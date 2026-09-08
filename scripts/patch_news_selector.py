@@ -34,19 +34,77 @@ old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential
 new_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
 text = text.replace(old_sections, new_sections)
 
-# Regional searches are deliberately broad. Google News RSS is much more reliable
-# with normal geographic/topic queries than long site:domain OR expressions.
-# Each query maps to a named region and is filtered again by the Regional tab.
-region_block = '''    "region": [
-        "Southwest US news Arizona New Mexico Colorado Utah Nevada",
-        "Western US news California Nevada Arizona Oregon Washington",
-        "Mountain West news Colorado Utah Idaho Montana Wyoming New Mexico",
-        "Midwest US news Illinois Indiana Michigan Ohio Wisconsin Minnesota Iowa Missouri",
-        "Southern US news Texas Oklahoma Arkansas Louisiana Tennessee Virginia Kentucky",
-        "Northeast US news New York Pennsylvania New Jersey Connecticut Massachusetts Maine",
-        "Pacific Northwest news Washington Oregon Idaho Alaska",
-        "Southeast US news Florida Georgia Alabama South Carolina North Carolina Tennessee Mississippi",
-    ],'''
+# Regional coverage uses several focused geographic searches per region. This is
+# intentionally more reliable than one long multi-state Google News query.
+region_block = '''    "region": {
+        "southwest": [
+            "Arizona news",
+            "New Mexico news",
+            "Colorado news",
+            "Utah news",
+            "Nevada news",
+        ],
+        "west": [
+            "California news",
+            "Nevada news",
+            "Oregon news",
+            "Washington state news",
+        ],
+        "mountain": [
+            "Colorado news",
+            "Utah news",
+            "Idaho news",
+            "Montana news",
+            "Wyoming news",
+        ],
+        "midwest": [
+            "Illinois news",
+            "Michigan news",
+            "Ohio news",
+            "Wisconsin news",
+            "Minnesota news",
+            "Iowa news",
+            "Missouri news",
+            "Indiana news",
+        ],
+        "south": [
+            "Texas news",
+            "Oklahoma news",
+            "Arkansas news",
+            "Louisiana news",
+            "Tennessee news",
+            "Kentucky news",
+            "Virginia news",
+            "West Virginia news",
+        ],
+        "northeast": [
+            "New York news",
+            "Pennsylvania news",
+            "New Jersey news",
+            "Connecticut news",
+            "Massachusetts news",
+            "New England news",
+            "Maine news",
+            "New Hampshire news",
+            "Vermont news",
+            "Rhode Island news",
+        ],
+        "pacific-northwest": [
+            "Washington state news",
+            "Oregon news",
+            "Idaho news",
+            "Alaska news",
+        ],
+        "southeast": [
+            "Florida news",
+            "Georgia news",
+            "Alabama news",
+            "South Carolina news",
+            "North Carolina news",
+            "Mississippi news",
+            "Tennessee news",
+        ],
+    },'''
 start = text.find('    "region": [')
 if start != -1:
     end = text.find('    ],', start)
@@ -54,12 +112,19 @@ if start != -1:
         end += len('    ],')
         text = text[:start] + region_block + text[end:]
 else:
-    anchor = '    "local": ['
-    start = text.find(anchor)
-    end = text.find('    ],', start)
-    if start != -1 and end != -1:
-        end += len('    ],')
-        text = text[:end] + '\n' + region_block + text[end:]
+    start = text.find('    "region": {')
+    if start != -1:
+        end = text.find('    },', start)
+        if end != -1:
+            end += len('    },')
+            text = text[:start] + region_block + text[end:]
+    else:
+        anchor = '    "local": ['
+        start = text.find(anchor)
+        end = text.find('    ],', start)
+        if start != -1 and end != -1:
+            end += len('    ],')
+            text = text[:end] + '\n' + region_block + text[end:]
 
 # Make the collector accept list-valued queries while preserving existing behavior.
 old_loop = '''    for category, query in QUERIES.items():
@@ -83,27 +148,8 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
-old_explicit_loop = '''            if category == "local":
-                items = []
-                for local_query in LOCAL_QUERIES:
-                    try:
-                        batch = parse_items(fetch(local_query), category)
-                        print(f"local/{local_query}: {len(batch)} fresh stories")
-                        items.extend(batch)
-                    except Exception as exc:
-                        print(f"Local feed failed for {local_query}: {exc}")
-            else:
-                items = parse_items(fetch(query), category)'''
-new_explicit_loop = '''            if category == "local":
-                items = []
-                for local_query in LOCAL_QUERIES:
-                    try:
-                        batch = parse_items(fetch(local_query), category)
-                        print(f"local/{local_query}: {len(batch)} fresh stories")
-                        items.extend(batch)
-                    except Exception as exc:
-                        print(f"Local feed failed for {local_query}: {exc}")
-            elif category == "region":
+# Replace the regional collector with per-region, multi-query collection.
+old_region_loop = '''            elif category == "region":
                 items = []
                 region_names = [
                     "southwest", "west", "mountain", "midwest",
@@ -117,29 +163,28 @@ new_explicit_loop = '''            if category == "local":
                         print(f"region/{region_name}: {len(batch)} fresh stories")
                         items.extend(batch)
                     except Exception as exc:
-                        print(f"Region feed failed for {region_name}: {exc}")
-            else:
-                items = parse_items(fetch(query), category)'''
-if old_explicit_loop in text:
-    text = text.replace(old_explicit_loop, new_explicit_loop)
+                        print(f"Region feed failed for {region_name}: {exc}")'''
+new_region_loop = '''            elif category == "region":
+                items = []
+                for region_name, region_queries in query.items():
+                    region_count = 0
+                    for region_query in region_queries:
+                        try:
+                            batch = parse_items(fetch(region_query), category)
+                            for item in batch:
+                                item["region"] = region_name
+                            region_count += len(batch)
+                            items.extend(batch)
+                        except Exception as exc:
+                            print(f"Region feed failed for {region_name}/{region_query}: {exc}")
+                    print(f"region/{region_name}: {region_count} fresh stories")'''
+if old_region_loop in text:
+    text = text.replace(old_region_loop, new_region_loop)
 
 if 'elif category == "region":' not in text:
     needle = '''            else:
                 items = parse_items(fetch(query), category)'''
-    replacement = '''            elif category == "region":
-                items = []
-                region_names = [
-                    "southwest", "west", "mountain", "midwest",
-                    "south", "northeast", "pacific-northwest", "southeast",
-                ]
-                for region_name, region_query in zip(region_names, query):
-                    try:
-                        batch = parse_items(fetch(region_query), category)
-                        for item in batch:
-                            item["region"] = region_name
-                        items.extend(batch)
-                    except Exception as exc:
-                        print(f"Region feed failed for {region_name}: {exc}")
+    replacement = new_region_loop + '''
             else:
                 items = parse_items(fetch(query), category)'''
     text = text.replace(needle, replacement, 1)
@@ -166,4 +211,4 @@ if old_selected in text:
     text = text.replace(old_selected, new_selected)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: preserved Local and fixed source-focused regional news queries.")
+print("Patched collector: preserved Local and expanded Regional coverage with focused state searches.")
