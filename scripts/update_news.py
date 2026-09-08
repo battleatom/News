@@ -245,7 +245,7 @@ def select_top_stories(unique):
         if k in seen_keys or source_counts.get(source, 0) >= 2:
             continue
         selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
-        if len(selected) == 10:
+        if len(selected) == 30:
             break
     return selected
 
@@ -274,13 +274,13 @@ def select_underreported(unique):
         if k in seen_keys or source_counts.get(source, 0) >= 2:
             continue
         selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
-        if len(selected) == 12:
+        if len(selected) == 30:
             break
     return selected
 
 
-def select_category_stories(items, limit=10):
-    """Select up to 10 distinct stories, with Local queries treated as the geographic scope."""
+def select_category_stories(items, limit=30):
+    """Select up to 30 distinct stories, with Local queries treated as the geographic scope."""
     if items and items[0].get("category") == "local":
         local_terms = (
             "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
@@ -425,7 +425,7 @@ def main():
             selected_by_category[category] = []
             for region_name in ("southwest", "west", "mountain", "midwest", "south", "northeast", "pacific-northwest", "southeast"):
                 region_items = [x for x in category_items if x.get("region") == region_name]
-                selected_by_category[category].extend(select_category_stories(region_items, limit=10))
+                selected_by_category[category].extend(select_category_stories(region_items, limit=30))
         else:
             selected_by_category[category] = select_category_stories(category_items)
     top = select_top_stories(top_unique)

@@ -50,6 +50,8 @@ header{padding:24px 18px 23px;background:#0b1120}header h1{font-size:29px;letter
 
 
 
+
+
 <style id="clean-news-v1">
 /* Underreported Design System — deliberately visible editorial redesign */
 :root{--ui-ink:#172033;--ui-muted:#667085;--ui-line:#e4e7ec;--ui-soft:#f6f7f9;--ui-purple:#7c3aed}
@@ -138,6 +140,12 @@ header p{font-size:11px!important}
   .news-item h3,
   .news-item:first-child h3 { font-size:15.5px!important; line-height:1.35!important; }
 }
+</style><style id="load-more-style-v1">
+.load-more-wrap{display:flex;justify-content:center;padding:20px 10px 6px}
+.load-more{appearance:none;border:1px solid #d5dae2;border-radius:999px;background:#fff;color:#344054;padding:10px 18px;font-size:11px;font-weight:750;cursor:pointer;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.load-more:hover{background:#f5f6f8;border-color:#c5cad3}
+.load-more:active{transform:translateY(1px)}
+@media(max-width:600px){.load-more-wrap{padding:18px 5px 4px}.load-more{width:100%;padding:10px 14px;font-size:10.5px}}
 </style></head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" onclick="loadNews(true)">↻ Refresh</button><span id="status">Loading…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
@@ -238,4 +246,49 @@ async function detectUserRegion(){
 }
 
 detectUserRegion();
+</script><script id="load-more-v1">
+const STORIES_PER_PAGE = 10;
+const loadCounts = {};
+
+function paginatedNewsItems(items){
+  const categoryItems = items.filter(item => (item.querySelector('category')?.textContent?.trim() || 'world') === active);
+  let available = categoryItems;
+  if(active === 'region'){
+    available = categoryItems.filter(item => (item.querySelector('region')?.textContent?.trim() || '') === detectedRegion);
+  }
+  const count = Math.min(loadCounts[active] || STORIES_PER_PAGE, available.length);
+  return {available, visible: available.slice(0, count), count};
+}
+
+const baseRenderWithPagination = render;
+render = function(items){
+  const data = paginatedNewsItems(items);
+  baseRenderWithPagination(data.visible);
+
+  const root = document.getElementById('news-feed');
+  const section = root.querySelector('.section');
+  if(!section) return;
+
+  const countEl = section.querySelector('.section-header .count');
+  if(countEl){
+    const locationNote = active === 'region' && typeof detectedLocation !== 'undefined' && detectedLocation ? ' · ' + detectedLocation : '';
+    countEl.textContent = `Showing ${data.count} of ${data.available.length} stories${locationNote}`;
+  }
+
+  if(data.available.length <= data.count) return;
+
+  const more = document.createElement('div');
+  more.className = 'load-more-wrap';
+  const button = document.createElement('button');
+  button.className = 'load-more';
+  const next = Math.min(data.count + STORIES_PER_PAGE, data.available.length);
+  button.textContent = `Load 10 more (${next} of ${data.available.length})`;
+  button.onclick = () => {
+    loadCounts[active] = next;
+    render(allItems);
+  };
+  more.appendChild(button);
+  // Keep the control at the bottom of the page/section, after all stories.
+  section.appendChild(more);
+};
 </script></body></html>
