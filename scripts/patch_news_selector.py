@@ -32,7 +32,7 @@ if old_local_block in text:
 
 # NFL is a dedicated tab with its own news pool; live scores are rendered client-side.
 if '    "nfl": [' not in text:
-    anchor = '    "world": ['
+    anchor = '    "world": '
     idx = text.find(anchor)
     if idx != -1:
         text = text[:idx] + '''    "nfl": [
@@ -42,8 +42,28 @@ if '    "nfl": [' not in text:
     ],
 ''' + text[idx:]
 
+# X is a separate conversation-signal pool. The enrichment step clusters these
+# indexed public X/Twitter results and deliberately does not invent post counts.
+if '    "x": [' not in text:
+    anchor = '    "underreported": '
+    idx = text.find(anchor)
+    if idx != -1:
+        text = text[:idx] + '''    "x": [
+        "site:x.com Trump OR White House OR Congress",
+        "site:x.com world war OR conflict OR international",
+        "site:x.com health medical FDA disease",
+        "site:x.com entertainment movie music celebrity",
+        "site:x.com AI technology Apple Google OpenAI",
+        "site:x.com gaming PlayStation Xbox Nintendo",
+        "site:x.com NFL NBA MLB soccer sports",
+        "site:x.com economy stocks tariffs jobs business",
+        "site:x.com science space NASA climate",
+        "site:x.com breaking news developing viral",
+    ],
+''' + text[idx:]
+
 old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]'
-new_sections = 'SECTIONS = ["top", "nfl", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
+new_sections = 'SECTIONS = ["top", "nfl", "x", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
 text = text.replace(old_sections, new_sections)
 
 region_block = '''    "region": {
@@ -61,15 +81,6 @@ if start != -1:
     end = text.find('    ],', start)
     if end != -1:
         text = text[:start] + region_block + text[end + len('    ],'):]
-else:
-    start = text.find('    "region": {')
-    if start == -1:
-        anchor = '    "local": ['
-        start = text.find(anchor)
-        end = text.find('    ],', start)
-        if start != -1 and end != -1:
-            end += len('    ],')
-            text = text[:end] + '\n' + region_block + text[end:]
 
 old_loop = '''    for category, query in QUERIES.items():
         try:
@@ -79,16 +90,28 @@ old_loop = '''    for category, query in QUERIES.items():
         except Exception as exc:
             print(f"Feed failed for {category}: {exc}")'''
 new_loop = '''    for category, query in QUERIES.items():
-        queries = query if isinstance(query, list) else [query]
-        category_items = []
-        for q in queries:
-            try:
-                items = parse_items(fetch(q), category)
-                category_items.extend(items)
-            except Exception as exc:
-                print(f"Feed failed for {category}/{q}: {exc}")
-        print(f"{category}: {len(category_items)} fresh stories")
-        all_items.extend(category_items)'''
+        if category == "region":
+            items = []
+            for region_name, region_queries in query.items():
+                for region_query in region_queries:
+                    try:
+                        batch = parse_items(fetch(region_query), category)
+                        for item in batch:
+                            item["region"] = region_name
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Region feed failed for {region_name}/{region_query}: {exc}")
+            print(f"region: {len(items)} fresh stories")
+        else:
+            queries = query if isinstance(query, list) else [query]
+            items = []
+            for q in queries:
+                try:
+                    items.extend(parse_items(fetch(q), category))
+                except Exception as exc:
+                    print(f"Feed failed for {category}/{q}: {exc}")
+            print(f"{category}: {len(items)} fresh stories")
+        all_items.extend(items)'''
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
@@ -129,21 +152,5 @@ new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escap
 if old_build in text:
     text = text.replace(old_build, new_build)
 
-old_selected = '''    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
-    top = select_top_stories(top_unique)'''
-new_selected = '''    selected_by_category = {}
-    for category in SECTIONS[2:]:
-        category_items = [x for x in unique if x["category"] == category]
-        if category == "region":
-            selected_by_category[category] = []
-            for region_name in ("southwest", "west", "mountain", "midwest", "south", "northeast", "pacific-northwest", "southeast"):
-                region_items = [x for x in category_items if x.get("region") == region_name]
-                selected_by_category[category].extend(select_category_stories(region_items, limit=10))
-        else:
-            selected_by_category[category] = select_category_stories(category_items)
-    top = select_top_stories(top_unique)'''
-if old_selected in text:
-    text = text.replace(old_selected, new_selected)
-
 path.write_text(text, encoding="utf-8")
-print("Patched collector: added NFL news while preserving Local and Regional coverage.")
+print("Patched collector: added NFL and X conversation-signal feeds while preserving Local and Regional coverage.")
