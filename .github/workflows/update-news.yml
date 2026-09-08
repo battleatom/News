@@ -7,6 +7,14 @@ on:
       - News
       - index.html
       - scripts/update_news.py
+      - scripts/apply_clean_design.py
+      - scripts/patch_article_style.py
+      - scripts/patch_region_tab.py
+      - scripts/patch_load_more.py
+      - scripts/persist_active_tab.py
+      - scripts/patch_news_selector.py
+      - scripts/patch_site_cache.py
+      - scripts/clean_news.py
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -26,6 +34,11 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+
+      - name: Sync with latest main
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Patch news collector rules
         run: python scripts/patch_news_selector.py
@@ -58,26 +71,36 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # The patch steps can intentionally update tracked collector/design files.
-          # Stage everything so those changes cannot block a later rebase.
           git add -A
           if git diff --cached --quiet; then
             echo "News feed is already current."
-          else
-            git commit -m "Auto-update news feed"
-            for attempt in 1 2 3 4 5; do
-              if git push; then
-                exit 0
-              fi
-              echo "Push conflict; rebasing onto the latest main (attempt $attempt)."
-              git fetch origin main
-              if git rebase --autostash origin/main; then
-                continue
-              fi
-              echo "Rebase conflict; aborting this attempt so the next retry starts clean."
-              git rebase --abort
-              sleep 2
-            done
-            echo "Unable to push after 5 attempts."
-            exit 1
+            exit 0
           fi
+
+          # Refresh immediately before committing so a manual design/content
+          # commit made while the feed was collecting cannot create a rebase
+          # conflict. The working tree contains the generated feed; reset only
+          # moves HEAD/index to the newest main while preserving those changes.
+          git fetch origin main
+          git reset --soft origin/main
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes remain after syncing with latest main."
+            exit 0
+          fi
+
+          git commit -m "Auto-update news feed"
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push raced with another commit; refreshing main (attempt $attempt)."
+            git fetch origin main
+            git reset --soft origin/main
+            git add -A
+            git commit --amend --no-edit
+            sleep 2
+          done
+          echo "Unable to push after 5 attempts."
+          exit 1
