@@ -34,17 +34,18 @@ old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential
 new_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
 text = text.replace(old_sections, new_sections)
 
-# Regional queries intentionally emphasize strong regional/public-service outlets rather
-# than simply searching a state name. Google News still supplies the freshness layer.
+# Regional searches are deliberately broad. Google News RSS is much more reliable
+# with normal geographic/topic queries than long site:domain OR expressions.
+# Each query maps to a named region and is filtered again by the Regional tab.
 region_block = '''    "region": [
-        "site:propublica.org Southwest Arizona Colorado New Mexico Nevada Utah OR site:statesnewsroom.com Southwest OR site:azmirror.com OR site:sourcenm.com OR site:coloradosun.com OR site:sltrib.com OR site:nevadanews.com",
-        "site:latimes.com California OR site:calmatters.org OR site:oregoncapitalchronicle.com OR site:washingtonstatestandard.com OR site:statesnewsroom.com West",
-        "site:coloradosun.com OR site:coloradonewsline.com OR site:utahnewsdispatch.com OR site:idahocapitalsun.com OR site:dailymontanan.com OR site:wyofile.com Mountain West",
-        "site:statesnewsroom.com Midwest OR site:capitolnewsillinois.com OR site:indianacapitalchronicle.com OR site:iowacapitaldispatch.com OR site:michiganadvance.com OR site:minnesotareformer.com OR site:missouriindependent.com OR site:ohiocapitaljournal.com OR site:wisconsingexaminer.com",
-        "site:statesnewsroom.com South OR site:texastribune.org OR site:virginiamercury.com OR site:ncnewsline.com OR site:tennesseelookout.com OR site:floridaphoenix.com OR site:georgiarecorder.com OR site:alabamareflector.com",
-        "site:statesnewsroom.com Northeast OR site:newyorkfocus.com OR site:capital-star.com OR site:ctmirror.org OR site:commonwealthbeacon.org OR site:maine-morningstar.com OR site:njmonitor.com OR site:spotlightdelaware.org",
-        "site:washingtonstatestandard.com OR site:oregoncapitalchronicle.com OR site:idahocapitalsun.com OR site:alaskabeacon.com OR site:statesnewsroom.com Northwest",
-        "site:statesnewsroom.com Southeast OR site:floridaphoenix.com OR site:georgiarecorder.com OR site:alabamareflector.com OR site:ncnewsline.com OR site:scdailygazette.com OR site:tennesseelookout.com OR site:mississippitoday.org",
+        "Southwest US news Arizona New Mexico Colorado Utah Nevada",
+        "Western US news California Nevada Arizona Oregon Washington",
+        "Mountain West news Colorado Utah Idaho Montana Wyoming New Mexico",
+        "Midwest US news Illinois Indiana Michigan Ohio Wisconsin Minnesota Iowa Missouri",
+        "Southern US news Texas Oklahoma Arkansas Louisiana Tennessee Virginia Kentucky",
+        "Northeast US news New York Pennsylvania New Jersey Connecticut Massachusetts Maine",
+        "Pacific Northwest news Washington Oregon Idaho Alaska",
+        "Southeast US news Florida Georgia Alabama South Carolina North Carolina Tennessee Mississippi",
     ],'''
 start = text.find('    "region": [')
 if start != -1:
@@ -165,4 +166,4 @@ if old_selected in text:
     text = text.replace(old_selected, new_selected)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: preserved Local and added source-focused regional news data.")
+print("Patched collector: preserved Local and fixed source-focused regional news queries.")
