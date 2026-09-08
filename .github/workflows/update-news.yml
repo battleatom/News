@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths-ignore:
       - News
+      - index.html
+      - scripts/update_news.py
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -21,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -69,7 +71,12 @@ jobs:
               fi
               echo "Push conflict; rebasing onto the latest main (attempt $attempt)."
               git fetch origin main
-              git rebase --autostash origin/main
+              if git rebase --autostash origin/main; then
+                continue
+              fi
+              echo "Rebase conflict; aborting this attempt so the next retry starts clean."
+              git rebase --abort
+              sleep 2
             done
             echo "Unable to push after 5 attempts."
             exit 1
