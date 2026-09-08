@@ -17,7 +17,7 @@ QUERIES = {
     "presidential": "Trump president White House",
     "federal": "US Congress OR federal government OR Supreme Court",
     "nm": "New Mexico government OR New Mexico news",
-    "local": "Farmington New Mexico OR Four Corners New Mexico",
+    "local": "Farmington New Mexico OR San Juan County New Mexico OR Aztec New Mexico OR Bloomfield New Mexico OR Kirtland New Mexico OR Shiprock New Mexico OR Four Corners New Mexico",
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -38,7 +38,7 @@ MAINSTREAM_TOP_QUERIES = [
     ("USA Today", "site:usatoday.com breaking news US world"),
 ]
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 4}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -114,13 +114,7 @@ def key(item):
 
 def source_key(source):
     s = re.sub(r"[^a-z0-9]+", "", (source or "").lower())
-    aliases = {
-        "delawareonline": "delawareonline",
-        "delawareonlinecom": "delawareonline",
-        "usatoday": "usatoday",
-        "apnews": "associatedpress",
-        "associatedpress": "associatedpress",
-    }
+    aliases = {"delawareonline": "delawareonline", "delawareonlinecom": "delawareonline", "usatoday": "usatoday", "apnews": "associatedpress", "associatedpress": "associatedpress"}
     return aliases.get(s, s)
 
 
