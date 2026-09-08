@@ -98,11 +98,17 @@ jobs:
       - name: Fix Regional tab click handling
         run: python scripts/fix_region_tab_click.py
 
+      - name: Patch Underreported detail UI
+        run: python scripts/patch_underreported_ui.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
+
+      - name: Enrich Underreported context and long-term supporting coverage
+        run: python scripts/enrich_underreported.py
 
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
