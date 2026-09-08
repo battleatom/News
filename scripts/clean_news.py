@@ -4,27 +4,41 @@ import xml.etree.ElementTree as ET
 
 NEWS_FILE = "News"
 
-# Commerce/affiliate material that should never appear in Gaming & Computing.
 GAMING_BLOCK_TERMS = (
     "coupon", "promo code", "promo codes", "discount code", "discount codes",
     "coupon code", "coupon codes", "deal of the day", "gaming deals",
     "game deals", "best deals", "price drop", "price drops", "sale price",
     "clearance", "affiliate", "sponsored content", "sponsored post",
 )
-
 GAMING_COMMERCE_SOURCES = (
     "slickdeals", "dealnews", "gamespot deals", "ign deals", "pc gamer deals",
     "tom's guide", "tomsguide", "techradar deals", "walmart", "best buy",
     "amazon", "newegg", "gamestop deals",
 )
-
-# Sources that commonly put substantial portions of their reporting behind a
-# subscription. They are not removed from Top Stories/Underreported, where a
-# major exclusive can still be important, but ordinary category pages prefer
-# freely accessible alternatives when possible.
 ORDINARY_PAYWALL_SOURCES = (
     "the new york times", "new york times", "wall street journal", "wsj",
     "bloomberg", "the washington post", "washington post",
+)
+
+# Local means the Farmington / San Juan County / Four Corners area.
+# Google News sometimes returns unrelated state-level stories for broad local
+# queries, so Local is now explicitly geographic rather than query-based.
+LOCAL_REQUIRED_TERMS = (
+    "farmington", "san juan county", "san juan regional", "aztec, nm", "aztec nm",
+    "aztec new mexico", "bloomfield, nm", "bloomfield nm", "bloomfield new mexico",
+    "kirtland, nm", "kirtland nm", "kirtland new mexico", "shiprock", "navajo nation",
+    "four corners", "san juan basin", "new mexico",
+)
+LOCAL_BLOCKED_TERMS = (
+    "new york", "new jersey", "pennsylvania", "oklahoma", "texas", "colorado",
+    "california", "arizona", "utah", "missouri", "arkansas", "kansas", "nebraska",
+    "louisiana", "florida", "georgia", "alabama", "tennessee", "north carolina",
+    "south carolina", "virginia", "west virginia", "ohio", "michigan", "illinois",
+    "indiana", "wisconsin", "minnesota", "iowa", "north dakota", "south dakota",
+    "montana", "wyoming", "idaho", "washington", "oregon", "nevada", "mississippi",
+    "kentucky", "maryland", "massachusetts", "connecticut", "rhode island", "vermont",
+    "new hampshire", "maine", "delaware", "district of columbia", "washington, d.c.",
+    "washington dc",
 )
 
 
@@ -44,12 +58,31 @@ def is_gaming_commerce(item):
         return True
     if any(term in source for term in GAMING_COMMERCE_SOURCES):
         return True
-    # Strong shopping/affiliate patterns that routinely slip through broad RSS searches.
     if re.search(r"\b(coupon|promo|discount)\b", text):
         return True
     if re.search(r"\b(save|off)\s+\$?\d+\b", text):
         return True
     return False
+
+
+def is_local_item(item):
+    text = normalized(item.findtext("title")) + " " + normalized(item.findtext("description"))
+    source = normalized(item.findtext("source"))
+    local_source = any(name in source for name in (
+        "farmington daily times", "daily times", "navajo times", "san juan county",
+        "four corners", "new mexico", "krtm", "ksje",
+    ))
+    has_local_signal = any(term in text for term in LOCAL_REQUIRED_TERMS)
+    has_blocked_signal = any(term in text for term in LOCAL_BLOCKED_TERMS)
+
+    # If an outside-state location is explicitly the subject, reject it even
+    # when the article happens to mention New Mexico in passing.
+    if has_blocked_signal and not any(term in text for term in (
+        "farmington", "san juan county", "four corners", "shiprock", "navajo nation",
+        "new mexico", "san juan basin",
+    )):
+        return False
+    return has_local_signal or local_source
 
 
 def is_ordinary_paywall(item):
@@ -71,11 +104,15 @@ def main():
     kept = []
     removed_gaming = 0
     removed_paywall = 0
+    removed_nonlocal = 0
 
     for item in items:
         category = normalized(item.findtext("category"))
         if category == "gaming" and is_gaming_commerce(item):
             removed_gaming += 1
+            continue
+        if category == "local" and not is_local_item(item):
+            removed_nonlocal += 1
             continue
         if is_ordinary_paywall(item):
             removed_paywall += 1
@@ -90,6 +127,7 @@ def main():
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
+    print(f"Removed {removed_nonlocal} non-local stories from Local.")
 
 
 if __name__ == "__main__":
