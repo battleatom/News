@@ -110,6 +110,9 @@ jobs:
       - name: Enrich Underreported context and long-term supporting coverage
         run: python scripts/enrich_underreported.py
 
+      - name: Patch X category coverage
+        run: python scripts/patch_x_category_coverage.py
+
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
 
