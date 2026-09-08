@@ -29,6 +29,7 @@ header{padding:24px 18px 23px;background:#0b1120}header h1{font-size:29px;letter
 
 
 
+
 <style id="clean-news-v1">
 /* Underreported Design System — deliberately visible editorial redesign */
 :root{--ui-ink:#172033;--ui-muted:#667085;--ui-line:#e4e7ec;--ui-soft:#f6f7f9;--ui-purple:#7c3aed}
@@ -83,6 +84,39 @@ header p{font-size:11px!important}
 .description{font-size:11.5px!important;line-height:1.5!important}
 .why{font-size:10px!important;padding:7px 8px!important}
 .meta{font-size:8.5px!important}
+}
+</style>
+<style id="article-style-v1">
+/* Equal article hierarchy with a subtle category-color rail. */
+.news-item,
+.news-item:first-child {
+  padding:18px 13px 17px!important;
+  margin:0!important;
+  background:#fff!important;
+  border-top:0!important;
+  border-bottom:1px solid #e9ebef!important;
+  border-left:4px solid var(--ui-purple)!important;
+  border-radius:0!important;
+}
+.news-item h3,
+.news-item:first-child h3 {
+  font-size:16.5px!important;
+  line-height:1.34!important;
+  font-weight:750!important;
+  letter-spacing:-.12px!important;
+}
+.news-item:first-child h3 { font-weight:750!important; }
+.news-item:nth-child(2n) { border-left-color:#2563eb!important; }
+.news-item:nth-child(3n) { border-left-color:#0f766e!important; }
+.news-item:nth-child(4n) { border-left-color:#b45309!important; }
+.news-item:nth-child(5n) { border-left-color:#7c3aed!important; }
+.news-item:nth-child(6n) { border-left-color:#0891b2!important; }
+.news-item:nth-child(7n) { border-left-color:#991b1b!important; }
+@media(max-width:600px){
+  .news-item,
+  .news-item:first-child { padding:16px 10px 15px!important; }
+  .news-item h3,
+  .news-item:first-child h3 { font-size:15.5px!important; line-height:1.35!important; }
 }
 </style></head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" onclick="loadNews(true)">↻ Refresh</button><span id="status">Loading…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
