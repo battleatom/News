@@ -99,28 +99,17 @@ def parse_items(root, category, source_override=None):
 
 
 def key(item):
-    """Normalize a headline so the same story from different outlets collapses.
-
-    Google News commonly appends the publisher to a headline (for example,
-    "Story headline - Source" or "Story headline | Source").  The old key
-    treated that publisher suffix as part of the story, allowing duplicates to
-    appear in category tabs.  Remove common publisher suffixes before comparing.
-    """
+    """Normalize a headline so the same story from different outlets collapses."""
     title = item["title"]
     source = (item.get("source") or "").strip()
-
-    # Remove a publisher suffix when it matches the parsed RSS source.
     if source:
         title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.IGNORECASE)
-
-    # Some Google News results use the publisher domain instead of the name.
     domains = {
         "apnews.com", "reuters.com", "cnn.com", "foxnews.com", "nbcnews.com",
         "abcnews.go.com", "cbsnews.com", "npr.org", "usatoday.com", "bbc.com",
         "bbc.co.uk", "nytimes.com", "washingtonpost.com"
     }
     title = re.sub(r"\s+(?:[-–—|:]\s*)?(?:" + "|".join(re.escape(d) for d in domains) + r")\s*$", "", title, flags=re.IGNORECASE)
-
     words = re.findall(r"[a-z0-9]+", title.lower())
     stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says"}
     return " ".join(w for w in words if w not in stop)[:180]
@@ -143,12 +132,6 @@ def impact_score(item, newest_time):
 
 
 def select_top_stories(unique):
-    """Top Stories = stories actually appearing across mainstream news.
-
-    Coverage across multiple major outlets is deliberately rewarded here. This
-    keeps Top Stories distinct from Underreported, whose score rewards low
-    coverage instead.
-    """
     if not unique:
         return []
     newest_time = max(x["published"] for x in unique)
@@ -156,28 +139,21 @@ def select_top_stories(unique):
     for item in unique:
         k = key(item)
         coverage.setdefault(k, set()).add(item["source"] or "Unknown")
-
     ranked = []
     for item in unique:
         k = key(item)
         outlet_count = len(coverage.get(k, set()))
-        score = impact_score(item, newest_time)
-        # Mainstream consensus is the defining signal for Top Stories.
-        score += min(30, outlet_count * 7)
+        score = impact_score(item, newest_time) + min(30, outlet_count * 7)
         if outlet_count >= 4:
             score += 8
         ranked.append((score, item["published"], outlet_count, item))
-
     ranked.sort(key=lambda x: (x[0], x[1]), reverse=True)
     selected, seen_keys, source_counts = [], set(), {}
     for _, _, _, item in ranked:
-        k = key(item)
-        source = item["source"] or "Unknown"
+        k = key(item); source = item["source"] or "Unknown"
         if k in seen_keys or source_counts.get(source, 0) >= 2:
             continue
-        selected.append(item)
-        seen_keys.add(k)
-        source_counts[source] = source_counts.get(source, 0) + 1
+        selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
         if len(selected) == 10:
             break
     return selected
@@ -208,6 +184,28 @@ def select_underreported(unique):
             continue
         selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
         if len(selected) == 12:
+            break
+    return selected
+
+
+def select_category_stories(unique, category, limit=10):
+    """Select category stories with source diversity.
+
+    A publisher may contribute only one story to a category page. This prevents
+    two differently-worded Google News results from the same outlet (such as
+    Delaware Online) from occupying multiple slots when they are effectively
+    duplicate coverage.
+    """
+    candidates = [x for x in unique if x["category"] == category]
+    selected = []
+    used_sources = set()
+    for item in candidates:
+        source = re.sub(r"\s+", " ", (item.get("source") or "Unknown").strip()).lower()
+        if source in used_sources:
+            continue
+        selected.append(item)
+        used_sources.add(source)
+        if len(selected) == limit:
             break
     return selected
 
@@ -284,22 +282,17 @@ def main():
         top_seen.add(k)
         top_unique.append(item)
 
-    selected_by_category = {category: [x for x in unique if x["category"] == category][:10] for category in SECTIONS[2:]}
+    selected_by_category = {category: select_category_stories(unique, category) for category in SECTIONS[2:]}
     top = select_top_stories(top_unique)
     underreported = select_underreported(unique)
 
     top_items = []
     for item in top:
-        copy = dict(item)
-        copy["category"] = "top"
-        top_items.append(copy)
+        copy = dict(item); copy["category"] = "top"; top_items.append(copy)
 
     under_items = []
     for item in underreported:
-        copy = dict(item)
-        copy["category"] = "underreported"
-        copy["whyMatters"] = why_matters(item)
-        under_items.append(copy)
+        copy = dict(item); copy["category"] = "underreported"; copy["whyMatters"] = why_matters(item); under_items.append(copy)
 
     ordered = top_items + under_items
     for category in SECTIONS[2:]:
