@@ -43,43 +43,19 @@ if '    "nfl": [' not in text:
     ],
 ''' + text[idx:]
 
-# X is a separate conversation-signal pool. It uses public X/Twitter results
-# indexed by Google News; later enrichment clusters them and explicitly avoids
-# inventing total post counts or treating trending claims as verified facts.
-if '    "x": [' not in text:
-    anchor = '    "underreported": '
-    idx = text.find(anchor)
-    if idx != -1:
-        text = text[:idx] + '''    "x": [
-        "site:x.com Trump OR White House OR Congress",
-        "site:x.com world war OR conflict OR international",
-        "site:x.com health medical FDA disease",
-        "site:x.com entertainment movie music celebrity",
-        "site:x.com AI technology Apple Google OpenAI",
-        "site:x.com gaming PlayStation Xbox Nintendo",
-        "site:x.com NFL NBA MLB soccer sports",
-        "site:x.com economy stocks tariffs jobs business",
-        "site:x.com science space NASA climate",
-        "site:x.com breaking news developing viral",
-    ],
-''' + text[idx:]
+# X is intentionally NOT part of update_news.py's normal article pool. Its data
+# is collected and clustered by enrich_x_issues.py after the normal feed is built,
+# keeping the X signal layer separate from conventional news ranking.
+text = re.sub(r'    "x": \[\n(?:.*\n)*?    \],\n', '', text, count=1)
 
-# Add X to the collector sections regardless of the exact current ordering.
+# Keep X out of the normal collector sections; enrich_x_issues.py appends it later.
 match = re.search(r'SECTIONS\s*=\s*\[[^\n]+\]', text)
 if match:
     sections = match.group(0)
-    if '"x"' not in sections:
-        sections = sections.replace('"top",', '"top", "x",', 1)
-        text = text[:match.start()] + sections + text[match.end():]
-
-# Ensure region is represented in the generated feed even if an older collector
-# version is restored by another patch.
-match = re.search(r'SECTIONS\s*=\s*\[[^\n]+\]', text)
-if match and '"region"' not in match.group(0):
-    sections = match.group(0).replace('"local",', '"local", "region",', 1)
+    sections = sections.replace('"x", ', '').replace(', "x"', '')
     text = text[:match.start()] + sections + text[match.end():]
 
-# Support list-valued queries (including X) without breaking scalar queries.
+# Support list-valued queries (including NFL) without breaking scalar queries.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -153,4 +129,4 @@ if old_build in text:
     text = text.replace(old_build, new_build)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: added X conversation-signal feed while preserving NFL, Local, and Regional coverage.")
+print("Patched collector: preserved NFL, Local, and Regional improvements; X is handled by the dedicated signal enrichment step.")
