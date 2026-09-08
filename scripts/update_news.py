@@ -9,7 +9,7 @@ from email.utils import parsedate_to_datetime
 
 OUT = "News"
 SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "nfl", "technology", "gaming", "military"]
-MAX_AGE_HOURS = 72
+MAX_AGE_HOURS = 48
 
 QUERIES = {
     "world": "world news OR international news",
@@ -99,6 +99,7 @@ QUERIES = {
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
+    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -150,7 +151,7 @@ ROUTINE_TERMS = {"opinion": -10, "review": -8, "podcast": -8, "how to": -8, "wat
 
 
 def feed_url(query):
-    q = urllib.parse.quote(f"{query} when:3d")
+    q = urllib.parse.quote(f"{query} when:2d")
     return f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 
