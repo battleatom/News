@@ -31,6 +31,8 @@ while marker in text:
         break
     text = text[:start] + text[end + len('</script>'):]
 
+# Load More behavior is JavaScript only. Styling belongs exclusively to
+# styles/theme.css so this patch cannot override the authoritative theme.
 script = r'''<script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
 const loadCounts = {};
@@ -45,8 +47,6 @@ function paginatedNewsItems(items){
 
 const baseRenderWithPagination = render;
 render = function(items){
-  // NFL has its own two-part renderer (scores + news), so its pagination is
-  // handled inside renderNfl rather than being appended beneath the score card.
   if(active === 'nfl') return baseRenderWithPagination(items);
 
   const data = paginatedNewsItems(items);
@@ -69,15 +69,6 @@ render = function(items){
 };
 </script>'''
 
-css = r'''<style id="load-more-style-v1">
-.load-more-wrap{display:flex;justify-content:center;padding:20px 10px 6px}
-.load-more{appearance:none;border:1px solid #d5dae2;border-radius:999px;background:#fff;color:#344054;padding:10px 18px;font-size:11px;font-weight:750;cursor:pointer;box-shadow:0 1px 2px rgba(16,24,40,.05)}
-.load-more:hover{background:#f5f6f8;border-color:#c5cad3}
-.load-more:active{transform:translateY(1px)}
-@media(max-width:600px){.load-more-wrap{padding:18px 5px 4px}.load-more{width:100%;padding:10px 14px;font-size:10.5px}}
-</style>'''
-
-text = text.replace('</head>', css + '</head>', 1)
-text = text.replace('</body>', script + '</body>', 1)
+text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Fixed Load More so NFL pagination is handled below NFL News, not below scores.")
+print("Applied Load More pagination without injecting CSS that can override styles/theme.css.")
