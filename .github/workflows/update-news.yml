@@ -43,6 +43,9 @@ jobs:
       - name: Patch location-aware Regional tab
         run: python scripts/patch_region_tab.py
 
+      - name: Add Load More pagination
+        run: python scripts/patch_load_more.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
