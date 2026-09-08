@@ -1,5 +1,6 @@
 import html
 import re
+import runpy
 import xml.etree.ElementTree as ET
 
 NEWS_FILE = "News"
@@ -56,15 +57,10 @@ def is_vague_world_headline(item):
         return True
     words = re.findall(r"[A-Za-z0-9]+", headline)
     lowered = headline.lower()
-    # Reject source-style/topic-only headlines such as "Trump - WV News" or
-    # "Ukraine - Example News". A World headline should tell the reader what
-    # actually happened, not merely name a person, country, or topic.
     if len(words) <= 2:
         return True
     if len(words) <= 3 and not any(term in lowered for term in WORLD_HEADLINE_EVENT_TERMS):
         return True
-    # Also reject titles that are essentially a bare proper noun plus a generic
-    # label, even when punctuation makes them look longer.
     if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9'’.-]*(?:\s+[A-Za-z0-9][A-Za-z0-9'’.-]*){0,2}", headline):
         return True
     return False
@@ -116,10 +112,6 @@ def main():
         if is_vague_world_headline(item):
             removed_vague_world += 1
             continue
-        # Local geography is enforced upstream by patch_news_selector.py before
-        # stories are selected. Do not run a second, source-based locality filter
-        # here because it can incorrectly delete legitimate Four Corners stories
-        # and leave the Local tab with only a few articles.
         kept.append(item)
 
     for item in items:
@@ -132,6 +124,13 @@ def main():
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
     print(f"Removed {removed_vague_world} vague World headlines.")
     print("Local stories retained after upstream geographic selection.")
+
+    # X enrichment runs after cleanup so it becomes part of every normal 15-minute
+    # feed build without needing a second competing workflow.
+    try:
+        runpy.run_path("scripts/enrich_x_issues.py", run_name="__main__")
+    except Exception as exc:
+        print(f"X issue enrichment failed; retaining base feed: {exc}")
 
 
 if __name__ == "__main__":
