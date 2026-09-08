@@ -1,155 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Underreported High-Impact Brief</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        header h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        .content {
-            padding: 30px 20px;
-        }
-        .news-item {
-            border-left: 4px solid #667eea;
-            padding: 20px;
-            margin-bottom: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .news-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
-        }
-        .news-item h3 {
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 18px;
-            line-height: 1.4;
-        }
-        .news-item p {
-            color: #555;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        .news-item .meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            color: #999;
-            margin-top: 10px;
-        }
-        .news-item a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            display: inline-block;
-            margin-top: 10px;
-        }
-        .news-item a:hover {
-            text-decoration: underline;
-        }
-        .loading {
-            text-align: center;
-            padding: 40px 20px;
-            color: #999;
-        }
-        footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #999;
-            border-top: 1px solid #e0e0e0;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>Underreported High-Impact Brief</h1>
-            <p>Five underreported stories whose secondary effects remain largely unnoticed</p>
-        </header>
-        <div class="content" id="news-feed">
-            <div class="loading">Loading news...</div>
-        </div>
-        <footer>
-            Last updated: <span id="last-update">—</span>
-        </footer>
-    </div>
-
-    <script>
-        fetch('News')
-            .then(response => response.text())
-            .then(data => {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(data, 'text/xml');
-                
-                const channel = xmlDoc.querySelector('channel');
-                const items = xmlDoc.querySelectorAll('item');
-                const lastBuildDate = channel.querySelector('lastBuildDate')?.textContent || 'Unknown';
-                
-                document.getElementById('last-update').textContent = lastBuildDate;
-                
-                const feedContainer = document.getElementById('news-feed');
-                feedContainer.innerHTML = '';
-                
-                items.forEach((item, index) => {
-                    const title = item.querySelector('title')?.textContent || 'No title';
-                    const description = item.querySelector('description')?.textContent || 'No description';
-                    const link = item.querySelector('link')?.textContent || '#';
-                    const pubDate = item.querySelector('pubDate')?.textContent || 'No date';
-                    
-                    const newsHTML = `
-                        <div class="news-item">
-                            <h3>${title}</h3>
-                            <p>${description}</p>
-                            <div class="meta">
-                                <span>${pubDate}</span>
-                            </div>
-                            <a href="${link}" target="_blank">Read more →</a>
-                        </div>
-                    `;
-                    feedContainer.innerHTML += newsHTML;
-                });
-            })
-            .catch(error => {
-                document.getElementById('news-feed').innerHTML = '<p style="color: red;">Error loading news feed: ' + error + '</p>';
-            });
-    </script>
-</body>
-</html>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#111827">
+<title>News Brief</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#0f172a;color:#111827;min-height:100vh;padding:14px}.container{max-width:1100px;margin:auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}header{background:linear-gradient(135deg,#111827,#334155);color:#fff;padding:28px 20px;text-align:center}header h1{font-size:30px;margin-bottom:6px}header p{font-size:14px;color:#cbd5e1}.toolbar{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid #e5e7eb;background:#f8fafc;position:sticky;top:0;z-index:10}button{border:0;border-radius:10px;padding:10px 16px;background:#111827;color:#fff;font-weight:700;cursor:pointer}button:hover{background:#334155}button:disabled{opacity:.6;cursor:wait}#status{font-size:12px;color:#64748b}.content{padding:18px}.section{margin-bottom:26px;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden}.section-header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#f1f5f9;cursor:pointer}.section-header h2{font-size:19px}.count{font-size:12px;color:#64748b}.section-body{padding:12px}.section.collapsed .section-body{display:none}.news-item{padding:15px;border-bottom:1px solid #e5e7eb}.news-item:last-child{border-bottom:0}.news-item h3{font-size:17px;line-height:1.4;margin-bottom:7px}.news-item h3 a{color:#111827;text-decoration:none}.news-item h3 a:hover{text-decoration:underline}.description{font-size:13px;line-height:1.55;color:#475569;margin-bottom:8px}.meta{font-size:11px;color:#94a3b8;display:flex;gap:8px;flex-wrap:wrap}.source{font-weight:700;color:#64748b}.empty,.loading{text-align:center;padding:35px;color:#64748b}footer{text-align:center;padding:18px;background:#f8fafc;border-top:1px solid #e5e7eb;font-size:12px;color:#64748b}@media(max-width:600px){body{padding:0}.container{border-radius:0;min-height:100vh}header h1{font-size:25px}.content{padding:10px}.news-item h3{font-size:16px}}
+</style></head>
+<body><div class="container"><header><h1>News Brief</h1><p>Top stories across the world, United States, government, New Mexico, technology and conflict.</p></header><div class="toolbar"><button id="refresh" onclick="loadNews(true)">↻ Refresh News</button><span id="status">Loading…</span></div><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Feed generated automatically. <span id="last-update">Last update: —</span></footer></div>
+<script>
+const sections=[['top','🔴 Top Stories'],['world','🌎 World'],['us','🇺🇸 United States'],['presidential','🏛️ Presidential'],['federal','🏛️ Federal Government'],['nm','🏜️ New Mexico'],['local','📍 Local / Four Corners'],['technology','💻 Technology'],['military','⚔️ Military & War']];
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
+function render(items){const grouped={};sections.forEach(([k])=>grouped[k]=[]);items.forEach(item=>{const c=item.querySelector('category')?.textContent?.trim()||'world';if(grouped[c])grouped[c].push(item)});const root=document.getElementById('news-feed');root.innerHTML='';sections.forEach(([key,label])=>{const sec=document.createElement('section');sec.className='section';const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>${label}</h2><span class="count">10 stories · tap to collapse</span>`;head.onclick=()=>sec.classList.toggle('collapsed');sec.appendChild(head);const body=document.createElement('div');body.className='section-body';const list=grouped[key];if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const title=item.querySelector('title')?.textContent||'Untitled';const desc=item.querySelector('description')?.textContent||'';const link=item.querySelector('link')?.textContent||'#';const date=item.querySelector('pubDate')?.textContent||'';const source=item.querySelector('source')?.textContent||'';const article=document.createElement('article');article.className='news-item';article.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3><p class="description">${esc(desc)}</p><div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(article)});sec.appendChild(body);root.appendChild(sec)})}
+async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');const items=[...xml.querySelectorAll('item')];render(items);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=items.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
+loadNews();setInterval(()=>loadNews(false),15*60*1000);
+</script></body></html>
