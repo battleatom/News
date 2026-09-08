@@ -4,10 +4,14 @@ import urllib.request
 from datetime import datetime, timezone
 
 OUT = "markets.json"
+
+# Use the actual market indexes for the headline ticker. SPY/DIA/QQQ are ETFs
+# and therefore show ETF share prices rather than the S&P 500, Dow Jones, and
+# Nasdaq index levels users expect to see in a news ticker.
 SYMBOLS = [
-    ("S&P 500", "SPY", "fund"),
-    ("DOW", "DIA", "fund"),
-    ("NASDAQ", "QQQ", "fund"),
+    ("S&P 500", "^GSPC", "index"),
+    ("DOW", "^DJI", "index"),
+    ("NASDAQ", "^IXIC", "index"),
     ("VIX", "^VIX", "index"),
     ("WTI OIL", "CL=F", "commodity"),
     ("GOLD", "GC=F", "commodity"),
@@ -52,8 +56,8 @@ def main():
             print(f"{name}: {exc}")
             markets.append({"name": name, "symbol": symbol, "kind": kind, "error": str(exc)})
 
-    spy = next((m for m in markets if m["symbol"] == "SPY" and "error" not in m), None)
-    regular_closed = bool(spy and spy.get("marketState") == "CLOSED")
+    primary = next((m for m in markets if m["symbol"] == "^GSPC" and "error" not in m), None)
+    regular_closed = bool(primary and primary.get("marketState") == "CLOSED")
     payload = {
         "updatedAt": datetime.now(timezone.utc).isoformat(),
         "marketClosed": regular_closed,
