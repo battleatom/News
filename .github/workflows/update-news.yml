@@ -6,14 +6,6 @@ on:
     paths-ignore:
       - News
       - index.html
-      - scripts/update_news.py
-      - scripts/apply_clean_design.py
-      - scripts/patch_article_style.py
-      - scripts/patch_load_more.py
-      - scripts/persist_active_tab.py
-      - scripts/patch_news_selector.py
-      - scripts/patch_site_cache.py
-      - scripts/clean_news.py
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -69,7 +61,7 @@ jobs:
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
 
-      - name: Apply Clean News App V1 design
+      - name: Apply site theme
         run: python scripts/apply_clean_design.py
 
       - name: Persist selected news tab
