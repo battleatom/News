@@ -3,14 +3,11 @@ from pathlib import Path
 path = Path("index.html")
 text = path.read_text(encoding="utf-8")
 
-# Make the new tab visible without changing the existing Local / Four Corners tab.
 old_sections = "const sections=[['top','🔴 Top Stories','#dc2626'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
 new_sections = "const sections=[['top','🔴 Top Stories','#dc2626'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
 if old_sections in text:
     text = text.replace(old_sections, new_sections, 1)
 
-# Append a small override layer rather than rewriting the existing news renderer.
-# This preserves the current Local tab and all existing category behavior.
 marker = '<script id="region-tab-v1">'
 while marker in text:
     start = text.find(marker)
@@ -28,11 +25,11 @@ const regionLabels = {
 };
 const stateRegion = {
   AZ:'southwest', NM:'southwest', UT:'southwest', CO:'southwest',
-  CA:'west', NV:'west',
+  CA:'west', NV:'west', HI:'west',
   ID:'mountain', MT:'mountain', WY:'mountain',
   IL:'midwest', IN:'midwest', MI:'midwest', OH:'midwest', WI:'midwest', MN:'midwest', IA:'midwest', MO:'midwest', KS:'midwest', NE:'midwest', SD:'midwest', ND:'midwest',
   TX:'south', OK:'south', AR:'south', LA:'south', TN:'south', KY:'south', VA:'south', WV:'south', MD:'south', DE:'south',
-  NY:'northeast', PA:'northeast', NJ:'northeast', CT:'northeast', RI:'northeast', MA:'northeast', VT:'northeast', NH:'northeast', ME:'northeast',
+  NY:'northeast', PA:'northeast', NJ:'northeast', CT:'northeast', RI:'northeast', MA:'northeast', VT:'northeast', NH:'northeast', ME:'northeast', DC:'northeast',
   WA:'pacific-northwest', OR:'pacific-northwest', AK:'pacific-northwest',
   FL:'southeast', GA:'southeast', AL:'southeast', SC:'southeast', NC:'southeast', MS:'southeast'
 };
@@ -64,11 +61,8 @@ function regionRender(items){
   sec.appendChild(body);root.appendChild(sec);
 }
 
-// Replace the existing renderer with one that understands the new region metadata.
 render = regionRender;
 
-// Keep the existing tab persistence, but detect the user's region when Region is selected.
-const originalBuildTabs = buildTabs;
 buildTabs = function(){
   const tabs=document.getElementById('tabs');tabs.innerHTML='';
   sections.forEach(([key,label,accent])=>{
@@ -101,18 +95,14 @@ async function detectUserRegion(){
     localStorage.setItem('underreported-region',detectedRegion);
     localStorage.setItem('underreported-location',detectedLocation);
     buildTabs();
+    if(active==='region') render(allItems);
   }catch(e){
-    // Keep the last successful region; default to Southwest for first-time users.
     buildTabs();
   }
 }
 
-// Detect quietly in the background so the Regional tab is ready when opened.
 detectUserRegion();
 </script>'''
 text = text.replace('</body>', script + '</body>', 1)
-path.write_text(text, encoding='utf-8')
-print('Added location-aware Regional tab without changing Local / Four Corners.')
-'''
 path.write_text(text, encoding='utf-8')
 print('Added location-aware Regional tab without changing Local / Four Corners.')
