@@ -17,7 +17,7 @@ def clean(value):
 
 
 def words(text):
-    stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says", "said", "that", "this", "are", "was", "were", "has", "have", "had", "into", "over", "its", "their", "will"}
+    stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says", "said", "that", "this", "are", "was", "were", "has", "have", "had", "into", "over", "its", "their", "will", "amid", "more", "than"}
     return {w for w in re.findall(r"[a-z0-9]+", (text or "").lower()) if len(w) >= 4 and w not in stop}
 
 
@@ -61,7 +61,6 @@ def fetch_related(title):
         age_bonus = 0
         if dt:
             age_days = max(0, (now - dt).days)
-            # Prefer useful history, but allow older supporting reporting.
             age_bonus = min(8, age_days / 30)
         score = overlap * 10 + age_bonus
         candidates.append((score, dt or datetime.min.replace(tzinfo=timezone.utc), t, link, desc, source, pub))
@@ -69,47 +68,101 @@ def fetch_related(title):
     candidates.sort(key=lambda x: (x[0], x[1]), reverse=True)
     selected = []
     seen_sources = set()
+    seen_titles = set()
     for row in candidates:
+        normalized = re.sub(r"[^a-z0-9]", "", row[2].lower())
+        if normalized in seen_titles:
+            continue
         source_key = re.sub(r"[^a-z0-9]", "", row[5].lower()) or row[3]
         if source_key in seen_sources and len(selected) < 2:
             continue
         selected.append(row)
         seen_sources.add(source_key)
+        seen_titles.add(normalized)
         if len(selected) >= MAX_RELATED:
             break
     return selected
 
 
-def specific_why(title, desc, category):
+def named_terms(text):
+    raw = re.findall(r"\b[A-Z][A-Za-z0-9'’-]+(?:\s+[A-Z][A-Za-z0-9'’-]+){0,3}", text or "")
+    bad = {"The", "This", "That", "After", "Before", "What", "When", "United States", "New York", "New Mexico"}
+    return [x for x in raw if x not in bad][:4]
+
+
+def specific_why(title, desc, category, related):
     text = f"{title} {desc}".lower()
-    if any(x in text for x in ("attack", "airstrike", "missile", "invasion", "troops", "war", "ceasefire")):
-        return "The significance is tied to a change in the security situation, military activity, or diplomatic position described in the reporting."
-    if any(x in text for x in ("court", "ruling", "lawsuit", "supreme court", "executive order")):
-        return "The significance is tied to the legal or government decision described here and the precedent, policy, or rights it may affect."
+    entities = named_terms(title)
+    subject = ", ".join(entities[:2])
+    if any(x in text for x in ("attack", "airstrike", "missile", "invasion", "troops", "war", "ceasefire", "strike")):
+        return (f"This matters because {subject + ' ' if subject else 'the development '}changes the military or diplomatic situation described in the report. The important question is whether it remains an isolated event or produces another response, escalation, or negotiation." )
+    if any(x in text for x in ("court", "ruling", "lawsuit", "supreme court", "executive order", "judge")):
+        return (f"This matters because {subject + ' ' if subject else 'the decision '}could change how the policy or legal dispute described here is applied. Its longer-term importance will depend on enforcement, appeals, or the precedent that follows.")
     if any(x in text for x in ("congress", "senate", "house", "bill", "vote", "legislation")):
-        return "The significance is tied to the government action or legislative step described here, including what it could change next."
-    if any(x in text for x in ("tariff", "inflation", "recession", "layoffs", "bankruptcy", "price")):
-        return "The significance is tied to the economic change described here and its potential effect on businesses, workers, prices, or consumers."
+        return (f"This matters because the development moves the policy dispute described here into a new stage. The next vote, negotiation, amendment, or implementation decision can determine whether the change becomes consequential beyond today's headline.")
+    if any(x in text for x in ("tariff", "inflation", "recession", "layoffs", "bankruptcy", "price", "jobs")):
+        return (f"This matters because the development can move costs, business decisions, employment, or consumer prices beyond the people directly named in the story. The lasting impact depends on how broadly the change spreads and how long it persists.")
     if any(x in text for x in ("hack", "breach", "cyberattack", "outage", "data leak")):
-        return "The significance is tied to the affected system, organization, or users described in the reporting and what happens as the response develops."
+        return "This matters because the affected system or organization may not be the only party exposed. The response, restoration timeline, and whether additional users or infrastructure are affected will determine the broader impact."
     if any(x in text for x in ("wildfire", "hurricane", "tornado", "earthquake", "drought", "flood", "contamination")):
-        return "The significance is tied to the people, infrastructure, or resources affected by the event and the response that follows."
-    if any(x in text for x in ("acquisition", "acquires", "studio closure", "shuts down", "canceled", "cancelled")):
-        return "The significance is tied to the organizational change described here and what it means for the people, products, or services involved."
+        return "This matters because the immediate event can create secondary effects for people, infrastructure, public resources, and nearby communities. The scale of the response and whether conditions worsen are more important than the initial headline alone."
+    if any(x in text for x in ("acquisition", "acquires", "studio closure", "shuts down", "canceled", "cancelled", "closure")):
+        return "This matters because the organizational change can affect employees, customers, products, or services beyond the announcement itself. The important follow-through is what happens to the people and projects affected."
     if category == "military":
-        return "The significance is tied to the defense or security development described in the reporting and whether it changes the situation going forward."
-    return "The significance comes from the specific action or development described in the reporting and what it may lead to next."
+        return "This matters because the development changes or tests the security situation described in the reporting. Its importance will become clearer through the response from the other parties involved."
+    return "This matters because the specific action described in the reporting could produce consequences beyond the immediate announcement. The key is what changes afterward, not simply that the announcement occurred."
+
+
+def extract_useful_sentence(text):
+    sentences = re.split(r"(?<=[.!?])\s+", text or "")
+    for sentence in sentences:
+        s = sentence.strip()
+        if len(s) >= 55 and not re.fullmatch(r".*\b(?:AP News|Reuters|Fox News|CBS News|NBC News|CNN|The Washington Post)\b", s):
+            return s
+    return ""
+
+
+def build_missing(title, desc, related):
+    current = words(title)
+    distinct = []
+    for row in related:
+        overlap = len(current & words(row[2]))
+        if overlap >= 2:
+            distinct.append(row)
+    if not related:
+        return "The story has limited supporting coverage in the available search results. There is not enough evidence to identify a specific overlooked angle, so this section is not presenting one as fact."
+    older = [r for r in related if r[1] < datetime.now(timezone.utc)]
+    sources = len({r[5] for r in related if r[5]})
+    if older:
+        oldest = min(older, key=lambda r: r[1])
+        age_days = max(1, (datetime.now(timezone.utc) - oldest[1]).days)
+        return f"The immediate headline is receiving attention, but the longer-running thread is easier to miss. Supporting reporting goes back about {age_days} days, and the available coverage comes from {sources} source(s). That history suggests this is a continuing development rather than a standalone event."
+    return f"The available reporting is concentrated in the current news cycle, with {sources} distinct source(s) represented in the supporting results. The limited spread of coverage is itself worth noting; there is not enough evidence to claim a more specific overlooked angle yet."
+
+
+def build_background(related):
+    older = [r for r in related if r[1] < datetime.now(timezone.utc)]
+    if not older:
+        return "No reliable older supporting report was identified. This story appears to be a newer development, so the section will expand as earlier reporting becomes available."
+    older.sort(key=lambda r: r[1])
+    pieces = []
+    for row in older[:2]:
+        date = row[1].strftime("%b %d, %Y") if row[1] != datetime.min.replace(tzinfo=timezone.utc) else "Earlier"
+        detail = extract_useful_sentence(row[4])
+        if detail:
+            pieces.append(f"On {date}, {row[5] or 'another outlet'} reported: {detail}")
+        else:
+            pieces.append(f"On {date}, {row[5] or 'another outlet'} reported related developments under the headline '{row[2]}'.")
+    return " ".join(pieces)
 
 
 def what_next(desc, related):
     sentences = re.split(r"(?<=[.!?])\s+", desc or "")
-    cues = ("will ", "plans to", "expected", "scheduled", "deadline", "next", "later", "tomorrow", "monday", "tuesday", "wednesday", "thursday", "friday", "vote", "hearing", "trial", "meeting", "announce")
-    matches = [s.strip() for s in sentences if any(c in s.lower() for c in cues) and len(s.strip()) >= 35]
+    cues = ("will ", "plans to", "expected", "scheduled", "deadline", "next", "later", "tomorrow", "monday", "tuesday", "wednesday", "thursday", "friday", "vote", "hearing", "trial", "meeting", "announce", "decision")
+    matches = [s.strip() for s in sentences if any(c in s.lower() for c in cues) and len(s.strip()) >= 45]
     if matches:
         return matches[0]
-    if related:
-        return "No specific next step was stated in the available current report. The related coverage below provides earlier or additional reporting to track what happens next."
-    return "No specific next step was stated in the available current report."
+    return ""
 
 
 def replace_children(parent, tag):
@@ -137,9 +190,9 @@ def main():
 
         fields = {
             "whatHappened": desc if len(desc) >= 40 else f"The available report identifies this development: {title}.",
-            "whyMatters": specific_why(title, desc, category),
-            "whatIsMissing": (f"This story appears in limited coverage: {len(related) + 1} related report(s) were found across the available search results, compared with the broader volume of routine news." if related else "Limited supporting coverage was found in the available search results. That makes the story worth watching rather than assuming the coverage is complete."),
-            "background": (f"Earlier or additional reporting is available below. These supporting links are intentionally searched without the site's 48-hour cutoff so developing stories can retain their history." if related else "No reliable older supporting report was identified from the available search results."),
+            "whyMatters": specific_why(title, desc, category, related),
+            "whatIsMissing": build_missing(title, desc, related),
+            "background": build_background(related),
             "whatNext": what_next(desc, related),
             "coverage": ("🟢 Overlooked" if len(related) == 0 else "🟡 Limited coverage"),
         }
@@ -162,7 +215,7 @@ def main():
         enriched += 1
 
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
-    print(f"Underreported enrichment complete: {enriched} stories enriched with story-specific context and longer-term supporting coverage.")
+    print(f"Underreported refinement complete: {enriched} stories enriched with distinct context sections and long-term supporting coverage.")
 
 
 if __name__ == "__main__":
