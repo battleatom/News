@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 OUT = "News"
-SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]
+SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]
 MAX_AGE_HOURS = 72
 
 QUERIES = {
