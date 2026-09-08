@@ -125,6 +125,7 @@ QUERIES = {
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
+    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
