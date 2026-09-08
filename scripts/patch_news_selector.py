@@ -30,7 +30,12 @@ old_local_block = '''    "local": [
 if old_local_block in text:
     text = text.replace(old_local_block, new_local)
 
-# Add a second, automatically location-aware Regional feed. The workflow prepares
+# Add the Regional section to the collector's category list.
+old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]'
+new_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
+text = text.replace(old_sections, new_sections)
+
+# Add the automatically location-aware Regional feed. The workflow prepares
 # stories for broad US regions; the browser later chooses the appropriate region.
 if '"region": [' not in text:
     anchor = '    "local": ['
@@ -40,18 +45,18 @@ if '"region": [' not in text:
         end += len('    ],')
         region_block = '''
     "region": [
-        "Southwest regional news Arizona New Mexico Utah Colorado",
-        "West Coast regional news California Oregon Washington Nevada",
-        "Mountain West regional news Colorado Utah Idaho Montana Wyoming",
-        "Midwest regional news Illinois Ohio Michigan Wisconsin Minnesota Iowa Missouri",
-        "South regional news Texas Florida Georgia North Carolina Tennessee Virginia",
-        "Northeast regional news New York Pennsylvania New Jersey Massachusetts Connecticut",
-        "Pacific Northwest regional news Washington Oregon Idaho Alaska",
-        "Southeast regional news Florida Georgia Alabama South Carolina North Carolina",
+        "Arizona New Mexico Utah Colorado regional news Southwest",
+        "California Oregon Washington Nevada regional news West Coast",
+        "Colorado Utah Idaho Montana Wyoming regional news Mountain West",
+        "Illinois Ohio Michigan Wisconsin Minnesota Iowa Missouri regional news Midwest",
+        "Texas Florida Georgia North Carolina Tennessee Virginia regional news South",
+        "New York Pennsylvania New Jersey Massachusetts Connecticut regional news Northeast",
+        "Washington Oregon Idaho Alaska regional news Pacific Northwest",
+        "Florida Georgia Alabama South Carolina North Carolina regional news Southeast",
     ],'''
         text = text[:end] + region_block + text[end:]
 
-# Make the collector accept list-valued queries while preserving the existing Local behavior.
+# Make the collector accept list-valued queries while preserving existing behavior.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -73,8 +78,7 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
-# If the currently installed update_news.py has the explicit Local query loop,
-# retain that behavior while adding the new generic region list support.
+# Current update_news.py has an explicit Local query loop. Extend it with Region.
 old_explicit_loop = '''            if category == "local":
                 items = []
                 for local_query in LOCAL_QUERIES:
@@ -115,7 +119,6 @@ new_explicit_loop = '''            if category == "local":
 if old_explicit_loop in text:
     text = text.replace(old_explicit_loop, new_explicit_loop)
 
-# If region is already present but the loop was not patched, inject the region branch.
 if 'elif category == "region":' not in text:
     needle = '''            else:
                 items = parse_items(fetch(query), category)'''
@@ -143,8 +146,7 @@ new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escap
 if old_build in text:
     text = text.replace(old_build, new_build)
 
-# Keep 10 strong, diverse regional stories for each supported region rather than
-# collapsing all regions into one 10-story pool.
+# Keep 10 strong, diverse regional stories for each supported region.
 old_selected = '''    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
     top = select_top_stories(top_unique)'''
 new_selected = '''    selected_by_category = {}
