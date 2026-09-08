@@ -23,6 +23,17 @@ QUERIES = {
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
 }
 
+LOCAL_QUERIES = [
+    "Farmington New Mexico news",
+    "San Juan County New Mexico news",
+    "Aztec New Mexico news",
+    "Bloomfield New Mexico news",
+    "Kirtland New Mexico news",
+    "Shiprock New Mexico news",
+    "Four Corners New Mexico news",
+    "Farmington NM crime OR government OR education OR business",
+]
+
 MAINSTREAM_TOP_QUERIES = [
     ("Reuters", "site:reuters.com world US politics breaking news"),
     ("Associated Press", "site:apnews.com breaking news world US politics"),
@@ -191,13 +202,27 @@ def select_underreported(unique):
 
 
 def select_category_stories(items, limit=10):
-    """Keep category pages diverse: no publisher may occupy more than one slot."""
+    """Select up to 10 distinct stories, preferring publisher diversity but never letting it starve a category."""
+    ranked = sorted(items, key=lambda x: x["published"], reverse=True)
     selected, seen_keys, seen_sources = [], set(), set()
-    for item in sorted(items, key=lambda x: x["published"], reverse=True):
+
+    # Pass 1: maximize publisher diversity.
+    for item in ranked:
         k = key(item); source = source_key(item["source"] or "Unknown")
         if not k or k in seen_keys or source in seen_sources:
             continue
         selected.append(item); seen_keys.add(k); seen_sources.add(source)
+        if len(selected) == limit:
+            return selected
+
+    # Pass 2: fill the remaining slots. Multiple stories from a publisher are
+    # acceptable; duplicate stories are not. This guarantees 10 whenever the
+    # collector has at least 10 distinct stories for that category.
+    for item in ranked:
+        k = key(item)
+        if not k or k in seen_keys:
+            continue
+        selected.append(item); seen_keys.add(k)
         if len(selected) == limit:
             break
     return selected
@@ -242,8 +267,18 @@ def main():
     all_items = []
     for category, query in QUERIES.items():
         try:
-            items = parse_items(fetch(query), category)
-            print(f"{category}: {len(items)} fresh stories")
+            if category == "local":
+                items = []
+                for local_query in LOCAL_QUERIES:
+                    try:
+                        batch = parse_items(fetch(local_query), category)
+                        print(f"local/{local_query}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Local feed failed for {local_query}: {exc}")
+            else:
+                items = parse_items(fetch(query), category)
+            print(f"{category}: {len(items)} fresh stories before dedupe")
             all_items.extend(items)
         except Exception as exc:
             print(f"Feed failed for {category}: {exc}")
@@ -285,7 +320,9 @@ def main():
 
     ordered = top_items + under_items
     for category in SECTIONS[2:]:
-        ordered.extend(selected_by_category[category])
+        chosen = selected_by_category[category]
+        print(f"FINAL {category}: {len(chosen)} stories")
+        ordered.extend(chosen)
 
     if not ordered:
         raise RuntimeError("No fresh stories were retrieved; refusing to overwrite News with an empty feed.")
