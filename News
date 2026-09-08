@@ -1,44 +1,799 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-<channel>
-<title>Underreported High-Impact Brief</title>
-<link>https://example.org/feed</link>
-<description>Five underreported stories whose secondary effects remain largely unnoticed</description>
-<lastBuildDate>Tue, 08 Sep 2026 04:48:00 GMT</lastBuildDate>
+<rss version="2.0"><channel>
+<title>News Brief</title>
+<link>https://battleatom.github.io/News/</link>
+<description>Automated categorized news brief</description>
+<lastBuildDate>Tue, 08 Sep 2026 14:06:07 GMT</lastBuildDate>
 <item>
-<title>Stalled U.S. housing bill leaves 4–6 million unit shortage intact</title>
-<link>https://www.nytimes.com/2026/06/25/us/politics/trump-housing-bill-scenarios.html</link>
-<description>President Trump withheld signature from the bipartisan 21st Century ROAD to Housing Act after it passed 358–32 and 85–15, tying it to the SAVE voter-ID bill. Unnoticed effect: regulatory relief and local construction incentives remain frozen, extending the affordability crisis through another building season.</description>
-<pubDate>Wed, 24 Jun 2026 16:00:00 GMT</pubDate>
-<guid isPermaLink="false">housing-bill-stall-2026</guid>
+<title>San Juan County receives funding for rail project - New Mexico Political Report</title>
+<link>https://news.google.com/rss/articles/CBMilAFBVV95cUxOdE9VRzZMZHhjTEEyV1JWTnJEdmloSk1NekM2VDNFNkZJLWduN2lZRFlwYnlzVk1KS1JXUE5BZjg3UEFYNUlQOExqZjIxQ05fRE9oSFAxcmROWjJ5WlAwVE1aa1pJM3p5dTJjTENxMk41V2thYVRTRzd5NnEtSGdZcVRlTXRTUFhzc1B4TW9CdmE0d1Jf?oc=5</link>
+<description>San Juan County receives funding for rail project New Mexico Political Report</description>
+<pubDate>Wed, 30 Oct 2024 07:00:00 GMT</pubDate>
+<source>New Mexico Political Report</source>
+<category>local</category>
+<guid isPermaLink="false">7974660572948850739</guid>
 </item>
 <item>
-<title>Haiti gangs seize Kenscoff heights above Port-au-Prince</title>
-<link>https://www.crisisgroup.org/sco/global/our-radar</link>
-<description>Armed groups killed at least 47 and abducted more than 50 in overnight raids 23–24 August. Unnoticed effect: the UN-backed Gang Suppression Force remains far below planned strength, allowing gangs to control high ground overlooking the capital while the force is still assembling.</description>
-<pubDate>Thu, 04 Sep 2026 16:00:00 GMT</pubDate>
-<guid isPermaLink="false">haiti-kenscoff-2026</guid>
+<title>In the Presence of the Minister of Energy, Cisco and King Abdullah University of Science and Technology (KAUST) launch landmark AI Institute to accelerate AI research, development, and talent in Saudi Arabia - Cisco Newsroom</title>
+<link>https://news.google.com/rss/articles/CBMixgJBVV95cUxQMUc2NWhVcWZVU1ViWWh3ZmRScEg3RVNvYnFNelVtM281S1VEZTBQazR1T2JDQ1JzNVp4MjVFdTU2YVJPSDR0eDA0dnlqTFppVm5MZzFmbTBuMjY4dHBEWk4yS1p4aE94TjRYU2VYeXNzaXZmWDRGMThpVjJGanZYU1I3SHlyalpEaGxhSWF3VjJJRHo0TWZVZXhxU2ZqSHNZVzUzeWZ6b3RKTUFkZG5mSGp5QXRsWVJEYkZ5NVdZSDZqYkcwUE9LbVNEQkdZWUIxQ25obW9STGlvd3QzckFlNjZkR0tzQ2JEU05nMC1ELThmanh2dU9LTjllb3R4R1AwU3RnMEdMUTU1QzVIRjZsYkkybTY3ZFpfV2pDRUVJcF94ZVM4bzFpRUVZZ2YzcFE2T0tSc2pZTzNWbmVmUklqaXpGU3gxZw?oc=5</link>
+<description>In the Presence of the Minister of Energy, Cisco and King Abdullah University of Science and Technology (KAUST) launch landmark AI Institute to accelerate AI research, development, and talent in Saudi Arabia Cisco Newsroom</description>
+<pubDate>Wed, 29 Oct 2025 07:00:00 GMT</pubDate>
+<source>Cisco Newsroom</source>
+<category>technology</category>
+<guid isPermaLink="false">3858555162441757592</guid>
 </item>
 <item>
-<title>U.S. heat deaths undercounted by an order of magnitude</title>
-<link>https://newrepublic.com/article/215007/goodbye-least-apocalyptic-summer-rest-life</link>
-<description>NPR/Boston University analysis found \~9,000 annual heat-related deaths versus CDC’s official \~700. Unnoticed effect: Florida tallies may be 40 times official figures, distorting public-health budgets and emergency-planning baselines nationwide.</description>
-<pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
-<guid isPermaLink="false">us-heat-undercount-2026</guid>
+<title>Supreme Court joins Trump, Congress in job approval slump - Axios</title>
+<link>https://news.google.com/rss/articles/CBMihAFBVV95cUxOSGlOY280WFNhVGl0UzVnUFMwVkdFZUxXZFMzQ2ZGQTlGUXI2eWN5WTVnSndwQ0lNcDJRelVIZnUwNjBYeEwyVFRSZU1MTUhjTWZxZDBWWDYxRzFmVllCNWoyejZkTm9Wb24wU2M5MXk2SUF2WVNtRVZrb0pBbDRhNmV0c0Y?oc=5</link>
+<description>Supreme Court joins Trump, Congress in job approval slump Axios</description>
+<pubDate>Wed, 29 Jul 2026 07:00:00 GMT</pubDate>
+<source>Axios</source>
+<category>federal</category>
+<guid isPermaLink="false">4087558318667986536</guid>
 </item>
 <item>
-<title>Nepal glacier-landslide death toll exceeds 1,010 with 4,400 missing</title>
-<link>https://newrepublic.com/article/215007/goodbye-least-apocalyptic-summer-rest-life</link>
-<description>A rockslide on Langtang Lirung pulled a glacier down, burying valleys. Unnoticed effect: identification of remains and reconstruction of high-altitude communities lag far behind headlines, leaving entire districts without winter stores or roads.</description>
-<pubDate>Tue, 01 Sep 2026 00:00:00 GMT</pubDate>
-<guid isPermaLink="false">nepal-langtang-2026</guid>
+<title>NSF Awards 1st CyberAICorps Scholarships to Train AI Cybersecurity Professionals - HPCwire</title>
+<link>https://news.google.com/rss/articles/CBMiwAFBVV95cUxPVjZNb2ZqRkhNSFBhTDYzVzd0eUQ3VzhqdDV0RE5Cenp0dGZEbnBfejhEenUxUFNaNTUyMjRIdUZpMVpMZU1ESlB0MzhNamhfSWg4V2cyZVBKbUZOZm5uZnRfWkttUjc4a1JzS3BBaVpPc0NiLWliMENxRzk3Nl82ZV9kQlRReEZ5eVlpWkw3R0xQaURnOHNFSmEwMkF1a2NaY2FCbm5yWFdvMllDLXFpOU9MczhOaUNQVUU4NjJtNTg?oc=5</link>
+<description>NSF Awards 1st CyberAICorps Scholarships to Train AI Cybersecurity Professionals HPCwire</description>
+<pubDate>Wed, 29 Jul 2026 07:00:00 GMT</pubDate>
+<source>HPCwire</source>
+<category>technology</category>
+<guid isPermaLink="false">983383689268214400</guid>
 </item>
 <item>
-<title>U.S. resumes strikes on Iranian coastal launchers and mines</title>
-<link>https://www.crisisgroup.org/sco/global/our-radar</link>
-<description>After a month-long pause, U.S. forces hit rocket launchers on Larak Island and dozens of southern-coast military sites. Unnoticed effect: the attacks reopen a second front while Iran’s nuclear program status after earlier strikes remains unresolved, raising covert-enrichment risk.</description>
-<pubDate>Sun, 06 Sep 2026 16:00:00 GMT</pubDate>
-<guid isPermaLink="false">us-iran-strikes-sep2026</guid>
+<title>House approves extension of divisive U.S. spy powers - PBS</title>
+<link>https://news.google.com/rss/articles/CBMirAFBVV95cUxQamw0VVNaTktIR0R0SkFRYlFaUXp2TDlIMDZ0Snp0cUxxMnhNZ3hWaDltZTA3b28tT25lU1owV29uaXAxNERFNmtmdlhhVjh5VDVrQUxYY3ZoVndkOEdpTTBTaG9tdk5kT1JUUUY4bG84enNvZ01RaFBhaG5xaWFaNE1kNWxtNG1NZUpHVU9ZaVBfWUlfUnEtdms1T0RBMVVKT1VZMGpTOWtHeUFI0gGyAUFVX3lxTE80YWd0Q0FrQXphQzNaUklKNGg3ZkF1UHZFdVZVdUJPRF9tUWk5cngtbkFjSk9QWEp5aFlycVdWQUJPNzNhWjk1eHZ4TEFrVzU2N25mbzNlOC00eXRpcWc5alV0MC11Tzc2QS1WQWpTNVlSd0U0YXdXRGV6Q2RXLTBtd1hzekF2TF9LQmlGQ0pLblpOMUt4OXhPd21vY0wwa3JMOTZWbkZTRmZpX3ZwZW4wdWc?oc=5</link>
+<description>House approves extension of divisive U.S. spy powers PBS</description>
+<pubDate>Wed, 29 Apr 2026 07:00:00 GMT</pubDate>
+<source>PBS</source>
+<category>us</category>
+<guid isPermaLink="false">7183618465868166956</guid>
 </item>
-</channel>
-</rss>
+<item>
+<title>A glimpse into cyber-security’s AI-driven future - The Economist</title>
+<link>https://news.google.com/rss/articles/CBMiqwFBVV95cUxQNzRBSEE2YnNtekRENXlOLUpHODVTZEgydy10cnoySGp5WGpVODlvaHowaXMtY1ZaU2VDR2dabGRZRTQxSDNoR2NiTlpqUDhCNnNoRnBMc2FPbjZwWGE0MlFoM0VpOWF0MFdSUW5KX0lOTUFyT1FIM3pvVlpkbmV1cWl4S0lqZGdvRl96ZW1FV1loWHlucERlSHpiczQtbDFKeXlTX19Ecm92aWs?oc=5</link>
+<description>A glimpse into cyber-security’s AI-driven future The Economist</description>
+<pubDate>Wed, 29 Apr 2026 07:00:00 GMT</pubDate>
+<source>The Economist</source>
+<category>technology</category>
+<guid isPermaLink="false">3984544656265077857</guid>
+</item>
+<item>
+<title>Behind Farmington’s mass shooting - Searchlight New Mexico</title>
+<link>https://news.google.com/rss/articles/CBMia0FVX3lxTE96NWV1WllHLTcxR2dXbWNULUlRSXRUU3JlOG5xT0UtX0xJYkRacXM5LThHN0E1emlIaU1UZzU3NE9OdUZRSFdSMmNReUpMU25pRllIQWJfbE5zRjJRUlJTS1lqMVluM2tVZFFB?oc=5</link>
+<description>Behind Farmington’s mass shooting Searchlight New Mexico</description>
+<pubDate>Wed, 28 Jun 2023 07:00:00 GMT</pubDate>
+<source>Searchlight New Mexico</source>
+<category>local</category>
+<guid isPermaLink="false">3805369107919753669</guid>
+</item>
+<item>
+<title>David Leon Taylor Obituary (2026) - Farmington, NM - Farmington Funeral Home - Legacy obituary</title>
+<link>https://news.google.com/rss/articles/CBMigAFBVV95cUxNMURIR3lkcmFyRklPelZDVml5TkJkcnhWY0hsYjBsWndTeHlzOVg4RUNCNU83eDVrNWVOUHFlMk4yU2VpUVI3QTNlRnVtb3lmVWlGUS1fMXVtNXpGbUlkc0FKN3NEdVZpcVlVNDR2US1ZT2g3clJIMnBFQTBGdFluaA?oc=5</link>
+<description>David Leon Taylor Obituary (2026) - Farmington, NM - Farmington Funeral Home Legacy obituary</description>
+<pubDate>Wed, 28 Jan 2026 20:30:28 GMT</pubDate>
+<source>Legacy obituary</source>
+<category>local</category>
+<guid isPermaLink="false">9150689181434471507</guid>
+</item>
+<item>
+<title>Special Olympics New Mexico Four Corners Invitational softball tournament - The Pagosa Springs Sun</title>
+<link>https://news.google.com/rss/articles/CBMiswFBVV95cUxNRnRuNUxFWlRBOVRmei1UMElyYThCMk5nUDlQY3gxQWpQOERvUVpHdVBhSFFzQ1RRS2x4TUE0ZU5hUnpkMGxXOFE4M2ExM1ZqM2x0SFlzS1JJdlVoWXhHdjZ5ZldEZ0RCRWUwQUhhdDN3eHlpTEdsYzlrTTlzVlZNR3U0cU5ldzh5dzJzdW9nZVlVbTd1b3Vwd1ppZG85QVdJcWJIMGZDTl8tT3Bsc28yTFVjSQ?oc=5</link>
+<description>Special Olympics New Mexico Four Corners Invitational softball tournament The Pagosa Springs Sun</description>
+<pubDate>Wed, 28 Aug 2024 07:00:00 GMT</pubDate>
+<source>The Pagosa Springs Sun</source>
+<category>local</category>
+<guid isPermaLink="false">763581816424015341</guid>
+</item>
+<item>
+<title>Four Corners Community Bank Selects Upstart for Personal Lending - Upstart</title>
+<link>https://news.google.com/rss/articles/CBMiuwFBVV95cUxPMXlSWkRGUkRVdEh4b0RsSXJoSWtkZlppSGhrMWdoaEIwdlpXVEw5Wnk5OG90WTJzWkhmLU8tZjFudVV6b3I2d0E0ZDdTeWpWWTZWc3p3UEtmNUxzLXlodkZabl8yUXdKRHdFa2ZvbzNpTkFVVWZzT3Etbnp4UzF0SlJnc01EMEpOVWdxX1R6LWFfOGxhdUF5UHgwSzJ2RWwwQm4yYXJMX0hOTGtiLWtRSHZ1cTNPcXhSTnpF?oc=5</link>
+<description>Four Corners Community Bank Selects Upstart for Personal Lending Upstart</description>
+<pubDate>Wed, 27 Oct 2021 07:00:00 GMT</pubDate>
+<source>Upstart</source>
+<category>local</category>
+<guid isPermaLink="false">6200978214591441535</guid>
+</item>
+<item>
+<title>US-Canada tariffs: Canada braces for prolonged trade war as counter-tariffs on US take effect - BBC</title>
+<link>https://news.google.com/rss/articles/CBMiWkFVX3lxTE9JMU1EU1FQNE96QWhEYTd3djdqell4cFo3QktqMWQzMXYwVE1pUWdVb1FiT2RnZllhZHdDTDdwN1NFd3hZNXN4cm5Ib3dNLUFoX1BIMnQ1dHRQQQ?oc=5</link>
+<description>US-Canada tariffs: Canada braces for prolonged trade war as counter-tariffs on US take effect BBC</description>
+<pubDate>Tue, 08 Sep 2026 12:23:22 GMT</pubDate>
+<source>BBC</source>
+<category>world</category>
+<guid isPermaLink="false">1881005860407005815</guid>
+</item>
+<item>
+<title>9/11: 'A Day to Give Back' - vaticannews.va</title>
+<link>https://news.google.com/rss/articles/CBMiugFBVV95cUxQdGR2NllKMzJULU80QjVNSFRWUmlER0RtTzlfenljemFKNmdMeV82aGQ3TVo1cnRrUko2WEY1NWE5Q0ZFaV9KVVA1MW13NFFZZ0FYLVJteEl6VGg3LVlBM3c4R29SNUUycm4tV1Z0SjVIc1JRNl9KeGhoNm5NSklzNjZnQ1FkdzZrWktrMmswZWJub0dOUmF5aTk4Vnc5TnZ3VnFFalNZTThobWZna01SbzBHM1kxbUNoVVE?oc=5</link>
+<description>9/11: 'A Day to Give Back' vaticannews.va</description>
+<pubDate>Tue, 08 Sep 2026 13:27:09 GMT</pubDate>
+<source>vaticannews.va</source>
+<category>world</category>
+<guid isPermaLink="false">4915685227072155474</guid>
+</item>
+<item>
+<title>‘Trust deficit’: Why India’s economic data has sparked a furore - The Guardian</title>
+<link>https://news.google.com/rss/articles/CBMilwFBVV95cUxPdEpIeGdCRXNuS1ZUeDZIX2lYT3FMRE5WVVBNNXFLUGVWbFRLRzJZTURQejhqbXJmWjBnTG9XNzhWdGs4RXVrRmJZTW1CTUVqdWwteWg1U2ZaYUZEUWJIaVV2eWxIRlRmQkItbGRXNFpsTUxhdXlyVWtvQXZZcUk4WkhEdmVGcXRnR1VPRXRlTEtadkZxVmpv?oc=5</link>
+<description>‘Trust deficit’: Why India’s economic data has sparked a furore The Guardian</description>
+<pubDate>Tue, 08 Sep 2026 08:12:00 GMT</pubDate>
+<source>The Guardian</source>
+<category>world</category>
+<guid isPermaLink="false">3443252377194901995</guid>
+</item>
+<item>
+<title>Iceland summons U.S. ambassador after Trump posts map showing island under American flag - NBC News</title>
+<link>https://news.google.com/rss/articles/CBMiqwFBVV95cUxQYWhhOHJ3MkFtbjVVZFVZTkg5NFFQZWhXbWVXTkFOQ3o5SHNENXg3S1ZmeVA2Qk8yV29tWE41T1RvSGRWaDhZTTF5MEI1cHE2MDI2MEEtSjRzLW9WNXFpdEpjcVQ2Qi00dFlPTWZDY2VvQkFwVVZuWkZpeGF3eG9EWW56MnZtTFZtejRXYjhXRmhsMGZLM0ZQeVlZemxNOF9jc0JMMWI4bmFnSWM?oc=5</link>
+<description>Iceland summons U.S. ambassador after Trump posts map showing island under American flag NBC News</description>
+<pubDate>Tue, 08 Sep 2026 07:27:29 GMT</pubDate>
+<source>NBC News</source>
+<category>world</category>
+<guid isPermaLink="false">8294726416176561968</guid>
+</item>
+<item>
+<title>Ultimate preview: women's javelin - worldathletics.org</title>
+<link>https://news.google.com/rss/articles/CBMi7gFBVV95cUxQUGx6VGlGWXBMdHpWTzFGWUNjaThuZUp1S3ZYQ1g3Um55NzZJSkVFc2xQVEl5OEtkLUhlYzJua2FyVE52UXp0eTVDTno2a2owRER3RFBZdGhEVTJuUjFRNW5CbUVRRXBCNm4wTk42S2lEcW5weWhDalhtOGVXWUlUMExyakR4RDZqeGZvMEdfdkwwd25CYlpqQTRIWlZlZEtoZjVZZ254UnN1dXRVUkxNc2dvckRfeG5ITVkzVF9yMHZBZzhMZVFXMjNGcFcySUhiY0RPeDJHY3B3VEVKdWZYSVZMNi0wdWV3TmpXNHNR?oc=5</link>
+<description>Ultimate preview: women's javelin worldathletics.org</description>
+<pubDate>Tue, 08 Sep 2026 10:57:05 GMT</pubDate>
+<source>worldathletics.org</source>
+<category>world</category>
+<guid isPermaLink="false">3845744089501031864</guid>
+</item>
+<item>
+<title>UAE warned Netanyahu of major Hamas operation days before Oct. 7 attack, news report says - Audacy</title>
+<link>https://news.google.com/rss/articles/CBMitAFBVV95cUxNTEdiWnZNWnNQN3UtTGxodXBoY1lzVlNYSDNBcURVQkhoQjFiOU5qLTJMeHZGbHdhbV9tU195ZGNlZFBxRnlacnZqZ3ByV1NvU21KQ2tZZ1U4Q0lGZEF4eW5tODdDTFVWa1hudmw0LVZSb1VEQUNxM2xZZGlubVFBQWF4YTl2N1pDREp4bk5zQWtRcUhPVWV5S0t6eUZLN19yQV9CZGpSVFU1Q1lxTWVocllBcXA?oc=5</link>
+<description>UAE warned Netanyahu of major Hamas operation days before Oct. 7 attack, news report says Audacy</description>
+<pubDate>Tue, 08 Sep 2026 13:01:00 GMT</pubDate>
+<source>Audacy</source>
+<category>world</category>
+<guid isPermaLink="false">3776229598591888022</guid>
+</item>
+<item>
+<title>The predominant basketball dynasty on Earth is at stake as America's eyes turn to Caitlin Clark's role - Fox News</title>
+<link>https://news.google.com/rss/articles/CBMivAFBVV95cUxOMnIwNmlTRkZkMWJ5ck9JZ2lBWmJILVV3RjZuSXg0ZlNha2lMaTh3MFNneGVaTzlFTGVycVdHUzRqS0VCT1JBQ2dGbHFLZVJ2R3c2bFRGdGx5UjYwTFVwbXZMaXA0Ml9sb2JQZkVWNUNrX0NIT1Axb1pvUmRKN19oemhHVjZxV0JtS1pFWm8xN0p6aFF5NnFqMWZwb3djdDFsZzV6ZUNUTDd6RVlkc0pxQk9uYzEyeWV1eFZNUw?oc=5</link>
+<description>The predominant basketball dynasty on Earth is at stake as America's eyes turn to Caitlin Clark's role Fox News</description>
+<pubDate>Tue, 08 Sep 2026 10:33:11 GMT</pubDate>
+<source>Fox News</source>
+<category>world</category>
+<guid isPermaLink="false">339483223961971306</guid>
+</item>
+<item>
+<title>World's most endangered tigers born in Greece as zoos build a safety net - ABC News - Breaking News, Latest News and Videos</title>
+<link>https://news.google.com/rss/articles/CBMirAFBVV95cUxQY0IyVEZzZWxBcmdRbGhNZEN2Q0JPbmpzbEhNYnlxOTlnQVZ4aTQxeFZyWXRHaU5XSmFJTnJZUXQ1cTlwRkp2LWppRGx3bFF0XzVhdkVQYUZLd2ZjcEpybGtzTjFQQzJZQk9VRGxNY24xNktCUEFXVlZrVkRxUUFUQVoxb2pZNkxFem92VHYtTzBLdm5ZU2xtZXQ4LWJMR0JSdkl2X2RSOHU1TWZ40gGyAUFVX3lxTE9CNC1ha2dxa1l0QjVWeFBFU1pkN3BkSFlUSUpRUFhXZkh5MjVqNzVDNlFnWC0zcjIyYjBFMThRaHBlZ19nWjJOYkFleU1oYlQ2aklnRDkzSTFXUGY4QXJ4cGttdzFpWXR5bE5ub3NGWlBCZE8yb1BWME1seDJvT01vNTJzbW5uM1VscWk0MFpWakJrbG1OQzVCUXB1VS1mallJbi1BTUFvSjlhV2M4Y0l0aFE?oc=5</link>
+<description>World's most endangered tigers born in Greece as zoos build a safety net ABC News - Breaking News, Latest News and Videos</description>
+<pubDate>Tue, 08 Sep 2026 10:37:19 GMT</pubDate>
+<source>ABC News - Breaking News, Latest News and Videos</source>
+<category>world</category>
+<guid isPermaLink="false">5229370601167534699</guid>
+</item>
+<item>
+<title>Brent crude oil near $98 after Iran's Houthi allies attack multiple Saudi energy facilities - CNBC</title>
+<link>https://news.google.com/rss/articles/CBMihgFBVV95cUxNdUhmamNMMjBBQ2d1THpZSmp2X3NORDdDUXVlWWx1c3N3dDJlS3ZsaWZrcWdXR0pTTzZqZHBDeFhsd2RicG9OTEdSV3FqTTNiTEl3Yjc1d1ZYaWV6b3F5cmlPQXpXU29ja0F5ZkY0Q3FnSUxEcGlleTNNMGh3SEpqNlZQRHQxUdIBiwFBVV95cUxNZ3llZW1uVXQ2bmhtM1VETXJjVmFkdFdDb09hT0NfNll0anVXakVGVjJHSDZRV2R5cGF2T0FIbHhkTE5maFZjUEc5VEhTdXVENjlsd2RMZGpENjNWR0xsZS1iTnpseUNrdkJQVEVaa0xnb1Y4aEtuMnl6UHdURC00WTFuY04tanhMNXVR?oc=5</link>
+<description>Brent crude oil near $98 after Iran's Houthi allies attack multiple Saudi energy facilities CNBC</description>
+<pubDate>Tue, 08 Sep 2026 01:32:00 GMT</pubDate>
+<source>CNBC</source>
+<category>world</category>
+<guid isPermaLink="false">6580625878053415829</guid>
+</item>
+<item>
+<title>Iran-backed Houthis attack four Saudi cities in expansion of Middle East war, 73 hurt - Reuters</title>
+<link>https://news.google.com/rss/articles/CBMixgFBVV95cUxNT2RnNWprQ01ScjN2Q05RSHRWdmRqVzh2U01LUVVPVmhiRDVYNER3anQxQlNWV24wS3RZR2ZqS1FxNnFKWFRqSmlYbnQwSFk1eU5Cbnh1SVpxbTZCWUwtelFqbFV6LTNLVHZZbGRaYTVucy1VT1JwNDZPM3gydkZRU2VCWHFoVnpTVU9ILXlfRHpKMnBsT3RJOUlkejRzT1FJa25YekFnMVl6dUJnbERxeXo1UnpOZTVaQ281aFJrbjFEWmN3T2c?oc=5</link>
+<description>Iran-backed Houthis attack four Saudi cities in expansion of Middle East war, 73 hurt Reuters</description>
+<pubDate>Tue, 08 Sep 2026 01:49:00 GMT</pubDate>
+<source>Reuters</source>
+<category>world</category>
+<guid isPermaLink="false">1456052889683160476</guid>
+</item>
+<item>
+<title>A whiplash election year enters its final stretch as Trump holds wild cards - PBS</title>
+<link>https://news.google.com/rss/articles/CBMiswFBVV95cUxPSXNrczZKSGxBR1M0bFR6UThPWGdHYUpLOUlzTzRCSHl4bnZOVDM0RTQyYlpoLXJMZEhSREc1S1ZtUy1lbkI4dXRId1VXd2RTb0VCTGtyZjltMlh1aDkwUjlGdVZaOGxmUFBmU2VfaE9GQVpKSmEwU2pEZHF3YU9ZNXpGT2FkNk9YWVAyT1l6NE5WT3owRnl2VG40SmprU2VtYWM2YlMweWloN0dGUzh0OWFKQdIBuAFBVV95cUxNY254ZXRhZU5ZcWJ1U1lyUS1BbFBVWW9ORXE5eTc0NkJrd1ZrLVY5S053Zm45VkRaUUI3bEgxUEhfNElvTzFOQjJzN2Nob01vQnl2STBRSXN3RlpfMi1EVXdGUktkME9Ua3poanBVVjk4V1haT2c2UnlVWmZMQy1fNHJoSTc0dEpsNHBsQkdlbHBhVGFsb1h3WWNDdnpxZ0c4VTJkNEpwVUgtekpOa3hRNUUxeHV1LXpw?oc=5</link>
+<description>A whiplash election year enters its final stretch as Trump holds wild cards PBS</description>
+<pubDate>Mon, 07 Sep 2026 19:30:39 GMT</pubDate>
+<source>PBS</source>
+<category>us</category>
+<guid isPermaLink="false">6749730254229562519</guid>
+</item>
+<item>
+<title>What to know about Canada’s trade war with U.S. as tariffs take effect - Spectrum News</title>
+<link>https://news.google.com/rss/articles/CBMiowFBVV95cUxPQzVYTXA0emRBaGhQWFh4M2J4WGd6aUlOQ1lJalhubEJuUWVLYjl2MDlMd1RlMEJ4SEZSTjJCLTVWazJjWkJ2QXRaeHlFRnFyXzRJdFBlUkE5c3g2TEpLd2RFZ1ZDSENWY0sxNGl3MDRldk9KMEdhZzR5TTNfanVjbW5wcWNLLVgyNXlDckg0ZFFjTnd2UTMtNk16QTl1b2V5cHFn?oc=5</link>
+<description>What to know about Canada’s trade war with U.S. as tariffs take effect Spectrum News</description>
+<pubDate>Tue, 08 Sep 2026 12:25:00 GMT</pubDate>
+<source>Spectrum News</source>
+<category>us</category>
+<guid isPermaLink="false">7283896379075059788</guid>
+</item>
+<item>
+<title>Trump Has Brutalized Blue States in His Second Term. There’s a Way for Democrats to Fight Back. - Slate Magazine</title>
+<link>https://news.google.com/rss/articles/CBMinAFBVV95cUxOMUx1cnByeGZDeDljMUtxdXMyV1N1WFNPUllYSjRfSzVVSEhDZUcxbnJvNHBsTW5vWXRrSjBlUnJSMENFTGltbS1oWkkzWC11bTl3ZUtyWkRqandQRTB5Tk9TMW1mSWV3VTZhNFNva1RZNnhIM3RRRk1TZ2ZJZk9qVl85QjRqcTZDZGl0cmFOejdqSzh5WS15YmZqYUY?oc=5</link>
+<description>Trump Has Brutalized Blue States in His Second Term. There’s a Way for Democrats to Fight Back. Slate Magazine</description>
+<pubDate>Tue, 08 Sep 2026 09:45:00 GMT</pubDate>
+<source>Slate Magazine</source>
+<category>us</category>
+<guid isPermaLink="false">6021644057998227307</guid>
+</item>
+<item>
+<title>Trump calls for a Bombardier plane ban, drawing pushback from a GOP senator - NBC News</title>
+<link>https://news.google.com/rss/articles/CBMixAFBVV95cUxOWmdvNUZJWEc5LWNIVjRqNzVSSS1oY2lmNkR5RS1hNTZPQUkxak5RRWZsY050VGNWc2dCbXBJZDZXalZfOGc4RHVYTHJhN2JjV0ZhTmcwOGJvdmxyLWdjTlhOaldQcjhQWDhHYjFrWjNRcHp4UExsQ2UwOW1sdlI5YnJtTHY4S2hQZ0tQOVNuQXdvRi1BR2NFRHQ1dDVFWWJfbWhpYmFxZ1JxNjFoNy1pSGtsR24zaU5LalZrVEp0LUluLVlQ?oc=5</link>
+<description>Trump calls for a Bombardier plane ban, drawing pushback from a GOP senator NBC News</description>
+<pubDate>Tue, 08 Sep 2026 07:37:00 GMT</pubDate>
+<source>NBC News</source>
+<category>us</category>
+<guid isPermaLink="false">6051321211655255402</guid>
+</item>
+<item>
+<title>California’s political hopefuls remain silent on state’s job losses, unemployment | Dan Walters - santamariatimes.com</title>
+<link>https://news.google.com/rss/articles/CBMiswJBVV95cUxOd1g3WGZSdFVXM09hSUxlNjh6X1VVaFQwNTRaNjE0TFBpSmxpRnFFb2FGSUVjSXVtRUlHeGNUVTVKT0U3d1VrSVMzUy0xbkNKUUtabnBmVGpBVU9idVVJQ1VLWWhnVl94OFhpQjRORUtkOThKUmVBcUExQVU1VUpzYTBtcERISERBaW5IMXppMnBWcGJ5eDNtb254U3VmNzI5SGQ4MVN6OTRWMXlrV29qUnZxS19pZ25ETGJBYWFYbUFPZ3JKRmQ4cVZ2SVhxV3dGSGo1LWRNRjJpRFRrTFBCTmFCQTdZR0xGM3N6Qlp2NXF3YlFIUzNWRWljdzdZVUNQSlV4QmtZNl90Z2Q1MEI5dVRIOXNyUFYtSW9icElLRU93XzEwbVpKRC1MZ0VucGNYZ2t3?oc=5</link>
+<description>California’s political hopefuls remain silent on state’s job losses, unemployment | Dan Walters santamariatimes.com</description>
+<pubDate>Tue, 08 Sep 2026 13:30:00 GMT</pubDate>
+<source>santamariatimes.com</source>
+<category>us</category>
+<guid isPermaLink="false">2451267269135741257</guid>
+</item>
+<item>
+<title>Pa. election results, Shapiro’s speeches and state laws are all prediction market bets. Could this lead to corruption? - The Latrobe Bulletin</title>
+<link>https://news.google.com/rss/articles/CBMilgJBVV95cUxPNENPYXk3dWNlU1pvWXJUZ19WUk9jSHZmVmh1MnB5LTV0VTU0UnNwLTBKVmRTVktQcGdhWkFEWktSWnR2b1d4ZkwwOHh1SVl2ZTdxdjFfQ19aRmRudmhFcEFuQ0FNMWF4WnM2Y3RpNkMxWUZIaUpQVjZJWmtDbVdLT3l6b003WUxzV29pdzhBTGZ0VGNvcFpXYjgtc3J4UDV2dzZ5dG1XQXNqb1VHU0FzbDhJczVQcXpaMG5CZ3o1NUlkYXl4bXZ1ZmhGbGl2dzNPMGtxWVpOMVdVVEVGNFI0TmNTdm90SE12LTFPYTMwNlZ6elhBNXNWWTczWjJFSDBJbWxEYW5XZGRpY2o1c1ZqNU9hbGQydw?oc=5</link>
+<description>Pa. election results, Shapiro’s speeches and state laws are all prediction market bets. Could this lead to corruption? The Latrobe Bulletin</description>
+<pubDate>Tue, 08 Sep 2026 09:00:00 GMT</pubDate>
+<source>The Latrobe Bulletin</source>
+<category>us</category>
+<guid isPermaLink="false">7140195309151237594</guid>
+</item>
+<item>
+<title>Tracking Trump's Crackdown on Higher Education - U.S. News &amp; World Report</title>
+<link>https://news.google.com/rss/articles/CBMi0gFBVV95cUxNTUZubnNDTkxCZmFWbDRoSVY1SFhVblZ2Y3RRNThYS0tSTzg1VDVMWEctd2VaMzA0M2FJbWtCUnJmYnhMdllSTXlWZ21xTmJfYzE0Q2JvdVl0dUMwTnhXWHljTmNKSkVCcWZzbGJ4cjV6dlNldU00akpQMW9PREV2aXAzRGxwQm05R3RYOWo3TzloX2IzSkptdVFsQkRiandPTGx6aUFyUmg4M28wdHJyYW9aVEE0VEw0bklicm5DVjEwWTJHTmU5bGtEdVFDbFZvN1E?oc=5</link>
+<description>Tracking Trump's Crackdown on Higher Education U.S. News &amp; World Report</description>
+<pubDate>Fri, 04 Sep 2026 16:00:00 GMT</pubDate>
+<source>U.S. News &amp; World Report</source>
+<category>us</category>
+<guid isPermaLink="false">2151656153475833268</guid>
+</item>
+<item>
+<title>Labor unions are growing, but where depends on state politics - Columbia Missourian</title>
+<link>https://news.google.com/rss/articles/CBMi8wFBVV95cUxOMm9VYTV0MEhiSFZpcndGSGpSODl6eXRMdnJLLXFGNzRKWWlvdjk5ZGU3QWVMVW1EcGtfb2FjVUFjT3hXeTVlZWxmOEJqaExCdkJMR0lNZHItWE9yRUVidFRXemU2bTQtZ0VrMlAzWjlfbzlrWURZaXQxZDZoWDhyaHVVdFNjaEhEZ3pMeXhPSS16YTYtdV8yc3FfcjA2dTJmMGwxTmRZR2tKWVlUR2E5ODlNOG1pMnY4b0RDY0hhaGdTV2xtSlg1YWotdE5VRjRfUlExaktRNVRNdDVDTjFHYkZhUWR0M1dGYnZ3Yk12Ny1NdDQ?oc=5</link>
+<description>Labor unions are growing, but where depends on state politics Columbia Missourian</description>
+<pubDate>Mon, 07 Sep 2026 20:30:00 GMT</pubDate>
+<source>Columbia Missourian</source>
+<category>us</category>
+<guid isPermaLink="false">8332236355136866974</guid>
+</item>
+<item>
+<title>Labor unions are growing, but where depends on state politics - Muddy River News</title>
+<link>https://news.google.com/rss/articles/CBMisgFBVV95cUxQcUxjMVJuOXN6WTVsMkViRXAwWEg2SGNWOUJqWS1uLTRLeGk0RTA3SVJGZ0s1UzJEUXNjemw1R0wzUnVoX0F2M001b09lQVNYWkJ1QkwtOE5abWZJcWRxS213X2lOSVdCVFJqX0hac1pCSmRtSU9UVklyaUpjd0hRdk1WVjc1SVFmazlhWmFIMEhpS0FlMkJxN3E3N28tbTRKLUJaUUJnNTBHTHItU29GMWl3?oc=5</link>
+<description>Labor unions are growing, but where depends on state politics Muddy River News</description>
+<pubDate>Tue, 08 Sep 2026 12:24:05 GMT</pubDate>
+<source>Muddy River News</source>
+<category>us</category>
+<guid isPermaLink="false">5215323908697065844</guid>
+</item>
+<item>
+<title>Trump Posts Map Suggesting New Mexico Be Renamed as ‘New America’ - The New York Times - The New York Times</title>
+<link>https://news.google.com/rss/articles/CBMigAFBVV95cUxOSmdaR2hQQXBZQ2xLbWw4d1hLaW1ucTdTT1owQlhIYnkwRnc5eTFHR3J6QkdOTkYwX1R1bE1vUmY2RHh0b3Ffbk9vR3E0R280MnphMG5EQ3VyTHlaSjl6c05HbXlWRURaa2JSR2ZRZUhGR3NQNUtmdE1QVDJiVHl0Sw?oc=5</link>
+<description>Trump Posts Map Suggesting New Mexico Be Renamed as ‘New America’ - The New York Times The New York Times</description>
+<pubDate>Mon, 07 Sep 2026 13:26:01 GMT</pubDate>
+<source>The New York Times</source>
+<category>us</category>
+<guid isPermaLink="false">3239929354947553271</guid>
+</item>
+<item>
+<title>Donald Trump Took a Wrecking Ball to the White House. The Next President Must Do the Same - Rolling Stone</title>
+<link>https://news.google.com/rss/articles/CBMirgFBVV95cUxPSk5EZUFCcFZ3aUMzTm9PUW1QTVVZTmZscThRb1BJRUxNcDBqRklYb19YQzlwYkNYU3NERTJKSThKdWJPN0xmeEFkVmVMbEJJTnV3TVd5cndPNXdWbFJfWDloQVdheGVnU0s5SmlXb1oxaEg4d3ItbTdEOVF2cFhaczc2c1hjVHJCaG9mOXFoMW9oODZiR3d2a0tveDNSek9saWRYRW5UckVDdk1wYnc?oc=5</link>
+<description>Donald Trump Took a Wrecking Ball to the White House. The Next President Must Do the Same Rolling Stone</description>
+<pubDate>Mon, 07 Sep 2026 13:03:52 GMT</pubDate>
+<source>Rolling Stone</source>
+<category>presidential</category>
+<guid isPermaLink="false">3425091812453099446</guid>
+</item>
+<item>
+<title>As War Grinds On, Trump Relishes Renovation Projects - The New York Times</title>
+<link>https://news.google.com/rss/articles/CBMihAFBVV95cUxPVkZjNjF6NzNZZzVKSno5aU9fczRqYUx3TmZlQ0dOVVBIbnJ0cFVMNGtrczRNRDlMUkltZFdxbEhtRHA5cTRkTGtMREpDRzMzVC03VFRaRzJqT1VrbVJFLUdmMXVIaWl0TjYwaGh4aEdRMW50bVRzY2RmNi12aWZ2bEszOVM?oc=5</link>
+<description>As War Grinds On, Trump Relishes Renovation Projects The New York Times</description>
+<pubDate>Mon, 07 Sep 2026 09:04:10 GMT</pubDate>
+<source>The New York Times</source>
+<category>presidential</category>
+<guid isPermaLink="false">6389547653009194054</guid>
+</item>
+<item>
+<title>Trump removes White House shrouds as he prepares for Xi visit - The Washington Post</title>
+<link>https://news.google.com/rss/articles/CBMiqgFBVV95cUxNelk2bnRrSnoxbEFfYkVYYUNTRG9UY04taTV2SUUzOHBDVFhPVWUyRFBic3BrQlF0bmVxZDkzUTQyaURhSnd0UWQ3bWpxRW5wM1lidHk2QmxfODZjZzZfSGJWWTc0S0hQSGdSOUdmbS1ad3dBNkVueFZXempXbHBhc3R6S3FOVFh6TDJMOHd4N0FuUmRvM0t2NEc0Q2dVbWpSelFEUDhiSEZDUQ?oc=5</link>
+<description>Trump removes White House shrouds as he prepares for Xi visit The Washington Post</description>
+<pubDate>Sun, 06 Sep 2026 03:45:58 GMT</pubDate>
+<source>The Washington Post</source>
+<category>presidential</category>
+<guid isPermaLink="false">1027708774043567263</guid>
+</item>
+<item>
+<title>President Donald Trump to host first responders, FDNY at White House in honor of 9/11 anniversary - ABC7 New York</title>
+<link>https://news.google.com/rss/articles/CBMiuAFBVV95cUxNVTI3bTI5S3lmTm1ReXdSUmdfeS1wUlhiYkNXN1NCSDBvQXl3dkhxS1lqUEE3UmFNV1BPakZVSVpmdEctMnpYNEZja3VDb0E5TElBdDIxX3M0UC1qbGJ1cC1vV1QtUzJ6N1JBN1d1MkYxRUFhbmowdEJPcjJXal81VlhJSUFtam9TRmM4eVd6YVRPOVp6cHNMcWwxQUpvNmhNcmJZRjBicUE4MUdjZVloTWFqNVJoOEpO0gG-AUFVX3lxTE1fVG0zclBsVEhNYVpIY3JmWWgtQ21EWUV4d3o5eE5ydjJSN2ZoNDBUYlFfYWNMT29sWXNNdHRVbzFEbnJjSFdZa0VWMFdQNS1SempfdUNqb1k0TWp0VkMtM3VoMDVjT3ROanZDa1dXR0FmMUhCZVd5bENtT3cySmtUV05WMEE2bTRPRUtLZXRCYTk4UXdiX2I0X2ZuZU5ST2g0V2RNOWlSSkRROUl1OEpZUTFxbGFBUWctdk5nSEE?oc=5</link>
+<description>President Donald Trump to host first responders, FDNY at White House in honor of 9/11 anniversary ABC7 New York</description>
+<pubDate>Tue, 08 Sep 2026 12:43:55 GMT</pubDate>
+<source>ABC7 New York</source>
+<category>presidential</category>
+<guid isPermaLink="false">8600647538254045373</guid>
+</item>
+<item>
+<title>Presented with bleak polling, the White House moves to make the midterms about Trump - NBC News</title>
+<link>https://news.google.com/rss/articles/CBMitgFBVV95cUxNaHFDM1dmaUFjMlgtdjNrTEpxNldhU3ktNFMtNFByNzUxbU1idjdYVUFVd0o2dnJNNzRKUTJUbjcxbFhwTWE0TVhjM2N5ZGlaSUJ4Vm9OVUdtWmEtNDBjVTlNX3ZFcWVSUTBiM20yaWpkR1FDMC1VUDJGTXFwZ3piVzJHeEVCN0treW5JVlhRc3J1OVJYaDJxT0EzTHJZY3NZQkxoa3gzbXFiZVluajV2Z0pLNTZmUQ?oc=5</link>
+<description>Presented with bleak polling, the White House moves to make the midterms about Trump NBC News</description>
+<pubDate>Wed, 02 Sep 2026 23:07:41 GMT</pubDate>
+<source>NBC News</source>
+<category>presidential</category>
+<guid isPermaLink="false">1719392071372378529</guid>
+</item>
+<item>
+<title>Zuckerberg opposed White House AI proposal in private call with Trump - politico.com</title>
+<link>https://news.google.com/rss/articles/CBMi5AFBVV95cUxNX05ZdHdWOW1wVXU1My11RHBMX3Z1Q19STWRjVkpRemFrQmhqRkI3UnlXQVRscnA0SjRTSTdWOVhKQ3ZKUzkwX2J4Z0YwVW9yNXZpRnRwZGFNREpoUW1KeG11OF82c3VOeEg3QjAweWp5WHlGclRFVU9lSl9JZ19QWWM1OEtkOHptTTR3N1hENmZsam9oaGFYaC1aSE53SHpDTF8xcEpDdHFGWmhwdzdqU0hLSTUzaWFBYTNhQ0haMU1CSnRBMzVTV3diQ3RDWUJ4eEs0Wmg2SkM4eWk5enBFRFdsYkc?oc=5</link>
+<description>Zuckerberg opposed White House AI proposal in private call with Trump politico.com</description>
+<pubDate>Thu, 03 Sep 2026 18:32:00 GMT</pubDate>
+<source>politico.com</source>
+<category>presidential</category>
+<guid isPermaLink="false">6844793749358863688</guid>
+</item>
+<item>
+<title>WATCH: Vance holds White House briefing after Leavitt's departure - PBS</title>
+<link>https://news.google.com/rss/articles/CBMiqgFBVV95cUxQdVRDVDhVUkE2Mzd2NHNsaVMzbnZxOWN3RFBUam4wcGtfM0d4T1BvSUdfUWxzeVJJR0VIcVhoU2x2OVFUZl9EQzk1V09nYTJKTFRqbXFOWFlsX19KcFNhcWphWUpCOEN0UXc1ZzdiVnF5alFTT0tkcURIR2FOYUJkQmFsUC13MnVPbC03LVR1aDNVOS0tQ0JLemh6TmtET2thTzRvQlplakV6QdIBrwFBVV95cUxNcllmV0lldW80VW1tTzBxalN0ZmNzdkxhc3A2dmZKVTRNdXp3OTA0TFl4dTVJU1piNWI0d0xLd3pnTlhfbVUzbFBIcEpmdUpLREh6WGYwWHBJOW1JTmtDVDlRSlpyOEVUNC04RzdyRWhaVDJjZUlkRElFUlItNzd3VHlsVHFGRVRfOGZMWGR2Tk1pM0hyS3M2ZTFwa3JvTVUzNmtmN3ZMckFCdUltbG5B?oc=5</link>
+<description>WATCH: Vance holds White House briefing after Leavitt's departure PBS</description>
+<pubDate>Thu, 03 Sep 2026 15:52:56 GMT</pubDate>
+<source>PBS</source>
+<category>presidential</category>
+<guid isPermaLink="false">7766500422685409113</guid>
+</item>
+<item>
+<title>Trump is staking out extreme positions on White House secrecy, legal experts say - CNN</title>
+<link>https://news.google.com/rss/articles/CBMiWEFVX3lxTE1wb2szMWxzR2pFa3RxZzRZZGp5V3hKSURnbXRJTW5nZEcyX2dGTWVxTGNCVGVHbV9MWnhaWGxOS3dBcnZmVnlXaE1yeUx4akxqbUl2Ql9QMm8?oc=5</link>
+<description>Trump is staking out extreme positions on White House secrecy, legal experts say CNN</description>
+<pubDate>Sat, 29 Aug 2026 07:00:00 GMT</pubDate>
+<source>CNN</source>
+<category>presidential</category>
+<guid isPermaLink="false">5954284817914779197</guid>
+</item>
+<item>
+<title>What to Know About Trump’s Aide Natalie Harp - time.com</title>
+<link>https://news.google.com/rss/articles/CBMiiwFBVV95cUxQTDlUd3lPWWtHOUxvTkNWTmVTZVczX2tmZEhWQmk3bWVVYWxqa1FPazQ2SmlXSkFDbndDU0hTUHJ6dGhUOWdyR1VFTXdGdk1aRk1rQV9oZlFVbDJXZkFXQ05JREVLand2b2ZnWjNKNmpqSHVTT1c5Q0tueGh5U3dQZ2s5TUlLdTliaVFr?oc=5</link>
+<description>What to Know About Trump’s Aide Natalie Harp time.com</description>
+<pubDate>Wed, 19 Aug 2026 07:00:00 GMT</pubDate>
+<source>time.com</source>
+<category>presidential</category>
+<guid isPermaLink="false">4175871779170071276</guid>
+</item>
+<item>
+<title>The Wrong Kind of American - The Atlantic</title>
+<link>https://news.google.com/rss/articles/CBMimAFBVV95cUxNRGo2aFhCbHJ4OWtoRWJkVDFWSzU1RzN5M1poZ0NYMUlPNEZNRXc3UzU3TmViTXlDVnl0azQ2b2ViU0tTY1JJUWZVcVR3d3dsbWNmS2paU3R2bjJyR2dRVlppdHZwb2h5V3BSY0dmakhSRk5PWUVWQktYU083YktRblpqUTkxNXB1eFZQSVd4cl8wWTRoR21rLQ?oc=5</link>
+<description>The Wrong Kind of American The Atlantic</description>
+<pubDate>Mon, 17 Aug 2026 07:00:00 GMT</pubDate>
+<source>The Atlantic</source>
+<category>presidential</category>
+<guid isPermaLink="false">544414082101537016</guid>
+</item>
+<item>
+<title>2025-2026 U.S. Supreme Court Term: Summary of Key Decisions and Implications for States - National Governors Association</title>
+<link>https://news.google.com/rss/articles/CBMitAFBVV95cUxOVktuZlF3am8wdVFIaVE0RWotTG01YUFMZDR6OU1CbUZJWDNQUWZPWWxEZENmYUJkTXAxcVNmX1VVY04xLXhMSzVSNS1xb3d0NkNKUlo4UXM4MFNYNjhRaENFWnhzZDg1UzBhaXZJUHdaZTNZRmFvcEp4XzN2dFlaVDNZbWhOY2FrWFFYZDR2ci1ZdTBfMUNwMGFreFR3Ulg5Qzdway03NlBPczcyeDdaSWYxSWc?oc=5</link>
+<description>2025-2026 U.S. Supreme Court Term: Summary of Key Decisions and Implications for States National Governors Association</description>
+<pubDate>Fri, 04 Sep 2026 16:38:52 GMT</pubDate>
+<source>National Governors Association</source>
+<category>federal</category>
+<guid isPermaLink="false">1622472288114053915</guid>
+</item>
+<item>
+<title>Missouri AG trashes state Supreme Court ruling in federal filing - missouriindependent.com</title>
+<link>https://news.google.com/rss/articles/CBMirAFBVV95cUxPd1YxeWZRQmROWXZTLWdKRzVCdUxkZ0pCZ2g1cFZWTHBnalZXbkFtajFaSldKWVhlUUZPTkdWQ21aSUlsaEx5MlRkeE5sazJKQU9zbzVYZnJfRG83UjBQRkE1Uk1QX1JfWmROX3lWM2Nocm5UMEFBM2xNNFBmMjVWbENjMmktUVJ2Y2FWZFVDRlVfYndaUGkzeEx1cTFGUzBPM3RzLWt5N0dXVnR3?oc=5</link>
+<description>Missouri AG trashes state Supreme Court ruling in federal filing missouriindependent.com</description>
+<pubDate>Mon, 07 Sep 2026 17:35:20 GMT</pubDate>
+<source>missouriindependent.com</source>
+<category>federal</category>
+<guid isPermaLink="false">7081254646427485534</guid>
+</item>
+<item>
+<title>Trump administration again appeals mail-in ballot dispute to the Supreme Court - SCOTUSblog</title>
+<link>https://news.google.com/rss/articles/CBMitAFBVV95cUxNWm5ORTlLX0V1T0gtYi1yRVZ6REhtbDU2WDFtODNjN1VjdWNkNVJfR1dMNjdkVHg4ME5KNnh1MV96SlA5Q0o0bURlNndvNk8tX2p0NkU2R0pabjR5U1dyS1hxS0o5eE92d1pFcmtKQTV2T3dJVkJyVEE4Y2w2Q1JtdDM2cVRybnQxQlpONmtZYmd3Q3FxX3RCSG91UGwyNWViZlUzMGcwdlpmeDAtN1VOSm10R1k?oc=5</link>
+<description>Trump administration again appeals mail-in ballot dispute to the Supreme Court SCOTUSblog</description>
+<pubDate>Sun, 06 Sep 2026 17:39:33 GMT</pubDate>
+<source>SCOTUSblog</source>
+<category>federal</category>
+<guid isPermaLink="false">1133462898925706828</guid>
+</item>
+<item>
+<title>Takeaways for Employers from the U.S. Supreme Court’s 2025-2026 Term - Spencer Fane</title>
+<link>https://news.google.com/rss/articles/CBMipgFBVV95cUxNc1FqajJpdDhuTDJiTUZrT0x2VmFrVEVfZDJ2NVZ3N3M0cU9pRm95N080bnozMmZSNGRnUTBZM0U3eGltMkh2OHREbXR0SndtZHgzYnRMdEtEWllNYnUzUVRVUXZYUUlBQ0VnemNkdWh3Umc4YWxseUE2eUxzT1VwY3ExS003UGMxRmMtbnFuQk80NUIwdW5xanBXejU3X1JTRUR3S2VR?oc=5</link>
+<description>Takeaways for Employers from the U.S. Supreme Court’s 2025-2026 Term Spencer Fane</description>
+<pubDate>Tue, 08 Sep 2026 13:00:39 GMT</pubDate>
+<source>Spencer Fane</source>
+<category>federal</category>
+<guid isPermaLink="false">8072826781173093150</guid>
+</item>
+<item>
+<title>Trump renews Supreme Court request to allow mail-in ballot plan - Jurist.org</title>
+<link>https://news.google.com/rss/articles/CBMiogFBVV95cUxQc1d4MVBNb1REenRpa3JmbGZQdjBLQXFKZDhJSWRrS1FXTl96dldZc0tsa2MwT3dLYXV5Z21ERnpocmoyX0RWM1VWSG5MMUprLW1RN1Q3a3V2YkltelBEbTB3ZW0zZE5OcXF2dUZ4cVZGSE11Tjh6NEZJcDBtbWhrc1hsOGk4alhtMm54MkRGU2UyNVZ4Rk9PcGxuM183YVRwWWc?oc=5</link>
+<description>Trump renews Supreme Court request to allow mail-in ballot plan Jurist.org</description>
+<pubDate>Tue, 08 Sep 2026 13:19:31 GMT</pubDate>
+<source>Jurist.org</source>
+<category>federal</category>
+<guid isPermaLink="false">4205338698244454292</guid>
+</item>
+<item>
+<title>Trump administration appeals again to US Supreme Court over mail-in voting - Al Jazeera</title>
+<link>https://news.google.com/rss/articles/CBMitAFBVV95cUxOMEZBWkwwQzJpY2RPUHE4STZNOUliRmI5Vnl3NEE4MTlOSDZmWWxPT0xJYkJvdzdBUzlyLWZtZzJfaDRJZUtDU3czOHJ4TVJFTWk1ZUk4RTFrQlNVNVAteUU3UnZBa1FwQkVneFRBRXhQTnpOOVU1Q3EtSnlmai1hZjR1Rk9TR0JuWFZyN0dnNy03Yy1sWkRZWDJjR0JKVGdtY3ZsdEZnY1dGak9uTzh4WEpiVVLSAboBQVVfeXFMT3M5SGt3bUVKWGQwTFhEVS1yRWxfeUVSTnpfSzE4YllLN2FtSlBBUDZhZGQyRU82UTh1T0d2Nm5pdUp6VThpc1JaVXNTdi1UT3doUlEyM2d5QUlXcTE0SF8yWHRrOXdULWppQ0pqZS1XOVdQdFg4SFZtMVFtMTNCZE5pNnBoWkhiVVZub3FoSnltM2pPckpZUWVEVktycFlOYWxuYV80b0dJQnRMcTVhZ1JKVk5MY241UFFR?oc=5</link>
+<description>Trump administration appeals again to US Supreme Court over mail-in voting Al Jazeera</description>
+<pubDate>Sun, 06 Sep 2026 18:49:17 GMT</pubDate>
+<source>Al Jazeera</source>
+<category>federal</category>
+<guid isPermaLink="false">3073137570083726564</guid>
+</item>
+<item>
+<title>No constitutional right to clean water, federal court finds - USA Today</title>
+<link>https://news.google.com/rss/articles/CBMipgFBVV95cUxPb2VvbFBwTlBKZUZ4WndzMU9CWFRJOUxIRFZONnIwY1NBTFBMOEFaVjlnVWxOMHV5WjNYSUhGVGhLM3VNN1hRT0pBTjJvMnJHRUZyZ2d6VlRuQmdraDhuTVRpWjVXZVUxOGRidjFFRjRNLVpMSFRVWmVhZDlWdVM1ZVlpMm5TWkNUS0NVVVlsaXhXQ3ktQU5YbDdBYnVKS0hUNUk0Wk5R?oc=5</link>
+<description>No constitutional right to clean water, federal court finds USA Today</description>
+<pubDate>Tue, 08 Sep 2026 11:54:00 GMT</pubDate>
+<source>USA Today</source>
+<category>federal</category>
+<guid isPermaLink="false">2264281693356318578</guid>
+</item>
+<item>
+<title>Trump again appeals to Supreme Court on mail voting restrictions as midterms loom - PBS</title>
+<link>https://news.google.com/rss/articles/CBMiuwFBVV95cUxOdjhZWFp3c1hzUnhTbzl1bkl2Z3JyUWZOVUNmd2pucnF5MzROeFVzR2h5OXptX1VKM3VfSDhnbjFZZWtMSHQyTEs0S1RXVk13ZVAxZVlSNnF1bDlMbG5TbUlONHNDR2dSRldRZENKOGk5Zmg3YUNfX1Bycm1PejY1Q2lHN0JKdTF6MXNEanVESDZYaE56UzQ5VDlUeGRwcThVMy04RWxyVjdFNzlRSl9nUGpXbzIwR0J3X09R0gHAAUFVX3lxTE5LR0prS0dQX0RpYUR2NlpUNnI4NnZuTTlfYWc4RlpkbmNYRDdUYXRMUUpEZ1VyVmFjTHVhUUdOR1ZiX1lrRFd2b0t2Q3A2bTBMZjMyMEJBWHJvZ1A0UTA4MDl6SUxRZlVtY0tvVzBiTEtqbi1sN0ZXUlNsZ3d0cHZsM2dJMHBIUkRpcU5IV1cwd1RXRVBZcE1yQ0VpUGx1eS1QdjY5ZDN6R21LUHBIcC12NEJja3pobmFweWRHWExicw?oc=5</link>
+<description>Trump again appeals to Supreme Court on mail voting restrictions as midterms loom PBS</description>
+<pubDate>Fri, 04 Sep 2026 00:25:01 GMT</pubDate>
+<source>PBS</source>
+<category>federal</category>
+<guid isPermaLink="false">5513419181535834640</guid>
+</item>
+<item>
+<title>ICE Wrongfully Arrested Him. Will His Lawsuit Change How Courts Hold Agents Accountable? - The Marshall Project</title>
+<link>https://news.google.com/rss/articles/CBMigwFBVV95cUxPcmNpQm5xV21RZzNKOUNyZUMwOHZTQ3lkLVNRcVZKWGZlZlJ6VnIycUFLN3NCOWtidmd3T2Y0MWdmbXAzcGFYSGh3LXNGMDU2UktUZzNGN25pOXZZWHNpS2M2bWd3M2xtRlEzUEdncFlidGV6RVRNNnVLbThUSDJ3MVdIVQ?oc=5</link>
+<description>ICE Wrongfully Arrested Him. Will His Lawsuit Change How Courts Hold Agents Accountable? The Marshall Project</description>
+<pubDate>Tue, 08 Sep 2026 10:00:14 GMT</pubDate>
+<source>The Marshall Project</source>
+<category>federal</category>
+<guid isPermaLink="false">3292766067043916413</guid>
+</item>
+<item>
+<title>Supreme Court ruling reshapes federal agency power - Substack</title>
+<link>https://news.google.com/rss/articles/CBMie0FVX3lxTE1XUmtYMVg2SE9HeUU2RDlzT2Voc1h4Y05pWEtOS1J5WUlJd1V2MjBwcHZZblJ3UC1VN2N6N1ZpcGRkRUJVYUowWFZHM0Jqc1lBZUo4NDdna05SQVlBc2t5MW5ySFg4cU1sd0ZQMUlaYkE1NlhhZWg1VGs0OA?oc=5</link>
+<description>Supreme Court ruling reshapes federal agency power Substack</description>
+<pubDate>Tue, 08 Sep 2026 11:04:47 GMT</pubDate>
+<source>Substack</source>
+<category>federal</category>
+<guid isPermaLink="false">8120432308597540716</guid>
+</item>
+<item>
+<title>New Mexico governor pushes back on Trump 'New America' posts - El Paso Times</title>
+<link>https://news.google.com/rss/articles/CBMi0wFBVV95cUxOQW94d08yYUxKQklkLW15SDV1M0Z0NF84aEVQV1hXcnhLSU9kU05XLTR1cmpsVmVIb2dSajdoaUJJT2stQTZSYV8yeUJ2azRXWDBldVVfNENZTU8tR3lkanNadXo5dlMtSmM3UTBGcjMzUG1HeFlaQzBHeG5YX093Zmh0T25xaWk5QWhncFJiNm5oTFVNOWhSLVJpam9HeV9vZFFPdnhzMVVESUFPR3V6TUpkZFhoaVJqd3lVcDlMWWdtSjFkWWdyMnBoYUhvd3Z3QWlB?oc=5</link>
+<description>New Mexico governor pushes back on Trump 'New America' posts El Paso Times</description>
+<pubDate>Tue, 08 Sep 2026 11:35:00 GMT</pubDate>
+<source>El Paso Times</source>
+<category>nm</category>
+<guid isPermaLink="false">4546748196256447936</guid>
+</item>
+<item>
+<title>NM State Falls in Monday Matchup with Lobos - New Mexico State University Athletics</title>
+<link>https://news.google.com/rss/articles/CBMioAFBVV95cUxOVkFSek5RQzY0bHhSdUtzZlJPR2xtZm5oOGl3MV9pVE0wQ29kQ1FKUHF0bTNJdkgzVXU0MEcyMWM2bWxuSzBmdm5YT1JLRWd6OGtRX3FFZEVIUnNKaHJXYnZMMnJMWlgybTZSLUROS0MydVFBOE5taks5QTRPekR1MTRmaS1wQzdNb0s5NTl1QTJ3VWZlWHBDQjd0Rmg4S1dL?oc=5</link>
+<description>NM State Falls in Monday Matchup with Lobos New Mexico State University Athletics</description>
+<pubDate>Tue, 08 Sep 2026 07:08:32 GMT</pubDate>
+<source>New Mexico State University Athletics</source>
+<category>nm</category>
+<guid isPermaLink="false">5466239986115033017</guid>
+</item>
+<item>
+<title>New Mexicans weigh in on ‘New America’ - KOB 4</title>
+<link>https://news.google.com/rss/articles/CBMid0FVX3lxTFA3Z2duSkl3SWRnaE9zd0Z5Q0ljZllOVFROcmZfTFVlNTlmT1BFLUhmeWlUNXozTktsWkU1ZGFVSzgxQkREeXM0MW1YWU1lelRQdlJRNnkyeThCMGhCakJ3amZVeGllYWhpejZzY1g5ZFM0V3FyNkJZ?oc=5</link>
+<description>New Mexicans weigh in on ‘New America’ KOB 4</description>
+<pubDate>Tue, 08 Sep 2026 00:49:51 GMT</pubDate>
+<source>KOB 4</source>
+<category>nm</category>
+<guid isPermaLink="false">6826052833856740341</guid>
+</item>
+<item>
+<title>'New Mexico is and always will be New Mexico': New Mexico leaders reject viral map suggesting state name change - KOAT</title>
+<link>https://news.google.com/rss/articles/CBMi3wFBVV95cUxOWWRUTWZQQjJsVHdaTEZ0OXU1T3BmYm9RNl9TUDYtM1pwcUVLTEZpNGxmU0FFY3A2dy00TnpQay15YVZCV29FNjdmUkhXbWZBV3NSTWhrMlF0VnotbFZWcWVDUnJpX1lZbU1qZlpUR0twMzdaejdBYzJXb0dPczNQUDBhTXZ0ZUNPY0VCTWNzZkdYLVh2M09PMENhc0lSRlk5dUJyMTZNZG9WM1JpWFF6dHNYR2VKdV91R05yS3NTenVDNlVibWRKSEtDcktzdWp5R0o1b1dLOG92djU5MmNN?oc=5</link>
+<description>'New Mexico is and always will be New Mexico': New Mexico leaders reject viral map suggesting state name change KOAT</description>
+<pubDate>Tue, 08 Sep 2026 12:21:00 GMT</pubDate>
+<source>KOAT</source>
+<category>nm</category>
+<guid isPermaLink="false">5246636009113433460</guid>
+</item>
+<item>
+<title>Trump’s Latest Target for a Name Change: New Mexico - WSJ</title>
+<link>https://news.google.com/rss/articles/CBMikAFBVV95cUxNYmttbjRJV1JrQ2U0QXVJcExiOThmUWlHVjZVa0hqYmJUSnhwM21aMnREYloxUXZVZ0VLUUxvemNpdC1JQkZKTzFTSjQ3YjN2aUJQZ0wtLWR1Y3cxaTk3YzVlc09fUnBHOFN4TnNWWjhkOGxmWGd0ZWxGNVItR09jX3lLcnlhTWJSaTNHcWpfTU4?oc=5</link>
+<description>Trump’s Latest Target for a Name Change: New Mexico WSJ</description>
+<pubDate>Mon, 07 Sep 2026 17:53:49 GMT</pubDate>
+<source>WSJ</source>
+<category>nm</category>
+<guid isPermaLink="false">7507108093793784873</guid>
+</item>
+<item>
+<title>GOP wants to end to seven day wait for firearm purchases - Las Cruces Sun-News</title>
+<link>https://news.google.com/rss/articles/CBMivwFBVV95cUxPdXFsSlFWTGVYRWJ0R3lyZm10aHVJX3h6SGhUbm9XTWYzWjhnSVgwcXJrNWd0Qnp4YnJya082TXVmYkFuRzlLRFAteFlQMzc0VzFtdW9LQmJuMGVvRzdBSkt2WUIwTUNjSTJDYkoySmE3YTRvSWs5azNIRGdSSnpVMVJxakY5cFNqbnNmTnpmSUNuVnRuajZibHlKaHBmYldqaTM3QW1IdEMtSXExdTZ3aHNqRWw1N1VmSTN2R1VhRQ?oc=5</link>
+<description>GOP wants to end to seven day wait for firearm purchases Las Cruces Sun-News</description>
+<pubDate>Tue, 08 Sep 2026 09:06:00 GMT</pubDate>
+<source>Las Cruces Sun-News</source>
+<category>nm</category>
+<guid isPermaLink="false">3549481310615179250</guid>
+</item>
+<item>
+<title>New Mexico governor rips Trump’s ‘New America’ post, says name ‘isn’t up for debate’ - The Hill</title>
+<link>https://news.google.com/rss/articles/CBMikAFBVV95cUxPcm44anRQSWpHdEw5LTdnVUJRZjI3cWpKdUdFTzZZTVdrbEhMNTRJcHRBX2dLTi1rc05iTTVxZ1V6cmFBRmJzRnY2UFBRaHg0d1g3OFVWWGthSHhOUE9jRHNLX3BpclRDOFZWS2hMS1hNZ2JMZTZxYTNBa2MyN2c0VEtLbzFOOFB5QWZPd3JCSFrSAZYBQVVfeXFMUHRPZjFCbGJkTWxNVGFaeHZQS1lCVjVMcXdYenJkM2F6NmxMQ1NUMlB2OWM5S09MRUVNa2pDeG9tR1BORmYyVm85S2FEUGUzMVNXclgyOVdLY3N0TjZHblI2WkdBaDRpMXZxbmlrQm5WYko0ME41S1Z6Ni04ZTNXZ1R5dE4wcnh6Q3VrZGZPSXQwT0R5Z0pn?oc=5</link>
+<description>New Mexico governor rips Trump’s ‘New America’ post, says name ‘isn’t up for debate’ The Hill</description>
+<pubDate>Mon, 07 Sep 2026 13:30:00 GMT</pubDate>
+<source>The Hill</source>
+<category>nm</category>
+<guid isPermaLink="false">3073944952135365447</guid>
+</item>
+<item>
+<title>Storm chances continue for parts of New Mexico with hotter temperatures - krqe.com</title>
+<link>https://news.google.com/rss/articles/CBMitwFBVV95cUxPRVlDNFQ1WGNxWUFzd0pBaHZVRmQwd0Y3RnlRaHNLNDlpWnRTeUlkUjBJakExOTFCWnhfdFZadEpuUHJ5SHBlNm1JUkRQUXBRdzVwQmFpMVBDYUpQbll0ZmhwakV2UHFXbUY3SHg3TndCaGhCNlVSZ2FodFN5MkdFel84TTBGX0I1Z3FxdXE4Xzh1Q05YYmhYZWVQaTR5THRoSmtjTWlpN3BrcTlCanBkaWVPWWJBYVnSAbwBQVVfeXFMUEZwRUUyVHpLWGlLLWp5cWZEQk1Kc2N6UFk2akdZZzVWU3Z2WE0zOWNndkRiUEZiUk5wQ1lYbXk3bTFmVVR3TmEtNmNEakp2Y3cwSnh1dzd6MDNWVTJTOVltR2x3WHRTc2hUdzE1Y2dmSmYxOUZ4Y0tBMXU2UkR0TVc3TklmNWY0RThlSE5ZTTFwQ3FfRFoxbm4xcEVQZ3hjQ2Y5XzhyMzJsRTZhU0tvSkwyWENCelJPenB1c0Q?oc=5</link>
+<description>Storm chances continue for parts of New Mexico with hotter temperatures krqe.com</description>
+<pubDate>Tue, 08 Sep 2026 03:40:54 GMT</pubDate>
+<source>krqe.com</source>
+<category>nm</category>
+<guid isPermaLink="false">4512417400730628765</guid>
+</item>
+<item>
+<title>One year into free child care in New Mexico, too many kids and not enough slots - The Washington Post</title>
+<link>https://news.google.com/rss/articles/CBMivgFBVV95cUxQdXlrRHBmUlRTb3dqbUVDZFVuRkdpdHpmM0VXcHZVYUktQzRBVlR3ZmpVZXZQUzRNUmQ5b18zLXJoUUJJVm5ReU1hSTEwNjItdDQ0STdEU1J5Z2NZZVA0V3pDdHppdjJSa1Z6QWw3bk9MN213Tk1NTFZ5bWRxU25CTGpYLUszdFFicUFCSzExNmRUMzBuTkpETnRzMThkM0JFSTB0N1NSdUM3eDh6eW14dEVGX2Rxemthby1JbUdR?oc=5</link>
+<description>One year into free child care in New Mexico, too many kids and not enough slots The Washington Post</description>
+<pubDate>Mon, 07 Sep 2026 17:00:00 GMT</pubDate>
+<source>The Washington Post</source>
+<category>nm</category>
+<guid isPermaLink="false">2612236867034667205</guid>
+</item>
+<item>
+<title>Trump promotes idea of changing name of New Mexico to 'New America' - Reuters</title>
+<link>https://news.google.com/rss/articles/CBMiowFBVV95cUxOSVhTWVFTMlBJaW9mY3ZwcW1aTTBQUkR5TmJQOTZpYU5CYlhaS0lCZXVsS3Q5S1dYdWJYODJXbENTbWhnNEdLM0NNYkxOY0NSSXlnQmZORloxZ0lQQ29uM2hoa2J3ZzZIYTE0c2RMalVwWl85eU00bUxJUVBQT09OT3BnMGhpRjNuYTRHdFlSc1NCX3NTVHI3NVRBMXhQOVVxY2pn?oc=5</link>
+<description>Trump promotes idea of changing name of New Mexico to 'New America' Reuters</description>
+<pubDate>Mon, 07 Sep 2026 16:33:43 GMT</pubDate>
+<source>Reuters</source>
+<category>nm</category>
+<guid isPermaLink="false">749488249519919962</guid>
+</item>
+<item>
+<title>Most of New Mexico’s oil-related water contamination in area around Chaco, advocate tells lawmakers - Source New Mexico</title>
+<link>https://news.google.com/rss/articles/CBMiygFBVV95cUxNNkdUZVRMR0llRHQySlFVRkZLUDVHMXBjcVVSLVM0elRabU42dFZlZnF5aVpvS21lTkJvSFRldkp4YWZjY1psTEZMVERRMERBazd3T0FDZ2dZWHViR0pGQmdwOFpvVXN3MENHcWFWeXZiZndlRWZmOGlEN1ItWDdEZ1hDQndYMXE5YUdYVHZQUHZ0Q2RoNGdNdFJLQUVjcDRTT3lhQlUzUGtZZFc4Z0NvVElPMkZfUTJ6UTIzb3Jza2dFODZTeGdXT1V3?oc=5</link>
+<description>Most of New Mexico’s oil-related water contamination in area around Chaco, advocate tells lawmakers Source New Mexico</description>
+<pubDate>Thu, 13 Aug 2026 07:00:00 GMT</pubDate>
+<source>Source New Mexico</source>
+<category>local</category>
+<guid isPermaLink="false">6463161812964433596</guid>
+</item>
+<item>
+<title>James Clements Obituary (1951 - 2026) - Farmington - Durango Herald</title>
+<link>https://news.google.com/rss/articles/CBMiqAFBVV95cUxNNlptcVpOOG1hNFVSMnFibWM5cl9Yb29kazFBcGgtTFB5NnllQVI2QWIyanBaZC00VS1UdDdnRHVMSjh3aGx0V2IwQkhoY0gtTmRzTlI4U2tWMUxFc0swcUwyaDFUTnRHSnBPczlFcWdyZ1hHcjZBaVI2OXo2MS15QmN2T3NTLUdoamQ0ZnE1NHVIdVRGQ3BxaVBmS3RKaVczQlBTaFZVU0M?oc=5</link>
+<description>James Clements Obituary (1951 - 2026) - Farmington Durango Herald</description>
+<pubDate>Tue, 18 Aug 2026 07:00:00 GMT</pubDate>
+<source>Durango Herald</source>
+<category>local</category>
+<guid isPermaLink="false">1447362350789620557</guid>
+</item>
+<item>
+<title>Four Corners 4×4 Week celebrates Farmington’s off-road community - Tri City Record</title>
+<link>https://news.google.com/rss/articles/CBMinAFBVV95cUxOSDc1RGxlT3I2VXkyUUsyQS1GNDVkak1oak81aE93M2h4eWd2UzlTSWlzSG02Vjgxc01CWTNXdnR3X25qeU90R0Vqa25zNUwzSmVIUk9DTjVuZDdzNkRHM29XQVk5d1V4bDM3N3BDcHNjdFpuelB5aThTSnhpME10RERVd2JZV3JiZ201dHotY3NvTVRGZ0ZwUTd2UGw?oc=5</link>
+<description>Four Corners 4×4 Week celebrates Farmington’s off-road community Tri City Record</description>
+<pubDate>Thu, 30 Jul 2026 07:00:00 GMT</pubDate>
+<source>Tri City Record</source>
+<category>local</category>
+<guid isPermaLink="false">1467934218377248564</guid>
+</item>
+<item>
+<title>Golf Beyond the Fairways in Farmington, New Mexico - Texas Monthly</title>
+<link>https://news.google.com/rss/articles/CBMikwFBVV95cUxQRldRNXRPTXNCcTFFdWF6WmI5QmVMckR1LVJPVjVGall6ekdhbTd1WDVMa0pDVUlKMlYwc09wc1E3Zlp4R3Z1M3FucE5vTHA4YkdsUDBTQ1JzSURROEJENjRVVGFkanB5dXI2d0dtYmZmY0dvdk9pQVQzaHlaWnlQSE5IYlY1RzFnWEdSQTFhRlVTNzg?oc=5</link>
+<description>Golf Beyond the Fairways in Farmington, New Mexico Texas Monthly</description>
+<pubDate>Fri, 05 Jun 2026 07:00:00 GMT</pubDate>
+<source>Texas Monthly</source>
+<category>local</category>
+<guid isPermaLink="false">6920421286550570122</guid>
+</item>
+<item>
+<title>7 miles of professionally-built flow trails added to popular MTB trail system in Farmington, NM - Singletracks Mountain Bike News</title>
+<link>https://news.google.com/rss/articles/CBMi0AFBVV95cUxPRmdkRXlnWDVrX080OEROS25NcUFMSVdtY3BtSjUxVnprOFNtVmZuZGRvUHI5MHZyMWFvUXJ1aHpCV05VeG96Q2JBYlBGcWNwWElqU2xjelQxWEIwOTJJUndVbWNvT3N2Wnp6SDlGb0c2UkVEOWVkeVVZVDVzZW96N3BYTFFHaEd5eVRYSnZrQXJDTjVSSWI5VWw3SnhGMEcwS2Zza1d2TzQwcGtOLVpHZlVvSXE3SnYyM3BGeWlPRVBRc0k2bWNRaEhqUF9EYVZq?oc=5</link>
+<description>7 miles of professionally-built flow trails added to popular MTB trail system in Farmington, NM Singletracks Mountain Bike News</description>
+<pubDate>Tue, 31 Mar 2026 07:00:00 GMT</pubDate>
+<source>Singletracks Mountain Bike News</source>
+<category>local</category>
+<guid isPermaLink="false">686196081037028753</guid>
+</item>
+<item>
+<title>Dangerous heat and strong winds expected in parts of New Mexico - KOB 4</title>
+<link>https://news.google.com/rss/articles/CBMimwFBVV95cUxPM1NWWl93T090VmZoZ3lZQ0tMd1llYUZ5X0VRVG5zS21IaFktSjYzYkhhWEZjUlZKcHI2M2lnNWtFUVN5dmR1ektKQlFJWFo2RUU3VHQ2aFRnSWxfNEhCQlZjWVB3Vi1OUmZ1Y09tR3FoN3kyeTZJd2lVemNHRUNhV0hBUXpTTHJFX2FJM0pCZ01PRzhUbHh1SnEzRQ?oc=5</link>
+<description>Dangerous heat and strong winds expected in parts of New Mexico KOB 4</description>
+<pubDate>Tue, 16 Jun 2026 07:00:00 GMT</pubDate>
+<source>KOB 4</source>
+<category>local</category>
+<guid isPermaLink="false">110596699728161286</guid>
+</item>
+<item>
+<title>Discover Farmington: A Dynamic Hub in the Four Corners Region - Livability.com</title>
+<link>https://news.google.com/rss/articles/CBMitwFBVV95cUxPREZfTWFaYVBNWFRmVWpQeUxoSzUwRVB5UmtOdHR1RFBoaDZKMzM1RXFhaWpVZGpGQTNGdlZ2SWVHSHVtUUt3amJrY1BWSUI4VWt1MFlBckJPa0NYd2p1VjlCWkJZUVFXMDhUTlB6V0pjNFVoRFRyQzI3SEdxVnpvM0tKT0VKdm5vM2lNeDJJejBUTUdRNnprSXo0amdvWmdyLV8yMms2eVZJSTNYRkFBTHl6UXJUSmc?oc=5</link>
+<description>Discover Farmington: A Dynamic Hub in the Four Corners Region Livability.com</description>
+<pubDate>Mon, 24 Nov 2025 08:00:00 GMT</pubDate>
+<source>Livability.com</source>
+<category>local</category>
+<guid isPermaLink="false">6871242800145310980</guid>
+</item>
+<item>
+<title>The Best Small Town In New Mexico For Seniors - WorldAtlas</title>
+<link>https://news.google.com/rss/articles/CBMijAFBVV95cUxOU0ludllUYTBQVFFyX3RGQnJJX1lRUUFxbVFjRHpoU3pJTjdSbzdZYms2cVJEaU15MFlnbmRwa0p4RG1zeTFlTWF1bDd0U0cyVmFaWkNhTkdXYVlpSjQxMXpOWkdiVU94UWhlUHpqUjBPc2hKLUE1R20wT0ItUFpyT3lqeFotajlnTG5fSA?oc=5</link>
+<description>The Best Small Town In New Mexico For Seniors WorldAtlas</description>
+<pubDate>Mon, 16 Mar 2026 07:00:00 GMT</pubDate>
+<source>WorldAtlas</source>
+<category>local</category>
+<guid isPermaLink="false">1264529503001680517</guid>
+</item>
+<item>
+<title>Colorado manufacturer expanding into Farmington, creating 22 jobs - KOAT</title>
+<link>https://news.google.com/rss/articles/CBMijgFBVV95cUxNVnJKZmZadkFFUDU2M21KbjdfS3dNZDhJMDlCQ3VUeVRIb3Vjcmx2eWJUemVWdUhKOWhuM0ZCTzlnMGRqWFVzZ3NpLXJ1LXo5Z3V6azNJLWJsNGFrRlA3R3dUZ1htUzhENXpBd1RnSlNwVWwxNVlTUmZoZURNbHNiMFlTV0pXYVFodnA4S1R3?oc=5</link>
+<description>Colorado manufacturer expanding into Farmington, creating 22 jobs KOAT</description>
+<pubDate>Wed, 10 Jun 2026 07:00:00 GMT</pubDate>
+<source>KOAT</source>
+<category>local</category>
+<guid isPermaLink="false">4757631183641837258</guid>
+</item>
+<item>
+<title>The Chinese immigrants trafficked on New Mexico’s weed farms - hcn.org</title>
+<link>https://news.google.com/rss/articles/CBMilwFBVV95cUxNX2VPUW1seW1waXZ4Zm1wMnRrU2dZUkJXT3VxQTJ2a1IzTy1rYTY0SWlURWJYeXIyb2NGS2VEZy1uWWp3MnVzTmlkQWZXUHlwWFB0eWgxd3U2d0Z2cTlWQnZfTVFvYVlBYVVncWJuY2FRWm10MEtCTl9KOF9QQm5oV2xIYmVlNUoyX25sMG9JMWlGT3BiaTRV?oc=5</link>
+<description>The Chinese immigrants trafficked on New Mexico’s weed farms hcn.org</description>
+<pubDate>Tue, 21 Jul 2026 07:00:00 GMT</pubDate>
+<source>hcn.org</source>
+<category>local</category>
+<guid isPermaLink="false">5293863300888060815</guid>
+</item>
+<item>
+<title>NSF announces first awards to advance AI and cybersecurity education and workforce development through CyberAICorps Scholarship for Service Program | NSF - U.S. National Science Foundation - U.S. National Science Foundation (.gov)</title>
+<link>https://news.google.com/rss/articles/CBMiggFBVV95cUxNT0ZTMkV4U3V5R1BOUFJybmdKaTlnZWVRTlBoRW1mUHZGcnpRNW5MUmlBeHk5WkdrTUFkdWd4T0dERFduSWU2OW0tcFowY2ZIRlctQy1qRWtLUWNfUk1Wb3VJT1V5LXBwTGR1eTZEZGs5ZjVILXRGeVJ1VV9RY1IxOEp3?oc=5</link>
+<description>NSF announces first awards to advance AI and cybersecurity education and workforce development through CyberAICorps Scholarship for Service Program | NSF - U.S. National Science Foundation U.S. National Science Foundation (.gov)</description>
+<pubDate>Tue, 28 Jul 2026 07:00:00 GMT</pubDate>
+<source>U.S. National Science Foundation (.gov)</source>
+<category>technology</category>
+<guid isPermaLink="false">4443997089633858278</guid>
+</item>
+<item>
+<title>AI is a cybersecurity problem — and also a solution - news.asu.edu</title>
+<link>https://news.google.com/rss/articles/CBMimwFBVV95cUxPaXR5NTYwY1F4OFpzN0F0VHhITTVvNGFtSy1UaUthUDdqSU81T3pmczEybGl4X0d3cllIbmVZel9lN1FZZWZoNkdES2NkNjY3b3FaR0g5MWRDbElGUXdGaTFfNU9kVW04SHNSNG5RZ0pHRHdEeVNMTUVQLV96Mjh6SWdLcnNWQmhPUEZNaUtQNEVyb0ozdS1jVEt1OA?oc=5</link>
+<description>AI is a cybersecurity problem — and also a solution news.asu.edu</description>
+<pubDate>Fri, 26 Jun 2026 07:00:00 GMT</pubDate>
+<source>news.asu.edu</source>
+<category>technology</category>
+<guid isPermaLink="false">8431621482839316650</guid>
+</item>
+<item>
+<title>By Opening a Model, a Chinese A.I. Lab May Test the World’s Cybersecurity - The New York Times</title>
+<link>https://news.google.com/rss/articles/CBMihAFBVV95cUxQUjdBMzBkZWNObjNqUzhDbXN5VTZtTkpOeXNyd2RmN1BaNHQ5S2ZCLXBhNGswZzBodUlFNTJVWW13VVFsdnE2bGxFQ3BUQW1ZTS1mYTlDU3RxbkJBbkhDRk9hbmhZSFNCaGM2eE9ULVRQTlR4QlBMRUI1S2J3cElDVWdiOU8?oc=5</link>
+<description>By Opening a Model, a Chinese A.I. Lab May Test the World’s Cybersecurity The New York Times</description>
+<pubDate>Tue, 25 Aug 2026 07:00:00 GMT</pubDate>
+<source>The New York Times</source>
+<category>technology</category>
+<guid isPermaLink="false">5109163773758733660</guid>
+</item>
+<item>
+<title>How big a cybersecurity threat are the latest AI models, really? - Science News</title>
+<link>https://news.google.com/rss/articles/CBMiekFVX3lxTFBtTjY2ZEpBMTNsVlhzMWpINEZiUmNUUWFxVktMOXg2dHM4QXotNzhIZjNhYkt0OUtoQW03UHZ5RHJNWG9zb2JPLVpjSWhoeEN4ZDJqOW8ybGdXUWplaWdGa0VZTlU0b0ZnaTdCbDNGOUFPZlQ2Ti0zUThB?oc=5</link>
+<description>How big a cybersecurity threat are the latest AI models, really? Science News</description>
+<pubDate>Fri, 26 Jun 2026 07:00:00 GMT</pubDate>
+<source>Science News</source>
+<category>technology</category>
+<guid isPermaLink="false">8737455106460806026</guid>
+</item>
+<item>
+<title>20 New Technology Trends for 2026 | Emerging Technologies 2026 - Simplilearn.com</title>
+<link>https://news.google.com/rss/articles/CBMidEFVX3lxTE96Qlh1S3htejlyck9TZjZacklqZ0dpMUpwRWJxMWtkQkVpSUl6c0I0S0M5MWdfV0JQOU0yZkpfVVFUN3kwZGFyMHFlWWdaYnIwWmpDOGxIOG96NFNYS2JfWi1VcjJxTGVzSEppUVpScGlqTksy?oc=5</link>
+<description>20 New Technology Trends for 2026 | Emerging Technologies 2026 Simplilearn.com</description>
+<pubDate>Sun, 06 Sep 2026 07:00:00 GMT</pubDate>
+<source>Simplilearn.com</source>
+<category>technology</category>
+<guid isPermaLink="false">7795336203827371468</guid>
+</item>
+<item>
+<title>HPE Advances AI, Cybersecurity, and Scientific Research in DOE Genesis Mission - The Fast Mode</title>
+<link>https://news.google.com/rss/articles/CBMiywFBVV95cUxNNWE2dW9Fa3JIa1Q0QnpHX3ByV3VqcVBOaW9SbHl3RDZ0ZFk0TUszSnExeW5adGtVd05GQVdsZzEyRmpPWFhRVVBJOTdEN3JEQkZlQUZEbVl2Skd5Rm8tOXJ6UnZ6MVRHRVI4R2VlWUhTSmkwZ1Q4WktCNWtuZ3dFMlRoOUE4THI4OXlkd2lvdHNHUTlHTEpEYndZbWdKekVzTG1KWUIyQzg4bEpRYXhaT2hEbXVEVkRGLVZmU1FLbFhNckhNajZOMDFEOA?oc=5</link>
+<description>HPE Advances AI, Cybersecurity, and Scientific Research in DOE Genesis Mission The Fast Mode</description>
+<pubDate>Thu, 23 Jul 2026 00:19:52 GMT</pubDate>
+<source>The Fast Mode</source>
+<category>technology</category>
+<guid isPermaLink="false">5236433448395455897</guid>
+</item>
+<item>
+<title>Data Science vs AI vs Cyber Security: Which Career Is Better in 2026? - Shoolini University</title>
+<link>https://news.google.com/rss/articles/CBMipwFBVV95cUxNNlNyNzdKTW5kZC0wZ1Q2NkZRZXlsQkxoM2E3d0tzMExGYmhhMUl3QU5vU0ZrUTFid2tqN3V6T0IxS0hjZVNHbU14ZGlOR1U1NFNTdVBGd2l2ektBajkzb2w0Q1JnUnBQMnRWR2tiMVhRRl9mQnVYOV8zdldZVVlncml4eUh0Uy1nWUtJSTJIYVE2OXJyRm14MWo5enVlWjFXcklEclVha9IBrwFBVV95cUxQYW1XTG9Bc2xNSW11d1dfbzRVNEg2SWF5Y3FCYUx3Qy1NV05NV2wxcXdMVGtMc2h6U2pSLTZNdGhUQVc0OW1lSTFyUlUya2FfNkVZYnVGTS1OTGtmejVraXMwLTZYcEx2VEZhZzBiTjg0WVNrV3RfallFVEM5MWtvdUl2Rml3NHdFQ3Boa1EtUXhHU1J2YzlJTmY5eUZJRzBXSlBWRmV3TFhpaFp0U3ZR?oc=5</link>
+<description>Data Science vs AI vs Cyber Security: Which Career Is Better in 2026? Shoolini University</description>
+<pubDate>Wed, 24 Jun 2026 07:00:00 GMT</pubDate>
+<source>Shoolini University</source>
+<category>technology</category>
+<guid isPermaLink="false">4889147409749576934</guid>
+</item>
+<item>
+<title>Microsoft deepens its commitment to Japan with $10 billion investment in AI infrastructure, cybersecurity, and workforce - Microsoft Source</title>
+<link>https://news.google.com/rss/articles/CBMi9wFBVV95cUxPSmJJc1MtaElhWjBueGJuanlHTXo1aS0wMzc4a3VlYnNpWkt6WWVzajltc0FyMl91aGRTS19teE1hM0VnS0JkdkVzN3N0ZDNXNi03SEVXN2xCTThQSEw0TlUzc1RYY0k1YVRKNGdldWFpXzFTMF9lN2FnU25sTzFkUW5sMWxKU2tEc3VmUVNQMVhVMGVNZWdmYjQ0TmJTV0FQTm1JQVJ1d3E3YW1McmtPMUM1UDh1aDJlWUNJMUltcW40ZG1WMXJyRm9TRWpaWkZpamVMU24yeG9QcnNCSF9TYnBtb2NUZTJ5UFFWR1dvSG1CTFM3OEI4?oc=5</link>
+<description>Microsoft deepens its commitment to Japan with $10 billion investment in AI infrastructure, cybersecurity, and workforce Microsoft Source</description>
+<pubDate>Fri, 03 Apr 2026 07:00:00 GMT</pubDate>
+<source>Microsoft Source</source>
+<category>technology</category>
+<guid isPermaLink="false">8303685423972962399</guid>
+</item>
+<item>
+<title>Pentagon quizzes NATO allies on political loyalty, documents reveal - Al Jazeera</title>
+<link>https://news.google.com/rss/articles/CBMiqwFBVV95cUxNc2F4SEZhQ0VEZXhQTWxMcE11WG1yWGthV2l4YlpMc3dlN0hwV1lTMHdtcXh0MWJjdVVnMHlMUTBiSVdGdjNjUGEtWjNCMVBjSkdFcncwQ05zazBuVk9KdDJxRmpZV3hPNzVWX0tZUGlOWGhsRWRHRXV0a3p4VEhUZ2U3NXRSXzFVRmd6X3AwWjVIeUsyY20wVUdZM09FaUhzUzFCZGZ6Y01lSk3SAbABQVVfeXFMT1gtalNnYTlLTzhWN29CanBha1VqakpjZmYtSXZlU2c0UjJUU2R4MTlacVVleGxtZl9FRF9YUm1wVVVqZmJKSDQwd2dmVjUxN0NlaGthQUpXdGVKTy1aMjQtUXVWZDA1cVpQOWc1QWZXSHNKMURIZ1ZWeWRQVmxoNUVjUXFvM2dHNWJLcHpEYWFNTmc0c0lHaDRJbW84eU5PVEtKMndfUm1NRzBkY1RYT3M?oc=5</link>
+<description>Pentagon quizzes NATO allies on political loyalty, documents reveal Al Jazeera</description>
+<pubDate>Wed, 19 Aug 2026 07:00:00 GMT</pubDate>
+<source>Al Jazeera</source>
+<category>military</category>
+<guid isPermaLink="false">3530170406823938144</guid>
+</item>
+<item>
+<title>NATO’s top military officer weighs adjusting Europe defense plan after Trump scales back - Fortune</title>
+<link>https://news.google.com/rss/articles/CBMihAFBVV95cUxNT0FzTDZ2ckpxLUZySWpzU2pURVJIaDYwdE1GQUpXNE9uMUQtSHNhd1VXZndSOVN3QlQxWkhhSk9zcTh5ZEdCVDUwOXBoeGpJZEJtRDdYd2NGLW9ZZEJvSTVFRFVrcjJuckMyX2lZdWdGN2tqWXZ4WlpEMUNjOWNUQXpRUng?oc=5</link>
+<description>NATO’s top military officer weighs adjusting Europe defense plan after Trump scales back Fortune</description>
+<pubDate>Fri, 12 Jun 2026 07:00:00 GMT</pubDate>
+<source>Fortune</source>
+<category>military</category>
+<guid isPermaLink="false">5201428557599362771</guid>
+</item>
+<item>
+<title>EXCLUSIVE: US plans to shrink forces available to NATO during crises, sources say - Reuters</title>
+<link>https://news.google.com/rss/articles/CBMiqAFBVV95cUxONWx0bm16cDVmZmVQLXpvVkhoazNGX0xPaGo1SzlRUG0xY256Q2wtbUpTS0VqSGY1YTBBaV96ZXFFUnVqSEJGdUFGNVB6NWlhVGJNTEY5Mlk2UUt3OXdwTk5DNENuZWJrb3JDaEt5Q05OR2lheXV1Ylk4OWE5dWRfVkFtX3ZTODlVRzYtTlowUDlxSFRVWGdQSjRvTElqTTJaa1ZueUpvMkU?oc=5</link>
+<description>EXCLUSIVE: US plans to shrink forces available to NATO during crises, sources say Reuters</description>
+<pubDate>Wed, 20 May 2026 07:00:00 GMT</pubDate>
+<source>Reuters</source>
+<category>military</category>
+<guid isPermaLink="false">7899868631854709731</guid>
+</item>
+<item>
+<title>Pentagon to cut strategic bombers, warships in NATO crisis force plans - stripes.com</title>
+<link>https://news.google.com/rss/articles/CBMiogFBVV95cUxNYURPRDQ3LUxBNVZ4VEpoSFZoU1Z0OURjOUFRR1lmMl9SV3hNbWJqbS01LTcwZXVEdkRiWklnMUpqUC00U2JBVWFiRmIyaXVUdEthUC16N1JVdjBpRzZkczlWYWlNZlpnelhmR1gzWHRMYWN3Ul9fa3BhWjlaVG91VzhsaW1kRkRQcUJkLUM3aE5NakhlcUVBQ2JPQzBsLVdaMFE?oc=5</link>
+<description>Pentagon to cut strategic bombers, warships in NATO crisis force plans stripes.com</description>
+<pubDate>Wed, 27 May 2026 07:00:00 GMT</pubDate>
+<source>stripes.com</source>
+<category>military</category>
+<guid isPermaLink="false">6981847045649274883</guid>
+</item>
+<item>
+<title>Hegseth puts Nato on notice: Pentagon to reassess US forces in Europe within six months - Firstpost</title>
+<link>https://news.google.com/rss/articles/CBMizAFBVV95cUxON1V4RHBFd0tCWDZqcXhSbElzcWxEVE5lUHdPcXJ1eWRLSEp2bGx6NkRCd2NkNkZSeEtmdVliRWhfVGE2a29JYlNFbHl6TzNzaFRrb01YYjhVWFRTbG9BMzN0Rk4wTDQydXRNbUowTk1HUjRObHpYcGZpdGZBUFdENTNJZWhBVmw0ZDlBM1BTQWxIdHZqSVBZM1ppRmhHcDVfa1Q5akJKQVJ0clAtT0FTTC1hZV9RZFdpVXZ6Y1d4MVRXYXROT0RxWjk1bXPSAdIBQVVfeXFMTWYtTGJxNXIyMkJuRGRlZ1BwYUp5QnAxTFdVNU5iQUNtMzRmV050ZllmbzAzemtVOEk0LTNfLTVBcFJPbmxNV3RjNnZJbWNKLUgwVWItN25KcEI4Q0tuS0NuczN5Q092TnVvWkEzV25pU0FHZXREcGV6ZTY0cHFYMHN6TXZwaWR3a1hwWWxQZnVlekkyRUdneGZDeWdPVkEwVm40dGNEanZFWkkxOWktTjRsNWlwaFp4ODJBT3RKZ29aUmNJY3p1UXM2UTdWZnNURmJB?oc=5</link>
+<description>Hegseth puts Nato on notice: Pentagon to reassess US forces in Europe within six months Firstpost</description>
+<pubDate>Thu, 18 Jun 2026 07:00:00 GMT</pubDate>
+<source>Firstpost</source>
+<category>military</category>
+<guid isPermaLink="false">3160098586577749004</guid>
+</item>
+<item>
+<title>Iran war drives wedge between US and European allies, NATO in question - The Arab Weekly</title>
+<link>https://news.google.com/rss/articles/CBMilwFBVV95cUxQTm9oaV9XZ0xEWlhTbUEwRlphZnBkMVNEUjBxUERfLVpJSHhzWGVpX1U2UjFkY0Z0b3d2dkxrS2FzdTFVVWtfMlVzOFdkLWJNNFcwajZpNXRKMlVpcUhEQkxnZ21zdE9IXzExS3JxV29oT3MzQVo3bzVOQ0VjWExRelhoV2xSZ29KamJEdlJoQzFjYUI2LUxZ?oc=5</link>
+<description>Iran war drives wedge between US and European allies, NATO in question The Arab Weekly</description>
+<pubDate>Wed, 01 Apr 2026 07:00:00 GMT</pubDate>
+<source>The Arab Weekly</source>
+<category>military</category>
+<guid isPermaLink="false">1437089853705364422</guid>
+</item>
+<item>
+<title>Pentagon Rift Deepens: NATO Unity Tested as U.S. Weighs Punitive Measures Against Allies - Modern Diplomacy</title>
+<link>https://news.google.com/rss/articles/CBMiwwFBVV95cUxOVUFXTFprMEFVN0tSRjI3MWhiX2J4ZW1GSEpXRVVRUzZjMm5icy1hZDVQclB1NEpMUldPaWJ4WHZpSENKa3FBR3VUMzV1N2NVNE1XQXlDQldNS05sOTV4dlAzZEZBanBqcU9IRkJQRzRZcWdGNkwzYmdqT0dNV1NKWEFsQi1kWnJJc3BHZ2g0a3g1aGVMQVhEbXkyZmZFOU1Bc3JSbU1zNWpIVjRZeHdnNWxlR0Z5ZWhMMmQyTXVpay1nNkU?oc=5</link>
+<description>Pentagon Rift Deepens: NATO Unity Tested as U.S. Weighs Punitive Measures Against Allies Modern Diplomacy</description>
+<pubDate>Fri, 24 Apr 2026 07:00:00 GMT</pubDate>
+<source>Modern Diplomacy</source>
+<category>military</category>
+<guid isPermaLink="false">2566712251571723179</guid>
+</item>
+<item>
+<title>Pentagon email floats suspending Spain from Nato over Iran war snub - The Independent</title>
+<link>https://news.google.com/rss/articles/CBMirwFBVV95cUxPa0lyVDNqVjV3WWw5UDFVQXAzTC0wUjRNVXZGd3lvZmEwaUpMdC1IdUs4Vkd3NU1jTkItT2NIY2VuV2tuZVU4SVd0Z3lldmFtRE1oRFBCQWFJeWtvTVJkTVlRRHZuM2ZuVFh2QU9mcWFKMTE4dTNjaGo3bDRRVzBJTmZleUJYRkpoaFN1bGxLMmVCanktTkVLLTdxa1gzVlNDQlRlU1ZDMEJXVkExWTJN?oc=5</link>
+<description>Pentagon email floats suspending Spain from Nato over Iran war snub The Independent</description>
+<pubDate>Fri, 24 Apr 2026 07:00:00 GMT</pubDate>
+<source>The Independent</source>
+<category>military</category>
+<guid isPermaLink="false">7283747126999310273</guid>
+</item>
+<item>
+<title>Britain and Spain Reject Reported Plans by Trump to Punish Them - The New York Times</title>
+<link>https://news.google.com/rss/articles/CBMiigFBVV95cUxQZHRTM0h6UTJOM1JIZHNyclpnTElxbldzTnN6MnY0Z1FSQnNGMThwUlhuN0J5Z3RDdXV1YkcyWWNYR01Mc18yX2tyVE5MUmllRWJjMXJmZWZ4S3pXSWl0djRYZmllZkJPMEJCbUNzZXR0N1BJSnRTUkZJcmNMWEowVjExOGRCQjFBd0E?oc=5</link>
+<description>Britain and Spain Reject Reported Plans by Trump to Punish Them The New York Times</description>
+<pubDate>Sun, 26 Apr 2026 07:00:00 GMT</pubDate>
+<source>The New York Times</source>
+<category>military</category>
+<guid isPermaLink="false">430878005827515677</guid>
+</item>
+<item>
+<title>Pentagon considers diverting Ukraine military aid to the Middle East - The Washington Post</title>
+<link>https://news.google.com/rss/articles/CBMinAFBVV95cUxQM1ViZ0NwODdyYVo1ZUV5MTJ6Z0MtMHFPMEg3Mmg4ZWZBMS05RFNKNV9hSGUydmcwZWdRaklzVDhYdWw5U0tWblVDTFlTMWJVdFEtSjdqVzdVQlAwU0N5Y0RRd0FUaTV0b0tjMDRaWnhGX3ZDMzZJSnZnS0NkQjlnWHFDb25tY2ZzV2tMX3NGb29nOEtlMEZIX0FnUlI?oc=5</link>
+<description>Pentagon considers diverting Ukraine military aid to the Middle East The Washington Post</description>
+<pubDate>Thu, 26 Mar 2026 07:00:00 GMT</pubDate>
+<source>The Washington Post</source>
+<category>military</category>
+<guid isPermaLink="false">7941901324882239374</guid>
+</item>
+</channel></rss>
