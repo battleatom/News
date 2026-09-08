@@ -30,31 +30,35 @@ old_local_block = '''    "local": [
 if old_local_block in text:
     text = text.replace(old_local_block, new_local)
 
-# Add the Regional section to the collector's category list.
 old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]'
 new_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
 text = text.replace(old_sections, new_sections)
 
-# Add the automatically location-aware Regional feed. The workflow prepares
-# stories for broad US regions; the browser later chooses the appropriate region.
-if '"region": [' not in text:
+# Regional queries intentionally emphasize strong regional/public-service outlets rather
+# than simply searching a state name. Google News still supplies the freshness layer.
+region_block = '''    "region": [
+        "site:propublica.org Southwest Arizona Colorado New Mexico Nevada Utah OR site:statesnewsroom.com Southwest OR site:azmirror.com OR site:sourcenm.com OR site:coloradosun.com OR site:sltrib.com OR site:nevadanews.com",
+        "site:latimes.com California OR site:calmatters.org OR site:oregoncapitalchronicle.com OR site:washingtonstatestandard.com OR site:statesnewsroom.com West",
+        "site:coloradosun.com OR site:coloradonewsline.com OR site:utahnewsdispatch.com OR site:idahocapitalsun.com OR site:dailymontanan.com OR site:wyofile.com Mountain West",
+        "site:statesnewsroom.com Midwest OR site:capitolnewsillinois.com OR site:indianacapitalchronicle.com OR site:iowacapitaldispatch.com OR site:michiganadvance.com OR site:minnesotareformer.com OR site:missouriindependent.com OR site:ohiocapitaljournal.com OR site:wisconsingexaminer.com",
+        "site:statesnewsroom.com South OR site:texastribune.org OR site:virginiamercury.com OR site:ncnewsline.com OR site:tennesseelookout.com OR site:floridaphoenix.com OR site:georgiarecorder.com OR site:alabamareflector.com",
+        "site:statesnewsroom.com Northeast OR site:newyorkfocus.com OR site:capital-star.com OR site:ctmirror.org OR site:commonwealthbeacon.org OR site:maine-morningstar.com OR site:njmonitor.com OR site:spotlightdelaware.org",
+        "site:washingtonstatestandard.com OR site:oregoncapitalchronicle.com OR site:idahocapitalsun.com OR site:alaskabeacon.com OR site:statesnewsroom.com Northwest",
+        "site:statesnewsroom.com Southeast OR site:floridaphoenix.com OR site:georgiarecorder.com OR site:alabamareflector.com OR site:ncnewsline.com OR site:scdailygazette.com OR site:tennesseelookout.com OR site:mississippitoday.org",
+    ],'''
+start = text.find('    "region": [')
+if start != -1:
+    end = text.find('    ],', start)
+    if end != -1:
+        end += len('    ],')
+        text = text[:start] + region_block + text[end:]
+else:
     anchor = '    "local": ['
     start = text.find(anchor)
     end = text.find('    ],', start)
     if start != -1 and end != -1:
         end += len('    ],')
-        region_block = '''
-    "region": [
-        "Arizona New Mexico Utah Colorado regional news Southwest",
-        "California Oregon Washington Nevada regional news West Coast",
-        "Colorado Utah Idaho Montana Wyoming regional news Mountain West",
-        "Illinois Ohio Michigan Wisconsin Minnesota Iowa Missouri regional news Midwest",
-        "Texas Florida Georgia North Carolina Tennessee Virginia regional news South",
-        "New York Pennsylvania New Jersey Massachusetts Connecticut regional news Northeast",
-        "Washington Oregon Idaho Alaska regional news Pacific Northwest",
-        "Florida Georgia Alabama South Carolina North Carolina regional news Southeast",
-    ],'''
-        text = text[:end] + region_block + text[end:]
+        text = text[:end] + '\n' + region_block + text[end:]
 
 # Make the collector accept list-valued queries while preserving existing behavior.
 old_loop = '''    for category, query in QUERIES.items():
@@ -78,7 +82,6 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
-# Current update_news.py has an explicit Local query loop. Extend it with Region.
 old_explicit_loop = '''            if category == "local":
                 items = []
                 for local_query in LOCAL_QUERIES:
@@ -140,13 +143,11 @@ if 'elif category == "region":' not in text:
                 items = parse_items(fetch(query), category)'''
     text = text.replace(needle, replacement, 1)
 
-# Add region metadata to the RSS item so the browser can select the user's region.
 old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 if old_build in text:
     text = text.replace(old_build, new_build)
 
-# Keep 10 strong, diverse regional stories for each supported region.
 old_selected = '''    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
     top = select_top_stories(top_unique)'''
 new_selected = '''    selected_by_category = {}
@@ -164,4 +165,4 @@ if old_selected in text:
     text = text.replace(old_selected, new_selected)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: preserved Local and added multi-region Regional news data.")
+print("Patched collector: preserved Local and added source-focused regional news data.")
