@@ -95,6 +95,9 @@ jobs:
       - name: Add Load More pagination
         run: python scripts/patch_load_more.py
 
+      - name: Fix Regional tab click handling
+        run: python scripts/fix_region_tab_click.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
