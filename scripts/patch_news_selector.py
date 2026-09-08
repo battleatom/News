@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 path = Path("scripts/update_news.py")
 text = path.read_text(encoding="utf-8")
@@ -42,8 +43,9 @@ if '    "nfl": [' not in text:
     ],
 ''' + text[idx:]
 
-# X is a separate conversation-signal pool. The enrichment step clusters these
-# indexed public X/Twitter results and deliberately does not invent post counts.
+# X is a separate conversation-signal pool. It uses public X/Twitter results
+# indexed by Google News; later enrichment clusters them and explicitly avoids
+# inventing total post counts or treating trending claims as verified facts.
 if '    "x": [' not in text:
     anchor = '    "underreported": '
     idx = text.find(anchor)
@@ -62,26 +64,22 @@ if '    "x": [' not in text:
     ],
 ''' + text[idx:]
 
-old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]'
-new_sections = 'SECTIONS = ["top", "nfl", "x", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
-text = text.replace(old_sections, new_sections)
+# Add X to the collector sections regardless of the exact current ordering.
+match = re.search(r'SECTIONS\s*=\s*\[[^\n]+\]', text)
+if match:
+    sections = match.group(0)
+    if '"x"' not in sections:
+        sections = sections.replace('"top",', '"top", "x",', 1)
+        text = text[:match.start()] + sections + text[match.end():]
 
-region_block = '''    "region": {
-        "southwest": ["Arizona news", "New Mexico news", "Colorado news", "Utah news", "Nevada news"],
-        "west": ["California news", "Nevada news", "Oregon news", "Washington state news"],
-        "mountain": ["Colorado news", "Utah news", "Idaho news", "Montana news", "Wyoming news"],
-        "midwest": ["Illinois news", "Michigan news", "Ohio news", "Wisconsin news", "Minnesota news", "Iowa news", "Missouri news", "Indiana news"],
-        "south": ["Texas news", "Oklahoma news", "Arkansas news", "Louisiana news", "Tennessee news", "Kentucky news", "Virginia news", "West Virginia news"],
-        "northeast": ["New York news", "Pennsylvania news", "New Jersey news", "Connecticut news", "Massachusetts news", "New England news", "Maine news", "New Hampshire news", "Vermont news", "Rhode Island news"],
-        "pacific-northwest": ["Washington state news", "Oregon news", "Idaho news", "Alaska news"],
-        "southeast": ["Florida news", "Georgia news", "Alabama news", "South Carolina news", "North Carolina news", "Mississippi news", "Tennessee news"],
-    },'''
-start = text.find('    "region": [')
-if start != -1:
-    end = text.find('    ],', start)
-    if end != -1:
-        text = text[:start] + region_block + text[end + len('    ],'):]
+# Ensure region is represented in the generated feed even if an older collector
+# version is restored by another patch.
+match = re.search(r'SECTIONS\s*=\s*\[[^\n]+\]', text)
+if match and '"region"' not in match.group(0):
+    sections = match.group(0).replace('"local",', '"local", "region",', 1)
+    text = text[:match.start()] + sections + text[match.end():]
 
+# Support list-valued queries (including X) without breaking scalar queries.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -115,6 +113,7 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
+# Ensure region-aware collector logic for older versions of update_news.py.
 old_region_loop = '''            elif category == "region":
                 items = []
                 region_names = [
@@ -147,10 +146,11 @@ new_region_loop = '''            elif category == "region":
 if old_region_loop in text:
     text = text.replace(old_region_loop, new_region_loop)
 
+# Preserve region metadata in RSS output.
 old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 if old_build in text:
     text = text.replace(old_build, new_build)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: added NFL and X conversation-signal feeds while preserving Local and Regional coverage.")
+print("Patched collector: added X conversation-signal feed while preserving NFL, Local, and Regional coverage.")
