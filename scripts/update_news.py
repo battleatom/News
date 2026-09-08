@@ -8,11 +8,9 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 OUT = "News"
-SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "military"]
+SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]
 MAX_AGE_HOURS = 72
 
-# Broad feeds power the category pages and Underreported. Top Stories uses a
-# separate pool made only from established mainstream news organizations.
 QUERIES = {
     "world": "world news OR international news",
     "us": "United States news OR US politics",
@@ -21,6 +19,7 @@ QUERIES = {
     "nm": "New Mexico government OR New Mexico news",
     "local": "Farmington New Mexico OR Four Corners New Mexico",
     "technology": "technology AI cybersecurity science",
+    "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
 }
 
@@ -39,7 +38,7 @@ MAINSTREAM_TOP_QUERIES = [
     ("USA Today", "site:usatoday.com breaking news US world"),
 ]
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "nm": 8, "local": 4}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 4}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -51,8 +50,11 @@ HIGH_IMPACT_TERMS = {
     "outage": 10, "breach": 12, "hack": 12, "cyberattack": 15, "lawsuit": 8, "ruling": 10,
     "ban": 9, "recall": 10, "layoffs": 8, "bankruptcy": 12, "inflation": 8, "recession": 12,
     "water crisis": 16, "drought": 12, "contamination": 12,
+    "acquisition": 12, "acquires": 12, "acquired": 12, "studio closure": 14, "shuts down": 14,
+    "canceled": 10, "cancelled": 10, "delay": 8, "delayed": 8, "price increase": 10, "price hike": 10,
+    "console": 5, "gpu": 8, "nvidia": 8, "playstation": 7, "xbox": 7, "nintendo": 7, "rtx": 7,
 }
-ROUTINE_TERMS = {"opinion": -10, "review": -8, "podcast": -8, "how to": -8, "watch": -5, "photos": -5, "best": -5, "guide": -5}
+ROUTINE_TERMS = {"opinion": -10, "review": -8, "podcast": -8, "how to": -8, "watch": -5, "photos": -5, "best": -5, "guide": -5, "sale": -8, "deal": -8}
 
 
 def feed_url(query):
@@ -99,20 +101,27 @@ def parse_items(root, category, source_override=None):
 
 
 def key(item):
-    """Normalize a headline so the same story from different outlets collapses."""
     title = item["title"]
     source = (item.get("source") or "").strip()
     if source:
         title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.IGNORECASE)
-    domains = {
-        "apnews.com", "reuters.com", "cnn.com", "foxnews.com", "nbcnews.com",
-        "abcnews.go.com", "cbsnews.com", "npr.org", "usatoday.com", "bbc.com",
-        "bbc.co.uk", "nytimes.com", "washingtonpost.com"
-    }
+    domains = {"apnews.com", "reuters.com", "cnn.com", "foxnews.com", "nbcnews.com", "abcnews.go.com", "cbsnews.com", "npr.org", "usatoday.com", "bbc.com", "bbc.co.uk", "nytimes.com", "washingtonpost.com"}
     title = re.sub(r"\s+(?:[-–—|:]\s*)?(?:" + "|".join(re.escape(d) for d in domains) + r")\s*$", "", title, flags=re.IGNORECASE)
     words = re.findall(r"[a-z0-9]+", title.lower())
     stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says"}
     return " ".join(w for w in words if w not in stop)[:180]
+
+
+def source_key(source):
+    s = re.sub(r"[^a-z0-9]+", "", (source or "").lower())
+    aliases = {
+        "delawareonline": "delawareonline",
+        "delawareonlinecom": "delawareonline",
+        "usatoday": "usatoday",
+        "apnews": "associatedpress",
+        "associatedpress": "associatedpress",
+    }
+    return aliases.get(s, s)
 
 
 def impact_score(item, newest_time):
@@ -141,8 +150,7 @@ def select_top_stories(unique):
         coverage.setdefault(k, set()).add(item["source"] or "Unknown")
     ranked = []
     for item in unique:
-        k = key(item)
-        outlet_count = len(coverage.get(k, set()))
+        k = key(item); outlet_count = len(coverage.get(k, set()))
         score = impact_score(item, newest_time) + min(30, outlet_count * 7)
         if outlet_count >= 4:
             score += 8
@@ -150,7 +158,7 @@ def select_top_stories(unique):
     ranked.sort(key=lambda x: (x[0], x[1]), reverse=True)
     selected, seen_keys, source_counts = [], set(), {}
     for _, _, _, item in ranked:
-        k = key(item); source = item["source"] or "Unknown"
+        k = key(item); source = source_key(item["source"] or "Unknown")
         if k in seen_keys or source_counts.get(source, 0) >= 2:
             continue
         selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
@@ -166,7 +174,7 @@ def select_underreported(unique):
     coverage = {}
     for item in unique:
         k = key(item)
-        coverage.setdefault(k, set()).add((item["source"] or "Unknown").lower())
+        coverage.setdefault(k, set()).add(source_key(item["source"] or "Unknown"))
     candidates = []
     for item in unique:
         k = key(item); sources = len(coverage.get(k, set())); impact = impact_score(item, newest_time)
@@ -179,7 +187,7 @@ def select_underreported(unique):
     candidates.sort(key=lambda x: (x[0], x[1]), reverse=True)
     selected, seen_keys, source_counts = [], set(), {}
     for _, _, item in candidates:
-        k = key(item); source = item["source"] or "Unknown"
+        k = key(item); source = source_key(item["source"] or "Unknown")
         if k in seen_keys or source_counts.get(source, 0) >= 2:
             continue
         selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
@@ -188,23 +196,14 @@ def select_underreported(unique):
     return selected
 
 
-def select_category_stories(unique, category, limit=10):
-    """Select category stories with source diversity.
-
-    A publisher may contribute only one story to a category page. This prevents
-    two differently-worded Google News results from the same outlet (such as
-    Delaware Online) from occupying multiple slots when they are effectively
-    duplicate coverage.
-    """
-    candidates = [x for x in unique if x["category"] == category]
-    selected = []
-    used_sources = set()
-    for item in candidates:
-        source = re.sub(r"\s+", " ", (item.get("source") or "Unknown").strip()).lower()
-        if source in used_sources:
+def select_category_stories(items, limit=10):
+    """Keep category pages diverse: no publisher may occupy more than one slot."""
+    selected, seen_keys, seen_sources = [], set(), set()
+    for item in sorted(items, key=lambda x: x["published"], reverse=True):
+        k = key(item); source = source_key(item["source"] or "Unknown")
+        if not k or k in seen_keys or source in seen_sources:
             continue
-        selected.append(item)
-        used_sources.add(source)
+        selected.append(item); seen_keys.add(k); seen_sources.add(source)
         if len(selected) == limit:
             break
     return selected
@@ -220,6 +219,8 @@ def why_matters(item):
         reason = "could have wider economic consequences"
     elif any(t in text for t in ("hack", "breach", "cyberattack", "outage", "technology")):
         reason = "could affect security, infrastructure, or technology users"
+    elif item["category"] == "gaming":
+        reason = "could affect gamers, gaming hardware, major platforms, or the wider games industry"
     elif any(t in text for t in ("wildfire", "hurricane", "tornado", "earthquake", "drought", "water crisis", "contamination")):
         reason = "could affect public safety or essential resources"
     elif item["category"] in ("nm", "local"):
@@ -235,14 +236,10 @@ def xml_escape(value):
 
 def build(items):
     now = datetime.now(timezone.utc).strftime("%a, %d %b %Y %H:%M:%S GMT")
-    out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>',
-           '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
+    out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>', '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
     for item in items:
         guid = hashlib.sha1((item["link"] + "|" + item["category"]).encode("utf-8")).hexdigest()
-        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>',
-                f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>',
-                f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>',
-                f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>', f'<guid isPermaLink="false">{guid}</guid>', "</item>"]
+        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>', f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>', f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>', f'<guid isPermaLink="false">{guid}</guid>', "</item>"]
     out.append("</channel></rss>")
     return "\n".join(out) + "\n"
 
@@ -271,18 +268,16 @@ def main():
         k = key(item)
         if not k or k in seen:
             continue
-        seen.add(k)
-        unique.append(item)
+        seen.add(k); unique.append(item)
 
     top_seen, top_unique = set(), []
     for item in sorted(mainstream_items, key=lambda x: x["published"], reverse=True):
         k = key(item)
         if not k or k in top_seen:
             continue
-        top_seen.add(k)
-        top_unique.append(item)
+        top_seen.add(k); top_unique.append(item)
 
-    selected_by_category = {category: select_category_stories(unique, category) for category in SECTIONS[2:]}
+    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
     top = select_top_stories(top_unique)
     underreported = select_underreported(unique)
 
@@ -296,9 +291,7 @@ def main():
 
     ordered = top_items + under_items
     for category in SECTIONS[2:]:
-        for item in selected_by_category[category]:
-            if item not in ordered:
-                ordered.append(item)
+        ordered.extend(selected_by_category[category])
 
     if not ordered:
         raise RuntimeError("No fresh stories were retrieved; refusing to overwrite News with an empty feed.")
