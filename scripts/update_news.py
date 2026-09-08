@@ -19,7 +19,7 @@ QUERIES = {
     "nm": "New Mexico government OR New Mexico news",
     "local": "Farmington New Mexico OR Four Corners New Mexico",
     "technology": "technology AI cybersecurity science",
-    "military": "military war conflict Pentagon NATO",
+    "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
 }
 
 # Top Stories favors broad-impact events over routine stories. These scores are
