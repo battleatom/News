@@ -40,6 +40,9 @@ jobs:
       - name: Apply article styling
         run: python scripts/patch_article_style.py
 
+      - name: Patch location-aware Regional tab
+        run: python scripts/patch_region_tab.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
