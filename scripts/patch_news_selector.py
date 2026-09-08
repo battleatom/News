@@ -30,95 +30,40 @@ old_local_block = '''    "local": [
 if old_local_block in text:
     text = text.replace(old_local_block, new_local)
 
+# NFL is a dedicated tab with its own news pool; live scores are rendered client-side.
+if '    "nfl": [' not in text:
+    anchor = '    "world": ['
+    idx = text.find(anchor)
+    if idx != -1:
+        text = text[:idx] + '''    "nfl": [
+        "NFL news",
+        "NFL injuries trades free agency",
+        "NFL scores results",
+    ],
+''' + text[idx:]
+
 old_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "technology", "gaming", "military"]'
-new_sections = 'SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
+new_sections = 'SECTIONS = ["top", "nfl", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]'
 text = text.replace(old_sections, new_sections)
 
-# Regional coverage uses several focused geographic searches per region. This is
-# intentionally more reliable than one long multi-state Google News query.
 region_block = '''    "region": {
-        "southwest": [
-            "Arizona news",
-            "New Mexico news",
-            "Colorado news",
-            "Utah news",
-            "Nevada news",
-        ],
-        "west": [
-            "California news",
-            "Nevada news",
-            "Oregon news",
-            "Washington state news",
-        ],
-        "mountain": [
-            "Colorado news",
-            "Utah news",
-            "Idaho news",
-            "Montana news",
-            "Wyoming news",
-        ],
-        "midwest": [
-            "Illinois news",
-            "Michigan news",
-            "Ohio news",
-            "Wisconsin news",
-            "Minnesota news",
-            "Iowa news",
-            "Missouri news",
-            "Indiana news",
-        ],
-        "south": [
-            "Texas news",
-            "Oklahoma news",
-            "Arkansas news",
-            "Louisiana news",
-            "Tennessee news",
-            "Kentucky news",
-            "Virginia news",
-            "West Virginia news",
-        ],
-        "northeast": [
-            "New York news",
-            "Pennsylvania news",
-            "New Jersey news",
-            "Connecticut news",
-            "Massachusetts news",
-            "New England news",
-            "Maine news",
-            "New Hampshire news",
-            "Vermont news",
-            "Rhode Island news",
-        ],
-        "pacific-northwest": [
-            "Washington state news",
-            "Oregon news",
-            "Idaho news",
-            "Alaska news",
-        ],
-        "southeast": [
-            "Florida news",
-            "Georgia news",
-            "Alabama news",
-            "South Carolina news",
-            "North Carolina news",
-            "Mississippi news",
-            "Tennessee news",
-        ],
+        "southwest": ["Arizona news", "New Mexico news", "Colorado news", "Utah news", "Nevada news"],
+        "west": ["California news", "Nevada news", "Oregon news", "Washington state news"],
+        "mountain": ["Colorado news", "Utah news", "Idaho news", "Montana news", "Wyoming news"],
+        "midwest": ["Illinois news", "Michigan news", "Ohio news", "Wisconsin news", "Minnesota news", "Iowa news", "Missouri news", "Indiana news"],
+        "south": ["Texas news", "Oklahoma news", "Arkansas news", "Louisiana news", "Tennessee news", "Kentucky news", "Virginia news", "West Virginia news"],
+        "northeast": ["New York news", "Pennsylvania news", "New Jersey news", "Connecticut news", "Massachusetts news", "New England news", "Maine news", "New Hampshire news", "Vermont news", "Rhode Island news"],
+        "pacific-northwest": ["Washington state news", "Oregon news", "Idaho news", "Alaska news"],
+        "southeast": ["Florida news", "Georgia news", "Alabama news", "South Carolina news", "North Carolina news", "Mississippi news", "Tennessee news"],
     },'''
 start = text.find('    "region": [')
 if start != -1:
     end = text.find('    ],', start)
     if end != -1:
-        end += len('    ],')
-        text = text[:start] + region_block + text[end:]
+        text = text[:start] + region_block + text[end + len('    ],'):]
 else:
     start = text.find('    "region": {')
-    if start != -1:
-        end = text.find('    },', start)
-        if end != -1:
-            end += len('    },')
-            text = text[:start] + region_block + text[end:]
-    else:
+    if start == -1:
         anchor = '    "local": ['
         start = text.find(anchor)
         end = text.find('    ],', start)
@@ -126,7 +71,6 @@ else:
             end += len('    ],')
             text = text[:end] + '\n' + region_block + text[end:]
 
-# Make the collector accept list-valued queries while preserving existing behavior.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -148,7 +92,6 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
-# Replace the regional collector with per-region, multi-query collection.
 old_region_loop = '''            elif category == "region":
                 items = []
                 region_names = [
@@ -181,14 +124,6 @@ new_region_loop = '''            elif category == "region":
 if old_region_loop in text:
     text = text.replace(old_region_loop, new_region_loop)
 
-if 'elif category == "region":' not in text:
-    needle = '''            else:
-                items = parse_items(fetch(query), category)'''
-    replacement = new_region_loop + '''
-            else:
-                items = parse_items(fetch(query), category)'''
-    text = text.replace(needle, replacement, 1)
-
 old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 if old_build in text:
@@ -211,4 +146,4 @@ if old_selected in text:
     text = text.replace(old_selected, new_selected)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: preserved Local and expanded Regional coverage with focused state searches.")
+print("Patched collector: added NFL news while preserving Local and Regional coverage.")
