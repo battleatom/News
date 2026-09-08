@@ -28,6 +28,9 @@ jobs:
       - name: Patch news collector rules
         run: python scripts/patch_news_selector.py
 
+      - name: Patch site cache metadata
+        run: python scripts/patch_site_cache.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
@@ -38,7 +41,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add News
+          git add News index.html
           if git diff --cached --quiet; then
             echo "News feed is already current."
           else
