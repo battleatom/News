@@ -34,6 +34,9 @@ jobs:
       - name: Apply Clean News App V1 design
         run: python scripts/apply_clean_design.py
 
+      - name: Persist selected news tab
+        run: python scripts/persist_active_tab.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
