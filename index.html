@@ -92,6 +92,14 @@ header{padding:24px 18px 23px;background:#0b1120}header h1{font-size:29px;letter
 .load-more:active{transform:translateY(1px)}
 @media(max-width:600px){.load-more-wrap{padding:18px 5px 4px}.load-more{width:100%;padding:10px 14px;font-size:10.5px}}
 </style>
+
+<style id="load-more-style-v1">
+.load-more-wrap{display:flex;justify-content:center;padding:20px 10px 6px}
+.load-more{appearance:none;border:1px solid #d5dae2;border-radius:999px;background:#fff;color:#344054;padding:10px 18px;font-size:11px;font-weight:750;cursor:pointer;box-shadow:0 1px 2px rgba(16,24,40,.05)}
+.load-more:hover{background:#f5f6f8;border-color:#c5cad3}
+.load-more:active{transform:translateY(1px)}
+@media(max-width:600px){.load-more-wrap{padding:18px 5px 4px}.load-more{width:100%;padding:10px 14px;font-size:10.5px}}
+</style>
 <style id="clean-news-v1">
 /* Underreported — modern Apple-inspired editorial design system. */
 :root{
@@ -235,7 +243,11 @@ function renderNfl(){
  const h=document.createElement('div');h.className='section-header';h.innerHTML='<h2>🏈 NFL</h2><span class="count">Live scores & latest news</span>';sec.appendChild(h);
  const body=document.createElement('div');body.className='section-body';body.innerHTML='<div class="loading">Loading NFL scores…</div>';sec.appendChild(body);root.appendChild(sec);
  fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32',{cache:'no-store'}).then(r=>r.json()).then(d=>{body.innerHTML='';(d.events||[]).forEach(ev=>{const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home'),card=document.createElement('article');card.className='news-item';card.innerHTML=`<h3>${esc(a?.team?.displayName||'Away')} <strong>${esc(a?.score??'-')}</strong> @ ${esc(h?.team?.displayName||'Home')} <strong>${esc(h?.score??'-')}</strong></h3><div class="meta"><span>${esc(ev.status?.type?.state==='post'?'FINAL':ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled')}</span></div>`;body.appendChild(card)});if(!d.events?.length)body.innerHTML='<div class="empty">No NFL games currently scheduled.</div>'}).catch(()=>body.innerHTML='<div class="empty">NFL scores are temporarily unavailable.</div>');
- const news=allItems.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='nfl').slice(0,10);if(news.length){const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='28px';nh.innerHTML='<h2>NFL News</h2><span class="count">Latest</span>';root.appendChild(nh);const nb=document.createElement('div');nb.className='section-body';news.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta">${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar)});root.appendChild(nb)}
+ const allNfl=allItems.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='nfl');
+ const count=Math.min(loadCounts?.nfl||10,allNfl.length),news=allNfl.slice(0,count);
+ const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='28px';nh.innerHTML=`<h2>NFL News</h2><span class="count">Showing ${count} of ${allNfl.length}</span>`;root.appendChild(nh);
+ const nb=document.createElement('div');nb.className='section-body';news.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta">${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar)});root.appendChild(nb);
+ if(allNfl.length>count){const more=document.createElement('div');more.className='load-more-wrap';const button=document.createElement('button');button.className='load-more';const next=Math.min(count+10,allNfl.length);button.textContent=`Load 10 more (${next} of ${allNfl.length})`;button.onclick=()=>{loadCounts.nfl=next;render(allItems)};more.appendChild(button);root.appendChild(more)}
 }
 function regionRender(items){if(active==='nfl'){renderNfl();return}const def=sections.find(x=>x[0]===active),accent=def?def[2]:'#111827';let list=items.filter(x=>(x.querySelector('category')?.textContent?.trim()||'world')===active);if(active==='region')list=list.filter(x=>(x.querySelector('region')?.textContent?.trim()||'')===detectedRegion);const root=document.getElementById('news-feed');root.innerHTML='';const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',accent);const head=document.createElement('div');head.className='section-header';const label=active==='region'?'🌎 '+regionLabels[detectedRegion]+' Region':(def?def[1]:'News');head.innerHTML=`<h2>${esc(label)}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);const body=document.createElement('div');body.className='section-body';if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',link=item.querySelector('link')?.textContent||'#',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(ar)});sec.appendChild(body);root.appendChild(sec)}
 render=regionRender;
@@ -249,42 +261,33 @@ const loadCounts = {};
 function paginatedNewsItems(items){
   const categoryItems = items.filter(item => (item.querySelector('category')?.textContent?.trim() || 'world') === active);
   let available = categoryItems;
-  if(active === 'region'){
-    available = categoryItems.filter(item => (item.querySelector('region')?.textContent?.trim() || '') === detectedRegion);
-  }
+  if(active === 'region') available = categoryItems.filter(item => (item.querySelector('region')?.textContent?.trim() || '') === detectedRegion);
   const count = Math.min(loadCounts[active] || STORIES_PER_PAGE, available.length);
   return {available, visible: available.slice(0, count), count};
 }
 
 const baseRenderWithPagination = render;
 render = function(items){
+  // NFL has its own two-part renderer (scores + news), so its pagination is
+  // handled inside renderNfl rather than being appended beneath the score card.
+  if(active === 'nfl') return baseRenderWithPagination(items);
+
   const data = paginatedNewsItems(items);
   baseRenderWithPagination(data.visible);
-
   const root = document.getElementById('news-feed');
   const section = root.querySelector('.section');
   if(!section) return;
-
   const countEl = section.querySelector('.section-header .count');
-  if(countEl){
-    const locationNote = active === 'region' && typeof detectedLocation !== 'undefined' && detectedLocation ? ' · ' + detectedLocation : '';
-    countEl.textContent = `Showing ${data.count} of ${data.available.length} stories${locationNote}`;
-  }
-
+  if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length} stories`;
   if(data.available.length <= data.count) return;
-
   const more = document.createElement('div');
   more.className = 'load-more-wrap';
   const button = document.createElement('button');
   button.className = 'load-more';
   const next = Math.min(data.count + STORIES_PER_PAGE, data.available.length);
   button.textContent = `Load 10 more (${next} of ${data.available.length})`;
-  button.onclick = () => {
-    loadCounts[active] = next;
-    render(allItems);
-  };
+  button.onclick = () => { loadCounts[active] = next; render(allItems); };
   more.appendChild(button);
-  // Keep the control at the bottom of the page/section, after all stories.
   section.appendChild(more);
 };
 </script></body></html>
