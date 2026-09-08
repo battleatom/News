@@ -2,6 +2,14 @@ from pathlib import Path
 
 path = Path("index.html")
 text = path.read_text(encoding="utf-8")
+
+# The main workflow enforces the section list; add X immediately after NFL so it
+# remains part of the normal tab bar on every rebuild.
+section_old = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
+section_new = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
+if section_old in text:
+    text = text.replace(section_old, section_new, 1)
+
 marker = '<script id="x-issues-ui-v1">'
 while marker in text:
     s = text.find(marker); e = text.find('</script>', s)
