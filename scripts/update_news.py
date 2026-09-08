@@ -27,16 +27,75 @@ QUERIES = {
         "Four Corners New Mexico news",
         "Farmington NM crime OR government OR education OR business",
     ],
-    "region": [
-        "Southwest US news Arizona New Mexico Colorado Utah Nevada",
-        "Western US news California Nevada Arizona Oregon Washington",
-        "Mountain West news Colorado Utah Idaho Montana Wyoming New Mexico",
-        "Midwest US news Illinois Indiana Michigan Ohio Wisconsin Minnesota Iowa Missouri",
-        "Southern US news Texas Oklahoma Arkansas Louisiana Tennessee Virginia Kentucky",
-        "Northeast US news New York Pennsylvania New Jersey Connecticut Massachusetts Maine",
-        "Pacific Northwest news Washington Oregon Idaho Alaska",
-        "Southeast US news Florida Georgia Alabama South Carolina North Carolina Tennessee Mississippi",
-    ],
+    "region": {
+        "southwest": [
+            "Arizona news",
+            "New Mexico news",
+            "Colorado news",
+            "Utah news",
+            "Nevada news",
+        ],
+        "west": [
+            "California news",
+            "Nevada news",
+            "Oregon news",
+            "Washington state news",
+        ],
+        "mountain": [
+            "Colorado news",
+            "Utah news",
+            "Idaho news",
+            "Montana news",
+            "Wyoming news",
+        ],
+        "midwest": [
+            "Illinois news",
+            "Michigan news",
+            "Ohio news",
+            "Wisconsin news",
+            "Minnesota news",
+            "Iowa news",
+            "Missouri news",
+            "Indiana news",
+        ],
+        "south": [
+            "Texas news",
+            "Oklahoma news",
+            "Arkansas news",
+            "Louisiana news",
+            "Tennessee news",
+            "Kentucky news",
+            "Virginia news",
+            "West Virginia news",
+        ],
+        "northeast": [
+            "New York news",
+            "Pennsylvania news",
+            "New Jersey news",
+            "Connecticut news",
+            "Massachusetts news",
+            "New England news",
+            "Maine news",
+            "New Hampshire news",
+            "Vermont news",
+            "Rhode Island news",
+        ],
+        "pacific-northwest": [
+            "Washington state news",
+            "Oregon news",
+            "Idaho news",
+            "Alaska news",
+        ],
+        "southeast": [
+            "Florida news",
+            "Georgia news",
+            "Alabama news",
+            "South Carolina news",
+            "North Carolina news",
+            "Mississippi news",
+            "Tennessee news",
+        ],
+    },
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -317,19 +376,18 @@ def main():
                         print(f"Local feed failed for {local_query}: {exc}")
             elif category == "region":
                 items = []
-                region_names = [
-                    "southwest", "west", "mountain", "midwest",
-                    "south", "northeast", "pacific-northwest", "southeast",
-                ]
-                for region_name, region_query in zip(region_names, query):
-                    try:
-                        batch = parse_items(fetch(region_query), category)
-                        for item in batch:
-                            item["region"] = region_name
-                        print(f"region/{region_name}: {len(batch)} fresh stories")
-                        items.extend(batch)
-                    except Exception as exc:
-                        print(f"Region feed failed for {region_name}: {exc}")
+                for region_name, region_queries in query.items():
+                    region_count = 0
+                    for region_query in region_queries:
+                        try:
+                            batch = parse_items(fetch(region_query), category)
+                            for item in batch:
+                                item["region"] = region_name
+                            region_count += len(batch)
+                            items.extend(batch)
+                        except Exception as exc:
+                            print(f"Region feed failed for {region_name}/{region_query}: {exc}")
+                    print(f"region/{region_name}: {region_count} fresh stories")
             else:
                 items = parse_items(fetch(query), category)
             print(f"{category}: {len(items)} fresh stories before dedupe")
