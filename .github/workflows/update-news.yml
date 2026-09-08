@@ -50,19 +50,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add News index.html
+          # The patch steps can intentionally update tracked collector/design files.
+          # Stage everything so those changes cannot block a later rebase.
+          git add -A
           if git diff --cached --quiet; then
             echo "News feed is already current."
           else
             git commit -m "Auto-update news feed"
-            for attempt in 1 2 3; do
+            for attempt in 1 2 3 4 5; do
               if git push; then
                 exit 0
               fi
               echo "Push conflict; rebasing onto the latest main (attempt $attempt)."
               git fetch origin main
-              git rebase origin/main
+              git rebase --autostash origin/main
             done
-            echo "Unable to push after 3 attempts."
+            echo "Unable to push after 5 attempts."
             exit 1
           fi
