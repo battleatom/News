@@ -37,6 +37,9 @@ jobs:
       - name: Persist selected news tab
         run: python scripts/persist_active_tab.py
 
+      - name: Apply article styling
+        run: python scripts/patch_article_style.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
