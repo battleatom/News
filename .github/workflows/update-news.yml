@@ -31,6 +31,9 @@ jobs:
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
 
+      - name: Apply Clean News App V1 design
+        run: python scripts/apply_clean_design.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
