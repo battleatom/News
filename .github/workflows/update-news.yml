@@ -101,6 +101,9 @@ jobs:
       - name: Update RSS feed
         run: python scripts/update_news.py
 
+      - name: Enrich World news content
+        run: python scripts/enrich_world_content.py
+
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
 
