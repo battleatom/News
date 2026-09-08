@@ -20,14 +20,18 @@ ORDINARY_PAYWALL_SOURCES = (
     "bloomberg", "the washington post", "washington post",
 )
 
-# Local means the Farmington / San Juan County / Four Corners area.
-# Google News sometimes returns unrelated state-level stories for broad local
-# queries, so Local is now explicitly geographic rather than query-based.
-LOCAL_REQUIRED_TERMS = (
+# Local is specifically the Farmington / San Juan County / Four Corners area.
+# Keep this filter aligned with the collector: do not use generic "New Mexico"
+# as a Local signal because that admits statewide stories that belong in NM.
+LOCAL_TITLE_TERMS = (
     "farmington", "san juan county", "san juan regional", "aztec, nm", "aztec nm",
     "aztec new mexico", "bloomfield, nm", "bloomfield nm", "bloomfield new mexico",
     "kirtland, nm", "kirtland nm", "kirtland new mexico", "shiprock", "navajo nation",
-    "four corners", "san juan basin", "new mexico",
+    "four corners", "san juan basin",
+)
+LOCAL_SOURCE_TERMS = (
+    "farmington daily times", "daily times", "navajo times", "san juan county",
+    "four corners", "new mexico", "krtm", "ksje",
 )
 LOCAL_BLOCKED_TERMS = (
     "new york", "new jersey", "pennsylvania", "oklahoma", "texas", "colorado",
@@ -66,23 +70,22 @@ def is_gaming_commerce(item):
 
 
 def is_local_item(item):
-    text = normalized(item.findtext("title")) + " " + normalized(item.findtext("description"))
+    title = normalized(item.findtext("title"))
     source = normalized(item.findtext("source"))
-    local_source = any(name in source for name in (
-        "farmington daily times", "daily times", "navajo times", "san juan county",
-        "four corners", "new mexico", "krtm", "ksje",
-    ))
-    has_local_signal = any(term in text for term in LOCAL_REQUIRED_TERMS)
-    has_blocked_signal = any(term in text for term in LOCAL_BLOCKED_TERMS)
 
-    # If an outside-state location is explicitly the subject, reject it even
-    # when the article happens to mention New Mexico in passing.
-    if has_blocked_signal and not any(term in text for term in (
-        "farmington", "san juan county", "four corners", "shiprock", "navajo nation",
-        "new mexico", "san juan basin",
-    )):
+    # Locality is determined from the headline or known local publisher, not
+    # from the description. Descriptions frequently mention unrelated places.
+    title_local = any(term in title for term in LOCAL_TITLE_TERMS)
+    source_local = any(term in source for term in LOCAL_SOURCE_TERMS)
+    if not (title_local or source_local):
         return False
-    return has_local_signal or local_source
+
+    # If the headline itself names an outside state and does not name a local
+    # Four Corners place, reject it. This prevents broad Google News matches.
+    title_blocked = any(term in title for term in LOCAL_BLOCKED_TERMS)
+    if title_blocked and not title_local:
+        return False
+    return True
 
 
 def is_ordinary_paywall(item):
