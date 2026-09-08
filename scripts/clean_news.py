@@ -19,6 +19,16 @@ ORDINARY_PAYWALL_SOURCES = (
     "the new york times", "new york times", "wall street journal", "wsj",
     "bloomberg", "the washington post", "washington post",
 )
+WORLD_HEADLINE_EVENT_TERMS = (
+    "attack", "attacks", "attacked", "strike", "strikes", "struck", "war",
+    "ceasefire", "invasion", "invades", "missile", "missiles", "killed",
+    "dies", "died", "election", "elections", "votes", "voted", "sanctions",
+    "tariff", "tariffs", "crisis", "earthquake", "hurricane", "wildfire",
+    "earthquake", "ruling", "court", "government", "president", "prime minister",
+    "resigns", "resignation", "arrested", "arrests", "protest", "protests",
+    "protesters", "agrees", "announces", "announced", "approves", "approved",
+    "orders", "launches", "launch", "explosion", "explodes", "collapse", "collapsed",
+)
 
 
 def clean(value):
@@ -28,6 +38,36 @@ def clean(value):
 
 def normalized(value):
     return re.sub(r"\s+", " ", clean(value)).strip().lower()
+
+
+def headline_without_source(item):
+    title = clean(item.findtext("title"))
+    source = clean(item.findtext("source")).strip()
+    if source:
+        title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.IGNORECASE)
+    return re.sub(r"\s+", " ", title).strip()
+
+
+def is_vague_world_headline(item):
+    if normalized(item.findtext("category")) != "world":
+        return False
+    headline = headline_without_source(item)
+    if not headline:
+        return True
+    words = re.findall(r"[A-Za-z0-9]+", headline)
+    lowered = headline.lower()
+    # Reject source-style/topic-only headlines such as "Trump - WV News" or
+    # "Ukraine - Example News". A World headline should tell the reader what
+    # actually happened, not merely name a person, country, or topic.
+    if len(words) <= 2:
+        return True
+    if len(words) <= 3 and not any(term in lowered for term in WORLD_HEADLINE_EVENT_TERMS):
+        return True
+    # Also reject titles that are essentially a bare proper noun plus a generic
+    # label, even when punctuation makes them look longer.
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9'’.-]*(?:\s+[A-Za-z0-9][A-Za-z0-9'’.-]*){0,2}", headline):
+        return True
+    return False
 
 
 def is_gaming_commerce(item):
@@ -63,6 +103,7 @@ def main():
     kept = []
     removed_gaming = 0
     removed_paywall = 0
+    removed_vague_world = 0
 
     for item in items:
         category = normalized(item.findtext("category"))
@@ -71,6 +112,9 @@ def main():
             continue
         if is_ordinary_paywall(item):
             removed_paywall += 1
+            continue
+        if is_vague_world_headline(item):
+            removed_vague_world += 1
             continue
         # Local geography is enforced upstream by patch_news_selector.py before
         # stories are selected. Do not run a second, source-based locality filter
@@ -86,6 +130,7 @@ def main():
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
+    print(f"Removed {removed_vague_world} vague World headlines.")
     print("Local stories retained after upstream geographic selection.")
 
 
