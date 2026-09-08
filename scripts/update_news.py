@@ -12,6 +12,11 @@ SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "n
 MAX_AGE_HOURS = 48
 
 QUERIES = {
+    "nfl": [
+        "NFL news",
+        "NFL injuries trades free agency",
+        "NFL scores results",
+    ],
     "world": "world news OR international news",
     "us": "United States news OR US politics",
     "presidential": "Trump president White House",
@@ -96,6 +101,7 @@ QUERIES = {
             "Tennessee news",
         ],
     },
+    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
