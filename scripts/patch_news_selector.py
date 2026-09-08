@@ -3,6 +3,7 @@ from pathlib import Path
 path = Path("scripts/update_news.py")
 text = path.read_text(encoding="utf-8")
 
+# Keep the existing Four Corners Local tab exactly as its own fixed geographic feed.
 old_local = '    "local": "Farmington New Mexico OR San Juan County New Mexico OR Aztec New Mexico OR Bloomfield New Mexico OR Kirtland New Mexico OR Shiprock New Mexico OR Four Corners New Mexico",'
 new_local = '''    "local": [
         "Farmington New Mexico news",
@@ -17,7 +18,6 @@ new_local = '''    "local": [
 if old_local in text:
     text = text.replace(old_local, new_local)
 
-# Also support the previous multi-query patch if the workflow has already run once.
 old_local_block = '''    "local": [
         "Farmington New Mexico",
         "San Juan County New Mexico",
@@ -30,6 +30,28 @@ old_local_block = '''    "local": [
 if old_local_block in text:
     text = text.replace(old_local_block, new_local)
 
+# Add a second, automatically location-aware Regional feed. The workflow prepares
+# stories for broad US regions; the browser later chooses the appropriate region.
+if '"region": [' not in text:
+    anchor = '    "local": ['
+    start = text.find(anchor)
+    end = text.find('    ],', start)
+    if start != -1 and end != -1:
+        end += len('    ],')
+        region_block = '''
+    "region": [
+        "Southwest regional news Arizona New Mexico Utah Colorado",
+        "West Coast regional news California Oregon Washington Nevada",
+        "Mountain West regional news Colorado Utah Idaho Montana Wyoming",
+        "Midwest regional news Illinois Ohio Michigan Wisconsin Minnesota Iowa Missouri",
+        "South regional news Texas Florida Georgia North Carolina Tennessee Virginia",
+        "Northeast regional news New York Pennsylvania New Jersey Massachusetts Connecticut",
+        "Pacific Northwest regional news Washington Oregon Idaho Alaska",
+        "Southeast regional news Florida Georgia Alabama South Carolina North Carolina",
+    ],'''
+        text = text[:end] + region_block + text[end:]
+
+# Make the collector accept list-valued queries while preserving the existing Local behavior.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -51,56 +73,93 @@ new_loop = '''    for category, query in QUERIES.items():
 if old_loop in text:
     text = text.replace(old_loop, new_loop)
 
-old_selector_start = text.find('def select_category_stories(items, limit=10):')
-old_selector_end = text.find('\n\ndef why_matters', old_selector_start)
-if old_selector_start != -1 and old_selector_end != -1:
-    new_selector = '''def select_category_stories(items, limit=10):
-    """Select up to 10 distinct stories, with Local queries treated as the geographic scope."""
-    if items and items[0].get("category") == "local":
-        local_terms = (
-            "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
-            "kirtland", "shiprock", "navajo nation", "four corners", "san juan basin",
-            "farmington daily times", "daily times", "navajo times", "krtm", "ksje",
-        )
-        outside_terms = (
-            "california", "texas", "florida", "new york", "chicago", "atlanta",
-            "phoenix", "denver", "las vegas", "albuquerque", "santa fe",
-        )
-        local_items = []
-        for item in items:
-            title = (item.get("title") or "").lower()
-            source = (item.get("source") or "").lower()
-            desc = (item.get("description") or "").lower()
-            local_signal = any(term in title or term in source for term in local_terms)
-            outside_signal = any(term in title for term in outside_terms)
-            if local_signal and not outside_signal:
-                local_items.append(item)
-        # Prefer strongly identified local stories, but do not let publisher
-        # diversity or a brittle second geography filter reduce the category.
-        items = local_items
+# If the currently installed update_news.py has the explicit Local query loop,
+# retain that behavior while adding the new generic region list support.
+old_explicit_loop = '''            if category == "local":
+                items = []
+                for local_query in LOCAL_QUERIES:
+                    try:
+                        batch = parse_items(fetch(local_query), category)
+                        print(f"local/{local_query}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Local feed failed for {local_query}: {exc}")
+            else:
+                items = parse_items(fetch(query), category)'''
+new_explicit_loop = '''            if category == "local":
+                items = []
+                for local_query in LOCAL_QUERIES:
+                    try:
+                        batch = parse_items(fetch(local_query), category)
+                        print(f"local/{local_query}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Local feed failed for {local_query}: {exc}")
+            elif category == "region":
+                items = []
+                region_names = [
+                    "southwest", "west", "mountain", "midwest",
+                    "south", "northeast", "pacific-northwest", "southeast",
+                ]
+                for region_name, region_query in zip(region_names, query):
+                    try:
+                        batch = parse_items(fetch(region_query), category)
+                        for item in batch:
+                            item["region"] = region_name
+                        print(f"region/{region_name}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Region feed failed for {region_name}: {exc}")
+            else:
+                items = parse_items(fetch(query), category)'''
+if old_explicit_loop in text:
+    text = text.replace(old_explicit_loop, new_explicit_loop)
 
-    ranked = sorted(items, key=lambda x: x["published"], reverse=True)
-    selected, seen_keys, seen_sources = [], set(), set()
+# If region is already present but the loop was not patched, inject the region branch.
+if 'elif category == "region":' not in text:
+    needle = '''            else:
+                items = parse_items(fetch(query), category)'''
+    replacement = '''            elif category == "region":
+                items = []
+                region_names = [
+                    "southwest", "west", "mountain", "midwest",
+                    "south", "northeast", "pacific-northwest", "southeast",
+                ]
+                for region_name, region_query in zip(region_names, query):
+                    try:
+                        batch = parse_items(fetch(region_query), category)
+                        for item in batch:
+                            item["region"] = region_name
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Region feed failed for {region_name}: {exc}")
+            else:
+                items = parse_items(fetch(query), category)'''
+    text = text.replace(needle, replacement, 1)
 
-    # Pass 1: maximize publisher diversity.
-    for item in ranked:
-        k = key(item); source = source_key(item["source"] or "Unknown")
-        if not k or k in seen_keys or source in seen_sources:
-            continue
-        selected.append(item); seen_keys.add(k); seen_sources.add(source)
-        if len(selected) == limit:
-            return selected
+# Add region metadata to the RSS item so the browser can select the user's region.
+old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
+new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
+if old_build in text:
+    text = text.replace(old_build, new_build)
 
-    # Pass 2: fill every remaining slot with distinct stories.
-    for item in ranked:
-        k = key(item)
-        if not k or k in seen_keys:
-            continue
-        selected.append(item); seen_keys.add(k)
-        if len(selected) == limit:
-            break
-    return selected'''
-    text = text[:old_selector_start] + new_selector + text[old_selector_end:]
+# Keep 10 strong, diverse regional stories for each supported region rather than
+# collapsing all regions into one 10-story pool.
+old_selected = '''    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
+    top = select_top_stories(top_unique)'''
+new_selected = '''    selected_by_category = {}
+    for category in SECTIONS[2:]:
+        category_items = [x for x in unique if x["category"] == category]
+        if category == "region":
+            selected_by_category[category] = []
+            for region_name in ("southwest", "west", "mountain", "midwest", "south", "northeast", "pacific-northwest", "southeast"):
+                region_items = [x for x in category_items if x.get("region") == region_name]
+                selected_by_category[category].extend(select_category_stories(region_items, limit=10))
+        else:
+            selected_by_category[category] = select_category_stories(category_items)
+    top = select_top_stories(top_unique)'''
+if old_selected in text:
+    text = text.replace(old_selected, new_selected)
 
 path.write_text(text, encoding="utf-8")
-print("Patched Local collector to use broader local queries and reliable slot filling.")
+print("Patched collector: preserved Local and added multi-region Regional news data.")
