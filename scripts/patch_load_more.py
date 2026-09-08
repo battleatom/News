@@ -71,8 +71,6 @@ render = function(items){
 
   if(data.available.length <= data.count) return;
 
-  const body = section.querySelector('.section-body');
-  if(!body) return;
   const more = document.createElement('div');
   more.className = 'load-more-wrap';
   const button = document.createElement('button');
@@ -84,7 +82,8 @@ render = function(items){
     render(allItems);
   };
   more.appendChild(button);
-  body.appendChild(more);
+  // Keep the control at the bottom of the page/section, after all stories.
+  section.appendChild(more);
 };
 </script>'''
 
@@ -99,4 +98,4 @@ css = r'''<style id="load-more-style-v1">
 text = text.replace('</head>', css + '</head>', 1)
 text = text.replace('</body>', script + '</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Added 10-at-a-time Load More pagination and expanded the stored story pool.")
+print("Added 10-at-a-time Load More pagination and placed the control at the bottom of each news section.")
