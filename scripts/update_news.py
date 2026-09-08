@@ -17,7 +17,16 @@ QUERIES = {
     "presidential": "Trump president White House",
     "federal": "US Congress OR federal government OR Supreme Court",
     "nm": "New Mexico government OR New Mexico news",
-    "local": "Farmington New Mexico OR San Juan County New Mexico OR Aztec New Mexico OR Bloomfield New Mexico OR Kirtland New Mexico OR Shiprock New Mexico OR Four Corners New Mexico",
+    "local": [
+        "Farmington New Mexico news",
+        "San Juan County New Mexico news",
+        "Aztec New Mexico news",
+        "Bloomfield New Mexico news",
+        "Kirtland New Mexico news",
+        "Shiprock New Mexico news",
+        "Four Corners New Mexico news",
+        "Farmington NM crime OR government OR education OR business",
+    ],
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -202,7 +211,30 @@ def select_underreported(unique):
 
 
 def select_category_stories(items, limit=10):
-    """Select up to 10 distinct stories, preferring publisher diversity but never letting it starve a category."""
+    """Select up to 10 distinct stories, with Local queries treated as the geographic scope."""
+    if items and items[0].get("category") == "local":
+        local_terms = (
+            "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
+            "kirtland", "shiprock", "navajo nation", "four corners", "san juan basin",
+            "farmington daily times", "daily times", "navajo times", "krtm", "ksje",
+        )
+        outside_terms = (
+            "california", "texas", "florida", "new york", "chicago", "atlanta",
+            "phoenix", "denver", "las vegas", "albuquerque", "santa fe",
+        )
+        local_items = []
+        for item in items:
+            title = (item.get("title") or "").lower()
+            source = (item.get("source") or "").lower()
+            desc = (item.get("description") or "").lower()
+            local_signal = any(term in title or term in source for term in local_terms)
+            outside_signal = any(term in title for term in outside_terms)
+            if local_signal and not outside_signal:
+                local_items.append(item)
+        # Prefer strongly identified local stories, but do not let publisher
+        # diversity or a brittle second geography filter reduce the category.
+        items = local_items
+
     ranked = sorted(items, key=lambda x: x["published"], reverse=True)
     selected, seen_keys, seen_sources = [], set(), set()
 
@@ -215,9 +247,7 @@ def select_category_stories(items, limit=10):
         if len(selected) == limit:
             return selected
 
-    # Pass 2: fill the remaining slots. Multiple stories from a publisher are
-    # acceptable; duplicate stories are not. This guarantees 10 whenever the
-    # collector has at least 10 distinct stories for that category.
+    # Pass 2: fill every remaining slot with distinct stories.
     for item in ranked:
         k = key(item)
         if not k or k in seen_keys:
@@ -226,7 +256,6 @@ def select_category_stories(items, limit=10):
         if len(selected) == limit:
             break
     return selected
-
 
 def why_matters(item):
     text = f"{item['title']} {item['description']}".lower()
