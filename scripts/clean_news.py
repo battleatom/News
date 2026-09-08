@@ -125,10 +125,23 @@ def main():
     print(f"Removed {removed_vague_world} vague World headlines.")
     print("Local stories retained after upstream geographic selection.")
 
-    # X enrichment runs after cleanup so it becomes part of every normal 15-minute
-    # feed build without needing a second competing workflow.
+    # The X collector's previous discovery query required Google News RSS to
+    # return literal x.com destinations, which produces zero results in practice.
+    # Broaden discovery to reporting that explicitly describes X conversations,
+    # while keeping the downstream independent-reporting verification step.
     try:
-        runpy.run_path("scripts/enrich_x_issues.py", run_name="__main__")
+        p = "scripts/enrich_x_issues.py"
+        src = open(p, "r", encoding="utf-8").read()
+        src = src.replace(
+            'fetch(f"site:x.com {query} (trending OR viral OR discussion OR controversy)")',
+            'fetch(f"{query} (\\\"on X\\\" OR \\\"on Twitter\\\" OR \\\"X users\\\" OR viral OR trending)")'
+        )
+        src = src.replace(
+            'return "x.com/" in link.lower() or "twitter.com/" in link.lower() or bool(re.search(r"\\b(?:on|posted on|posts? on|from)\\s+(?:x|twitter)\\b", text))',
+            'return bool(re.search(r"\\b(?:on|posted on|posts? on|from)\\s+(?:x|twitter)\\b", text)) or "x.com/" in link.lower() or "twitter.com/" in link.lower()'
+        )
+        ns = {"__name__": "__main__"}
+        exec(compile(src, p, "exec"), ns, ns)
     except Exception as exc:
         print(f"X issue enrichment failed; retaining base feed: {exc}")
 
