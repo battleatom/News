@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 OUT = "News"
-SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]
+SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "nfl", "technology", "gaming", "military"]
 MAX_AGE_HOURS = 72
 
 QUERIES = {
@@ -96,6 +96,7 @@ QUERIES = {
             "Tennessee news",
         ],
     },
+    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -127,7 +128,7 @@ MAINSTREAM_TOP_QUERIES = [
     ("USA Today", "site:usatoday.com breaking news US world"),
 ]
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
