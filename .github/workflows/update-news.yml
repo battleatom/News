@@ -12,12 +12,21 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: update-news-feed
+  cancel-in-progress: true
+
 jobs:
   update-news:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Patch news collector rules
+        run: python scripts/patch_news_selector.py
 
       - name: Update RSS feed
         run: python scripts/update_news.py
@@ -34,5 +43,14 @@ jobs:
             echo "News feed is already current."
           else
             git commit -m "Auto-update news feed"
-            git push
+            for attempt in 1 2 3; do
+              if git push; then
+                exit 0
+              fi
+              echo "Push conflict; rebasing onto the latest main (attempt $attempt)."
+              git fetch origin main
+              git rebase origin/main
+            done
+            echo "Unable to push after 3 attempts."
+            exit 1
           fi
