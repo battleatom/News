@@ -99,7 +99,29 @@ def parse_items(root, category, source_override=None):
 
 
 def key(item):
-    words = re.findall(r"[a-z0-9]+", item["title"].lower())
+    """Normalize a headline so the same story from different outlets collapses.
+
+    Google News commonly appends the publisher to a headline (for example,
+    "Story headline - Source" or "Story headline | Source").  The old key
+    treated that publisher suffix as part of the story, allowing duplicates to
+    appear in category tabs.  Remove common publisher suffixes before comparing.
+    """
+    title = item["title"]
+    source = (item.get("source") or "").strip()
+
+    # Remove a publisher suffix when it matches the parsed RSS source.
+    if source:
+        title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.IGNORECASE)
+
+    # Some Google News results use the publisher domain instead of the name.
+    domains = {
+        "apnews.com", "reuters.com", "cnn.com", "foxnews.com", "nbcnews.com",
+        "abcnews.go.com", "cbsnews.com", "npr.org", "usatoday.com", "bbc.com",
+        "bbc.co.uk", "nytimes.com", "washingtonpost.com"
+    }
+    title = re.sub(r"\s+(?:[-–—|:]\s*)?(?:" + "|".join(re.escape(d) for d in domains) + r")\s*$", "", title, flags=re.IGNORECASE)
+
+    words = re.findall(r"[a-z0-9]+", title.lower())
     stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says"}
     return " ".join(w for w in words if w not in stop)[:180]
 
@@ -132,7 +154,8 @@ def select_top_stories(unique):
     newest_time = max(x["published"] for x in unique)
     coverage = {}
     for item in unique:
-        coverage.setdefault(key(item), set()).add(item["source"] or "Unknown")
+        k = key(item)
+        coverage.setdefault(k, set()).add(item["source"] or "Unknown")
 
     ranked = []
     for item in unique:
