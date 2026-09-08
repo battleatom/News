@@ -49,7 +49,7 @@ jobs:
           from pathlib import Path
           p = Path('scripts/update_news.py')
           s = p.read_text(encoding='utf-8')
-          s = s.replace('SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]', 'SECTIONS = ["top", "nfl", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]')
+          s = s.replace('SECTIONS = ["top", "nfl", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]', 'SECTIONS = ["top", "nfl", "x", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]')
           s = s.replace('    "technology": "technology AI cybersecurity science",', '    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",\n    "technology": "technology AI cybersecurity science",')
           s = s.replace('CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 6}', 'CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}')
           p.write_text(s, encoding='utf-8')
@@ -73,23 +73,20 @@ jobs:
       - name: Patch location-aware Regional tab
         run: python scripts/patch_region_tab.py
 
-      - name: Verify and enforce NFL tab
+      - name: Verify and enforce NFL and X tabs
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          nfl = "['nfl','🏈 NFL','#166534']"
           pattern = r"const sections=\[[^;]*\];"
-          replacement = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
+          replacement = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a00'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
           s2, n = re.subn(pattern, replacement, s, count=1)
           if n != 1:
               raise SystemExit('Could not locate sections declaration in index.html')
-          if nfl not in s2:
-              raise SystemExit('NFL tab verification failed')
           p.write_text(s2, encoding='utf-8')
-          print('NFL tab verified and enforced.')
+          print('NFL and X tabs verified and enforced.')
           PY
 
       - name: Add Load More pagination
@@ -101,6 +98,9 @@ jobs:
       - name: Patch Underreported detail UI
         run: python scripts/patch_underreported_ui.py
 
+      - name: Patch X Top Issues UI
+        run: python scripts/patch_x_ui.py
+
       - name: Update RSS feed
         run: python scripts/update_news.py
 
@@ -109,6 +109,9 @@ jobs:
 
       - name: Enrich Underreported context and long-term supporting coverage
         run: python scripts/enrich_underreported.py
+
+      - name: Enrich X Top Issues
+        run: python scripts/enrich_x_issues.py
 
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
