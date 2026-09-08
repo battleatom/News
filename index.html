@@ -42,6 +42,8 @@ header{padding:24px 18px 23px;background:#0b1120}header h1{font-size:29px;letter
 
 
 
+
+
 <style id="clean-news-v1">
 /* Underreported Design System — deliberately visible editorial redesign */
 :root{--ui-ink:#172033;--ui-muted:#667085;--ui-line:#e4e7ec;--ui-soft:#f6f7f9;--ui-purple:#7c3aed}
@@ -133,7 +135,7 @@ header p{font-size:11px!important}
 </style></head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" onclick="loadNews(true)">↻ Refresh</button><span id="status">Loading…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
-const sections=[['top','🔴 Top Stories','#dc2626'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];
+const sections=[['top','🔴 Top Stories','#dc2626'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];
 let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -144,4 +146,90 @@ function fmtMarket(v,name){if(name==='10Y'||name==='VIX')return Number(v).toFixe
 async function loadMarkets(){const track=document.getElementById('markets-track');try{const r=await fetch('markets.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('market file HTTP '+r.status);const data=await r.json();const valid=(data.markets||[]).some(v=>v&&v.price!=null);if(!valid)throw new Error('no market data');let html='<span class="market-label">MARKETS</span>';(data.markets||[]).forEach(v=>{if(v.error||v.price==null){html+=`<span class="market"><span class="market-name">${esc(v.name)}</span><span class="neutral">—</span></span>`;return}const cls=v.changePct>0?'up':v.changePct<0?'down':'neutral';const arrow=v.changePct>0?'▲':v.changePct<0?'▼':'—';html+=marketHtml(v.name,fmtMarket(v.price,v.name),arrow+' '+Math.abs(Number(v.changePct)).toFixed(2)+'%',cls)});html+=`<span class="market"><span class="market-name">OPEC</span><span class="neutral">WATCH</span></span>`;html+=`<span class="market-time">${data.marketClosed?'MARKETS CLOSED':'MARKET DATA'} · ${formatDate(data.updatedAt)}</span>`;track.innerHTML=html}catch(e){track.innerHTML='<span class="market-label">MARKETS</span><span class="market"><span class="neutral">Data temporarily unavailable</span></span><span class="market"><span class="market-name">OPEC</span><span class="neutral">WATCH</span></span>'}}
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
+</script><script id="region-tab-v1">
+let detectedRegion = localStorage.getItem('underreported-region') || 'southwest';
+let detectedLocation = localStorage.getItem('underreported-location') || '';
+const regionLabels = {
+  southwest:'Southwest', west:'West', mountain:'Mountain West', midwest:'Midwest',
+  south:'South', northeast:'Northeast', 'pacific-northwest':'Pacific Northwest', southeast:'Southeast'
+};
+const stateRegion = {
+  AZ:'southwest', NM:'southwest', UT:'southwest', CO:'southwest',
+  CA:'west', NV:'west', HI:'west',
+  ID:'mountain', MT:'mountain', WY:'mountain',
+  IL:'midwest', IN:'midwest', MI:'midwest', OH:'midwest', WI:'midwest', MN:'midwest', IA:'midwest', MO:'midwest', KS:'midwest', NE:'midwest', SD:'midwest', ND:'midwest',
+  TX:'south', OK:'south', AR:'south', LA:'south', TN:'south', KY:'south', VA:'south', WV:'south', MD:'south', DE:'south',
+  NY:'northeast', PA:'northeast', NJ:'northeast', CT:'northeast', RI:'northeast', MA:'northeast', VT:'northeast', NH:'northeast', ME:'northeast', DC:'northeast',
+  WA:'pacific-northwest', OR:'pacific-northwest', AK:'pacific-northwest',
+  FL:'southeast', GA:'southeast', AL:'southeast', SC:'southeast', NC:'southeast', MS:'southeast'
+};
+
+function regionRender(items){
+  const def=sections.find(x=>x[0]===active);
+  const accent=def?def[2]:'#111827';
+  let list=items.filter(item=>(item.querySelector('category')?.textContent?.trim()||'world')===active);
+  if(active==='region') list=list.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);
+  const root=document.getElementById('news-feed');root.innerHTML='';
+  const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',accent);
+  const head=document.createElement('div');head.className='section-header';
+  const label=active==='region' ? '🌎 '+regionLabels[detectedRegion]+' Region' : (def?def[1]:'News');
+  const locationNote=active==='region' && detectedLocation ? ' · '+detectedLocation : '';
+  head.innerHTML=`<h2>${esc(label)}</h2><span class="count">${list.length} stories${esc(locationNote)}</span>`;sec.appendChild(head);
+  const body=document.createElement('div');body.className='section-body';
+  if(!list.length) body.innerHTML='<div class="empty">No regional stories available right now.</div>';
+  list.forEach((item,i)=>{
+    const title=item.querySelector('title')?.textContent||'Untitled';
+    const desc=item.querySelector('description')?.textContent||'';
+    const why=item.querySelector('whyMatters')?.textContent||'';
+    const link=item.querySelector('link')?.textContent||'#';
+    const date=item.querySelector('pubDate')?.textContent||'';
+    const source=item.querySelector('source')?.textContent||'';
+    const article=document.createElement('article');article.className='news-item';
+    article.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;
+    body.appendChild(article);
+  });
+  sec.appendChild(body);root.appendChild(sec);
+}
+
+render = regionRender;
+
+buildTabs = function(){
+  const tabs=document.getElementById('tabs');tabs.innerHTML='';
+  sections.forEach(([key,label,accent])=>{
+    const b=document.createElement('button');b.className='tab'+(key===active?' active':'');
+    b.textContent=key==='region' && detectedLocation ? '🌎 '+regionLabels[detectedRegion] : label;
+    b.onclick=async()=>{
+      active=key;localStorage.setItem('underreported-active-tab',active);buildTabs();
+      if(key==='region') await detectUserRegion();
+      render(allItems);
+    };
+    b.style.setProperty('--accent',accent);tabs.appendChild(b);
+  });
+};
+
+async function detectUserRegion(){
+  try{
+    let coords;
+    if(navigator.geolocation){
+      coords=await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,timeout:8000,maximumAge:300000}));
+      coords={latitude:coords.coords.latitude,longitude:coords.coords.longitude};
+    }
+    const params=new URLSearchParams({localityLanguage:'en'});
+    if(coords){params.set('latitude',String(coords.latitude));params.set('longitude',String(coords.longitude));}
+    const response=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+params.toString(),{cache:'no-store'});
+    if(!response.ok)throw new Error('Location lookup failed');
+    const data=await response.json();
+    const code=(data.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();
+    if(stateRegion[code]) detectedRegion=stateRegion[code];
+    detectedLocation=[data.city,data.principalSubdivisionCode?.replace(/^US-/,'')].filter(Boolean).join(', ');
+    localStorage.setItem('underreported-region',detectedRegion);
+    localStorage.setItem('underreported-location',detectedLocation);
+    buildTabs();
+    if(active==='region') render(allItems);
+  }catch(e){
+    buildTabs();
+  }
+}
+
+detectUserRegion();
 </script></body></html>
