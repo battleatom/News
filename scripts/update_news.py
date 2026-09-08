@@ -27,6 +27,16 @@ QUERIES = {
         "Four Corners New Mexico news",
         "Farmington NM crime OR government OR education OR business",
     ],
+    "region": [
+        "Southwest regional news Arizona New Mexico Utah Colorado",
+        "West Coast regional news California Oregon Washington Nevada",
+        "Mountain West regional news Colorado Utah Idaho Montana Wyoming",
+        "Midwest regional news Illinois Ohio Michigan Wisconsin Minnesota Iowa Missouri",
+        "South regional news Texas Florida Georgia North Carolina Tennessee Virginia",
+        "Northeast regional news New York Pennsylvania New Jersey Massachusetts Connecticut",
+        "Pacific Northwest regional news Washington Oregon Idaho Alaska",
+        "Southeast regional news Florida Georgia Alabama South Carolina North Carolina",
+    ],
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -287,7 +297,7 @@ def build(items):
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>', '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
     for item in items:
         guid = hashlib.sha1((item["link"] + "|" + item["category"]).encode("utf-8")).hexdigest()
-        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>', f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>', f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>', f'<guid isPermaLink="false">{guid}</guid>', "</item>"]
+        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>', f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>', f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>', f'<region>{xml_escape(item.get("region", ""))}</region>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>', f'<guid isPermaLink="false">{guid}</guid>', "</item>"]
     out.append("</channel></rss>")
     return "\n".join(out) + "\n"
 
@@ -305,6 +315,21 @@ def main():
                         items.extend(batch)
                     except Exception as exc:
                         print(f"Local feed failed for {local_query}: {exc}")
+            elif category == "region":
+                items = []
+                region_names = [
+                    "southwest", "west", "mountain", "midwest",
+                    "south", "northeast", "pacific-northwest", "southeast",
+                ]
+                for region_name, region_query in zip(region_names, query):
+                    try:
+                        batch = parse_items(fetch(region_query), category)
+                        for item in batch:
+                            item["region"] = region_name
+                        print(f"region/{region_name}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Region feed failed for {region_name}: {exc}")
             else:
                 items = parse_items(fetch(query), category)
             print(f"{category}: {len(items)} fresh stories before dedupe")
@@ -335,7 +360,16 @@ def main():
             continue
         top_seen.add(k); top_unique.append(item)
 
-    selected_by_category = {category: select_category_stories([x for x in unique if x["category"] == category]) for category in SECTIONS[2:]}
+    selected_by_category = {}
+    for category in SECTIONS[2:]:
+        category_items = [x for x in unique if x["category"] == category]
+        if category == "region":
+            selected_by_category[category] = []
+            for region_name in ("southwest", "west", "mountain", "midwest", "south", "northeast", "pacific-northwest", "southeast"):
+                region_items = [x for x in category_items if x.get("region") == region_name]
+                selected_by_category[category].extend(select_category_stories(region_items, limit=10))
+        else:
+            selected_by_category[category] = select_category_stories(category_items)
     top = select_top_stories(top_unique)
     underreported = select_underreported(unique)
 
