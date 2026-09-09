@@ -60,6 +60,7 @@
 <style id="nfl-live-style">.nfl-live-note{padding:8px 12px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:12px;background:rgba(255,255,255,.68);font-size:10px;color:#64748b}.nfl-live-note strong{color:#166534}.nfl-game-card .broadcast{margin-top:8px;font-size:10px;color:#475569}.nfl-game-card .broadcast strong{color:#166534}.nfl-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 3px rgba(22,163,74,.12)}</style>
 
 
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -75,10 +76,14 @@
 #refresh:disabled{opacity:.7;cursor:wait}
 @media(max-width:700px){#pull-stats-ui{font-size:10px;gap:5px}}
 </style>
+<style id="bookmarks-v1-style">
+.bookmark-row{display:flex;align-items:flex-start;gap:8px}.bookmark-row h3{flex:1;margin:0}.bookmark-btn{border:0;background:transparent;padding:2px 4px;cursor:pointer;font-size:18px;line-height:1;opacity:.45;border-radius:6px}.bookmark-btn:hover,.bookmark-btn.saved{opacity:1}.bookmark-btn:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}.bookmark-section .bookmark-btn{opacity:1}.bookmark-section .news-item{position:relative}.bookmark-section .bookmark-row{padding-right:2px}@media(max-width:700px){.bookmark-btn{font-size:17px;padding:1px 3px}}
+</style>
 </head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Refresh News</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -104,6 +109,11 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
+
 
 
 
@@ -387,6 +397,123 @@ loadNews(false);
   setInterval(ensureVisibleUI,1000);
   setInterval(renderStats,1000);
   setInterval(loadStats,60000);
+})();
+</script>
+<script id="bookmarks-v1">
+(function(){
+  'use strict';
+  const STORAGE_KEY='news-bookmarks-v1';
+  let bookmarkMode=false;
+  let bookmarked=new Set(loadBookmarks());
+  let rendering=false;
+
+  function loadBookmarks(){
+    try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v:[];}catch(e){return[];}
+  }
+  function saveBookmarks(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify([...bookmarked]));}catch(e){}}
+  function itemKey(item){
+    const link=(item?.querySelector?.('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
+    if(link)return 'l:'+link;
+    const title=(item?.querySelector?.('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    return 't:'+title;
+  }
+  function itemTitle(item){return (item?.querySelector?.('title')?.textContent||'Untitled').trim();}
+  function itemLink(item){return (item?.querySelector?.('link')?.textContent||'#').trim();}
+  function escapeHtml(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+
+  function ensureBookmarkTab(){
+    const tabs=document.getElementById('tabs');
+    if(!tabs)return;
+    let b=document.getElementById('bookmarks-tab');
+    if(!b){
+      b=document.createElement('button');
+      b.id='bookmarks-tab'; b.className='tab'; b.type='button';
+      b.textContent=`🔖 Bookmarks (${bookmarked.size})`;
+      b.title='Saved articles';
+      b.addEventListener('click',()=>{bookmarkMode=true; active='bookmarks'; localStorage.setItem('underreported-active-tab','bookmarks'); renderBookmarks(); updateBookmarkTab();});
+      tabs.appendChild(b);
+    }
+    b.textContent=`🔖 Bookmarks${bookmarked.size?` (${bookmarked.size})`:''}`;
+    b.classList.toggle('active',bookmarkMode);
+  }
+
+  function updateBookmarkTab(){
+    const b=document.getElementById('bookmarks-tab');
+    if(b){b.textContent=`🔖 Bookmarks${bookmarked.size?` (${bookmarked.size})`:''}`;b.classList.toggle('active',bookmarkMode);}
+  }
+
+  function renderBookmarks(){
+    const root=document.getElementById('news-feed');
+    if(!root)return;
+    const items=(typeof allItems!=='undefined'?allItems:[]).filter(x=>bookmarked.has(itemKey(x)));
+    root.innerHTML='';
+    const sec=document.createElement('section'); sec.className='section bookmark-section';
+    const head=document.createElement('div'); head.className='section-header';
+    head.innerHTML=`<h2>🔖 Bookmarks</h2><span class="count">${items.length} saved</span>`;
+    sec.appendChild(head);
+    const body=document.createElement('div'); body.className='section-body';
+    if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
+    items.forEach((item,i)=>{
+      const ar=document.createElement('article'); ar.className='news-item';
+      const title=itemTitle(item),link=itemLink(item),desc=item.querySelector('description')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';
+      ar.dataset.bookmarkKey=itemKey(item);
+      ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
+      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(itemKey(item));saveBookmarks();updateBookmarkTab();renderBookmarks();});
+      body.appendChild(ar);
+    });
+    sec.appendChild(body); root.appendChild(sec);
+  }
+
+  function addBookmarkButtons(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.classList.contains('bookmark-section'))return;
+      if(card.querySelector('.bookmark-btn'))return;
+      const titleLink=card.querySelector('h3 a');
+      if(!titleLink)return;
+      let key='';
+      if(typeof allItems!=='undefined'){
+        const title=(titleLink.textContent||'').replace(/^\d+\.\s*/,'').trim().toLowerCase();
+        const item=allItems.find(x=>itemTitle(x).toLowerCase()===title);
+        if(item)key=itemKey(item);
+      }
+      if(!key){key='l:'+(titleLink.href||'').toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');}
+      const btn=document.createElement('button');
+      btn.type='button'; btn.className='bookmark-btn'+(bookmarked.has(key)?' saved':'');
+      btn.textContent=bookmarked.has(key)?'🔖':'🔖';
+      btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
+      btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
+      btn.dataset.bookmarkKey=key;
+      btn.addEventListener('click',e=>{
+        e.preventDefault(); e.stopPropagation();
+        if(bookmarked.has(key))bookmarked.delete(key);else bookmarked.add(key);
+        saveBookmarks();
+        btn.classList.toggle('saved',bookmarked.has(key));
+        btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
+        btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
+        updateBookmarkTab();
+      });
+      const h=card.querySelector('h3');
+      h?.insertAdjacentElement('beforebegin',btn);
+    });
+    updateBookmarkTab();
+  }
+
+  // If the user selected Bookmarks, keep that view after a feed refresh.
+  function keepBookmarkView(){
+    if(bookmarkMode){renderBookmarks();}
+    else addBookmarkButtons();
+  }
+
+  const observer=new MutationObserver(()=>{if(rendering)return;setTimeout(keepBookmarkView,0);});
+  function start(){
+    ensureBookmarkTab();
+    if(typeof active!=='undefined' && active==='bookmarks')bookmarkMode=true;
+    const root=document.getElementById('news-feed'); if(root)observer.observe(root,{childList:true,subtree:true});
+    const tabs=document.getElementById('tabs'); if(tabs)new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+    setTimeout(()=>{ensureBookmarkTab();keepBookmarkView();},50);
+    setInterval(()=>{ensureBookmarkTab();},1000);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
 <script id="nfl-live-v1">
