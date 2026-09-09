@@ -221,4 +221,19 @@ jobs:
             exit 0
           fi
           git commit -m 'Automated news feed update'
-          git push origin main
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push rejected; synchronizing with latest main before retry ${attempt}."
+            git fetch origin main
+            git merge --no-edit -X ours origin/main || {
+              echo 'Unable to merge concurrent main changes safely.'
+              git merge --abort || true
+              exit 1
+            }
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          echo 'Push failed after 3 attempts.'
+          exit 1
