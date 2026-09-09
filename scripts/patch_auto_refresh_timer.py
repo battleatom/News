@@ -2,7 +2,6 @@ from pathlib import Path
 import re
 
 P = Path('index.html')
-MARKER = '<script id="auto-refresh-timer-v1">'
 SCRIPT = r'''<script id="auto-refresh-timer-v1">
 (function(){
   'use strict';
@@ -23,11 +22,8 @@ SCRIPT = r'''<script id="auto-refresh-timer-v1">
         const before=Number(window.lastSuccessfulPull)||0;
         window.refreshNewsFromPage(false).then(function(){
           const last=Number(window.lastSuccessfulPull)||0;
-          if(last>before){
-            window.nextScheduledPull=last+INTERVAL;
-          }else{
-            window.nextScheduledPull=Date.now()+RETRY;
-          }
+          if(last>before)window.nextScheduledPull=last+INTERVAL;
+          else window.nextScheduledPull=Date.now()+RETRY;
         }).catch(function(err){
           console.error('Automatic news refresh failed:',err);
           window.nextScheduledPull=Date.now()+RETRY;
@@ -52,8 +48,11 @@ for marker in ('auto-refresh-timer-v1','auto-refresh-timer-v2'):
         b=s.find('</script>',a)
         if b<0:break
         s=s[:a]+s[b+9:]
+
+# Remove both legacy and the old five-second scheduler from site-features.
 s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*loadNews\(false\)\s*,\s*15\s*\*\s*60\s*\*\s*1000\s*\);','',s)
+s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)\s*\{\s*refreshNewsFromPage\(false\);\s*\}\s*\}\s*,\s*5000\s*\);','',s)
 if '</body>' not in s: raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Installed one reset-safe 15-minute automatic refresh timer with one-minute failure retry and removed the legacy scheduler.')
+print('Installed the sole 15-minute automatic refresh scheduler, removed the legacy scheduler and removed the old five-second competing scheduler.')
