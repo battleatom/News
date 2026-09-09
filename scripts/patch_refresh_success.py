@@ -11,7 +11,35 @@ if MARKER in s:
 
 pattern = re.compile(r'async function refreshNewsFromPage\(manual=false\)\{.*?\}\nfunction renderStandardCanonical', re.S)
 
-replacement = r'''async function refreshNewsFromPage(manual=false){
+replacement = r'''async function fetchNewsDocument(){
+  const urls=[];
+  const addUrl=(u)=>{if(u&&!urls.includes(u))urls.push(u)};
+  try{addUrl(new URL('News',document.baseURI).href)}catch(e){}
+  try{addUrl(new URL('./News',window.location.href).href)}catch(e){}
+  // GitHub Pages project-site fallback. This only runs if the normal relative
+  // URL failed and prevents a stale/odd browser base URL from breaking Refresh.
+  try{addUrl(new URL('/News/News',window.location.origin).href)}catch(e){}
+  let lastError=null;
+  for(let attempt=0;attempt<3;attempt++){
+    for(const base of urls){
+      try{
+        const sep=base.includes('?')?'&':'?';
+        const response=await fetch(base+sep+'ts='+(Date.now()+attempt),{cache:'no-store'});
+        if(!response.ok)throw new Error('HTTP '+response.status);
+        const text=await response.text();
+        const xml=new DOMParser().parseFromString(text,'text/xml');
+        if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');
+        const items=[...xml.querySelectorAll('channel > item')];
+        if(!items.length)throw new Error('News feed returned zero items');
+        return {response,text,xml,items};
+      }catch(e){lastError=e;}
+    }
+    if(attempt<2)await new Promise(resolve=>setTimeout(resolve,600*(attempt+1)));
+  }
+  throw lastError||new Error('Unable to fetch News feed');
+}
+
+async function refreshNewsFromPage(manual=false){
   ensurePullStatus();
   const btn=document.getElementById('refresh'),status=document.getElementById('status');
   if(pullInProgress)return false;
@@ -21,28 +49,17 @@ replacement = r'''async function refreshNewsFromPage(manual=false){
   pullStatusHtml(allItems.length,false,'Connecting to news feed');
   try{
     if(manual)unlockPopAudio();
-    const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});
-    if(!response.ok)throw new Error('HTTP '+response.status);
+    const loaded=await fetchNewsDocument();
+    const xml=loaded.xml;
+    const fetched=loaded.items;
     pullStatusHtml(allItems.length,false,'Feed downloaded');
-    const text=await response.text();
-    const xml=new DOMParser().parseFromString(text,'text/xml');
-    if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');
 
-    const fetched=[...xml.querySelectorAll('item')];
-    if(!fetched.length){
-      if(status)status.textContent='Feed returned 0 stories · existing stories kept';
-      pullStatusHtml(allItems.length,false,'Feed temporarily returned no stories');
-      console.warn('News feed returned zero items; preserving the current browser feed.');
-      return false;
-    }
-
-    pullStatusHtml(allItems.length,false,'Searching for duplicates');
     const beforeLinks=new Set(allItems.map(normalizeDuplicateKey));
     const result=dedupeFetchedItems(fetched);
     const refreshedItems=result.items;
     const newCount=refreshedItems.filter(item=>!beforeLinks.has(normalizeDuplicateKey(item))).length;
     allItems=refreshedItems;
-    if(result.removed)console.info('Client refresh removed',result.removed,'duplicate article(s).');
+    if(result.removed)console.info('Client refresh removed',result.removed,'exact duplicate article(s).');
 
     const channel=xml.querySelector('channel');
     const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();
@@ -69,9 +86,14 @@ replacement = r'''async function refreshNewsFromPage(manual=false){
     }
     return true;
   }catch(e){
-    if(status)status.textContent='Update failed';
-    pullStatusHtml(allItems.length||0,true,'Unable to fetch or parse feed');
-    console.error('News feed refresh failed:',e);
+    console.error('News feed refresh failed after retries:',e);
+    if(allItems.length){
+      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';
+      pullStatusHtml(allItems.length,false,'Refresh unavailable · current feed kept');
+    }else{
+      if(status)status.textContent='Update failed';
+      pullStatusHtml(0,true,'Unable to fetch or parse feed');
+    }
     return false;
   }finally{
     pullInProgress=false;
@@ -85,5 +107,14 @@ if n != 1:
     raise SystemExit('Could not locate canonical refreshNewsFromPage function')
 
 s2 = s2.replace('<script id="site-features-v2">', '<script id="site-features-v2">\n/* '+MARKER+' */', 1)
+
+# The legacy main-script loadNews() has its own broad "Update failed" catch and
+# can race the hardened site-features loader. Start the page through the same
+# resilient refresh function once every script has been parsed.
+legacy_start = 'loadNews();loadMarkets();'
+modern_start = "window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFromPage==='function'){window.refreshNewsFromPage(false)}else{loadNews(false)}});loadMarkets();"
+if legacy_start in s2:
+    s2 = s2.replace(legacy_start, modern_start, 1)
+
 P.write_text(s2, encoding='utf-8')
-print('Applied hardened refresh handling: zero-item feeds are preserved, zero-new refreshes succeed, and missing UI nodes cannot fake a network failure.')
+print('Applied retrying refresh handling and routed initial page load through the same resilient feed loader.')
