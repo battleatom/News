@@ -75,6 +75,7 @@ const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'
 
 
 
+
 let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -86,6 +87,11 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
+
 
 
 
@@ -235,17 +241,26 @@ loadNews(false);
   let pullStats=null;
   const originalPullStatusHtml=window.pullStatusHtml;
   function statsStatus(count,failed=false,phase=''){
-    const root=document.getElementById('pull-status');if(!root)return;
+    const root=document.getElementById('pull-status');
+    const inline=document.getElementById('status');
+    if(!root && !inline)return;
     const last=typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull?new Date(lastSuccessfulPull):null;
-    const next=typeof nextScheduledPull!=='undefined'&&nextScheduledPull?nextScheduledPull?new Date(nextScheduledPull):null:null;
+    const next=typeof nextScheduledPull!=='undefined'&&nextScheduledPull?new Date(nextScheduledPull):null;
     const left=next&&typeof countdownText==='function'?countdownText(next.getTime()-Date.now()):'—';
     const fetched=pullStats?.fetchedCount ?? count ?? 0;
     const fresh=pullStats?.newCount ?? 0;
     const dup=pullStats?.duplicatesRemoved ?? 0;
     const finalCount=pullStats?.finalCount ?? count ?? 0;
-    let lead=failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':(typeof pullInProgress!=='undefined'&&pullInProgress?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>');
-    let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';
-    root.innerHTML=`${lead}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span><strong>${fetched}</strong> fetched</span><span class="sep">·</span><span><strong>${fresh}</strong> new</span><span class="sep">·</span><span><strong>${dup}</strong> duplicates removed</span><span class="sep">·</span><span><strong>${finalCount}</strong> final</span>`;
+    const busy=typeof pullInProgress!=='undefined'&&pullInProgress;
+    let lead=failed?'⚠ Update failed':(busy?'↻ Fetching news…':'✓ Auto update active');
+    let detail=`${lead} · ${fetched} fetched · ${fresh} new · ${dup} duplicates removed · ${finalCount} final`;
+    if(last)detail+=` · Last: ${formatDate(last.toISOString())}`;
+    if(next)detail+=` · Next: ${left}`;
+    if(inline){inline.textContent=detail;inline.title=phase||'News feed update status';inline.setAttribute('aria-live','polite');}
+    if(root){
+      let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';
+      root.innerHTML=`${failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':(busy?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>')}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span><strong>${fetched}</strong> fetched</span><span class="sep">·</span><span><strong>${fresh}</strong> new</span><span class="sep">·</span><span><strong>${dup}</strong> duplicates removed</span><span class="sep">·</span><span><strong>${finalCount}</strong> final</span>`;
+    }
   }
   window.pullStatusHtml=statsStatus;
   function wireRefreshButton(){
