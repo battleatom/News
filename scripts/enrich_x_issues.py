@@ -26,7 +26,7 @@ CATEGORIES = [
 ]
 
 STOP = {"the","a","an","to","of","in","on","for","and","with","is","as","at","from","by","after","new","says","said","that","this","are","was","were","has","have","had","into","over","its","their","will","news","latest","x","twitter","post","posts","users","people"}
-GENERIC = {"trump", "elon musk", "donald trump", "taylor swift", "kim kardashian", "celebrity", "breaking news", "viral", "x", "twitter", "zelda"}
+GENERIC = {"trump", "elon musk", "donald trump", "taylor swift", "kim kardashian", "celebrity", "breaking news", "viral", "x", "twitter"}
 
 
 def clean(value):
@@ -49,7 +49,7 @@ def date(value):
 def fetch(query, days=MAX_AGE_DAYS):
     q = urllib.parse.quote(f"{query} when:{days}d")
     url = f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.1"})
     with urllib.request.urlopen(req, timeout=15) as response:
         return ET.fromstring(response.read())
 
@@ -67,18 +67,13 @@ def news_item_data(item):
 
 
 def fetch_trend_names():
-    """Get public X trend names. This is a discovery signal only, never treated as proof."""
-    urls = [
-        "https://twitter-trends.snaplytics.io/",
-        "https://www.techtwitter.com/twitter-trending/archive",
-    ]
+    urls = ["https://twitter-trends.snaplytics.io/", "https://www.techtwitter.com/twitter-trending/archive"]
     names = []
     for url in urls:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.1"})
             with urllib.request.urlopen(req, timeout=15) as response:
                 text = response.read().decode("utf-8", errors="ignore")
-            # Pull visible-ish text from headings, links and common trend containers.
             text = re.sub(r"<script[\s\S]*?</script>|<style[\s\S]*?</style>|<[^>]+>", " ", text, flags=re.I)
             text = html.unescape(re.sub(r"\s+", " ", text))
             for token in re.findall(r"(?:#|\$)?[A-Za-z][A-Za-z0-9'’.-]{2,}(?:\s+[A-Za-z0-9'’.-]{2,}){0,5}", text):
@@ -91,7 +86,6 @@ def fetch_trend_names():
                 names.append(token)
         except Exception:
             continue
-    # Preserve order while de-duplicating.
     out=[]; seen=set()
     for n in names:
         k=n.lower()
@@ -107,19 +101,17 @@ def category_match(name, query):
 
 
 def trend_candidates(category, query):
-    # First use public trend archives as the actual X discovery layer.
     names = fetch_trend_names()
     matched = [n for n in names if category_match(n, query)]
-    # Then use Google News to find reporting about those exact trend names.
     candidates=[]
-    for name in matched[:12]:
+    for name in matched[:20]:
         try:
             rss = fetch(f'"{name}"')
         except Exception:
             continue
         for item in rss.findall(".//item"):
             d = news_item_data(item)
-            if not d["dt"] or not d["title"] or not d["desc"]:
+            if not d["dt"] or not d["title"] or len(d["desc"]) < 70:
                 continue
             if "x.com/" in d["link"].lower() or "twitter.com/" in d["link"].lower():
                 continue
@@ -139,25 +131,35 @@ def broad_candidates(query):
     for item in rss.findall(".//item"):
         d=news_item_data(item)
         if d["dt"] and len(words(d["title"])) >= 4 and len(d["desc"]) > 80:
-            out.append((d["dt"],d))
-    out.sort(reverse=True)
-    return [(1,d,"") for _,d in out[:20]]
+            out.append((1,d,""))
+    out.sort(key=lambda x:x[1]["dt"], reverse=True)
+    return out[:20]
+
+
+def normalize_candidate(row):
+    # Candidate shape is always (overlap, data, trend). This prevents the
+    # category-coverage patch from ever breaking the scorer again.
+    if len(row) >= 3:
+        overlap, data, trend = row[0], row[1], row[2]
+        if isinstance(data, dict):
+            return int(overlap or 0), data, trend or ""
+    return None
 
 
 def best_issue(category, query):
     candidates=trend_candidates(category,query)
     if not candidates:
         candidates=broad_candidates(query)
-    if not candidates:
+    normalized=[x for row in candidates if (x:=normalize_candidate(row)) is not None]
+    if not normalized:
         return None
-    # Prefer a well-explained article, recent publication, and a concrete headline.
     def score(row):
         overlap,d,name=row
         concrete=len(words(d["title"]))
         explanation=min(len(d["desc"]),500)/100
         age=(datetime.now(timezone.utc)-d["dt"]).total_seconds()/86400
         return overlap*8+concrete+explanation-age*2
-    return max(candidates,key=score)
+    return max(normalized,key=score)
 
 
 def related_reporting(signal_title, query):
@@ -205,8 +207,8 @@ def main():
         ET.SubElement(issue,"xTopic").text=category
         ET.SubElement(issue,"xSignal").text="Top public X trend"
         ET.SubElement(issue,"xWhyTrending").text=(f'“{trend}” is appearing in public X trend signals and is being discussed in current reporting.' if trend else 'This issue is receiving a strong current social-media/news signal; the underlying event is independently reported below.')
-        ET.SubElement(issue,"xWhatPeopleAreSaying").text=f"People on X are discussing the underlying issue from different perspectives. The trend signal identifies the conversation; it does not establish that every claim circulating in it is true."
-        ET.SubElement(issue,"xConfirmed").text=f"Independent reporting confirms the underlying news event described above. See the reporting links for the factual basis."
+        ET.SubElement(issue,"xWhatPeopleAreSaying").text="People on X are discussing the underlying issue from different perspectives. The trend signal identifies the conversation; it does not establish that every claim circulating in it is true."
+        ET.SubElement(issue,"xConfirmed").text="Independent reporting confirms the underlying news event described above. See the reporting links for the factual basis."
         ET.SubElement(issue,"xUnconfirmed").text="Specific rumors, screenshots, accusations, and interpretations circulating on X are not treated as facts unless independently verified."
         rel=ET.SubElement(issue,"xRelated"); seen=set()
         for r in reports:
