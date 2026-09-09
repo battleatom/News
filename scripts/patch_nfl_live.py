@@ -35,7 +35,24 @@ function renderNflLive(){
 const canonicalBeforeNfl=canonicalRender;
 canonicalRender=function(items){if(active==='nfl'){renderNflLive();return}canonicalBeforeNfl(items);};
 window.render=canonicalRender;
+
+// A full browser reload can restore the saved NFL tab before the async News
+// feed and all later renderer wrappers are ready. Once the page is fully loaded,
+// wait briefly for allItems, then route through the final window.render so NFL
+// appears without requiring the user to switch tabs first.
+function restoreNflAfterBrowserReload(attempt=0){
+ if(typeof active==='undefined'||active!=='nfl')return;
+ const itemsReady=typeof allItems!=='undefined'&&Array.isArray(allItems)&&allItems.length>0;
+ if(!itemsReady){if(attempt<40)setTimeout(()=>restoreNflAfterBrowserReload(attempt+1),250);return;}
+ const root=document.getElementById('news-feed');
+ const alreadyRendered=[...(root?.querySelectorAll('.section-header h2')||[])].some(h=>/NFL/i.test(h.textContent||''));
+ if(alreadyRendered)return;
+ if(typeof window.render==='function')window.render(allItems);else renderNflLive();
+}
+function scheduleSavedNflRestore(){setTimeout(()=>restoreNflAfterBrowserReload(0),75);}
+if(document.readyState==='complete')scheduleSavedNflRestore();
+else window.addEventListener('load',scheduleSavedNflRestore,{once:true});
 </script>'''
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 p.write_text(s,encoding='utf-8')
-print('Added ultra-compact single-line NFL live scoreboard with 30-second refresh.')
+print('Added ultra-compact NFL scoreboard and reliable saved-NFL rendering after browser reload.')
