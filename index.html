@@ -114,6 +114,9 @@
 
 
 <style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
+
+
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -167,6 +170,7 @@ const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'
 
 
 
+
 var allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -176,7 +180,7 @@ function marketHtml(name,value,change,cls){return `<span class="market"><span cl
 function fmtMarket(v,name){if(name==='10Y'||name==='VIX')return Number(v).toFixed(2);if(name==='WTI OIL'||name==='GOLD')return '$'+Number(v).toFixed(2);return Number(v).toLocaleString(undefined,{maximumFractionDigits:2})}
 async function loadMarkets(){const track=document.getElementById('markets-track');try{const r=await fetch('markets.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('market file HTTP '+r.status);const data=await r.json();const valid=(data.markets||[]).some(v=>v&&v.price!=null);if(!valid)throw new Error('no market data');let html='<span class="market-label">MARKETS</span>';(data.markets||[]).forEach(v=>{if(v.error||v.price==null){html+=`<span class="market"><span class="market-name">${esc(v.name)}</span><span class="neutral">—</span></span>`;return}const cls=v.changePct>0?'up':v.changePct<0?'down':'neutral';const arrow=v.changePct>0?'▲':v.changePct<0?'▼':'—';html+=marketHtml(v.name,fmtMarket(v.price,v.name),arrow+' '+Math.abs(Number(v.changePct)).toFixed(2)+'%',cls)});html+=`<span class="market"><span class="market-name">OPEC</span><span class="neutral">WATCH</span></span>`;html+=`<span class="market-time">${data.marketClosed?'MARKETS CLOSED':'MARKET DATA'} · ${formatDate(data.updatedAt)}</span>`;track.innerHTML=html}catch(e){track.innerHTML='<span class="market-label">MARKETS</span><span class="market"><span class="neutral">Data temporarily unavailable</span></span><span class="market"><span class="market-name">OPEC</span><span class="neutral">WATCH</span></span>'}}
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
-loadNews();loadMarkets();setInterval(loadMarkets,60*1000);
+window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFromPage==='function'){window.refreshNewsFromPage(false)}else{loadNews(false)}});loadMarkets();setInterval(loadMarkets,60*1000);
 </script>
 
 
@@ -486,6 +490,14 @@ loadNews();loadMarkets();setInterval(loadMarkets,60*1000);
   setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
 })();
 </script>
+
+
+
+
+
+
+
+
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -566,6 +578,7 @@ function renderXIssues(items){
 }
 render=function(items){if(active==='x'){renderXIssues(items);return}baseRenderForX(items)};
 </script><script id="site-features-v2">
+/* refresh-success-handling-v1 */
 const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
@@ -581,7 +594,95 @@ function pullStatusHtml(count,failed=false,phase=''){ensurePullStatus();const ro
 function ensurePullStatus(){const toolbar=document.querySelector('.toolbar');if(!toolbar)return;let row=document.getElementById('pull-status');if(!row){row=document.createElement('div');row.id='pull-status';row.className='pull-status';toolbar.insertAdjacentElement('afterend',row);}return row;}
 function isFresh(dateText){const d=new Date(dateText);return !isNaN(d)&&Date.now()-d.getTime()<=60*60*1000&&Date.now()>=d.getTime()-5*60*1000;}
 function decorateNewBadges(){document.querySelectorAll('.news-item').forEach(card=>{if(card.querySelector('.new-badge'))return;const meta=card.querySelector('.meta span');if(meta&&isFresh(meta.textContent)){const h=card.querySelector('h3');if(h){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';h.appendChild(badge);}}});}
-async function refreshNewsFromPage(manual=false){ensurePullStatus();const btn=document.getElementById('refresh'),status=document.getElementById('status');if(pullInProgress)return;pullInProgress=true;if(btn)btn.disabled=true;if(status)status.textContent=manual?'Fetching…':'Updating…';pullStatusHtml(allItems.length,false,'Connecting to news feed');try{if(manual)unlockPopAudio();const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);pullStatusHtml(allItems.length,false,'Feed downloaded');const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');pullStatusHtml(allItems.length,false,'Searching for duplicates');const fetched=[...xml.querySelectorAll('item')];const beforeLinks=new Set(allItems.map(normalizeDuplicateKey));const result=dedupeFetchedItems(fetched);allItems=result.items;const newCount=allItems.filter(item=>!beforeLinks.has(normalizeDuplicateKey(item))).length;if(result.removed)console.info('Client refresh removed',result.removed,'duplicate article(s).');pullStatusHtml(allItems.length,false,result.removed?`Removed ${result.removed} duplicate${result.removed===1?'':'s'}`:'No duplicate articles found');const channel=xml.querySelector('channel');const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();lastSuccessfulPull=Date.now();nextScheduledPull=lastSuccessfulPull+AUTO_PULL_MS;document.getElementById('last-update').textContent='Last update: '+formatDate(updated);if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';canonicalBuildTabs();canonicalRender(allItems);decorateNewBadges();if(newCount>0)playNewArticlePop();pullStatusHtml(allItems.length,false,'Fetch complete');}catch(e){if(status)status.textContent='Update failed';pullStatusHtml(allItems.length||0,true,'Unable to fetch feed');console.error(e);}finally{pullInProgress=false;if(btn)btn.disabled=false;}}
+async function fetchNewsDocument(){
+  const urls=[];
+  const addUrl=(u)=>{if(u&&!urls.includes(u))urls.push(u)};
+  try{addUrl(new URL('News',document.baseURI).href)}catch(e){}
+  try{addUrl(new URL('./News',window.location.href).href)}catch(e){}
+  // GitHub Pages project-site fallback. This only runs if the normal relative
+  // URL failed and prevents a stale/odd browser base URL from breaking Refresh.
+  try{addUrl(new URL('/News/News',window.location.origin).href)}catch(e){}
+  let lastError=null;
+  for(let attempt=0;attempt<3;attempt++){
+    for(const base of urls){
+      try{
+        const sep=base.includes('?')?'&':'?';
+        const response=await fetch(base+sep+'ts='+(Date.now()+attempt),{cache:'no-store'});
+        if(!response.ok)throw new Error('HTTP '+response.status);
+        const text=await response.text();
+        const xml=new DOMParser().parseFromString(text,'text/xml');
+        if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');
+        const items=[...xml.querySelectorAll('channel > item')];
+        if(!items.length)throw new Error('News feed returned zero items');
+        return {response,text,xml,items};
+      }catch(e){lastError=e;}
+    }
+    if(attempt<2)await new Promise(resolve=>setTimeout(resolve,600*(attempt+1)));
+  }
+  throw lastError||new Error('Unable to fetch News feed');
+}
+
+async function refreshNewsFromPage(manual=false){
+  ensurePullStatus();
+  const btn=document.getElementById('refresh'),status=document.getElementById('status');
+  if(pullInProgress)return false;
+  pullInProgress=true;
+  if(btn)btn.disabled=true;
+  if(status)status.textContent=manual?'Fetching…':'Updating…';
+  pullStatusHtml(allItems.length,false,'Connecting to news feed');
+  try{
+    if(manual)unlockPopAudio();
+    const loaded=await fetchNewsDocument();
+    const xml=loaded.xml;
+    const fetched=loaded.items;
+    pullStatusHtml(allItems.length,false,'Feed downloaded');
+
+    const beforeLinks=new Set(allItems.map(normalizeDuplicateKey));
+    const result=dedupeFetchedItems(fetched);
+    const refreshedItems=result.items;
+    const newCount=refreshedItems.filter(item=>!beforeLinks.has(normalizeDuplicateKey(item))).length;
+    allItems=refreshedItems;
+    if(result.removed)console.info('Client refresh removed',result.removed,'exact duplicate article(s).');
+
+    const channel=xml.querySelector('channel');
+    const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();
+    lastSuccessfulPull=Date.now();
+    nextScheduledPull=lastSuccessfulPull+AUTO_PULL_MS;
+    window.lastSuccessfulPull=lastSuccessfulPull;
+    window.nextScheduledPull=nextScheduledPull;
+    const lastUpdateEl=document.getElementById('last-update');
+    if(lastUpdateEl)lastUpdateEl.textContent='Last update: '+formatDate(updated);
+    if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';
+
+    const phase=newCount===0?'No new stories — feed is current':(result.removed?`Found ${newCount} new · removed ${result.removed} duplicate${result.removed===1?'':'s'}`:`Found ${newCount} new stor${newCount===1?'y':'ies'}`);
+    pullStatusHtml(allItems.length,false,phase);
+
+    try{
+      canonicalBuildTabs();
+      canonicalRender(allItems);
+      decorateNewBadges();
+      if(newCount>0)playNewArticlePop();
+    }catch(renderError){
+      console.error('Feed downloaded successfully, but page rendering failed:',renderError);
+      if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new';
+      pullStatusHtml(allItems.length,false,'Feed updated · display refresh issue');
+    }
+    return true;
+  }catch(e){
+    console.error('News feed refresh failed after retries:',e);
+    if(allItems.length){
+      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';
+      pullStatusHtml(allItems.length,false,'Refresh unavailable · current feed kept');
+    }else{
+      if(status)status.textContent='Update failed';
+      pullStatusHtml(0,true,'Unable to fetch or parse feed');
+    }
+    return false;
+  }finally{
+    pullInProgress=false;
+    if(btn)btn.disabled=false;
+  }
+}
 function renderStandardCanonical(items){const def=CANONICAL_SECTIONS.find(x=>x[0]===active)||CANONICAL_SECTIONS[0];let list=items.filter(item=>(item.querySelector('category')?.textContent?.trim()||'world')===active);if(active==='region'&&typeof detectedRegion!=='undefined')list=list.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);const root=document.getElementById('news-feed');root.innerHTML='';const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',def[2]);const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>${esc(def[1])}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);const body=document.createElement('div');body.className='section-body';if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(ar)});sec.appendChild(body);root.appendChild(sec);decorateNewBadges();}
 function renderBoxOffice(){const root=document.getElementById('news-feed');root.innerHTML='<section class="section"><div class="section-header"><h2>🎬 Box Office</h2><span class="count">Movies, releases & Farmington showtimes</span></div><div class="section-body"><div class="loading">Loading movie information…</div></div></section>';fetch('boxoffice.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(data=>{const movies=data.movies||[];const body=root.querySelector('.section-body');body.innerHTML='';const intro=document.createElement('div');intro.className='boxoffice-intro';intro.innerHTML='Local theater information is for <strong>Farmington, NM</strong>. Showtimes can change during the day; use the source link to confirm before heading out.';body.appendChild(intro);const local=movies.filter(m=>m.status==='In theaters');const upcoming=movies.filter(m=>m.status==='Upcoming');function addHeading(t){const h=document.createElement('div');h.className='boxoffice-section-title';h.textContent=t;body.appendChild(h)}function addMovie(m,status){const ar=document.createElement('article');ar.className='news-item movie-card';const details=[m.rating,m.runtime,m.genres,m.releaseDate?'Release '+new Date(m.releaseDate+'T12:00:00').toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'}):''].filter(Boolean);let shows='';if(m.theaters?.length){shows='<div class="movie-showtimes"><strong>📍 Farmington showtimes</strong>'+m.theaters.map(t=>`<small><b>${esc(t.name)}</b>: ${esc((t.showtimes||[]).join(' · '))}</small>`).join('')+'<small><a href="https://www.showtimes.com/movie-times/farmington-nm/" target="_blank" rel="noopener noreferrer">Verify showtimes</a></small></div>';}let news='';if(m.news?.length){news='<div class="movie-news"><div class="underreported-label">Movie news</div>'+m.news.map(n=>`<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a>`).join('')+'</div>';}ar.innerHTML=`<div><span class="movie-status">${esc(status)}</span></div><h3>${esc(m.title)}</h3><div class="movie-details">${details.map(x=>`<span class="movie-pill">${esc(x)}</span>`).join('')}</div>${m.description?`<p class="description">${esc(m.description)}</p>`:''}${shows}${news}`;body.appendChild(ar);}if(local.length){addHeading('🍿 New & still in theaters');local.forEach(m=>addMovie(m,'IN THEATERS'));}if(upcoming.length){addHeading('🗓 Upcoming releases');upcoming.slice(0,25).forEach(m=>addMovie(m,'UPCOMING'));}if(!local.length&&!upcoming.length)body.innerHTML+='<div class="empty">Movie data is temporarily unavailable.</div>';const foot=document.createElement('div');foot.className='meta';foot.innerHTML=`<span>Updated ${esc(formatDate(data.updatedAt||new Date().toISOString()))}</span><span class="source"><a href="https://www.showtimes.com/movie-times/farmington-nm/" target="_blank" rel="noopener noreferrer">Showtimes.com</a> · <a href="https://www.the-numbers.com/movies/release-schedule/2026" target="_blank" rel="noopener noreferrer">The Numbers</a></span>`;body.appendChild(foot);}).catch(()=>{root.querySelector('.section-body').innerHTML='<div class="empty">Movie data is temporarily unavailable. Try Refresh.</div>';});}
 function canonicalRender(items){if(active==='boxoffice'){renderBoxOffice();return}if(active==='nfl'&&typeof renderNfl==='function'){renderNfl();setTimeout(decorateNewBadges,100);return}if(active==='x'&&typeof renderXIssues==='function'){renderXIssues(items);setTimeout(decorateNewBadges,100);return}if(active==='underreported'&&typeof renderUnderreported==='function'){renderUnderreported(items);setTimeout(decorateNewBadges,100);return}renderStandardCanonical(items);}
