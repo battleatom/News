@@ -139,7 +139,17 @@ SCRIPT = r'''<script id="bookmarks-v1">
     ensureBookmarkTab();
     if(typeof active!=='undefined' && active==='bookmarks')bookmarkMode=true;
     const root=document.getElementById('news-feed'); if(root)observer.observe(root,{childList:true,subtree:true});
-    const tabs=document.getElementById('tabs'); if(tabs)new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+    const tabs=document.getElementById('tabs');
+    if(tabs){
+      tabs.addEventListener('click',e=>{
+        const tab=e.target.closest('.tab');
+        if(tab && tab.id!=='bookmarks-tab'){
+          bookmarkMode=false;
+          updateBookmarkTab();
+        }
+      });
+      new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+    }
     setTimeout(()=>{ensureBookmarkTab();keepBookmarkView();},50);
     setInterval(()=>{ensureBookmarkTab();},1000);
   }
@@ -165,4 +175,4 @@ s=s.replace('</head>',STYLE+'\n</head>',1)
 if '</body>' not in s: raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Installed persistent article bookmarks and Bookmarks tab.')
+print('Installed persistent article bookmarks and fixed tab navigation.')
