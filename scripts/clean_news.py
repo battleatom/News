@@ -149,6 +149,39 @@ def suppress_repeated_description(item):
     return False
 
 
+def context_for_item(item):
+    """Provide concise useful context when an RSS description contains no real summary."""
+    title = headline_without_source(item).lower()
+    category = normalized(item.findtext("category"))
+    if any(t in title for t in ("war", "attack", "strike", "missile", "military", "troops", "iran", "ukraine", "israel", "gaza")):
+        return "Why it matters: This could change the military or diplomatic situation, affect regional security, or increase the risk of further escalation."
+    if any(t in title for t in ("congress", "senate", "supreme court", "white house", "president", "federal", "ruling", "law", "bill", "election")):
+        return "Why it matters: This could affect government policy, legal rights, public institutions, elections, or how federal power is exercised."
+    if any(t in title for t in ("tariff", "inflation", "economy", "jobs", "layoff", "bankruptcy", "market", "stock", "rate")):
+        return "Why it matters: This could affect prices, jobs, investment, business conditions, or the broader economy."
+    if any(t in title for t in ("hack", "breach", "cyber", "outage", "ai ", "artificial intelligence", "technology", "chip", "nvidia")) or category == "technology":
+        return "Why it matters: This could affect digital security, major technology platforms, infrastructure, or how people and businesses use technology."
+    if category == "gaming":
+        return "Why it matters: This could affect game availability, major platforms, hardware, studios, release plans, or the wider gaming industry."
+    if category == "nfl":
+        return "Why it matters: This could affect team availability, roster decisions, standings, injuries, or upcoming games."
+    if category in ("nm", "local", "region"):
+        return "Why it matters: This could affect residents, public services, safety, schools, business, or government decisions in the area."
+    if category == "world":
+        return "Why it matters: This development could have consequences beyond the country involved through diplomacy, trade, security, or regional stability."
+    return "Why it matters: This development may have consequences beyond the immediate headline and is worth watching for follow-up reporting."
+
+
+def ensure_context(item):
+    why = item.find("whyMatters")
+    if why is None:
+        why = ET.SubElement(item, "whyMatters")
+    if not (why.text or "").strip():
+        why.text = context_for_item(item)
+        return True
+    return False
+
+
 def main():
     tree = ET.parse(NEWS_FILE)
     root = tree.getroot()
@@ -159,7 +192,8 @@ def main():
     items = channel.findall("item")
     kept = []
     removed_gaming = removed_paywall = removed_vague_world = 0
-    removed_underreported_duplicates = removed_malformed = suppressed_descriptions = 0
+    removed_underreported_duplicates = removed_malformed = 0
+    suppressed_descriptions = added_context = 0
     seen_underreported = set()
 
     for item in items:
@@ -181,10 +215,10 @@ def main():
             continue
         if suppress_repeated_description(item):
             suppressed_descriptions += 1
+        if ensure_context(item):
+            added_context += 1
         kept.append(item)
 
-    # Catastrophic-cleanup protection: never silently turn a healthy generated feed
-    # into an empty or near-empty feed because of one bad filter rule.
     if len(items) >= 20 and len(kept) < max(10, int(len(items) * 0.10)):
         raise SystemExit(f"Cleanup safety stop: would reduce {len(items)} stories to {len(kept)}")
 
@@ -199,6 +233,7 @@ def main():
     print(f"Removed {removed_vague_world} vague World headlines.")
     print(f"Removed {removed_malformed} actual malformed/list artifacts.")
     print(f"Suppressed {suppressed_descriptions} headline-only RSS descriptions without deleting stories.")
+    print(f"Added useful fallback context to {added_context} stories that otherwise lacked article information.")
     print(f"Removed {removed_underreported_duplicates} duplicate Underreported stories.")
     print(f"Final cleanup retained {len(kept)} of {len(items)} stories.")
 
