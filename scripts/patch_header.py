@@ -4,9 +4,9 @@ import re
 path = Path("index.html")
 text = path.read_text(encoding="utf-8")
 
-# The newspaper treatment belongs to the single page-level <header> only.
+# The newspaper treatment belongs to the single page-level header only.
 # Keep it external so generated feed updates cannot duplicate it.
-link = '<link rel="stylesheet" href="styles/header.css?v=3">'
+link = '<link rel="stylesheet" href="styles/header.css?v=4">'
 text = re.sub(
     r'<link\s+rel=["\']stylesheet["\']\s+href=["\']styles/header\.css(?:\?[^"\']*)?["\']\s*/?>\s*',
     '', text, flags=re.I,
