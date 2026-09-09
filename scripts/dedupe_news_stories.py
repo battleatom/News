@@ -15,6 +15,10 @@ GENERIC_TOPIC_WORDS = {
     "congress", "senate", "democrats", "republicans", "republican", "democrat", "political", "washington",
     "federal", "official", "officials", "country", "state", "states", "america", "american"
 }
+GAMING_GENERIC_WORDS = {
+    "game", "games", "gaming", "video", "player", "players", "nintendo", "switch", "playstation", "xbox",
+    "steam", "pc", "direct", "showcase", "trailer", "teaser", "console", "consoles"
+}
 GAMING_EVENT_GROUPS = {
     "announcement": {"announced", "announce", "announces", "revealed", "reveal", "reveals", "confirmed", "confirm", "confirmation", "unveiled", "unveil"},
     "marketing": {"teaser", "trailer", "direct", "showcase", "presentation", "exclusive"},
@@ -42,7 +46,9 @@ def title_without_source(item):
 
 def tokens(item):
     text = re.sub(r"[^a-z0-9\s]", " ", title_without_source(item).lower())
-    return set(w for w in text.split() if w not in STOP_WORDS and len(w) > 1)
+    # Preserve single-digit model/sequel/week numbers. They are often the detail
+    # that distinguishes one gaming, technology, or sports story from another.
+    return set(w for w in text.split() if w not in STOP_WORDS and (len(w) > 1 or w.isdigit()))
 
 
 def content_tokens(item):
@@ -55,15 +61,33 @@ def gaming_event_groups(item):
 
 
 def same_gaming_event(a, b):
-    """Catch cross-source coverage of the same gaming event without merging unrelated games."""
+    """Catch the same named gaming announcement without merging a whole showcase."""
     ta, tb = content_tokens(a), content_tokens(b)
     shared = ta & tb
     if len(shared) < 2:
         return False
     if not (gaming_event_groups(a) & gaming_event_groups(b)):
         return False
-    named_shared = {w for w in shared if not any(w in terms for terms in GAMING_EVENT_GROUPS.values()) and w not in {"game", "games", "gaming", "player", "players"}}
+    named_shared = {
+        w for w in shared
+        if not any(w in terms for terms in GAMING_EVENT_GROUPS.values())
+        and w not in GAMING_GENERIC_WORDS
+    }
+    # Example: Persona 6 coverage shares the named subject "persona" and sequel
+    # number "6", while two unrelated Nintendo Direct announcements do not.
     return len(named_shared) >= 2
+
+
+def very_close_title(a, b, minimum_common=5, ratio=0.94):
+    ta, tb = tokens(a), tokens(b)
+    common = len(ta & tb)
+    if common < minimum_common:
+        return False
+    raw_a = title_without_source(a).lower()
+    raw_b = title_without_source(b).lower()
+    if len(raw_a) < 35 or len(raw_b) < 35:
+        return False
+    return difflib.SequenceMatcher(None, raw_a, raw_b).ratio() >= ratio
 
 
 def same_story(a, b):
@@ -76,10 +100,25 @@ def same_story(a, b):
         return False
     if ta == tb:
         return True
+
     common = len(ta & tb)
     smaller = min(len(ta), len(tb))
+
+    # Sports, technology and gaming headlines naturally reuse many category words.
+    # The old generic 65% overlap rule collapsed whole NFL weeks and product events.
+    # Use exact/near-exact title matching here, plus the dedicated gaming event rule.
+    if ca == "nfl":
+        return very_close_title(a, b, minimum_common=5, ratio=0.94)
+    if ca == "technology":
+        return very_close_title(a, b, minimum_common=5, ratio=0.95)
+    if ca == "gaming":
+        if same_gaming_event(a, b):
+            return True
+        return very_close_title(a, b, minimum_common=5, ratio=0.95)
+
     if smaller >= 5 and common / smaller >= 0.90:
         return True
+
     ca_tokens, cb_tokens = content_tokens(a), content_tokens(b)
     content_common = len(ca_tokens & cb_tokens)
     content_smaller = min(len(ca_tokens), len(cb_tokens))
@@ -91,8 +130,7 @@ def same_story(a, b):
     else:
         if content_common >= 4 and content_smaller >= 5 and content_common / content_smaller >= 0.65:
             return True
-    if ca == "gaming" and same_gaming_event(a, b):
-        return True
+
     sa = " ".join(sorted(ta))
     sb = " ".join(sorted(tb))
     if common >= 5 and difflib.SequenceMatcher(None, sa, sb).ratio() >= 0.86:
@@ -157,6 +195,7 @@ def main():
     print(f"Removed {removed_exact} exact-link duplicate stories.")
     print(f"Removed {removed_similar} same-category near-duplicate stories across sources.")
     print(f"Final feed contains {len(kept)} story items after language and cross-source deduplication.")
+
 
 if __name__ == "__main__":
     main()
