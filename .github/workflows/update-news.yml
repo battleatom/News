@@ -33,13 +33,33 @@ jobs:
           git reset --hard origin/main
 
       - name: Ensure rolling 48-hour feed window
-        run: python scripts/patch_feed_window.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/update_news.py')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('MAX_AGE_HOURS = 72', 'MAX_AGE_HOURS = 48')
+          s = s.replace('f"{query} when:3d"', 'f"{query} when:2d"')
+          p.write_text(s, encoding='utf-8')
+          print('Enforced rolling 48-hour RSS window.')
+          PY
 
       - name: Ensure NFL feed category
-        run: python scripts/patch_nfl_feed.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('scripts/update_news.py')
+          s = p.read_text(encoding='utf-8')
+          line = '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],'
+          s = re.sub(r'(?:\n?' + re.escape(line) + r'){1,}', '\n' + line, s)
+          if '    "technology": "technology AI cybersecurity science",' in s and line not in s:
+              s = s.replace('    "technology": "technology AI cybersecurity science",', line + '\n    "technology": "technology AI cybersecurity science",', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
 
       - name: Patch news collector rules
-        run: python scripts/patch_news_collector.py
+        run: python scripts/patch_news_selector.py
 
       - name: Patch Top Stories topic and entity diversity
         run: python scripts/patch_top_diversity.py
@@ -48,19 +68,19 @@ jobs:
         run: python scripts/patch_event_dedupe.py
 
       - name: Patch site cache metadata
-        run: python scripts/patch_cache_metadata.py
+        run: python scripts/patch_site_cache.py
 
       - name: Apply site theme
-        run: python scripts/patch_theme.py
+        run: python scripts/apply_clean_design.py
 
       - name: Apply live local date time and weather
-        run: python scripts/patch_local_status.py
+        run: python scripts/add_local_status.py
 
       - name: Apply page-level newspaper header
-        run: python scripts/patch_newspaper_header.py
+        run: python scripts/patch_header.py
 
       - name: Persist selected news tab
-        run: python scripts/patch_tab_persistence.py
+        run: python scripts/persist_active_tab.py
 
       - name: Apply article styling
         run: python scripts/patch_article_style.py
@@ -69,16 +89,29 @@ jobs:
         run: python scripts/patch_region_tab.py
 
       - name: Verify and enforce NFL and X tabs
-        run: python scripts/patch_nfl_x_tabs.py
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          pattern = r"const sections=\[[^;]*\];"
+          replacement = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a00'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
+          s2, n = re.subn(pattern, replacement, s, count=1)
+          if n != 1:
+              raise SystemExit('Could not locate sections declaration in index.html')
+          p.write_text(s2, encoding='utf-8')
+          print('NFL and X tabs verified.')
+          PY
 
       - name: Fix Regional tab click handling
-        run: python scripts/patch_region_click.py
+        run: python scripts/fix_region_tab_click.py
 
       - name: Patch Underreported detail UI
-        run: python scripts/patch_underreported_detail.py
+        run: python scripts/patch_underreported_ui.py
 
       - name: Patch X Top Issues UI
-        run: python scripts/patch_x_issues_ui.py
+        run: python scripts/patch_x_ui.py
 
       - name: Update RSS feed
         run: |
@@ -153,21 +186,29 @@ jobs:
       - name: Deduplicate generated UI styles
         run: python scripts/dedupe_generated_ui.py
 
-      - name: Validate generated page
+      - name: Validate generated page and scripts
         run: |
+          python -m py_compile scripts/*.py
           python - <<'PY'
           from pathlib import Path
           import re
-          s=Path('index.html').read_text(encoding='utf-8')
-          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1']
-          missing=[m for m in required if m not in s]
+          workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
+          script_refs=re.findall(r'(?:run:\s*python\s+|python\s+)(scripts/[A-Za-z0-9_./-]+\.py)', workflow)
+          missing=[p for p in sorted(set(script_refs)) if not Path(p).exists()]
           if missing:
-              raise SystemExit('Missing required UI markers: '+', '.join(missing))
+              raise SystemExit('Workflow references missing scripts: '+', '.join(missing))
+          s=Path('index.html').read_text(encoding='utf-8')
+          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1','boxoffice-location-v1']
+          missing_ui=[m for m in required if m not in s]
+          if missing_ui:
+              raise SystemExit('Missing required UI markers: '+', '.join(missing_ui))
           if s.count('id="auto-refresh-timer-v1"') != 1:
               raise SystemExit('Expected exactly one auto refresh timer marker')
           if '<html' not in s.lower() or '</html>' not in s.lower():
               raise SystemExit('Invalid generated page')
-          print('Generated page validation passed.')
+          if len(re.findall(r'const sections=', s)) != 1:
+              raise SystemExit('Generated page does not contain exactly one sections declaration')
+          print('Generated page, workflow references, and Python syntax validation passed.')
           PY
 
       - name: Commit and push changes
