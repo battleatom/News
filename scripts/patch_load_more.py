@@ -31,11 +31,19 @@ while marker in text:
         break
     text = text[:start] + text[end + len('</script>'):]
 
-# Load More behavior is JavaScript only. Styling belongs exclusively to
-# styles/theme.css so this patch cannot override the authoritative theme.
+# Make the existing NFL renderer honor the same per-tab count used by pagination.
+text = text.replace(
+    'allNfl.slice(0,10).forEach((item,i)=>',
+    'allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>',
+    1,
+)
+
+# Load More must wrap canonicalRender because canonical tab clicks call that function
+# directly. Wrapping only `render` leaves the control bypassed during normal tab use.
 script = r'''<script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
-const loadCounts = {};
+window.loadCounts = window.loadCounts || {};
+const loadCounts = window.loadCounts;
 
 function paginatedNewsItems(items){
   const categoryItems = items.filter(item => (item.querySelector('category')?.textContent?.trim() || 'world') === active);
@@ -45,30 +53,54 @@ function paginatedNewsItems(items){
   return {available, visible: available.slice(0, count), count};
 }
 
-const baseRenderWithPagination = render;
-render = function(items){
-  if(active === 'nfl') return baseRenderWithPagination(items);
-
-  const data = paginatedNewsItems(items);
-  baseRenderWithPagination(data.visible);
+function appendLoadMoreControl(data){
   const root = document.getElementById('news-feed');
-  const section = root.querySelector('.section');
-  if(!section) return;
-  const countEl = section.querySelector('.section-header .count');
-  if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length} stories`;
-  if(data.available.length <= data.count) return;
+  if(!root || data.available.length <= data.count) return;
+  const section = root.querySelector('.section') || root;
+  if(section.querySelector('.load-more-wrap')) return;
   const more = document.createElement('div');
   more.className = 'load-more-wrap';
   const button = document.createElement('button');
+  button.type = 'button';
   button.className = 'load-more';
   const next = Math.min(data.count + STORIES_PER_PAGE, data.available.length);
   button.textContent = `Load 10 more (${next} of ${data.available.length})`;
-  button.onclick = () => { loadCounts[active] = next; render(allItems); };
+  button.onclick = () => {
+    loadCounts[active] = next;
+    canonicalRender(allItems);
+  };
   more.appendChild(button);
   section.appendChild(more);
+}
+
+const baseCanonicalRenderWithPagination = canonicalRender;
+canonicalRender = function(items){
+  if(active === 'bookmarks' || active === 'boxoffice'){
+    return baseCanonicalRenderWithPagination(items);
+  }
+
+  if(active === 'nfl'){
+    const data = paginatedNewsItems(items);
+    loadCounts.nfl = data.count;
+    baseCanonicalRenderWithPagination(items);
+    const nflHeader = [...document.querySelectorAll('.section-header .count')].find(el => el.closest('.section-header')?.querySelector('h2')?.textContent?.includes('NFL News'));
+    if(nflHeader) nflHeader.textContent = `Showing ${data.count} of ${data.available.length}`;
+    appendLoadMoreControl(data);
+    return;
+  }
+
+  const data = paginatedNewsItems(items);
+  baseCanonicalRenderWithPagination(data.visible);
+  const root = document.getElementById('news-feed');
+  const countEl = root?.querySelector('.section .section-header .count');
+  if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length} stories`;
+  appendLoadMoreControl(data);
 };
+
+render = canonicalRender;
+window.render = canonicalRender;
 </script>'''
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied Load More pagination without injecting CSS that can override styles/theme.css.")
+print("Applied canonical Load More pagination with NFL support.")
