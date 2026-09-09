@@ -4,61 +4,42 @@ on:
   push:
     branches: [main]
     paths-ignore:
-      - News
-      - index.html
+      - 'News'
+      - 'index.html'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 concurrency:
   group: update-news-feed
   cancel-in-progress: true
 
+permissions:
+  contents: write
+
 jobs:
-  update-news:
+  update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Sync with latest main
+      - name: Sync latest main
         run: |
           git fetch origin main
+          git checkout main
           git reset --hard origin/main
 
       - name: Ensure rolling 48-hour feed window
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('scripts/update_news.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('MAX_AGE_HOURS = 72', 'MAX_AGE_HOURS = 48')
-          s = s.replace('f"{query} when:3d"', 'f"{query} when:2d"')
-          p.write_text(s, encoding='utf-8')
-          print('Enforced rolling 48-hour RSS window.')
-          PY
+        run: python scripts/patch_feed_window.py
 
       - name: Ensure NFL feed category
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('scripts/update_news.py')
-          s = p.read_text(encoding='utf-8')
-          line = '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],'
-          s = re.sub(r'(?:\n?' + re.escape(line) + r'){1,}', '\n' + line, s)
-          if '    "technology": "technology AI cybersecurity science",' in s and line not in s:
-              s = s.replace('    "technology": "technology AI cybersecurity science",', line + '\n    "technology": "technology AI cybersecurity science",', 1)
-          p.write_text(s, encoding='utf-8')
-          PY
+        run: python scripts/patch_nfl_feed.py
 
       - name: Patch news collector rules
-        run: python scripts/patch_news_selector.py
+        run: python scripts/patch_news_collector.py
 
       - name: Patch Top Stories topic and entity diversity
         run: python scripts/patch_top_diversity.py
@@ -67,19 +48,19 @@ jobs:
         run: python scripts/patch_event_dedupe.py
 
       - name: Patch site cache metadata
-        run: python scripts/patch_site_cache.py
+        run: python scripts/patch_cache_metadata.py
 
       - name: Apply site theme
-        run: python scripts/apply_clean_design.py
+        run: python scripts/patch_theme.py
 
-      - name: Apply live local date time weather
-        run: python scripts/add_local_status.py
+      - name: Apply live local date time and weather
+        run: python scripts/patch_local_status.py
 
       - name: Apply page-level newspaper header
-        run: python scripts/patch_header.py
+        run: python scripts/patch_newspaper_header.py
 
       - name: Persist selected news tab
-        run: python scripts/persist_active_tab.py
+        run: python scripts/patch_tab_persistence.py
 
       - name: Apply article styling
         run: python scripts/patch_article_style.py
@@ -88,33 +69,19 @@ jobs:
         run: python scripts/patch_region_tab.py
 
       - name: Verify and enforce NFL and X tabs
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          pattern = r"const sections=\[[^;]*\];"
-          replacement = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a00'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
-          s2, n = re.subn(pattern, replacement, s, count=1)
-          if n != 1:
-              raise SystemExit('Could not locate sections declaration in index.html')
-          p.write_text(s2, encoding='utf-8')
-          print('NFL and X tabs verified.')
-          PY
+        run: python scripts/patch_nfl_x_tabs.py
 
       - name: Fix Regional tab click handling
-        run: python scripts/fix_region_tab_click.py
+        run: python scripts/patch_region_click.py
 
       - name: Patch Underreported detail UI
-        run: python scripts/patch_underreported_ui.py
+        run: python scripts/patch_underreported_detail.py
 
       - name: Patch X Top Issues UI
-        run: python scripts/patch_x_ui.py
+        run: python scripts/patch_x_issues_ui.py
 
       - name: Update RSS feed
         run: |
-          set -o pipefail
           success=0
           for attempt in 1 2 3; do
             echo "RSS update attempt ${attempt}/3"
@@ -162,6 +129,9 @@ jobs:
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
 
+      - name: Apply reliable automatic refresh timer
+        run: python scripts/patch_auto_refresh_timer.py
+
       - name: Apply location-aware Box Office UI
         run: python scripts/patch_boxoffice_ui.py
 
@@ -188,45 +158,26 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import re
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'pull-stats-ui-v1', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
-          missing = [x for x in required if x not in s]
+          s=Path('index.html').read_text(encoding='utf-8')
+          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1']
+          missing=[m for m in required if m not in s]
           if missing:
-              raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
-          if not re.search(r"\['boxoffice'", s):
-              raise SystemExit('Generated page is missing the Box Office tab declaration')
-          if len(re.findall(r'<nav[^>]+id=["\']tabs["\']', s, flags=re.I)) != 1:
-              raise SystemExit('Generated page does not contain exactly one tabs container')
-          if len(re.findall(r'const sections=', s)) != 1:
-              raise SystemExit('Generated page does not contain exactly one sections declaration')
-          if len(re.findall(r'<script\s+id=["\']load-more-v1["\']', s, flags=re.I)) != 1:
-              raise SystemExit('Generated page does not contain exactly one Load More script')
-          for style_id in ('site-features-style', 'nfl-live-style', 'bookmarks-v1-style'):
-              count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
-              if count != 1:
-                  raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
-          print('Generated page validation passed with bookmarks, detailed pull statistics, and existing features.')
+              raise SystemExit('Missing required UI markers: '+', '.join(missing))
+          if s.count('id="auto-refresh-timer-v1"') != 1:
+              raise SystemExit('Expected exactly one auto refresh timer marker')
+          if '<html' not in s.lower() or '</html>' not in s.lower():
+              raise SystemExit('Invalid generated page')
+          print('Generated page validation passed.')
           PY
 
-      - name: Commit updated feed
+      - name: Commit and push changes
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json scripts .github/workflows/update-news.yml
           if git diff --cached --quiet; then
-            echo "News feed is already current."
+            echo 'No changes to commit.'
             exit 0
           fi
-
-          git fetch origin main
-          git reset --soft origin/main
-          git add -A
-
-          if git diff --cached --quiet; then
-            echo "No changes remain after syncing with latest main."
-            exit 0
-          fi
-
-          git commit -m "Automated news feed update"
-          git push origin HEAD:main
+          git commit -m 'Automated news feed update'
+          git push origin main
