@@ -22,5 +22,14 @@ if tags or tail.strip():
     body_prefix = s[:body_end]
     s = body_prefix + ('\n' + '\n'.join(tags) if tags else '') + '\n</body>\n</html>\n'
 
+# Hard guarantees: there must be one automatic scheduler and no legacy/competing
+# refresh loops. The timer patch owns scheduling; site-features owns rendering/status.
+if s.count('id="auto-refresh-timer-v1"') != 1:
+    raise SystemExit('Expected exactly one auto refresh timer script')
+if re.search(r'setInterval\(\(\)\s*=>\s*loadNews\(false\)', s):
+    raise SystemExit('Legacy 15-minute loadNews scheduler still exists')
+if re.search(r'setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)', s):
+    raise SystemExit('Competing five-second refresh scheduler still exists')
+
 P.write_text(s, encoding='utf-8')
-print('Normalized generated HTML so scripts and styles stay inside the document body.')
+print('Normalized generated HTML and verified there is only one automatic refresh scheduler.')
