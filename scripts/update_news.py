@@ -187,6 +187,10 @@ def parse_items(root, category, source_override=None):
         desc = clean(item.findtext("description")); pub = item.findtext("pubDate") or ""
         published = parse_date(pub); source_el = item.find("source")
         source = source_override or clean(source_el.text if source_el is not None else "")
+        if not source_is_trusted(source):
+            continue
+        if should_route_to_world(title, desc, category):
+            category = "world"
         if not title or not link or not published or published < cutoff or published > now + timedelta(minutes=10):
             continue
         result.append({"title": title, "link": link, "description": desc, "pubDate": pub,
@@ -340,6 +344,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
