@@ -121,6 +121,10 @@
 
 
 
+
+
+
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -137,11 +141,11 @@
 .load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
 .load-more:active{transform:translateY(1px)}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 </head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Refresh News</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -494,6 +498,34 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
+
+
+
+
+
+
+
+
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
+})();
+</script>
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -954,18 +986,18 @@ function renderNflLive(){
  const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent','#166534');
  const h=document.createElement('div');h.className='section-header';h.innerHTML='<h2>🏈 NFL</h2><span class="count"><span class="nfl-live-dot"></span>Live scoreboard</span>';sec.appendChild(h);
  const body=document.createElement('div');body.className='section-body';body.innerHTML='<div class="loading">Loading live NFL scores…</div>';sec.appendChild(body);root.appendChild(sec);
- const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN scoreboard · refreshes every 30 seconds. TV/stream availability depends on your provider.';body.appendChild(note);
+ const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec';body.appendChild(note);
  async function load(){
   try{
    const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
    [...body.querySelectorAll('.nfl-game-card,.nfl-empty')].forEach(x=>x.remove());
    if(!d.events?.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No NFL games currently scheduled.';body.appendChild(e);return;}
-   d.events.forEach(ev=>{const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home');const card=document.createElement('article');card.className='news-item nfl-game-card';const state=ev.status?.type?.state,detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled';const broadcasts=(c?.broadcasts||[]).flatMap(x=>x.names||[]).filter(Boolean);const watch=(ev.links||[]).find(x=>Array.isArray(x.rel)&&x.rel.some(r=>String(r).toLowerCase().includes('watch')));const when=state==='post'?'FINAL':detail;const broadcastText=broadcasts.length?broadcasts.join(' · '):'No TV listing';const watchHtml=watch?.href?` · <a href="${esc(watch.href)}" target="_blank" rel="noopener noreferrer">Watch</a>`:'';card.innerHTML=`<h3>${esc(a?.team?.displayName||'Away')} <strong>${esc(a?.score??'-')}</strong> @ ${esc(h?.team?.displayName||'Home')} <strong>${esc(h?.score??'-')}</strong></h3><div class="meta"><span>${esc(when)}</span></div><div class="broadcast"><strong>TV:</strong> ${esc(broadcastText)}${watchHtml}</div>`;body.appendChild(card);});
+   d.events.forEach(ev=>{const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home');const card=document.createElement('article');card.className='news-item nfl-game-card';const state=ev.status?.type?.state,detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled';const broadcasts=(c?.broadcasts||[]).flatMap(x=>x.names||[]).filter(Boolean);const watch=(ev.links||[]).find(x=>Array.isArray(x.rel)&&x.rel.some(r=>String(r).toLowerCase().includes('watch')));const when=state==='post'?'FINAL':detail;const away=esc(a?.team?.abbreviation||a?.team?.shortDisplayName||'AWAY'),home=esc(h?.team?.abbreviation||h?.team?.shortDisplayName||'HOME');const tv=broadcasts.length?esc(broadcasts.join(' · ')):'';const watchHtml=watch?.href?` <a href="${esc(watch.href)}" target="_blank" rel="noopener noreferrer">Watch</a>`:'';card.innerHTML=`<div class="nfl-score-line"><span class="teams">${away} ${esc(a?.score??'-')} @ ${home} ${esc(h?.score??'-')}</span><span class="status">· ${esc(when)}</span>${tv?`<span class="tv">· ${tv}${watchHtml}</span>`:''}</div>`;body.appendChild(card);});
   }catch(e){const old=body.querySelector('.nfl-error');if(!old){const err=document.createElement('div');err.className='empty nfl-error';err.textContent='NFL live data is temporarily unavailable; try Refresh.';body.appendChild(err);}}
  }
  load();if(nflRefreshTimer)clearInterval(nflRefreshTimer);nflRefreshTimer=setInterval(()=>{if(active==='nfl')load();},30000);
  const allNfl=allItems.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='nfl');
- if(allNfl.length){const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='28px';nh.innerHTML=`<h2>NFL News</h2><span class="count">${allNfl.length} stories</span>`;root.appendChild(nh);const nb=document.createElement('div');nb.className='section-body';allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar);});root.appendChild(nb);}
+ if(allNfl.length){const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='20px';nh.innerHTML=`<h2>NFL News</h2><span class="count">${allNfl.length} stories</span>`;root.appendChild(nh);const nb=document.createElement('div');nb.className='section-body';allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar);});root.appendChild(nb);}
 }
 const canonicalBeforeNfl=canonicalRender;
 canonicalRender=function(items){if(active==='nfl'){renderNflLive();return}canonicalBeforeNfl(items);};
@@ -1053,26 +1085,6 @@ canonicalRender = function(items){
 
 render = canonicalRender;
 window.render = canonicalRender;
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
-})();
 </script>
 </body>
 </html>
