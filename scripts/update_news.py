@@ -101,9 +101,22 @@ QUERIES = {
             "Tennessee news",
         ],
     },
-    "technology": "technology AI cybersecurity science",
-    "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
-    "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
+    "technology": [
+        "AI technology news",
+        "cybersecurity data breach technology",
+        "Microsoft Google Apple Nvidia technology",
+        "semiconductor software cloud computing news",
+    ],
+    "gaming": [
+        "PlayStation Xbox Nintendo gaming news",
+        "PC gaming Nvidia AMD gaming hardware",
+        "video game industry releases studios gaming",
+    ],
+    "military": [
+        "Pentagon US military defense news",
+        "US armed forces troops military news",
+        "defense industry military conflict news",
+    ],
 }
 
 LOCAL_QUERIES = [
@@ -379,6 +392,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
     if not unique:
@@ -475,7 +490,7 @@ def select_category_stories(items, limit=30):
             title = (item.get("title") or "").lower()
             source = (item.get("source") or "").lower()
             desc = (item.get("description") or "").lower()
-            local_signal = any(term in title or term in source for term in local_terms)
+            local_signal = any(term in title or term in source or term in desc for term in local_terms)
             outside_signal = any(term in title for term in outside_terms)
             if local_signal and not outside_signal:
                 local_items.append(item)
