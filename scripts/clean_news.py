@@ -1,6 +1,5 @@
 import html
 import re
-import runpy
 import xml.etree.ElementTree as ET
 
 NEWS_FILE = "News"
@@ -64,14 +63,10 @@ def is_vague_world_headline(item):
         return True
     words = re.findall(r"[A-Za-z0-9]+", headline)
     lowered = headline.lower()
-
-    # Remove source/list-style placeholders such as "World News 10" or
-    # "World News". These are navigation labels, not actual stories.
     if re.fullmatch(r"(?:world|international)\s+news(?:\s+\d+)?", lowered):
         return True
     if re.fullmatch(r"(?:world|international)\s+(?:news\s+)?(?:\d+)", lowered):
         return True
-
     if len(words) <= 2:
         return True
     if len(words) <= 3 and not any(term in lowered for term in WORLD_HEADLINE_EVENT_TERMS):
@@ -84,14 +79,10 @@ def is_vague_world_headline(item):
 def is_gaming_commerce(item):
     text = normalized(item.findtext("title")) + " " + normalized(item.findtext("description"))
     source = normalized(item.findtext("source"))
-    if any(term in text for term in GAMING_BLOCK_TERMS):
-        return True
-    if any(term in source for term in GAMING_COMMERCE_SOURCES):
-        return True
-    if re.search(r"\b(coupon|promo|discount)\b", text):
-        return True
-    if re.search(r"\b(save|off)\s+\$?\d+\b", text):
-        return True
+    if any(term in text for term in GAMING_BLOCK_TERMS): return True
+    if any(term in source for term in GAMING_COMMERCE_SOURCES): return True
+    if re.search(r"\b(coupon|promo|discount)\b", text): return True
+    if re.search(r"\b(save|off)\s+\$?\d+\b", text): return True
     return False
 
 
@@ -104,15 +95,10 @@ def is_ordinary_paywall(item):
 
 
 def is_duplicate_underreported(item, seen_keys):
-    if normalized(item.findtext("category")) != "underreported":
-        return False
+    if normalized(item.findtext("category")) != "underreported": return False
     k = story_key(item)
-    if not k:
-        return True
-    # Exact normalized headline duplicates are always removed. This catches
-    # the same story arriving from multiple outlets with different source suffixes.
-    if k in seen_keys:
-        return True
+    if not k: return True
+    if k in seen_keys: return True
     seen_keys.add(k)
     return False
 
@@ -121,38 +107,24 @@ def main():
     tree = ET.parse(NEWS_FILE)
     root = tree.getroot()
     channel = root.find("channel")
-    if channel is None:
-        return
-
+    if channel is None: return
     items = channel.findall("item")
     kept = []
-    removed_gaming = 0
-    removed_paywall = 0
-    removed_vague_world = 0
-    removed_underreported_duplicates = 0
+    removed_gaming = removed_paywall = removed_vague_world = removed_underreported_duplicates = 0
     seen_underreported = set()
-
     for item in items:
         category = normalized(item.findtext("category"))
         if category == "gaming" and is_gaming_commerce(item):
-            removed_gaming += 1
-            continue
+            removed_gaming += 1; continue
         if is_ordinary_paywall(item):
-            removed_paywall += 1
-            continue
+            removed_paywall += 1; continue
         if is_vague_world_headline(item):
-            removed_vague_world += 1
-            continue
+            removed_vague_world += 1; continue
         if is_duplicate_underreported(item, seen_underreported):
-            removed_underreported_duplicates += 1
-            continue
+            removed_underreported_duplicates += 1; continue
         kept.append(item)
-
-    for item in items:
-        channel.remove(item)
-    for item in kept:
-        channel.append(item)
-
+    for item in items: channel.remove(item)
+    for item in kept: channel.append(item)
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
@@ -160,26 +132,4 @@ def main():
     print(f"Removed {removed_underreported_duplicates} duplicate Underreported stories.")
     print("Local stories retained after upstream geographic selection.")
 
-    # The X collector's previous discovery query required Google News RSS to
-    # return literal x.com destinations, which produces zero results in practice.
-    # Broaden discovery to reporting that explicitly describes X conversations,
-    # while keeping the downstream independent-reporting verification step.
-    try:
-        p = "scripts/enrich_x_issues.py"
-        src = open(p, "r", encoding="utf-8").read()
-        src = src.replace(
-            'fetch(f"site:x.com {query} (trending OR viral OR discussion OR controversy)")',
-            'fetch(f"{query} (\\\"on X\\\" OR \\\"on Twitter\\\" OR \\\"X users\\\" OR viral OR trending)")'
-        )
-        src = src.replace(
-            'return "x.com/" in link.lower() or "twitter.com/" in link.lower() or bool(re.search(r"\\b(?:on|posted on|posts? on|from)\\s+(?:x|twitter)\\b", text))',
-            'return bool(re.search(r"\\b(?:on|posted on|posts? on|from)\\s+(?:x|twitter)\\b", text)) or "x.com/" in link.lower() or "twitter.com/" in link.lower()'
-        )
-        ns = {"__name__": "__main__"}
-        exec(compile(src, p, "exec"), ns, ns)
-    except Exception as exc:
-        print(f"X issue enrichment failed; retaining base feed: {exc}")
-
-
-if __name__ == "__main__":
-    main()
+if __name__ == "__main__": main()
