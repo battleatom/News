@@ -229,30 +229,6 @@ def impact_score(item, newest_time):
     return score
 
 
-SUBJECT_ALIASES = {
-    "iran": ("iran", "iranian", "tehran"),
-    "israel": ("israel", "israeli", "gaza", "idf"),
-    "russia": ("russia", "russian", "moscow", "putin"),
-    "ukraine": ("ukraine", "ukrainian", "kyiv", "zelensky"),
-    "china": ("china", "chinese", "beijing", "xi jinping"),
-    "north korea": ("north korea", "north korean", "pyongyang", "kim jong un"),
-    "donald trump": ("donald trump", "trump", "president trump"),
-    "congress": ("congress", "senate", "house republicans", "house democrats"),
-    "supreme court": ("supreme court", "scotus"),
-    "fed": ("federal reserve", "fed", "jerome powell"),
-    "nato": ("nato",),
-    "gulf": ("strait of hormuz", "persian gulf", "gulf states"),
-    "israel-palestine": ("palestinian", "palestine", "west bank"),
-    "elon musk": ("elon musk", "musk", "spacex", "tesla"),
-    "meta": ("meta", "facebook", "instagram", "zuckerberg"),
-    "openai": ("openai", "chatgpt"),
-    "google": ("google", "alphabet"),
-    "apple": ("apple", "iphone"),
-    "microsoft": ("microsoft", "windows", "xbox"),
-    "nvidia": ("nvidia", "geforce", "rtx"),
-    "amazon": ("amazon", "aws"),
-}
-
 SUBJECT_ALIASES = {'iran': ('iran', 'iranian', 'tehran'), 'israel': ('israel', 'israeli', 'gaza', 'idf'), 'russia': ('russia', 'russian', 'moscow', 'putin'), 'ukraine': ('ukraine', 'ukrainian', 'kyiv', 'zelensky'), 'china': ('china', 'chinese', 'beijing', 'xi jinping'), 'north korea': ('north korea', 'north korean', 'pyongyang', 'kim jong un'), 'donald trump': ('donald trump', 'trump', 'president trump'), 'congress': ('congress', 'senate', 'house republicans', 'house democrats'), 'supreme court': ('supreme court', 'scotus'), 'fed': ('federal reserve', 'fed', 'jerome powell'), 'nato': ('nato',), 'gulf': ('strait of hormuz', 'persian gulf', 'gulf states'), 'israel-palestine': ('palestinian', 'palestine', 'west bank'), 'elon musk': ('elon musk', 'musk', 'spacex', 'tesla'), 'meta': ('meta', 'facebook', 'instagram', 'zuckerberg'), 'openai': ('openai', 'chatgpt'), 'google': ('google', 'alphabet'), 'apple': ('apple', 'iphone'), 'microsoft': ('microsoft', 'windows', 'xbox'), 'nvidia': ('nvidia', 'geforce', 'rtx'), 'amazon': ('amazon', 'aws'), 'walmart': ('walmart', 'wal-mart')}
 
 def subject_keys(item):
@@ -294,15 +270,68 @@ def article_terms(item):
 
 
 def same_event_topic(a, b):
-    ta,tb=article_terms(a),article_terms(b)
-    shared=ta & tb
-    sa,sb=set(subject_keys(a)),set(subject_keys(b))
-    # Strong shared event vocabulary: e.g. "Walmart recalls eggs" / "national egg recall".
-    if len(shared)>=4: return True
-    if len(shared)>=2 and len(shared)/max(1,len(ta|tb))>=0.30: return True
-    # A named subject alone is not enough; two Iran stories can both remain if
-    # they concern different events. Shared event words make them a cluster.
-    if sa & sb and len(shared)>=2: return True
+    """Detect redundant coverage of the same real-world event without collapsing a whole subject."""
+    ta, tb = article_terms(a), article_terms(b)
+    shared = ta & tb
+    sa, sb = set(subject_keys(a)), set(subject_keys(b))
+    shared_subjects = sa & sb
+    topic_a, topic_b = topic_key(a), topic_key(b)
+
+    # Title terms are more useful for event matching than long publisher descriptions.
+    title_a = set(re.findall(r"[a-z0-9]+", (a.get('title') or '').lower()))
+    title_b = set(re.findall(r"[a-z0-9]+", (b.get('title') or '').lower()))
+    title_stop = {"the","a","an","and","or","but","for","from","with","into","over","after","before","about","amid","during","this","that","these","those","says","said","new","news","latest","update","report","reported","according","officials","official","will","could","would","may","can","has","have","had","was","were","are","is","be","been","to","of","in","on","at","by","as","it","its","their","they","them","who","what","when","where","why","how","us","one","two","first","second","third","today","now","more","just","also","still"}
+    title_a = {w for w in title_a if len(w) >= 3 and w not in title_stop}
+    title_b = {w for w in title_b if len(w) >= 3 and w not in title_stop}
+    title_shared = title_a & title_b
+
+    # Strong phrase/event anchors. These distinguish an actual event from a broad subject.
+    event_groups = {
+        'military': {'war','warfare','siege','airstrike','airstrikes','missile','missiles','strike','strikes','bombing','bombed','troops','invasion','invades','invaded','ceasefire','fighting','battle','battles','offensive','attack','attacks','attacked','retaliation','retaliates','retaliatory','shelling','raid','raids'},
+        'recall': {'recall','recalls','recalled','contamination','contaminated','salmonella','listeria','outbreak','outbreaks','safety'},
+        'disaster': {'earthquake','hurricane','tornado','wildfire','flood','flooding','landslide','eruption','evacuation','evacuations'},
+        'crime': {'shooting','shootings','murder','murdered','homicide','arrest','arrested','missing','kidnapped','robbery','stabbing','stabbings','charged','indicted'},
+        'government': {'bill','bills','vote','votes','voted','law','lawsuit','ruling','rules','ruled','order','orders','executive','legislation','hearing','hearings','impeach','impeachment'},
+        'business': {'acquisition','acquires','acquired','merger','merges','layoffs','laid','bankruptcy','bankrupt','closure','closes','closed','earnings','recall'},
+        'technology': {'breach','hack','hacked','hackers','outage','outages','vulnerability','vulnerabilities','launch','launches','launched','shutdown','shuts','updates','update'},
+        'sports': {'game','games','match','matches','injury','injured','trade','trades','signed','signs','score','scores','playoffs','championship'},
+    }
+
+    def event_groups_for(terms):
+        return {name for name, words in event_groups.items() if terms & words}
+
+    groups_a = event_groups_for(ta | title_a)
+    groups_b = event_groups_for(tb | title_b)
+    shared_groups = groups_a & groups_b
+
+    # Exact/near-exact lexical overlap remains the safest signal.
+    if len(shared) >= 4:
+        return True
+    if len(shared) >= 3 and len(shared) / max(1, len(ta | tb)) >= 0.24:
+        return True
+    if len(title_shared) >= 3:
+        return True
+
+    # Same named subject + same event class + at least one meaningful event anchor.
+    # This catches examples like "war in Iran" / "Iran under siege" while allowing
+    # unrelated Iran stories such as sanctions, diplomacy, or elections to coexist.
+    if shared_subjects and shared_groups:
+        if len(title_shared) >= 1 and len(shared) >= 1:
+            return True
+        if len(shared) >= 2:
+            return True
+
+    # If titles share a named subject and two event-specific words, treat as one event
+    # even when descriptions use different wording.
+    if shared_subjects and len(title_shared) >= 2 and shared_groups:
+        return True
+
+    # Recall/safety stories commonly use different wording ("recalls eggs" vs
+    # "national egg recall"). Two shared terms plus the same event class is enough.
+    if topic_a == topic_b and topic_a in {'recall-food-safety','disaster-weather','crime-public-safety'}:
+        if len(shared) >= 2 and (shared_groups or len(title_shared) >= 1):
+            return True
+
     return False
 
 
@@ -312,6 +341,56 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
+def select_top_stories(unique):
+    """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
+    if not unique:
+        return []
+    newest_time = max(x["published"] for x in unique)
+    coverage = {}
+    for item in unique:
+        coverage.setdefault(key(item), set()).add(item.get("source") or "Unknown")
+    ranked = []
+    for item in unique:
+        outlet_count = len(coverage.get(key(item), set()))
+        score = impact_score(item, newest_time) + min(30, outlet_count * 7) + (8 if outlet_count >= 4 else 0)
+        ranked.append((score, item["published"], outlet_count, item))
+    ranked.sort(key=lambda x: (x[0], x[1]), reverse=True)
+    selected = []
+    seen_keys = set()
+    source_counts = {}
+    subject_counts = {}
+    topic_counts = {}
+    SUBJECT_CAP = 3
+    TOPIC_CAP = 5
+    MAX_PER_SOURCE = 2
+    for _, _, _, item in ranked:
+        k = key(item); src = source_key(item.get("source") or "Unknown")
+        subs = subject_keys(item); topic = topic_key(item)
+        if not k or k in seen_keys or source_counts.get(src, 0) >= MAX_PER_SOURCE: continue
+        if subs and max(subject_counts.get(x, 0) for x in subs) >= SUBJECT_CAP: continue
+        if topic_counts.get(topic, 0) >= TOPIC_CAP: continue
+        related = next((prior for prior in selected if same_event_topic(prior, item)), None)
+        if related is not None:
+            attach_related(related, item); continue
+        selected.append(item); seen_keys.add(k)
+        source_counts[src] = source_counts.get(src, 0) + 1
+        topic_counts[topic] = topic_counts.get(topic, 0) + 1
+        for sub in subs: subject_counts[sub] = subject_counts.get(sub, 0) + 1
+        if len(selected) >= 30: break
+    if len(selected) < 30:
+        for _, _, _, item in ranked:
+            k = key(item); src = source_key(item.get("source") or "Unknown")
+            if not k or k in seen_keys or source_counts.get(src, 0) >= MAX_PER_SOURCE: continue
+            related = next((prior for prior in selected if same_event_topic(prior, item)), None)
+            if related is not None:
+                attach_related(related, item); continue
+            selected.append(item); seen_keys.add(k)
+            source_counts[src] = source_counts.get(src, 0) + 1
+            if len(selected) >= 30: break
+    print('TOP event clusters: ' + str(sum(len(x.get('_relatedArticles', [])) for x in selected)) + ' related article(s) attached to primary stories.')
+    return selected
 
 
 def select_underreported(unique):
@@ -524,48 +603,5 @@ def main():
     print(f"Wrote {len(ordered)} fresh stories to {OUT}")
     print(f"Top Stories: {len(top_items)} mainstream | Underreported: {len(under_items)} low-coverage/high-impact")
 
-
 if __name__ == "__main__":
-    main()def select_top_stories(unique):
-    """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
-    if not unique: return []
-    newest_time=max(x["published"] for x in unique)
-    coverage={}
-    for item in unique:
-        coverage.setdefault(key(item),set()).add(item["source"] or "Unknown")
-    ranked=[]
-    for item in unique:
-        outlet_count=len(coverage.get(key(item),set()))
-        score=impact_score(item,newest_time)+min(30,outlet_count*7)+(8 if outlet_count>=4 else 0)
-        ranked.append((score,item["published"],outlet_count,item))
-    ranked.sort(key=lambda x:(x[0],x[1]),reverse=True)
-    selected=[];seen_keys=set();source_counts={};subject_counts={};topic_counts={}
-    SUBJECT_CAP=3;TOPIC_CAP=5;MAX_PER_SOURCE=2
-    for _,_,_,item in ranked:
-        k=key(item);src=source_key(item.get("source") or "Unknown");subs=subject_keys(item);topic=topic_key(item)
-        if not k or k in seen_keys or source_counts.get(src,0)>=MAX_PER_SOURCE: continue
-        if subs and max(subject_counts.get(x,0) for x in subs)>=SUBJECT_CAP: continue
-        if topic_counts.get(topic,0)>=TOPIC_CAP: continue
-        clustered=False
-        for prior in selected:
-            if same_event_topic(prior,item):
-                attach_related(prior,item);clustered=True;break
-        if clustered: continue
-        selected.append(item);seen_keys.add(k);source_counts[src]=source_counts.get(src,0)+1;topic_counts[topic]=topic_counts.get(topic,0)+1
-        for sub in subs: subject_counts[sub]=subject_counts.get(sub,0)+1
-        if len(selected)>=30: break
-    # Fill only with genuinely different stories; do not reintroduce a clustered event.
-    if len(selected)<30:
-        for _,_,_,item in ranked:
-            k=key(item);src=source_key(item.get("source") or "Unknown")
-            if not k or k in seen_keys or source_counts.get(src,0)>=MAX_PER_SOURCE: continue
-            if any(same_event_topic(prior,item) for prior in selected):
-                for prior in selected:
-                    if same_event_topic(prior,item): attach_related(prior,item);break
-                continue
-            selected.append(item);seen_keys.add(k);source_counts[src]=source_counts.get(src,0)+1
-            if len(selected)>=30: break
-    clustered=sum(len(x.get('_relatedArticles',[])) for x in selected)
-    print('TOP event clusters: '+str(clustered)+' related article(s) attached to primary stories.')
-    return selected
-
+    main()

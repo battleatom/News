@@ -63,6 +63,9 @@
 
 
 
+
+
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -81,11 +84,11 @@
 <style id="bookmarks-v1-style">
 .bookmark-row{display:flex;align-items:flex-start;gap:8px}.bookmark-row h3{flex:1;margin:0}.bookmark-btn{border:0;background:transparent;padding:2px 4px;cursor:pointer;font-size:18px;line-height:1;opacity:.45;border-radius:6px}.bookmark-btn:hover,.bookmark-btn.saved{opacity:1}.bookmark-btn:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}.bookmark-section .bookmark-btn{opacity:1}.bookmark-section .news-item{position:relative}.bookmark-section .bookmark-row{padding-right:2px}@media(max-width:700px){.bookmark-btn{font-size:17px;padding:1px 3px}}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 </head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Refresh News</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -196,6 +199,32 @@ loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval
 
 
 
+
+
+
+
+
+
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
+})();
+</script>
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -301,6 +330,39 @@ setInterval(()=>pullStatusHtml(allItems.length||0,false),1000);
 setInterval(()=>{if(lastSuccessfulPull&&Date.now()>=nextScheduledPull&&!pullInProgress){refreshNewsFromPage(false);}},5000);
 setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
 loadNews(false);
+</script>
+<script id="auto-refresh-timer-v1">
+(function(){
+  'use strict';
+  const INTERVAL=15*60*1000;
+  function startAutoRefreshTimer(){
+    if(window.__autoRefreshTimerV1)return;
+    window.__autoRefreshTimerV1=true;
+    setInterval(async function(){
+      try{
+        if(typeof pullInProgress!=='undefined' && pullInProgress)return;
+        if(typeof nextScheduledPull==='undefined')return;
+        if(!nextScheduledPull){
+          if(typeof lastSuccessfulPull!=='undefined' && lastSuccessfulPull){
+            nextScheduledPull=lastSuccessfulPull+INTERVAL;
+          }else{
+            nextScheduledPull=Date.now()+INTERVAL;
+          }
+        }
+        if(Date.now()>=nextScheduledPull && typeof refreshNewsFromPage==='function'){
+          await refreshNewsFromPage(false);
+          if(typeof lastSuccessfulPull!=='undefined' && lastSuccessfulPull){
+            nextScheduledPull=lastSuccessfulPull+INTERVAL;
+          }else{
+            nextScheduledPull=Date.now()+INTERVAL;
+          }
+        }
+        if(typeof pullStatusHtml==='function' && typeof allItems!=='undefined')pullStatusHtml(allItems.length,false);
+      }catch(e){console.error('Auto refresh timer error:',e);}
+    },1000);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startAutoRefreshTimer);else startAutoRefreshTimer();
+})();
 </script>
 <script id="pull-stats-ui-v1">
 (function(){
@@ -413,14 +475,28 @@ loadNews(false);
 (function(){
   'use strict';
   const STORAGE_KEY='news-bookmarks-v1';
+  const DATA_KEY='news-bookmark-data-v1';
   let bookmarkMode=false;
   let bookmarked=new Set(loadBookmarks());
+  let bookmarkData=loadBookmarkData();
   let rendering=false;
 
   function loadBookmarks(){
     try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v:[];}catch(e){return[];}
   }
   function saveBookmarks(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify([...bookmarked]));}catch(e){}}
+  function loadBookmarkData(){
+    try{const v=JSON.parse(localStorage.getItem(DATA_KEY)||'{}');return v&&typeof v==='object'?v:{};}catch(e){return{};}
+  }
+  function saveBookmarkData(){try{localStorage.setItem(DATA_KEY,JSON.stringify(bookmarkData));}catch(e){}}
+  function readItem(item){
+    return {key:itemKey(item),title:itemTitle(item),link:itemLink(item),description:item?.querySelector?.('description')?.textContent||'',date:item?.querySelector?.('pubDate')?.textContent||'',source:item?.querySelector?.('source')?.textContent||''};
+  }
+  function rememberItem(item){
+    if(!item)return;
+    const data=readItem(item); if(!data.key)return;
+    bookmarkData[data.key]=data; saveBookmarkData();
+  }
   function itemKey(item){
     const link=(item?.querySelector?.('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
     if(link)return 'l:'+link;
@@ -455,7 +531,10 @@ loadNews(false);
   function renderBookmarks(){
     const root=document.getElementById('news-feed');
     if(!root)return;
-    const items=(typeof allItems!=='undefined'?allItems:[]).filter(x=>bookmarked.has(itemKey(x)));
+    const current=(typeof allItems!=='undefined'?allItems:[]);
+    current.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
+    const currentByKey={}; current.forEach(x=>{currentByKey[itemKey(x)]=x;});
+    const items=[...bookmarked].map(k=>currentByKey[k]||bookmarkData[k]).filter(Boolean);
     root.innerHTML='';
     const sec=document.createElement('section'); sec.className='section bookmark-section';
     const head=document.createElement('div'); head.className='section-header';
@@ -465,10 +544,11 @@ loadNews(false);
     if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
     items.forEach((item,i)=>{
       const ar=document.createElement('article'); ar.className='news-item';
-      const title=itemTitle(item),link=itemLink(item),desc=item.querySelector('description')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';
-      ar.dataset.bookmarkKey=itemKey(item);
+      const stored=typeof item==='object' && typeof item.querySelector!=='function';
+      const title=stored?(item.title||'Untitled'):itemTitle(item),link=stored?(item.link||'#'):itemLink(item),desc=stored?(item.description||''):item.querySelector('description')?.textContent||'',date=stored?(item.date||''):item.querySelector('pubDate')?.textContent||'',source=stored?(item.source||''):item.querySelector('source')?.textContent||'',bk=stored?(item.key||''):itemKey(item);
+      ar.dataset.bookmarkKey=bk;
       ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
-      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(itemKey(item));saveBookmarks();updateBookmarkTab();renderBookmarks();});
+      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(bk);delete bookmarkData[bk];saveBookmarks();saveBookmarkData();updateBookmarkTab();renderBookmarks();});
       body.appendChild(ar);
     });
     sec.appendChild(body); root.appendChild(sec);
@@ -489,14 +569,21 @@ loadNews(false);
       if(!key){key='l:'+(titleLink.href||'').toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');}
       const btn=document.createElement('button');
       btn.type='button'; btn.className='bookmark-btn'+(bookmarked.has(key)?' saved':'');
-      btn.textContent=bookmarked.has(key)?'🔖':'🔖';
+      btn.textContent='🔖';
       btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
       btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
       btn.dataset.bookmarkKey=key;
       btn.addEventListener('click',e=>{
         e.preventDefault(); e.stopPropagation();
-        if(bookmarked.has(key))bookmarked.delete(key);else bookmarked.add(key);
-        saveBookmarks();
+        if(bookmarked.has(key)){bookmarked.delete(key);delete bookmarkData[key];}
+        else{
+          bookmarked.add(key);
+          if(typeof allItems!=='undefined'){
+            const item=allItems.find(x=>itemKey(x)===key);
+            if(item)rememberItem(item);
+          }
+        }
+        saveBookmarks(); saveBookmarkData();
         btn.classList.toggle('saved',bookmarked.has(key));
         btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
         btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
@@ -508,7 +595,6 @@ loadNews(false);
     updateBookmarkTab();
   }
 
-  // If the user selected Bookmarks, keep that view after a feed refresh.
   function keepBookmarkView(){
     if(bookmarkMode){renderBookmarks();}
     else addBookmarkButtons();
@@ -516,10 +602,21 @@ loadNews(false);
 
   const observer=new MutationObserver(()=>{if(rendering)return;setTimeout(keepBookmarkView,0);});
   function start(){
+    if(typeof allItems!=='undefined') allItems.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
     ensureBookmarkTab();
     if(typeof active!=='undefined' && active==='bookmarks')bookmarkMode=true;
     const root=document.getElementById('news-feed'); if(root)observer.observe(root,{childList:true,subtree:true});
-    const tabs=document.getElementById('tabs'); if(tabs)new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+    const tabs=document.getElementById('tabs');
+    if(tabs){
+      tabs.addEventListener('click',e=>{
+        const tab=e.target.closest('.tab');
+        if(tab && tab.id!=='bookmarks-tab'){
+          bookmarkMode=false;
+          updateBookmarkTab();
+        }
+      });
+      new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+    }
     setTimeout(()=>{ensureBookmarkTab();keepBookmarkView();},50);
     setInterval(()=>{ensureBookmarkTab();},1000);
   }
@@ -596,26 +693,6 @@ render = function(items){
   more.appendChild(button);
   section.appendChild(more);
 };
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
-})();
 </script>
 </body></html>
 <script id="boxoffice-location-v1">
