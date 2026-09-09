@@ -521,6 +521,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -727,6 +729,18 @@ def main():
                                 break
                         except Exception as exc:
                             print(f"Local fallback failed for {fallback_source}: {exc}")
+                usable_count = len(select_category_stories(items, limit=30))
+                if usable_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            usable_count = len(select_category_stories(items, limit=30))
+                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
+                            if usable_count >= 15:
+                                break
+                        except Exception as exc:
+                            print(f"Local fallback failed for {fallback_source}: {exc}")
             elif category == "region":
                 items = []
                 for region_name, region_queries in query.items():
@@ -786,9 +800,11 @@ def main():
     seen, unique = set(), []
     for item in sorted(all_items, key=lambda x: x["published"], reverse=True):
         k = key(item)
-        if not k or k in seen:
+        category_key = item.get("category") or "world"
+        scoped_key = (category_key, k)
+        if not k or scoped_key in seen:
             continue
-        seen.add(k); unique.append(item)
+        seen.add(scoped_key); unique.append(item)
 
     top_seen, top_unique = set(), []
     for item in sorted(mainstream_items, key=lambda x: x["published"], reverse=True):
