@@ -27,13 +27,6 @@ TRUSTED_SOURCE_ALIASES = [
 ]
 TRUSTED_SOURCE_TOKENS = tuple(sorted({re.sub(r"[^a-z0-9]+", " ", x.lower()).strip() for x in TRUSTED_SOURCE_ALIASES if x}))
 
-def source_is_trusted(source):
-    s = re.sub(r"[^a-z0-9]+", " ", (source or "").lower()).strip()
-    if not s:
-        return False
-    padded = f" {s} "
-    return any(s == token or f" {token} " in padded for token in TRUSTED_SOURCE_TOKENS)
-
 FOREIGN_ONLY_TERMS = (
     "germany", "german", "berlin", "france", "french", "paris", "united kingdom", "britain",
     "british", "london", "italy", "italian", "rome", "spain", "spanish", "madrid", "europe",
@@ -52,6 +45,14 @@ US_CONTEXT_TERMS = (
     "congress", "senate", "house of representatives", "white house", "pentagon", "supreme court",
 )
 
+def source_is_trusted(source):
+    s = re.sub(r"[^a-z0-9]+", " ", (source or "").lower()).strip()
+    if not s:
+        return False
+    padded = f" {s} "
+    return any(s == token or f" {token} " in padded for token in TRUSTED_SOURCE_TOKENS)
+
+
 def should_route_to_world(title, description, category):
     if category == "world":
         return False
@@ -59,6 +60,17 @@ def should_route_to_world(title, description, category):
     foreign_hits = sum(1 for term in FOREIGN_ONLY_TERMS if term in text)
     us_hits = sum(1 for term in US_CONTEXT_TERMS if term in text)
     return foreign_hits >= 2 and us_hits == 0
+
+# These helpers must exist in the generated collector itself. The patch script's
+# own definitions are not visible when update_news.py is executed as a process.
+generated_helpers = """\n\nTRUSTED_SOURCE_TOKENS = %r\nFOREIGN_ONLY_TERMS = %r\nUS_CONTEXT_TERMS = %r\n\ndef source_is_trusted(source):\n    s = re.sub(r\"[^a-z0-9]+\", \" \", (source or \"\").lower()).strip()\n    if not s:\n        return False\n    padded = f\" {s} \"\n    return any(s == token or f\" {token} \" in padded for token in TRUSTED_SOURCE_TOKENS)\n\ndef should_route_to_world(title, description, category):\n    if category == \"world\":\n        return False\n    text = f\"{title} {description}\".lower()\n    foreign_hits = sum(1 for term in FOREIGN_ONLY_TERMS if term in text)\n    us_hits = sum(1 for term in US_CONTEXT_TERMS if term in text)\n    return foreign_hits >= 2 and us_hits == 0\n""" % (TRUSTED_SOURCE_TOKENS, FOREIGN_ONLY_TERMS, US_CONTEXT_TERMS)
+
+# Keep the helper definitions directly in update_news.py, before parse_items uses them.
+if "def source_is_trusted(source):" not in text:
+    anchor = "\ndef parse_date(value):"
+    if anchor not in text:
+        raise SystemExit("Could not locate parse_date() in update_news.py")
+    text = text.replace(anchor, generated_helpers + anchor, 1)
 
 old_local = '    "local": "Farmington New Mexico OR San Juan County New Mexico OR Aztec New Mexico OR Bloomfield New Mexico OR Kirtland New Mexico OR Shiprock New Mexico OR Four Corners New Mexico",'
 new_local = '''    "local": [
@@ -106,16 +118,34 @@ if match:
     sections = sections.replace('"x", ', '').replace(', "x"', '')
     text = text[:match.start()] + sections + text[match.end():]
 
-source_anchor = '        source = source_override or clean(source_el.text if source_el is not None else "")\n'
-source_guard = '''        source = source_override or clean(source_el.text if source_el is not None else "")
+# Install the source gate without relying on names defined in this patch process.
+old_source = '''        source = source_override or clean(source_el.text if source_el is not None else "")
         if not source_is_trusted(source):
             continue
         if should_route_to_world(title, desc, category):
             category = "world"
 '''
-if source_anchor in text and 'if not source_is_trusted(source):' not in text:
-    text = text.replace(source_anchor, source_guard, 1)
+new_source = '''        source = source_override or clean(source_el.text if source_el is not None else "")
+        if not source_is_trusted(source):
+            continue
+        item_category = "world" if should_route_to_world(title, desc, category) else category
+'''
+if old_source in text:
+    text = text.replace(old_source, new_source, 1)
+else:
+    source_anchor = '        source = source_override or clean(source_el.text if source_el is not None else "")\n'
+    if source_anchor in text and 'if not source_is_trusted(source):' not in text:
+        text = text.replace(source_anchor, new_source, 1)
 
+# Make the result use the per-item category so one foreign story cannot relabel an entire feed.
+old_result = '''        result.append({"title": title, "link": link, "description": desc, "pubDate": pub,
+                       "published": published, "source": source, "category": category})'''
+new_result = '''        result.append({"title": title, "link": link, "description": desc, "pubDate": pub,
+                       "published": published, "source": source, "category": item_category})'''
+if old_result in text:
+    text = text.replace(old_result, new_result, 1)
+
+# Support list-valued queries (including NFL) without breaking scalar queries in older collector versions.
 old_loop = '''    for category, query in QUERIES.items():
         try:
             items = parse_items(fetch(query), category)
@@ -187,4 +217,4 @@ if old_build in text:
     text = text.replace(old_build, new_build)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: trusted-source allowlist, foreign-story routing to World, and existing NFL/Local/Regional behavior preserved.")
+print("Patched collector: trusted-source validation, per-story World routing, and existing NFL/Local/Regional behavior preserved.")
