@@ -70,6 +70,9 @@ jobs:
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
 
+      - name: Tighten category quality
+        run: python scripts/patch_category_quality.py
+
       - name: Apply site theme
         run: python scripts/apply_clean_design.py
 
