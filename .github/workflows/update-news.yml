@@ -93,9 +93,6 @@ jobs:
           print('NFL and X tabs verified.')
           PY
 
-      - name: Add Load More pagination
-        run: python scripts/patch_load_more.py
-
       - name: Fix Regional tab click handling
         run: python scripts/fix_region_tab_click.py
 
@@ -135,6 +132,9 @@ jobs:
       - name: Expire NEW badges after one hour
         run: python scripts/patch_new_badges.py
 
+      - name: Add Load More pagination
+        run: python scripts/patch_load_more.py
+
       - name: Deduplicate generated UI styles
         run: python scripts/dedupe_generated_ui.py
 
@@ -145,7 +145,7 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'styles/header.css']
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css']
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
@@ -155,11 +155,13 @@ jobs:
               raise SystemExit('Generated page does not contain exactly one tabs container')
           if len(re.findall(r'const sections=', s)) != 1:
               raise SystemExit('Generated page does not contain exactly one sections declaration')
+          if len(re.findall(r'<script\s+id=["\']load-more-v1["\']', s, flags=re.I)) != 1:
+              raise SystemExit('Generated page does not contain exactly one Load More script')
           for style_id in ('site-features-style', 'nfl-live-style'):
               count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
               if count != 1:
                   raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
-          print('Generated page validation passed with unique generated style blocks.')
+          print('Generated page validation passed with Load More and unique generated style blocks.')
           PY
 
       - name: Commit updated feed
