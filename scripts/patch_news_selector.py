@@ -246,10 +246,29 @@ text = text.replace(
     'local_signal = any(term in title or term in source or term in desc for term in local_terms)',
 )
 
+# Deduplicate within each category, not across the entire site. A Farmington story
+# can legitimately belong in both New Mexico and Local / Four Corners.
+old_unique = '''    seen, unique = set(), []
+    for item in sorted(all_items, key=lambda x: x["published"], reverse=True):
+        k = key(item)
+        if not k or k in seen:
+            continue
+        seen.add(k); unique.append(item)'''
+new_unique = '''    seen, unique = set(), []
+    for item in sorted(all_items, key=lambda x: x["published"], reverse=True):
+        k = key(item)
+        category_key = item.get("category") or "world"
+        scoped_key = (category_key, k)
+        if not k or scoped_key in seen:
+            continue
+        seen.add(scoped_key); unique.append(item)'''
+if old_unique in text:
+    text = text.replace(old_unique, new_unique, 1)
+
 old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 if old_build in text:
     text = text.replace(old_build, new_build)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: trusted sources retained, sparse tabs broadened, local description relevance enabled, and World routing preserved.")
+print("Patched collector: trusted sources retained, category-scoped dedupe preserves Local/Four Corners, and World routing remains intact.")
