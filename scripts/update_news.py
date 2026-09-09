@@ -162,6 +162,26 @@ def clean(text):
     return re.sub(r"\s+", " ", text).strip()
 
 
+
+TRUSTED_SOURCE_TOKENS = ('aap', 'abc australia', 'abc news', 'afp', 'al jazeera', 'albuquerque journal', 'ap', 'arizona republic', 'ars technica', 'associated press', 'australian broadcasting corporation', 'axios', 'azcentral', 'bbc', 'bloomberg', 'boston globe', 'breaking defense', 'cbc', 'cbs news', 'chicago tribune', 'cnbc', 'cnn', 'colorado public radio', 'corriere della sera', 'daily times', 'defense news', 'denver post', 'denver7', 'der spiegel', 'destructoid', 'deutsche presse agentur', 'deutsche welle', 'dpa', 'durango herald', 'durango telegraph', 'dw', 'el pais', 'engadget', 'eurogamer', 'euronews', 'farmington daily times', 'forbes', 'fox news', 'france 24', 'france24', 'game informer', 'gamespot', 'haaretz', 'ign', 'janes', 'jerusalem post', 'kfox', 'koaa', 'koat', 'kob 4', 'kob tv', 'kotaku', 'krdo', 'krqe', 'kvia', 'kyiv independent', 'las cruces sun news', 'le monde', 'los angeles times', 'military times', 'mit technology review', 'nature', 'nbc news', 'new mexico in depth', 'new york times', 'newsweek', 'nhk', 'nintendo life', 'nm political report', 'npr', 'pbs', 'pc gamer', 'pc magazine', 'pcmag', 'politico', 'politico europe', 'polygon', 'reuters', 'rfi', 'rock paper shotgun', 'santa fe new mexican', 'scientific american', 'sky news', 'south china morning post', 'space com', 'stars and stripes', 'swissinfo', 'techcrunch', 'the colorado sun', 'the gamer', 'the guardian', 'the hill', 'the hindu', 'the telegraph', 'the times', 'the verge', 'time', 'times of india', 'times of israel', 'tom s hardware', 'usa today', 'usatoday', 'wall street journal', 'war on the rocks', 'washington post', 'wired', 'wsj', 'yahoo finance', 'yahoo news')
+FOREIGN_ONLY_TERMS = ('germany', 'german', 'berlin', 'france', 'french', 'paris', 'united kingdom', 'britain', 'british', 'london', 'italy', 'italian', 'rome', 'spain', 'spanish', 'madrid', 'europe', 'european union', 'eu', 'ukraine', 'ukrainian', 'russia', 'russian', 'moscow', 'china', 'chinese', 'beijing', 'japan', 'japanese', 'tokyo', 'south korea', 'korean', 'india', 'indian', 'africa', 'african', 'south africa', 'nigeria', 'kenya', 'ethiopia', 'ghana', 'egypt', 'cairo', 'israel', 'israeli', 'gaza', 'palestine', 'iran', 'iranian', 'tehran', 'iraq', 'iraqi', 'syria', 'syrian', 'lebanon', 'turkey', 'turkish', 'australia', 'australian', 'canada', 'canadian', 'mexico', 'mexican', 'brazil', 'brazilian', 'argentina', 'argentine', 'colombia', 'philippines', 'indonesia', 'taiwan', 'new zealand', 'pakistan', 'afghanistan', 'north korea', 'nato', 'united nations', 'west bank')
+US_CONTEXT_TERMS = ('united states', 'u.s.', 'us ', 'america', 'american', 'washington dc', 'washington, d.c.', 'new mexico', 'farmington', 'san juan county', 'arizona', 'colorado', 'utah', 'nevada', 'texas', 'california', 'oregon', 'washington state', 'new york', 'florida', 'georgia', 'illinois', 'ohio', 'congress', 'senate', 'house of representatives', 'white house', 'pentagon', 'supreme court')
+
+def source_is_trusted(source):
+    s = re.sub(r"[^a-z0-9]+", " ", (source or "").lower()).strip()
+    if not s:
+        return False
+    padded = f" {s} "
+    return any(s == token or f" {token} " in padded for token in TRUSTED_SOURCE_TOKENS)
+
+def should_route_to_world(title, description, category):
+    if category == "world":
+        return False
+    text = f"{title} {description}".lower()
+    foreign_hits = sum(1 for term in FOREIGN_ONLY_TERMS if term in text)
+    us_hits = sum(1 for term in US_CONTEXT_TERMS if term in text)
+    return foreign_hits >= 2 and us_hits == 0
+
 def parse_date(value):
     try:
         dt = parsedate_to_datetime(value)
@@ -189,12 +209,11 @@ def parse_items(root, category, source_override=None):
         source = source_override or clean(source_el.text if source_el is not None else "")
         if not source_is_trusted(source):
             continue
-        if should_route_to_world(title, desc, category):
-            category = "world"
+        item_category = "world" if should_route_to_world(title, desc, category) else category
         if not title or not link or not published or published < cutoff or published > now + timedelta(minutes=10):
             continue
         result.append({"title": title, "link": link, "description": desc, "pubDate": pub,
-                       "published": published, "source": source, "category": category})
+                       "published": published, "source": source, "category": item_category})
     return result
 
 
@@ -344,6 +363,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
