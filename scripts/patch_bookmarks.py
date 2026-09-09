@@ -8,14 +8,28 @@ SCRIPT = r'''<script id="bookmarks-v1">
 (function(){
   'use strict';
   const STORAGE_KEY='news-bookmarks-v1';
+  const DATA_KEY='news-bookmark-data-v1';
   let bookmarkMode=false;
   let bookmarked=new Set(loadBookmarks());
+  let bookmarkData=loadBookmarkData();
   let rendering=false;
 
   function loadBookmarks(){
     try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v:[];}catch(e){return[];}
   }
   function saveBookmarks(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify([...bookmarked]));}catch(e){}}
+  function loadBookmarkData(){
+    try{const v=JSON.parse(localStorage.getItem(DATA_KEY)||'{}');return v&&typeof v==='object'?v:{};}catch(e){return{};}
+  }
+  function saveBookmarkData(){try{localStorage.setItem(DATA_KEY,JSON.stringify(bookmarkData));}catch(e){}}
+  function readItem(item){
+    return {key:itemKey(item),title:itemTitle(item),link:itemLink(item),description:item?.querySelector?.('description')?.textContent||'',date:item?.querySelector?.('pubDate')?.textContent||'',source:item?.querySelector?.('source')?.textContent||''};
+  }
+  function rememberItem(item){
+    if(!item)return;
+    const data=readItem(item); if(!data.key)return;
+    bookmarkData[data.key]=data; saveBookmarkData();
+  }
   function itemKey(item){
     const link=(item?.querySelector?.('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
     if(link)return 'l:'+link;
@@ -50,7 +64,10 @@ SCRIPT = r'''<script id="bookmarks-v1">
   function renderBookmarks(){
     const root=document.getElementById('news-feed');
     if(!root)return;
-    const items=(typeof allItems!=='undefined'?allItems:[]).filter(x=>bookmarked.has(itemKey(x)));
+    const current=(typeof allItems!=='undefined'?allItems:[]);
+    current.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
+    const currentByKey={}; current.forEach(x=>{currentByKey[itemKey(x)]=x;});
+    const items=[...bookmarked].map(k=>currentByKey[k]||bookmarkData[k]).filter(Boolean);
     root.innerHTML='';
     const sec=document.createElement('section'); sec.className='section bookmark-section';
     const head=document.createElement('div'); head.className='section-header';
@@ -60,10 +77,11 @@ SCRIPT = r'''<script id="bookmarks-v1">
     if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
     items.forEach((item,i)=>{
       const ar=document.createElement('article'); ar.className='news-item';
-      const title=itemTitle(item),link=itemLink(item),desc=item.querySelector('description')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';
-      ar.dataset.bookmarkKey=itemKey(item);
+      const stored=typeof item==='object' && typeof item.querySelector!=='function';
+      const title=stored?(item.title||'Untitled'):itemTitle(item),link=stored?(item.link||'#'):itemLink(item),desc=stored?(item.description||''):item.querySelector('description')?.textContent||'',date=stored?(item.date||''):item.querySelector('pubDate')?.textContent||'',source=stored?(item.source||''):item.querySelector('source')?.textContent||'',bk=stored?(item.key||''):itemKey(item);
+      ar.dataset.bookmarkKey=bk;
       ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
-      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(itemKey(item));saveBookmarks();updateBookmarkTab();renderBookmarks();});
+      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(bk);delete bookmarkData[bk];saveBookmarks();saveBookmarkData();updateBookmarkTab();renderBookmarks();});
       body.appendChild(ar);
     });
     sec.appendChild(body); root.appendChild(sec);
@@ -84,14 +102,21 @@ SCRIPT = r'''<script id="bookmarks-v1">
       if(!key){key='l:'+(titleLink.href||'').toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');}
       const btn=document.createElement('button');
       btn.type='button'; btn.className='bookmark-btn'+(bookmarked.has(key)?' saved':'');
-      btn.textContent=bookmarked.has(key)?'🔖':'🔖';
+      btn.textContent='🔖';
       btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
       btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
       btn.dataset.bookmarkKey=key;
       btn.addEventListener('click',e=>{
         e.preventDefault(); e.stopPropagation();
-        if(bookmarked.has(key))bookmarked.delete(key);else bookmarked.add(key);
-        saveBookmarks();
+        if(bookmarked.has(key)){bookmarked.delete(key);delete bookmarkData[key];}
+        else{
+          bookmarked.add(key);
+          if(typeof allItems!=='undefined'){
+            const item=allItems.find(x=>itemKey(x)===key);
+            if(item)rememberItem(item);
+          }
+        }
+        saveBookmarks(); saveBookmarkData();
         btn.classList.toggle('saved',bookmarked.has(key));
         btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
         btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
@@ -103,7 +128,6 @@ SCRIPT = r'''<script id="bookmarks-v1">
     updateBookmarkTab();
   }
 
-  // If the user selected Bookmarks, keep that view after a feed refresh.
   function keepBookmarkView(){
     if(bookmarkMode){renderBookmarks();}
     else addBookmarkButtons();
@@ -111,6 +135,7 @@ SCRIPT = r'''<script id="bookmarks-v1">
 
   const observer=new MutationObserver(()=>{if(rendering)return;setTimeout(keepBookmarkView,0);});
   function start(){
+    if(typeof allItems!=='undefined') allItems.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
     ensureBookmarkTab();
     if(typeof active!=='undefined' && active==='bookmarks')bookmarkMode=true;
     const root=document.getElementById('news-feed'); if(root)observer.observe(root,{childList:true,subtree:true});
