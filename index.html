@@ -54,6 +54,10 @@
 
 
 
+<style id="site-features-style">
+.pull-status{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;padding:6px 12px 8px;border-bottom:1px solid var(--ui-line);background:rgba(255,255,255,.62);color:#64748b;font-size:10px;font-weight:650}.pull-status strong{color:#334155}.pull-status .ok{color:#15803d}.pull-status .sep{color:#cbd5e1}.new-badge{display:inline-flex;align-items:center;margin-left:7px;padding:2px 7px;border-radius:999px;background:#dc2626;color:#fff;font-size:9px;font-weight:800;letter-spacing:.35px;vertical-align:middle;box-shadow:0 2px 6px rgba(220,38,38,.2)}.boxoffice-intro{padding:10px 14px;color:#64748b;font-size:11px;line-height:1.5;background:rgba(255,255,255,.6);border-bottom:1px solid var(--ui-line)}.movie-card .movie-details{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.movie-pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f1f5f9;color:#475569;font-size:10px;font-weight:700}.movie-status{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff7ed;color:#9a3412;font-size:10px;font-weight:800}.movie-showtimes{margin-top:10px;padding:10px;border:1px solid var(--ui-line);border-radius:12px;background:rgba(248,250,252,.85)}.movie-showtimes strong{display:block;margin-bottom:5px}.movie-showtimes small{display:block;color:#64748b;margin-bottom:3px}.movie-news{margin-top:10px}.movie-news a{display:block;margin-top:5px}.boxoffice-section-title{margin:22px 0 8px;padding-left:10px;border-left:3px solid #9a3412;font-size:15px;font-weight:800}@media(max-width:700px){.pull-status{font-size:9px;gap:5px}.pull-status .optional{display:none}.movie-card{padding:16px 13px!important}}
+</style>
+<style id="nfl-live-style">.nfl-live-note{padding:8px 12px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:12px;background:rgba(255,255,255,.68);font-size:10px;color:#64748b}.nfl-live-note strong{color:#166534}.nfl-game-card .broadcast{margin-top:8px;font-size:10px;color:#475569}.nfl-game-card .broadcast strong{color:#166534}.nfl-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 3px rgba(22,163,74,.12)}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -68,6 +72,7 @@
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 
+
 let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -79,6 +84,10 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
 
 
 
