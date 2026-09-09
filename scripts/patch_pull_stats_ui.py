@@ -1,8 +1,8 @@
 from pathlib import Path
 
 P = Path('index.html')
-SCRIPT_ID = 'pull-stats-ui-v2'
-SCRIPT = r'''<script id="pull-stats-ui-v2">
+SCRIPT_ID = 'pull-stats-ui-v1'
+SCRIPT = r'''<script id="pull-stats-ui-v1">
 (function(){
   'use strict';
   const AUTO_PULL_MS=15*60*1000;
@@ -10,9 +10,8 @@ SCRIPT = r'''<script id="pull-stats-ui-v2">
   let lastPullMs=0;
   function byId(id){return document.getElementById(id)}
   function safeFormatDate(v){try{return typeof window.formatDate==='function'?window.formatDate(v):new Date(v).toLocaleString()}catch(e){return String(v||'—')}}
-  function currentNext(){return Number(window.nextScheduledPull)||0}
   function countdown(){
-    const target=currentNext();
+    const target=Number(window.nextScheduledPull)||0;
     if(!target)return '—';
     const sec=Math.max(0,Math.ceil((target-Date.now())/1000));
     if(sec<=0)return 'Updating…';
@@ -55,9 +54,8 @@ SCRIPT = r'''<script id="pull-stats-ui-v2">
       const parsed=Date.parse(stats.updatedAt);
       if(Number.isFinite(parsed)){
         const current=Number(window.lastSuccessfulPull)||0;
-        if(!current||parsed>current){
-          lastPullMs=parsed;window.lastSuccessfulPull=parsed;window.nextScheduledPull=parsed+AUTO_PULL_MS;
-        }else if(!lastPullMs){lastPullMs=current}
+        if(!current||parsed>current){lastPullMs=parsed;window.lastSuccessfulPull=parsed;window.nextScheduledPull=parsed+AUTO_PULL_MS}
+        else if(!lastPullMs)lastPullMs=current;
       }
       renderStats(false,'');
     }catch(e){renderStats(false,'')}
@@ -66,7 +64,7 @@ SCRIPT = r'''<script id="pull-stats-ui-v2">
   ensureVisibleUI();loadStats();setInterval(ensureVisibleUI,1000);setInterval(renderStats,1000);setInterval(loadStats,60000);
 })();
 </script>'''
-STYLE = r'''<style id="pull-stats-ui-v2-style">
+STYLE = r'''<style id="pull-stats-ui-v1-style">
 #pull-stats-ui{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0;padding:7px 12px;border-bottom:1px solid var(--ui-line);background:#f8fafc;color:#475569;font-size:11px;line-height:1.4;font-weight:650}#pull-stats-ui strong{color:#166534;font-weight:850}#pull-stats-ui.failed strong{color:#b91c1c}#pull-stats-ui.busy{color:#92400e}#pull-stats-ui.busy strong{color:#92400e}#refresh{min-width:122px!important;font-weight:800!important}#refresh:disabled{opacity:.7;cursor:wait}@media(max-width:700px){#pull-stats-ui{font-size:10px;gap:5px}}
 </style>'''
 s=P.read_text(encoding='utf-8')
@@ -87,4 +85,4 @@ s=s.replace('<button id="refresh" onclick="loadNews(true)">↻ Refresh</button>'
 s=s.replace('</head>',STYLE+'\n</head>',1)
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Synchronized the visible countdown with the canonical automatic refresh timer.')
+print('Synchronized the countdown with the canonical automatic refresh timer.')
