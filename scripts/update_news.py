@@ -145,6 +145,23 @@ MAINSTREAM_TOP_QUERIES = [
     ("USA Today", "site:usatoday.com breaking news US world"),
 ]
 
+TRUSTED_CATEGORY_FALLBACKS = {
+    "technology": [
+        ("The Verge", "site:theverge.com (AI OR technology OR cybersecurity OR Microsoft OR Apple OR Google OR Nvidia)"),
+        ("Ars Technica", "site:arstechnica.com (AI OR technology OR security OR software OR chips OR computing)"),
+        ("TechCrunch", "site:techcrunch.com (AI OR technology OR cybersecurity OR software OR startups)"),
+        ("Wired", "site:wired.com (AI OR technology OR cybersecurity OR computing)"),
+        ("Tom's Hardware", "site:tomshardware.com (Nvidia OR AMD OR Intel OR GPU OR CPU OR hardware)"),
+    ],
+    "gaming": [
+        ("IGN", "site:ign.com (gaming OR video games OR PlayStation OR Xbox OR Nintendo OR PC gaming)"),
+        ("GameSpot", "site:gamespot.com (gaming OR video games OR PlayStation OR Xbox OR Nintendo)"),
+        ("PC Gamer", "site:pcgamer.com (gaming OR PC gaming OR Nvidia OR AMD OR Steam)"),
+        ("Nintendo Life", "site:nintendolife.com (Nintendo OR Switch OR gaming OR games)"),
+        ("Polygon", "site:polygon.com (gaming OR video games OR PlayStation OR Xbox OR Nintendo)"),
+    ],
+}
+
 CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
@@ -191,6 +208,21 @@ def should_route_to_world(title, description, category):
     if category == "world":
         return False
     text = f"{title} {description}".lower()
+    if category in ("gaming", "technology"):
+        domain_terms = (
+            "gaming", "video game", "playstation", "xbox", "nintendo", "switch", "steam", "game studio",
+            "technology", "software", "hardware", "artificial intelligence", " ai ", "chip", "semiconductor",
+            "gpu", "cpu", "nvidia", "amd", "intel", "microsoft", "apple", "google", "android", "iphone",
+            "cybersecurity", "data breach", "cloud computing",
+        )
+        geopolitical_terms = (
+            "government", "president", "prime minister", "parliament", "election", "military", "war",
+            "sanction", "tariff", "diplomat", "embassy", "protest", "attack", "invasion", "ceasefire",
+            "foreign ministry", "defense ministry", "national security law",
+        )
+        padded = f" {text} "
+        if any(term in padded for term in domain_terms) and not any(term in text for term in geopolitical_terms):
+            return False
     foreign_hits = sum(1 for term in FOREIGN_ONLY_TERMS if term in text)
     us_hits = sum(1 for term in US_CONTEXT_TERMS if term in text)
     return foreign_hits >= 2 and us_hits == 0
@@ -376,6 +408,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
@@ -598,6 +632,18 @@ def main():
             else:
                 combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
                 items = parse_items(fetch(combined_query), category)
+                own_count = sum(1 for item in items if item.get("category") == category)
+                if category in TRUSTED_CATEGORY_FALLBACKS and own_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS[category]:
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            own_count = sum(1 for item in items if item.get("category") == category)
+                            print(f"{category} fallback/{fallback_source}: {len(batch)} accepted; {own_count} category stories")
+                            if own_count >= 20:
+                                break
+                        except Exception as exc:
+                            print(f"{category} fallback failed for {fallback_source}: {exc}")
             print(f"{category}: {len(items)} fresh stories before dedupe")
             all_items.extend(items)
         except Exception as exc:
