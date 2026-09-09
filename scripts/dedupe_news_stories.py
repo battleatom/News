@@ -166,8 +166,17 @@ def same_story(a, b):
         if same_gaming_event(a, b):
             return True
         return very_close_title(a, b, minimum_common=5, ratio=0.95)
-    if ca == "federal" and same_federal_state_event(a, b):
-        return True
+    if ca == "federal":
+        if same_federal_state_event(a, b):
+            return True
+        fa, fb = content_tokens(a), content_tokens(b)
+        federal_common = len(fa & fb)
+        federal_smaller = min(len(fa), len(fb))
+        # Keep clearly identical federal events, but preserve distinct court
+        # cases, agency actions and congressional stories.
+        if federal_common >= 5 and federal_smaller >= 6 and federal_common / federal_smaller >= 0.78:
+            return True
+        return very_close_title(a, b, minimum_common=5, ratio=0.92)
 
     if smaller >= 5 and common / smaller >= 0.90:
         return True

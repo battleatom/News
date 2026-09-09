@@ -36,8 +36,17 @@ QUERIES = {
         "Bloomfield New Mexico news",
         "Kirtland New Mexico news",
         "Shiprock New Mexico news",
-        "Four Corners New Mexico news",
-        "Farmington NM crime OR government OR education OR business",
+        "Four Corners news",
+        "Durango Colorado news",
+        "La Plata County Colorado news",
+        "Cortez Colorado news",
+        "Montezuma County Colorado news",
+        "Gallup New Mexico news",
+        "Window Rock Arizona news",
+        "Navajo Nation news",
+        "Blanding Utah news",
+        "San Juan County Utah news",
+        "Farmington NM crime government education business",
     ],
     "region": {
         "southwest": [
@@ -133,8 +142,17 @@ LOCAL_QUERIES = [
     "Bloomfield New Mexico news",
     "Kirtland New Mexico news",
     "Shiprock New Mexico news",
-    "Four Corners New Mexico news",
-    "Farmington NM crime OR government OR education OR business",
+    "Four Corners news",
+    "Durango Colorado news",
+    "La Plata County Colorado news",
+    "Cortez Colorado news",
+    "Montezuma County Colorado news",
+    "Gallup New Mexico news",
+    "Window Rock Arizona news",
+    "Navajo Nation news",
+    "Blanding Utah news",
+    "San Juan County Utah news",
+    "Farmington NM crime government education business",
 ]
 
 MAINSTREAM_TOP_QUERIES = [
@@ -501,6 +519,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -585,27 +605,25 @@ def select_category_stories(items, limit=30):
     """Select up to 30 distinct stories, with Local queries treated as the geographic scope."""
     if items and items[0].get("category") == "local":
         local_terms = (
-            "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
-            "kirtland", "shiprock", "navajo nation", "four corners", "san juan basin",
-            "farmington daily times", "daily times", "navajo times", "krtm", "ksje",
-            "tri-city record", "tri city record", "durango herald", "the journal",
-            "tri-city record", "tri city record", "durango herald", "the journal",
+            "farmington", "san juan county", "aztec", "bloomfield", "kirtland",
+            "shiprock", "navajo nation", "four corners", "san juan basin",
+            "durango", "la plata county", "bayfield", "ignacio",
+            "cortez", "montezuma county", "mancos", "dolores",
+            "gallup", "mckinley county", "window rock", "chinle", "kayenta",
+            "blanding", "monticello", "san juan county utah",
         )
-        outside_terms = (
-            "california", "texas", "florida", "new york", "chicago", "atlanta",
-            "phoenix", "denver", "las vegas", "albuquerque", "santa fe",
+        reject_terms = (
+            "kirtland afb", "kirtland air force base",
         )
         local_items = []
         for item in items:
             title = (item.get("title") or "").lower()
-            source = (item.get("source") or "").lower()
             desc = (item.get("description") or "").lower()
-            local_signal = any(term in title or term in source or term in desc for term in local_terms)
-            outside_signal = any(term in title for term in outside_terms)
-            if local_signal and not outside_signal:
+            searchable = f"{title} {desc}"
+            if any(term in searchable for term in reject_terms):
+                continue
+            if any(term in searchable for term in local_terms):
                 local_items.append(item)
-        # Prefer strongly identified local stories, but do not let publisher
-        # diversity or a brittle second geography filter reduce the category.
         items = local_items
 
     ranked = sorted(items, key=lambda x: x["published"], reverse=True)
@@ -685,6 +703,18 @@ def main():
                         items.extend(batch)
                     except Exception as exc:
                         print(f"Local feed failed for {local_query}: {exc}")
+                usable_count = len(select_category_stories(items, limit=30))
+                if usable_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            usable_count = len(select_category_stories(items, limit=30))
+                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
+                            if usable_count >= 15:
+                                break
+                        except Exception as exc:
+                            print(f"Local fallback failed for {fallback_source}: {exc}")
                 usable_count = len(select_category_stories(items, limit=30))
                 if usable_count < 10:
                     for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
