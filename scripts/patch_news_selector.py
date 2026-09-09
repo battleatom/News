@@ -16,6 +16,7 @@ TRUSTED_SOURCE_ALIASES = [
     "las cruces sun-news", "krqe", "koat", "kob 4", "kob tv", "kfox", "kvia", "nm political report",
     "new mexico in depth", "durango herald", "durango telegraph", "the colorado sun", "denver post",
     "azcentral", "arizona republic", "colorado public radio", "krdo", "koaa", "denver7",
+    "navajo times", "ksje", "tri-city record", "the journal",
     "the verge", "ars technica", "techcrunch", "wired", "engadget", "tom's hardware", "pcmag",
     "pc magazine", "mit technology review", "scientific american", "nature", "space.com",
     "ign", "gamespot", "polygon", "eurogamer", "pc gamer", "game informer", "kotaku",
@@ -108,6 +109,33 @@ if '    "nfl": [' not in text:
         "NFL scores results",
     ],
 ''' + text[idx:]
+
+# Sparse categories use multiple targeted searches while retaining the same trusted-source gate.
+text = text.replace(
+    '    "technology": "technology AI cybersecurity science",',
+    '''    "technology": [
+        "AI technology news",
+        "cybersecurity data breach technology",
+        "Microsoft Google Apple Nvidia technology",
+        "semiconductor software cloud computing news",
+    ],''',
+)
+text = text.replace(
+    '    "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",',
+    '''    "gaming": [
+        "PlayStation Xbox Nintendo gaming news",
+        "PC gaming Nvidia AMD gaming hardware",
+        "video game industry releases studios gaming",
+    ],''',
+)
+text = text.replace(
+    '    "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",',
+    '''    "military": [
+        "Pentagon US military defense news",
+        "US armed forces troops military news",
+        "defense industry military conflict news",
+    ],''',
+)
 
 text = re.sub(r'^\s*"nfl":\s*"NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",\s*\n', '', text, flags=re.M)
 text = re.sub(r'    "x": \[\n(?:.*\n)*?    \],\n', '', text, count=1)
@@ -211,10 +239,17 @@ new_region_loop = '''            elif category == "region":
 if old_region_loop in text:
     text = text.replace(old_region_loop, new_region_loop)
 
+# Local relevance can be established by the article description too; requiring the
+# town name in the headline/source was discarding legitimate Four Corners stories.
+text = text.replace(
+    'local_signal = any(term in title or term in source for term in local_terms)',
+    'local_signal = any(term in title or term in source or term in desc for term in local_terms)',
+)
+
 old_build = 'f\'<category>{item["category"]}</category>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 new_build = 'f\'<category>{item["category"]}</category>\', f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\','
 if old_build in text:
     text = text.replace(old_build, new_build)
 
 path.write_text(text, encoding="utf-8")
-print("Patched collector: trusted-source validation, per-story World routing, and existing NFL/Local/Regional behavior preserved.")
+print("Patched collector: trusted sources retained, sparse tabs broadened, local description relevance enabled, and World routing preserved.")
