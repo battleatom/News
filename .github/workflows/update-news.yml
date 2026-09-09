@@ -105,6 +105,9 @@ jobs:
       - name: Update RSS feed
         run: python scripts/update_news.py
 
+      - name: Record feed pull statistics
+        run: python scripts/record_pull_stats.py
+
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
 
@@ -126,11 +129,17 @@ jobs:
       - name: Remove exact and near-duplicate news stories
         run: python scripts/dedupe_news_stories.py
 
+      - name: Finalize feed pull statistics
+        run: python scripts/record_pull_stats.py --finalize
+
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
 
       - name: Apply location-aware Box Office UI
         run: python scripts/patch_boxoffice_ui.py
+
+      - name: Apply detailed pull statistics UI
+        run: python scripts/patch_pull_stats_ui.py
 
       - name: Add live NFL scoreboard presentation
         run: python scripts/patch_nfl_live.py
@@ -151,7 +160,7 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'pull-stats-ui-v1', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
@@ -167,7 +176,7 @@ jobs:
               count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
               if count != 1:
                   raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
-          print('Generated page validation passed with Load More, Box Office location support, and unique generated style blocks.')
+          print('Generated page validation passed with detailed pull statistics and existing features.')
           PY
 
       - name: Commit updated feed
