@@ -1,40 +1,42 @@
 from pathlib import Path
+import re
 
 P = Path('index.html')
-
-# The canonical page script intentionally keeps state in top-level `let` bindings.
-# Those bindings are not properties of window, but several independent UI modules
-# (the timer, stats panel, and related-coverage decorator) need a shared public bridge.
-# Define accessors instead of copying the values so both sides always see the same state.
-BRIDGE = r'''<script id="shared-page-state-bridge-v1">
+MARKER = '<script id="shared-page-state-bridge-v1">'
+SCRIPT = r'''<script id="shared-page-state-bridge-v1">
 (function(){
   'use strict';
-  function bridge(name){
-    try{
-      if(typeof window[name] === 'undefined'){
-        Object.defineProperty(window,name,{configurable:true,enumerable:false,get:function(){
-          try{return eval(name)}catch(e){return undefined}
-        },set:function(v){
-          try{eval(name+' = v')}catch(e){}
-        }});
-      }
-    }catch(e){console.warn('State bridge unavailable for',name,e)}
+  if(typeof window.allItems==='undefined' || typeof window.lastSuccessfulPull==='undefined' || typeof window.nextScheduledPull==='undefined' || typeof window.pullInProgress==='undefined'){
+    throw new Error('Shared page state was not exposed as global variables.');
   }
-  ['allItems','lastSuccessfulPull','nextScheduledPull','pullInProgress'].forEach(bridge);
 })();
 </script>'''
 
 s = P.read_text(encoding='utf-8')
-marker = '<script id="shared-page-state-bridge-v1">'
-while marker in s:
-    a = s.find(marker)
+# The page's canonical state used top-level let declarations. Those are lexical
+# globals and therefore invisible to window-based feature modules. Convert only
+# the shared state declarations to var so they are true window globals.
+old_all = "let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';"
+new_all = "var allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';"
+if old_all in s:
+    s = s.replace(old_all, new_all, 1)
+old_pull = "let lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;"
+new_pull = "var lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;"
+if old_pull in s:
+    s = s.replace(old_pull, new_pull, 1)
+if old_all not in s and new_all not in s:
+    raise SystemExit('Could not locate allItems shared state declaration')
+if old_pull not in s and new_pull not in s:
+    raise SystemExit('Could not locate refresh shared state declaration')
+
+while MARKER in s:
+    a = s.find(MARKER)
     b = s.find('</script>', a)
     if b < 0:
         break
     s = s[:a] + s[b + 9:]
-
 if '</body>' not in s:
     raise SystemExit('Missing </body> in index.html')
-s = s.replace('</body>', BRIDGE + '\n</body>', 1)
+s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Installed shared page-state bridge for timer, stats, bookmarks, and related coverage.')
+print('Exposed shared page state as real window globals and installed a validation bridge.')
