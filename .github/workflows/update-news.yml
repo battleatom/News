@@ -139,10 +139,12 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'styles/header.css', "['boxoffice','🎬 Box Office"]"]
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'styles/header.css']
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
+          if not re.search(r"\['boxoffice'", s):
+              raise SystemExit('Generated page is missing the Box Office tab declaration')
           if len(re.findall(r'<nav[^>]+id=["\']tabs["\']', s, flags=re.I)) != 1:
               raise SystemExit('Generated page does not contain exactly one tabs container')
           if len(re.findall(r'const sections=', s)) != 1:
