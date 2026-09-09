@@ -4,8 +4,6 @@ import re
 path = Path("scripts/update_news.py")
 text = path.read_text(encoding="utf-8")
 
-# Only admit publishers with an established editorial/news operation. Google News
-# is the aggregator, not the trust decision: the publisher itself must be approved.
 TRUSTED_SOURCE_ALIASES = [
     "reuters", "associated press", "ap", "bbc", "npr", "pbs", "afp", "france 24", "france24",
     "deutsche welle", "dw", "the guardian", "sky news", "al jazeera", "euronews", "cbc", "nhk",
@@ -13,7 +11,7 @@ TRUSTED_SOURCE_ALIASES = [
     "cnn", "nbc news", "abc news", "cbs news", "fox news", "usa today", "new york times",
     "washington post", "wall street journal", "wsj", "los angeles times", "chicago tribune",
     "boston globe", "politico", "axios", "the hill", "newsweek", "time", "usatoday",
-    "bloomberg", "cnbc", "forbes", "yahoo news", "yahoo finance", "associated press",
+    "bloomberg", "cnbc", "forbes", "yahoo news", "yahoo finance",
     "farmington daily times", "daily times", "albuquerque journal", "santa fe new mexican",
     "las cruces sun-news", "krqe", "koat", "kob 4", "kob tv", "kfox", "kvia", "nm political report",
     "new mexico in depth", "durango herald", "durango telegraph", "the colorado sun", "denver post",
@@ -33,7 +31,8 @@ def source_is_trusted(source):
     s = re.sub(r"[^a-z0-9]+", " ", (source or "").lower()).strip()
     if not s:
         return False
-    return any(s == token or token in s for token in TRUSTED_SOURCE_TOKENS)
+    padded = f" {s} "
+    return any(s == token or f" {token} " in padded for token in TRUSTED_SOURCE_TOKENS)
 
 FOREIGN_ONLY_TERMS = (
     "germany", "german", "berlin", "france", "french", "paris", "united kingdom", "britain",
@@ -61,7 +60,6 @@ def should_route_to_world(title, description, category):
     us_hits = sum(1 for term in US_CONTEXT_TERMS if term in text)
     return foreign_hits >= 2 and us_hits == 0
 
-# Keep the existing Four Corners Local tab exactly as its own fixed geographic feed.
 old_local = '    "local": "Farmington New Mexico OR San Juan County New Mexico OR Aztec New Mexico OR Bloomfield New Mexico OR Kirtland New Mexico OR Shiprock New Mexico OR Four Corners New Mexico",'
 new_local = '''    "local": [
         "Farmington New Mexico news",
@@ -88,7 +86,6 @@ old_local_block = '''    "local": [
 if old_local_block in text:
     text = text.replace(old_local_block, new_local)
 
-# NFL is a dedicated tab with its own news pool; live scores are rendered client-side.
 if '    "nfl": [' not in text:
     anchor = '    "world": '
     idx = text.find(anchor)
@@ -109,7 +106,6 @@ if match:
     sections = sections.replace('"x", ', '').replace(', "x"', '')
     text = text[:match.start()] + sections + text[match.end():]
 
-# Reject unapproved publishers and move clear foreign-only stories into World.
 source_anchor = '        source = source_override or clean(source_el.text if source_el is not None else "")\n'
 source_guard = '''        source = source_override or clean(source_el.text if source_el is not None else "")
         if not source_is_trusted(source):
