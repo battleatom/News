@@ -499,6 +499,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -586,6 +588,7 @@ def select_category_stories(items, limit=30):
             "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
             "kirtland", "shiprock", "navajo nation", "four corners", "san juan basin",
             "farmington daily times", "daily times", "navajo times", "krtm", "ksje",
+            "tri-city record", "tri city record", "durango herald", "the journal",
             "tri-city record", "tri city record", "durango herald", "the journal",
         )
         outside_terms = (
@@ -682,6 +685,18 @@ def main():
                         items.extend(batch)
                     except Exception as exc:
                         print(f"Local feed failed for {local_query}: {exc}")
+                usable_count = len(select_category_stories(items, limit=30))
+                if usable_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            usable_count = len(select_category_stories(items, limit=30))
+                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
+                            if usable_count >= 15:
+                                break
+                        except Exception as exc:
+                            print(f"Local fallback failed for {fallback_source}: {exc}")
             elif category == "region":
                 items = []
                 for region_name, region_queries in query.items():
