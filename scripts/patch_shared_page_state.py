@@ -1,5 +1,7 @@
 from pathlib import Path
 import re
+import subprocess
+import sys
 
 P = Path('index.html')
 MARKER = '<script id="shared-page-state-bridge-v1">'
@@ -12,7 +14,15 @@ SCRIPT = r'''<script id="shared-page-state-bridge-v1">
 })();
 </script>'''
 
+# patch_site_features.py runs immediately before this script in the main news
+# workflow. Apply the resilient refresh handler here so refresh is part of the
+# same build/deploy and no second automatic workflow can race the generated page.
+subprocess.run([sys.executable, 'scripts/patch_refresh_success.py'], check=True)
+
 s = P.read_text(encoding='utf-8')
+if 'refresh-success-handling-v1' not in s:
+    raise SystemExit('Integrated refresh success handling marker is missing')
+
 # The page's canonical state used top-level let declarations. Those are lexical
 # globals and therefore invisible to window-based feature modules. Convert only
 # the shared state declarations to var so they are true window globals.
@@ -39,4 +49,4 @@ if '</body>' not in s:
     raise SystemExit('Missing </body> in index.html')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Exposed shared page state as real window globals and installed a validation bridge.')
+print('Integrated resilient refresh handling, exposed shared page state as real window globals, and installed the validation bridge.')
