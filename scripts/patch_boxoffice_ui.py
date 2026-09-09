@@ -27,7 +27,6 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     intro.innerHTML=`Showing national movie releases plus box-office/theater news selected for <strong>${esc(stateName)}</strong>.${state==='NM'&&/Farmington/i.test(localStorage.getItem('underreported-location')||'')?' Local Farmington showtimes are included when available.':''}`;
     sec.appendChild(intro);
     const body=document.createElement('div');body.className='section-body';
-
     if(loc?.news?.length){
       const localTitle=document.createElement('div');localTitle.className='boxoffice-section-title';localTitle.textContent=`📍 ${stateName} Box Office & Theater News`;
       body.appendChild(localTitle);
@@ -37,7 +36,6 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
         body.appendChild(ar);
       });
     }
-
     const nationalTitle=document.createElement('div');nationalTitle.className='boxoffice-section-title';nationalTitle.textContent='🎥 Movies & Releases';body.appendChild(nationalTitle);
     if(!movies.length){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');}
     movies.forEach(movie=>{
@@ -61,7 +59,8 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
 
 s = P.read_text(encoding='utf-8')
 if MARKER in s:
-    raise SystemExit('Box Office location patch already present')
-s += '\n' + SCRIPT + '\n'
-P.write_text(s, encoding='utf-8')
-print('Added location-aware Box Office renderer.')
+    print('Box Office location patch already present; nothing to change.')
+else:
+    s += '\n' + SCRIPT + '\n'
+    P.write_text(s, encoding='utf-8')
+    print('Added location-aware Box Office renderer.')
