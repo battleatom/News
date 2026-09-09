@@ -59,6 +59,7 @@
 </style>
 <style id="nfl-live-style">.nfl-live-note{padding:8px 12px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:12px;background:rgba(255,255,255,.68);font-size:10px;color:#64748b}.nfl-live-note strong{color:#166534}.nfl-game-card .broadcast{margin-top:8px;font-size:10px;color:#475569}.nfl-game-card .broadcast strong{color:#166534}.nfl-live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 3px rgba(22,163,74,.12)}</style>
 
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
@@ -91,6 +92,7 @@ const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'
 
 
 
+
 let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -102,6 +104,11 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
+
 
 
 
@@ -278,17 +285,24 @@ loadNews(false);
 <script id="pull-stats-ui-v1">
 (function(){
   'use strict';
+  const AUTO_PULL_MS=15*60*1000;
+  let stats=null;
+  let lastPullMs=0;
+  let nextPullMs=0;
   function byId(id){return document.getElementById(id)}
   function safeFormatDate(v){
     try{ if(typeof window.formatDate==='function') return window.formatDate(v); return new Date(v).toLocaleString(); }
     catch(e){ return String(v||'—'); }
   }
   function countdown(){
-    try{
-      if(typeof window.nextScheduledPull!=='undefined' && window.nextScheduledPull && typeof window.countdownText==='function')
-        return window.countdownText(window.nextScheduledPull-Date.now());
-    }catch(e){}
-    return '—';
+    const target=nextPullMs || (nextPullMs===0 ? 0 : 0);
+    if(!target)return '—';
+    const sec=Math.max(0,Math.ceil((target-Date.now())/1000));
+    const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;
+    if(sec<=0)return 'now';
+    if(h)return `${h}h ${String(m).padStart(2,'0')}m`;
+    if(m)return `${m}m ${String(s).padStart(2,'0')}s`;
+    return `${s}s`;
   }
   function ensureVisibleUI(){
     const btn=byId('refresh');
@@ -332,7 +346,6 @@ loadNews(false);
     }
     return panel;
   }
-  let stats=null;
   function renderStats(failed=false,phase=''){
     const panel=ensureVisibleUI();
     if(!panel)return;
@@ -341,7 +354,7 @@ loadNews(false);
     const dup=stats?.duplicatesRemoved ?? 0;
     const finalCount=stats?.finalCount ?? (typeof allItems!=='undefined'?allItems.length:0);
     let last='—';
-    try{if(typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull)last=safeFormatDate(lastSuccessfulPull)}catch(e){}
+    if(lastPullMs)last=safeFormatDate(new Date(lastPullMs).toISOString());
     const busy=btnBusy();
     panel.className=failed?'failed':(busy?'busy':'ready');
     if(failed){
@@ -351,12 +364,19 @@ loadNews(false);
     panel.innerHTML=`<strong>✓ Auto update active</strong><span>•</span><span>${fetched} fetched</span><span>•</span><span>${fresh} new</span><span>•</span><span>${dup} duplicates removed</span><span>•</span><span>${finalCount} final</span><span>•</span><span>Last: ${escapeHtml(last)}</span><span>•</span><span>Next: ${escapeHtml(countdown())}</span>`;
   }
   function btnBusy(){const b=byId('refresh');return !!b?.disabled || b?.dataset.refreshing==='1'}
-  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   async function loadStats(){
     try{
       const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});
       if(!r.ok)throw new Error('HTTP '+r.status);
       stats=await r.json();
+      const parsed=Date.parse(stats.updatedAt);
+      if(Number.isFinite(parsed)){
+        lastPullMs=parsed;
+        nextPullMs=parsed+AUTO_PULL_MS;
+        // Keep the canonical page script in sync when its globals are exposed.
+        try{window.lastSuccessfulPull=lastPullMs;window.nextScheduledPull=nextPullMs;}catch(e){}
+      }
       renderStats(false,'');
     }catch(e){ renderStats(false,''); }
   }
