@@ -162,6 +162,9 @@ jobs:
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
 
+      - name: Bridge shared page state
+        run: python scripts/patch_shared_page_state.py
+
       - name: Apply reliable automatic refresh timer
         run: python scripts/patch_auto_refresh_timer.py
 
@@ -198,12 +201,14 @@ jobs:
           if missing:
               raise SystemExit('Workflow references missing scripts: '+', '.join(missing))
           s=Path('index.html').read_text(encoding='utf-8')
-          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1','boxoffice-location-v1']
+          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1','boxoffice-location-v1','shared-page-state-bridge-v1']
           missing_ui=[m for m in required if m not in s]
           if missing_ui:
               raise SystemExit('Missing required UI markers: '+', '.join(missing_ui))
           if s.count('id="auto-refresh-timer-v1"') != 1:
               raise SystemExit('Expected exactly one auto refresh timer marker')
+          if s.count('id="shared-page-state-bridge-v1"') != 1:
+              raise SystemExit('Expected exactly one shared state bridge marker')
           if '<html' not in s.lower() or '</html>' not in s.lower():
               raise SystemExit('Invalid generated page')
           if len(re.findall(r'const sections=', s)) != 1:

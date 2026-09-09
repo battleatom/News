@@ -36,4 +36,19 @@ jobs:
             exit 0
           fi
           git commit -m "Add similar coverage links"
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "Related coverage push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Related coverage push rejected; synchronizing with latest main before retry ${attempt}."
+            git fetch origin main
+            git merge --no-edit -X ours origin/main || {
+              echo "Unable to merge concurrent main changes safely."
+              git merge --abort || true
+              exit 1
+            }
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          echo "Related coverage push failed after 3 attempts."
+          exit 1
