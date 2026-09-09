@@ -15,6 +15,12 @@ GENERIC_TOPIC_WORDS = {
     "congress", "senate", "democrats", "republicans", "republican", "democrat", "political", "washington",
     "federal", "official", "officials", "country", "state", "states", "america", "american"
 }
+GAMING_EVENT_TERMS = {
+    "announced", "announce", "announces", "revealed", "reveal", "reveals", "confirmed", "confirm",
+    "confirmation", "unveiled", "unveil", "teaser", "trailer", "direct", "showcase", "presentation",
+    "launch", "launched", "release", "released", "delay", "delayed", "cancelled", "canceled", "shutdown",
+    "closure", "acquisition", "acquired", "exclusive", "gameplay", "beta", "demo", "update", "expansion"
+}
 
 
 def clean(value):
@@ -43,6 +49,21 @@ def content_tokens(item):
     return tokens(item) - GENERIC_TOPIC_WORDS
 
 
+def same_gaming_event(a, b):
+    """Catch cross-source coverage of the same gaming announcement/event without merging unrelated games."""
+    ta, tb = content_tokens(a), content_tokens(b)
+    shared = ta & tb
+    if len(shared) < 2:
+        return False
+    ea = ta & GAMING_EVENT_TERMS
+    eb = tb & GAMING_EVENT_TERMS
+    if not (ea and eb and (ea & eb)):
+        return False
+    # A named game/franchise/platform plus a shared event verb is a strong same-event signal.
+    named_shared = {w for w in shared if w not in GAMING_EVENT_TERMS and w not in {"game", "games", "gaming", "player", "players"}}
+    return len(named_shared) >= 2
+
+
 def same_story(a, b):
     # Never merge unrelated categories just because they share a politician or broad topic.
     ca = clean(a.findtext("category")).strip()
@@ -61,8 +82,6 @@ def same_story(a, b):
     if smaller >= 5 and common / smaller >= 0.90:
         return True
 
-    # For political/presidential headlines, require overlap in event-specific words,
-    # not merely shared words such as "Trump", "president", or "White House".
     ca_tokens, cb_tokens = content_tokens(a), content_tokens(b)
     content_common = len(ca_tokens & cb_tokens)
     content_smaller = min(len(ca_tokens), len(cb_tokens))
@@ -74,6 +93,11 @@ def same_story(a, b):
     else:
         if content_common >= 4 and content_smaller >= 5 and content_common / content_smaller >= 0.65:
             return True
+
+    # Gaming headlines often differ substantially between outlets while describing the same event.
+    # Require shared named terms AND the same announcement/event language.
+    if ca == "gaming" and same_gaming_event(a, b):
+        return True
 
     sa = " ".join(sorted(ta))
     sb = " ".join(sorted(tb))
@@ -92,21 +116,13 @@ def looks_english(item):
     text = f"{clean(item.findtext('title'))} {clean(item.findtext('description'))}".strip()
     if not text:
         return False
-
-    # Reject scripts that cannot reasonably be an English-language article.
     non_latin = sum(1 for ch in text if any((lo <= ord(ch) <= hi) for lo, hi in (
-        (0x0400, 0x052F),   # Cyrillic
-        (0x0600, 0x06FF),   # Arabic
-        (0x0900, 0x097F),   # Devanagari
-        (0x3040, 0x30FF),   # Japanese
-        (0x3400, 0x9FFF),   # CJK
-        (0x0370, 0x03FF),   # Greek
-        (0x0590, 0x05FF),   # Hebrew
+        (0x0400, 0x052F), (0x0600, 0x06FF), (0x0900, 0x097F), (0x3040, 0x30FF),
+        (0x3400, 0x9FFF), (0x0370, 0x03FF), (0x0590, 0x05FF),
     )))
     letters = sum(1 for ch in text if ch.isalpha())
     if letters and non_latin / letters > 0.12:
         return False
-
     latin_words = re.findall(r"[A-Za-z]{2,}", text.lower())
     if not latin_words:
         return False
@@ -123,13 +139,9 @@ def main():
     if channel is None:
         raise SystemExit("RSS channel not found")
     items = channel.findall("item")
-
     kept = []
     seen_links = set()
-    removed_exact = 0
-    removed_language = 0
-    removed_similar = 0
-
+    removed_exact = removed_language = removed_similar = 0
     for item in items:
         if not looks_english(item):
             removed_language += 1
@@ -144,18 +156,15 @@ def main():
         if link:
             seen_links.add(link)
         kept.append(item)
-
     for item in items:
         channel.remove(item)
     for item in kept:
         channel.append(item)
-
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
     print(f"Removed {removed_language} clearly non-English stories.")
     print(f"Removed {removed_exact} exact-link duplicate stories.")
     print(f"Removed {removed_similar} same-category near-duplicate stories across sources.")
     print(f"Final feed contains {len(kept)} story items after language and cross-source deduplication.")
-
 
 if __name__ == "__main__":
     main()
