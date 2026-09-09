@@ -20,7 +20,14 @@ QUERIES = {
     "world": "world news OR international news",
     "us": "United States news OR US politics",
     "presidential": "Trump president White House",
-    "federal": "US Congress OR federal government OR Supreme Court",
+    "federal": [
+        "US Congress Senate House legislation committee federal government",
+        "US Supreme Court federal appeals court federal judge",
+        "DOJ FBI DHS federal agency government policy",
+        "EPA FTC SEC FCC IRS federal regulation rule",
+        "US Treasury State Department federal government agency",
+        "federal budget spending government shutdown Congress",
+    ],
     "nm": "New Mexico government OR New Mexico news",
     "local": [
         "Farmington New Mexico news",
@@ -146,6 +153,13 @@ MAINSTREAM_TOP_QUERIES = [
 ]
 
 TRUSTED_CATEGORY_FALLBACKS = {
+    "local": [
+        ("Tri-City Record", "site:tricityrecordnm.com (Farmington OR \"San Juan County\" OR Aztec OR Bloomfield OR Kirtland OR Shiprock OR \"Four Corners\")"),
+        ("KSJE", "site:ksje.com (Farmington OR \"San Juan County\" OR Aztec OR Bloomfield OR Kirtland OR Shiprock OR \"Four Corners\")"),
+        ("Navajo Times", "site:navajotimes.com (Shiprock OR Farmington OR \"San Juan County\" OR \"Four Corners\")"),
+        ("Durango Herald", "site:durangoherald.com (Farmington OR Shiprock OR Aztec OR \"San Juan County\" OR \"Four Corners\")"),
+        ("The Journal", "site:the-journal.com (Farmington OR Shiprock OR Cortez OR \"Four Corners\")"),
+    ],
     "nfl": [
         ("ESPN", "site:espn.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
         ("NFL.com", "site:nfl.com/news (NFL OR football OR injury OR trade OR roster OR game)"),
@@ -202,6 +216,11 @@ def clean(text):
 
 
 TRUSTED_SOURCE_TOKENS = ('aap', 'abc australia', 'abc news', 'afp', 'al jazeera', 'albuquerque journal', 'ap', 'arizona republic', 'ars technica', 'associated press', 'australian broadcasting corporation', 'axios', 'azcentral', 'bbc', 'bloomberg', 'boston globe', 'breaking defense', 'cbc', 'cbs news', 'chicago tribune', 'cnbc', 'cnn', 'colorado public radio', 'corriere della sera', 'daily times', 'defense news', 'denver post', 'denver7', 'der spiegel', 'destructoid', 'deutsche presse agentur', 'deutsche welle', 'dpa', 'durango herald', 'durango telegraph', 'dw', 'el pais', 'engadget', 'eurogamer', 'euronews', 'farmington daily times', 'forbes', 'fox news', 'france 24', 'france24', 'game informer', 'gamespot', 'haaretz', 'ign', 'janes', 'jerusalem post', 'kfox', 'koaa', 'koat', 'kob 4', 'kob tv', 'kotaku', 'krdo', 'krqe', 'kvia', 'kyiv independent', 'las cruces sun news', 'le monde', 'los angeles times', 'military times', 'mit technology review', 'nature', 'nbc news', 'new mexico in depth', 'new york times', 'newsweek', 'nhk', 'nintendo life', 'nm political report', 'npr', 'pbs', 'pc gamer', 'pc magazine', 'pcmag', 'politico', 'politico europe', 'polygon', 'reuters', 'rfi', 'rock paper shotgun', 'santa fe new mexican', 'scientific american', 'sky news', 'south china morning post', 'space com', 'stars and stripes', 'swissinfo', 'techcrunch', 'the colorado sun', 'the gamer', 'the guardian', 'the hill', 'the hindu', 'the telegraph', 'the times', 'the verge', 'time', 'times of india', 'times of israel', 'tom s hardware', 'usa today', 'usatoday', 'wall street journal', 'war on the rocks', 'washington post', 'wired', 'wsj', 'yahoo finance', 'yahoo news')
+TRUSTED_LOCAL_SOURCE_TOKENS = (
+    "tri city record", "ksje", "navajo times", "durango herald", "the journal",
+)
+TRUSTED_SOURCE_TOKENS = tuple(sorted(set(TRUSTED_SOURCE_TOKENS) | set(TRUSTED_LOCAL_SOURCE_TOKENS)))
+
 TRUSTED_SPORTS_SOURCE_TOKENS = (
     "espn", "nfl com", "cbs sports", "nbc sports", "fox sports",
     "yahoo sports", "sports illustrated", "pro football talk",
@@ -478,6 +497,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -565,6 +586,7 @@ def select_category_stories(items, limit=30):
             "farmington", "san juan county", "san juan regional", "aztec", "bloomfield",
             "kirtland", "shiprock", "navajo nation", "four corners", "san juan basin",
             "farmington daily times", "daily times", "navajo times", "krtm", "ksje",
+            "tri-city record", "tri city record", "durango herald", "the journal",
         )
         outside_terms = (
             "california", "texas", "florida", "new york", "chicago", "atlanta",
@@ -675,17 +697,30 @@ def main():
                             print(f"Region feed failed for {region_name}/{region_query}: {exc}")
                     print(f"region/{region_name}: {region_count} fresh stories")
             else:
-                combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
-                items = parse_items(fetch(combined_query), category)
+                if category == "federal" and isinstance(query, list):
+                    items = []
+                    for federal_query in query:
+                        try:
+                            batch = parse_items(fetch(federal_query), category)
+                            items.extend(batch)
+                            print(f"federal/{federal_query}: {len(batch)} fresh stories")
+                        except Exception as exc:
+                            print(f"Federal feed failed for {federal_query}: {exc}")
+                else:
+                    combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
+                    items = parse_items(fetch(combined_query), category)
                 own_count = sum(1 for item in items if item.get("category") == category)
-                if category in TRUSTED_CATEGORY_FALLBACKS and own_count < 10:
+                usable_count = len(select_category_stories(items, limit=30)) if category == "local" else own_count
+                if category in TRUSTED_CATEGORY_FALLBACKS and usable_count < 10:
                     for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS[category]:
                         try:
                             batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
                             items.extend(batch)
                             own_count = sum(1 for item in items if item.get("category") == category)
-                            print(f"{category} fallback/{fallback_source}: {len(batch)} accepted; {own_count} category stories")
-                            if own_count >= 20:
+                            usable_count = len(select_category_stories(items, limit=30)) if category == "local" else own_count
+                            print(f"{category} fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable category stories")
+                            target = 15 if category == "local" else 20
+                            if usable_count >= target:
                                 break
                         except Exception as exc:
                             print(f"{category} fallback failed for {fallback_source}: {exc}")
