@@ -140,13 +140,17 @@
 
 
 
+
+
+
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
 </style>
 <link rel="stylesheet" href="styles/header.css?v=4">
 <style id="pull-stats-ui-v1-style">
-#pull-stats-ui{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0;padding:7px 12px;border-bottom:1px solid var(--ui-line);background:#f8fafc;color:#475569;font-size:11px;line-height:1.4;font-weight:650}#pull-stats-ui strong{color:#166534;font-weight:850}#pull-stats-ui.failed strong{color:#b91c1c}#pull-stats-ui.busy{color:#92400e}#pull-stats-ui.busy strong{color:#92400e}#refresh{min-width:122px!important;font-weight:800!important}#refresh:disabled{opacity:.7;cursor:wait}@media(max-width:700px){#pull-stats-ui{font-size:10px;gap:5px}}
+#pull-stats-ui{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0;padding:7px 12px;border-bottom:1px solid var(--ui-line);background:#f8fafc;color:#475569;font-size:11px;line-height:1.4;font-weight:650}#pull-stats-ui strong{color:#166534;font-weight:850}#pull-stats-ui.failed strong{color:#b91c1c}#pull-stats-ui.busy{color:#92400e}#pull-stats-ui.busy strong{color:#92400e}#refresh{min-width:148px!important;font-weight:800!important}#refresh[hidden]{display:none!important}#refresh:disabled{opacity:.7;cursor:wait}@media(max-width:700px){#pull-stats-ui{font-size:10px;gap:5px}#refresh{min-width:142px!important}}
 </style>
 <style id="bookmarks-v1-style">
 .bookmark-row{display:flex;align-items:flex-start;gap:8px}.bookmark-row h3{flex:1;margin:0}.bookmark-btn{border:0;background:transparent;padding:2px 4px;cursor:pointer;font-size:18px;line-height:1;opacity:.45;border-radius:6px}.bookmark-btn:hover,.bookmark-btn.saved{opacity:1}.bookmark-btn:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}.bookmark-section .bookmark-btn{opacity:1}.bookmark-section .news-item{position:relative}.bookmark-section .bookmark-row{padding-right:2px}@media(max-width:700px){.bookmark-btn{font-size:17px;padding:1px 3px}}
@@ -156,11 +160,11 @@
 .load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
 .load-more:active{transform:translateY(1px)}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 </head>
-<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Refresh News</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
+<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -562,6 +566,34 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
+
+
+
+
+
+
+
+
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
+})();
+</script>
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -809,6 +841,7 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
   let lastPullMs=0;
   function byId(id){return document.getElementById(id)}
   function safeFormatDate(v){try{return typeof window.formatDate==='function'?window.formatDate(v):new Date(v).toLocaleString()}catch(e){return String(v||'—')}}
+  function currentTab(){try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}}
   function countdown(){
     const target=Number(window.nextScheduledPull)||0;
     if(!target)return '—';
@@ -822,17 +855,25 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
   function ensureVisibleUI(){
     const btn=byId('refresh'),toolbar=btn?.closest('.toolbar');
     if(!btn||!toolbar)return;
-    btn.type='button';btn.removeAttribute('onclick');btn.title='Fetch the latest news feed now';btn.setAttribute('aria-label','Fetch the latest news feed now');btn.style.minWidth='122px';btn.style.fontWeight='800';btn.style.cursor='pointer';
+    const onTop=currentTab()==='top';
+    btn.hidden=!onTop;
+    btn.type='button';btn.removeAttribute('onclick');
+    btn.title='Show the next 10 unseen Top Stories and quietly check the full feed for updates';
+    btn.setAttribute('aria-label','Show next unseen Top Stories');
+    btn.style.minWidth='148px';btn.style.fontWeight='800';btn.style.cursor='pointer';
     if(!btn.dataset.refreshStatsWired){
       btn.dataset.refreshStatsWired='1';
       btn.addEventListener('click',async function(){
-        if(btn.disabled||typeof window.refreshNewsFromPage!=='function')return;
-        btn.disabled=true;btn.dataset.refreshing='1';btn.textContent='⟳ Refreshing…';
-        try{await window.refreshNewsFromPage(true)}catch(e){console.error('Manual news refresh failed:',e)}
-        finally{btn.disabled=false;btn.dataset.refreshing='';btn.textContent='↻ Refresh News';renderStats()}
+        if(btn.disabled||currentTab()!=='top')return;
+        btn.disabled=true;btn.dataset.refreshing='1';btn.textContent='⟳ Checking…';
+        try{
+          if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();
+          else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false);
+        }catch(e){console.error('Top Stories discovery refresh failed:',e)}
+        finally{btn.disabled=false;btn.dataset.refreshing='';btn.textContent='↻ Next Top Stories';renderStats()}
       });
     }
-    if(btn.dataset.refreshing!=='1')btn.textContent='↻ Refresh News';
+    if(btn.dataset.refreshing!=='1')btn.textContent='↻ Next Top Stories';
     let panel=byId('pull-stats-ui');
     if(!panel){panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel)}
     return panel;
@@ -860,7 +901,8 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
     }catch(e){renderStats(false,'')}
   }
   window.refreshPullStatsUI=function(failed,phase){renderStats(!!failed,phase||'')};
-  ensureVisibleUI();loadStats();setInterval(ensureVisibleUI,1000);setInterval(renderStats,1000);setInterval(loadStats,60000);
+  window.syncTopDiscoveryButton=ensureVisibleUI;
+  ensureVisibleUI();loadStats();setInterval(ensureVisibleUI,500);setInterval(renderStats,1000);setInterval(loadStats,60000);
 })();
 </script>
 <script id="bookmarks-v1">
@@ -1070,94 +1112,157 @@ setInterval(()=>{if(typeof decorateNewBadges==='function')decorateNewBadges();},
 </script>
 <script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
+const TOP_DISCOVERY_MARKER = 'top-story-cycle-v1';
+const TOP_SEEN_STORAGE = 'news-top-seen-v1';
 window.loadCounts = window.loadCounts || {};
 const loadCounts = window.loadCounts;
+window.topRotationKeys = window.topRotationKeys || [];
+
+function topStoryKey(item){
+  const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
+  if(link)return 'l:'+link;
+  const title=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+  return 't:'+title;
+}
+function topStorageDay(){
+  const d=new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function readTopSeen(){
+  try{
+    const raw=JSON.parse(localStorage.getItem(TOP_SEEN_STORAGE)||'{}');
+    if(raw.day!==topStorageDay()||!Array.isArray(raw.keys))return new Set();
+    return new Set(raw.keys);
+  }catch(e){return new Set()}
+}
+function writeTopSeen(seen){
+  try{localStorage.setItem(TOP_SEEN_STORAGE,JSON.stringify({day:topStorageDay(),keys:[...seen].slice(-300)}))}catch(e){}
+}
+function topItemsNewestFirst(items){
+  return items
+    .map((item,index)=>({item,index}))
+    .filter(x=>(x.item.querySelector('category')?.textContent?.trim()||'world')==='top')
+    .sort((a,b)=>{
+      const ad=Date.parse(a.item.querySelector('pubDate')?.textContent||'')||0;
+      const bd=Date.parse(b.item.querySelector('pubDate')?.textContent||'')||0;
+      return bd-ad||a.index-b.index;
+    })
+    .map(x=>x.item);
+}
+function topItemIsFresh(item){
+  const ms=Date.parse(item.querySelector('pubDate')?.textContent||'');
+  return Number.isFinite(ms)&&Date.now()-ms<=60*60*1000&&Date.now()>=ms-5*60*1000;
+}
+function topDisplayItems(items){
+  const ordered=topItemsNewestFirst(items);
+  const seen=readTopSeen();
+  const byKey=new Map(ordered.map(item=>[topStoryKey(item),item]));
+  const freshUnseen=ordered.filter(item=>!seen.has(topStoryKey(item))&&topItemIsFresh(item));
+  const freshKeys=new Set(freshUnseen.map(topStoryKey));
+  const rotated=(window.topRotationKeys||[]).map(k=>byKey.get(k)).filter(Boolean).filter(item=>!freshKeys.has(topStoryKey(item)));
+  const used=new Set([...freshUnseen,...rotated].map(topStoryKey));
+  return [...freshUnseen,...rotated,...ordered.filter(item=>!used.has(topStoryKey(item)))];
+}
+function markTopStoriesSeen(items){
+  const seen=readTopSeen();
+  items.forEach(item=>seen.add(topStoryKey(item)));
+  writeTopSeen(seen);
+}
+function syncDiscoveryButton(){
+  if(typeof window.syncTopDiscoveryButton==='function')window.syncTopDiscoveryButton();
+}
 
 function paginatedNewsItems(items){
-  const categoryItems = items.filter(item => (item.querySelector('category')?.textContent?.trim() || 'world') === active);
-  let available = categoryItems;
-  if(active === 'region') available = categoryItems.filter(item => (item.querySelector('region')?.textContent?.trim() || '') === detectedRegion);
-  const count = Math.min(loadCounts[active] || STORIES_PER_PAGE, available.length);
-  return {available, visible: available.slice(0, count), count};
+  let available;
+  if(active==='top'){
+    available=topDisplayItems(items);
+  }else{
+    const categoryItems=items.filter(item=>(item.querySelector('category')?.textContent?.trim()||'world')===active);
+    available=categoryItems;
+    if(active==='region')available=categoryItems.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);
+  }
+  const count=Math.min(loadCounts[active]||STORIES_PER_PAGE,available.length);
+  return {available,visible:available.slice(0,count),count};
 }
 
 function appendLoadMoreControl(data){
-  const root = document.getElementById('news-feed');
-  if(!root) return;
-  root.querySelectorAll('.load-more-wrap').forEach(el => el.remove());
-  if(data.available.length <= data.count) return;
-
-  const more = document.createElement('div');
-  more.className = 'load-more-wrap';
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'load-more';
-  const next = Math.min(data.count + STORIES_PER_PAGE, data.available.length);
-  button.textContent = `Load 10 more (${next} of ${data.available.length})`;
-  button.onclick = () => {
-    loadCounts[active] = next;
+  const root=document.getElementById('news-feed');
+  if(!root)return;
+  root.querySelectorAll('.load-more-wrap').forEach(el=>el.remove());
+  if(data.available.length<=data.count)return;
+  const more=document.createElement('div');
+  more.className='load-more-wrap';
+  const button=document.createElement('button');
+  button.type='button';
+  button.className='load-more';
+  const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
+  button.textContent=`Load 10 more (${next} of ${data.available.length})`;
+  button.onclick=()=>{
+    loadCounts[active]=next;
     canonicalRender(allItems);
   };
   more.appendChild(button);
-
-  if(active === 'nfl'){
-    // renderNflLive places NFL News after the live-score section. Appending to
-    // root here guarantees the control is directly below the news articles.
-    root.appendChild(more);
-  }else{
-    const section = root.querySelector('.section') || root;
-    section.appendChild(more);
-  }
+  if(active==='nfl')root.appendChild(more);
+  else (root.querySelector('.section')||root).appendChild(more);
 }
 
-const baseCanonicalRenderWithPagination = canonicalRender;
-canonicalRender = function(items){
-  if(active === 'bookmarks' || active === 'boxoffice'){
-    return baseCanonicalRenderWithPagination(items);
+const baseCanonicalRenderWithPagination=canonicalRender;
+canonicalRender=function(items){
+  if(active==='bookmarks'||active==='boxoffice'){
+    const out=baseCanonicalRenderWithPagination(items);
+    syncDiscoveryButton();
+    return out;
   }
-
-  if(active === 'nfl'){
-    const data = paginatedNewsItems(items);
-    loadCounts.nfl = data.count;
+  if(active==='nfl'){
+    const data=paginatedNewsItems(items);
+    loadCounts.nfl=data.count;
     baseCanonicalRenderWithPagination(items);
-    const nflHeaders = [...document.querySelectorAll('.section-header')];
-    const nflNewsHeader = nflHeaders.find(el => el.querySelector('h2')?.textContent?.trim() === 'NFL News');
-    const countEl = nflNewsHeader?.querySelector('.count');
-    if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length}`;
+    const nflHeaders=[...document.querySelectorAll('.section-header')];
+    const nflNewsHeader=nflHeaders.find(el=>el.querySelector('h2')?.textContent?.trim()==='NFL News');
+    const countEl=nflNewsHeader?.querySelector('.count');
+    if(countEl)countEl.textContent=`Showing ${data.count} of ${data.available.length}`;
     appendLoadMoreControl(data);
+    syncDiscoveryButton();
     return;
   }
-
-  const data = paginatedNewsItems(items);
+  const data=paginatedNewsItems(items);
   baseCanonicalRenderWithPagination(data.visible);
-  const root = document.getElementById('news-feed');
-  const countEl = root?.querySelector('.section .section-header .count');
-  if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length} stories`;
+  const root=document.getElementById('news-feed');
+  const countEl=root?.querySelector('.section .section-header .count');
+  if(countEl)countEl.textContent=`Showing ${data.count} of ${data.available.length} stories`;
+  if(active==='top')markTopStoriesSeen(data.visible);
   appendLoadMoreControl(data);
+  syncDiscoveryButton();
 };
 
-render = canonicalRender;
-window.render = canonicalRender;
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
+window.cycleTopStoriesAndRefresh=async function(){
+  if(active!=='top')return false;
+  const ordered=topItemsNewestFirst(allItems);
+  const seen=readTopSeen();
+  const unseen=ordered.filter(item=>!seen.has(topStoryKey(item)));
+  const status=document.getElementById('status');
+  if(unseen.length){
+    const batch=unseen.slice(0,STORIES_PER_PAGE);
+    window.topRotationKeys=batch.map(topStoryKey);
+    loadCounts.top=STORIES_PER_PAGE;
+    canonicalRender(allItems);
+    if(status)status.textContent=`Showing ${batch.length} unseen Top Stories · checking for updates…`;
+  }else{
+    window.topRotationKeys=[];
+    loadCounts.top=STORIES_PER_PAGE;
+    canonicalRender(allItems);
+    if(status)status.textContent='You’re caught up · showing newest Top Stories · checking for updates…';
   }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
-})();
+  const refreshFn=window.refreshNewsFromPage||(typeof refreshNewsFromPage==='function'?refreshNewsFromPage:null);
+  if(refreshFn){
+    try{await refreshFn(false)}catch(e){console.error('Passive full-feed refresh failed:',e)}
+  }
+  return true;
+};
+
+render=canonicalRender;
+window.render=canonicalRender;
+syncDiscoveryButton();
 </script>
 </body>
 </html>

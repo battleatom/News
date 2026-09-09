@@ -470,8 +470,10 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
-    """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
+    """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
         return []
     newest_time = max(x["published"] for x in unique)
@@ -489,9 +491,10 @@ def select_top_stories(unique):
     source_counts = {}
     subject_counts = {}
     topic_counts = {}
-    SUBJECT_CAP = 3
-    TOPIC_CAP = 5
-    MAX_PER_SOURCE = 2
+    TOP_POOL_SIZE = 60
+    SUBJECT_CAP = 4
+    TOPIC_CAP = 8
+    MAX_PER_SOURCE = 5
     for _, _, _, item in ranked:
         k = key(item); src = source_key(item.get("source") or "Unknown")
         subs = subject_keys(item); topic = topic_key(item)
@@ -505,8 +508,8 @@ def select_top_stories(unique):
         source_counts[src] = source_counts.get(src, 0) + 1
         topic_counts[topic] = topic_counts.get(topic, 0) + 1
         for sub in subs: subject_counts[sub] = subject_counts.get(sub, 0) + 1
-        if len(selected) >= 30: break
-    if len(selected) < 30:
+        if len(selected) >= TOP_POOL_SIZE: break
+    if len(selected) < TOP_POOL_SIZE:
         for _, _, _, item in ranked:
             k = key(item); src = source_key(item.get("source") or "Unknown")
             if not k or k in seen_keys or source_counts.get(src, 0) >= MAX_PER_SOURCE: continue
@@ -515,8 +518,8 @@ def select_top_stories(unique):
                 attach_related(related, item); continue
             selected.append(item); seen_keys.add(k)
             source_counts[src] = source_counts.get(src, 0) + 1
-            if len(selected) >= 30: break
-    print('TOP event clusters: ' + str(sum(len(x.get('_relatedArticles', [])) for x in selected)) + ' related article(s) attached to primary stories.')
+            if len(selected) >= TOP_POOL_SIZE: break
+    print('TOP event clusters: ' + str(sum(len(x.get('_relatedArticles', [])) for x in selected)) + ' related article(s) attached to primary stories; ' + str(len(selected)) + ' rotating Top Stories retained.')
     return selected
 
 
