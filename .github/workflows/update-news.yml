@@ -64,6 +64,9 @@ jobs:
       - name: Apply site theme
         run: python scripts/apply_clean_design.py
 
+      - name: Apply live local date time weather
+        run: python scripts/add_local_status.py
+
       - name: Apply page-level newspaper header
         run: python scripts/patch_header.py
 
