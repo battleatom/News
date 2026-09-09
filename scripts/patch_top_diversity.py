@@ -5,7 +5,7 @@ p = Path('scripts/update_news.py')
 s = p.read_text(encoding='utf-8')
 
 SELECTOR = r'''def select_top_stories(unique):
-    """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
+    """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
         return []
     newest_time = max(x["published"] for x in unique)
@@ -23,9 +23,10 @@ SELECTOR = r'''def select_top_stories(unique):
     source_counts = {}
     subject_counts = {}
     topic_counts = {}
-    SUBJECT_CAP = 3
-    TOPIC_CAP = 5
-    MAX_PER_SOURCE = 2
+    TOP_POOL_SIZE = 60
+    SUBJECT_CAP = 4
+    TOPIC_CAP = 8
+    MAX_PER_SOURCE = 5
     for _, _, _, item in ranked:
         k = key(item); src = source_key(item.get("source") or "Unknown")
         subs = subject_keys(item); topic = topic_key(item)
@@ -39,8 +40,8 @@ SELECTOR = r'''def select_top_stories(unique):
         source_counts[src] = source_counts.get(src, 0) + 1
         topic_counts[topic] = topic_counts.get(topic, 0) + 1
         for sub in subs: subject_counts[sub] = subject_counts.get(sub, 0) + 1
-        if len(selected) >= 30: break
-    if len(selected) < 30:
+        if len(selected) >= TOP_POOL_SIZE: break
+    if len(selected) < TOP_POOL_SIZE:
         for _, _, _, item in ranked:
             k = key(item); src = source_key(item.get("source") or "Unknown")
             if not k or k in seen_keys or source_counts.get(src, 0) >= MAX_PER_SOURCE: continue
@@ -49,8 +50,8 @@ SELECTOR = r'''def select_top_stories(unique):
                 attach_related(related, item); continue
             selected.append(item); seen_keys.add(k)
             source_counts[src] = source_counts.get(src, 0) + 1
-            if len(selected) >= 30: break
-    print('TOP event clusters: ' + str(sum(len(x.get('_relatedArticles', [])) for x in selected)) + ' related article(s) attached to primary stories.')
+            if len(selected) >= TOP_POOL_SIZE: break
+    print('TOP event clusters: ' + str(sum(len(x.get('_relatedArticles', [])) for x in selected)) + ' related article(s) attached to primary stories; ' + str(len(selected)) + ' rotating Top Stories retained.')
     return selected
 '''
 
@@ -111,4 +112,4 @@ if '<relatedArticles>' not in s:
 
 s = s.rstrip() + '\n\nif __name__ == "__main__":\n    main()\n'
 p.write_text(s, encoding='utf-8')
-print('Canonicalized Top Stories, removed duplicate NFL/alias definitions, repaired update_news entry-point ordering, and preserved related coverage.')
+print('Canonicalized a 60-story rotating Top pool, preserved topic/source diversity, repaired update_news ordering, and kept related coverage.')
