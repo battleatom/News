@@ -15,6 +15,28 @@ GAMING_COMMERCE_SOURCES = (
     "tom's guide", "tomsguide", "techradar deals", "walmart", "best buy",
     "amazon", "newegg", "gamestop deals",
 )
+NFL_BLOCK_TERMS = (
+    "betmgm", "draftkings", "fanduel", "sportsbook", "sports book",
+    "bonus bet", "bonus bets", "bonus code", "promo code", "betting odds",
+    "best bets", "player props", "prop bets", "same-game parlay", "same game parlay",
+    "wager", "wagering", "gambling",
+)
+NFL_RELEVANCE_TERMS = (
+    "nfl", "super bowl", "afc", "nfc",
+    "patriots", "seahawks", "49ers", "niners", "rams", "bears", "ravens", "colts",
+    "falcons", "steelers", "browns", "jaguars", "buccaneers", "bucs", "bengals",
+    "jets", "titans", "saints", "lions", "bills", "texans", "cardinals", "chargers",
+    "packers", "vikings", "dolphins", "raiders", "commanders", "eagles", "cowboys",
+    "giants", "broncos", "chiefs", "panthers",
+    "new england", "seattle seahawks", "san francisco 49ers", "los angeles rams",
+    "chicago bears", "baltimore ravens", "indianapolis colts", "atlanta falcons",
+    "pittsburgh steelers", "cleveland browns", "jacksonville jaguars", "tampa bay buccaneers",
+    "cincinnati bengals", "new york jets", "tennessee titans", "new orleans saints",
+    "detroit lions", "buffalo bills", "houston texans", "arizona cardinals",
+    "los angeles chargers", "green bay packers", "minnesota vikings", "miami dolphins",
+    "las vegas raiders", "washington commanders", "philadelphia eagles", "dallas cowboys",
+    "new york giants", "denver broncos", "kansas city chiefs", "carolina panthers",
+)
 ORDINARY_PAYWALL_SOURCES = (
     "the new york times", "new york times", "wall street journal", "wsj",
     "bloomberg", "the washington post", "washington post",
@@ -90,6 +112,19 @@ def is_gaming_commerce(item):
         or bool(re.search(r"\b(coupon|promo|discount)\b", text))
         or bool(re.search(r"\b(save|off)\s+\$?\d+\b", text))
     )
+
+
+def is_bad_nfl_item(item):
+    if normalized(item.findtext("category")) != "nfl":
+        return False
+    title = normalized(headline_without_source(item))
+    desc = normalized(item.findtext("description"))
+    text = f"{title} {desc}"
+    if any(term in text for term in NFL_BLOCK_TERMS):
+        return True
+    # Google News can occasionally leak other sports into broad sports searches.
+    # Keep the NFL tab strict enough that baseball/college stories do not survive.
+    return not any(term in title for term in NFL_RELEVANCE_TERMS)
 
 
 def is_ordinary_paywall(item):
@@ -191,7 +226,7 @@ def main():
 
     items = channel.findall("item")
     kept = []
-    removed_gaming = removed_paywall = removed_vague_world = 0
+    removed_gaming = removed_nfl = removed_paywall = removed_vague_world = 0
     removed_underreported_duplicates = removed_malformed = 0
     suppressed_descriptions = added_context = 0
     seen_underreported = set()
@@ -200,6 +235,9 @@ def main():
         category = normalized(item.findtext("category"))
         if category == "gaming" and is_gaming_commerce(item):
             removed_gaming += 1
+            continue
+        if is_bad_nfl_item(item):
+            removed_nfl += 1
             continue
         if is_ordinary_paywall(item):
             removed_paywall += 1
@@ -229,6 +267,7 @@ def main():
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
 
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
+    print(f"Removed {removed_nfl} non-NFL/betting items from NFL news.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
     print(f"Removed {removed_vague_world} vague World headlines.")
     print(f"Removed {removed_malformed} actual malformed/list artifacts.")
