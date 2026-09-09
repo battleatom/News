@@ -64,6 +64,9 @@ jobs:
       - name: Apply site theme
         run: python scripts/apply_clean_design.py
 
+      - name: Apply page-level newspaper header
+        run: python scripts/patch_header.py
+
       - name: Persist selected news tab
         run: python scripts/persist_active_tab.py
 
