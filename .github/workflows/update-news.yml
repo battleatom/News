@@ -126,6 +126,9 @@ jobs:
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
 
+      - name: Add live NFL scoreboard presentation
+        run: python scripts/patch_nfl_live.py
+
       - name: Validate generated page
         run: |
           python - <<'PY'
@@ -133,7 +136,7 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'styles/header.css', "['boxoffice','🎬 Box Office"]"]
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'styles/header.css', "['boxoffice','🎬 Box Office"]"]
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
