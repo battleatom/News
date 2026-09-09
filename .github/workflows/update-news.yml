@@ -103,7 +103,24 @@ jobs:
         run: python scripts/patch_x_ui.py
 
       - name: Update RSS feed
-        run: python scripts/update_news.py
+        run: |
+          set -o pipefail
+          success=0
+          for attempt in 1 2 3; do
+            echo "RSS update attempt ${attempt}/3"
+            if python scripts/update_news.py; then
+              success=1
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 20))
+              echo "RSS update failed; retrying in ${delay}s."
+              sleep "$delay"
+            fi
+          done
+          if [ "$success" -ne 1 ]; then
+            echo "All RSS update attempts failed. Preserving the existing News feed and continuing the workflow."
+          fi
 
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
