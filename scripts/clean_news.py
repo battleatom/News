@@ -279,3 +279,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+    from enforce_us_federal import main as enforce_us_federal_main
+    enforce_us_federal_main()
