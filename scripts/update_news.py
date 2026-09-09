@@ -398,6 +398,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep distinct subjects/events in Top Stories and attach suppressed coverage."""
     if not unique:
@@ -594,7 +596,8 @@ def main():
                             print(f"Region feed failed for {region_name}/{region_query}: {exc}")
                     print(f"region/{region_name}: {region_count} fresh stories")
             else:
-                items = parse_items(fetch(query), category)
+                combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
+                items = parse_items(fetch(combined_query), category)
             print(f"{category}: {len(items)} fresh stories before dedupe")
             all_items.extend(items)
         except Exception as exc:
