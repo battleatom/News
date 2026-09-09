@@ -132,6 +132,9 @@ jobs:
       - name: Expire NEW badges after one hour
         run: python scripts/patch_new_badges.py
 
+      - name: Deduplicate generated UI styles
+        run: python scripts/dedupe_generated_ui.py
+
       - name: Validate generated page
         run: |
           python - <<'PY'
@@ -149,7 +152,11 @@ jobs:
               raise SystemExit('Generated page does not contain exactly one tabs container')
           if len(re.findall(r'const sections=', s)) != 1:
               raise SystemExit('Generated page does not contain exactly one sections declaration')
-          print('Generated page validation passed.')
+          for style_id in ('site-features-style', 'nfl-live-style'):
+              count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
+              if count != 1:
+                  raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
+          print('Generated page validation passed with unique generated style blocks.')
           PY
 
       - name: Commit updated feed
