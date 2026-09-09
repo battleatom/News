@@ -103,6 +103,32 @@ def is_duplicate_underreported(item, seen_keys):
     return False
 
 
+def is_malformed_description(item):
+    """Reject feed artifacts that render as markdown/headline metadata instead of article information."""
+    title = headline_without_source(item)
+    desc = clean(item.findtext("description"))
+    if not desc.strip():
+        return True
+    d = re.sub(r"\s+", " ", desc).strip()
+    # Google News occasionally exposes a markdown-formatted result/list as the description.
+    if re.search(r"(?:^|\s)#{1,6}\s*\[", d):
+        return True
+    if re.search(r"\]\(https?://(?:news\.google\.com|www\.google\.com)/", d, re.I):
+        return True
+    # A description that is only a repeated headline/source/date is not useful article content.
+    title_words = re.findall(r"[a-z0-9]+", title.lower())
+    desc_words = re.findall(r"[a-z0-9]+", d.lower())
+    if title_words and len(desc_words) <= max(10, len(title_words) + 4):
+        title_set = set(title_words)
+        desc_set = set(desc_words)
+        if len(title_set & desc_set) / max(1, len(title_set)) >= 0.85:
+            return True
+    # Reject obvious metadata-only descriptions even when the source omitted the title.
+    if re.fullmatch(r"(?:https?://\S+|[A-Za-z0-9 .,'’&-]+)\s*(?:\|\s*[A-Za-z0-9 .,'’&-]+)?", d) and len(desc_words) <= 8:
+        return True
+    return False
+
+
 def main():
     tree = ET.parse(NEWS_FILE)
     root = tree.getroot()
@@ -110,7 +136,7 @@ def main():
     if channel is None: return
     items = channel.findall("item")
     kept = []
-    removed_gaming = removed_paywall = removed_vague_world = removed_underreported_duplicates = 0
+    removed_gaming = removed_paywall = removed_vague_world = removed_underreported_duplicates = removed_malformed = 0
     seen_underreported = set()
     for item in items:
         category = normalized(item.findtext("category"))
@@ -120,6 +146,8 @@ def main():
             removed_paywall += 1; continue
         if is_vague_world_headline(item):
             removed_vague_world += 1; continue
+        if is_malformed_description(item):
+            removed_malformed += 1; continue
         if is_duplicate_underreported(item, seen_underreported):
             removed_underreported_duplicates += 1; continue
         kept.append(item)
@@ -129,6 +157,7 @@ def main():
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
     print(f"Removed {removed_vague_world} vague World headlines.")
+    print(f"Removed {removed_malformed} malformed/metadata-only article descriptions.")
     print(f"Removed {removed_underreported_duplicates} duplicate Underreported stories.")
     print("Local stories retained after upstream geographic selection.")
 
