@@ -149,8 +149,9 @@ function appendLoadMoreControl(data){
     canonicalRender(allItems);
   };
   more.appendChild(button);
-  if(active==='nfl')root.appendChild(more);
-  else (root.querySelector('.section')||root).appendChild(more);
+  // Keep pagination outside the category section. Several category renderers
+  // rebuild their section after canonicalRender and could otherwise delete it.
+  root.appendChild(more);
 }
 
 const baseCanonicalRenderWithPagination=canonicalRender;
@@ -214,4 +215,4 @@ syncDiscoveryButton();
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied Load More plus daily unseen Top Stories cycling with passive full-feed refresh.")
+print("Applied page-level Load More plus daily unseen Top Stories cycling with passive full-feed refresh.")
