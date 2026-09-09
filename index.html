@@ -70,6 +70,7 @@ const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'
 
 
 
+
 let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function formatDate(s){const d=new Date(s);return isNaN(d)?s:d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'})}
@@ -81,6 +82,10 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
 
 
 
