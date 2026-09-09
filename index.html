@@ -183,7 +183,7 @@
 
 
 
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="desktop-layout-fix-v1">
 @media (min-width:601px){
@@ -211,6 +211,7 @@
 .load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
 .load-more:active{transform:translateY(1px)}
 </style>
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 </head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
@@ -734,26 +735,7 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
-})();
-</script>
+
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -1512,6 +1494,26 @@ syncDiscoveryButton();
       if(typeof window.refreshPullStatsUI==='function')window.refreshPullStatsUI(false,'');
     }
   },true);
+})();
+</script>
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
 })();
 </script>
 </body>
