@@ -15,11 +15,11 @@ GENERIC_TOPIC_WORDS = {
     "congress", "senate", "democrats", "republicans", "republican", "democrat", "political", "washington",
     "federal", "official", "officials", "country", "state", "states", "america", "american"
 }
-GAMING_EVENT_TERMS = {
-    "announced", "announce", "announces", "revealed", "reveal", "reveals", "confirmed", "confirm",
-    "confirmation", "unveiled", "unveil", "teaser", "trailer", "direct", "showcase", "presentation",
-    "launch", "launched", "release", "released", "delay", "delayed", "cancelled", "canceled", "shutdown",
-    "closure", "acquisition", "acquired", "exclusive", "gameplay", "beta", "demo", "update", "expansion"
+GAMING_EVENT_GROUPS = {
+    "announcement": {"announced", "announce", "announces", "revealed", "reveal", "reveals", "confirmed", "confirm", "confirmation", "unveiled", "unveil"},
+    "marketing": {"teaser", "trailer", "direct", "showcase", "presentation", "exclusive"},
+    "release": {"launch", "launched", "release", "released", "delay", "delayed", "cancelled", "canceled"},
+    "product_change": {"shutdown", "closure", "acquisition", "acquired", "gameplay", "beta", "demo", "update", "expansion"},
 }
 
 
@@ -49,39 +49,37 @@ def content_tokens(item):
     return tokens(item) - GENERIC_TOPIC_WORDS
 
 
+def gaming_event_groups(item):
+    ts = content_tokens(item)
+    return {name for name, terms in GAMING_EVENT_GROUPS.items() if ts & terms}
+
+
 def same_gaming_event(a, b):
-    """Catch cross-source coverage of the same gaming announcement/event without merging unrelated games."""
+    """Catch cross-source coverage of the same gaming event without merging unrelated games."""
     ta, tb = content_tokens(a), content_tokens(b)
     shared = ta & tb
     if len(shared) < 2:
         return False
-    ea = ta & GAMING_EVENT_TERMS
-    eb = tb & GAMING_EVENT_TERMS
-    if not (ea and eb and (ea & eb)):
+    if not (gaming_event_groups(a) & gaming_event_groups(b)):
         return False
-    # A named game/franchise/platform plus a shared event verb is a strong same-event signal.
-    named_shared = {w for w in shared if w not in GAMING_EVENT_TERMS and w not in {"game", "games", "gaming", "player", "players"}}
+    named_shared = {w for w in shared if not any(w in terms for terms in GAMING_EVENT_GROUPS.values()) and w not in {"game", "games", "gaming", "player", "players"}}
     return len(named_shared) >= 2
 
 
 def same_story(a, b):
-    # Never merge unrelated categories just because they share a politician or broad topic.
     ca = clean(a.findtext("category")).strip()
     cb = clean(b.findtext("category")).strip()
     if ca != cb:
         return False
-
     ta, tb = tokens(a), tokens(b)
     if not ta or not tb:
         return False
     if ta == tb:
         return True
-
     common = len(ta & tb)
     smaller = min(len(ta), len(tb))
     if smaller >= 5 and common / smaller >= 0.90:
         return True
-
     ca_tokens, cb_tokens = content_tokens(a), content_tokens(b)
     content_common = len(ca_tokens & cb_tokens)
     content_smaller = min(len(ca_tokens), len(cb_tokens))
@@ -93,17 +91,12 @@ def same_story(a, b):
     else:
         if content_common >= 4 and content_smaller >= 5 and content_common / content_smaller >= 0.65:
             return True
-
-    # Gaming headlines often differ substantially between outlets while describing the same event.
-    # Require shared named terms AND the same announcement/event language.
     if ca == "gaming" and same_gaming_event(a, b):
         return True
-
     sa = " ".join(sorted(ta))
     sb = " ".join(sorted(tb))
     if common >= 5 and difflib.SequenceMatcher(None, sa, sb).ratio() >= 0.86:
         return True
-
     raw_a = title_without_source(a).lower()
     raw_b = title_without_source(b).lower()
     if len(raw_a) >= 45 and len(raw_b) >= 45 and difflib.SequenceMatcher(None, raw_a, raw_b).ratio() >= 0.91 and common >= 5:
@@ -112,7 +105,6 @@ def same_story(a, b):
 
 
 def looks_english(item):
-    """Reject clearly non-English stories while allowing normal names and punctuation."""
     text = f"{clean(item.findtext('title'))} {clean(item.findtext('description'))}".strip()
     if not text:
         return False
