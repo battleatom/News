@@ -25,7 +25,7 @@ WORLD_HEADLINE_EVENT_TERMS = (
     "ceasefire", "invasion", "invades", "missile", "missiles", "killed",
     "dies", "died", "election", "elections", "votes", "voted", "sanctions",
     "tariff", "tariffs", "crisis", "earthquake", "hurricane", "wildfire",
-    "earthquake", "ruling", "court", "government", "president", "prime minister",
+    "ruling", "court", "government", "president", "prime minister",
     "resigns", "resignation", "arrested", "arrests", "protest", "protests",
     "protesters", "agrees", "announces", "announced", "approves", "approved",
     "orders", "launches", "launch", "explosion", "explodes", "collapse", "collapsed",
@@ -49,6 +49,13 @@ def headline_without_source(item):
     return re.sub(r"\s+", " ", title).strip()
 
 
+def story_key(item):
+    title = headline_without_source(item).lower()
+    title = re.sub(r"[^a-z0-9\s]", " ", title)
+    stop = {"the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by", "after", "new", "says", "said", "that", "this", "are", "was", "were", "has", "have", "had", "into", "over", "its", "their", "will", "amid", "more", "than"}
+    return " ".join(w for w in title.split() if w not in stop)
+
+
 def is_vague_world_headline(item):
     if normalized(item.findtext("category")) != "world":
         return False
@@ -57,6 +64,14 @@ def is_vague_world_headline(item):
         return True
     words = re.findall(r"[A-Za-z0-9]+", headline)
     lowered = headline.lower()
+
+    # Remove source/list-style placeholders such as "World News 10" or
+    # "World News". These are navigation labels, not actual stories.
+    if re.fullmatch(r"(?:world|international)\s+news(?:\s+\d+)?", lowered):
+        return True
+    if re.fullmatch(r"(?:world|international)\s+(?:news\s+)?(?:\d+)", lowered):
+        return True
+
     if len(words) <= 2:
         return True
     if len(words) <= 3 and not any(term in lowered for term in WORLD_HEADLINE_EVENT_TERMS):
@@ -88,6 +103,20 @@ def is_ordinary_paywall(item):
     return any(name in source for name in ORDINARY_PAYWALL_SOURCES)
 
 
+def is_duplicate_underreported(item, seen_keys):
+    if normalized(item.findtext("category")) != "underreported":
+        return False
+    k = story_key(item)
+    if not k:
+        return True
+    # Exact normalized headline duplicates are always removed. This catches
+    # the same story arriving from multiple outlets with different source suffixes.
+    if k in seen_keys:
+        return True
+    seen_keys.add(k)
+    return False
+
+
 def main():
     tree = ET.parse(NEWS_FILE)
     root = tree.getroot()
@@ -100,6 +129,8 @@ def main():
     removed_gaming = 0
     removed_paywall = 0
     removed_vague_world = 0
+    removed_underreported_duplicates = 0
+    seen_underreported = set()
 
     for item in items:
         category = normalized(item.findtext("category"))
@@ -112,6 +143,9 @@ def main():
         if is_vague_world_headline(item):
             removed_vague_world += 1
             continue
+        if is_duplicate_underreported(item, seen_underreported):
+            removed_underreported_duplicates += 1
+            continue
         kept.append(item)
 
     for item in items:
@@ -123,6 +157,7 @@ def main():
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
     print(f"Removed {removed_vague_world} vague World headlines.")
+    print(f"Removed {removed_underreported_duplicates} duplicate Underreported stories.")
     print("Local stories retained after upstream geographic selection.")
 
     # The X collector's previous discovery query required Google News RSS to
