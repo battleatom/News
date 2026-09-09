@@ -161,6 +161,9 @@ jobs:
       - name: Apply detailed pull statistics UI
         run: python scripts/patch_pull_stats_ui.py
 
+      - name: Apply persistent article bookmarks
+        run: python scripts/patch_bookmarks.py
+
       - name: Add live NFL scoreboard presentation
         run: python scripts/patch_nfl_live.py
 
@@ -180,7 +183,7 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'pull-stats-ui-v1', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'pull-stats-ui-v1', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
@@ -192,11 +195,11 @@ jobs:
               raise SystemExit('Generated page does not contain exactly one sections declaration')
           if len(re.findall(r'<script\s+id=["\']load-more-v1["\']', s, flags=re.I)) != 1:
               raise SystemExit('Generated page does not contain exactly one Load More script')
-          for style_id in ('site-features-style', 'nfl-live-style'):
+          for style_id in ('site-features-style', 'nfl-live-style', 'bookmarks-v1-style'):
               count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
               if count != 1:
                   raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
-          print('Generated page validation passed with detailed pull statistics and existing features.')
+          print('Generated page validation passed with bookmarks, detailed pull statistics, and existing features.')
           PY
 
       - name: Commit updated feed
