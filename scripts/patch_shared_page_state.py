@@ -23,6 +23,27 @@ s = P.read_text(encoding='utf-8')
 if 'refresh-success-handling-v1' not in s:
     raise SystemExit('Integrated refresh success handling marker is missing')
 
+# patch_site_features historically starts an eager loadNews(false) while the
+# document is still being parsed. The canonical DOMContentLoaded loader added by
+# patch_refresh_success.py starts a second fetch later. On mobile those two
+# requests can race: one fills allItems while the other failure leaves the page
+# stuck on "Loading news...". Remove the eager startup call so there is exactly
+# one initial feed load, after every renderer (including NFL and Load More) exists.
+site_script = re.compile(r'(<script id="site-features-v2">.*?)(?:\r?\n)?loadNews\(false\);(\s*</script>)', re.S)
+s, removed_eager_load = site_script.subn(r'\1\2', s, count=1)
+if removed_eager_load != 1:
+    raise SystemExit('Could not remove eager site-features loadNews(false) startup call')
+
+# If a later refresh fails after another path already populated allItems, render
+# those existing items rather than allowing a stale "Loading news..." placeholder
+# to remain visible.
+fallback_anchor = "if(allItems.length){\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
+fallback_replacement = "if(allItems.length){\n      try{canonicalBuildTabs();canonicalRender(allItems);decorateNewBadges();}catch(renderExistingError){console.error('Unable to render existing feed after refresh failure:',renderExistingError);}\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
+if fallback_anchor in s:
+    s = s.replace(fallback_anchor, fallback_replacement, 1)
+else:
+    raise SystemExit('Could not add existing-feed render fallback to refresh handler')
+
 # The page's canonical state used top-level let declarations. Those are lexical
 # globals and therefore invisible to window-based feature modules. Convert only
 # the shared state declarations to var so they are true window globals.
@@ -49,4 +70,4 @@ if '</body>' not in s:
     raise SystemExit('Missing </body> in index.html')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Integrated resilient refresh handling, exposed shared page state as real window globals, and installed the validation bridge.')
+print('Integrated resilient refresh handling, removed the duplicate startup fetch, exposed shared page state as real window globals, and installed the validation bridge.')
