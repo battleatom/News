@@ -8,45 +8,113 @@ STOP_WORDS = {
     "the", "a", "an", "to", "of", "in", "on", "for", "and", "with", "is", "as", "at", "from", "by",
     "after", "before", "new", "says", "said", "that", "this", "are", "was", "were", "has", "have", "had",
     "into", "over", "its", "their", "will", "amid", "more", "than", "what", "know", "here", "latest",
-    "update", "updates", "report", "reports"
+    "update", "updates", "report", "reports", "news", "breaking", "today", "officials", "according"
 }
+GENERIC_TOPIC_WORDS = {
+    "president", "presidential", "trump", "white", "house", "administration", "government", "politics",
+    "congress", "senate", "democrats", "republicans", "republican", "democrat", "political", "washington",
+    "federal", "official", "officials", "country", "state", "states", "america", "american"
+}
+
 
 def clean(value):
     value = html.unescape(value or "")
     return re.sub(r"<[^>]+>", " ", value)
+
 
 def title_without_source(item):
     title = clean(item.findtext("title"))
     source = clean(item.findtext("source")).strip()
     if source:
         title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.I)
-    # Google News can leave a publisher/domain suffix even when <source> differs.
-    title = re.sub(r"\s+(?:[-–—|:]\s*)?(?:AP News|Reuters|NBC News|CBS News|ABC News|CNN|BBC|NPR|USA Today|The Washington Post|The New York Times)\s*$", "", title, flags=re.I)
+    title = re.sub(
+        r"\s+(?:[-–—|:]\s*)?(?:AP News|Reuters|NBC News|CBS News|ABC News|CNN|BBC|NPR|USA Today|The Washington Post|The New York Times)\s*$",
+        "", title, flags=re.I,
+    )
     return re.sub(r"\s+", " ", title).strip()
+
 
 def tokens(item):
     text = re.sub(r"[^a-z0-9\s]", " ", title_without_source(item).lower())
     return set(w for w in text.split() if w not in STOP_WORDS and len(w) > 1)
 
+
+def content_tokens(item):
+    return tokens(item) - GENERIC_TOPIC_WORDS
+
+
 def same_story(a, b):
+    # Never merge unrelated categories just because they share a politician or broad topic.
+    ca = clean(a.findtext("category")).strip()
+    cb = clean(b.findtext("category")).strip()
+    if ca != cb:
+        return False
+
     ta, tb = tokens(a), tokens(b)
     if not ta or not tb:
         return False
     if ta == tb:
         return True
+
     common = len(ta & tb)
     smaller = min(len(ta), len(tb))
     if smaller >= 5 and common / smaller >= 0.90:
         return True
+
+    # For political/presidential headlines, require overlap in event-specific words,
+    # not merely shared words such as "Trump", "president", or "White House".
+    ca_tokens, cb_tokens = content_tokens(a), content_tokens(b)
+    content_common = len(ca_tokens & cb_tokens)
+    content_smaller = min(len(ca_tokens), len(cb_tokens))
+    if ca == "presidential":
+        if content_common < 3:
+            return False
+        if content_smaller >= 4 and content_common / content_smaller >= 0.60:
+            return True
+    else:
+        if content_common >= 4 and content_smaller >= 5 and content_common / content_smaller >= 0.65:
+            return True
+
     sa = " ".join(sorted(ta))
     sb = " ".join(sorted(tb))
     if common >= 5 and difflib.SequenceMatcher(None, sa, sb).ratio() >= 0.86:
         return True
+
     raw_a = title_without_source(a).lower()
     raw_b = title_without_source(b).lower()
     if len(raw_a) >= 45 and len(raw_b) >= 45 and difflib.SequenceMatcher(None, raw_a, raw_b).ratio() >= 0.91 and common >= 5:
         return True
     return False
+
+
+def looks_english(item):
+    """Reject clearly non-English stories while allowing normal names and punctuation."""
+    text = f"{clean(item.findtext('title'))} {clean(item.findtext('description'))}".strip()
+    if not text:
+        return False
+
+    # Reject scripts that cannot reasonably be an English-language article.
+    non_latin = sum(1 for ch in text if any((lo <= ord(ch) <= hi) for lo, hi in (
+        (0x0400, 0x052F),   # Cyrillic
+        (0x0600, 0x06FF),   # Arabic
+        (0x0900, 0x097F),   # Devanagari
+        (0x3040, 0x30FF),   # Japanese
+        (0x3400, 0x9FFF),   # CJK
+        (0x0370, 0x03FF),   # Greek
+        (0x0590, 0x05FF),   # Hebrew
+    )))
+    letters = sum(1 for ch in text if ch.isalpha())
+    if letters and non_latin / letters > 0.12:
+        return False
+
+    latin_words = re.findall(r"[A-Za-z]{2,}", text.lower())
+    if not latin_words:
+        return False
+    common_english = {"the", "and", "of", "to", "in", "for", "on", "with", "is", "that", "from", "by", "as", "at", "this", "new", "news"}
+    if len(latin_words) >= 12 and not (set(latin_words) & common_english):
+        return False
+    return True
+
 
 def main():
     tree = ET.parse(NEWS_FILE)
@@ -55,13 +123,17 @@ def main():
     if channel is None:
         raise SystemExit("RSS channel not found")
     items = channel.findall("item")
-    # The feed is already ordered by editorial priority: Top, Underreported, then categories.
-    # Keep the first occurrence so an event represented in multiple outlets/categories has one card.
+
     kept = []
     seen_links = set()
     removed_exact = 0
+    removed_language = 0
     removed_similar = 0
+
     for item in items:
+        if not looks_english(item):
+            removed_language += 1
+            continue
         link = clean(item.findtext("link")).strip()
         if link and link in seen_links:
             removed_exact += 1
@@ -72,14 +144,18 @@ def main():
         if link:
             seen_links.add(link)
         kept.append(item)
+
     for item in items:
         channel.remove(item)
     for item in kept:
         channel.append(item)
+
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
+    print(f"Removed {removed_language} clearly non-English stories.")
     print(f"Removed {removed_exact} exact-link duplicate stories.")
-    print(f"Removed {removed_similar} near-duplicate stories across sources/categories.")
-    print(f"Final feed contains {len(kept)} story items after cross-source deduplication.")
+    print(f"Removed {removed_similar} same-category near-duplicate stories across sources.")
+    print(f"Final feed contains {len(kept)} story items after language and cross-source deduplication.")
+
 
 if __name__ == "__main__":
     main()
