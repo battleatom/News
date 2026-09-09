@@ -43,9 +43,11 @@ if '    "nfl": [' not in text:
     ],
 ''' + text[idx:]
 
+# Remove obsolete scalar NFL entries left behind by earlier workflow patches.
+text = re.sub(r'^\s*"nfl":\s*"NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",\s*\n', '', text, flags=re.M)
+
 # X is intentionally NOT part of update_news.py's normal article pool. Its data
-# is collected and clustered by enrich_x_issues.py after the normal feed is built,
-# keeping the X signal layer separate from conventional news ranking.
+# is collected and clustered by enrich_x_issues.py after the normal feed is built.
 text = re.sub(r'    "x": \[\n(?:.*\n)*?    \],\n', '', text, count=1)
 
 # Keep X out of the normal collector sections; enrich_x_issues.py appends it later.
