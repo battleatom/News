@@ -27,31 +27,36 @@ replacement = r'''async function refreshNewsFromPage(manual=false){
     const text=await response.text();
     const xml=new DOMParser().parseFromString(text,'text/xml');
     if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');
-    pullStatusHtml(allItems.length,false,'Searching for duplicates');
+
     const fetched=[...xml.querySelectorAll('item')];
+    if(!fetched.length){
+      if(status)status.textContent='Feed returned 0 stories · existing stories kept';
+      pullStatusHtml(allItems.length,false,'Feed temporarily returned no stories');
+      console.warn('News feed returned zero items; preserving the current browser feed.');
+      return false;
+    }
+
+    pullStatusHtml(allItems.length,false,'Searching for duplicates');
     const beforeLinks=new Set(allItems.map(normalizeDuplicateKey));
     const result=dedupeFetchedItems(fetched);
-    allItems=result.items;
-    const newCount=allItems.filter(item=>!beforeLinks.has(normalizeDuplicateKey(item))).length;
+    const refreshedItems=result.items;
+    const newCount=refreshedItems.filter(item=>!beforeLinks.has(normalizeDuplicateKey(item))).length;
+    allItems=refreshedItems;
     if(result.removed)console.info('Client refresh removed',result.removed,'duplicate article(s).');
 
-    // A successfully downloaded and parsed feed is a successful refresh even when
-    // it contains zero new stories. Record the successful pull before rendering so
-    // the countdown cannot remain at zero after a valid refresh.
     const channel=xml.querySelector('channel');
     const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();
     lastSuccessfulPull=Date.now();
     nextScheduledPull=lastSuccessfulPull+AUTO_PULL_MS;
     window.lastSuccessfulPull=lastSuccessfulPull;
     window.nextScheduledPull=nextScheduledPull;
-    document.getElementById('last-update').textContent='Last update: '+formatDate(updated);
+    const lastUpdateEl=document.getElementById('last-update');
+    if(lastUpdateEl)lastUpdateEl.textContent='Last update: '+formatDate(updated);
     if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';
 
     const phase=newCount===0?'No new stories — feed is current':(result.removed?`Found ${newCount} new · removed ${result.removed} duplicate${result.removed===1?'':'s'}`:`Found ${newCount} new stor${newCount===1?'y':'ies'}`);
     pullStatusHtml(allItems.length,false,phase);
 
-    // Rendering is deliberately separated from feed success. A display-side
-    // exception must not falsely report a successful network fetch as a failed update.
     try{
       canonicalBuildTabs();
       canonicalRender(allItems);
@@ -65,7 +70,7 @@ replacement = r'''async function refreshNewsFromPage(manual=false){
     return true;
   }catch(e){
     if(status)status.textContent='Update failed';
-    pullStatusHtml(allItems.length||0,true,'Unable to fetch feed');
+    pullStatusHtml(allItems.length||0,true,'Unable to fetch or parse feed');
     console.error('News feed refresh failed:',e);
     return false;
   }finally{
@@ -79,7 +84,6 @@ s2, n = pattern.subn(replacement, s, count=1)
 if n != 1:
     raise SystemExit('Could not locate canonical refreshNewsFromPage function')
 
-# Add an explicit marker inside the generated page for validation/idempotence.
 s2 = s2.replace('<script id="site-features-v2">', '<script id="site-features-v2">\n/* '+MARKER+' */', 1)
 P.write_text(s2, encoding='utf-8')
-print('Applied refresh success handling: zero-new refreshes are successful and rendering errors no longer masquerade as fetch failures.')
+print('Applied hardened refresh handling: zero-item feeds are preserved, zero-new refreshes succeed, and missing UI nodes cannot fake a network failure.')
