@@ -63,10 +63,21 @@
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
 </style>
 <link rel="stylesheet" href="styles/header.css?v=4">
+<style id="pull-stats-ui-v1-style">
+#pull-stats-ui{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:0;padding:7px 12px;border-bottom:1px solid var(--ui-line);background:#f8fafc;color:#475569;font-size:11px;line-height:1.4;font-weight:650}
+#pull-stats-ui strong{color:#166534;font-weight:850}
+#pull-stats-ui.failed strong{color:#b91c1c}
+#pull-stats-ui.busy{color:#92400e}
+#pull-stats-ui.busy strong{color:#92400e}
+#refresh{min-width:122px!important;font-weight:800!important}
+#refresh:disabled{opacity:.7;cursor:wait}
+@media(max-width:700px){#pull-stats-ui{font-size:10px;gap:5px}}
+</style>
 </head>
-<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" onclick="loadNews(true)">↻ Refresh</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
+<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Refresh News</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -89,6 +100,11 @@ async function loadMarkets(){const track=document.getElementById('markets-track'
 async function loadNews(manual=false){const btn=document.getElementById('refresh'),status=document.getElementById('status');btn.disabled=true;status.textContent=manual?'Refreshing…':'Loading…';try{const response=await fetch('News?ts='+Date.now(),{cache:'no-store'});if(!response.ok)throw new Error('HTTP '+response.status);const text=await response.text();const xml=new DOMParser().parseFromString(text,'text/xml');if(xml.querySelector('parsererror'))throw new Error('Invalid RSS/XML feed');const channel=xml.querySelector('channel');allItems=[...xml.querySelectorAll('item')];buildTabs();render(allItems);const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();document.getElementById('last-update').textContent='Last update: '+formatDate(updated);status.textContent=allItems.length+' stories loaded'}catch(e){document.getElementById('news-feed').innerHTML=`<div class="empty">Unable to load the news feed.<br><small>${esc(e.message)}</small></div>`;status.textContent='Update failed'}finally{btn.disabled=false}}
 loadNews();loadMarkets();setInterval(()=>loadNews(false),15*60*1000);setInterval(loadMarkets,60*1000);
 </script>
+
+
+
+
+
 
 
 
@@ -249,57 +265,96 @@ loadNews(false);
 </script>
 <script id="pull-stats-ui-v1">
 (function(){
-  if(document.getElementById('pull-stats-ui-v1')) return;
-  let pullStats=null;
-  const originalPullStatusHtml=window.pullStatusHtml;
-  function statsStatus(count,failed=false,phase=''){
-    const root=document.getElementById('pull-status');
-    const inline=document.getElementById('status');
-    if(!root && !inline)return;
-    const last=typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull?new Date(lastSuccessfulPull):null;
-    const next=typeof nextScheduledPull!=='undefined'&&nextScheduledPull?new Date(nextScheduledPull):null;
-    const left=next&&typeof countdownText==='function'?countdownText(next.getTime()-Date.now()):'—';
-    const fetched=pullStats?.fetchedCount ?? count ?? 0;
-    const fresh=pullStats?.newCount ?? 0;
-    const dup=pullStats?.duplicatesRemoved ?? 0;
-    const finalCount=pullStats?.finalCount ?? count ?? 0;
-    const busy=typeof pullInProgress!=='undefined'&&pullInProgress;
-    let lead=failed?'⚠ Update failed':(busy?'↻ Fetching news…':'✓ Auto update active');
-    let detail=`${lead} · ${fetched} fetched · ${fresh} new · ${dup} duplicates removed · ${finalCount} final`;
-    if(last)detail+=` · Last: ${formatDate(last.toISOString())}`;
-    if(next)detail+=` · Next: ${left}`;
-    if(inline){inline.textContent=detail;inline.title=phase||'News feed update status';inline.setAttribute('aria-live','polite');}
-    if(root){
-      let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';
-      root.innerHTML=`${failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':(busy?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>')}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span><strong>${fetched}</strong> fetched</span><span class="sep">·</span><span><strong>${fresh}</strong> new</span><span class="sep">·</span><span><strong>${dup}</strong> duplicates removed</span><span class="sep">·</span><span><strong>${finalCount}</strong> final</span>`;
-    }
+  'use strict';
+  function byId(id){return document.getElementById(id)}
+  function safeFormatDate(v){
+    try{ if(typeof window.formatDate==='function') return window.formatDate(v); return new Date(v).toLocaleString(); }
+    catch(e){ return String(v||'—'); }
   }
-  window.pullStatusHtml=statsStatus;
-  function wireRefreshButton(){
-    const btn=document.getElementById('refresh');
-    if(!btn || btn.dataset.refreshWired==='1') return;
-    btn.dataset.refreshWired='1';
-    btn.removeAttribute('onclick');
+  function countdown(){
+    try{
+      if(typeof window.nextScheduledPull!=='undefined' && window.nextScheduledPull && typeof window.countdownText==='function')
+        return window.countdownText(window.nextScheduledPull-Date.now());
+    }catch(e){}
+    return '—';
+  }
+  function ensureVisibleUI(){
+    const btn=byId('refresh');
+    const toolbar=btn?.closest('.toolbar');
+    if(!btn || !toolbar) return;
+
+    // Make the intended control unmistakable even if another script changes its text later.
     btn.type='button';
-    btn.title='Fetch the latest News feed now';
-    btn.addEventListener('click',async()=>{
-      if(typeof window.loadNews!=='function' || btn.disabled) return;
-      const old=btn.textContent;
-      btn.textContent='⟳ Refreshing…';
-      btn.classList.add('refreshing');
-      try{await window.loadNews(true);}finally{btn.textContent=old||'↻ Refresh News';btn.classList.remove('refreshing');}
-    });
-    if(btn.textContent.trim()==='↻ Refresh') btn.textContent='↻ Refresh News';
+    btn.removeAttribute('onclick');
+    btn.title='Fetch the latest news feed now';
+    btn.setAttribute('aria-label','Fetch the latest news feed now');
+    btn.style.minWidth='122px';
+    btn.style.fontWeight='800';
+    btn.style.cursor='pointer';
+    if(!btn.dataset.refreshStatsWired){
+      btn.dataset.refreshStatsWired='1';
+      btn.addEventListener('click',async function(){
+        if(btn.disabled || typeof window.loadNews!=='function') return;
+        btn.disabled=true;
+        btn.dataset.refreshing='1';
+        btn.textContent='⟳ Refreshing…';
+        try{ await window.loadNews(true); }
+        catch(e){ console.error('Manual news refresh failed:',e); }
+        finally{
+          btn.disabled=false;
+          btn.dataset.refreshing='';
+          btn.textContent='↻ Refresh News';
+          renderStats();
+        }
+      });
+    }
+    if(btn.dataset.refreshing!=='1') btn.textContent='↻ Refresh News';
+
+    let panel=byId('pull-stats-ui');
+    if(!panel){
+      panel=document.createElement('div');
+      panel.id='pull-stats-ui';
+      panel.setAttribute('role','status');
+      panel.setAttribute('aria-live','polite');
+      toolbar.insertAdjacentElement('afterend',panel);
+    }
+    return panel;
   }
-  async function loadPullStats(){
-    try{const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('stats '+r.status);pullStats=await r.json();statsStatus(allItems?.length||0,false);}
-    catch(e){if(typeof originalPullStatusHtml==='function')originalPullStatusHtml(allItems?.length||0,false);}
+  let stats=null;
+  function renderStats(failed=false,phase=''){
+    const panel=ensureVisibleUI();
+    if(!panel)return;
+    const fetched=stats?.fetchedCount ?? (typeof allItems!=='undefined'?allItems.length:0);
+    const fresh=stats?.newCount ?? 0;
+    const dup=stats?.duplicatesRemoved ?? 0;
+    const finalCount=stats?.finalCount ?? (typeof allItems!=='undefined'?allItems.length:0);
+    let last='—';
+    try{if(typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull)last=safeFormatDate(lastSuccessfulPull)}catch(e){}
+    const busy=btnBusy();
+    panel.className=failed?'failed':(busy?'busy':'ready');
+    if(failed){
+      panel.innerHTML='⚠ <strong>News update failed</strong>'+(phase?' · '+escapeHtml(phase):'')+' · Existing feed preserved';
+      return;
+    }
+    panel.innerHTML=`<strong>✓ Auto update active</strong><span>•</span><span>${fetched} fetched</span><span>•</span><span>${fresh} new</span><span>•</span><span>${dup} duplicates removed</span><span>•</span><span>${finalCount} final</span><span>•</span><span>Last: ${escapeHtml(last)}</span><span>•</span><span>Next: ${escapeHtml(countdown())}</span>`;
   }
-  wireRefreshButton();
-  loadPullStats();
-  setInterval(wireRefreshButton,1000);
-  setInterval(loadPullStats,60*1000);
-  setInterval(()=>statsStatus(allItems?.length||0,false),1000);
+  function btnBusy(){const b=byId('refresh');return !!b?.disabled || b?.dataset.refreshing==='1'}
+  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  async function loadStats(){
+    try{
+      const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});
+      if(!r.ok)throw new Error('HTTP '+r.status);
+      stats=await r.json();
+      renderStats(false,'');
+    }catch(e){ renderStats(false,''); }
+  }
+  // Expose a stable hook for the site's canonical pull-status function.
+  window.refreshPullStatsUI=function(failed,phase){renderStats(!!failed,phase||'')};
+  ensureVisibleUI();
+  loadStats();
+  setInterval(ensureVisibleUI,1000);
+  setInterval(renderStats,1000);
+  setInterval(loadStats,60000);
 })();
 </script>
 <script id="nfl-live-v1">
