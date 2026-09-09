@@ -1,15 +1,10 @@
 from pathlib import Path
 
 P = Path('index.html')
-MARKER = '<script id="pull-stats-ui-v2">'
-SCRIPT = r'''<style id="pull-stats-ui-v2-style">
-#refresh{min-width:122px!important;font-weight:800!important;transition:transform .15s ease,opacity .15s ease}
-#refresh.refreshing{opacity:.72;transform:scale(.98)}
-#status{font-weight:700;min-width:0}
-</style>
-<script id="pull-stats-ui-v2">
+MARKER = '<script id="pull-stats-ui-v1">'
+SCRIPT = r'''<script id="pull-stats-ui-v1">
 (function(){
-  if(document.getElementById('pull-stats-ui-v2')) return;
+  if(document.getElementById('pull-stats-ui-v1')) return;
   let pullStats=null;
   const originalPullStatusHtml=window.pullStatusHtml;
   function statsStatus(count,failed=false,phase=''){
@@ -37,21 +32,19 @@ SCRIPT = r'''<style id="pull-stats-ui-v2-style">
   window.pullStatusHtml=statsStatus;
   function wireRefreshButton(){
     const btn=document.getElementById('refresh');
-    if(!btn)return;
-    if(btn.dataset.refreshWired!=='2'){
-      btn.dataset.refreshWired='2';
-      btn.removeAttribute('onclick');
-      btn.type='button';
-      btn.title='Fetch the latest News feed now';
-      btn.addEventListener('click',async()=>{
-        if(typeof window.loadNews!=='function' || btn.disabled)return;
-        btn.disabled=true;
-        btn.textContent='⟳ Refreshing…';
-        btn.classList.add('refreshing');
-        try{await window.loadNews(true);}finally{btn.disabled=false;btn.textContent='↻ Refresh News';btn.classList.remove('refreshing');}
-      });
-    }
-    if(!btn.disabled && !btn.classList.contains('refreshing'))btn.textContent='↻ Refresh News';
+    if(!btn || btn.dataset.refreshWired==='1') return;
+    btn.dataset.refreshWired='1';
+    btn.removeAttribute('onclick');
+    btn.type='button';
+    btn.title='Fetch the latest News feed now';
+    btn.addEventListener('click',async()=>{
+      if(typeof window.loadNews!=='function' || btn.disabled) return;
+      const old=btn.textContent;
+      btn.textContent='⟳ Refreshing…';
+      btn.classList.add('refreshing');
+      try{await window.loadNews(true);}finally{btn.textContent=old||'↻ Refresh News';btn.classList.remove('refreshing');}
+    });
+    if(btn.textContent.trim()==='↻ Refresh') btn.textContent='↻ Refresh News';
   }
   async function loadPullStats(){
     try{const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('stats '+r.status);pullStats=await r.json();statsStatus(allItems?.length||0,false);}
@@ -66,16 +59,10 @@ SCRIPT = r'''<style id="pull-stats-ui-v2-style">
 </script>'''
 
 s=P.read_text(encoding='utf-8')
-# Remove all prior pull-stats scripts/styles so this patch is deterministic.
-for marker in ('<script id="pull-stats-ui-v1">','<script id="pull-stats-ui-v2">'):
-    while marker in s:
-        a=s.find(marker);b=s.find('</script>',a)
-        if b<0:break
-        s=s[:a]+s[b+9:]
-while '<style id="pull-stats-ui-v2-style">' in s:
-    a=s.find('<style id="pull-stats-ui-v2-style">');b=s.find('</style>',a)
+while MARKER in s:
+    a=s.find(MARKER);b=s.find('</script>',a)
     if b<0:break
-    s=s[:a]+s[b+8:]
+    s=s[:a]+s[b+9:]
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Forced the Refresh News button text, active refreshing state, and live pull statistics beside the button.')
+print('Showed fetched/new/duplicate/final pull statistics directly beside Refresh and kept the detailed status row.')
