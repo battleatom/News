@@ -47,9 +47,13 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p = Path('scripts/update_news.py')
           s = p.read_text(encoding='utf-8')
-          s = s.replace('    "technology": "technology AI cybersecurity science",', '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],\n    "technology": "technology AI cybersecurity science",')
+          line = '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],'
+          s = re.sub(r'(?:\n?' + re.escape(line) + r'){1,}', '\n' + line, s)
+          if '    "technology": "technology AI cybersecurity science",' in s and line not in s:
+              s = s.replace('    "technology": "technology AI cybersecurity science",', line + '\n    "technology": "technology AI cybersecurity science",', 1)
           p.write_text(s, encoding='utf-8')
           PY
 
@@ -58,6 +62,9 @@ jobs:
 
       - name: Patch Top Stories topic and entity diversity
         run: python scripts/patch_top_diversity.py
+
+      - name: Strengthen event-level duplicate detection
+        run: python scripts/patch_event_dedupe.py
 
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
