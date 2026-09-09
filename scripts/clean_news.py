@@ -48,6 +48,15 @@ def headline_without_source(item):
     return re.sub(r"\s+", " ", title).strip()
 
 
+def description_without_source(item):
+    """Return the RSS description with a trailing publisher/source label removed."""
+    desc = re.sub(r"\s+", " ", clean(item.findtext("description"))).strip()
+    source = re.sub(r"\s+", " ", clean(item.findtext("source"))).strip()
+    if source:
+        desc = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", desc, flags=re.IGNORECASE)
+    return desc.strip()
+
+
 def story_key(item):
     title = headline_without_source(item).lower()
     title = re.sub(r"[^a-z0-9\s]", " ", title)
@@ -106,25 +115,43 @@ def is_duplicate_underreported(item, seen_keys):
 def is_malformed_description(item):
     """Reject feed artifacts that render as markdown/headline metadata instead of article information."""
     title = headline_without_source(item)
-    desc = clean(item.findtext("description"))
-    if not desc.strip():
+    raw_desc = clean(item.findtext("description"))
+    if not raw_desc.strip():
         return True
-    d = re.sub(r"\s+", " ", desc).strip()
+    d = re.sub(r"\s+", " ", raw_desc).strip()
+
     # Google News occasionally exposes a markdown-formatted result/list as the description.
     if re.search(r"(?:^|\s)#{1,6}\s*\[", d):
         return True
     if re.search(r"\]\(https?://(?:news\.google\.com|www\.google\.com)/", d, re.I):
         return True
-    # A description that is only a repeated headline/source/date is not useful article content.
-    title_words = re.findall(r"[a-z0-9]+", title.lower())
-    desc_words = re.findall(r"[a-z0-9]+", d.lower())
-    if title_words and len(desc_words) <= max(10, len(title_words) + 4):
+
+    # Google News commonly emits only "headline + publisher" as description text.
+    # Strip the publisher first; otherwise a long publisher name can make the
+    # description look long enough to evade the repeated-headline check.
+    meaningful = description_without_source(item)
+    if not meaningful:
+        return True
+
+    title_norm = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()
+    meaningful_norm = re.sub(r"[^a-z0-9]+", " ", meaningful.lower()).strip()
+    if title_norm and meaningful_norm == title_norm:
+        return True
+
+    title_words = re.findall(r"[a-z0-9]+", title_norm)
+    desc_words = re.findall(r"[a-z0-9]+", meaningful_norm)
+    if title_words:
         title_set = set(title_words)
         desc_set = set(desc_words)
-        if len(title_set & desc_set) / max(1, len(title_set)) >= 0.85:
+        overlap = len(title_set & desc_set) / max(1, len(title_set))
+        # If almost all description words simply repeat the headline and there is
+        # little additional text, there is no useful article summary to display.
+        extra_words = [w for w in desc_words if w not in title_set]
+        if overlap >= 0.85 and len(extra_words) <= 5:
             return True
+
     # Reject obvious metadata-only descriptions even when the source omitted the title.
-    if re.fullmatch(r"(?:https?://\S+|[A-Za-z0-9 .,'’&-]+)\s*(?:\|\s*[A-Za-z0-9 .,'’&-]+)?", d) and len(desc_words) <= 8:
+    if re.fullmatch(r"(?:https?://\S+|[A-Za-z0-9 .,'’&-]+)\s*(?:\|\s*[A-Za-z0-9 .,'’&-]+)?", meaningful) and len(desc_words) <= 8:
         return True
     return False
 
