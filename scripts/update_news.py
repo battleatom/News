@@ -146,6 +146,14 @@ MAINSTREAM_TOP_QUERIES = [
 ]
 
 TRUSTED_CATEGORY_FALLBACKS = {
+    "nfl": [
+        ("ESPN", "site:espn.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
+        ("NFL.com", "site:nfl.com/news (NFL OR football OR injury OR trade OR roster OR game)"),
+        ("CBS Sports", "site:cbssports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
+        ("NBC Sports", "site:nbcsports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
+        ("Fox Sports", "site:foxsports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
+        ("Yahoo Sports", "site:sports.yahoo.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),
+    ],
     "technology": [
         ("The Verge", "site:theverge.com (AI OR technology OR cybersecurity OR Microsoft OR Apple OR Google OR Nvidia)"),
         ("Ars Technica", "site:arstechnica.com (AI OR technology OR security OR software OR chips OR computing)"),
@@ -194,6 +202,12 @@ def clean(text):
 
 
 TRUSTED_SOURCE_TOKENS = ('aap', 'abc australia', 'abc news', 'afp', 'al jazeera', 'albuquerque journal', 'ap', 'arizona republic', 'ars technica', 'associated press', 'australian broadcasting corporation', 'axios', 'azcentral', 'bbc', 'bloomberg', 'boston globe', 'breaking defense', 'cbc', 'cbs news', 'chicago tribune', 'cnbc', 'cnn', 'colorado public radio', 'corriere della sera', 'daily times', 'defense news', 'denver post', 'denver7', 'der spiegel', 'destructoid', 'deutsche presse agentur', 'deutsche welle', 'dpa', 'durango herald', 'durango telegraph', 'dw', 'el pais', 'engadget', 'eurogamer', 'euronews', 'farmington daily times', 'forbes', 'fox news', 'france 24', 'france24', 'game informer', 'gamespot', 'haaretz', 'ign', 'janes', 'jerusalem post', 'kfox', 'koaa', 'koat', 'kob 4', 'kob tv', 'kotaku', 'krdo', 'krqe', 'kvia', 'kyiv independent', 'las cruces sun news', 'le monde', 'los angeles times', 'military times', 'mit technology review', 'nature', 'nbc news', 'new mexico in depth', 'new york times', 'newsweek', 'nhk', 'nintendo life', 'nm political report', 'npr', 'pbs', 'pc gamer', 'pc magazine', 'pcmag', 'politico', 'politico europe', 'polygon', 'reuters', 'rfi', 'rock paper shotgun', 'santa fe new mexican', 'scientific american', 'sky news', 'south china morning post', 'space com', 'stars and stripes', 'swissinfo', 'techcrunch', 'the colorado sun', 'the gamer', 'the guardian', 'the hill', 'the hindu', 'the telegraph', 'the times', 'the verge', 'time', 'times of india', 'times of israel', 'tom s hardware', 'usa today', 'usatoday', 'wall street journal', 'war on the rocks', 'washington post', 'wired', 'wsj', 'yahoo finance', 'yahoo news')
+TRUSTED_SPORTS_SOURCE_TOKENS = (
+    "espn", "nfl com", "cbs sports", "nbc sports", "fox sports",
+    "yahoo sports", "sports illustrated", "pro football talk",
+)
+TRUSTED_SOURCE_TOKENS = tuple(sorted(set(TRUSTED_SOURCE_TOKENS) | set(TRUSTED_SPORTS_SOURCE_TOKENS)))
+
 FOREIGN_ONLY_TERMS = ('germany', 'german', 'berlin', 'france', 'french', 'paris', 'united kingdom', 'britain', 'british', 'london', 'italy', 'italian', 'rome', 'spain', 'spanish', 'madrid', 'europe', 'european union', 'eu', 'ukraine', 'ukrainian', 'russia', 'russian', 'moscow', 'china', 'chinese', 'beijing', 'japan', 'japanese', 'tokyo', 'south korea', 'korean', 'india', 'indian', 'africa', 'african', 'south africa', 'nigeria', 'kenya', 'ethiopia', 'ghana', 'egypt', 'cairo', 'israel', 'israeli', 'gaza', 'palestine', 'iran', 'iranian', 'tehran', 'iraq', 'iraqi', 'syria', 'syrian', 'lebanon', 'turkey', 'turkish', 'australia', 'australian', 'canada', 'canadian', 'mexico', 'mexican', 'brazil', 'brazilian', 'argentina', 'argentine', 'colombia', 'philippines', 'indonesia', 'taiwan', 'new zealand', 'pakistan', 'afghanistan', 'north korea', 'nato', 'united nations', 'west bank')
 US_CONTEXT_TERMS = ('united states', 'u.s.', 'us ', 'america', 'american', 'washington dc', 'washington, d.c.', 'new mexico', 'farmington', 'san juan county', 'arizona', 'colorado', 'utah', 'nevada', 'texas', 'california', 'oregon', 'washington state', 'new york', 'florida', 'georgia', 'illinois', 'ohio', 'congress', 'senate', 'house of representatives', 'white house', 'pentagon', 'supreme court')
 
@@ -408,6 +422,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
