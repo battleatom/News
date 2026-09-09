@@ -4,9 +4,15 @@ import re
 p = Path('scripts/update_news.py')
 s = p.read_text(encoding='utf-8')
 
+# The workflow historically inserted the NFL dict entry on every run. Normalize it
+# before Python parses the collector so repeated scheduled runs cannot accumulate it.
+nfl_line = '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],'
+s = re.sub(r'(?:\n?' + re.escape(nfl_line) + r'){1,}', '\n' + nfl_line, s)
+
 MARKER = 'SUBJECT_ALIASES = {'
 if MARKER in s:
-    print('Top diversity patch already present; nothing to change.')
+    p.write_text(s, encoding='utf-8')
+    print('Top diversity patch already present; normalized repeated NFL entries.')
     raise SystemExit(0)
 
 subject_block = r'''SUBJECT_ALIASES = {
@@ -39,7 +45,7 @@ helpers = r'''def subject_keys(item):
     """Return major named subjects represented in a headline/description."""
     text = f"{item.get('title', '')} {item.get('description', '')}".lower()
     return [subject for subject, aliases in SUBJECT_ALIASES.items()
-            if any(re.search(rf"\\b{re.escape(alias)}\\b", text) for alias in aliases)]
+            if any(re.search(rf"\b{re.escape(alias)}\b", text) for alias in aliases)]
 
 
 def topic_key(item):
@@ -111,14 +117,11 @@ new_func = r'''def select_top_stories(unique):
             subject_counts[subject] = subject_counts.get(subject, 0) + 1
         return True
 
-    # Pass 1 protects subject/topic variety while keeping the strongest stories.
     for _, _, _, item in ranked:
         add(item)
         if len(selected) == 30:
             break
 
-    # Pass 2 fills remaining slots if today's news is unusually concentrated.
-    # Duplicate and publisher protections remain active.
     if len(selected) < 30:
         for _, _, _, item in ranked:
             add(item, relaxed=True)
@@ -130,7 +133,6 @@ new_func = r'''def select_top_stories(unique):
     return selected
 '''
 
-# Insert helpers immediately before the selector, then replace only that selector.
 s = s[:start] + subject_block + helpers + new_func + s[end:]
 p.write_text(s, encoding='utf-8')
-print('Added subject/topic diversity controls to Top Stories.')
+print('Added subject/topic diversity controls to Top Stories and normalized NFL queries.')
