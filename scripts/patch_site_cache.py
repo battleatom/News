@@ -94,6 +94,43 @@ else:
         nfl_block = '''    "nfl": [\n        ("ESPN", "site:espn.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),\n        ("NFL.com", "site:nfl.com/news (NFL OR football OR injury OR trade OR roster OR game)"),\n        ("CBS Sports", "site:cbssports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),\n        ("NBC Sports", "site:nbcsports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),\n        ("Fox Sports", "site:foxsports.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),\n        ("Yahoo Sports", "site:sports.yahoo.com/nfl (NFL OR football OR injury OR trade OR roster OR game)"),\n    ],\n'''
         source = source.replace('TRUSTED_CATEGORY_FALLBACKS = {\n', 'TRUSTED_CATEGORY_FALLBACKS = {\n' + nfl_block, 1)
 
+# Local has its own collection branch, so it must run its fallback pool there
+# rather than relying on the generic branch below.
+old_local_collection = '''            if category == "local":
+                items = []
+                for local_query in LOCAL_QUERIES:
+                    try:
+                        batch = parse_items(fetch(local_query), category)
+                        print(f"local/{local_query}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Local feed failed for {local_query}: {exc}")'''
+new_local_collection = '''            if category == "local":
+                items = []
+                for local_query in LOCAL_QUERIES:
+                    try:
+                        batch = parse_items(fetch(local_query), category)
+                        print(f"local/{local_query}: {len(batch)} fresh stories")
+                        items.extend(batch)
+                    except Exception as exc:
+                        print(f"Local feed failed for {local_query}: {exc}")
+                usable_count = len(select_category_stories(items, limit=30))
+                if usable_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            usable_count = len(select_category_stories(items, limit=30))
+                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
+                            if usable_count >= 15:
+                                break
+                        except Exception as exc:
+                            print(f"Local fallback failed for {fallback_source}: {exc}")'''
+if old_local_collection in source:
+    source = source.replace(old_local_collection, new_local_collection, 1)
+elif 'local fallback/{fallback_source}' not in source:
+    raise SystemExit('Could not install Four Corners fallbacks in Local collector branch')
+
 old_combined = '''            else:
                 combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
                 items = parse_items(fetch(combined_query), category)
@@ -184,4 +221,4 @@ elif 'domain_terms = (' not in source:
     raise SystemExit('Could not update World routing for Tech/Gaming')
 
 collector.write_text(source, encoding="utf-8")
-print("Patched cache metadata, diversified Federal discovery, added trusted Four Corners fallbacks, and preserved domain-aware World routing.")
+print("Patched cache metadata, diversified Federal discovery, ran trusted Four Corners fallbacks in Local, and preserved domain-aware World routing.")
