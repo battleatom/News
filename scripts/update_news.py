@@ -101,7 +101,6 @@ QUERIES = {
             "Tennessee news",
         ],
     },
-    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],
     "technology": "technology AI cybersecurity science",
     "gaming": "Sony PlayStation OR Microsoft Xbox OR Nintendo OR Nvidia gaming OR PC gaming OR gaming hardware",
     "military": "military news OR Pentagon news OR defense news OR war news OR armed forces OR troops OR military conflict",
@@ -341,6 +340,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 def select_top_stories(unique):
