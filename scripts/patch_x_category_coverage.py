@@ -5,9 +5,7 @@ p = Path('scripts/enrich_x_issues.py')
 s = p.read_text(encoding='utf-8')
 
 new = r'''def trend_candidates(category, query):
-    # Do not require a trend name to literally contain words such as
-    # "celebrity", "gaming", or "health". Real X trends are often names,
-    # teams, shows, products, hashtags, or events.
+    # Do not require a trend name to literally contain category words.
     names = fetch_trend_names()
     terms = set(re.findall(r"[a-z0-9]+", query.lower()))
     candidates = []
@@ -30,9 +28,6 @@ new = r'''def trend_candidates(category, query):
             category_hits = len(title_words & terms)
             if not overlap:
                 continue
-            # Require either category evidence in the reporting or a very
-            # strong exact trend match. This prevents unrelated trends from
-            # filling every category while still allowing named trends.
             if category_hits == 0 and overlap < 2:
                 continue
             candidates.append((category_hits, overlap, d, name))
@@ -46,7 +41,10 @@ s2, n = re.subn(pattern, new + "\n\ndef broad_candidates(query):", s, count=1)
 if n != 1:
     raise SystemExit('Could not patch trend_candidates')
 
-# Make the generic filter less destructive: named trends can be valid topics.
 s2 = s2.replace(', "zelda"', '')
+# The category-coverage patch returns four fields; make downstream code accept both
+# the original 3-field candidates and the enriched 4-field candidates.
+s2 = s2.replace('overlap,d,name=row', 'overlap,d,name,*extra=row')
+s2 = s2.replace('_,lead,trend=best', '_,lead,trend,*extra=best')
 p.write_text(s2, encoding='utf-8')
-print('Patched X category coverage: named trends can now populate all categories.')
+print('Patched X category coverage and candidate tuple compatibility.')
