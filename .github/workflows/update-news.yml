@@ -189,6 +189,9 @@ jobs:
       - name: Deduplicate generated UI styles
         run: python scripts/dedupe_generated_ui.py
 
+      - name: Normalize generated HTML structure
+        run: python scripts/normalize_generated_html.py
+
       - name: Validate generated page and scripts
         run: |
           python -m py_compile scripts/*.py
@@ -209,11 +212,13 @@ jobs:
               raise SystemExit('Expected exactly one auto refresh timer marker')
           if s.count('id="shared-page-state-bridge-v1"') != 1:
               raise SystemExit('Expected exactly one shared state bridge marker')
+          if re.search(r'</html>\s*<(?:script|style)\b', s, flags=re.I):
+              raise SystemExit('Generated page contains script/style tags after </html>')
           if '<html' not in s.lower() or '</html>' not in s.lower():
               raise SystemExit('Invalid generated page')
           if len(re.findall(r'const sections=', s)) != 1:
               raise SystemExit('Generated page does not contain exactly one sections declaration')
-          print('Generated page, workflow references, and Python syntax validation passed.')
+          print('Generated page, workflow references, HTML structure, and Python syntax validation passed.')
           PY
 
       - name: Commit and push changes
