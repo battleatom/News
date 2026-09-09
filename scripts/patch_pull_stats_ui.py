@@ -8,17 +8,26 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
   let pullStats=null;
   const originalPullStatusHtml=window.pullStatusHtml;
   function statsStatus(count,failed=false,phase=''){
-    const root=document.getElementById('pull-status');if(!root)return;
+    const root=document.getElementById('pull-status');
+    const inline=document.getElementById('status');
+    if(!root && !inline)return;
     const last=typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull?new Date(lastSuccessfulPull):null;
-    const next=typeof nextScheduledPull!=='undefined'&&nextScheduledPull?nextScheduledPull?new Date(nextScheduledPull):null:null;
+    const next=typeof nextScheduledPull!=='undefined'&&nextScheduledPull?new Date(nextScheduledPull):null;
     const left=next&&typeof countdownText==='function'?countdownText(next.getTime()-Date.now()):'—';
     const fetched=pullStats?.fetchedCount ?? count ?? 0;
     const fresh=pullStats?.newCount ?? 0;
     const dup=pullStats?.duplicatesRemoved ?? 0;
     const finalCount=pullStats?.finalCount ?? count ?? 0;
-    let lead=failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':(typeof pullInProgress!=='undefined'&&pullInProgress?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>');
-    let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';
-    root.innerHTML=`${lead}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span><strong>${fetched}</strong> fetched</span><span class="sep">·</span><span><strong>${fresh}</strong> new</span><span class="sep">·</span><span><strong>${dup}</strong> duplicates removed</span><span class="sep">·</span><span><strong>${finalCount}</strong> final</span>`;
+    const busy=typeof pullInProgress!=='undefined'&&pullInProgress;
+    let lead=failed?'⚠ Update failed':(busy?'↻ Fetching news…':'✓ Auto update active');
+    let detail=`${lead} · ${fetched} fetched · ${fresh} new · ${dup} duplicates removed · ${finalCount} final`;
+    if(last)detail+=` · Last: ${formatDate(last.toISOString())}`;
+    if(next)detail+=` · Next: ${left}`;
+    if(inline){inline.textContent=detail;inline.title=phase||'News feed update status';inline.setAttribute('aria-live','polite');}
+    if(root){
+      let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';
+      root.innerHTML=`${failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':(busy?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>')}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span><strong>${fetched}</strong> fetched</span><span class="sep">·</span><span><strong>${fresh}</strong> new</span><span class="sep">·</span><span><strong>${dup}</strong> duplicates removed</span><span class="sep">·</span><span><strong>${finalCount}</strong> final</span>`;
+    }
   }
   window.pullStatusHtml=statsStatus;
   function wireRefreshButton(){
@@ -56,4 +65,4 @@ while MARKER in s:
     s=s[:a]+s[b+9:]
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Made Refresh visibly change to Refreshing… while fetching and explicitly trigger loadNews(true).')
+print('Showed fetched/new/duplicate/final pull statistics directly beside Refresh and kept the detailed status row.')
