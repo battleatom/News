@@ -123,6 +123,9 @@ jobs:
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
 
+      - name: Remove exact and near-duplicate news stories
+        run: python scripts/dedupe_news_stories.py
+
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
 
@@ -178,19 +181,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Auto-update news feed"
-          for attempt in 1 2 3 4 5; do
-            if git push; then
-              exit 0
-            fi
-            echo "Push raced with another commit; refreshing main (attempt $attempt)."
-            git fetch origin main
-            git reset --soft origin/main
-            git add -A
-            git commit --amend --no-edit
-            sleep 2
-          done
-          echo "Unable to push after 5 attempts."
-          exit 1
-
-# Force rebuild trigger
+          git commit -m "Automated news feed update"
+          git push origin HEAD:main
