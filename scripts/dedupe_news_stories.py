@@ -26,6 +26,25 @@ GAMING_EVENT_GROUPS = {
     "product_change": {"shutdown", "closure", "acquisition", "acquired", "gameplay", "beta", "demo", "update", "expansion"},
 }
 
+US_STATE_NAMES = {
+    "alabama", "alaska", "arizona", "arkansas", "california", "colorado", "connecticut", "delaware", "florida",
+    "georgia", "hawaii", "idaho", "illinois", "indiana", "iowa", "kansas", "kentucky", "louisiana", "maine",
+    "maryland", "massachusetts", "michigan", "minnesota", "mississippi", "missouri", "montana", "nebraska",
+    "nevada", "new hampshire", "new jersey", "new mexico", "new york", "north carolina", "north dakota", "ohio",
+    "oklahoma", "oregon", "pennsylvania", "rhode island", "south carolina", "south dakota", "tennessee", "texas",
+    "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming", "district of columbia"
+}
+
+# State-centered federal disputes often generate many slightly different headlines
+# from the same event. Keep one representative Federal story instead of allowing
+# one state/case to dominate the category.
+FEDERAL_STATE_EVENT_GROUPS = {
+    "redistricting": {"redistricting", "map", "maps", "district", "districts", "congressional"},
+    "elections": {"election", "elections", "voting", "voter", "voters", "ballot", "ballots"},
+    "immigration": {"immigration", "migrant", "migrants", "border", "deportation", "deportations", "asylum"},
+    "abortion": {"abortion", "abortions", "reproductive"},
+}
+
 
 def clean(value):
     value = html.unescape(value or "")
@@ -78,6 +97,38 @@ def same_gaming_event(a, b):
     return len(named_shared) >= 2
 
 
+def title_states(item):
+    text = title_without_source(item).lower()
+    return {state for state in US_STATE_NAMES if re.search(rf"\b{re.escape(state)}\b", text)}
+
+
+def federal_state_event_groups(item):
+    ts = tokens(item)
+    return {name for name, terms in FEDERAL_STATE_EVENT_GROUPS.items() if ts & terms}
+
+
+def same_federal_state_event(a, b):
+    """Collapse repeated coverage of the same state-centered federal dispute."""
+    shared_states = title_states(a) & title_states(b)
+    if not shared_states:
+        return False
+    shared_groups = federal_state_event_groups(a) & federal_state_event_groups(b)
+    if not shared_groups:
+        return False
+
+    # Redistricting/map stories are especially repetitive and easy to identify by
+    # state + event family. For other event families, require additional shared
+    # meaningful title language so unrelated cases in the same state are preserved.
+    if "redistricting" in shared_groups:
+        return True
+
+    ta, tb = content_tokens(a), content_tokens(b)
+    state_words = {w for state in shared_states for w in state.split()}
+    shared_specific = (ta & tb) - state_words
+    shared_specific -= set().union(*FEDERAL_STATE_EVENT_GROUPS.values())
+    return len(shared_specific) >= 2
+
+
 def very_close_title(a, b, minimum_common=5, ratio=0.94):
     ta, tb = tokens(a), tokens(b)
     common = len(ta & tb)
@@ -115,6 +166,8 @@ def same_story(a, b):
         if same_gaming_event(a, b):
             return True
         return very_close_title(a, b, minimum_common=5, ratio=0.95)
+    if ca == "federal" and same_federal_state_event(a, b):
+        return True
 
     if smaller >= 5 and common / smaller >= 0.90:
         return True
