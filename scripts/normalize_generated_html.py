@@ -1,9 +1,19 @@
 from pathlib import Path
 import re
+import subprocess
+import sys
 
 P = Path('index.html')
+
+# patch_load_more.py runs immediately before normalization in the main workflow.
+# Apply the final Top Stories reliability layer here so every generated page gets
+# the revolving cycle behavior after all renderer wrappers have been installed.
+subprocess.run([sys.executable, 'scripts/patch_top_cycle_revolving.py'], check=True)
+
 s = P.read_text(encoding='utf-8')
 
+if 'top-cycle-reliability-v1' not in s:
+    raise SystemExit('Top Stories revolving-cycle reliability marker is missing')
 if '</body>' not in s or '</html>' not in s:
     raise SystemExit('Generated page is missing </body> or </html>')
 
@@ -32,4 +42,4 @@ if re.search(r'setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\
     raise SystemExit('Competing five-second refresh scheduler still exists')
 
 P.write_text(s, encoding='utf-8')
-print('Normalized generated HTML and verified there is only one automatic refresh scheduler.')
+print('Normalized generated HTML, hardened the Top Stories cycle, and verified there is only one automatic refresh scheduler.')
