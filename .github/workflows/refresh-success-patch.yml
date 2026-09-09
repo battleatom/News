@@ -52,6 +52,26 @@ jobs:
             exit 0
           fi
           git commit -m 'Fix refresh success state'
-          git fetch origin main
-          git rebase origin/main
-          git push origin HEAD:main
+
+          # py_compile and other validation steps may leave tracked or untracked
+          # workspace noise. It is not part of this patch and must not block
+          # synchronization with a concurrently updated main branch.
+          git reset --hard HEAD
+          git clean -fd
+
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push rejected; synchronizing with latest main before retry ${attempt}."
+            git fetch origin main
+            git merge --no-edit -X ours origin/main || {
+              echo 'Unable to merge concurrent main changes safely.'
+              git merge --abort || true
+              exit 1
+            }
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          echo 'Push failed after 3 attempts.'
+          exit 1
