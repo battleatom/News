@@ -8,17 +8,24 @@ MARKER = f'<script id="{SCRIPT_ID}">'
 SCRIPT = r'''<script id="pull-stats-ui-v1">
 (function(){
   'use strict';
+  const AUTO_PULL_MS=15*60*1000;
+  let stats=null;
+  let lastPullMs=0;
+  let nextPullMs=0;
   function byId(id){return document.getElementById(id)}
   function safeFormatDate(v){
     try{ if(typeof window.formatDate==='function') return window.formatDate(v); return new Date(v).toLocaleString(); }
     catch(e){ return String(v||'—'); }
   }
   function countdown(){
-    try{
-      if(typeof window.nextScheduledPull!=='undefined' && window.nextScheduledPull && typeof window.countdownText==='function')
-        return window.countdownText(window.nextScheduledPull-Date.now());
-    }catch(e){}
-    return '—';
+    const target=nextPullMs || (nextPullMs===0 ? 0 : 0);
+    if(!target)return '—';
+    const sec=Math.max(0,Math.ceil((target-Date.now())/1000));
+    const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;
+    if(sec<=0)return 'now';
+    if(h)return `${h}h ${String(m).padStart(2,'0')}m`;
+    if(m)return `${m}m ${String(s).padStart(2,'0')}s`;
+    return `${s}s`;
   }
   function ensureVisibleUI(){
     const btn=byId('refresh');
@@ -62,7 +69,6 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
     }
     return panel;
   }
-  let stats=null;
   function renderStats(failed=false,phase=''){
     const panel=ensureVisibleUI();
     if(!panel)return;
@@ -71,7 +77,7 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
     const dup=stats?.duplicatesRemoved ?? 0;
     const finalCount=stats?.finalCount ?? (typeof allItems!=='undefined'?allItems.length:0);
     let last='—';
-    try{if(typeof lastSuccessfulPull!=='undefined'&&lastSuccessfulPull)last=safeFormatDate(lastSuccessfulPull)}catch(e){}
+    if(lastPullMs)last=safeFormatDate(new Date(lastPullMs).toISOString());
     const busy=btnBusy();
     panel.className=failed?'failed':(busy?'busy':'ready');
     if(failed){
@@ -81,12 +87,19 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
     panel.innerHTML=`<strong>✓ Auto update active</strong><span>•</span><span>${fetched} fetched</span><span>•</span><span>${fresh} new</span><span>•</span><span>${dup} duplicates removed</span><span>•</span><span>${finalCount} final</span><span>•</span><span>Last: ${escapeHtml(last)}</span><span>•</span><span>Next: ${escapeHtml(countdown())}</span>`;
   }
   function btnBusy(){const b=byId('refresh');return !!b?.disabled || b?.dataset.refreshing==='1'}
-  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
   async function loadStats(){
     try{
       const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});
       if(!r.ok)throw new Error('HTTP '+r.status);
       stats=await r.json();
+      const parsed=Date.parse(stats.updatedAt);
+      if(Number.isFinite(parsed)){
+        lastPullMs=parsed;
+        nextPullMs=parsed+AUTO_PULL_MS;
+        // Keep the canonical page script in sync when its globals are exposed.
+        try{window.lastSuccessfulPull=lastPullMs;window.nextScheduledPull=nextPullMs;}catch(e){}
+      }
       renderStats(false,'');
     }catch(e){ renderStats(false,''); }
   }
@@ -135,4 +148,4 @@ if '<div id="pull-stats-ui"' not in s:
 s=s.replace('</head>', STYLE+'\n</head>',1)
 s=s.replace('</body>', SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Installed visible Refresh News button and pull-statistics panel.')
+print('Installed visible Refresh News button and pull-statistics panel with a live next-update countdown.')
