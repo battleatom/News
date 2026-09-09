@@ -56,6 +56,9 @@ jobs:
       - name: Patch news collector rules
         run: python scripts/patch_news_selector.py
 
+      - name: Patch Top Stories topic and entity diversity
+        run: python scripts/patch_top_diversity.py
+
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
 
