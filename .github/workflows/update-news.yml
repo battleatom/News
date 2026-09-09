@@ -117,6 +117,9 @@ jobs:
       - name: Enrich Box Office and Farmington movie data
         run: python scripts/enrich_box_office.py
 
+      - name: Add location-aware Box Office data
+        run: python scripts/patch_boxoffice_location.py
+
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
 
@@ -125,6 +128,9 @@ jobs:
 
       - name: Canonicalize final page features
         run: python scripts/patch_site_features.py
+
+      - name: Apply location-aware Box Office UI
+        run: python scripts/patch_boxoffice_ui.py
 
       - name: Add live NFL scoreboard presentation
         run: python scripts/patch_nfl_live.py
@@ -145,7 +151,7 @@ jobs:
           import re
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css']
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'nfl-live-v1', 'new-badge-expiry-v1', 'load-more-v1', 'styles/header.css', 'boxoffice-location-v1']
           missing = [x for x in required if x not in s]
           if missing:
               raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
@@ -161,7 +167,7 @@ jobs:
               count = len(re.findall(rf'<style\s+id=["\']{re.escape(style_id)}["\']', s, flags=re.I))
               if count != 1:
                   raise SystemExit(f'Generated page contains {count} copies of {style_id}; expected exactly 1')
-          print('Generated page validation passed with Load More and unique generated style blocks.')
+          print('Generated page validation passed with Load More, Box Office location support, and unique generated style blocks.')
           PY
 
       - name: Commit updated feed
