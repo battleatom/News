@@ -49,9 +49,7 @@ jobs:
           from pathlib import Path
           p = Path('scripts/update_news.py')
           s = p.read_text(encoding='utf-8')
-          s = s.replace('SECTIONS = ["top", "nfl", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]', 'SECTIONS = ["top", "nfl", "x", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "technology", "gaming", "military"]')
-          s = s.replace('    "technology": "technology AI cybersecurity science",', '    "nfl": "NFL football news OR NFL scores OR NFL injuries OR NFL trades OR NFL teams",\n    "technology": "technology AI cybersecurity science",')
-          s = s.replace('CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "technology": 12, "gaming": 16, "nm": 8, "local": 6}', 'CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}')
+          s = s.replace('    "technology": "technology AI cybersecurity science",', '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],\n    "technology": "technology AI cybersecurity science",')
           p.write_text(s, encoding='utf-8')
           PY
 
@@ -92,7 +90,7 @@ jobs:
           if n != 1:
               raise SystemExit('Could not locate sections declaration in index.html')
           p.write_text(s2, encoding='utf-8')
-          print('NFL and X tabs verified and enforced.')
+          print('NFL and X tabs verified.')
           PY
 
       - name: Add Load More pagination
@@ -116,14 +114,35 @@ jobs:
       - name: Enrich Underreported context and long-term supporting coverage
         run: python scripts/enrich_underreported.py
 
-      - name: Patch X category coverage
-        run: python scripts/patch_x_category_coverage.py
-
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
 
+      - name: Enrich Box Office and Farmington movie data
+        run: python scripts/enrich_box_office.py
+
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
+
+      - name: Canonicalize final page features
+        run: python scripts/patch_site_features.py
+
+      - name: Validate generated page
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          required = ['id="tabs"', 'id="refresh"', 'site-features-v2', 'styles/header.css', "['boxoffice','🎬 Box Office"]"]
+          missing = [x for x in required if x not in s]
+          if missing:
+              raise SystemExit('Generated page missing required features: ' + ', '.join(missing))
+          if len(re.findall(r'<nav[^>]+id=["\']tabs["\']', s, flags=re.I)) != 1:
+              raise SystemExit('Generated page does not contain exactly one tabs container')
+          if len(re.findall(r'const sections=', s)) != 1:
+              raise SystemExit('Generated page does not contain exactly one sections declaration')
+          print('Generated page validation passed.')
+          PY
 
       - name: Commit updated feed
         run: |
