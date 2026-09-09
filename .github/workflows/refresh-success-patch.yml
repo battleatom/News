@@ -1,0 +1,57 @@
+name: Apply Refresh Success Fix
+
+on:
+  workflow_run:
+    workflows: ["Update News Feed"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-success-patch
+  cancel-in-progress: true
+
+jobs:
+  patch:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Apply refresh success handling
+        run: python scripts/patch_refresh_success.py
+
+      - name: Validate page
+        run: |
+          python -m py_compile scripts/*.py
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          if 'refresh-success-handling-v1' not in s:
+              raise SystemExit('Refresh success marker missing')
+          if re.search(r'</html>\s*<(?:script|style)\b', s, flags=re.I):
+              raise SystemExit('Generated page contains script/style tags after </html>')
+          print('Refresh success handling validation passed.')
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html scripts/patch_refresh_success.py .github/workflows/refresh-success-patch.yml
+          if git diff --cached --quiet; then
+            echo 'Refresh success fix already present.'
+            exit 0
+          fi
+          git commit -m 'Fix refresh success state'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
