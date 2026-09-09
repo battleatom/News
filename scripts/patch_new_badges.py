@@ -8,6 +8,18 @@ while marker in s:
     if b<0: break
     s=s[:a]+s[b+9:]
 
+old_state="let audioContext=null,audioUnlocked=false;"
+new_state="let audioContext=null,audioUnlocked=false,newArticleAudio=null;"
+if old_state in s:
+    s=s.replace(old_state,new_state,1)
+
+old_audio="""function unlockPopAudio(){try{if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();audioUnlocked=true;}catch(e){audioUnlocked=false;}}\nfunction playNewArticlePop(){if(!audioUnlocked||!audioContext)return;try{const now=audioContext.currentTime;const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.setValueAtTime(620,now);osc.frequency.exponentialRampToValueAtTime(1080,now+0.055);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.16,now+0.008);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.085);osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+0.09);}catch(e){}}"""
+new_audio="""function ensureNewArticleAudio(){if(!newArticleAudio){newArticleAudio=new Audio('assets/new-article-pop.mp3');newArticleAudio.preload='auto';newArticleAudio.volume=0.85;}return newArticleAudio;}\nfunction unlockPopAudio(){try{ensureNewArticleAudio();if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();audioUnlocked=true;}catch(e){audioUnlocked=true;}}\nfunction playSynthNewArticlePop(){if(!audioContext)return;try{const now=audioContext.currentTime;const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.setValueAtTime(620,now);osc.frequency.exponentialRampToValueAtTime(1080,now+0.055);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.16,now+0.008);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.085);osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+0.09);}catch(e){}}\nfunction playNewArticlePop(){if(!audioUnlocked)return;try{const audio=ensureNewArticleAudio();audio.pause();audio.currentTime=0;const started=audio.play();if(started&&typeof started.catch==='function')started.catch(()=>playSynthNewArticlePop());}catch(e){playSynthNewArticlePop();}}\ndocument.addEventListener('pointerdown',unlockPopAudio,{once:true,capture:true});document.addEventListener('keydown',unlockPopAudio,{once:true,capture:true});"""
+if old_audio in s:
+    s=s.replace(old_audio,new_audio,1)
+elif "assets/new-article-pop.mp3" not in s:
+    raise SystemExit('Could not install uploaded new-article audio')
+
 script=r'''<script id="new-badge-expiry-v1">
 function decorateNewBadges(){
  document.querySelectorAll('.news-item').forEach(card=>{
@@ -22,4 +34,4 @@ setInterval(()=>{if(typeof decorateNewBadges==='function')decorateNewBadges();},
 </script>'''
 s=s.replace('</body>',script+'\n</body>',1)
 p.write_text(s,encoding='utf-8')
-print('NEW badges now expire automatically after one hour.')
+print('NEW badges expire after one hour and uploaded bubble-pop plays once when refresh adds new stories.')
