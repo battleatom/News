@@ -31,15 +31,32 @@ while marker in text:
         break
     text = text[:start] + text[end + len('</script>'):]
 
-# Make the existing NFL renderer honor the same per-tab count used by pagination.
+style_marker = '<style id="load-more-style-v1">'
+while style_marker in text:
+    start = text.find(style_marker)
+    end = text.find('</style>', start)
+    if end == -1:
+        break
+    text = text[:start] + text[end + len('</style>'):]
+
+# The live NFL renderer is installed immediately before this patch and used to
+# hard-limit itself to 10 stories. Make it honor the same count as Load More.
 text = text.replace(
     'allNfl.slice(0,10).forEach((item,i)=>',
     'allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>',
     1,
 )
 
-# Load More must wrap canonicalRender because canonical tab clicks call that function
-# directly. Wrapping only `render` leaves the control bypassed during normal tab use.
+style = r'''<style id="load-more-style-v1">
+.load-more-wrap{display:flex;justify-content:center;width:100%;padding:18px 12px 8px;box-sizing:border-box}
+.load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.load-more:active{transform:translateY(1px)}
+</style>'''
+text = text.replace('</head>', style + '\n</head>', 1)
+
+# Load More wraps canonicalRender because canonical tab clicks call that function
+# directly. For NFL, place the control after the NFL News list rather than inside
+# the live-score section so it is actually visible beneath the articles.
 script = r'''<script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
 window.loadCounts = window.loadCounts || {};
@@ -55,9 +72,10 @@ function paginatedNewsItems(items){
 
 function appendLoadMoreControl(data){
   const root = document.getElementById('news-feed');
-  if(!root || data.available.length <= data.count) return;
-  const section = root.querySelector('.section') || root;
-  if(section.querySelector('.load-more-wrap')) return;
+  if(!root) return;
+  root.querySelectorAll('.load-more-wrap').forEach(el => el.remove());
+  if(data.available.length <= data.count) return;
+
   const more = document.createElement('div');
   more.className = 'load-more-wrap';
   const button = document.createElement('button');
@@ -70,7 +88,15 @@ function appendLoadMoreControl(data){
     canonicalRender(allItems);
   };
   more.appendChild(button);
-  section.appendChild(more);
+
+  if(active === 'nfl'){
+    // renderNflLive places NFL News after the live-score section. Appending to
+    // root here guarantees the control is directly below the news articles.
+    root.appendChild(more);
+  }else{
+    const section = root.querySelector('.section') || root;
+    section.appendChild(more);
+  }
 }
 
 const baseCanonicalRenderWithPagination = canonicalRender;
@@ -83,8 +109,10 @@ canonicalRender = function(items){
     const data = paginatedNewsItems(items);
     loadCounts.nfl = data.count;
     baseCanonicalRenderWithPagination(items);
-    const nflHeader = [...document.querySelectorAll('.section-header .count')].find(el => el.closest('.section-header')?.querySelector('h2')?.textContent?.includes('NFL News'));
-    if(nflHeader) nflHeader.textContent = `Showing ${data.count} of ${data.available.length}`;
+    const nflHeaders = [...document.querySelectorAll('.section-header')];
+    const nflNewsHeader = nflHeaders.find(el => el.querySelector('h2')?.textContent?.trim() === 'NFL News');
+    const countEl = nflNewsHeader?.querySelector('.count');
+    if(countEl) countEl.textContent = `Showing ${data.count} of ${data.available.length}`;
     appendLoadMoreControl(data);
     return;
   }
@@ -103,4 +131,4 @@ window.render = canonicalRender;
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied canonical Load More pagination with NFL support.")
+print("Applied visible canonical Load More pagination with dynamic NFL support.")
