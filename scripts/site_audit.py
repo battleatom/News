@@ -9,7 +9,7 @@ NEWS = Path('News')
 
 REQUIRED_BLOCK_IDS = (
     'site-features-v2', 'shared-page-state-bridge-v1', 'auto-refresh-timer-v1',
-    'alerts-status-v22', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1',
+    'alerts-status-v22', 'alerts-new-v23', 'bookmarks-v1', 'nfl-live-v1',
     'load-more-v1', 'top-cycle-reliability-v1', 'legislation-ui-v1',
     'boxoffice-location-v1', 'underreported-ui-v1', 'x-issues-ui-v1', 'region-tab-v1',
 )
@@ -57,9 +57,14 @@ def main():
 
     if counts.get('pull-stats-ui-v1', 0):
         errors.append('legacy pull-stats-ui-v1 controller remains alongside V2.2')
+    if counts.get('new-badge-expiry-v1', 0):
+        errors.append('retired minute-polling NEW badge controller remains alongside V2.3')
     for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed', 'serverNewLinks'):
         if marker not in html:
             errors.append(f'V2.2 status/alert marker missing: {marker}')
+    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', 'Newly discovered by Underreported within the last hour'):
+        if marker not in html:
+            errors.append(f'V2.3 new-article marker missing: {marker}')
 
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
@@ -149,7 +154,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V2.2 status/alerts, generated feature blocks, tabs, pagination, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V2.2 status, V2.3 NEW/audio gating, tabs, pagination, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
