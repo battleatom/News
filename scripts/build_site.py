@@ -43,6 +43,9 @@ PATCHERS = [
     'scripts/patch_v23_new_alerts.py',
     # V2.5 owns detected-state/local content pools and runs after legacy render wrappers.
     'scripts/patch_v25_location_content.py',
+    # Final interaction-only compatibility fix. Keep this last so later patchers
+    # cannot restore the older audio or absolute-scroll behavior.
+    'scripts/patch_interaction_hotfix.py',
 ]
 
 
