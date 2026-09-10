@@ -91,6 +91,9 @@ jobs:
           echo $! > /tmp/news-preview-http.pid
           sleep 2
 
+      - name: Diagnose alert-enable audio path
+        run: python tests/audio_debug.py
+
       - name: Run desktop and mobile browser tests
         run: python tests/site_smoke.py
 
