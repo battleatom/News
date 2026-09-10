@@ -39,8 +39,6 @@ while style_marker in text:
         break
     text = text[:start] + text[end + len('</style>'):]
 
-# The live NFL renderer is installed immediately before this patch and used to
-# hard-limit itself to 10 stories. Make it honor the same count as Load More.
 text = text.replace(
     'allNfl.slice(0,10).forEach((item,i)=>',
     'allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>',
@@ -54,9 +52,6 @@ style = r'''<style id="load-more-style-v1">
 </style>'''
 text = text.replace('</head>', style + '\n</head>', 1)
 
-# Load More wraps canonicalRender because canonical tab clicks call that function
-# directly. Top Stories gets a persistent daily seen-set and a rotating order;
-# all other tabs keep normal pagination. NFL keeps its custom live-score renderer.
 script = r'''<script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
 const TOP_DISCOVERY_MARKER = 'top-story-cycle-v1';
@@ -118,6 +113,15 @@ function markTopStoriesSeen(items){
 function syncDiscoveryButton(){
   if(typeof window.syncTopDiscoveryButton==='function')window.syncTopDiscoveryButton();
 }
+function renderMoreWithoutJump(next){
+  const y=window.scrollY;
+  const activeBefore=active;
+  loadCounts[activeBefore]=next;
+  canonicalRender(allItems);
+  requestAnimationFrame(()=>{
+    if(active===activeBefore)window.scrollTo({top:y,left:window.scrollX,behavior:'auto'});
+  });
+}
 
 function paginatedNewsItems(items){
   let available;
@@ -144,13 +148,8 @@ function appendLoadMoreControl(data){
   button.className='load-more';
   const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
   button.textContent=`Load 10 more (${next} of ${data.available.length})`;
-  button.onclick=()=>{
-    loadCounts[active]=next;
-    canonicalRender(allItems);
-  };
+  button.addEventListener('click',e=>{e.preventDefault();renderMoreWithoutJump(next)});
   more.appendChild(button);
-  // Keep pagination outside the category section. Several category renderers
-  // rebuild their section after canonicalRender and could otherwise delete it.
   root.appendChild(more);
 }
 
@@ -211,8 +210,9 @@ window.cycleTopStoriesAndRefresh=async function(){
 render=canonicalRender;
 window.render=canonicalRender;
 syncDiscoveryButton();
+window.__loadMoreNoJumpV281=true;
 </script>'''
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied page-level Load More plus daily unseen Top Stories cycling with passive full-feed refresh.")
+print("Applied Load More with preserved scroll position plus daily unseen Top Stories cycling.")
