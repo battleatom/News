@@ -141,6 +141,9 @@ jobs:
             echo "All RSS update attempts failed. Preserving the existing News feed and continuing the workflow."
           fi
 
+      - name: Refine Gaming and upcoming Technology
+        run: python scripts/refine_tech_gaming.py
+
       - name: Collect official legislation records
         run: python scripts/collect_official_legislation.py
 
