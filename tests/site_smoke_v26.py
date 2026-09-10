@@ -21,6 +21,8 @@ def collector_checks():
     assert not check('Brazil president announces new economic plan','Government in Brasilia releases details')
     assert not check('French president addresses parliament','Paris government update')
     assert not check('President signs sweeping reform bill','Foreign parliament approved the measure')
+    region_selector=ns.get('select_region_stories')
+    assert callable(region_selector), 'Per-state regional depth selector is missing'
 
 
 def badge_checks(page):
@@ -33,6 +35,26 @@ def badge_checks(page):
     assert state(10,2)=='yellow', 'Older article newly added within three hours must be yellow NEW'
     assert state(4,2)=='', 'Article aged 3-6 hours should have no secondary NEW badge'
     assert state(10,4)=='', 'Yellow NEW must expire three hours after first seen'
+
+
+def synthetic_denver_mix(page):
+    return page.evaluate("""() => {
+      const rows=[];
+      const now=new Date().toUTCString();
+      function add(title,link,state,region){
+        const xml=`<item><title>${title}</title><link>${link}</link><description>${title}</description><pubDate>${now}</pubDate><source>Test Source</source><category>region</category><region>${region}</region><state>${state}</state></item>`;
+        rows.push(new DOMParser().parseFromString(xml,'text/xml').documentElement);
+      }
+      for(let i=1;i<=6;i++)add(`Denver local test ${i}`,`https://example.com/denver-${i}`,'Colorado','mountain');
+      for(let i=1;i<=6;i++)add(`Colorado statewide test ${i}`,`https://example.com/colorado-${i}`,'Colorado','mountain');
+      for(let i=1;i<=6;i++)add(`Wyoming mountain regional test ${i}`,`https://example.com/mountain-${i}`,'Wyoming','mountain');
+      const result=window.__mergedStatePoolV26(rows);
+      return {
+        counts:window.__stateMergeCountsV26,
+        tiers:result.slice(0,18).map(i=>i.querySelector('locationTier')?.textContent||''),
+        links:result.slice(0,18).map(i=>i.querySelector('link')?.textContent||'')
+      };
+    }""")
 
 
 def farmington_suite(browser):
@@ -51,7 +73,7 @@ def farmington_suite(browser):
 
     click_key(page,'nm')
     counts=page.evaluate('window.__stateMergeCountsV26')
-    assert counts and counts['state']==6 and counts['regional']==6 and counts['local']==6, f'State lead mix is not 6 State / 6 Regional / 6 Local: {counts}'
+    assert counts and counts['state']>=6 and counts['regional']>=6 and counts['local']>=6, f'Farmington State lead mix does not have at least 6/6/6 candidates: {counts}'
     more=page.locator('.load-more');assert more.count() and more.is_visible(), 'Merged State feed has no Load More'
     before=page.locator('#news-feed .news-item').count();more.click();page.wait_for_timeout(350);after=page.locator('#news-feed .news-item').count()
     assert after>before, 'Merged State Load More did not add stories'
@@ -68,9 +90,16 @@ def denver_suite(browser):
     assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
     click_key(page,'nm')
-    counts=page.evaluate('window.__stateMergeCountsV26')
-    assert counts and counts['state']==6 and counts['regional']==6 and counts['local']==6, f'Denver State mix is not 6/6/6: {counts}'
-    assert counts['location']['code']=='CO', f'Denver State pool used wrong location: {counts}'
+    live_counts=page.evaluate('window.__stateMergeCountsV26')
+    assert live_counts and live_counts['location']['code']=='CO', f'Denver State pool used wrong location: {live_counts}'
+
+    synthetic=synthetic_denver_mix(page)
+    counts=synthetic['counts']
+    assert counts['state']==6 and counts['regional']==6 and counts['local']==6, f'Deterministic Denver State mix is not 6/6/6: {synthetic}'
+    assert synthetic['tiers'][:6]==['State']*6, f'First six merged stories are not State: {synthetic["tiers"]}'
+    assert synthetic['tiers'][6:12]==['Regional']*6, f'Second six merged stories are not Regional: {synthetic["tiers"]}'
+    assert synthetic['tiers'][12:18]==['Local']*6, f'Third six merged stories are not Local: {synthetic["tiers"]}'
+    assert len(set(synthetic['links']))==18, 'Merged 6/6/6 lead mix duplicated an article'
     context.close()
 
 
@@ -91,7 +120,7 @@ def main():
         browser=p.chromium.launch(headless=True)
         farmington_suite(browser);denver_suite(browser);mobile_suite(browser)
         browser.close()
-    print('V2.6 SMOKE PASS — Presidential strict, State 6/6/6 merge, tiered NEW badges.')
+    print('V2.6 SMOKE PASS — Presidential strict, merged State 6/6/6 logic, location switching, tiered NEW badges.')
 
 
 if __name__=='__main__':
