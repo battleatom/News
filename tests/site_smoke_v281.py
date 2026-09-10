@@ -2,7 +2,7 @@ from playwright.sync_api import sync_playwright
 
 BASE='http://127.0.0.1:8765/'
 
-
+# V2.8.1 targeted regression coverage.
 def click_key(page,key):
     tab=page.locator(f'#tabs > .tab[data-nav-key="{key}"]')
     assert tab.count()==1 and tab.is_visible(), f'Missing tab {key}'
@@ -21,7 +21,6 @@ def main():
         assert page.evaluate('window.__loadMoreNoJumpV281===true'), 'No-jump Load More controller missing'
         assert page.evaluate('window.__locationDedupeV281===true'), 'State event dedupe controller missing'
 
-        # NEW badges depend only on publication age.
         now=page.evaluate('Date.now()')
         classify=lambda hours: page.evaluate('([p,n])=>window.__classifyNewBadgeV26(p,0,n)',[now-hours*3600000,now])
         assert classify(.25)=='red'
@@ -32,7 +31,6 @@ def main():
         assert classify(5.99)=='yellow'
         assert classify(6.01)==''
 
-        # NM/Four Corners merged view should collapse same-event title variants.
         click_key(page,'nm')
         synthetic=page.evaluate("""() => {
           const now=new Date().toUTCString();
@@ -54,7 +52,6 @@ def main():
         assert sum('school board' in x and 'budget' in x for x in lower)==1, synthetic
         assert sum('hospital' in x and 'emergency wing' in x for x in lower)==1, synthetic
 
-        # Load More must preserve user's scroll position instead of jumping to top.
         load_more_checked=False
         for key in ('world','us','technology','nm','federal'):
             click_key(page,key); page.wait_for_timeout(300)
@@ -73,7 +70,6 @@ def main():
                 break
         assert load_more_checked, 'No category exposed Load More for scroll test'
 
-        # Core controls remain live.
         click_key(page,'top')
         assert page.locator('#refresh').is_visible(), 'Top Stories refresh button missing'
         assert page.locator('#sound-alerts-toggle').is_visible(), 'Sound button missing'
