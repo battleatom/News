@@ -94,8 +94,11 @@ def desktop(browser):
         return page.evaluate('([p,f,n])=>window.__classifyNewBadgeV26(p,f,n)',[now-hours*3600000,now-first_hours*3600000 if first_hours else 0,now])
     assert cls(.5,10)=='red'; assert cls(2,0)=='blue'; assert cls(4,.1)=='yellow'; assert cls(7,.1)==''
 
-    # Validate the real geolocated state view instead of fighting the browser's
-    # Farmington geolocation with an artificial Texas cache value.
+    # Location rendering is validated from a clean navigation state. The bookmark
+    # interaction above intentionally tears its own data down and can still have a
+    # queued decoration frame when the next assertion begins.
+    page.evaluate("localStorage.setItem('underreported-active-tab','top')")
+    page.reload(wait_until='domcontentloaded'); wait_feed(page,label='location reset'); page.wait_for_timeout(1000)
     click_key(page,'legislation'); page.wait_for_timeout(700); wait_feed(page,label='NM legislation')
     legislation_text=page.locator('#news-feed').inner_text()
     assert 'Federal' in legislation_text or 'Congress.gov' in legislation_text, legislation_text[:500]
