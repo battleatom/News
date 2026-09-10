@@ -32,7 +32,7 @@ def fetch_related(title):
     if not query:
         return []
     try:
-        req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 Underreported/1.0"})
+        req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 Underreported/2.0"})
         with urllib.request.urlopen(req, timeout=15) as response:
             root = ET.fromstring(response.read())
     except Exception:
@@ -95,13 +95,13 @@ def specific_why(title, desc, category, related):
     entities = named_terms(title)
     subject = ", ".join(entities[:2])
     if any(x in text for x in ("attack", "airstrike", "missile", "invasion", "troops", "war", "ceasefire", "strike")):
-        return (f"This matters because {subject + ' ' if subject else 'the development '}changes the military or diplomatic situation described in the report. The important question is whether it remains an isolated event or produces another response, escalation, or negotiation." )
+        return f"This matters because {subject + ' ' if subject else 'the development '}changes the military or diplomatic situation described in the report. The important question is whether it remains an isolated event or produces another response, escalation, or negotiation."
     if any(x in text for x in ("court", "ruling", "lawsuit", "supreme court", "executive order", "judge")):
-        return (f"This matters because {subject + ' ' if subject else 'the decision '}could change how the policy or legal dispute described here is applied. Its longer-term importance will depend on enforcement, appeals, or the precedent that follows.")
+        return f"This matters because {subject + ' ' if subject else 'the decision '}could change how the policy or legal dispute described here is applied. Its longer-term importance will depend on enforcement, appeals, or the precedent that follows."
     if any(x in text for x in ("congress", "senate", "house", "bill", "vote", "legislation")):
-        return (f"This matters because the development moves the policy dispute described here into a new stage. The next vote, negotiation, amendment, or implementation decision can determine whether the change becomes consequential beyond today's headline.")
+        return "This matters because the development moves the policy dispute described here into a new stage. The next vote, negotiation, amendment, or implementation decision can determine whether the change becomes consequential beyond today's headline."
     if any(x in text for x in ("tariff", "inflation", "recession", "layoffs", "bankruptcy", "price", "jobs")):
-        return (f"This matters because the development can move costs, business decisions, employment, or consumer prices beyond the people directly named in the story. The lasting impact depends on how broadly the change spreads and how long it persists.")
+        return "This matters because the development can move costs, business decisions, employment, or consumer prices beyond the people directly named in the story. The lasting impact depends on how broadly the change spreads and how long it persists."
     if any(x in text for x in ("hack", "breach", "cyberattack", "outage", "data leak")):
         return "This matters because the affected system or organization may not be the only party exposed. The response, restoration timeline, and whether additional users or infrastructure are affected will determine the broader impact."
     if any(x in text for x in ("wildfire", "hurricane", "tornado", "earthquake", "drought", "flood", "contamination")):
@@ -124,11 +124,7 @@ def extract_useful_sentence(text):
 
 def build_missing(title, desc, related):
     current = words(title)
-    distinct = []
-    for row in related:
-        overlap = len(current & words(row[2]))
-        if overlap >= 2:
-            distinct.append(row)
+    distinct = [row for row in related if len(current & words(row[2])) >= 2]
     if not related:
         return "The story has limited supporting coverage in the available search results. There is not enough evidence to identify a specific overlooked angle, so this section is not presenting one as fact."
     older = [r for r in related if r[1] < datetime.now(timezone.utc)]
@@ -160,9 +156,21 @@ def what_next(desc, related):
     sentences = re.split(r"(?<=[.!?])\s+", desc or "")
     cues = ("will ", "plans to", "expected", "scheduled", "deadline", "next", "later", "tomorrow", "monday", "tuesday", "wednesday", "thursday", "friday", "vote", "hearing", "trial", "meeting", "announce", "decision")
     matches = [s.strip() for s in sentences if any(c in s.lower() for c in cues) and len(s.strip()) >= 45]
-    if matches:
-        return matches[0]
-    return ""
+    return matches[0] if matches else ""
+
+
+def coverage_signal(related):
+    """Return a bounded heuristic. Higher means less supporting coverage found."""
+    source_count = len({clean(row[5]).lower() for row in related if clean(row[5])})
+    result_count = len(related)
+    score = max(50, min(96, 96 - source_count * 10 - max(0, result_count - source_count) * 4))
+    if source_count == 0:
+        label = "High underreporting signal"
+    elif source_count <= 2:
+        label = "Limited supporting coverage"
+    else:
+        label = "Growing supporting coverage"
+    return score, source_count, label
 
 
 def replace_children(parent, tag):
@@ -187,6 +195,7 @@ def main():
         desc = clean(item.findtext("description"))
         category = clean(item.findtext("category"))
         related = fetch_related(title)
+        signal_score, supporting_sources, signal_label = coverage_signal(related)
 
         fields = {
             "whatHappened": desc if len(desc) >= 40 else f"The available report identifies this development: {title}.",
@@ -194,7 +203,10 @@ def main():
             "whatIsMissing": build_missing(title, desc, related),
             "background": build_background(related),
             "whatNext": what_next(desc, related),
-            "coverage": ("🟢 Overlooked" if len(related) == 0 else "🟡 Limited coverage"),
+            "coverage": signal_label,
+            "underreportedScore": str(signal_score),
+            "supportingSourceCount": str(supporting_sources),
+            "signalMethod": "Heuristic based on distinct supporting sources found in the related-news search; higher means less supporting coverage was found.",
         }
         for tag, value in fields.items():
             el = item.find(tag)
@@ -215,7 +227,7 @@ def main():
         enriched += 1
 
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
-    print(f"Underreported refinement complete: {enriched} stories enriched with distinct context sections and long-term supporting coverage.")
+    print(f"Underreported refinement complete: {enriched} stories enriched with context and a transparent coverage heuristic.")
 
 
 if __name__ == "__main__":
