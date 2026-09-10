@@ -55,6 +55,7 @@
 
 
 
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="desktop-layout-fix-v1">
 @media (min-width:601px){
@@ -98,11 +99,11 @@
 <style id="legislation-style-v1">
 .legislation-card .leg-top{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px}.leg-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(202,138,4,.09);border:1px solid rgba(202,138,4,.18);font-size:9px;font-weight:800;letter-spacing:.02em;color:#92400e}.leg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.leg-field{padding:9px 10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(118,118,128,.035)}.leg-field strong{display:block;margin-bottom:3px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui-subtle)}.leg-field span{font-size:11.5px;line-height:1.45;color:var(--ui-muted)}.leg-support{margin-top:13px;padding-top:11px;border-top:1px solid var(--ui-line)}.leg-support-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ui-subtle);margin-bottom:6px}.leg-support a{display:block;padding:6px 0;text-decoration:none;font-size:11.5px;font-weight:650;border-top:1px solid rgba(60,60,67,.07)}.leg-support a:first-of-type{border-top:0}.leg-support small{display:block;margin-top:2px;color:var(--ui-subtle);font-size:9px}.leg-official{margin-top:10px}.leg-official a{display:inline-flex;padding:7px 10px;border-radius:9px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);font-size:10px;font-weight:750;text-decoration:none}@media(max-width:600px){.leg-grid{grid-template-columns:1fr}.legislation-card .leg-top{gap:5px}}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 </head>
 <body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -751,6 +752,36 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
+
+
+
+
+
+
+
+
+
+
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
+})();
+</script>
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -776,7 +807,7 @@ function renderNfl(){
 function regionRender(items){if(active==='nfl'){renderNfl();return}const def=sections.find(x=>x[0]===active),accent=def?def[2]:'#111827';let list=items.filter(x=>(x.querySelector('category')?.textContent?.trim()||'world')===active);if(active==='region')list=list.filter(x=>(x.querySelector('region')?.textContent?.trim()||'')===detectedRegion);const root=document.getElementById('news-feed');root.innerHTML='';const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',accent);const head=document.createElement('div');head.className='section-header';const label=active==='region'?'🌎 '+regionLabels[detectedRegion]+' Region':(def?def[1]:'News');head.innerHTML=`<h2>${esc(label)}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);const body=document.createElement('div');body.className='section-body';if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',link=item.querySelector('link')?.textContent||'#',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(ar)});sec.appendChild(body);root.appendChild(sec)}
 render=regionRender;
 buildTabs=function(){const tabs=document.getElementById('tabs');tabs.innerHTML='';sections.forEach(([key,label,accent])=>{const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&detectedLocation?'🌎 '+regionLabels[detectedRegion]:label;b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);buildTabs();render(allItems);if(key==='region')detectUserRegion().then(()=>{if(active==='region')render(allItems)}).catch(()=>{});};b.style.setProperty('--accent',accent);tabs.appendChild(b)})};
-async function detectUserRegion(){try{let c;if(navigator.geolocation)c=await new Promise((r,j)=>navigator.geolocation.getCurrentPosition(r,j,{timeout:8000,maximumAge:300000}));const p=new URLSearchParams({localityLanguage:'en'});if(c){p.set('latitude',c.coords.latitude);p.set('longitude',c.coords.longitude)}const d=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+p,{cache:'no-store'}).then(r=>r.json()),code=(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();if(stateRegion[code])detectedRegion=stateRegion[code];detectedLocation=[d.city,d.principalSubdivisionCode?.replace(/^US-/,'')].filter(Boolean).join(', ');localStorage.setItem('underreported-region',detectedRegion);localStorage.setItem('underreported-location',detectedLocation);buildTabs();if(active==='region')render(allItems)}catch(e){buildTabs()}}
+async function detectUserRegion(){try{let c;if(navigator.geolocation)c=await new Promise((r,j)=>navigator.geolocation.getCurrentPosition(r,j,{timeout:8000,maximumAge:300000}));const p=new URLSearchParams({localityLanguage:'en'});if(c){p.set('latitude',c.coords.latitude);p.set('longitude',c.coords.longitude)}const d=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+p,{cache:'no-store'}).then(r=>r.json()),code=(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();if(stateRegion[code])detectedRegion=stateRegion[code];detectedLocation=[d.city,d.principalSubdivisionCode?.replace(/^US-/,'')].filter(Boolean).join(', ');localStorage.setItem('underreported-region',detectedRegion);localStorage.setItem('underreported-location',detectedLocation);localStorage.setItem('underreported-state',code);buildTabs();if(active==='region')render(allItems)}catch(e){buildTabs()}}
 detectUserRegion();
 </script><script id="underreported-ui-v1">
 const baseRenderForUnderreported=render;
@@ -1466,6 +1497,79 @@ syncDiscoveryButton();
   canonicalBuildTabs();
 })();
 </script>
+<script id="legislation-location-v1">
+(function(){
+ 'use strict';
+ const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
+ let stateCache=null,cacheLoaded=false,cachePromise=null,lastState='';
+ function stateCode(){
+   let code=(localStorage.getItem('underreported-state')||'').toUpperCase();
+   if(STATES[code])return code;
+   const loc=(localStorage.getItem('underreported-location')||'').toUpperCase();
+   const m=loc.match(/(?:,\s*|\b)([A-Z]{2})$/); return m&&STATES[m[1]]?m[1]:'NM';
+ }
+ function stateName(){return STATES[stateCode()]||'New Mexico'}
+ function x(doc,tag,value){const e=doc.createElement(tag);e.textContent=value||'';return e}
+ function jsonItem(rec){
+   const doc=document.implementation.createDocument('','item'); const item=doc.documentElement;
+   const link=rec.officialSource||rec.indexSource||'#';
+   item.appendChild(x(doc,'title',`${rec.billNumber||''} — ${rec.title||'State legislation'}`));
+   item.appendChild(x(doc,'link',link)); item.appendChild(x(doc,'description',rec.description||rec.title||''));
+   item.appendChild(x(doc,'pubDate',rec.latestActionDate||rec.statusDate||'')); item.appendChild(x(doc,'source',`${rec.stateName||stateName()} Legislature`));
+   item.appendChild(x(doc,'category','legislation')); item.appendChild(x(doc,'jurisdiction',rec.stateName||stateName()));
+   item.appendChild(x(doc,'status',rec.status||'Active')); item.appendChild(x(doc,'whatItDoes',rec.description||rec.title||''));
+   item.appendChild(x(doc,'whoAffected','Residents, organizations, agencies, or programs covered by the measure'));
+   item.appendChild(x(doc,'effectiveDate','See official bill text / enacted law'));
+   item.appendChild(x(doc,'nextStep',/passed|enrolled/i.test(rec.status||'')?'Implementation, executive action, or final procedural steps.':'Watch the next committee, floor, or executive action.'));
+   item.appendChild(x(doc,'officialSource',rec.officialSource||'')); item.appendChild(x(doc,'billNumber',rec.billNumber||''));
+   item.appendChild(x(doc,'latestAction',rec.latestAction||'')); item.appendChild(x(doc,'sponsor',rec.sponsor||''));
+   return item;
+ }
+ function startCacheLoad(){
+   if(cacheLoaded||cachePromise)return cachePromise;
+   cachePromise=fetch('state-legislation.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('state cache unavailable');return r.json()}).then(d=>{stateCache=d;cacheLoaded=true;return d}).catch(()=>{cacheLoaded=true;stateCache=null;return null});
+   return cachePromise;
+ }
+ function locationItems(items){
+   const code=stateCode(),name=STATES[code];
+   const nonLeg=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')!=='legislation');
+   const federal=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation' && /federal/i.test(i.querySelector('jurisdiction')?.textContent||''));
+   let stateRows=[];
+   if(code==='NM'){
+     stateRows=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation' && /new mexico/i.test(i.querySelector('jurisdiction')?.textContent||''));
+   }else{
+     stateRows=((stateCache?.states||{})[code]?.bills||[]).map(jsonItem);
+   }
+   return nonLeg.concat(federal,stateRows);
+ }
+ function updateLabel(){
+   const code=stateCode(),name=STATES[code]||'State';
+   const def=CANONICAL_SECTIONS.find(x=>x[0]==='legislation');
+   if(def)def[1]=`📜 Federal + ${name}`;
+   if(lastState!==code){lastState=code;if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();}
+ }
+ const previous=canonicalRender;
+ canonicalRender=function(items){
+   if(active!=='legislation')return previous(items);
+   updateLabel();
+   const code=stateCode();
+   if(code!=='NM'&&!cacheLoaded){
+     startCacheLoad().then(()=>{if(active==='legislation')canonicalRender(allItems)});
+   }
+   previous(locationItems(items));
+   const sec=document.querySelector('#news-feed .section');
+   if(sec){
+     const intro=sec.querySelector('.x-issues-intro');
+     if(intro)intro.textContent=`Federal records come from Congress.gov. State records follow your detected location (${stateName()}) and link to the official state legislature when available. News coverage is supporting context, not the primary record.`;
+     const hasState=[...sec.querySelectorAll('.leg-pill')].some(p=>(p.textContent||'').includes(stateName()));
+     if(!hasState&&code!=='NM'&&cacheLoaded){const n=document.createElement('div');n.className='x-issues-intro';n.textContent=`${stateName()} state records are not populated yet; federal records are shown. Configure the state legislation cache to add them.`;sec.insertBefore(n,sec.querySelector('.section-body'));}
+   }
+ };
+ render=canonicalRender;window.render=canonicalRender;window.canonicalRender=canonicalRender;
+ updateLabel();startCacheLoad();
+ setInterval(updateLabel,2000);
+})();
+</script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
@@ -1550,26 +1654,6 @@ syncDiscoveryButton();
       if(typeof window.refreshPullStatsUI==='function')window.refreshPullStatsUI(false,'');
     }
   },true);
-})();
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
 })();
 </script>
 </body>

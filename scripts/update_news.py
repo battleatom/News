@@ -606,6 +606,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -1148,7 +1150,7 @@ def main():
                             usable_count = len(select_category_stories(items, limit=30)) if category == "local" else own_count
                             print(f"{category} fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable category stories")
                             target = 15 if category == "local" else 20
-                            if usable_count >= target:
+                            if usable_count >= target and category not in ("gaming", "technology"):
                                 break
                         except Exception as exc:
                             print(f"{category} fallback failed for {fallback_source}: {exc}")

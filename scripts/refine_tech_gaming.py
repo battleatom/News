@@ -121,7 +121,8 @@ def gaming_allowed(item):
     anchored = any(term in raw for term in GAMING_ANCHORS)
     if movie_tv and not anchored:
         return False
-    return anchored
+    trusted_gaming_source = source_family(text(item, 'source')) in ('ign','gamespot','pc gamer','nintendo life','polygon')
+    return anchored or trusted_gaming_source
 
 
 def refine_gaming(items):
