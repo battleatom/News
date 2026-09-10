@@ -679,6 +679,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -1089,6 +1091,7 @@ def main():
                             batch = parse_items(fetch(region_query), category)
                             for item in batch:
                                 item["region"] = region_name
+                                item["state"] = region_query_state(region_query)
                                 item["state"] = region_query_state(region_query)
                                 item["state"] = region_query_state(region_query)
                             region_count += len(batch)
