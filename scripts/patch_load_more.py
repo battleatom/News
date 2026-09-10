@@ -145,8 +145,10 @@ function appendLoadMoreControl(data){
   const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
   button.textContent=`Load 10 more (${next} of ${data.available.length})`;
   button.onclick=()=>{
+    const scrollY=window.scrollY;
     loadCounts[active]=next;
     canonicalRender(allItems);
+    requestAnimationFrame(()=>window.scrollTo({top:scrollY,behavior:'auto'}));
   };
   more.appendChild(button);
   // Keep pagination outside the category section. Several category renderers
