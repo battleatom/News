@@ -54,54 +54,43 @@ def parse_pubdate(pub):
         return None
 
 
-def fetch_supporting(title, primary_link):
+def fetch_supporting(title, primary_link, bill_number=''):
     terms=[w for w in re.findall(r'[A-Za-z0-9]+',title) if len(w)>3][:14]
-    if not terms:
-        return [], ''
-    query=' '.join(terms)
+    query=' '.join(([bill_number] if bill_number else []) + terms)
+    if not query.strip():
+        return []
     try:
-        req=urllib.request.Request(feed_url(query),headers={'User-Agent':'Mozilla/5.0 LegislationTracker/1.1'})
+        req=urllib.request.Request(feed_url(query),headers={'User-Agent':'Mozilla/5.0 LegislationTracker/2.0'})
         with urllib.request.urlopen(req,timeout=15) as response:
             root=ET.fromstring(response.read())
     except Exception:
-        return [], ''
+        return []
     target=words(title)
-    rows=[]
-    official=''
-    seen=set()
-    cutoff=datetime.now(timezone.utc)-timedelta(days=SUPPORTING_MAX_AGE_DAYS)
+    rows=[]; seen=set(); cutoff=datetime.now(timezone.utc)-timedelta(days=SUPPORTING_MAX_AGE_DAYS)
     for item in root.findall('.//item'):
         t=clean(item.findtext('title')); link=clean(item.findtext('link')); desc=clean(item.findtext('description'))
         source_el=item.find('source'); source=clean(source_el.text if source_el is not None else '')
         pub=clean(item.findtext('pubDate')); dt=parse_pubdate(pub)
-        if not t or not link or link==primary_link or source_is_paywalled(source):
+        if not t or not link or link==primary_link or source_is_paywalled(source) or not source_is_journalism(source):
             continue
         overlap=len(target & words(t))
-        if overlap<2:
+        if bill_number and bill_number.lower().replace(' ','') in t.lower().replace(' ',''):
+            overlap += 3
+        if overlap<2 or not dt or dt<cutoff:
             continue
         sk=re.sub(r'[^a-z0-9]','',source.lower()) or link
         if sk in seen:
             continue
         seen.add(sk)
-        if not official and any(x in source.lower() for x in OFFICIAL_SOURCES):
-            official=link
-            continue
-        # The card footer is supporting REPORTING, not law-firm SEO, investment sites,
-        # random blogs, or stale articles about a similarly named older measure.
-        if not source_is_journalism(source):
-            continue
-        if not dt or dt < cutoff:
-            continue
         age_days=max(0,(datetime.now(timezone.utc)-dt).days)
-        score=overlap*10-max(0,age_days/14)
-        rows.append((score,t,link,source,pub,desc))
+        rows.append((overlap*10-max(0,age_days/14),t,link,source,pub,desc))
     rows.sort(key=lambda x:x[0],reverse=True)
-    return rows[:MAX_SUPPORTING], official
+    return rows[:MAX_SUPPORTING]
 
 
 def jurisdiction(text):
     t=text.lower()
-    if any(x in t for x in ('new mexico','nm legislature','nmlegis','governor michelle lujan grisham','state legislature')):
+    if any(x in t for x in ('new mexico','nm legislature','nmlegis','state legislature')):
         return 'New Mexico'
     if any(x in t for x in ('farmington','san juan county','city council','county commission','ordinance','durango','cortez','montezuma county','la plata county')):
         return 'Local / Four Corners'
@@ -110,24 +99,11 @@ def jurisdiction(text):
 
 def status(text):
     t=text.lower()
-    if any(x in t for x in ('signed into law','signs bill','signed bill','enacted')):
-        return 'Signed / enacted'
-    if 'veto' in t:
-        return 'Vetoed'
-    if any(x in t for x in ('struck down','blocked by court','court blocks','judge blocks')):
-        return 'Blocked / struck down'
-    if any(x in t for x in ('final rule','final regulation')):
-        return 'Final rule issued'
-    if 'executive order' in t:
-        return 'Executive order issued'
-    if any(x in t for x in ('passes house','house passes','passes senate','senate passes','legislature passes','passed the house','passed the senate')):
-        return 'Passed a chamber'
-    if any(x in t for x in ('committee advances','advances bill','clears committee')):
-        return 'Advanced from committee'
-    if any(x in t for x in ('introduced','introduces bill','proposes bill','proposed rule','proposal')):
-        return 'Introduced / proposed'
-    if any(x in t for x in ('rescission','rescind','repeal')):
-        return 'Rule/law change proposed'
+    if any(x in t for x in ('signed into law','signs bill','signed bill','enacted','became public law')): return 'Signed / enacted'
+    if 'veto' in t: return 'Vetoed'
+    if any(x in t for x in ('passes house','house passes','passes senate','senate passes','passed the house','passed the senate')): return 'Passed a chamber'
+    if any(x in t for x in ('committee advances','advances bill','clears committee','reported by','ordered to be reported')): return 'Advanced from committee'
+    if any(x in t for x in ('introduced','referred to','proposed rule','proposal')): return 'Introduced / referred'
     return 'Active development'
 
 
@@ -145,8 +121,7 @@ def affected(text):
         ('Residents, utilities, and water users',('water','utility','electric','pollution','environment')),
     ]
     for label,terms in groups:
-        if any(term in t for term in terms):
-            return label
+        if any(term in t for term in terms): return label
     return 'People and organizations subject to the measure'
 
 
@@ -154,19 +129,10 @@ def next_step(status_text):
     return {
         'Signed / enacted':'Implementation and any agency guidance or court challenges.',
         'Vetoed':'Watch for an override attempt, replacement legislation, or renewed proposal.',
-        'Blocked / struck down':'Watch for appeals, revised language, or enforcement changes.',
-        'Final rule issued':'Implementation, compliance deadlines, and possible legal challenges.',
-        'Executive order issued':'Agency implementation and any legal or congressional response.',
         'Passed a chamber':'Action in the other chamber, reconciliation, or executive signature.',
         'Advanced from committee':'A floor vote or additional committee action.',
-        'Introduced / proposed':'Committee hearings, amendments, public comment, or a floor vote.',
-        'Rule/law change proposed':'Public comment, agency action, legislative response, or litigation.',
+        'Introduced / referred':'Committee hearings, amendments, or a floor vote.',
     }.get(status_text,'Watch for the next formal vote, order, rulemaking step, or implementation action.')
-
-
-def effective_date(text):
-    m=re.search(r'\b(?:effective|takes effect|beginning|starts?)\s+(?:on\s+)?([A-Z][a-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{1,2}/\d{1,2}/\d{2,4}|\d{4})',text,re.I)
-    return m.group(1) if m else 'Not stated in the available summary'
 
 
 def set_text(item,tag,value):
@@ -176,44 +142,41 @@ def set_text(item,tag,value):
     el.text=value
 
 
+def keep_or(item, tag, fallback):
+    current=clean(item.findtext(tag))
+    return current or fallback
+
+
 def main():
-    if not NEWS.exists():
-        raise SystemExit('News feed not found')
+    if not NEWS.exists(): raise SystemExit('News feed not found')
     tree=ET.parse(NEWS); root=tree.getroot(); channel=root.find('channel')
-    if channel is None:
-        raise SystemExit('RSS channel not found')
-    count=0; support_count=0
+    if channel is None: raise SystemExit('RSS channel not found')
+    count=0; support_count=0; official_count=0
     for item in channel.findall('item'):
-        if clean(item.findtext('category'))!='legislation':
-            continue
+        if clean(item.findtext('category'))!='legislation': continue
         title=clean(item.findtext('title')); desc=clean(item.findtext('description')); link=clean(item.findtext('link'))
-        source=clean(item.findtext('source')); text=f'{title} {desc} {source}'
-        st=status(text)
-        set_text(item,'jurisdiction',jurisdiction(text))
+        source=clean(item.findtext('source')); text=f'{title} {desc} {source} {clean(item.findtext("latestAction"))}'
+        st=keep_or(item,'status',status(text))
+        set_text(item,'jurisdiction',keep_or(item,'jurisdiction',jurisdiction(text)))
         set_text(item,'status',st)
-        set_text(item,'whatItDoes',desc if len(desc)>=45 else title)
-        set_text(item,'whoAffected',affected(text))
-        set_text(item,'effectiveDate',effective_date(text))
-        set_text(item,'nextStep',next_step(st))
-        supporting,official=fetch_supporting(title,link)
-        if not official and any(x in source.lower() for x in OFFICIAL_SOURCES):
-            official=link
+        set_text(item,'whatItDoes',keep_or(item,'whatItDoes',desc if len(desc)>=45 else title))
+        set_text(item,'whoAffected',keep_or(item,'whoAffected',affected(text)))
+        set_text(item,'effectiveDate',keep_or(item,'effectiveDate','See official text'))
+        set_text(item,'nextStep',keep_or(item,'nextStep',next_step(st)))
+        official=keep_or(item,'officialSource',link if any(x in source.lower() for x in OFFICIAL_SOURCES) else '')
         set_text(item,'officialSource',official)
-        for existing in list(item.findall('relatedArticles')):
-            item.remove(existing)
+        if official: official_count+=1
+        bill_number=clean(item.findtext('billNumber'))
+        supporting=fetch_supporting(title,link,bill_number)
+        for existing in list(item.findall('relatedArticles')): item.remove(existing)
         if supporting:
             rel=ET.SubElement(item,'relatedArticles')
             for _,t,l,src,pub,d in supporting:
                 ar=ET.SubElement(rel,'article')
-                ET.SubElement(ar,'title').text=t
-                ET.SubElement(ar,'link').text=l
-                ET.SubElement(ar,'source').text=src
-                ET.SubElement(ar,'pubDate').text=pub
-                ET.SubElement(ar,'description').text=d
-                support_count+=1
+                ET.SubElement(ar,'title').text=t; ET.SubElement(ar,'link').text=l; ET.SubElement(ar,'source').text=src
+                ET.SubElement(ar,'pubDate').text=pub; ET.SubElement(ar,'description').text=d; support_count+=1
         count+=1
     tree.write(NEWS,encoding='utf-8',xml_declaration=True)
-    print(f'Legislation enrichment complete: {count} action-focused cards; {support_count} recent established-journalism supporting links attached.')
+    print(f'Legislation enrichment complete: {count} official-record cards; {official_count} official links preserved; {support_count} supporting news links attached.')
 
-if __name__=='__main__':
-    main()
+if __name__=='__main__': main()
