@@ -145,7 +145,7 @@ jobs:
         run: python scripts/refine_tech_gaming.py
 
       - name: Collect official legislation records
-        run: python scripts/collect_official_legislation.py
+        run: python scripts/collect_official_legislation_v2.py
 
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
