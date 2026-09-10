@@ -38,6 +38,8 @@ PATCHERS = [
     # V2.3 is the final event gate: server-backed NEW badges and sound only when
     # a refresh actually introduces one or more new story links.
     'scripts/patch_v23_new_alerts.py',
+    # V2.5 owns detected-state/local content pools and runs after legacy render wrappers.
+    'scripts/patch_v25_location_content.py',
 ]
 
 
