@@ -73,6 +73,9 @@ jobs:
       - name: Add public-interest Underreported and legislation collection
         run: python scripts/patch_public_interest_legislation.py
 
+      - name: Apply public-interest quality gate
+        run: python scripts/patch_public_interest_quality.py
+
       - name: Tighten category quality
         run: python scripts/patch_category_quality.py
 
