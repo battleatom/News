@@ -63,9 +63,12 @@
     try{
       let coords=await browserCoords();
       coords=await reverseGeocode(coords);
-      if(!coords.state&&old.state)coords.state=old.state;
-      if(!coords.label&&old.label)coords.label=old.label;
-      return persist(coords);
+      if(coords.state)return persist(coords);
+      try{return persist(await ipCoords());}
+      catch(ipError){
+        if(old.state||old.label)return persist({...coords,state:old.state,label:old.label,source:'device-unresolved'});
+        return persist(coords);
+      }
     }catch(e){
       try{return persist(await ipCoords());}
       catch(ipError){const cached=readCache();if(cached)return cached;throw ipError;}
@@ -80,6 +83,12 @@
       return pending;
     },
     cached:readCache,
-    clear(){try{localStorage.removeItem(CACHE_KEY);}catch(e){}},
+    clear(){
+      try{
+        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem('underreported-location');
+        localStorage.removeItem('underreported-state');
+      }catch(e){}
+    },
   };
 })();

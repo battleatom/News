@@ -2,11 +2,16 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges, refinement-v2.7-test]
     paths-ignore:
+      - 'News'
       - 'index.html'
-      - 'scripts/update_news.py'
+      - 'update-stats.json'
+      - 'boxoffice.json'
+      - 'state-legislation.json'
+      - 'markets.json'
       - 'refresh-health.json'
+      - 'scripts/update_news.py'
   workflow_dispatch:
 
 permissions:
@@ -26,11 +31,53 @@ jobs:
           ref: ${{ github.ref_name }}
           fetch-depth: 0
 
-      - name: Optimize generated collector
+      - name: Apply production collector refinement chain
         run: |
+          python scripts/preflight_feed.py
+          python scripts/patch_news_selector.py
+          python scripts/patch_top_diversity.py
+          python scripts/patch_event_dedupe.py
+          python scripts/patch_dedupe_scope.py
+          python scripts/patch_site_cache.py
+          python scripts/patch_public_interest_legislation.py
+          python scripts/patch_public_interest_quality.py
+          python scripts/patch_category_quality.py
           python scripts/patch_collector_hygiene.py
           python scripts/patch_region_state_tags.py
           python scripts/patch_presidential_us_only.py
+
+      - name: Generate branch-only live news feed
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            echo "Preview RSS update attempt ${attempt}/3"
+            if python scripts/update_news.py; then
+              success=1
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              sleep $((attempt * 15))
+            fi
+          done
+          if [ "$success" -ne 1 ]; then
+            echo 'Preview feed generation failed after three attempts.'
+            exit 1
+          fi
+
+      - name: Run production enrichment and quality pipeline
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_v2.py
+          python scripts/enrich_world_content.py
+          python scripts/enrich_underreported.py
+          python scripts/enrich_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/record_pull_stats.py
+          python scripts/dedupe_news_stories.py
+          python scripts/record_pull_stats.py --finalize
 
       - name: Build V2 page in canonical order
         run: python scripts/build_site.py
@@ -38,7 +85,7 @@ jobs:
       - name: Audit generated site
         run: python scripts/site_audit.py
 
-      - name: Validate Python syntax and V2.6 invariants
+      - name: Validate Python syntax and V2.7 refinement invariants
         run: |
           python -m py_compile scripts/*.py tests/*.py
           python - <<'PY'
@@ -48,6 +95,7 @@ jobs:
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
           stats=Path('scripts/record_pull_stats.py').read_text(encoding='utf-8')
           location_js=Path('assets/location-content-v25.js').read_text(encoding='utf-8')
+          location_core=Path('assets/location-v2.js').read_text(encoding='utf-8')
           required=(
               'data-underreported-version="2"',
               'styles/v2.css?v=5',
@@ -61,13 +109,24 @@ jobs:
               'alerts-new-v23',
               'new-badge-v26-style',
               '__alertsNewV26',
+              'refresh-success-handling-v2',
+              'Display refresh failed · retry scheduled',
           )
           missing=[x for x in required if x not in html]
           if missing:
-              raise SystemExit('Missing V2.6 generated markers: '+', '.join(missing))
-          for marker in ('__locationContentV26','mergedStatePool','removeMergedTabs','__presidentialRelevantV26'):
+              raise SystemExit('Missing V2.7 generated markers: '+', '.join(missing))
+          for marker in ('__locationContentV26','mergedStatePool','removeMergedTabs','__presidentialRelevantV26','FOUR_CORNERS_LOCAL_TERMS'):
               if marker not in location_js:
-                  raise SystemExit('Missing V2.6 external location controller marker: '+marker)
+                  raise SystemExit('Missing V2.7 location controller marker: '+marker)
+          if "if(rank(local,loc).length<6)local=local.concat(stateSpecific)" in location_js:
+              raise SystemExit('State stories can still be relabeled Local to fill a quota')
+          if "category(item)==='local')return true" in location_js:
+              raise SystemExit('Local category still bypasses geographic matching')
+          for legacy_key in ("localStorage.removeItem('underreported-location')","localStorage.removeItem('underreported-state')"):
+              if legacy_key not in location_core:
+                  raise SystemExit('Location clear does not remove '+legacy_key)
+          if 'VISIBLE_SOURCE_CAP = 2' not in collector or 'coverage_boost' not in collector or 'Build event clusters before scoring' not in collector:
+              raise SystemExit('Event-first Top ranking or visible publisher diversity is missing')
           forbidden=(
               'setInterval(decorate,1500)',
               'setInterval(()=>{ensureBookmarkTab();},1000)',
@@ -98,7 +157,7 @@ jobs:
                   raise SystemExit('Missing alert/status marker: '+marker)
           if '<script id="pull-stats-ui-v1">' in html:
               raise SystemExit('Legacy status controller still present alongside V2.2/V2.6')
-          print('V2.6 static invariants pass.')
+          print('V2.7 refinement static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -112,7 +171,7 @@ jobs:
           echo $! > /tmp/news-preview-http.pid
           sleep 2
 
-      - name: Verify V2.6 Presidential, State merge, and NEW badges
+      - name: Verify V2.7 refinement behavior
         run: python tests/site_smoke_v26.py
 
       - name: Diagnose alert-enable audio path
@@ -126,10 +185,10 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add index.html scripts/update_news.py
+          git add News index.html update-stats.json boxoffice.json state-legislation.json scripts/update_news.py
           if git diff --cached --quiet; then
             echo 'Generated preview is already current.'
             exit 0
           fi
-          git commit -m 'Build validated Underreported preview [skip ci]'
+          git commit -m 'Build validated V2.7 refinement preview [skip ci]'
           git push origin HEAD:${{ github.ref_name }}

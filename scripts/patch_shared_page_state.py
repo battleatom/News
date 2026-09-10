@@ -20,8 +20,8 @@ SCRIPT = r'''<script id="shared-page-state-bridge-v1">
 subprocess.run([sys.executable, 'scripts/patch_refresh_success.py'], check=True)
 
 s = P.read_text(encoding='utf-8')
-if 'refresh-success-handling-v1' not in s:
-    raise SystemExit('Integrated refresh success handling marker is missing')
+if 'refresh-success-handling-v2' not in s:
+    raise SystemExit('Integrated render-aware refresh success handling marker is missing')
 
 # patch_site_features owns the canonical category list and intentionally assigns
 # sections=CANONICAL_SECTIONS at runtime. The generated base page historically

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import runpy
+from collections import Counter
+from datetime import datetime, timedelta, timezone
 from playwright.sync_api import sync_playwright
 
 BASE='http://127.0.0.1:8765/'
@@ -23,6 +25,61 @@ def collector_checks():
     assert not check('President signs sweeping reform bill','Foreign parliament approved the measure')
     region_selector=ns.get('select_region_stories')
     assert callable(region_selector), 'Per-state regional depth selector is missing'
+
+    same_event=ns.get('same_event_topic')
+    top_selector=ns.get('select_top_stories')
+    assert callable(same_event) and callable(top_selector), 'Event-first Top selector is missing'
+
+    now=datetime.now(timezone.utc)
+    counter=0
+    def story(title,source,minutes=10,description=''):
+        nonlocal counter
+        counter+=1
+        published=now-timedelta(minutes=minutes)
+        return {
+            'title':title,
+            'link':f'https://example.com/story-{counter}',
+            'description':description or title,
+            'pubDate':published.strftime('%a, %d %b %Y %H:%M:%S GMT'),
+            'published':published,
+            'source':source,
+            'category':'top',
+        }
+
+    event=[
+        story('Iran missile strike hits Gulf military base','Reuters',5),
+        story('Gulf military base hit by Iran missile strike','Associated Press',7),
+        story('Iran launches missile strike at Gulf military base','BBC',9),
+    ]
+    assert same_event(event[0],event[1]), 'Clearly equivalent event headlines do not cluster'
+
+    filler_titles=[
+        'Supreme Court issues voting rights ruling',
+        'Wildfire forces California evacuations',
+        'Hospital network reports cybersecurity breach',
+        'Federal Reserve changes interest rate policy',
+        'Airline cancels flights after nationwide outage',
+        'Congress advances defense spending bill',
+        'Major retailer files for bankruptcy protection',
+        'Food company recalls contaminated product',
+        'Tornado damages Oklahoma communities',
+        'Technology company launches new processor',
+        'Senate holds hearing on housing costs',
+        'Earthquake strikes Alaska coast',
+        'Automaker announces large worker layoffs',
+        'State officials declare drought emergency',
+        'Election officials update ballot rules',
+    ]
+    sources=['Reuters','Associated Press','BBC','CNN','CBS News']
+    filler=[story(title,sources[i%len(sources)],15+i) for i,title in enumerate(filler_titles)]
+    selected=top_selector(event+filler)
+    event_selected=[x for x in selected if 'iran' in x['title'].lower() and 'missile' in x['title'].lower()]
+    assert len(event_selected)==1, f'Same event survived as multiple Top cards: {[x["title"] for x in event_selected]}'
+    related_sources={x.get('source') for x in event_selected[0].get('_relatedArticles',[])}
+    assert len(related_sources)>=2, f'Event cluster did not preserve multi-outlet coverage: {related_sources}'
+    assert len(selected)>=10, 'Synthetic Top pool did not retain enough stories for diversity validation'
+    visible_sources=Counter(x.get('source') for x in selected[:10])
+    assert max(visible_sources.values())<=2, f'First ten Top stories are publisher-heavy: {visible_sources}'
 
 
 def badge_checks(page):
@@ -57,6 +114,24 @@ def synthetic_denver_mix(page):
     }""")
 
 
+def synthetic_denver_without_local(page):
+    return page.evaluate("""() => {
+      const rows=[];
+      const now=new Date().toUTCString();
+      function add(title,link,state,region){
+        const xml=`<item><title>${title}</title><link>${link}</link><description>${title}</description><pubDate>${now}</pubDate><source>Test Source</source><category>region</category><region>${region}</region><state>${state}</state></item>`;
+        rows.push(new DOMParser().parseFromString(xml,'text/xml').documentElement);
+      }
+      for(let i=1;i<=6;i++)add(`Colorado statewide policy ${i}`,`https://example.com/state-only-${i}`,'Colorado','mountain');
+      for(let i=1;i<=6;i++)add(`Wyoming mountain regional ${i}`,`https://example.com/regional-only-${i}`,'Wyoming','mountain');
+      const result=window.__mergedStatePoolV26(rows);
+      return {
+        counts:window.__stateMergeCountsV26,
+        tiers:result.map(i=>i.querySelector('locationTier')?.textContent||'')
+      };
+    }""")
+
+
 def farmington_suite(browser):
     context=browser.new_context(viewport={'width':1440,'height':950},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
     page=context.new_page();errors=[];page.on('pageerror',lambda exc: errors.append(str(exc)))
@@ -73,7 +148,12 @@ def farmington_suite(browser):
 
     click_key(page,'nm')
     counts=page.evaluate('window.__stateMergeCountsV26')
-    assert counts and counts['state']>=6 and counts['regional']>=6 and counts['local']>=6, f'Farmington State lead mix does not have at least 6/6/6 candidates: {counts}'
+    assert counts and counts['state']>=6 and counts['regional']>=6 and 0<=counts['local']<=6, f'Farmington State mix is invalid: {counts}'
+    local_texts=page.evaluate("""() => window.__mergedStatePoolV26(allItems)
+      .filter(i=>(i.querySelector('locationTier')?.textContent||'')==='Local')
+      .map(i=>`${i.querySelector('title')?.textContent||''} ${i.querySelector('description')?.textContent||''}`.toLowerCase())""")
+    local_terms=('farmington','san juan county','aztec','bloomfield','kirtland','shiprock','four corners')
+    assert all(any(term in text for term in local_terms) for text in local_texts), f'Non-local story was labeled Local: {local_texts}'
     more=page.locator('.load-more');assert more.count() and more.is_visible(), 'Merged State feed has no Load More'
     before=page.locator('#news-feed .news-item').count();more.click();page.wait_for_timeout(350);after=page.locator('#news-feed .news-item').count()
     assert after>before, 'Merged State Load More did not add stories'
@@ -95,11 +175,15 @@ def denver_suite(browser):
 
     synthetic=synthetic_denver_mix(page)
     counts=synthetic['counts']
-    assert counts['state']==6 and counts['regional']==6 and counts['local']==6, f'Deterministic Denver State mix is not 6/6/6: {synthetic}'
+    assert counts['state']==6 and counts['regional']==6 and counts['local']==6, f'Deterministic Denver State mix is not 6/6/6 with six genuine Denver stories: {synthetic}'
     assert synthetic['tiers'][:6]==['State']*6, f'First six merged stories are not State: {synthetic["tiers"]}'
     assert synthetic['tiers'][6:12]==['Regional']*6, f'Second six merged stories are not Regional: {synthetic["tiers"]}'
     assert synthetic['tiers'][12:18]==['Local']*6, f'Third six merged stories are not Local: {synthetic["tiers"]}'
     assert len(set(synthetic['links']))==18, 'Merged 6/6/6 lead mix duplicated an article'
+
+    no_local=synthetic_denver_without_local(page)
+    assert no_local['counts']['local']==0, f'State stories were relabeled Local to fill a quota: {no_local}'
+    assert 'Local' not in no_local['tiers'], f'Local tier was fabricated without a Denver match: {no_local}'
     context.close()
 
 
@@ -111,7 +195,20 @@ def mobile_suite(browser):
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile page overflows horizontally by {overflow}px'
-    badge_checks(page);context.close()
+    badge_checks(page)
+    cleared=page.evaluate("""() => {
+      localStorage.setItem('underreported-location-v2','{}');
+      localStorage.setItem('underreported-location','Old City, NM');
+      localStorage.setItem('underreported-state','NM');
+      window.UnderreportedLocation.clear();
+      return [
+        localStorage.getItem('underreported-location-v2'),
+        localStorage.getItem('underreported-location'),
+        localStorage.getItem('underreported-state')
+      ];
+    }""")
+    assert cleared==[None,None,None], f'Location clear left stale legacy keys: {cleared}'
+    context.close()
 
 
 def main():
@@ -120,7 +217,7 @@ def main():
         browser=p.chromium.launch(headless=True)
         farmington_suite(browser);denver_suite(browser);mobile_suite(browser)
         browser.close()
-    print('V2.6 SMOKE PASS — Presidential strict, merged State 6/6/6 logic, location switching, tiered NEW badges.')
+    print('V2.7 REFINEMENT SMOKE PASS — event-first Top ranking, publisher diversity, strict Local accuracy, location clearing, Presidential filter, and NEW badges.')
 
 
 if __name__=='__main__':
