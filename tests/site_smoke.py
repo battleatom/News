@@ -44,21 +44,19 @@ def assert_status(page):
 
 
 def set_cached_location(page,city,state,lat,lon,active_tab='legislation'):
-    page.evaluate("""([city,state,lat,lon,activeTab])=>{
+    page.evaluate("""([city,state,lat,lon])=>{
       const value={city,state,lat,lon,label:`${city}, ${state}`,source:'test',savedAt:Date.now()};
       localStorage.setItem('underreported-location-v2',JSON.stringify(value));
       localStorage.setItem('underreported-state',state);
       localStorage.setItem('underreported-location',value.label);
-      localStorage.setItem('underreported-active-tab',activeTab);
-    }""",[city,state,lat,lon,active_tab])
+      localStorage.setItem('underreported-active-tab','top');
+    }""",[city,state,lat,lon])
     page.reload(wait_until='domcontentloaded')
     wait_feed(page,label=f'{city} reload')
-    page.wait_for_timeout(900)
-    tab=page.locator(f'#tabs > .tab[data-nav-key="{active_tab}"]')
-    assert tab.count()==1 and tab.first.is_visible(), f'{city}: expected tab {active_tab}'
-    if page.evaluate('window.active')!=active_tab:
-        tab.first.click(); page.wait_for_timeout(350)
+    page.wait_for_timeout(1000)
+    click_key(page,active_tab)
     wait_feed(page,label=f'{city} {active_tab}')
+    page.wait_for_timeout(350)
     assert page.evaluate('window.active')==active_tab, f'{city}: expected active tab {active_tab}'
 
 
