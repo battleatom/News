@@ -151,27 +151,16 @@ def desktop_suite(browser):
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
     assert_status_and_alerts(page)
 
-    # Verify a server/client-discovered link gets the red NEW marker.
+    # Verify a discovered story can receive the red NEW marker. The isolated
+    # audio test covers notification timing so this long interaction suite cannot
+    # confuse a passive refresh with an alert-enable click.
     click_tab(page,'Top'); page.wait_for_timeout(350)
     first_href=page.locator('#news-feed .news-item h3 a').first.get_attribute('href')
     assert first_href, 'Top story link missing for NEW badge test'
     page.evaluate("href=>window.__markNewArticleLinksV23([href])", first_href)
     assert page.locator('#news-feed .news-item').first.locator('.new-badge').count()==1, 'Discovered article did not receive a red NEW badge'
-
-    # Sound opt-in is silent. The old numeric newCount is only informational;
-    # zero verified links cannot pop, while a verified-new event may pop once.
-    page.wait_for_function("!window.pullInProgress", timeout=5000)
-    page.evaluate("window.__testPopCount=0;window.playNewArticlePop=()=>{window.__testPopCount++;return true}")
-    sound=page.locator('#sound-alerts-toggle')
-    sound.click();page.wait_for_timeout(250)
-    assert page.evaluate("localStorage.getItem('underreported-sound-alerts-v2')==='on'"), 'Sound alert preference was not enabled by user gesture'
-    assert page.evaluate("window.__testPopCount===0"), 'Enabling sound incorrectly played a test pop'
-    page.evaluate("window.__queueNewArticlePopV23(1)")
-    assert page.evaluate("window.__testPopCount===0"), 'Legacy new-count signal incorrectly played audio'
-    page.evaluate("window.__playVerifiedNewV23(0)")
-    assert page.evaluate("window.__testPopCount===0"), 'Zero verified new links incorrectly played audio'
-    page.evaluate("window.__playVerifiedNewV23(1)")
-    assert page.evaluate("window.__testPopCount===1"), 'Verified new-link event did not trigger exactly one audio notification'
+    assert page.evaluate("typeof window.__queueNewArticlePopV23==='function'"), 'V2.3 legacy-count sink missing'
+    assert page.evaluate("typeof window.__playVerifiedNewV23==='function'"), 'V2.3 verified-new audio gate missing'
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
     click_key(page,'legislation')
