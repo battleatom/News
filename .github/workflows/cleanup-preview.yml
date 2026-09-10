@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -68,7 +68,13 @@ jobs:
               raise SystemExit('Market data is not ignored by news push trigger')
           if 'git merge --no-edit -X ours origin/main' in workflow:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
-          print('V2.1 static invariants pass.')
+          if 'scripts/patch_v22_alerts_status.py' in Path('scripts/build_site.py').read_text(encoding='utf-8'):
+              for marker in ('alerts-status-v22','sound-alerts-toggle','Next in','duplicates removed'):
+                  if marker not in html:
+                      raise SystemExit('Missing V2.2 alert/status marker: '+marker)
+              if '<script id="pull-stats-ui-v1">' in html:
+                  raise SystemExit('Legacy status controller still present alongside V2.2')
+          print('V2 static invariants pass.')
           PY
 
       - name: Install Playwright
