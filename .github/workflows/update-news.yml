@@ -64,14 +64,14 @@ jobs:
       - name: Patch Top Stories topic and entity diversity
         run: python scripts/patch_top_diversity.py
 
-      - name: Add public-interest Underreported and legislation collection
-        run: python scripts/patch_public_interest_legislation.py
-
       - name: Strengthen event-level duplicate detection
         run: python scripts/patch_event_dedupe.py
 
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
+
+      - name: Add public-interest Underreported and legislation collection
+        run: python scripts/patch_public_interest_legislation.py
 
       - name: Tighten category quality
         run: python scripts/patch_category_quality.py
