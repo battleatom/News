@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges, refinement-v2.7-test, version-3]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges, refinement-v2.7-test, version-3, v3-content-briefs]
     paths-ignore:
       - 'News'
       - 'index.html'
@@ -78,18 +78,20 @@ jobs:
           python scripts/record_pull_stats.py
           python scripts/dedupe_news_stories.py
           python scripts/record_pull_stats.py --finalize
+          python scripts/create_content_briefs.py
 
-      - name: Build V2 page in canonical order
+      - name: Build V3 content-brief page in canonical order
         run: python scripts/build_site.py
 
       - name: Audit generated site
         run: python scripts/site_audit.py
 
-      - name: Validate Python syntax and V2.7 refinement invariants
+      - name: Validate Python syntax, legacy invariants, and content briefs
         run: |
           python -m py_compile scripts/*.py tests/*.py
           python - <<'PY'
           from pathlib import Path
+          import xml.etree.ElementTree as ET
           html=Path('index.html').read_text(encoding='utf-8')
           collector=Path('scripts/update_news.py').read_text(encoding='utf-8')
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
@@ -111,13 +113,15 @@ jobs:
               '__alertsNewV26',
               'refresh-success-handling-v2',
               'Display refresh failed · retry scheduled',
+              'data-content-briefs="1"',
+              'styles/content-briefs.css?v=1',
           )
           missing=[x for x in required if x not in html]
           if missing:
-              raise SystemExit('Missing V2.7 generated markers: '+', '.join(missing))
+              raise SystemExit('Missing generated markers: '+', '.join(missing))
           for marker in ('__locationContentV26','mergedStatePool','removeMergedTabs','__presidentialRelevantV26','FOUR_CORNERS_LOCAL_TERMS'):
               if marker not in location_js:
-                  raise SystemExit('Missing V2.7 location controller marker: '+marker)
+                  raise SystemExit('Missing location controller marker: '+marker)
           if "if(rank(local,loc).length<6)local=local.concat(stateSpecific)" in location_js:
               raise SystemExit('State stories can still be relabeled Local to fill a quota')
           if "category(item)==='local')return true" in location_js:
@@ -147,7 +151,7 @@ jobs:
               raise SystemExit('Persistent first-seen NEW timing is not installed')
           if "- 'markets.json'" not in workflow:
               raise SystemExit('Market data is not ignored by news push trigger')
-          for required_step in ('python scripts/patch_region_state_tags.py','python scripts/patch_presidential_us_only.py'):
+          for required_step in ('python scripts/patch_region_state_tags.py','python scripts/patch_presidential_us_only.py','python scripts/create_content_briefs.py'):
               if required_step not in workflow:
                   raise SystemExit('Production workflow missing '+required_step)
           if 'git merge --no-edit -X ours origin/main' in workflow:
@@ -157,7 +161,14 @@ jobs:
                   raise SystemExit('Missing alert/status marker: '+marker)
           if '<script id="pull-stats-ui-v1">' in html:
               raise SystemExit('Legacy status controller still present alongside V2.2/V2.6')
-          print('V2.7 refinement static invariants pass.')
+          root=ET.parse('News').getroot()
+          items=root.findall('.//item')
+          if not items:
+              raise SystemExit('No news items generated')
+          missing_briefs=[item.findtext('title') or 'Untitled' for item in items if item.findtext('briefGenerated')!='true' or len((item.findtext('description') or '').strip())<60]
+          if missing_briefs:
+              raise SystemExit(f'Content briefs missing/too short for {len(missing_briefs)} stories; first: {missing_briefs[0]}')
+          print(f'Content brief validation passes for {len(items)} stories.')
           PY
 
       - name: Install Playwright
@@ -190,5 +201,5 @@ jobs:
             echo 'Generated preview is already current.'
             exit 0
           fi
-          git commit -m 'Build validated V2.7 refinement preview [skip ci]'
+          git commit -m 'Build validated V3 content brief preview [skip ci]'
           git push origin HEAD:${{ github.ref_name }}
