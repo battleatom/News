@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.4-desktop-full-width]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -42,9 +42,10 @@ jobs:
           from pathlib import Path
           html=Path('index.html').read_text(encoding='utf-8')
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
+          css=Path('styles/v2.css').read_text(encoding='utf-8')
           required=(
               'data-underreported-version="2"',
-              'styles/v2.css?v=3',
+              'styles/v2.css?v=4',
               'assets/location-v2.js?v=2',
               'assets/app-v2.js?v=3',
               'auto-refresh-timer-v1',
@@ -56,6 +57,8 @@ jobs:
           missing=[x for x in required if x not in html]
           if missing:
               raise SystemExit('Missing V2 generated markers: '+', '.join(missing))
+          if '--v2-max:none' not in css:
+              raise SystemExit('Desktop 1180px width cap still exists')
           forbidden=(
               'setInterval(decorate,1500)',
               'setInterval(()=>{ensureBookmarkTab();},1000)',
@@ -74,10 +77,10 @@ jobs:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
           for marker in ('sound-alerts-toggle','Next in','duplicates removed','__queueNewArticlePopV23','__markNewArticleLinksV23'):
               if marker not in html:
-                  raise SystemExit('Missing V2.3 alert/status marker: '+marker)
+                  raise SystemExit('Missing alert/status marker: '+marker)
           if '<script id="pull-stats-ui-v1">' in html:
               raise SystemExit('Legacy status controller still present alongside V2.2/V2.3')
-          print('V2.3 static invariants pass.')
+          print('V2.4 static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -90,6 +93,9 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-preview-http.log 2>&1 &
           echo $! > /tmp/news-preview-http.pid
           sleep 2
+
+      - name: Validate desktop full width
+        run: python tests/desktop_width.py
 
       - name: Diagnose alert-enable audio path
         run: python tests/audio_debug.py
