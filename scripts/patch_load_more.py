@@ -115,12 +115,23 @@ function syncDiscoveryButton(){
 }
 function renderMoreWithoutJump(next){
   const y=window.scrollY;
+  const x=window.scrollX;
   const activeBefore=active;
+  const doc=document.documentElement;
+  const oldBehavior=doc.style.scrollBehavior;
+  doc.style.scrollBehavior='auto';
   loadCounts[activeBefore]=next;
   canonicalRender(allItems);
-  requestAnimationFrame(()=>{
-    if(active===activeBefore)window.scrollTo({top:y,left:window.scrollX,behavior:'auto'});
-  });
+  const restore=()=>{
+    if(active!==activeBefore)return;
+    window.scrollTo(x,y);
+    if(document.scrollingElement)document.scrollingElement.scrollTop=y;
+  };
+  restore();
+  requestAnimationFrame(()=>{restore();requestAnimationFrame(restore)});
+  setTimeout(restore,0);
+  setTimeout(restore,50);
+  setTimeout(()=>{restore();doc.style.scrollBehavior=oldBehavior},150);
 }
 
 function paginatedNewsItems(items){
@@ -148,7 +159,7 @@ function appendLoadMoreControl(data){
   button.className='load-more';
   const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
   button.textContent=`Load 10 more (${next} of ${data.available.length})`;
-  button.addEventListener('click',e=>{e.preventDefault();renderMoreWithoutJump(next)});
+  button.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();renderMoreWithoutJump(next)});
   more.appendChild(button);
   root.appendChild(more);
 }
@@ -210,9 +221,9 @@ window.cycleTopStoriesAndRefresh=async function(){
 render=canonicalRender;
 window.render=canonicalRender;
 syncDiscoveryButton();
-window.__loadMoreNoJumpV281=true;
+window.__loadMoreNoJumpV282=true;
 </script>'''
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied Load More with preserved scroll position plus daily unseen Top Stories cycling.")
+print("Applied Load More with multi-frame scroll preservation plus daily unseen Top Stories cycling.")
