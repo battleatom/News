@@ -58,13 +58,15 @@ def main():
     if counts.get('pull-stats-ui-v1', 0):
         errors.append('legacy pull-stats-ui-v1 controller remains alongside V2.2')
     if counts.get('new-badge-expiry-v1', 0):
-        errors.append('retired minute-polling NEW badge controller remains alongside V2.6')
+        errors.append('retired minute-polling NEW badge controller remains')
     for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed'):
         if marker not in html:
             errors.append(f'V2.2 status/alert marker missing: {marker}')
-    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', '__classifyNewBadgeV26', 'serverFirstSeen', 'stats.firstSeenAt', 'New to Underreported within the last hour'):
+    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', '__classifyNewBadgeV26', '__alertsNewV281', '__freshPublishedLinksV281', '__playFreshPublishedAlertV281', 'Published within the last hour', 'Published 1–3 hours ago', 'Published 3–6 hours ago'):
         if marker not in html:
-            errors.append(f'V2.6 new-article marker missing: {marker}')
+            errors.append(f'V2.8.1 new-article marker missing: {marker}')
+    if 'serverFirstSeen' in html or 'stats.firstSeenAt' in html:
+        warnings.append('legacy first-seen data remains in generated page; badge color should ignore it')
 
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
@@ -97,6 +99,10 @@ def main():
         warnings.append('could not confirm 15-minute refresh interval textually')
     if 'STORIES_PER_PAGE = 10' not in html:
         errors.append('10-story pagination constant is missing')
+    if '__loadMoreNoJumpV281' not in html or 'window.scrollTo({top:y' not in html:
+        errors.append('V2.8.1 Load More scroll-preservation marker is missing')
+    if '__locationDedupeV281' not in html or '__sameStateEventV281' not in html:
+        errors.append('V2.8.1 state event dedupe marker is missing')
 
     tree = ET.parse(NEWS)
     items = tree.getroot().findall('./channel/item')
@@ -154,7 +160,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V2.2 status, V2.6 NEW timing, tabs, pagination, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, status/audio wiring, publish-age NEW timing, no-jump pagination, state dedupe, tabs, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
