@@ -19,7 +19,12 @@ QUERIES = {
     ],
     "world": "world news OR international news",
     "us": "United States news OR US politics",
-    "presidential": "Trump president White House",
+    "presidential": [
+        "Trump president White House",
+        "President Trump administration White House policy",
+        "Trump executive order presidential action White House",
+        "Trump cabinet administration president",
+    ],
     "federal": [
         "US Congress Senate House legislation committee federal government",
         "US Supreme Court federal appeals court federal judge",
@@ -183,6 +188,20 @@ MAINSTREAM_TOP_QUERIES = [
 ]
 
 TRUSTED_CATEGORY_FALLBACKS = {
+    "presidential": [
+        ("Reuters", "site:reuters.com Trump White House president administration"),
+        ("Associated Press", "site:apnews.com Trump White House president administration"),
+        ("Politico", "site:politico.com Trump White House president administration"),
+        ("CNN", "site:cnn.com Trump White House president administration"),
+        ("CBS News", "site:cbsnews.com Trump White House president administration"),
+    ],
+    "federal": [
+        ("Reuters", "site:reuters.com Congress Supreme Court DOJ FBI federal agency government"),
+        ("Associated Press", "site:apnews.com Congress Supreme Court DOJ FBI federal government"),
+        ("Politico", "site:politico.com Congress Supreme Court federal agency government"),
+        ("The Hill", "site:thehill.com Congress Supreme Court federal agency government"),
+        ("NPR", "site:npr.org Congress Supreme Court federal government agency"),
+    ],
     "local": [
         ("Tri-City Record", "site:tricityrecordnm.com (Farmington OR \"San Juan County\" OR Aztec OR Bloomfield OR Kirtland OR Shiprock OR \"Four Corners\")"),
         ("KSJE", "site:ksje.com (Farmington OR \"San Juan County\" OR Aztec OR Bloomfield OR Kirtland OR Shiprock OR \"Four Corners\")"),
@@ -215,6 +234,7 @@ TRUSTED_CATEGORY_FALLBACKS = {
 }
 
 CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_POOL_MINIMUMS = {'local': 20, 'nfl': 20, 'presidential': 20, 'federal': 25, 'technology': 25, 'gaming': 25}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -514,6 +534,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
@@ -1159,7 +1181,7 @@ def main():
                     items = parse_items(fetch(combined_query), category)
                 own_count = sum(1 for item in items if item.get("category") == category)
                 usable_count = len(select_category_stories(items, limit=30)) if category == "local" else own_count
-                if category in TRUSTED_CATEGORY_FALLBACKS and usable_count < 10:
+                if category in TRUSTED_CATEGORY_FALLBACKS and usable_count < CATEGORY_POOL_MINIMUMS.get(category, 10):
                     for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS[category]:
                         try:
                             batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
@@ -1167,7 +1189,7 @@ def main():
                             own_count = sum(1 for item in items if item.get("category") == category)
                             usable_count = len(select_category_stories(items, limit=30)) if category == "local" else own_count
                             print(f"{category} fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable category stories")
-                            target = 15 if category == "local" else 20
+                            target = CATEGORY_POOL_MINIMUMS.get(category, 20)
                             if usable_count >= target and category not in ("gaming", "technology"):
                                 break
                         except Exception as exc:
