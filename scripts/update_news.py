@@ -709,6 +709,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Rank distinct news events first, then retain a diverse rotating Top Stories pool."""
     if not unique:
