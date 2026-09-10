@@ -1,5 +1,5 @@
-/* Underreported 2.1 — compact mobile layout, full tab navigation, one clean status row. */
-:root{--v2-max:1180px;--v2-radius:14px;--v2-focus:#2563eb}
+/* Underreported 2.4 — compact mobile layout, full-width desktop, full tab navigation, one clean status row. */
+:root{--v2-max:none;--v2-radius:14px;--v2-focus:#2563eb}
 html,body{max-width:100%;overflow-x:hidden}
 .skip-link-v2{position:fixed;left:12px;top:8px;z-index:1000;transform:translateY(-160%);padding:8px 12px;border-radius:9px;background:#fff;color:#111827;font-size:12px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.2)}.skip-link-v2:focus{transform:translateY(0)}
 .container{max-width:var(--v2-max)!important}
