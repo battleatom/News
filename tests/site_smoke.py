@@ -50,6 +50,19 @@ def assert_unique_visible_titles(page):
     assert not duplicates, f'Exact visible title duplicates: {sorted(duplicates)[:5]}'
 
 
+def assert_v22_status_and_alerts(page):
+    panel=page.locator('#pull-stats-ui')
+    assert panel.count()==1 and panel.is_visible(), 'Detailed update status panel missing'
+    status_text=panel.inner_text().lower()
+    assert 'auto refresh' in status_text, 'Auto-refresh state is missing from status panel'
+    assert 'next in' in status_text, 'Live refresh countdown is missing'
+    assert 'fetched' in status_text and 'new' in status_text, 'Fetch/new counts are missing'
+    assert 'duplicates removed' in status_text, 'Duplicate-removal count is missing'
+    assert 'shown' in status_text, 'Final shown count is missing'
+    sound=page.locator('#sound-alerts-toggle')
+    assert sound.count()==1 and sound.is_visible(), 'Sound-alert enable control is missing'
+
+
 def desktop_suite(browser):
     context=browser.new_context(
         viewport={'width':1440,'height':1000},
@@ -64,6 +77,7 @@ def desktop_suite(browser):
     page.wait_for_timeout(1200)
 
     assert page.evaluate("window.__underreportedV2===true"), 'Underreported 2.0 controller did not start'
+    assert page.evaluate("window.__alertsStatusV22===true"), 'Underreported V2.2 status/alert controller did not start'
     assert page.locator('body[data-underreported-version="2"]').count()==1, 'V2 page marker missing'
     assert page.locator('.skip-link-v2').count()==1, 'Accessible skip link missing'
     assert page.locator('#tabs').count()==1, 'Tab bar missing'
@@ -123,8 +137,8 @@ def desktop_suite(browser):
 
     click_tab(page,'Top'); page.wait_for_timeout(350)
     page.wait_for_selector('.bookmark-btn', timeout=5000)
-    first=page.locator('.bookmark-btn').first
-    first.click(); page.wait_for_timeout(200)
+    first_bookmark=page.locator('.bookmark-btn').first
+    first_bookmark.click(); page.wait_for_timeout(200)
     click_tab(page,'Bookmarks'); page.wait_for_timeout(350)
     assert page.locator('#news-feed .news-item').count()>=1, 'Bookmark was not saved/rendered'
     page.locator('#news-feed .bookmark-btn').first.click(); page.wait_for_timeout(250)
@@ -133,16 +147,24 @@ def desktop_suite(browser):
     assert page.evaluate("window.__autoRefreshTimerV1===true"), 'Automatic refresh scheduler did not start'
     assert page.evaluate("Number(window.nextScheduledPull)>Date.now()"), 'Next automatic refresh time is not scheduled'
     assert page.evaluate("Boolean(window.__autoRefreshTimeout)"), 'Timeout-based automatic refresh was not scheduled'
-    assert page.locator('#pull-stats-ui').count()==1 and page.locator('#pull-stats-ui').is_visible(), 'Compact update status panel missing'
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
-    status_text=page.locator('#pull-stats-ui').inner_text()
-    assert 'duplicates removed' not in status_text.lower(), 'Developer duplicate counter leaked into compact user status'
+    assert_v22_status_and_alerts(page)
 
-    page.locator('body').click(position={'x':20,'y':20})
-    page.wait_for_timeout(150)
-    audio=page.evaluate("() => { try { const a=ensureNewArticleAudio(); playNewArticlePop(); return {src:a.src,volume:a.volume}; } catch(e){ return {error:String(e)}; } }")
-    assert not audio.get('error'), f'Notification audio invocation failed: {audio}'
-    assert 'assets/new-article-pop.mp3' in audio.get('src',''), f'Wrong notification audio source: {audio}'
+    # Force one visible card to a fresh timestamp and verify the red NEW marker.
+    page.evaluate("""() => {
+      const card=document.querySelector('#news-feed .news-item');
+      const meta=card?.querySelector('.meta span');
+      if(meta)meta.textContent=new Date().toISOString();
+      window.decorateNewBadges();
+    }""")
+    assert page.locator('#news-feed .new-badge').count()>=1, 'Fresh article did not receive a red NEW badge'
+
+    sound=page.locator('#sound-alerts-toggle')
+    sound.click();page.wait_for_timeout(200)
+    assert page.evaluate("localStorage.getItem('underreported-sound-alerts-v2')==='on'"), 'Sound alert preference was not enabled by user gesture'
+    assert 'alerts on' in sound.inner_text().lower(), 'Sound control did not confirm alerts are enabled'
+    assert page.evaluate("typeof window.playNewArticlePop==='function'"), 'New-article pop function is missing'
+    page.evaluate("window.playNewArticlePop()")
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
     click_key(page,'legislation')
@@ -183,8 +205,8 @@ def mobile_suite(browser):
     pad_top=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", first.element_handle()))
     pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", first.element_handle()))
     assert pad_top<=12 and pad_left<=11, f'Mobile card padding is too large: top={pad_top}, left={pad_left}'
-    assert page.locator('#pull-stats-ui').is_visible(), 'Mobile compact update row missing'
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Mobile duplicate update row is visible'
+    assert_v22_status_and_alerts(page)
     context.close()
 
 
