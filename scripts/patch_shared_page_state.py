@@ -1,7 +1,5 @@
 from pathlib import Path
 import re
-import subprocess
-import sys
 
 P = Path('index.html')
 MARKER = '<script id="shared-page-state-bridge-v1">'
@@ -14,14 +12,9 @@ SCRIPT = r'''<script id="shared-page-state-bridge-v1">
 })();
 </script>'''
 
-# patch_site_features.py runs immediately before this script in the main news
-# workflow. Apply the resilient refresh handler here so refresh is part of the
-# same build/deploy and no second automatic workflow can race the generated page.
-subprocess.run([sys.executable, 'scripts/patch_refresh_success.py'], check=True)
-
 s = P.read_text(encoding='utf-8')
 if 'refresh-success-handling-v2' not in s:
-    raise SystemExit('Integrated render-aware refresh success handling marker is missing')
+    raise SystemExit('Explicit render-aware refresh success handling step must run before shared page state')
 
 # patch_site_features owns the canonical category list and intentionally assigns
 # sections=CANONICAL_SECTIONS at runtime. The generated base page historically
@@ -80,4 +73,4 @@ if '</body>' not in s:
     raise SystemExit('Missing </body> in index.html')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Integrated resilient refresh handling, removed the duplicate startup fetch, exposed mutable shared page state as real window globals, and installed the validation bridge.')
+print('Integrated resilient refresh state, removed the duplicate startup fetch, exposed shared globals, and installed the validation bridge.')
