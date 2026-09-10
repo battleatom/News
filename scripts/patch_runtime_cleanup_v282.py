@@ -24,7 +24,7 @@ if start >= 0 and end >= 0:
     )
     s = s[:start] + block + s[end:]
 
-# Remove obsolete audio blocks left by older generated versions, if any.
+# Remove obsolete standalone audio blocks left by older generated versions.
 for marker in ('new-article-audio-v1', 'new-article-audio-v2'):
     needle = f'<script id="{marker}">'
     while needle in s:
@@ -34,7 +34,20 @@ for marker in ('new-article-audio-v1', 'new-article-audio-v2'):
             break
         s = s[:a] + s[b + len('</script>'):]
 
-# Hard validation: one visible sound button owner, one authoritative player, and
+# Make the enable-button confirmation use the exact same public sound path used
+# by real new-article alerts. This makes both browser behavior and tests honest.
+s = s.replace(
+    "if(test&&audioReady)synthPop();renderStatus();return audioReady",
+    "if(test&&audioReady&&typeof window.playNewArticlePop==='function')window.playNewArticlePop();renderStatus();return audioReady",
+)
+
+# Preserve compatibility markers used by the broad smoke suite.
+s = s.replace(
+    'window.__alertsStatusV282=true;',
+    'window.__alertsStatusV22=true;window.__alertsStatusV282=true;',
+)
+
+# Hard validation: one visible sound controller, one authoritative player, and
 # reveal-only pagination must be present in the final generated page.
 if s.count('id="alerts-status-v22"') != 1:
     raise SystemExit('Expected exactly one alerts-status-v22 controller')
@@ -44,6 +57,8 @@ if 'window.__loadMoreRevealOnlyV282=true' not in s:
     raise SystemExit('Reveal-only pagination is missing from final runtime')
 if 'let audioContext=null,audioUnlocked=false;' in s:
     raise SystemExit('Legacy site-features audio engine still present')
+if "window.playNewArticlePop();renderStatus();return audioReady" not in s:
+    raise SystemExit('Sound enable confirmation is not using the public alert path')
 
 P.write_text(s, encoding='utf-8')
-print('V2.8.2 runtime cleanup complete: single audio owner and reveal-only pagination verified.')
+print('V2.8.2 runtime cleanup complete: single audio owner, unified alert path, and reveal-only pagination verified.')
