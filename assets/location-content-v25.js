@@ -9,12 +9,29 @@
   const FOUR_CORNERS_CITIES=['farmington','aztec','bloomfield','kirtland','shiprock'];
   const FOUR_CORNERS_LOCAL_TERMS=['farmington','san juan county','aztec','bloomfield','kirtland','shiprock','four corners'];
   const IMPACT=[['emergency',24],['wildfire',22],['shooting',22],['killed',18],['death',14],['evacuation',18],['earthquake',20],['tornado',20],['flood',18],['drought',15],['water',10],['supreme court',18],['court',10],['law',12],['legislation',12],['election',16],['governor',10],['school',9],['hospital',10],['health',8],['layoff',12],['economy',9],['inflation',10],['crime',10],['police',9],['cyber',12],['outage',12],['breaking',12]];
+  const EVENT_STOP=new Set(['this','that','with','from','have','will','after','into','over','about','amid','says','said','news','new','more','than','their','there','where','what','when','your','they','them','been','were','would','could','should','state','local','mexico']);
 
   function category(item){return (item.querySelector('category')?.textContent||'').trim()}
   function text(item){return `${item.querySelector('title')?.textContent||''} ${item.querySelector('description')?.textContent||''} ${item.querySelector('source')?.textContent||''}`.toLowerCase()}
   function itemKey(item){
     if(typeof normalizeDuplicateKey==='function')return normalizeDuplicateKey(item);
     return (item.querySelector('link')?.textContent||item.querySelector('title')?.textContent||'').trim().toLowerCase();
+  }
+  function titleWords(item){
+    const raw=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9 ]+/g,' ');
+    return [...new Set(raw.split(/\s+/).filter(w=>w.length>=4&&!EVENT_STOP.has(w)))];
+  }
+  function sameStateEvent(a,b){
+    if(itemKey(a)===itemKey(b))return true;
+    const aw=titleWords(a),bw=titleWords(b);if(!aw.length||!bw.length)return false;
+    const bs=new Set(bw),common=aw.filter(w=>bs.has(w)).length;
+    const denom=Math.min(aw.length,bw.length);
+    return denom>=3&&common>=3&&common/denom>=0.6;
+  }
+  function stateUnique(items){
+    const out=[];
+    for(const item of items){if(out.some(existing=>sameStateEvent(existing,item)))continue;out.push(item)}
+    return out;
   }
   function publishedMs(item){return Date.parse(item.querySelector('pubDate')?.textContent||'')||0}
   function unique(items){const seen=new Set();return items.filter(item=>{const k=itemKey(item);if(!k||seen.has(k))return false;seen.add(k);return true})}
@@ -53,7 +70,7 @@
     let tierEl=clone.querySelector('locationTier');if(!tierEl){tierEl=clone.ownerDocument.createElement('locationTier');clone.appendChild(tierEl)}tierEl.textContent=tier;
     return clone;
   }
-  function take(items,count,used){const out=[];for(const item of items){const k=itemKey(item);if(!k||used.has(k))continue;used.add(k);out.push(item);if(out.length>=count)break}return out}
+  function take(items,count,used,chosen=[]){const out=[];for(const item of items){const k=itemKey(item);if(!k||used.has(k)||chosen.concat(out).some(existing=>sameStateEvent(existing,item)))continue;used.add(k);out.push(item);if(out.length>=count)break}return out}
 
   function presidentialRelevant(item){
     const t=` ${text(item)} `;
@@ -80,15 +97,16 @@
     let local=items.filter(i=>category(i)==='local'&&matchesCity(i,loc));
     local=local.concat(items.filter(i=>['region','us','top','nm'].includes(category(i))&&matchesCity(i,loc)));
 
-    const localRanked=rank(local,loc),stateRanked=rank(stateSpecific,loc),regionalRanked=rank(regional,loc);
+    const localRanked=stateUnique(rank(local,loc)),stateRanked=stateUnique(rank(stateSpecific,loc)),regionalRanked=stateUnique(rank(regional,loc));
     const used=new Set();
-    const topLocal=take(localRanked,6,used);
     const topState=take(stateRanked,6,used);
-    const topRegional=take(regionalRanked,6,used);
+    const topRegional=take(regionalRanked,6,used,topState);
+    const topLocal=take(localRanked,6,used,topState.concat(topRegional));
+    const selected=topState.concat(topRegional,topLocal);
     const top=[...topState.map(i=>addTier(i,'State')),...topRegional.map(i=>addTier(i,'Regional')),...topLocal.map(i=>addTier(i,'Local'))];
-    const remainder=rank([...stateRanked,...regionalRanked,...localRanked],loc).filter(i=>!used.has(itemKey(i))).map(i=>addTier(i,'Ranked'));
+    const remainder=stateUnique(rank([...stateRanked,...regionalRanked,...localRanked],loc)).filter(i=>!used.has(itemKey(i))&&!selected.some(existing=>sameStateEvent(existing,i))).map(i=>addTier(i,'Ranked'));
     window.__stateMergeCountsV26={state:topState.length,regional:topRegional.length,local:topLocal.length,total:top.length+remainder.length,location:loc};
-    return unique([...top,...remainder]).slice(0,90);
+    return stateUnique([...top,...remainder]).slice(0,90);
   }
 
   function removeMergedTabs(){
@@ -123,10 +141,12 @@
     if(typeof active!=='undefined'&&['nm','legislation'].includes(active)&&typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems);
   }
   window.__presidentialRelevantV26=presidentialRelevant;
+  window.__sameStateEventV281=sameStateEvent;
   window.__mergedStatePoolV26=mergedStatePool;
   window.addEventListener('underreported:location',refreshLocationView);
   removeMergedTabs();updateLabel();
   if(window.UnderreportedLocation?.get)window.UnderreportedLocation.get().then(refreshLocationView).catch(()=>refreshLocationView());
   window.__locationContentV25=true;
   window.__locationContentV26=true;
+  window.__locationDedupeV281=true;
 })();
