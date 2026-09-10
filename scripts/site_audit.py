@@ -95,14 +95,20 @@ def main():
 
     if 'playNewArticlePop' not in html or 'enableNewArticleSound' not in html:
         errors.append('new-article audio player/enable control is not wired into generated page')
+    if html.count('window.playNewArticlePop=function') != 1:
+        errors.append('new-article audio player has multiple runtime owners')
+    if 'let audioContext=null,audioUnlocked=false;' in html:
+        errors.append('legacy site-features audio engine remains in generated page')
     if html.count('id="auto-refresh-timer-v1"') != 1:
         errors.append('automatic refresh scheduler is not unique')
     if '15*60*1000' not in html and '15 * 60 * 1000' not in html:
         warnings.append('could not confirm 15-minute refresh interval textually')
     if 'STORIES_PER_PAGE = 10' not in html:
         errors.append('10-story pagination constant is missing')
-    if '__loadMoreNoJumpV281' not in html or 'window.scrollTo({top:y' not in html:
-        errors.append('V2.8.1 Load More scroll-preservation marker is missing')
+    if '__loadMoreRevealOnlyV282' not in html or 'data-page-hidden' not in html:
+        errors.append('V2.8.2 reveal-only Load More pagination is missing')
+    if 'canonicalRender(allItems);\n    const restore=' in html:
+        errors.append('retired rerender-and-restore Load More path remains')
     if 'assets/location-content-v25.js?v=3' not in html:
         errors.append('V2.8.1 location controller cache-busted asset reference is missing')
     if '__locationDedupeV281' not in location_js or '__sameStateEventV281' not in location_js or 'stateUnique' not in location_js:
@@ -164,7 +170,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, status/audio wiring, publish-age NEW timing, no-jump pagination, external state dedupe, tabs, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, single-owner status/audio, publish-age NEW timing, reveal-only pagination, external state dedupe, tabs, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
