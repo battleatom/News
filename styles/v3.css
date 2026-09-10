@@ -1,0 +1,292 @@
+/* Underreported 3.0 — denser cards, clearer hierarchy, stronger terminal cues. */
+
+/* Top hierarchy: one slim sticky utility bar. */
+html body .toolbar{
+  position:sticky!important;
+  top:0!important;
+  z-index:90!important;
+  min-height:36px!important;
+  padding:4px 10px!important;
+  gap:7px!important;
+  flex-wrap:nowrap!important;
+  background:rgba(255,255,255,.9)!important;
+  backdrop-filter:saturate(180%) blur(18px)!important;
+}
+html body .toolbar button{
+  padding:5px 9px!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+}
+html body #status{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-width:0!important;
+  max-width:150px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:9.5px!important;
+  font-weight:700!important;
+  color:#64748b!important;
+}
+html body #pull-stats-ui{display:none!important}
+html body #v3-auto-status{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  min-width:0;
+  max-width:190px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  color:#166534;
+  font-size:9.5px;
+  font-weight:800;
+}
+html body .local-status{
+  margin-left:auto!important;
+  gap:6px!important;
+  min-width:0!important;
+  font-size:9.5px!important;
+}
+
+/* Slightly tighter masthead without changing the identity. */
+html body header{min-height:82px!important;padding-top:14px!important;padding-bottom:14px!important}
+html body header h1{font-size:29px!important;margin-bottom:3px!important}
+html body header p{font-size:11.5px!important}
+
+/* Markets stay visible as a terminal-style rail and scroll horizontally. */
+html body .markets{
+  display:block!important;
+  width:100%!important;
+  height:31px!important;
+  min-height:31px!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  white-space:nowrap!important;
+  -webkit-overflow-scrolling:touch!important;
+  scrollbar-width:none!important;
+}
+html body .markets::-webkit-scrollbar{display:none!important}
+html body .markets-track{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  height:31px!important;
+  padding:0 12px!important;
+  gap:13px!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  white-space:nowrap!important;
+}
+html body .market{gap:4px!important;font-size:9.5px!important}
+html body .market .up,html body .market .down{font-weight:900!important}
+html body .market .up::before{content:'▲ ';font-size:7px}
+html body .market .down::before{content:'▼ ';font-size:7px}
+html body .market:has(.up){background:rgba(22,163,74,.08);border-radius:999px;padding:3px 6px}
+html body .market:has(.down){background:rgba(220,38,38,.08);border-radius:999px;padding:3px 6px}
+
+/* Sticky category rail with a much stronger selected state. */
+html body .tabs{
+  position:sticky!important;
+  top:36px!important;
+  z-index:80!important;
+  min-height:38px!important;
+  padding:4px 8px!important;
+  gap:3px!important;
+  flex-wrap:nowrap!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  white-space:nowrap!important;
+  background:rgba(250,250,252,.94)!important;
+  backdrop-filter:saturate(180%) blur(18px)!important;
+  box-shadow:0 2px 10px rgba(15,23,42,.06)!important;
+  scrollbar-width:none!important;
+}
+html body .tabs::-webkit-scrollbar{display:none!important}
+html body .tab{
+  flex:0 0 auto!important;
+  padding:6px 9px!important;
+  border-radius:8px!important;
+  font-size:10px!important;
+  line-height:1.1!important;
+  font-weight:750!important;
+}
+html body .tab.active{
+  background:var(--accent,#7c3aed)!important;
+  color:#fff!important;
+  border-color:var(--accent,#7c3aed)!important;
+  box-shadow:0 2px 7px color-mix(in srgb,var(--accent,#7c3aed) 26%,transparent)!important;
+}
+
+/* Denser feed: less padding, tighter typography, reduced vertical gaps. */
+html body .content{padding:11px 12px 24px!important}
+html body .section-header{padding-bottom:6px!important;margin-bottom:4px!important}
+html body .section-header h2{font-size:17px!important;line-height:1.15!important}
+html body .count{font-size:9px!important}
+html body .section-body{gap:5px!important}
+html body .news-item{
+  padding:8px 10px!important;
+  margin:4px 0!important;
+  min-height:0!important;
+  border-radius:10px!important;
+  border-left-width:3px!important;
+  box-shadow:0 1px 4px rgba(15,23,42,.045)!important;
+}
+html body .news-item:hover{transform:none!important;box-shadow:0 3px 10px rgba(15,23,42,.07)!important}
+html body .news-item h3,
+html body .news-item:first-child h3{
+  margin:0 0 3px!important;
+  font-size:14.75px!important;
+  line-height:1.22!important;
+  letter-spacing:-.18px!important;
+}
+html body .bookmark-row{gap:4px!important;align-items:flex-start!important}
+html body .bookmark-btn{font-size:14px!important;padding:0 2px!important}
+html body .description{
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:1!important;
+  overflow:hidden!important;
+  margin:4px 0!important;
+  font-size:11px!important;
+  line-height:1.32!important;
+  color:#64748b!important;
+}
+
+/* WHY IT MATTERS becomes a distinct editorial strip. */
+html body .news-item .why{
+  display:flex!important;
+  align-items:flex-start!important;
+  gap:6px!important;
+  margin:5px -10px 4px!important;
+  padding:5px 10px!important;
+  border:0!important;
+  border-top:1px solid rgba(124,58,237,.11)!important;
+  border-bottom:1px solid rgba(124,58,237,.09)!important;
+  border-radius:0!important;
+  background:rgba(124,58,237,.045)!important;
+  color:#475569!important;
+  font-size:10.5px!important;
+  line-height:1.3!important;
+}
+html body .v3-why-label{
+  flex:0 0 auto;
+  color:#6d28d9;
+  font-size:8.5px;
+  line-height:1.55;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+  font-weight:900;
+}
+html body .v3-why-label::after{content:' —'}
+html body .v3-why-text{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  min-width:0;
+}
+html body .news-item .meta{
+  gap:3px 7px!important;
+  margin-top:4px!important;
+  font-size:9px!important;
+  line-height:1.25!important;
+}
+html body .source{display:inline-flex!important;align-items:center!important;gap:4px!important}
+html body .v3-source-icon{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:17px;
+  height:15px;
+  padding:0 3px;
+  border:1px solid rgba(71,85,105,.17);
+  border-radius:4px;
+  background:rgba(148,163,184,.08);
+  color:#475569;
+  font-size:7px;
+  line-height:1;
+  letter-spacing:.02em;
+  font-weight:900;
+}
+
+/* Context labels: subtle, useful, and not applied to every story. */
+html body .v3-importance{
+  display:inline-flex;
+  align-items:center;
+  width:max-content;
+  margin:0 0 4px;
+  padding:2px 5px;
+  border:1px solid rgba(100,116,139,.18);
+  border-radius:4px;
+  background:rgba(100,116,139,.065);
+  color:#64748b;
+  font-size:7.5px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+}
+html body .v3-importance.high{background:rgba(220,38,38,.07);border-color:rgba(220,38,38,.16);color:#b91c1c}
+html body .v3-importance.analysis{background:rgba(124,58,237,.07);border-color:rgba(124,58,237,.16);color:#6d28d9}
+html body .v3-importance.local{background:rgba(21,128,61,.07);border-color:rgba(21,128,61,.16);color:#166534}
+html body .v3-importance.trending{background:rgba(37,99,235,.07);border-color:rgba(37,99,235,.16);color:#1d4ed8}
+
+/* Keep the lead story important, but no longer oversized. */
+html body[data-active-tab="top"] .section-body{gap:5px!important}
+html body[data-active-tab="top"] .section-body>.lead-story-v2{padding:10px 11px!important}
+html body[data-active-tab="top"] .lead-story-v2 h3,
+html body[data-active-tab="top"] .lead-story-v2 h3 a{font-size:17px!important;line-height:1.2!important}
+html body[data-active-tab="top"] .lead-story-v2 .description,
+html body[data-active-tab="top"] .lead-story-v2 .why{font-size:10.75px!important}
+
+/* Dense variants for sections that carry extra context. */
+html body .underreported-item{padding:9px 10px!important}
+html body .underreported-topline{margin-bottom:3px!important}
+html body .underreported-coverage,html body .underreported-signal-v2{padding:2px 6px!important;font-size:7.5px!important}
+html body .underreported-block{margin:5px 0!important}
+html body .underreported-block p{font-size:11px!important;line-height:1.35!important}
+html body .underreported-connections{margin:6px 0 2px!important;padding:6px 8px!important}
+html body .related-coverage{margin-top:6px!important;padding-top:6px!important}
+
+@media(prefers-color-scheme:dark){
+  html body .toolbar{background:rgba(28,28,30,.93)!important}
+  html body #status{color:#a1a1aa!important}
+  html body #v3-auto-status{color:#86efac!important}
+  html body .tabs{background:rgba(28,28,30,.95)!important}
+  html body .news-item .why{background:rgba(124,58,237,.10)!important;color:#d1d1d6!important;border-color:rgba(196,168,255,.12)!important}
+  html body .v3-why-label{color:#c4a8ff}
+  html body .v3-source-icon{background:rgba(148,163,184,.1);border-color:rgba(235,235,245,.14);color:#d1d1d6}
+  html body .v3-importance{color:#cbd5e1;border-color:rgba(203,213,225,.14);background:rgba(203,213,225,.06)}
+  html body .v3-importance.high{color:#fca5a5}.v3-importance.analysis{color:#c4a8ff}.v3-importance.local{color:#86efac}.v3-importance.trending{color:#93c5fd}
+}
+
+@media(max-width:760px){
+  html body header{min-height:70px!important;padding:11px 96px 11px 12px!important}
+  html body header h1{font-size:23px!important}
+  html body header p{font-size:10px!important}
+  html body .toolbar{min-height:34px!important;padding:3px 7px!important;gap:5px!important}
+  html body .toolbar button{padding:5px 7px!important;font-size:9px!important}
+  html body #status{max-width:92px!important;font-size:8.5px!important}
+  html body #v3-auto-status{display:none!important}
+  html body .local-status{font-size:9px!important;gap:4px!important}
+  html body .local-status .weather-condition,html body .local-status .weather-location,html body .local-status .local-sep:first-of-type{display:none!important}
+  html body .tabs{top:34px!important;min-height:36px!important;padding:4px 6px!important}
+  html body .tab{padding:6px 8px!important;font-size:9.5px!important}
+  html body .content{padding:9px 8px 20px!important}
+  html body .news-item{padding:7px 8px!important;margin:4px 0!important;border-radius:9px!important}
+  html body .news-item h3,html body .news-item:first-child h3{font-size:14px!important;line-height:1.2!important}
+  html body .news-item .why{margin:4px -8px 3px!important;padding:4px 8px!important;font-size:10px!important}
+  html body .description{-webkit-line-clamp:1!important;font-size:10.5px!important}
+  html body .news-item .meta{font-size:8.5px!important}
+  html body[data-active-tab="top"] .section-body{grid-template-columns:1fr!important;gap:4px!important}
+  html body[data-active-tab="top"] .lead-story-v2 h3,html body[data-active-tab="top"] .lead-story-v2 h3 a{font-size:16px!important}
+}
+
+@media(max-width:430px){
+  html body #status{display:none!important}
+  html body .local-status .local-date{display:none!important}
+  html body .markets-track{gap:10px!important;padding:0 8px!important}
+}
