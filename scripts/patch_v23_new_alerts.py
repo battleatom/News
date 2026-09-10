@@ -3,7 +3,7 @@ from pathlib import Path
 P = Path('index.html')
 s = P.read_text(encoding='utf-8')
 
-# Replace prior NEW controllers and the V2.6 badge color override idempotently.
+# Replace prior NEW controllers and badge color overrides idempotently.
 for tag, marker, close in (
     ('script', 'new-badge-expiry-v1', '</script>'),
     ('script', 'alerts-new-v23', '</script>'),
@@ -17,15 +17,15 @@ for tag, marker, close in (
             break
         s = s[:a] + s[b + len(close):]
 
-# Older refresh code can report a count, but only the verified before/after link
-# comparison below may make a notification sound.
+# Older refresh code can report a count, but only the verified fresh-link gate
+# below may make a notification sound.
 s = s.replace(
     'if(newCount>0)playNewArticlePop();',
     "if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);",
 )
 s = s.replace(
     "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}",
-    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}}",
+    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}",
 )
 
 STYLE = r'''<style id="new-badge-v26-style">
@@ -40,15 +40,12 @@ s = s.replace('</head>', STYLE + '\n</head>', 1)
 SCRIPT = r'''<script id="alerts-new-v23">
 (function(){
   'use strict';
-  const RED_SITE_TTL=60*60*1000;
-  const BLUE_PUBLISHED_TTL=3*60*60*1000;
-  const YELLOW_SITE_TTL=3*60*60*1000;
-  const YELLOW_MIN_PUBLISHED_AGE=6*60*60*1000;
+  const RED_TTL=60*60*1000;
+  const BLUE_TTL=3*60*60*1000;
+  const YELLOW_TTL=6*60*60*1000;
+  const AUDIO_TTL=30*60*1000;
   const CLOCK_SLOP=5*60*1000;
-  const SERVER_STATS='update-stats.json';
-  const CLIENT_KEY='underreported-first-seen-v26';
-  let serverFirstSeen=new Map();
-  let clientFirstSeen=new Map();
+  const ALERTED_KEY='underreported-audio-alerted-v281';
   let refreshWrapped=false;
   let badgeTimer=0;
 
@@ -73,114 +70,87 @@ SCRIPT = r'''<script id="alerts-new-v23">
     });
     return out;
   }
-  function pruneClient(){
-    const cutoff=Date.now()-YELLOW_SITE_TTL;
-    for(const [link,at] of clientFirstSeen){if(!Number.isFinite(at)||at<cutoff)clientFirstSeen.delete(link)}
-  }
-  function saveClient(){
-    pruneClient();
-    try{localStorage.setItem(CLIENT_KEY,JSON.stringify([...clientFirstSeen]))}catch(e){}
-  }
-  function restoreClient(){
-    try{
-      const rows=JSON.parse(localStorage.getItem(CLIENT_KEY)||'[]');
-      if(Array.isArray(rows))rows.forEach(row=>{if(Array.isArray(row)&&row.length===2)clientFirstSeen.set(normalizeLink(row[0]),Number(row[1])||0)});
-    }catch(e){}
-    pruneClient();
-  }
-  function markClientNew(links){
-    const now=Date.now();
-    (links||[]).forEach(raw=>{
-      const link=normalizeLink(raw);if(!link)return;
-      if(!clientFirstSeen.has(link)&&!serverFirstSeen.has(link))clientFirstSeen.set(link,now);
-    });
-    saveClient();
-  }
-  function firstSeenFor(link){
-    link=normalizeLink(link);if(!link)return 0;
-    const server=Number(serverFirstSeen.get(link)||0);if(server)return server;
-    pruneClient();return Number(clientFirstSeen.get(link)||0);
-  }
-  function classifyTimes(publishedAt,firstSeenAt,now=Date.now()){
-    const pub=Number(publishedAt)||0,first=Number(firstSeenAt)||0;
-    const siteAge=first?now-first:Infinity;
-    const pubAge=pub?now-pub:Infinity;
-    if(first&&siteAge>=-CLOCK_SLOP&&siteAge<=RED_SITE_TTL)return 'red';
-    if(pub&&pubAge>=-CLOCK_SLOP&&pubAge<=BLUE_PUBLISHED_TTL)return 'blue';
-    if(first&&siteAge>=-CLOCK_SLOP&&siteAge<=YELLOW_SITE_TTL&&pub&&pubAge>YELLOW_MIN_PUBLISHED_AGE)return 'yellow';
+  function classifyTimes(publishedAt,_firstSeenAt,now=Date.now()){
+    const pub=Number(publishedAt)||0;
+    if(!pub)return '';
+    const age=now-pub;
+    if(age<-CLOCK_SLOP)return '';
+    if(age<=RED_TTL)return 'red';
+    if(age<=BLUE_TTL)return 'blue';
+    if(age<=YELLOW_TTL)return 'yellow';
     return '';
   }
   window.__classifyNewBadgeV26=classifyTimes;
 
-  function scheduleNextChange(pub,first,now){
-    const points=[];
-    if(first){points.push(first+RED_SITE_TTL,first+YELLOW_SITE_TTL)}
-    if(pub)points.push(pub+BLUE_PUBLISHED_TTL);
-    return points.filter(x=>x>now+250).sort((a,b)=>a-b)[0]||0;
+  function scheduleNextChange(pub,now){
+    if(!pub)return 0;
+    return [pub+RED_TTL,pub+BLUE_TTL,pub+YELLOW_TTL].filter(x=>x>now+250).sort((a,b)=>a-b)[0]||0;
   }
   function decorate(){
     const pubs=publicationMap(),now=Date.now();let next=0;
     document.querySelectorAll('#news-feed .news-item').forEach(card=>{
       const h=card.querySelector('h3');if(!h)return;
       const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
-      const first=firstSeenFor(href),pub=pubs.get(href)||0;
-      const state=classifyTimes(pub,first,now);
+      const pub=pubs.get(href)||0;
+      const state=classifyTimes(pub,0,now);
       let badge=h.querySelector('.new-badge');
       if(!state){if(badge)badge.remove();return}
       if(!badge){badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';h.appendChild(badge)}
       badge.classList.remove('new-badge-red','new-badge-blue','new-badge-yellow');
       badge.classList.add('new-badge-'+state);
-      if(state==='red')badge.title='New to Underreported within the last hour';
-      if(state==='blue')badge.title='Published within the last three hours';
-      if(state==='yellow')badge.title='Older article newly added to Underreported within the last three hours';
-      const change=scheduleNextChange(pub,first,now);if(change&&(!next||change<next))next=change;
+      if(state==='red')badge.title='Published within the last hour';
+      if(state==='blue')badge.title='Published 1–3 hours ago';
+      if(state==='yellow')badge.title='Published 3–6 hours ago';
+      const change=scheduleNextChange(pub,now);if(change&&(!next||change<next))next=change;
     });
     if(badgeTimer)clearTimeout(badgeTimer);
     if(next)badgeTimer=setTimeout(decorate,Math.max(500,next-Date.now()+100));
   }
   window.decorateNewBadges=decorate;
-  window.__markNewArticleLinksV23=function(links){markClientNew(links);decorate()};
-
-  async function syncServerNew(){
-    try{
-      const r=await fetch(SERVER_STATS+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
-      const stats=await r.json();
-      const map=new Map();
-      if(stats.firstSeenAt&&typeof stats.firstSeenAt==='object'){
-        Object.entries(stats.firstSeenAt).forEach(([raw,stamp])=>{const link=normalizeLink(raw),at=Date.parse(stamp)||Number(stamp)||0;if(link&&at)map.set(link,at)});
-      }else{
-        const at=Date.parse(stats.updatedAt||'')||0;
-        (stats.newLinks||[]).forEach(raw=>{const link=normalizeLink(raw);if(link&&at)map.set(link,at)});
-      }
-      serverFirstSeen=map;
-    }catch(e){console.warn('NEW article statistics unavailable:',e)}
-    decorate();
-  }
-
+  // Kept for compatibility with older callers. Fetch/first-seen state no longer
+  // changes badge color; publication time is the only source of badge age.
+  window.__markNewArticleLinksV23=function(){decorate()};
   window.__queueNewArticlePopV23=function(count){return Number(count)||0};
-  function playOnlyForVerifiedNew(count){
-    if(!(count>0))return false;
+
+  function readAlerted(){
+    try{const rows=JSON.parse(localStorage.getItem(ALERTED_KEY)||'[]');return new Set(Array.isArray(rows)?rows:[])}catch(e){return new Set()}
+  }
+  function saveAlerted(set){try{localStorage.setItem(ALERTED_KEY,JSON.stringify([...set].slice(-500)))}catch(e){}}
+  function freshPublishedLinks(links,now=Date.now()){
+    const pubs=publicationMap(),alerted=readAlerted(),fresh=[];
+    (links||[]).forEach(raw=>{
+      const link=normalizeLink(raw),pub=pubs.get(link)||0,age=pub?now-pub:Infinity;
+      if(link&&pub&&age>=-CLOCK_SLOP&&age<=AUDIO_TTL&&!alerted.has(link))fresh.push(link);
+    });
+    return fresh;
+  }
+  function playFreshPublishedAlert(links){
+    const fresh=freshPublishedLinks(links);
+    if(!fresh.length)return false;
+    const alerted=readAlerted();fresh.forEach(link=>alerted.add(link));saveAlerted(alerted);
     if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
     return false;
   }
-  window.__playVerifiedNewV23=playOnlyForVerifiedNew;
+  window.__freshPublishedLinksV281=freshPublishedLinks;
+  window.__playFreshPublishedAlertV281=playFreshPublishedAlert;
+  window.__playVerifiedNewV23=function(count){return Number(count)>0?false:false};
 
   function wrapRefresh(){
     if(refreshWrapped||typeof window.refreshNewsFromPage!=='function')return;
     const previous=window.refreshNewsFromPage;
-    if(previous.__v23Wrapped){refreshWrapped=true;return}
+    if(previous.__v281Wrapped){refreshWrapped=true;return}
     const wrapped=async function(...args){
       const before=feedLinks();
       const result=await previous.apply(this,args);
       const after=feedLinks();
       const discovered=[...after].filter(link=>!before.has(link));
-      if(discovered.length)markClientNew(discovered);
-      await syncServerNew();
       decorate();
-      playOnlyForVerifiedNew(discovered.length);
+      // Exactly one chime per refresh, and only when at least one newly discovered
+      // article was actually published within the last 30 minutes.
+      playFreshPublishedAlert(discovered);
       return result;
     };
-    wrapped.__v23Wrapped=true;
+    wrapped.__v23Wrapped=true;wrapped.__v281Wrapped=true;
     window.refreshNewsFromPage=wrapped;
     refreshWrapped=true;
   }
@@ -188,15 +158,18 @@ SCRIPT = r'''<script id="alerts-new-v23">
   document.addEventListener('click',function(e){
     const btn=e.target?.closest?.('#sound-alerts-toggle');if(!btn)return;
     e.preventDefault();e.stopImmediatePropagation();
-    if(typeof window.enableNewArticleSound==='function')void window.enableNewArticleSound(false);
+    // Give the user an audible confirmation when turning sound on so the control
+    // has immediate, testable feedback on mobile browsers.
+    if(typeof window.enableNewArticleSound==='function')void window.enableNewArticleSound(true);
   },true);
 
-  restoreClient();wrapRefresh();void syncServerNew();
+  wrapRefresh();decorate();
   const feed=document.getElementById('news-feed');
-  if(feed)new MutationObserver(decorate).observe(feed,{childList:true,subtree:true});
+  if(feed)new MutationObserver(decorate).observe(feed,{childList:true});
   document.addEventListener('underreported:feed-rendered',decorate);
   window.__alertsNewV23=true;
   window.__alertsNewV26=true;
+  window.__alertsNewV281=true;
 })();
 </script>'''
 
@@ -204,4 +177,4 @@ if '</body>' not in s:
     raise SystemExit('Generated page is missing </body>')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Installed V2.6 red/blue/yellow NEW badges with persistent site first-seen timing and verified-new-only audio.')
+print('Installed V2.8.1 publication-age NEW badges and once-per-fresh-article audio alerts.')
