@@ -4,7 +4,7 @@ path = Path("index.html")
 text = path.read_text(encoding="utf-8")
 
 old_state = "let allItems=[],active='top';"
-new_state = "let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';"
+new_state = "const __savedActiveTab=localStorage.getItem('underreported-active-tab')||'top';let allItems=[],active='top';window.__pendingActiveTab=__savedActiveTab;"
 
 if old_state in text:
     text = text.replace(old_state, new_state, 1)
@@ -16,4 +16,4 @@ if old_click in text:
     text = text.replace(old_click, new_click, 1)
 
 path.write_text(text, encoding="utf-8")
-print("Persisted the selected news tab across page refreshes.")
+print("Deferred persisted-tab restoration until all runtime renderers are registered.")
