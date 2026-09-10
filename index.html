@@ -59,6 +59,7 @@
 
 
 
+<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
 <link rel="stylesheet" href="styles/theme.css?v=3">
 <style id="desktop-layout-fix-v1">
 @media (min-width:601px){
@@ -102,11 +103,18 @@
 <style id="legislation-style-v1">
 .legislation-card .leg-top{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px}.leg-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(202,138,4,.09);border:1px solid rgba(202,138,4,.18);font-size:9px;font-weight:800;letter-spacing:.02em;color:#92400e}.leg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.leg-field{padding:9px 10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(118,118,128,.035)}.leg-field strong{display:block;margin-bottom:3px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui-subtle)}.leg-field span{font-size:11.5px;line-height:1.45;color:var(--ui-muted)}.leg-support{margin-top:13px;padding-top:11px;border-top:1px solid var(--ui-line)}.leg-support-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ui-subtle);margin-bottom:6px}.leg-support a{display:block;padding:6px 0;text-decoration:none;font-size:11.5px;font-weight:650;border-top:1px solid rgba(60,60,67,.07)}.leg-support a:first-of-type{border-top:0}.leg-support small{display:block;margin-top:2px;color:var(--ui-subtle);font-size:9px}.leg-official{margin-top:10px}.leg-official a{display:inline-flex;padding:7px 10px;border-radius:9px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);font-size:10px;font-weight:750;text-decoration:none}@media(max-width:600px){.leg-grid{grid-template-columns:1fr}.legislation-card .leg-top{gap:5px}}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
+<style id="story-search-v1-style">
+#story-search{margin-left:auto;width:clamp(150px,22vw,290px);min-width:0;box-sizing:border-box;border:1px solid #334155;border-radius:9px;background:#0f172a;color:#f8fafc;padding:7px 10px;font-size:12px;line-height:1.2;outline:none}
+#story-search::placeholder{color:#94a3b8}
+#story-search:focus{border-color:#64748b;box-shadow:0 0 0 2px rgba(148,163,184,.15)}
+#story-search[disabled]{opacity:.55;cursor:not-allowed}
+@media(max-width:700px){.toolbar{flex-wrap:wrap}#story-search{order:20;margin-left:0;width:100%;flex:1 1 100%}}
+</style>
 </head>
-<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
+<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><input id="story-search" type="search" inputmode="search" autocomplete="off" placeholder="Search stories…" aria-label="Search stories in this section"><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -806,6 +814,37 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+<script id="related-coverage-v1">
+(function(){
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('.news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
+      if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];
+      if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';
+      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
+})();
+</script>
 <script id="local-status-v1">
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
 function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
@@ -1180,28 +1219,33 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
 
   function renderBookmarks(){
     const root=document.getElementById('news-feed');
-    if(!root)return;
-    const current=(typeof allItems!=='undefined'?allItems:[]);
-    current.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
-    const currentByKey={}; current.forEach(x=>{currentByKey[itemKey(x)]=x;});
-    const items=[...bookmarked].map(k=>currentByKey[k]||bookmarkData[k]).filter(Boolean);
-    root.innerHTML='';
-    const sec=document.createElement('section'); sec.className='section bookmark-section';
-    const head=document.createElement('div'); head.className='section-header';
-    head.innerHTML=`<h2>🔖 Bookmarks</h2><span class="count">${items.length} saved</span>`;
-    sec.appendChild(head);
-    const body=document.createElement('div'); body.className='section-body';
-    if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
-    items.forEach((item,i)=>{
-      const ar=document.createElement('article'); ar.className='news-item';
-      const stored=typeof item==='object' && typeof item.querySelector!=='function';
-      const title=stored?(item.title||'Untitled'):itemTitle(item),link=stored?(item.link||'#'):itemLink(item),desc=stored?(item.description||''):item.querySelector('description')?.textContent||'',date=stored?(item.date||''):item.querySelector('pubDate')?.textContent||'',source=stored?(item.source||''):item.querySelector('source')?.textContent||'',bk=stored?(item.key||''):itemKey(item);
-      ar.dataset.bookmarkKey=bk;
-      ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
-      ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(bk);delete bookmarkData[bk];saveBookmarks();saveBookmarkData();updateBookmarkTab();renderBookmarks();});
-      body.appendChild(ar);
-    });
-    sec.appendChild(body); root.appendChild(sec);
+    if(!root || rendering)return;
+    rendering=true;
+    try{
+      const current=(typeof allItems!=='undefined'?allItems:[]);
+      current.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
+      const currentByKey={}; current.forEach(x=>{currentByKey[itemKey(x)]=x;});
+      const items=[...bookmarked].map(k=>currentByKey[k]||bookmarkData[k]).filter(Boolean);
+      root.innerHTML='';
+      const sec=document.createElement('section'); sec.className='section bookmark-section';
+      const head=document.createElement('div'); head.className='section-header';
+      head.innerHTML=`<h2>🔖 Bookmarks</h2><span class="count">${items.length} saved</span>`;
+      sec.appendChild(head);
+      const body=document.createElement('div'); body.className='section-body';
+      if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
+      items.forEach((item,i)=>{
+        const ar=document.createElement('article'); ar.className='news-item';
+        const stored=typeof item==='object' && typeof item.querySelector!=='function';
+        const title=stored?(item.title||'Untitled'):itemTitle(item),link=stored?(item.link||'#'):itemLink(item),desc=stored?(item.description||''):item.querySelector('description')?.textContent||'',date=stored?(item.date||''):item.querySelector('pubDate')?.textContent||'',source=stored?(item.source||''):item.querySelector('source')?.textContent||'',bk=stored?(item.key||''):itemKey(item);
+        ar.dataset.bookmarkKey=bk;
+        ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
+        ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(bk);delete bookmarkData[bk];saveBookmarks();saveBookmarkData();updateBookmarkTab();renderBookmarks();});
+        body.appendChild(ar);
+      });
+      sec.appendChild(body); root.appendChild(sec);
+    } finally {
+      requestAnimationFrame(()=>{rendering=false;});
+    }
   }
 
   function addBookmarkButtons(){
@@ -1594,6 +1638,57 @@ syncDiscoveryButton();
  setInterval(updateLabel,2000);
 })();
 </script>
+<script id="story-search-v1">
+(function(){
+  'use strict';
+  const input=document.getElementById('story-search');
+  if(!input || typeof render!=='function')return;
+
+  let query='';
+  const baseRender=render;
+  const unsupported=new Set(['nfl','boxoffice']);
+
+  function itemText(item){
+    if(!item || !item.querySelectorAll)return '';
+    const selectors='title,description,source,whyMatters,region,impact,category,whatItDoes,whoAffected,latestAction,sponsor,jurisdiction,status';
+    return [...item.querySelectorAll(selectors)].map(el=>el.textContent||'').join(' ').toLowerCase();
+  }
+
+  function filtered(items){
+    const q=query.trim().toLowerCase();
+    if(!q || !Array.isArray(items))return items;
+    return items.filter(item=>itemText(item).includes(q));
+  }
+
+  function syncAvailability(){
+    const blocked=unsupported.has(String(active||''));
+    input.disabled=blocked;
+    input.placeholder=blocked?'Search unavailable in this live section':'Search stories…';
+  }
+
+  render=function(items){
+    syncAvailability();
+    return baseRender(unsupported.has(String(active||''))?items:filtered(items));
+  };
+
+  input.addEventListener('input',function(){
+    query=input.value||'';
+    render(allItems);
+  });
+  input.addEventListener('keydown',function(event){
+    if(event.key==='Escape' && input.value){
+      input.value='';query='';render(allItems);input.blur();
+    }
+  });
+  document.addEventListener('keydown',function(event){
+    if(event.key==='/' && !event.ctrlKey && !event.metaKey && !event.altKey){
+      const tag=(document.activeElement?.tagName||'').toLowerCase();
+      if(tag!=='input' && tag!=='textarea' && !input.disabled){event.preventDefault();input.focus();}
+    }
+  });
+  syncAvailability();
+})();
+</script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
@@ -1678,26 +1773,6 @@ syncDiscoveryButton();
       if(typeof window.refreshPullStatsUI==='function')window.refreshPullStatsUI(false,'');
     }
   },true);
-})();
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
 })();
 </script>
 </body>
