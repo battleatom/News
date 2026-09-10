@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -50,6 +50,8 @@ jobs:
               'auto-refresh-timer-v1',
               'bookmarks-v1',
               'related-coverage-v1',
+              'alerts-status-v22',
+              'alerts-new-v23',
           )
           missing=[x for x in required if x not in html]
           if missing:
@@ -60,21 +62,22 @@ jobs:
               'setInterval(tick,1000)',
               'setInterval(ensureVisibleUI,500)',
               'setInterval(renderStats,1000)',
+              'new-badge-expiry-v1',
+              'if(test)synthPop()',
           )
           found=[x for x in forbidden if x in html]
           if found:
-              raise SystemExit('Legacy polling remains: '+', '.join(found))
+              raise SystemExit('Legacy generated behavior remains: '+', '.join(found))
           if "- 'markets.json'" not in workflow:
               raise SystemExit('Market data is not ignored by news push trigger')
           if 'git merge --no-edit -X ours origin/main' in workflow:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
-          if 'scripts/patch_v22_alerts_status.py' in Path('scripts/build_site.py').read_text(encoding='utf-8'):
-              for marker in ('alerts-status-v22','sound-alerts-toggle','Next in','duplicates removed'):
-                  if marker not in html:
-                      raise SystemExit('Missing V2.2 alert/status marker: '+marker)
-              if '<script id="pull-stats-ui-v1">' in html:
-                  raise SystemExit('Legacy status controller still present alongside V2.2')
-          print('V2 static invariants pass.')
+          for marker in ('sound-alerts-toggle','Next in','duplicates removed','__queueNewArticlePopV23','__markNewArticleLinksV23'):
+              if marker not in html:
+                  raise SystemExit('Missing V2.3 alert/status marker: '+marker)
+          if '<script id="pull-stats-ui-v1">' in html:
+              raise SystemExit('Legacy status controller still present alongside V2.2/V2.3')
+          print('V2.3 static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -87,6 +90,9 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-preview-http.log 2>&1 &
           echo $! > /tmp/news-preview-http.pid
           sleep 2
+
+      - name: Diagnose alert-enable audio path
+        run: python tests/audio_debug.py
 
       - name: Run desktop and mobile browser tests
         run: python tests/site_smoke.py

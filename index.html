@@ -67,6 +67,7 @@
 
 
 
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 
 <style id="local-status-style">
@@ -112,6 +113,7 @@
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -374,6 +376,16 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 })();
 </script>
 
+
+
+
+
+
+
+
+
+
+
 <script id="local-status-v1">
 (function(){
 'use strict';
@@ -490,16 +502,9 @@ const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL'
 sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
 var lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;
-window.__audioContext=window.__audioContext||null;
-window.__audioUnlocked=Boolean(window.__audioUnlocked);
-window.__newArticleAudio=window.__newArticleAudio||null;
-window.__newArticleAudioPrimed=Boolean(window.__newArticleAudioPrimed);
-function ensureNewArticleAudio(){let audio=window.__newArticleAudio;if(!audio){audio=new Audio('assets/new-article-pop.mp3');audio.preload='auto';audio.volume=0.85;audio.setAttribute('playsinline','');window.__newArticleAudio=audio;}return audio;}
-async function unlockPopAudio(){let mediaUnlocked=false;try{const audio=ensureNewArticleAudio();if(!window.__newArticleAudioPrimed){const previousMuted=audio.muted,previousVolume=audio.volume;audio.muted=true;audio.volume=0;audio.currentTime=0;const started=audio.play();if(started&&typeof started.then==='function')await started;audio.pause();audio.currentTime=0;audio.muted=previousMuted;audio.volume=previousVolume||0.85;window.__newArticleAudioPrimed=true;}mediaUnlocked=true;}catch(e){console.info('MP3 notification audio could not be primed yet.',e);}try{if(!window.__audioContext)window.__audioContext=new (window.AudioContext||window.webkitAudioContext)();if(window.__audioContext.state==='suspended')await window.__audioContext.resume();window.__audioUnlocked=mediaUnlocked||window.__audioContext.state==='running';}catch(e){window.__audioUnlocked=mediaUnlocked;}return window.__audioUnlocked;}
-function playSynthNewArticlePop(){const ctx=window.__audioContext;if(!ctx||ctx.state!=='running')return;try{const now=ctx.currentTime;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.setValueAtTime(620,now);osc.frequency.exponentialRampToValueAtTime(1080,now+0.055);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.16,now+0.008);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.085);osc.connect(gain);gain.connect(ctx.destination);osc.start(now);osc.stop(now+0.09);}catch(e){}}
-function playNewArticlePop(){if(!window.__audioUnlocked)return;try{const audio=ensureNewArticleAudio();audio.muted=false;audio.volume=0.85;audio.pause();audio.currentTime=0;const started=audio.play();if(started&&typeof started.catch==='function')started.catch(()=>playSynthNewArticlePop());}catch(e){playSynthNewArticlePop();}}
-function primeNewArticleAudio(){if(window.__newArticleAudioPrimed&&window.__audioUnlocked)return;void unlockPopAudio();}
-document.addEventListener('pointerdown',primeNewArticleAudio,{capture:true,passive:true});document.addEventListener('keydown',primeNewArticleAudio,{capture:true});
+let audioContext=null,audioUnlocked=false;
+function unlockPopAudio(){try{if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();audioUnlocked=true;}catch(e){audioUnlocked=false;}}
+function playNewArticlePop(){if(!audioUnlocked||!audioContext)return;try{const now=audioContext.currentTime;const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.setValueAtTime(620,now);osc.frequency.exponentialRampToValueAtTime(1080,now+0.055);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.16,now+0.008);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.085);osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+0.09);}catch(e){}}
 function normalizeDuplicateKey(item){const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');if(link)return 'l:'+link;const title=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();return 't:'+title;}
 function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const key=normalizeDuplicateKey(item);if(seen.has(key))continue;seen.add(key);out.push(item);}return {items:out,removed:items.length-out.length};}
 function canonicalBuildTabs(){const root=document.getElementById('tabs');if(!root)return;root.innerHTML='';const seen=new Set();CANONICAL_SECTIONS.forEach(([key,label,accent])=>{if(seen.has(key))return;seen.add(key);const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&typeof detectedLocation!=='undefined'&&detectedLocation?'🌎 '+(typeof regionLabels!=='undefined'?regionLabels[detectedRegion]:'Region'):label;b.style.setProperty('--accent',accent);b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);canonicalBuildTabs();canonicalRender(allItems)};root.appendChild(b)});}
@@ -575,7 +580,7 @@ async function refreshNewsFromPage(manual=false){
       canonicalBuildTabs();
       canonicalRender(allItems);
       decorateNewBadges();
-      if(newCount>0)playNewArticlePop();
+      if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);
     }catch(renderError){
       console.error('Feed downloaded successfully, but page rendering failed:',renderError);
       if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new';
@@ -802,18 +807,6 @@ function restoreNflAfterBrowserReload(attempt=0){
 function scheduleSavedNflRestore(){setTimeout(()=>restoreNflAfterBrowserReload(0),75);}
 if(document.readyState==='complete')scheduleSavedNflRestore();
 else window.addEventListener('load',scheduleSavedNflRestore,{once:true});
-</script>
-<script id="new-badge-expiry-v1">
-function decorateNewBadges(){
- document.querySelectorAll('.news-item').forEach(card=>{
-   const existing=card.querySelector('.new-badge');
-   const meta=card.querySelector('.meta span');
-   const fresh=meta&&isFresh(meta.textContent);
-   if(existing&&!fresh) existing.remove();
-   if(!existing&&fresh){const h=card.querySelector('h3');if(h){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';h.appendChild(badge);}}
- });
-}
-setInterval(()=>{if(typeof decorateNewBadges==='function')decorateNewBadges();},60*1000);
 </script>
 <script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
@@ -1268,7 +1261,7 @@ syncDiscoveryButton();
   }
   async function enableSound(test){
     const ok=await ensureAudio();
-    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
+    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}}
     renderStatus();return ok;
   }
   window.enableNewArticleSound=enableSound;
@@ -1348,6 +1341,123 @@ syncDiscoveryButton();
   function refreshStatsLoop(){void loadStats();statsTimer=setTimeout(refreshStatsLoop,60000)}
   wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);
   window.__alertsStatusV22=true;
+})();
+</script>
+<script id="alerts-new-v23">
+(function(){
+  'use strict';
+  const NEW_TTL=60*60*1000;
+  const SERVER_STATS='update-stats.json';
+  let serverNewLinks=new Set();
+  let serverStatsAt=0;
+  let clientNewLinks=new Map();
+  let refreshWrapped=false;
+
+  function normalizeLink(v){
+    try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}
+    catch(e){return String(v||'').trim()}
+  }
+  function feedLinks(){
+    let items=[];
+    try{items=(typeof allItems!=='undefined'&&Array.isArray(allItems))?allItems:(Array.isArray(window.allItems)?window.allItems:[])}catch(e){items=Array.isArray(window.allItems)?window.allItems:[]}
+    const out=new Set();
+    items.forEach(item=>{const link=normalizeLink(item?.querySelector?.('link')?.textContent||'');if(link)out.add(link)});
+    return out;
+  }
+  function pruneClientNew(){
+    const now=Date.now();
+    for(const [link,expires] of clientNewLinks){if(expires<=now)clientNewLinks.delete(link)}
+  }
+  function markClientNew(links){
+    const expires=Date.now()+NEW_TTL;
+    (links||[]).forEach(link=>{link=normalizeLink(link);if(link)clientNewLinks.set(link,expires)});
+    try{sessionStorage.setItem('underreported-client-new-v23',JSON.stringify([...clientNewLinks]))}catch(e){}
+  }
+  function restoreClientNew(){
+    try{
+      const rows=JSON.parse(sessionStorage.getItem('underreported-client-new-v23')||'[]');
+      if(Array.isArray(rows))rows.forEach(row=>{if(Array.isArray(row)&&row.length===2)clientNewLinks.set(normalizeLink(row[0]),Number(row[1])||0)});
+    }catch(e){}
+    pruneClientNew();
+  }
+  function isKnownNew(link){
+    link=normalizeLink(link);if(!link)return false;
+    pruneClientNew();
+    if(clientNewLinks.has(link))return true;
+    return Date.now()-serverStatsAt<=NEW_TTL&&serverNewLinks.has(link);
+  }
+  function decorate(){
+    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
+      const h=card.querySelector('h3');if(!h)return;
+      const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
+      const fresh=isKnownNew(href);
+      const existing=h.querySelector('.new-badge');
+      if(fresh&&!existing){
+        const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';
+        badge.title='Newly discovered by Underreported within the last hour';h.appendChild(badge);
+      }else if(!fresh&&existing){existing.remove()}
+    });
+  }
+  window.decorateNewBadges=decorate;
+  window.__markNewArticleLinksV23=function(links){markClientNew(links);decorate()};
+
+  async function syncServerNew(){
+    try{
+      const r=await fetch(SERVER_STATS+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
+      const stats=await r.json();
+      const at=Date.parse(stats.updatedAt||'')||0;
+      serverStatsAt=at;
+      serverNewLinks=(at&&Date.now()-at<=NEW_TTL)?new Set((stats.newLinks||[]).map(normalizeLink)):new Set();
+    }catch(e){console.warn('V2.3 new-article statistics unavailable:',e)}
+    decorate();
+  }
+
+  // Compatibility sink for older generated refresh code. A positive count is
+  // never permission to make sound; only an actual new link found below is.
+  window.__queueNewArticlePopV23=function(count){return Number(count)||0};
+
+  function playOnlyForVerifiedNew(count){
+    if(!(count>0))return false;
+    if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
+    return false;
+  }
+  window.__playVerifiedNewV23=playOnlyForVerifiedNew;
+
+  function wrapRefresh(){
+    if(refreshWrapped||typeof window.refreshNewsFromPage!=='function')return;
+    const previous=window.refreshNewsFromPage;
+    if(previous.__v23Wrapped){refreshWrapped=true;return}
+    const wrapped=async function(...args){
+      const before=feedLinks();
+      const result=await previous.apply(this,args);
+      const after=feedLinks();
+      const discovered=[...after].filter(link=>!before.has(link));
+      if(discovered.length)markClientNew(discovered);
+      await syncServerNew();
+      decorate();
+      playOnlyForVerifiedNew(discovered.length);
+      return result;
+    };
+    wrapped.__v23Wrapped=true;
+    window.refreshNewsFromPage=wrapped;
+    refreshWrapped=true;
+  }
+
+  // Android/Chrome requires a user gesture to unlock audio. Enabling alerts is
+  // intentionally silent; the next verified new-article event is the first pop.
+  document.addEventListener('click',function(e){
+    const btn=e.target?.closest?.('#sound-alerts-toggle');if(!btn)return;
+    e.preventDefault();e.stopImmediatePropagation();
+    if(typeof window.enableNewArticleSound==='function')void window.enableNewArticleSound(false);
+  },true);
+
+  restoreClientNew();
+  wrapRefresh();
+  void syncServerNew();
+  const feed=document.getElementById('news-feed');
+  if(feed)new MutationObserver(decorate).observe(feed,{childList:true,subtree:true});
+  document.addEventListener('underreported:feed-rendered',decorate);
+  window.__alertsNewV23=true;
 })();
 </script>
 </body>

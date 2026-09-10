@@ -26,7 +26,6 @@ PATCHERS = [
     'scripts/patch_pull_stats_ui.py',
     'scripts/patch_bookmarks.py',
     'scripts/patch_nfl_live.py',
-    'scripts/patch_new_badges.py',
     'scripts/patch_load_more.py',
     'scripts/patch_legislation_ui.py',
     'scripts/patch_legislation_location.py',
@@ -34,8 +33,11 @@ PATCHERS = [
     'scripts/patch_v2_frontend.py',
     'scripts/dedupe_generated_ui.py',
     'scripts/normalize_generated_html.py',
-    # Final V2.2 UX layer owns the visible update panel and notification UX.
+    # V2.2 owns the visible refresh-status panel and browser audio unlock.
     'scripts/patch_v22_alerts_status.py',
+    # V2.3 is the final event gate: server-backed NEW badges and sound only when
+    # a refresh actually introduces one or more new story links.
+    'scripts/patch_v23_new_alerts.py',
 ]
 
 
