@@ -150,6 +150,8 @@ def desktop_suite(browser):
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
     assert_v22_status_and_alerts(page)
 
+    # Return to a populated story view before testing badge decoration.
+    click_tab(page,'Top'); page.wait_for_timeout(350)
     # Force one visible card to a fresh timestamp and verify the red NEW marker.
     page.evaluate("""() => {
       const card=document.querySelector('#news-feed .news-item');
