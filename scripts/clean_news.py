@@ -122,13 +122,13 @@ def is_bad_nfl_item(item):
     text = f"{title} {desc}"
     if any(term in text for term in NFL_BLOCK_TERMS):
         return True
-    # Google News can occasionally leak other sports into broad sports searches.
-    # Keep the NFL tab strict enough that baseball/college stories do not survive.
     return not any(term in title for term in NFL_RELEVANCE_TERMS)
 
 
 def is_ordinary_paywall(item):
-    if normalized(item.findtext("category")) in ("top", "underreported"):
+    # Top may retain a major paywalled source when it is itself part of the top-news mix.
+    # Underreported and Laws & Legislation must lead with a free-to-read primary link.
+    if normalized(item.findtext("category")) == "top":
         return False
     source = normalized(item.findtext("source"))
     return any(name in source for name in ORDINARY_PAYWALL_SOURCES)
@@ -145,7 +145,6 @@ def is_duplicate_underreported(item, seen_keys):
 
 
 def is_malformed_item(item):
-    """Reject actual RSS/list artifacts, not ordinary Google headline descriptions."""
     raw = re.sub(r"\s+", " ", clean(item.findtext("description"))).strip()
     title = headline_without_source(item)
     link = (item.findtext("link") or "").strip()
@@ -161,7 +160,6 @@ def is_malformed_item(item):
 
 
 def suppress_repeated_description(item):
-    """Hide headline+publisher boilerplate while preserving the actual story item."""
     desc_el = item.find("description")
     if desc_el is None:
         return False
@@ -185,7 +183,6 @@ def suppress_repeated_description(item):
 
 
 def context_for_item(item):
-    """Provide concise useful context when an RSS description contains no real summary."""
     title = headline_without_source(item).lower()
     category = normalized(item.findtext("category"))
     if any(t in title for t in ("war", "attack", "strike", "missile", "military", "troops", "iran", "ukraine", "israel", "gaza")):
@@ -268,7 +265,7 @@ def main():
 
     print(f"Removed {removed_gaming} gaming commerce/coupon items.")
     print(f"Removed {removed_nfl} non-NFL/betting items from NFL news.")
-    print(f"Removed {removed_paywall} ordinary-category paywall-source items.")
+    print(f"Removed {removed_paywall} paywall-source primary links outside Top Stories.")
     print(f"Removed {removed_vague_world} vague World headlines.")
     print(f"Removed {removed_malformed} actual malformed/list artifacts.")
     print(f"Suppressed {suppressed_descriptions} headline-only RSS descriptions without deleting stories.")
