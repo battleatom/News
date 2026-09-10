@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges, refinement-v2.7-test]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges, refinement-v2.7-test, version-3]
     paths-ignore:
       - 'News'
       - 'index.html'
