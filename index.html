@@ -74,6 +74,7 @@
 
 
 
+
 <link rel="stylesheet" href="styles/theme.css?v=3">
 
 <style id="local-status-style">
@@ -116,9 +117,15 @@
 @media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}#sound-alerts-toggle{padding:2px 6px}}
 @media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}#sound-alerts-toggle{background:#242426;color:#e5e7eb;border-color:#3f3f46}#sound-alerts-toggle[data-enabled="true"]{background:#10261a;color:#86efac;border-color:#166534}}
 </style>
+<style id="new-badge-v26-style">
+.new-badge.new-badge-red{background:#dc2626!important;color:#fff!important}
+.new-badge.new-badge-blue{background:#2563eb!important;color:#fff!important}
+.new-badge.new-badge-yellow{background:#facc15!important;color:#422006!important}
+</style>
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -1376,57 +1383,103 @@ syncDiscoveryButton();
 <script id="alerts-new-v23">
 (function(){
   'use strict';
-  const NEW_TTL=60*60*1000;
+  const RED_SITE_TTL=60*60*1000;
+  const BLUE_PUBLISHED_TTL=3*60*60*1000;
+  const YELLOW_SITE_TTL=3*60*60*1000;
+  const YELLOW_MIN_PUBLISHED_AGE=6*60*60*1000;
+  const CLOCK_SLOP=5*60*1000;
   const SERVER_STATS='update-stats.json';
-  let serverNewLinks=new Set();
-  let serverStatsAt=0;
-  let clientNewLinks=new Map();
+  const CLIENT_KEY='underreported-first-seen-v26';
+  let serverFirstSeen=new Map();
+  let clientFirstSeen=new Map();
   let refreshWrapped=false;
+  let badgeTimer=0;
 
   function normalizeLink(v){
     try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}
     catch(e){return String(v||'').trim()}
   }
+  function feedItems(){
+    try{return (typeof allItems!=='undefined'&&Array.isArray(allItems))?allItems:(Array.isArray(window.allItems)?window.allItems:[])}catch(e){return Array.isArray(window.allItems)?window.allItems:[]}
+  }
   function feedLinks(){
-    let items=[];
-    try{items=(typeof allItems!=='undefined'&&Array.isArray(allItems))?allItems:(Array.isArray(window.allItems)?window.allItems:[])}catch(e){items=Array.isArray(window.allItems)?window.allItems:[]}
     const out=new Set();
-    items.forEach(item=>{const link=normalizeLink(item?.querySelector?.('link')?.textContent||'');if(link)out.add(link)});
+    feedItems().forEach(item=>{const link=normalizeLink(item?.querySelector?.('link')?.textContent||'');if(link)out.add(link)});
     return out;
   }
-  function pruneClientNew(){
-    const now=Date.now();
-    for(const [link,expires] of clientNewLinks){if(expires<=now)clientNewLinks.delete(link)}
+  function publicationMap(){
+    const out=new Map();
+    feedItems().forEach(item=>{
+      const link=normalizeLink(item?.querySelector?.('link')?.textContent||'');
+      const pub=Date.parse(item?.querySelector?.('pubDate')?.textContent||'')||0;
+      if(link)out.set(link,pub);
+    });
+    return out;
+  }
+  function pruneClient(){
+    const cutoff=Date.now()-YELLOW_SITE_TTL;
+    for(const [link,at] of clientFirstSeen){if(!Number.isFinite(at)||at<cutoff)clientFirstSeen.delete(link)}
+  }
+  function saveClient(){
+    pruneClient();
+    try{localStorage.setItem(CLIENT_KEY,JSON.stringify([...clientFirstSeen]))}catch(e){}
+  }
+  function restoreClient(){
+    try{
+      const rows=JSON.parse(localStorage.getItem(CLIENT_KEY)||'[]');
+      if(Array.isArray(rows))rows.forEach(row=>{if(Array.isArray(row)&&row.length===2)clientFirstSeen.set(normalizeLink(row[0]),Number(row[1])||0)});
+    }catch(e){}
+    pruneClient();
   }
   function markClientNew(links){
-    const expires=Date.now()+NEW_TTL;
-    (links||[]).forEach(link=>{link=normalizeLink(link);if(link)clientNewLinks.set(link,expires)});
-    try{sessionStorage.setItem('underreported-client-new-v23',JSON.stringify([...clientNewLinks]))}catch(e){}
+    const now=Date.now();
+    (links||[]).forEach(raw=>{
+      const link=normalizeLink(raw);if(!link)return;
+      if(!clientFirstSeen.has(link)&&!serverFirstSeen.has(link))clientFirstSeen.set(link,now);
+    });
+    saveClient();
   }
-  function restoreClientNew(){
-    try{
-      const rows=JSON.parse(sessionStorage.getItem('underreported-client-new-v23')||'[]');
-      if(Array.isArray(rows))rows.forEach(row=>{if(Array.isArray(row)&&row.length===2)clientNewLinks.set(normalizeLink(row[0]),Number(row[1])||0)});
-    }catch(e){}
-    pruneClientNew();
+  function firstSeenFor(link){
+    link=normalizeLink(link);if(!link)return 0;
+    const server=Number(serverFirstSeen.get(link)||0);if(server)return server;
+    pruneClient();return Number(clientFirstSeen.get(link)||0);
   }
-  function isKnownNew(link){
-    link=normalizeLink(link);if(!link)return false;
-    pruneClientNew();
-    if(clientNewLinks.has(link))return true;
-    return Date.now()-serverStatsAt<=NEW_TTL&&serverNewLinks.has(link);
+  function classifyTimes(publishedAt,firstSeenAt,now=Date.now()){
+    const pub=Number(publishedAt)||0,first=Number(firstSeenAt)||0;
+    const siteAge=first?now-first:Infinity;
+    const pubAge=pub?now-pub:Infinity;
+    if(first&&siteAge>=-CLOCK_SLOP&&siteAge<=RED_SITE_TTL)return 'red';
+    if(pub&&pubAge>=-CLOCK_SLOP&&pubAge<=BLUE_PUBLISHED_TTL)return 'blue';
+    if(first&&siteAge>=-CLOCK_SLOP&&siteAge<=YELLOW_SITE_TTL&&pub&&pubAge>YELLOW_MIN_PUBLISHED_AGE)return 'yellow';
+    return '';
+  }
+  window.__classifyNewBadgeV26=classifyTimes;
+
+  function scheduleNextChange(pub,first,now){
+    const points=[];
+    if(first){points.push(first+RED_SITE_TTL,first+YELLOW_SITE_TTL)}
+    if(pub)points.push(pub+BLUE_PUBLISHED_TTL);
+    return points.filter(x=>x>now+250).sort((a,b)=>a-b)[0]||0;
   }
   function decorate(){
+    const pubs=publicationMap(),now=Date.now();let next=0;
     document.querySelectorAll('#news-feed .news-item').forEach(card=>{
       const h=card.querySelector('h3');if(!h)return;
       const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
-      const fresh=isKnownNew(href);
-      const existing=h.querySelector('.new-badge');
-      if(fresh&&!existing){
-        const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';
-        badge.title='Newly discovered by Underreported within the last hour';h.appendChild(badge);
-      }else if(!fresh&&existing){existing.remove()}
+      const first=firstSeenFor(href),pub=pubs.get(href)||0;
+      const state=classifyTimes(pub,first,now);
+      let badge=h.querySelector('.new-badge');
+      if(!state){if(badge)badge.remove();return}
+      if(!badge){badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';h.appendChild(badge)}
+      badge.classList.remove('new-badge-red','new-badge-blue','new-badge-yellow');
+      badge.classList.add('new-badge-'+state);
+      if(state==='red')badge.title='New to Underreported within the last hour';
+      if(state==='blue')badge.title='Published within the last three hours';
+      if(state==='yellow')badge.title='Older article newly added to Underreported within the last three hours';
+      const change=scheduleNextChange(pub,first,now);if(change&&(!next||change<next))next=change;
     });
+    if(badgeTimer)clearTimeout(badgeTimer);
+    if(next)badgeTimer=setTimeout(decorate,Math.max(500,next-Date.now()+100));
   }
   window.decorateNewBadges=decorate;
   window.__markNewArticleLinksV23=function(links){markClientNew(links);decorate()};
@@ -1435,17 +1488,19 @@ syncDiscoveryButton();
     try{
       const r=await fetch(SERVER_STATS+'?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
       const stats=await r.json();
-      const at=Date.parse(stats.updatedAt||'')||0;
-      serverStatsAt=at;
-      serverNewLinks=(at&&Date.now()-at<=NEW_TTL)?new Set((stats.newLinks||[]).map(normalizeLink)):new Set();
-    }catch(e){console.warn('V2.3 new-article statistics unavailable:',e)}
+      const map=new Map();
+      if(stats.firstSeenAt&&typeof stats.firstSeenAt==='object'){
+        Object.entries(stats.firstSeenAt).forEach(([raw,stamp])=>{const link=normalizeLink(raw),at=Date.parse(stamp)||Number(stamp)||0;if(link&&at)map.set(link,at)});
+      }else{
+        const at=Date.parse(stats.updatedAt||'')||0;
+        (stats.newLinks||[]).forEach(raw=>{const link=normalizeLink(raw);if(link&&at)map.set(link,at)});
+      }
+      serverFirstSeen=map;
+    }catch(e){console.warn('NEW article statistics unavailable:',e)}
     decorate();
   }
 
-  // Compatibility sink for older generated refresh code. A positive count is
-  // never permission to make sound; only an actual new link found below is.
   window.__queueNewArticlePopV23=function(count){return Number(count)||0};
-
   function playOnlyForVerifiedNew(count){
     if(!(count>0))return false;
     if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
@@ -1473,24 +1528,21 @@ syncDiscoveryButton();
     refreshWrapped=true;
   }
 
-  // Android/Chrome requires a user gesture to unlock audio. Enabling alerts is
-  // intentionally silent; the next verified new-article event is the first pop.
   document.addEventListener('click',function(e){
     const btn=e.target?.closest?.('#sound-alerts-toggle');if(!btn)return;
     e.preventDefault();e.stopImmediatePropagation();
     if(typeof window.enableNewArticleSound==='function')void window.enableNewArticleSound(false);
   },true);
 
-  restoreClientNew();
-  wrapRefresh();
-  void syncServerNew();
+  restoreClient();wrapRefresh();void syncServerNew();
   const feed=document.getElementById('news-feed');
   if(feed)new MutationObserver(decorate).observe(feed,{childList:true,subtree:true});
   document.addEventListener('underreported:feed-rendered',decorate);
   window.__alertsNewV23=true;
+  window.__alertsNewV26=true;
 })();
 </script>
 
-<script src="assets/location-content-v25.js?v=1"></script>
+<script src="assets/location-content-v25.js?v=2"></script>
 </body>
 </html>

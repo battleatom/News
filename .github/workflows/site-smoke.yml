@@ -30,8 +30,10 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-http.log 2>&1 &
           echo $! > /tmp/news-http.pid
           sleep 2
-      - name: Test every tab and interactive feature
-        run: python tests/site_smoke.py
+      - name: Test V2.6 Presidential, merged State, NEW badges and responsive UI
+        run: python tests/site_smoke_v26.py
+      - name: Test alert audio gate
+        run: python tests/audio_debug.py
       - name: Show server log on failure
         if: failure()
         run: cat /tmp/news-http.log || true

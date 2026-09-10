@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header, v2.6-presidential-state-newbadges]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -30,6 +30,7 @@ jobs:
         run: |
           python scripts/patch_collector_hygiene.py
           python scripts/patch_region_state_tags.py
+          python scripts/patch_presidential_us_only.py
 
       - name: Build V2 page in canonical order
         run: python scripts/build_site.py
@@ -37,7 +38,7 @@ jobs:
       - name: Audit generated site
         run: python scripts/site_audit.py
 
-      - name: Validate Python syntax and V2 invariants
+      - name: Validate Python syntax and V2.6 invariants
         run: |
           python -m py_compile scripts/*.py tests/*.py
           python - <<'PY'
@@ -45,21 +46,28 @@ jobs:
           html=Path('index.html').read_text(encoding='utf-8')
           collector=Path('scripts/update_news.py').read_text(encoding='utf-8')
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
+          stats=Path('scripts/record_pull_stats.py').read_text(encoding='utf-8')
+          location_js=Path('assets/location-content-v25.js').read_text(encoding='utf-8')
           required=(
               'data-underreported-version="2"',
               'styles/v2.css?v=5',
               'assets/location-v2.js?v=2',
               'assets/app-v2.js?v=3',
-              'assets/location-content-v25.js?v=1',
+              'assets/location-content-v25.js?v=2',
               'auto-refresh-timer-v1',
               'bookmarks-v1',
               'related-coverage-v1',
               'alerts-status-v22',
               'alerts-new-v23',
+              'new-badge-v26-style',
+              '__alertsNewV26',
           )
           missing=[x for x in required if x not in html]
           if missing:
-              raise SystemExit('Missing V2 generated markers: '+', '.join(missing))
+              raise SystemExit('Missing V2.6 generated markers: '+', '.join(missing))
+          for marker in ('__locationContentV26','mergedStatePool','removeMergedTabs','__presidentialRelevantV26'):
+              if marker not in location_js:
+                  raise SystemExit('Missing V2.6 external location controller marker: '+marker)
           forbidden=(
               'setInterval(decorate,1500)',
               'setInterval(()=>{ensureBookmarkTab();},1000)',
@@ -74,18 +82,23 @@ jobs:
               raise SystemExit('Legacy generated behavior remains: '+', '.join(found))
           if 'item["state"] = region_query_state(region_query)' not in collector or '<state>' not in collector:
               raise SystemExit('Regional state tagging is not installed in collector')
+          if 'is_us_presidential_story' not in collector or 'category == "presidential" and not is_us_presidential_story' not in collector:
+              raise SystemExit('Strict U.S. Presidential filter is not installed')
+          if 'firstSeenAt' not in stats:
+              raise SystemExit('Persistent first-seen NEW timing is not installed')
           if "- 'markets.json'" not in workflow:
               raise SystemExit('Market data is not ignored by news push trigger')
-          if 'python scripts/patch_region_state_tags.py' not in workflow:
-              raise SystemExit('Production workflow does not install regional state tags')
+          for required_step in ('python scripts/patch_region_state_tags.py','python scripts/patch_presidential_us_only.py'):
+              if required_step not in workflow:
+                  raise SystemExit('Production workflow missing '+required_step)
           if 'git merge --no-edit -X ours origin/main' in workflow:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
-          for marker in ('sound-alerts-toggle','Next in','duplicates removed','__queueNewArticlePopV23','__markNewArticleLinksV23'):
+          for marker in ('sound-alerts-toggle','Next in','duplicates removed','__queueNewArticlePopV23','__markNewArticleLinksV23','__classifyNewBadgeV26'):
               if marker not in html:
                   raise SystemExit('Missing alert/status marker: '+marker)
           if '<script id="pull-stats-ui-v1">' in html:
-              raise SystemExit('Legacy status controller still present alongside V2.2/V2.3')
-          print('V2.5 static invariants pass.')
+              raise SystemExit('Legacy status controller still present alongside V2.2/V2.6')
+          print('V2.6 static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -99,14 +112,11 @@ jobs:
           echo $! > /tmp/news-preview-http.pid
           sleep 2
 
-      - name: Verify Denver location, pagination, and masthead
-        run: python tests/v25_location_smoke.py
+      - name: Verify V2.6 Presidential, State merge, and NEW badges
+        run: python tests/site_smoke_v26.py
 
       - name: Diagnose alert-enable audio path
         run: python tests/audio_debug.py
-
-      - name: Run desktop and mobile browser tests
-        run: python tests/site_smoke.py
 
       - name: Show server log on failure
         if: failure()
