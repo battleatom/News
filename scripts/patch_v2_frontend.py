@@ -21,10 +21,13 @@ head='''\n<link rel="stylesheet" href="styles/v2.css?v=3">\n<script src="assets/
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
-if '<body>' in s:
-    s=s.replace('<body>','<body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a>',1)
-elif '<body ' in s and 'data-underreported-version=' not in s:
-    s=s.replace('<body ','<body data-underreported-version="2" ',1)
+# Always restore the body marker and skip link, including on an already-built V2 page.
+body_match=re.search(r'<body([^>]*)>',s,flags=re.I)
+if not body_match:raise SystemExit('Missing <body>')
+attrs=body_match.group(1)
+attrs=re.sub(r'\s+data-underreported-version=("[^"]*"|\'[^\']*\')','',attrs,flags=re.I)
+replacement='<body'+attrs+' data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a>'
+s=s[:body_match.start()]+replacement+s[body_match.end():]
 
 app='''\n<script src="assets/app-v2.js?v=3"></script>\n'''
 if '</body>' not in s:raise SystemExit('Missing </body>')
