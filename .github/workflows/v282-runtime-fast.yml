@@ -1,0 +1,65 @@
+name: Underreported V2.8.2 Fast Runtime Gate
+
+on:
+  push:
+    branches: [stabilize-v2.8.2-runtime]
+    paths-ignore:
+      - 'News'
+      - 'index.html'
+      - 'update-stats.json'
+      - 'boxoffice.json'
+      - 'state-legislation.json'
+      - 'markets.json'
+      - 'refresh-health.json'
+      - 'scripts/update_news.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: underreported-v282-fast-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - name: Build final runtime from existing feed
+        run: python scripts/build_site.py
+      - name: Audit final generated page
+        run: python scripts/site_audit.py
+      - name: Verify ownership and syntax
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python - <<'PY'
+          from pathlib import Path
+          h=Path('index.html').read_text(encoding='utf-8')
+          assert h.count('id="alerts-status-v22"') == 1
+          assert h.count('window.playNewArticlePop=function') == 1
+          assert 'let audioContext=null,audioUnlocked=false;' not in h
+          assert '__loadMoreRevealOnlyV282=true' in h
+          assert '__alertsStatusV282=true' in h
+          assert '__alertsNewV282=true' in h
+          print('Single-owner runtime structure PASS')
+          PY
+      - name: Install Playwright
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start preview
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/v282-fast.log 2>&1 &
+          sleep 2
+      - name: Full feature browser suite
+        run: python tests/site_smoke.py
+      - name: Targeted Load More, audio toggle, badge and NM suite
+        run: python tests/site_smoke_v281.py
+      - name: Audio timing and once-only suite
+        run: python tests/audio_v281.py
+      - name: Logs on failure
+        if: failure()
+        run: cat /tmp/v282-fast.log || true
