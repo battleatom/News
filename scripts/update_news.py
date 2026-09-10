@@ -214,7 +214,7 @@ TRUSTED_CATEGORY_FALLBACKS = {
     ],
 }
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -279,6 +279,15 @@ UNDERREPORTED_DISCOVERY_QUERIES = [
     ("Source New Mexico", "site:sourcenm.com New Mexico legislature environment health labor"),
     ("Searchlight New Mexico", "site:searchlightnm.org New Mexico investigation children health government"),
     ("Stateline", "site:stateline.org state policy legislation health housing labor"),
+]
+
+LEGISLATION_JOURNALISM_QUERIES = [
+    ("Source New Mexico", "site:sourcenm.com (bill OR legislature OR law OR regulation OR executive order) New Mexico"),
+    ("New Mexico In Depth", "site:nmindepth.com (bill OR legislature OR law OR regulation) New Mexico"),
+    ("Searchlight New Mexico", "site:searchlightnm.org (bill OR law OR legislature OR regulation) New Mexico"),
+    ("Tri-City Record", "site:tricityrecordnm.com (ordinance OR city council OR county commission OR law) Farmington"),
+    ("Durango Herald", "site:durangoherald.com (ordinance OR city council OR county commission OR law) Durango"),
+    ("The Journal", "site:the-journal.com (ordinance OR city council OR county commission OR law) Cortez"),
 ]
 
 UNDERREPORTED_PAYWALL_SOURCE_TOKENS = (
@@ -584,6 +593,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -664,9 +675,90 @@ def underreported_topic(item):
 def underreported_source_allowed(item):
     source = source_key(item.get('source') or '')
     raw = (item.get('source') or '').lower()
+    title = (item.get('title') or '').lower()
     if any(token.replace(' ','') in source or token in raw for token in UNDERREPORTED_PAYWALL_SOURCE_TOKENS):
         return False
+    ceremonial = ('patriot day', 'proclamation', 'personal vision', 'historic results', 'promises made', 'remarks by', 'statement from the president')
+    if any(term in title for term in ceremonial):
+        return False
+    government_source = any(term in raw for term in ('white house', 'congress.gov', 'congress gov', 'federal register', '.gov'))
+    accountability_or_action = any(term in title for term in (
+        'audit', 'report', 'investigation', 'inspector general', 'enforcement', 'settlement',
+        'bill', 'act', 'law', 'resolution', 'executive order', 'final rule', 'proposed rule',
+        'regulation', 'ordinance', 'veto', 'passes', 'passed', 'signed'
+    ))
+    if government_source and not accountability_or_action:
+        return False
+    if 'congress' in raw:
+        years = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', title)]
+        current_year = datetime.now(timezone.utc).year
+        if years and min(years) < current_year - 2:
+            return False
     return True
+
+
+def legislation_action_allowed(item):
+    title = (item.get('title') or '').lower()
+    source = (item.get('source') or '').lower()
+    if any(term in title for term in (
+        'public inspection: combined filings', 'public inspection: new postal products',
+        'personal vision', 'historic results', 'promises made, promises kept',
+        'patriot day', 'proclamation', 'remarks by', 'representative ', 'senator '
+    )):
+        if not any(term in title for term in (' bill ', ' h.r.', ' s.', ' act ', ' resolution ', 'passes', 'passed', 'signed', 'veto')):
+            return False
+    years = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', title)]
+    current_year = datetime.now(timezone.utc).year
+    if years and min(years) < current_year - 2 and ('congress' in source or 'federal register' in source):
+        return False
+    strong_actions = (
+        'signed into law', 'signs bill', 'signed bill', 'enacted', 'passes house', 'house passes',
+        'passes senate', 'senate passes', 'passed the house', 'passed the senate', 'veto',
+        'executive order', 'final rule', 'proposed rule', 'rulemaking', 'regulation', 'rescission',
+        'repeal', 'ordinance', 'amendment', 'resolution', 'legislation', ' bill ', ' h.r.', ' s.'
+    )
+    if any(term in f' {title} ' for term in strong_actions):
+        return True
+    if 'federal register' in source and any(term in title for term in (
+        'requirements', 'standards', 'eligibility', 'registration', 'fee for', 'ban on',
+        'regulation of', 'amendments to', 'rule on', 'rules for'
+    )):
+        return True
+    return False
+
+
+def legislation_score(item, newest_time):
+    title = (item.get('title') or '').lower()
+    source = (item.get('source') or '').lower()
+    score = impact_score(item, newest_time)
+    if any(term in title for term in ('signed into law','signed bill','enacted','veto')): score += 34
+    elif any(term in title for term in ('passes house','house passes','passes senate','senate passes','passed the house','passed the senate')): score += 30
+    elif 'executive order' in title: score += 28
+    elif 'final rule' in title: score += 25
+    elif any(term in title for term in ('proposed rule','regulation','rescission','repeal')): score += 20
+    else: score += 12
+    if any(term in title for term in ('new mexico','farmington','san juan county','durango','cortez')): score += 22
+    if any(term in source for term in ('source new mexico','new mexico in depth','searchlight new mexico','tri-city record','durango herald','the journal')): score += 12
+    return score
+
+
+def select_legislation_stories(items, limit=30):
+    valid = [item for item in items if legislation_action_allowed(item)]
+    if not valid:
+        return []
+    newest_time = max(x['published'] for x in valid)
+    ranked = sorted(valid, key=lambda x: (legislation_score(x, newest_time), x['published']), reverse=True)
+    selected=[]; seen=set(); source_counts={}
+    for item in ranked:
+        k=key(item); src=source_key(item.get('source') or 'Unknown')
+        if not k or k in seen or source_counts.get(src,0) >= 5:
+            continue
+        related = next((prior for prior in selected if same_event_topic(prior,item)), None)
+        if related is not None:
+            attach_related(related,item); continue
+        selected.append(item); seen.add(k); source_counts[src]=source_counts.get(src,0)+1
+        if len(selected)>=limit: break
+    return selected
 
 
 def select_underreported(unique):
@@ -687,8 +779,7 @@ def select_underreported(unique):
             'contamination','pollution','hospital','medicaid','workers','labor','privacy','surveillance',
             'civil rights','tribal','indigenous','veteran','fraud','regulation','legislation','bill','law'
         )) else 0
-        # Famous-person coverage is allowed, but fame alone should not make something underreported.
-        celebrity_penalty = 8 if any(t in text for t in ('donald trump','president trump','elon musk')) and public_interest_bonus < 12 else 0
+        celebrity_penalty = 10 if any(t in text for t in ('donald trump','president trump','elon musk')) and public_interest_bonus < 12 else 0
         score = impact + public_interest_bonus - celebrity_penalty
         if score < 24:
             continue
@@ -732,6 +823,8 @@ def select_underreported(unique):
 
 def select_category_stories(items, limit=30):
     """Select up to 30 distinct stories, with Local queries treated as the geographic scope."""
+    if items and items[0].get("category") == "legislation":
+        return select_legislation_stories(items, limit=limit)
     if items and items[0].get("category") == "local":
         local_terms = (
             "farmington", "san juan county", "aztec", "bloomfield", "kirtland",
@@ -994,6 +1087,14 @@ def main():
                                 break
                         except Exception as exc:
                             print(f"{category} fallback failed for {fallback_source}: {exc}")
+            if category == "legislation":
+                for fallback_source, fallback_query in LEGISLATION_JOURNALISM_QUERIES:
+                    try:
+                        batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                        items.extend(batch)
+                        print(f"legislation journalism/{fallback_source}: {len(batch)} fresh stories")
+                    except Exception as exc:
+                        print(f"Legislation journalism failed for {fallback_source}: {exc}")
             print(f"{category}: {len(items)} fresh stories before dedupe")
             all_items.extend(items)
         except Exception as exc:
