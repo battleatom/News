@@ -61,7 +61,7 @@ def desktop_suite(browser):
     market_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", market.element_handle())
     assert market_overflow <= 4, f'Desktop markets overflow horizontally by {market_overflow}px'
 
-    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Laws & Legislation','New Mexico','Local / Four Corners','Region','Technology','Gaming','Military','Box Office','Bookmarks']
+    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Laws & Legislation','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
     results={}
     for name in expected:
         label=click_tab(page,name)
