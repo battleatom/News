@@ -71,7 +71,7 @@ def desktop_suite(browser):
     assert page.locator('#more-menu-v2').count()==0, 'Retired More menu is still present'
     assert page.locator('#markets').count()==1 or page.locator('.markets').count()>=1, 'Markets strip missing'
 
-    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Laws & Legislation','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
+    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Federal + New Mexico','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
     direct_labels=[(t or '').strip() for t in page.locator('#tabs > .tab').all_text_contents()]
     for name in expected:
         assert any(name.lower() in label.lower() for label in direct_labels), f'{name} missing from visible tab strip'
