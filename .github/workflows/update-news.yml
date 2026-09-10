@@ -9,6 +9,9 @@ on:
       - 'update-stats.json'
       - 'boxoffice.json'
       - 'state-legislation.json'
+      - 'markets.json'
+      - 'refresh-health.json'
+      - 'scripts/update_news.py'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -62,38 +65,8 @@ jobs:
       - name: Tighten category quality
         run: python scripts/patch_category_quality.py
 
-      - name: Canonicalize collector patch artifacts
+      - name: Canonicalize and optimize collector
         run: python scripts/patch_collector_hygiene.py
-
-      - name: Apply site theme
-        run: python scripts/apply_clean_design.py
-
-      - name: Apply live local date time and weather
-        run: python scripts/add_local_status.py
-
-      - name: Apply page-level newspaper header
-        run: python scripts/patch_header.py
-
-      - name: Persist selected news tab
-        run: python scripts/persist_active_tab.py
-
-      - name: Apply article styling
-        run: python scripts/patch_article_style.py
-
-      - name: Patch location-aware Regional tab
-        run: python scripts/patch_region_tab.py
-
-      - name: Fix Regional tab click handling
-        run: python scripts/fix_region_tab_click.py
-
-      - name: Persist detected state code
-        run: python scripts/patch_location_state.py
-
-      - name: Patch Underreported detail UI
-        run: python scripts/patch_underreported_ui.py
-
-      - name: Patch X Top Issues UI
-        run: python scripts/patch_x_ui.py
 
       - name: Update RSS feed
         run: |
@@ -110,8 +83,23 @@ jobs:
               sleep "$delay"
             fi
           done
-          if [ "$success" -ne 1 ]; then
-            echo "All RSS update attempts failed. Preserving the existing News feed and continuing the workflow."
+          if [ "$success" -eq 1 ]; then
+            python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          with open('refresh-health.json','w',encoding='utf-8') as f:
+              json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2)
+              f.write('\n')
+          PY
+          else
+            echo "All RSS update attempts failed. Preserving the existing News feed and marking the refresh degraded."
+            python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          with open('refresh-health.json','w',encoding='utf-8') as f:
+              json.dump({'status':'degraded','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated collection failed after three attempts. The previous validated feed is still being served.'},f,indent=2)
+              f.write('\n')
+          PY
           fi
 
       - name: Refine Gaming and upcoming Technology
@@ -150,44 +138,8 @@ jobs:
       - name: Finalize feed pull statistics
         run: python scripts/record_pull_stats.py --finalize
 
-      - name: Canonicalize final page features
-        run: python scripts/patch_site_features.py
-
-      - name: Bridge shared page state
-        run: python scripts/patch_shared_page_state.py
-
-      - name: Apply reliable automatic refresh timer
-        run: python scripts/patch_auto_refresh_timer.py
-
-      - name: Apply location-aware Box Office UI
-        run: python scripts/patch_boxoffice_ui.py
-
-      - name: Apply detailed pull statistics UI
-        run: python scripts/patch_pull_stats_ui.py
-
-      - name: Apply persistent article bookmarks
-        run: python scripts/patch_bookmarks.py
-
-      - name: Add live NFL scoreboard presentation
-        run: python scripts/patch_nfl_live.py
-
-      - name: Expire NEW badges and wire notification audio
-        run: python scripts/patch_new_badges.py
-
-      - name: Add Load More pagination
-        run: python scripts/patch_load_more.py
-
-      - name: Add Laws & Legislation card UI
-        run: python scripts/patch_legislation_ui.py
-
-      - name: Make legislation location aware
-        run: python scripts/patch_legislation_location.py
-
-      - name: Deduplicate generated UI blocks
-        run: python scripts/dedupe_generated_ui.py
-
-      - name: Normalize generated HTML structure
-        run: python scripts/normalize_generated_html.py
+      - name: Build final site in one deterministic pass
+        run: python scripts/build_site.py
 
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
@@ -200,11 +152,11 @@ jobs:
           rm -f scripts/collect_official_legislation.py
           find scripts -type d -name __pycache__ -prune -exec rm -rf {} +
 
-      - name: Commit and push changes
+      - name: Commit and push validated changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A News index.html update-stats.json boxoffice.json scripts
+          git add -A News index.html update-stats.json boxoffice.json refresh-health.json scripts
           if git diff --cached --quiet; then
             echo 'No changes to commit.'
             exit 0
@@ -215,13 +167,13 @@ jobs:
               echo "Push succeeded on attempt ${attempt}."
               exit 0
             fi
-            echo "Push rejected; synchronizing with latest main before retry ${attempt}."
+            echo "Push rejected; rebasing onto latest main before retry ${attempt}."
             git fetch origin main
-            git merge --no-edit -X ours origin/main || {
-              echo 'Unable to merge concurrent main changes safely.'
-              git merge --abort || true
+            if ! git rebase origin/main; then
+              echo 'Concurrent changes conflict with this generated update; refusing to resolve silently.'
+              git rebase --abort || true
               exit 1
-            }
+            fi
             if [ "$attempt" -lt 3 ]; then sleep 3; fi
           done
           echo 'Push failed after 3 attempts.'
