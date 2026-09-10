@@ -12,6 +12,16 @@ OUT = "News"
 SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "legislation", "nm", "local", "region", "nfl", "technology", "gaming", "military"]
 MAX_AGE_HOURS = 48
 
+US_STATE_NAMES = {
+    'Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming'
+}
+
+def region_query_state(query):
+    candidate=re.sub(r'\s+news$', '', str(query), flags=re.I).strip()
+    if candidate.lower()=='washington state': candidate='Washington'
+    return candidate if candidate in US_STATE_NAMES else ''
+
+
 QUERIES = {
     "nfl": [
         "NFL news",
@@ -1028,7 +1038,7 @@ def build(items):
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>', '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
     for item in items:
         guid = hashlib.sha1((item["link"] + "|" + item["category"]).encode("utf-8")).hexdigest()
-        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>', f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>', f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>', f'<region>{xml_escape(item.get("region", ""))}</region>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>']
+        out += ["<item>", f'<title>{xml_escape(item["title"])}</title>', f'<link>{xml_escape(item["link"])}</link>', f'<description>{xml_escape(item.get("description", ""))}</description>', f'<pubDate>{xml_escape(item["pubDate"])}</pubDate>', f'<source>{xml_escape(item["source"])}</source>', f'<category>{item["category"]}</category>', f'<region>{xml_escape(item.get("region", ""))}</region>', f'<state>{xml_escape(item.get("state", ""))}</state>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>']
         related=item.get('_relatedArticles', [])
         if related:
             out.append('<relatedArticles>')
@@ -1079,6 +1089,8 @@ def main():
                             batch = parse_items(fetch(region_query), category)
                             for item in batch:
                                 item["region"] = region_name
+                                item["state"] = region_query_state(region_query)
+                                item["state"] = region_query_state(region_query)
                             region_count += len(batch)
                             items.extend(batch)
                         except Exception as exc:

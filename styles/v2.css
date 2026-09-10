@@ -1,15 +1,14 @@
-/* Underreported 2.4 — compact mobile layout, full-width desktop, full tab navigation, one clean status row. */
+/* Underreported 2.5 — compact mobile layout, full-width desktop, location-aware navigation. */
 :root{--v2-max:none;--v2-radius:14px;--v2-focus:#2563eb}
 html,body{max-width:100%;overflow-x:hidden}
 .skip-link-v2{position:fixed;left:12px;top:8px;z-index:1000;transform:translateY(-160%);padding:8px 12px;border-radius:9px;background:#fff;color:#111827;font-size:12px;font-weight:800;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.2)}.skip-link-v2:focus{transform:translateY(0)}
 .container{max-width:var(--v2-max)!important}
-header{min-height:90px!important;padding:18px 22px 17px!important;justify-content:center!important;background:linear-gradient(135deg,#0a0b0e,#17191e)!important}
-header::before,header::after{display:none!important;content:none!important}
+header{min-height:90px!important;padding:18px 285px 17px 22px!important;justify-content:center!important;background:radial-gradient(circle at 86% 35%,rgba(255,255,255,.08),transparent 22%),linear-gradient(135deg,#0a0b0e,#17191e)!important}
+header h1,header p{max-width:none!important}
 header h1{font-size:30px!important;letter-spacing:-1.3px!important;margin:0 0 4px!important}
-header p{max-width:none!important;font-size:12px!important;color:#b7bac2!important;margin:0!important}
+header p{font-size:12px!important;color:#b7bac2!important;margin:0!important}
 .toolbar{min-height:42px!important;padding:6px 14px!important}
 #status{max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* The older pull-status row duplicates the newer compact status panel. Keep only one visible row. */
 #pull-status,.pull-status{display:none!important}
 #pull-stats-ui{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:6px!important;min-height:30px!important;padding:5px 12px!important;font-size:10px!important;line-height:1.25!important;white-space:nowrap!important;overflow-x:auto!important;scrollbar-width:none!important}
 #pull-stats-ui::-webkit-scrollbar{display:none!important}
@@ -48,7 +47,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--v2-focus)!important
 }
 @media(prefers-color-scheme:dark){.skip-link-v2{background:#2c2c2e;color:#f5f5f7}body[data-active-tab="top"] .section-body>.lead-story-v2{background:linear-gradient(145deg,rgba(52,52,54,.96),rgba(35,35,38,.96))!important}.news-item-v2-kicker{background:rgba(124,58,237,.18);color:#c4a8ff}.underreported-signal-v2{border-color:rgba(196,168,255,.25);background:rgba(124,58,237,.18);color:#c4a8ff}}
 @media(max-width:760px){
-  header{min-height:78px!important;padding:14px 14px!important}header h1{font-size:25px!important}header p{font-size:11px!important}
+  header{min-height:78px!important;padding:14px 118px 14px 14px!important}header h1{font-size:25px!important}header p{font-size:11px!important}
   .toolbar{padding:5px 9px!important;gap:5px!important;min-height:38px!important}.local-status{margin-left:auto!important}
   #pull-stats-ui{padding:5px 9px!important;font-size:9.5px!important;min-height:28px!important}
   .tabs{top:38px!important;padding:5px 7px!important;min-height:41px!important}.tab{padding:7px 9px!important;font-size:10px!important}
@@ -58,5 +57,5 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--v2-focus)!important
   body[data-active-tab="top"] .section-body>.lead-story-v2{padding:12px 11px!important}
   body[data-active-tab="top"] .lead-story-v2 h3,body[data-active-tab="top"] .lead-story-v2 h3 a{font-size:20px!important;line-height:1.22!important}
 }
-@media(max-width:420px){#status{display:none!important}.local-status .local-date{display:none}.toolbar{gap:5px!important}#refresh{min-width:0!important;padding:6px 9px!important}}
+@media(max-width:420px){#status{display:none!important}.local-status .local-date{display:none}.toolbar{gap:5px!important}#refresh{min-width:0!important;padding:6px 9px!important}header{padding-right:92px!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

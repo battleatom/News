@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup, v2.2-new-status-audio, v2.3-new-badges-audio, v2.5-location-government-header]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -27,7 +27,9 @@ jobs:
           fetch-depth: 0
 
       - name: Optimize generated collector
-        run: python scripts/patch_collector_hygiene.py
+        run: |
+          python scripts/patch_collector_hygiene.py
+          python scripts/patch_region_state_tags.py
 
       - name: Build V2 page in canonical order
         run: python scripts/build_site.py
@@ -41,12 +43,14 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           html=Path('index.html').read_text(encoding='utf-8')
+          collector=Path('scripts/update_news.py').read_text(encoding='utf-8')
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
           required=(
               'data-underreported-version="2"',
-              'styles/v2.css?v=3',
+              'styles/v2.css?v=5',
               'assets/location-v2.js?v=2',
               'assets/app-v2.js?v=3',
+              'assets/location-content-v25.js?v=1',
               'auto-refresh-timer-v1',
               'bookmarks-v1',
               'related-coverage-v1',
@@ -68,16 +72,20 @@ jobs:
           found=[x for x in forbidden if x in html]
           if found:
               raise SystemExit('Legacy generated behavior remains: '+', '.join(found))
+          if 'item["state"] = region_query_state(region_query)' not in collector or '<state>' not in collector:
+              raise SystemExit('Regional state tagging is not installed in collector')
           if "- 'markets.json'" not in workflow:
               raise SystemExit('Market data is not ignored by news push trigger')
+          if 'python scripts/patch_region_state_tags.py' not in workflow:
+              raise SystemExit('Production workflow does not install regional state tags')
           if 'git merge --no-edit -X ours origin/main' in workflow:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
           for marker in ('sound-alerts-toggle','Next in','duplicates removed','__queueNewArticlePopV23','__markNewArticleLinksV23'):
               if marker not in html:
-                  raise SystemExit('Missing V2.3 alert/status marker: '+marker)
+                  raise SystemExit('Missing alert/status marker: '+marker)
           if '<script id="pull-stats-ui-v1">' in html:
               raise SystemExit('Legacy status controller still present alongside V2.2/V2.3')
-          print('V2.3 static invariants pass.')
+          print('V2.5 static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -90,6 +98,9 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-preview-http.log 2>&1 &
           echo $! > /tmp/news-preview-http.pid
           sleep 2
+
+      - name: Verify Denver location, pagination, and masthead
+        run: python tests/v25_location_smoke.py
 
       - name: Diagnose alert-enable audio path
         run: python tests/audio_debug.py

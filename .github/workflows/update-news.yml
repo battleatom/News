@@ -68,6 +68,9 @@ jobs:
       - name: Canonicalize and optimize collector
         run: python scripts/patch_collector_hygiene.py
 
+      - name: Tag regional stories by state
+        run: python scripts/patch_region_state_tags.py
+
       - name: Update RSS feed
         run: |
           success=0
