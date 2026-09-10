@@ -18,14 +18,14 @@ def click_key(page,key):
     tab.first.click(); page.wait_for_timeout(300)
 
 
-def wait_feed(page,allow_loading=False):
+def wait_feed(page,allow_loading=False,label='unknown'):
     page.wait_for_selector('#news-feed')
     if not allow_loading:
         try: page.wait_for_function("!document.querySelector('#news-feed')?.innerText?.includes('Loading news')",timeout=12000)
-        except PlaywrightTimeoutError: raise AssertionError('Feed remained stuck on Loading news')
+        except PlaywrightTimeoutError: raise AssertionError(f'{label}: feed remained stuck on Loading news')
     text=(page.locator('#news-feed').inner_text() or '').strip()
-    assert text, 'Feed rendered no text'
-    assert 'Update failed' not in text, text[:200]
+    assert text, f'{label}: feed rendered no text'
+    assert 'Update failed' not in text, f'{label}: '+text[:200]
 
 
 def unique_titles(page):
@@ -46,7 +46,7 @@ def assert_status(page):
 def desktop(browser):
     context=browser.new_context(viewport={'width':1440,'height':1000},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
     page=context.new_page(); errors=[]; page.on('pageerror',lambda exc: errors.append(str(exc)))
-    page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page); page.wait_for_timeout(1300)
+    page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page,label='initial'); page.wait_for_timeout(1300)
 
     for expr,msg in [
         ('window.__underreportedV2===true','V2 controller missing'),
@@ -63,11 +63,11 @@ def desktop(browser):
     assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
 
-    # Every intended current destination renders and its controls remain usable.
     keys=['top','nfl','x','underreported','world','us','presidential','federal','legislation','nm','technology','gaming','military','boxoffice','bookmarks']
     for key in keys:
+        print('CHECK TAB',key,flush=True)
         click_key(page,key)
-        wait_feed(page,allow_loading=key in ('nfl','boxoffice'))
+        wait_feed(page,allow_loading=key in ('nfl','boxoffice'),label=key)
         if key in ('nfl','boxoffice'): page.wait_for_timeout(1500)
         body=(page.locator('#news-feed').inner_text() or '').strip()
         assert body and 'Loading news' not in body, f'{key} failed to render'
@@ -78,7 +78,6 @@ def desktop(browser):
     before=card_titles(page); page.locator('#refresh').click(); page.wait_for_timeout(700); after=card_titles(page)
     if len(before)>=10: assert before!=after, 'Next Top Stories did not rotate visible batch'
 
-    # Bookmarks save/remove.
     page.wait_for_selector('.bookmark-btn',timeout=5000)
     page.locator('.bookmark-btn').first.click(); page.wait_for_timeout(150)
     click_key(page,'bookmarks')
@@ -90,16 +89,11 @@ def desktop(browser):
     assert page.evaluate('Boolean(window.__autoRefreshTimeout)')
     assert_status(page)
 
-    # Publish-age badge behavior only; fetching/first-seen state must not control color.
     now=page.evaluate('Date.now()')
     def cls(hours,first_hours=0):
         return page.evaluate('([p,f,n])=>window.__classifyNewBadgeV26(p,f,n)',[now-hours*3600000,now-first_hours*3600000 if first_hours else 0,now])
-    assert cls(.5,10)=='red'
-    assert cls(2,0)=='blue'
-    assert cls(4,.1)=='yellow'
-    assert cls(7,.1)==''
+    assert cls(.5,10)=='red'; assert cls(2,0)=='blue'; assert cls(4,.1)=='yellow'; assert cls(7,.1)==''
 
-    # Location-specific legislation still follows state selection.
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
     click_key(page,'legislation'); page.wait_for_timeout(500)
     tx=page.locator('#news-feed').inner_text()
@@ -116,7 +110,7 @@ def desktop(browser):
 
 def mobile(browser):
     context=browser.new_context(viewport={'width':390,'height':844},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
-    page=context.new_page(); page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page); page.wait_for_timeout(900)
+    page=context.new_page(); page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page,label='mobile initial'); page.wait_for_timeout(900)
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile body overflow {overflow}px'
     assert page.locator('#tabs > .tab').count()>=15
