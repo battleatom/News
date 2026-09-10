@@ -19,10 +19,9 @@ SCRIPT = r'''<script id="story-search-v1">
 (function(){
   'use strict';
   const input=document.getElementById('story-search');
-  if(!input || typeof render!=='function')return;
+  if(!input)return;
 
   let query='';
-  const baseRender=render;
   const unsupported=new Set(['nfl','boxoffice']);
 
   function itemText(item){
@@ -43,18 +42,20 @@ SCRIPT = r'''<script id="story-search-v1">
     input.placeholder=blocked?'Search unavailable in this live section':'Search stories…';
   }
 
-  render=function(items){
+  function renderSearch(){
     syncAvailability();
-    return baseRender(unsupported.has(String(active||''))?items:filtered(items));
-  };
+    if(typeof window.render!=='function')return;
+    const items=unsupported.has(String(active||''))?allItems:filtered(allItems);
+    window.render(items);
+  }
 
   input.addEventListener('input',function(){
     query=input.value||'';
-    render(allItems);
+    renderSearch();
   });
   input.addEventListener('keydown',function(event){
     if(event.key==='Escape' && input.value){
-      input.value='';query='';render(allItems);input.blur();
+      input.value='';query='';renderSearch();input.blur();
     }
   });
   document.addEventListener('keydown',function(event){
@@ -62,6 +63,13 @@ SCRIPT = r'''<script id="story-search-v1">
       const tag=(document.activeElement?.tagName||'').toLowerCase();
       if(tag!=='input' && tag!=='textarea' && !input.disabled){event.preventDefault();input.focus();}
     }
+  });
+
+  // Search is section-scoped. Switching tabs clears the old query rather than
+  // wrapping render() just to preserve it across unrelated sections.
+  document.getElementById('tabs')?.addEventListener('click',function(){
+    if(input.value){input.value='';query='';}
+    setTimeout(syncAvailability,0);
   });
   syncAvailability();
 })();
@@ -84,4 +92,4 @@ text = text.replace(status, status + HTML, 1)
 text = text.replace('</body>', SCRIPT + '</body>', 1)
 
 path.write_text(text, encoding='utf-8')
-print('Story search UI applied.')
+print('Story search UI applied through the canonical renderer.')
