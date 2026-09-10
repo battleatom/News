@@ -25,4 +25,17 @@ elif 'trusted_gaming_source = source_family' not in g:
     raise SystemExit('Could not relax Gaming source-context filter')
 G.write_text(g, encoding='utf-8')
 
-print('Preflight complete: rolling 48-hour news window, NFL category, and trusted Gaming context verified.')
+# Laws & Legislation must be part of the canonical section registry itself.
+# Injecting the tab only from a later UI wrapper was brittle: subsequent
+# canonical tab rebuilds could drop it even though legislation data remained.
+S = Path('scripts/patch_site_features.py')
+site = S.read_text(encoding='utf-8')
+old_registry = "['federal','🏛️ Federal Government','#ca8a04'],['nm','🏜️ New Mexico','#0f766e']"
+new_registry = "['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e']"
+if old_registry in site:
+    site = site.replace(old_registry, new_registry)
+elif "['legislation','📜 Laws & Legislation','#a16207']" not in site:
+    raise SystemExit('Could not add legislation to canonical tab registry')
+S.write_text(site, encoding='utf-8')
+
+print('Preflight complete: 48-hour news window, NFL, Gaming context, and canonical legislation tab verified.')
