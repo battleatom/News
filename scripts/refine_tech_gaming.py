@@ -49,6 +49,10 @@ TECH_EMERGING = (
 )
 
 LOW_VALUE = ('opinion','review','how to','best ','deal','sale','guide','roundup','explainer')
+NON_ARTICLE_PREFIXES = (
+    'tag:', 'topic:', 'category:', 'author:', 'authors:', 'archive:', 'archives:', 'page:',
+    'search results', 'search:', 'podcasts:', 'videos:', 'gallery:', 'galleries:'
+)
 
 
 def clean(value):
@@ -93,6 +97,19 @@ def canonical_title(item):
     return re.sub(r'[^a-z0-9]+', ' ', title.lower()).strip()
 
 
+def article_like_title(title):
+    value = clean(title)
+    lower = value.lower().strip()
+    if not value or any(lower.startswith(prefix) for prefix in NON_ARTICLE_PREFIXES):
+        return False
+    # Reject obvious publisher taxonomy/navigation pages that sometimes enter
+    # Google News feeds as if they were stories.
+    if re.match(r'^(?:tag|topic|category|author|archive|search)\s*[-–—:|]', lower):
+        return False
+    words = re.findall(r'[A-Za-z0-9][A-Za-z0-9+.-]*', value)
+    return len(words) >= 4
+
+
 def near_same(a, b):
     ca, cb = canonical_title(a), canonical_title(b)
     if not ca or not cb:
@@ -110,6 +127,8 @@ def near_same(a, b):
 def gaming_allowed(item):
     title = text(item, 'title')
     desc = text(item, 'description')
+    if not article_like_title(title):
+        return False
     raw = f'{title} {desc}'.lower()
     if any(term in raw for term in GAMING_JUNK):
         return False
@@ -183,7 +202,7 @@ def fetch_upcoming_tech():
             pub = clean(src_item.findtext('pubDate'))
             source_el = src_item.find('source')
             source = clean(source_el.text if source_el is not None else '')
-            if not title or not link or not source_trusted(source):
+            if not title or not link or not source_trusted(source) or not article_like_title(title):
                 continue
             key = re.sub(r'[^a-z0-9]+',' ',title.lower()).strip()
             if key in seen:
@@ -213,10 +232,17 @@ def refine_technology(existing):
     seen_titles = set()
     for item in combined:
         link = text(item,'link')
+        title = text(item,'title')
         title_key = canonical_title(item)
+        if not article_like_title(title):
+            continue
         if not link or link in seen_links or not title_key or title_key in seen_titles:
             continue
-        seen_links.add(link); seen_titles.add(title_key); unique.append(item)
+        if any(near_same(item, prior) for prior in unique):
+            continue
+        seen_links.add(link)
+        seen_titles.add(title_key)
+        unique.append(item)
     unique.sort(key=lambda i: (tech_score(i), parse_date(text(i,'pubDate'))), reverse=True)
     return unique[:MAX_TECH]
 
@@ -249,7 +275,7 @@ def main():
     replace_category(channel, 'gaming', new_gaming)
     tree.write(NEWS, encoding='utf-8', xml_declaration=True)
     print(f'Gaming quality: {len(gaming)} -> {len(new_gaming)} relevant, deduplicated stories.')
-    print(f'Technology quality: {len(tech)} existing -> {len(new_tech)} stories, with upcoming/emerging tech promoted.')
+    print(f'Technology quality: {len(tech)} existing -> {len(new_tech)} article-only stories; taxonomy pages removed.')
 
 if __name__ == '__main__':
     main()
