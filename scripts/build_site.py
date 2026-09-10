@@ -20,6 +20,9 @@ PATCHERS = [
     'scripts/patch_underreported_ui.py',
     'scripts/patch_x_ui.py',
     'scripts/patch_site_features.py',
+    # Keep refresh hardening explicit in the build graph instead of invoking it
+    # indirectly from patch_shared_page_state.py.
+    'scripts/patch_refresh_success.py',
     'scripts/patch_shared_page_state.py',
     'scripts/patch_auto_refresh_timer.py',
     'scripts/patch_boxoffice_ui.py',
