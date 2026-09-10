@@ -16,8 +16,9 @@ for tag, marker, close in (
             break
         s = s[:a] + s[b + len(close):]
 
-# Route all legacy refresh-time audio requests through the V2.3 event gate.
-# This deliberately queues a notification instead of playing immediately.
+# Retire every legacy direct audio request. The older refresh code can still
+# report its newCount for diagnostics, but only the V2.3 before/after link
+# comparison below is allowed to decide whether a notification sound plays.
 s = s.replace(
     'if(newCount>0)playNewArticlePop();',
     "if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);",
@@ -39,7 +40,6 @@ SCRIPT = r'''<script id="alerts-new-v23">
   let serverNewLinks=new Set();
   let serverStatsAt=0;
   let clientNewLinks=new Map();
-  let queuedNewCount=0;
   let refreshWrapped=false;
 
   function normalizeLink(v){
@@ -101,23 +101,23 @@ SCRIPT = r'''<script id="alerts-new-v23">
     decorate();
   }
 
-  // The older page code may detect a positive newCount while parsing the feed.
-  // Queue that fact; do not make sound until the wrapper verifies actual new links.
-  window.__queueNewArticlePopV23=function(count){queuedNewCount=Math.max(queuedNewCount,Number(count)||0)};
+  // Compatibility sink for older generated refresh code. A positive count is
+  // never permission to make sound; only an actual new link found below is.
+  window.__queueNewArticlePopV23=function(count){return Number(count)||0};
 
   function playOnlyForVerifiedNew(count){
-    if(!(count>0)||!(queuedNewCount>0))return false;
-    queuedNewCount=0;
+    if(!(count>0))return false;
     if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
     return false;
   }
+  window.__playVerifiedNewV23=playOnlyForVerifiedNew;
 
   function wrapRefresh(){
     if(refreshWrapped||typeof window.refreshNewsFromPage!=='function')return;
     const previous=window.refreshNewsFromPage;
     if(previous.__v23Wrapped){refreshWrapped=true;return}
     const wrapped=async function(...args){
-      const before=feedLinks();queuedNewCount=0;
+      const before=feedLinks();
       const result=await previous.apply(this,args);
       const after=feedLinks();
       const discovered=[...after].filter(link=>!before.has(link));
