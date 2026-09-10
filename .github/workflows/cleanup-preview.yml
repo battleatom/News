@@ -99,6 +99,9 @@ jobs:
           echo $! > /tmp/news-preview-http.pid
           sleep 2
 
+      - name: Verify Denver location, pagination, and masthead
+        run: python tests/v25_location_smoke.py
+
       - name: Diagnose alert-enable audio path
         run: python tests/audio_debug.py
 
