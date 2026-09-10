@@ -7,6 +7,7 @@
   const PRESIDENTIAL_DIRECT=['donald trump','president trump','trump ',' trump','white house','u.s. president','us president','president of the united states','oval office','trump administration','vice president vance','jd vance','j.d. vance','karoline leavitt','white house press secretary'];
   const PRESIDENTIAL_ACTION=['executive order','presidential action','presidential memorandum','presidential proclamation','cabinet meeting','administration official'];
   const FOUR_CORNERS_CITIES=['farmington','aztec','bloomfield','kirtland','shiprock'];
+  const FOUR_CORNERS_LOCAL_TERMS=['farmington','san juan county','aztec','bloomfield','kirtland','shiprock','four corners'];
   const IMPACT=[['emergency',24],['wildfire',22],['shooting',22],['killed',18],['death',14],['evacuation',18],['earthquake',20],['tornado',20],['flood',18],['drought',15],['water',10],['supreme court',18],['court',10],['law',12],['legislation',12],['election',16],['governor',10],['school',9],['hospital',10],['health',8],['layoff',12],['economy',9],['inflation',10],['crime',10],['police',9],['cyber',12],['outage',12],['breaking',12]];
 
   function category(item){return (item.querySelector('category')?.textContent||'').trim()}
@@ -34,7 +35,7 @@
     if(!loc.city)return false;
     const t=text(item),city=loc.city.toLowerCase();
     if(t.includes(city))return true;
-    if(loc.code==='NM'&&FOUR_CORNERS_CITIES.includes(city)&&category(item)==='local')return true;
+    if(loc.code==='NM'&&FOUR_CORNERS_CITIES.includes(city))return FOUR_CORNERS_LOCAL_TERMS.some(term=>t.includes(term));
     return false;
   }
   function importance(item,loc){
@@ -78,7 +79,6 @@
     const regional=items.filter(i=>category(i)==='region'&&((i.querySelector('region')?.textContent||'').trim()===loc.region));
     let local=items.filter(i=>category(i)==='local'&&matchesCity(i,loc));
     local=local.concat(items.filter(i=>['region','us','top','nm'].includes(category(i))&&matchesCity(i,loc)));
-    if(rank(local,loc).length<6)local=local.concat(stateSpecific);
 
     const localRanked=rank(local,loc),stateRanked=rank(stateSpecific,loc),regionalRanked=rank(regional,loc);
     const used=new Set();
