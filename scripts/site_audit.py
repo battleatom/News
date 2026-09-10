@@ -12,6 +12,7 @@ REQUIRED_BLOCK_IDS = (
     'pull-stats-ui-v1', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1',
     'load-more-v1', 'top-cycle-reliability-v1', 'legislation-ui-v1',
     'boxoffice-location-v1', 'underreported-ui-v1', 'x-issues-ui-v1', 'region-tab-v1',
+    'story-search-v1',
 )
 EXPECTED_TABS = (
     'top','nfl','x','underreported','world','us','presidential','federal','legislation',
@@ -58,6 +59,17 @@ def main():
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
             errors.append(f'missing tab declaration: {tab}')
+
+    # One canonical router owns page rendering. Specialized features may expose
+    # renderer functions, but they should not replace/wrap canonicalRender later.
+    if 'canonicalBeforeNfl' in html or 'canonicalRender=function(items)' in html:
+        errors.append('NFL still wraps canonicalRender instead of using the canonical router')
+    if 'const baseRender=render;' in html:
+        errors.append('story search still wraps render() instead of calling the canonical renderer')
+    if 'function canonicalRender(items)' not in html:
+        errors.append('canonicalRender router is missing')
+    if 'function renderNfl()' not in html or 'window.renderNfl=renderNfl' not in html:
+        errors.append('live NFL renderer is not registered with the canonical router')
 
     if "assets/new-article-pop.mp3" not in html or 'playNewArticlePop' not in html:
         errors.append('new-article audio asset/player is not wired into generated page')
@@ -124,7 +136,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: generated feature blocks, tabs, pagination, audio wiring, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, generated feature blocks, tabs, pagination, audio wiring, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
