@@ -3,8 +3,6 @@ from pathlib import Path
 P = Path('index.html')
 s = P.read_text(encoding='utf-8')
 
-# V2.2 owns the visible refresh-status panel. Remove the older status controller
-# so two independent scripts cannot overwrite each other's text/state.
 for tag, marker, close in (
     ('script', 'pull-stats-ui-v1', '</script>'),
     ('style', 'pull-stats-ui-v1-style', '</style>'),
@@ -40,160 +38,68 @@ SCRIPT = r'''<script id="alerts-status-v22">
 (function(){
   'use strict';
   const AUTO_MS=15*60*1000;
-  const NEW_AGE_MS=60*60*1000;
   const SOUND_KEY='underreported-sound-alerts-v2';
-  let stats=null;
-  let serverNewLinks=new Set();
-  let refreshState='scheduled';
-  let tickTimer=null;
-  let statsTimer=null;
-  let audioContext=null;
-  let audioReady=false;
-
+  let stats=null,refreshState='scheduled',tickTimer=null,statsTimer=null;
+  let audioContext=null,audioReady=false;
   const byId=id=>document.getElementById(id);
-  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function normalizeLink(v){try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}catch(e){return String(v||'').trim()}}
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
   function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
-  function countdown(ms){
-    const total=Math.max(0,Math.ceil(ms/1000));
-    const m=Math.floor(total/60), sec=total%60;
-    if(m>=60){const h=Math.floor(m/60),rm=m%60;return `${h}h ${rm}m`;}
-    return `${m}m ${String(sec).padStart(2,'0')}s`;
-  }
+  function countdown(ms){const total=Math.max(0,Math.ceil(ms/1000)),m=Math.floor(total/60),sec=total%60;if(m>=60){const h=Math.floor(m/60),rm=m%60;return `${h}h ${rm}m`}return `${m}m ${String(sec).padStart(2,'0')}s`}
   function lastPull(){const fromStats=Date.parse(stats?.updatedAt||'')||0;return Math.max(fromStats,Number(window.lastSuccessfulPull)||0)}
-  function nextPull(){
-    let next=Number(window.nextScheduledPull)||0;
-    const now=Date.now();
-    if(next<=0){const last=lastPull();next=last?last+AUTO_MS:now+AUTO_MS;window.nextScheduledPull=next;}
-    return next;
-  }
-  function ensurePanel(){
-    let panel=byId('pull-stats-ui');
-    if(panel)return panel;
-    const toolbar=document.querySelector('.toolbar');if(!toolbar)return null;
-    panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel);return panel;
-  }
+  function nextPull(){let next=Number(window.nextScheduledPull)||0;const now=Date.now();if(next<=0){const last=lastPull();next=last?last+AUTO_MS:now+AUTO_MS;window.nextScheduledPull=next}return next}
+  function ensurePanel(){let panel=byId('pull-stats-ui');if(panel)return panel;const toolbar=document.querySelector('.toolbar');if(!toolbar)return null;panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel);return panel}
   function soundEnabled(){try{return localStorage.getItem(SOUND_KEY)==='on'}catch(e){return false}}
-  function stateLabel(){
-    if(refreshState==='checking'||window.pullInProgress)return '↻ Auto refresh checking';
-    if(refreshState==='retrying')return '⚠ Auto refresh retrying';
-    const last=lastPull();if(last&&Date.now()-last>AUTO_MS*2.5)return '⚠ Feed update delayed';
-    return '✓ Auto refresh active';
-  }
-  function renderStatus(){
-    const panel=ensurePanel();if(!panel)return;
-    const fetched=Number(stats?.fetchedCount)||0,newCount=Number(stats?.newCount)||0,dupes=Number(stats?.duplicatesRemoved)||0,shown=Number(stats?.finalCount)||(typeof allItems!=='undefined'?allItems.length:0);
-    const last=lastPull(),next=nextPull(),remaining=next-Date.now();
-    const failed=refreshState==='retrying'||(last&&Date.now()-last>AUTO_MS*2.5);
-    const busy=refreshState==='checking'||window.pullInProgress;
-    panel.className=failed?'failed':busy?'busy':'ready';
-    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span><button id="sound-alerts-toggle" type="button" data-enabled="${soundEnabled()?'true':'false'}">${soundEnabled()?'🔊 Alerts on':'🔔 Enable sound'}</button></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
-    const sound=byId('sound-alerts-toggle');if(sound)sound.onclick=()=>{void enableSound(true)};
-  }
-
+  function setSoundEnabled(on){try{localStorage.setItem(SOUND_KEY,on?'on':'off')}catch(e){}}
+  function stateLabel(){if(refreshState==='checking'||window.pullInProgress)return '↻ Auto refresh checking';if(refreshState==='retrying')return '⚠ Auto refresh retrying';const last=lastPull();if(last&&Date.now()-last>AUTO_MS*2.5)return '⚠ Feed update delayed';return '✓ Auto refresh active'}
   function synthPop(){
     if(!audioContext||audioContext.state!=='running')return false;
     try{
-      const now=audioContext.currentTime;
-      const gain=audioContext.createGain();gain.connect(audioContext.destination);
-      gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(.18,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.16);
-      [740,1040].forEach((freq,i)=>{const o=audioContext.createOscillator();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.045);o.connect(gain);o.start(now+i*.045);o.stop(now+.15);});
+      const now=audioContext.currentTime,gain=audioContext.createGain();gain.connect(audioContext.destination);
+      gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(.22,now+.01);gain.gain.exponentialRampToValueAtTime(.0001,now+.22);
+      [740,1040].forEach((freq,i)=>{const o=audioContext.createOscillator();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.055);o.connect(gain);o.start(now+i*.055);o.stop(now+.21)});
       return true;
-    }catch(e){return false}
+    }catch(e){console.warn('Alert sound failed:',e);return false}
   }
-  async function ensureAudio(){
-    try{
-      if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();
-      if(audioContext.state==='suspended')await audioContext.resume();
-      audioReady=audioContext.state==='running';
-    }catch(e){audioReady=false}
-    return audioReady;
+  function ensureContext(){
+    try{if(!audioContext){const Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return null;audioContext=new Ctx()}return audioContext}catch(e){console.warn('Audio context unavailable:',e);return null}
   }
-  async function enableSound(test){
-    const ok=await ensureAudio();
-    if(ok){
-      try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}
-      if(test&&typeof window.playNewArticlePop==='function')window.playNewArticlePop();
-    }
-    renderStatus();return ok;
+  function enableSound(test){
+    const ctx=ensureContext();if(!ctx)return Promise.resolve(false);
+    setSoundEnabled(true);
+    const play=()=>{audioReady=ctx.state==='running';if(test&&audioReady)synthPop();renderStatus();return audioReady};
+    if(ctx.state==='running')return Promise.resolve(play());
+    try{return ctx.resume().then(play).catch(e=>{console.warn('Audio resume blocked:',e);renderStatus();return false})}catch(e){renderStatus();return Promise.resolve(false)}
   }
+  function disableSound(){setSoundEnabled(false);renderStatus();return true}
+  function toggleSound(){return soundEnabled()?(disableSound(),Promise.resolve(false)):enableSound(true)}
   window.enableNewArticleSound=enableSound;
-  window.playNewArticlePop=function(){if(!soundEnabled())return false;if(audioReady&&synthPop())return true;void ensureAudio().then(ok=>{if(ok)synthPop()});return false};
-  // A remembered preference is re-activated by the first normal user gesture,
-  // satisfying mobile autoplay rules without making every page load beep.
-  function activateRememberedSound(){if(soundEnabled()&&!audioReady)void ensureAudio()}
-  document.addEventListener('pointerdown',activateRememberedSound,{capture:true,passive:true});
-  document.addEventListener('keydown',activateRememberedSound,{capture:true});
-
-  function cardPublishedMs(card){
-    const text=card.querySelector('.meta span')?.textContent||'';
-    const d=Date.parse(text);return Number.isFinite(d)?d:0;
-  }
-  function cardIsNew(card){
-    const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
-    if(href&&serverNewLinks.has(href))return true;
-    const published=cardPublishedMs(card);
-    return !!published&&Date.now()-published>=-5*60*1000&&Date.now()-published<=NEW_AGE_MS;
-  }
-  window.decorateNewBadges=function(){
-    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
-      const h=card.querySelector('h3');if(!h)return;
-      const existing=h.querySelector('.new-badge');const fresh=cardIsNew(card);
-      if(fresh&&!existing){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';badge.title='Newly discovered or published within the last hour';h.appendChild(badge)}
-      else if(!fresh&&existing)existing.remove();
-    });
+  window.disableNewArticleSound=disableSound;
+  window.toggleNewArticleSound=toggleSound;
+  window.playNewArticlePop=function(){
+    if(!soundEnabled())return false;
+    const ctx=ensureContext();if(!ctx)return false;
+    if(ctx.state==='running'){audioReady=true;return synthPop()}
+    try{void ctx.resume().then(()=>{audioReady=ctx.state==='running';if(audioReady)synthPop()})}catch(e){}
+    return false;
   };
-
-  async function loadStats(){
-    try{
-      const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
-      stats=await r.json();
-      serverNewLinks=new Set((stats.newLinks||[]).map(normalizeLink));
-      const parsed=Date.parse(stats.updatedAt||'');
-      if(Number.isFinite(parsed)){
-        window.lastSuccessfulPull=Math.max(Number(window.lastSuccessfulPull)||0,parsed);
-        const now=Date.now(),next=Number(window.nextScheduledPull)||0;
-        if(next<=now&&refreshState!=='retrying')window.nextScheduledPull=Math.max(parsed+AUTO_MS,now+1000);
-      }
-    }catch(e){console.warn('Update statistics unavailable:',e)}
-    window.decorateNewBadges();renderStatus();
+  function renderStatus(){
+    const panel=ensurePanel();if(!panel)return;
+    const fetched=Number(stats?.fetchedCount)||0,newCount=Number(stats?.newCount)||0,dupes=Number(stats?.duplicatesRemoved)||0,shown=Number(stats?.finalCount)||(typeof allItems!=='undefined'?allItems.length:0);
+    const last=lastPull(),next=nextPull(),remaining=next-Date.now();const failed=refreshState==='retrying'||(last&&Date.now()-last>AUTO_MS*2.5);const busy=refreshState==='checking'||window.pullInProgress;
+    panel.className=failed?'failed':busy?'busy':'ready';
+    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span><button id="sound-alerts-toggle" type="button" data-enabled="${soundEnabled()?'true':'false'}">${soundEnabled()?'🔊 Alerts on':'🔔 Enable sound'}</button></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
+    const sound=byId('sound-alerts-toggle');if(sound)sound.onclick=e=>{e.preventDefault();e.stopPropagation();void toggleSound()};
   }
-
-  // Keep the Top discovery button behavior that the older status controller owned.
-  function wireTopButton(){
-    const btn=byId('refresh');if(!btn)return;
-    const current=()=>{try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}};
-    btn.hidden=current()!=='top';btn.type='button';btn.textContent='↻ Next Top Stories';
-    if(btn.dataset.v22Wired)return;btn.dataset.v22Wired='1';
-    btn.addEventListener('click',async()=>{
-      if(btn.disabled||current()!=='top')return;
-      btn.disabled=true;btn.textContent='⟳ Checking…';
-      try{if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false)}catch(e){console.error(e)}
-      finally{btn.disabled=false;btn.textContent='↻ Next Top Stories';renderStatus()}
-    });
-  }
+  async function loadStats(){try{const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(r.ok){stats=await r.json();const parsed=Date.parse(stats.updatedAt||'');if(Number.isFinite(parsed))window.lastSuccessfulPull=Math.max(Number(window.lastSuccessfulPull)||0,parsed)}}catch(e){}renderStatus()}
+  function wireTopButton(){const btn=byId('refresh');if(!btn)return;const current=()=>{try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}};btn.hidden=current()!=='top';btn.type='button';btn.textContent='↻ Next Top Stories';if(btn.dataset.v22Wired)return;btn.dataset.v22Wired='1';btn.addEventListener('click',async()=>{if(btn.disabled||current()!=='top')return;btn.disabled=true;btn.textContent='⟳ Checking…';try{if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false)}finally{btn.disabled=false;btn.textContent='↻ Next Top Stories';renderStatus()}})}
   window.syncTopDiscoveryButton=function(){wireTopButton();renderStatus()};
-
-  const originalRefresh=window.refreshNewsFromPage;
-  if(typeof originalRefresh==='function'&&!originalRefresh.__v22Wrapped){
-    const wrapped=async function(...args){
-      const before=Number(window.lastSuccessfulPull)||0;refreshState='checking';renderStatus();
-      try{return await originalRefresh.apply(this,args)}finally{
-        const after=Number(window.lastSuccessfulPull)||0;
-        refreshState=after>before?'scheduled':'retrying';
-        if(refreshState==='retrying'&&Number(window.nextScheduledPull)<=Date.now())window.nextScheduledPull=Date.now()+60*1000;
-        await loadStats();
-      }
-    };
-    wrapped.__v22Wrapped=true;window.refreshNewsFromPage=wrapped;
-  }
-
-  const feed=byId('news-feed');if(feed)new MutationObserver(()=>window.decorateNewBadges()).observe(feed,{childList:true,subtree:true});
-  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();window.decorateNewBadges();renderStatus()},0));
+  const originalRefresh=window.refreshNewsFromPage;if(typeof originalRefresh==='function'&&!originalRefresh.__v22Wrapped){const wrapped=async function(...args){const before=Number(window.lastSuccessfulPull)||0;refreshState='checking';renderStatus();try{return await originalRefresh.apply(this,args)}finally{const after=Number(window.lastSuccessfulPull)||0;refreshState=after>before?'scheduled':'retrying';await loadStats()}};wrapped.__v22Wrapped=true;window.refreshNewsFromPage=wrapped}
+  document.addEventListener('pointerdown',()=>{if(soundEnabled()&&!audioReady){const ctx=ensureContext();if(ctx&&ctx.state==='suspended')void ctx.resume().then(()=>{audioReady=ctx.state==='running'})}},{capture:true,passive:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden&&soundEnabled()){const ctx=ensureContext();if(ctx&&ctx.state==='suspended')void ctx.resume().then(()=>{audioReady=ctx.state==='running'})}});
+  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();renderStatus()},0));
   function tick(){renderStatus();tickTimer=setTimeout(tick,1000-(Date.now()%1000)+20)}
   function refreshStatsLoop(){void loadStats();statsTimer=setTimeout(refreshStatsLoop,60000)}
-  wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);
-  window.__alertsStatusV22=true;
+  wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);window.__alertsStatusV282=true;
 })();
 </script>'''
 
@@ -202,4 +108,4 @@ if '</head>' not in s or '</body>' not in s:
 s = s.replace('</head>', STYLE + '\n</head>', 1)
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Installed V2.2 NEW badges, explicit mobile-safe sound alerts, detailed fetch metrics, countdown, and auto-refresh state.')
+print('Installed single-owner sound toggle, mobile-safe Web Audio alerts, fetch metrics, countdown, and refresh state.')
