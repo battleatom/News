@@ -17,11 +17,11 @@ if old in s:
 elif 'item["state"] = region_query_state(region_query)' not in s:
     raise SystemExit('Could not tag regional items with state')
 
-old_build='''f'<region>{xml_escape(item.get("region", ""))}</region>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>'\n'''
-new_build='''f'<region>{xml_escape(item.get("region", ""))}</region>', f'<state>{xml_escape(item.get("state", ""))}</state>', f'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>'\n'''
-if old_build in s:
-    s=s.replace(old_build,new_build,1)
-elif "item.get(\"state\", \"\")" not in s:
+needle='f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\''
+replacement='f\'<region>{xml_escape(item.get("region", ""))}</region>\', f\'<state>{xml_escape(item.get("state", ""))}</state>\', f\'<whyMatters>{xml_escape(item.get("whyMatters", ""))}</whyMatters>\''
+if needle in s:
+    s=s.replace(needle,replacement,1)
+elif 'f\'<state>{xml_escape(item.get("state", ""))}</state>\'' not in s:
     raise SystemExit('Could not add state element to RSS output')
 
 P.write_text(s,encoding='utf-8')
