@@ -50,7 +50,7 @@ def assert_unique_visible_titles(page):
     assert not duplicates, f'Exact visible title duplicates: {sorted(duplicates)[:5]}'
 
 
-def assert_v22_status_and_alerts(page):
+def assert_status_and_alerts(page):
     panel=page.locator('#pull-stats-ui')
     assert panel.count()==1 and panel.is_visible(), 'Detailed update status panel missing'
     status_text=panel.inner_text().lower()
@@ -77,7 +77,8 @@ def desktop_suite(browser):
     page.wait_for_timeout(1200)
 
     assert page.evaluate("window.__underreportedV2===true"), 'Underreported 2.0 controller did not start'
-    assert page.evaluate("window.__alertsStatusV22===true"), 'Underreported V2.2 status/alert controller did not start'
+    assert page.evaluate("window.__alertsStatusV22===true"), 'Underreported V2.2 status controller did not start'
+    assert page.evaluate("window.__alertsNewV23===true"), 'Underreported V2.3 NEW/audio controller did not start'
     assert page.locator('body[data-underreported-version="2"]').count()==1, 'V2 page marker missing'
     assert page.locator('.skip-link-v2').count()==1, 'Accessible skip link missing'
     assert page.locator('#tabs').count()==1, 'Tab bar missing'
@@ -148,25 +149,24 @@ def desktop_suite(browser):
     assert page.evaluate("Number(window.nextScheduledPull)>Date.now()"), 'Next automatic refresh time is not scheduled'
     assert page.evaluate("Boolean(window.__autoRefreshTimeout)"), 'Timeout-based automatic refresh was not scheduled'
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
-    assert_v22_status_and_alerts(page)
+    assert_status_and_alerts(page)
 
-    # Return to a populated story view before testing badge decoration.
+    # Verify a server/client-discovered link gets the red NEW marker.
     click_tab(page,'Top'); page.wait_for_timeout(350)
-    # Force one visible card to a fresh timestamp and verify the red NEW marker.
-    page.evaluate("""() => {
-      const card=document.querySelector('#news-feed .news-item');
-      const meta=card?.querySelector('.meta span');
-      if(meta)meta.textContent=new Date().toISOString();
-      window.decorateNewBadges();
-    }""")
-    assert page.locator('#news-feed .new-badge').count()>=1, 'Fresh article did not receive a red NEW badge'
+    first_href=page.locator('#news-feed .news-item h3 a').first.get_attribute('href')
+    assert first_href, 'Top story link missing for NEW badge test'
+    page.evaluate("href=>window.__markNewArticleLinksV23([href])", first_href)
+    assert page.locator('#news-feed .news-item').first.locator('.new-badge').count()==1, 'Discovered article did not receive a red NEW badge'
 
+    # Enabling audio must be silent. A sound request is merely queued until a
+    # refresh verifies that one or more genuinely new links appeared.
+    page.evaluate("window.__testPopCount=0;window.playNewArticlePop=()=>{window.__testPopCount++;return true}")
     sound=page.locator('#sound-alerts-toggle')
-    sound.click();page.wait_for_timeout(200)
+    sound.click();page.wait_for_timeout(250)
     assert page.evaluate("localStorage.getItem('underreported-sound-alerts-v2')==='on'"), 'Sound alert preference was not enabled by user gesture'
-    assert 'alerts on' in sound.inner_text().lower(), 'Sound control did not confirm alerts are enabled'
-    assert page.evaluate("typeof window.playNewArticlePop==='function'"), 'New-article pop function is missing'
-    page.evaluate("window.playNewArticlePop()")
+    assert page.evaluate("window.__testPopCount===0"), 'Enabling sound incorrectly played a test pop'
+    page.evaluate("window.__queueNewArticlePopV23(1)")
+    assert page.evaluate("window.__testPopCount===0"), 'Queued new count played audio before a verified new link event'
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
     click_key(page,'legislation')
@@ -208,7 +208,8 @@ def mobile_suite(browser):
     pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", first.element_handle()))
     assert pad_top<=12 and pad_left<=11, f'Mobile card padding is too large: top={pad_top}, left={pad_left}'
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Mobile duplicate update row is visible'
-    assert_v22_status_and_alerts(page)
+    assert_status_and_alerts(page)
+    assert page.evaluate("window.__alertsNewV23===true"), 'Mobile V2.3 NEW/audio controller missing'
     context.close()
 
 
