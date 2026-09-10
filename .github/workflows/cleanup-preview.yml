@@ -1,0 +1,96 @@
+name: Underreported 2.0 Preview Validation
+
+on:
+  push:
+    branches: [underreported-2.0-cleanup]
+    paths-ignore:
+      - 'index.html'
+      - 'scripts/update_news.py'
+      - 'refresh-health.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: underreported-2-preview
+  cancel-in-progress: true
+
+jobs:
+  validate-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout cleanup branch
+        uses: actions/checkout@v4
+        with:
+          ref: underreported-2.0-cleanup
+          fetch-depth: 0
+
+      - name: Optimize generated collector
+        run: python scripts/patch_collector_hygiene.py
+
+      - name: Build V2 page in canonical order
+        run: python scripts/build_site.py
+
+      - name: Audit generated site
+        run: python scripts/site_audit.py
+
+      - name: Validate Python syntax and V2 invariants
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('index.html').read_text(encoding='utf-8')
+          workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
+          required=(
+              'data-underreported-version="2"',
+              'styles/v2.css?v=2',
+              'assets/location-v2.js?v=2',
+              'assets/app-v2.js?v=2',
+              'auto-refresh-timer-v1',
+              'bookmarks-v1',
+              'related-coverage-v1',
+          )
+          missing=[x for x in required if x not in html]
+          if missing:
+              raise SystemExit('Missing V2 generated markers: '+', '.join(missing))
+          forbidden=('setInterval(decorate,1500)', 'setInterval(()=>{ensureBookmarkTab();},1000)', 'setInterval(tick,1000)')
+          found=[x for x in forbidden if x in html]
+          if found:
+              raise SystemExit('Legacy polling remains: '+', '.join(found))
+          if "- 'markets.json'" not in workflow:
+              raise SystemExit('Market data is not ignored by news push trigger')
+          if 'git merge --no-edit -X ours origin/main' in workflow:
+              raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
+          print('V2 static invariants pass.')
+          PY
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Start local preview
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-preview-http.log 2>&1 &
+          echo $! > /tmp/news-preview-http.pid
+          sleep 2
+
+      - name: Run desktop and mobile browser tests
+        run: python tests/site_smoke.py
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/news-preview-http.log || true
+
+      - name: Commit validated generated preview
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html scripts/update_news.py
+          if git diff --cached --quiet; then
+            echo 'Generated preview is already current.'
+            exit 0
+          fi
+          git commit -m 'Build validated Underreported 2.0 preview [skip ci]'
+          git push origin HEAD:underreported-2.0-cleanup
