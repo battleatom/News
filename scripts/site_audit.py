@@ -9,7 +9,7 @@ NEWS = Path('News')
 
 REQUIRED_BLOCK_IDS = (
     'site-features-v2', 'shared-page-state-bridge-v1', 'auto-refresh-timer-v1',
-    'pull-stats-ui-v1', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1',
+    'alerts-status-v22', 'bookmarks-v1', 'nfl-live-v1', 'new-badge-expiry-v1',
     'load-more-v1', 'top-cycle-reliability-v1', 'legislation-ui-v1',
     'boxoffice-location-v1', 'underreported-ui-v1', 'x-issues-ui-v1', 'region-tab-v1',
 )
@@ -55,14 +55,16 @@ def main():
         if counts.get(block_id, 0) != 1:
             errors.append(f'{block_id}: expected exactly 1 generated block, found {counts.get(block_id,0)}')
 
+    if counts.get('pull-stats-ui-v1', 0):
+        errors.append('legacy pull-stats-ui-v1 controller remains alongside V2.2')
+    for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed', 'serverNewLinks'):
+        if marker not in html:
+            errors.append(f'V2.2 status/alert marker missing: {marker}')
+
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
             errors.append(f'missing tab declaration: {tab}')
 
-    # The NFL live feature must register a renderer with the canonical router;
-    # only the retired NFL-specific wrapper is a hard failure. Other legacy
-    # canonicalRender assignments are tracked as consolidation debt below so
-    # they do not falsely fail an otherwise healthy news update.
     nfl_wrapper = re.search(
         r"canonicalRender\s*=\s*function\s*\(items\)\s*\{\s*if\s*\(\s*active\s*===\s*['\"]nfl['\"]\s*\)",
         html,
@@ -79,12 +81,11 @@ def main():
     if wrapper_count:
         warnings.append(f'{wrapper_count} legacy canonicalRender wrapper assignment(s) remain for later consolidation')
 
-    # Search was intentionally retired; fail if an old generated copy returns.
     if 'story-search' in html:
         errors.append('retired story search UI is present')
 
-    if "assets/new-article-pop.mp3" not in html or 'playNewArticlePop' not in html:
-        errors.append('new-article audio asset/player is not wired into generated page')
+    if 'playNewArticlePop' not in html or 'enableNewArticleSound' not in html:
+        errors.append('new-article audio player/enable control is not wired into generated page')
     if html.count('id="auto-refresh-timer-v1"') != 1:
         errors.append('automatic refresh scheduler is not unique')
     if '15*60*1000' not in html and '15 * 60 * 1000' not in html:
@@ -148,7 +149,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, generated feature blocks, tabs, pagination, audio wiring, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V2.2 status/alerts, generated feature blocks, tabs, pagination, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':

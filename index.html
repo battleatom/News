@@ -76,9 +76,7 @@
 <style id="site-features-style">
 .pull-status{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;padding:7px 12px 9px;border-bottom:1px solid var(--ui-line);background:rgba(255,255,255,.72);color:#64748b;font-size:10px;font-weight:650}.pull-status strong{color:#334155}.pull-status .ok{color:#15803d}.pull-status .busy{color:#2563eb}.pull-status .warn{color:#b45309}.pull-status .sep{color:#cbd5e1}.pull-status .count{font-weight:800}.new-badge{display:inline-flex;align-items:center;margin-left:7px;padding:2px 7px;border-radius:999px;background:#dc2626;color:#fff;font-size:9px;font-weight:800;letter-spacing:.35px;vertical-align:middle;box-shadow:0 2px 6px rgba(220,38,38,.2)}.boxoffice-intro{padding:10px 14px;color:#64748b;font-size:11px;line-height:1.5;background:rgba(255,255,255,.6);border-bottom:1px solid var(--ui-line)}.movie-card .movie-details{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.movie-pill{display:inline-flex;padding:4px 8px;border-radius:999px;background:#f1f5f9;color:#475569;font-size:10px;font-weight:700}.movie-status{display:inline-flex;padding:4px 8px;border-radius:999px;background:#fff7ed;color:#9a3412;font-size:10px;font-weight:800}.movie-showtimes{margin-top:10px;padding:10px;border:1px solid var(--ui-line);border-radius:12px;background:rgba(248,250,252,.85)}.movie-showtimes strong{display:block;margin-bottom:5px}.movie-showtimes small{display:block;color:#64748b;margin-bottom:3px}.movie-news{margin-top:10px}.movie-news a{display:block;margin-top:5px}.boxoffice-section-title{margin:22px 0 8px;padding-left:10px;border-left:3px solid #9a3412;font-size:15px;font-weight:800}@media(max-width:700px){.pull-status{font-size:9px;gap:5px}.pull-status .optional{display:none}.movie-card{padding:16px 13px!important}}
 </style>
-<style id="pull-stats-ui-v1-style">
-#pull-stats-ui{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;margin:0;padding:5px 12px;border-bottom:1px solid var(--ui-line);background:#f8fafc;color:#475569;font-size:10px;line-height:1.25;font-weight:650;white-space:nowrap;overflow-x:auto;scrollbar-width:none}#pull-stats-ui::-webkit-scrollbar{display:none}#pull-stats-ui strong{color:#166534;font-weight:850}#pull-stats-ui.failed strong{color:#b91c1c}#pull-stats-ui.busy{color:#92400e}#pull-stats-ui.busy strong{color:#92400e}#refresh{font-weight:800!important}#refresh[hidden]{display:none!important}#refresh:disabled{opacity:.7;cursor:wait}@media(max-width:700px){#pull-stats-ui{font-size:9.5px;gap:5px;padding:5px 9px}#refresh{min-width:0!important}}
-</style>
+
 <style id="bookmarks-v1-style">
 .bookmark-row{display:flex;align-items:flex-start;gap:8px}.bookmark-row h3{flex:1;margin:0}.bookmark-btn{border:0;background:transparent;padding:2px 4px;cursor:pointer;font-size:18px;line-height:1;opacity:.45;border-radius:6px}.bookmark-btn:hover,.bookmark-btn.saved{opacity:1}.bookmark-btn:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}.bookmark-section .bookmark-btn{opacity:1}.bookmark-section .news-item{position:relative}.bookmark-section .bookmark-row{padding-right:2px}@media(max-width:700px){.bookmark-btn{font-size:17px;padding:1px 3px}}
 </style>
@@ -95,9 +93,26 @@
 
 <link rel="stylesheet" href="styles/v2.css?v=3">
 <script src="assets/location-v2.js?v=2"></script>
+<style id="alerts-status-v22-style">
+#status{display:none!important}
+#pull-stats-ui{display:block!important;margin:0!important;padding:6px 11px!important;border-bottom:1px solid var(--ui-line)!important;background:#f8fafc!important;color:#475569!important;font-size:10px!important;line-height:1.28!important;font-weight:650!important;white-space:normal!important;overflow:visible!important}
+#pull-stats-ui .status-line{display:flex;align-items:center;flex-wrap:wrap;gap:4px 7px;min-height:16px}
+#pull-stats-ui .status-line+.status-line{margin-top:2px;color:#64748b}
+#pull-stats-ui .status-state{font-weight:850;color:#166534}
+#pull-stats-ui.busy .status-state{color:#b45309}
+#pull-stats-ui.failed .status-state{color:#b91c1c}
+#pull-stats-ui .status-new{font-weight:850;color:#dc2626}
+#pull-stats-ui .sep{color:#cbd5e1}
+#sound-alerts-toggle{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;padding:2px 7px;font:inherit;font-weight:800;line-height:1.35;cursor:pointer}
+#sound-alerts-toggle[data-enabled="true"]{border-color:#86efac;background:#f0fdf4;color:#166534}
+.new-badge{display:inline-flex!important;align-items:center!important;margin-left:6px!important;padding:2px 6px!important;border-radius:999px!important;background:#dc2626!important;color:#fff!important;font-size:9px!important;line-height:1.25!important;font-weight:900!important;letter-spacing:.04em!important;vertical-align:middle!important;box-shadow:0 1px 4px rgba(220,38,38,.24)!important}
+@media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}#sound-alerts-toggle{padding:2px 6px}}
+@media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}#sound-alerts-toggle{background:#242426;color:#e5e7eb;border-color:#3f3f46}#sound-alerts-toggle[data-enabled="true"]{background:#10261a;color:#86efac;border-color:#166534}}
+</style>
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -649,94 +664,7 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
-<script id="pull-stats-ui-v1">
-(function(){
-  'use strict';
-  const AUTO_PULL_MS=15*60*1000;
-  let stats=null;
-  let lastPullMs=0;
-  function byId(id){return document.getElementById(id)}
-  function currentTab(){try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}}
-  function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-  function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
-  function nextTime(){const target=Number(window.nextScheduledPull)||0;return target>Date.now()?shortTime(target):'soon'}
-  function btnBusy(){const b=byId('refresh');return !!b?.disabled||b?.dataset.refreshing==='1'}
 
-  function ensureVisibleUI(){
-    const btn=byId('refresh'),toolbar=btn?.closest('.toolbar');
-    if(!btn||!toolbar)return;
-    const onTop=currentTab()==='top';
-    btn.hidden=!onTop;
-    btn.type='button';btn.removeAttribute('onclick');
-    btn.title='Show the next 10 unseen Top Stories and quietly check the full feed for updates';
-    btn.setAttribute('aria-label','Show next unseen Top Stories');
-    if(!btn.dataset.refreshStatsWired){
-      btn.dataset.refreshStatsWired='1';
-      btn.addEventListener('click',async function(){
-        if(btn.disabled||currentTab()!=='top')return;
-        btn.disabled=true;btn.dataset.refreshing='1';btn.textContent='⟳ Checking…';
-        try{
-          if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();
-          else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false);
-        }catch(e){console.error('Top Stories discovery refresh failed:',e)}
-        finally{
-          btn.disabled=false;btn.dataset.refreshing='';btn.textContent='↻ Next Top Stories';
-          const now=Date.now(),next=Number(window.nextScheduledPull)||0;
-          if(next<=now)window.nextScheduledPull=now+AUTO_PULL_MS;
-          renderStats();
-        }
-      });
-    }
-    if(btn.dataset.refreshing!=='1')btn.textContent='↻ Next Top Stories';
-    let panel=byId('pull-stats-ui');
-    if(!panel){panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel)}
-    return panel;
-  }
-
-  function renderStats(failed=false,phase=''){
-    const panel=ensureVisibleUI();if(!panel)return;
-    const finalCount=stats?.finalCount??(typeof allItems!=='undefined'?allItems.length:0);
-    panel.dataset.fetched=String(stats?.fetchedCount??'');
-    panel.dataset.newCount=String(stats?.newCount??'');
-    panel.dataset.duplicatesRemoved=String(stats?.duplicatesRemoved??'');
-    const busy=btnBusy();panel.className=failed?'failed':(busy?'busy':'ready');
-    if(failed){
-      panel.innerHTML=`<strong>⚠ Update delayed</strong><span>•</span><span>Showing current feed</span><span>•</span><span>Last good feed ${escapeHtml(shortTime(lastPullMs))}</span>`;
-      return;
-    }
-    panel.innerHTML=`<strong>✓ Live updates</strong><span>•</span><span>${finalCount} stories</span><span>•</span><span>Feed ${escapeHtml(shortTime(lastPullMs))}</span><span>•</span><span>Next check ${escapeHtml(nextTime())}</span>`;
-  }
-
-  async function loadStats(){
-    try{
-      const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);stats=await r.json();
-      const parsed=Date.parse(stats.updatedAt);
-      if(Number.isFinite(parsed)){
-        const current=Number(window.lastSuccessfulPull)||0;
-        lastPullMs=Math.max(parsed,current||0);
-        if(!current||parsed>current)window.lastSuccessfulPull=parsed;
-        /* Never replace the live scheduler's future deadline with a stale stats-file timestamp. */
-        const now=Date.now(),existingNext=Number(window.nextScheduledPull)||0;
-        if(existingNext<=now){
-          const feedBased=parsed+AUTO_PULL_MS;
-          window.nextScheduledPull=feedBased>now?feedBased:now+AUTO_PULL_MS;
-        }
-      }
-    }catch(e){}
-    renderStats(false,'');
-  }
-
-  window.refreshPullStatsUI=function(failed,phase){renderStats(!!failed,phase||'')};
-  window.syncTopDiscoveryButton=ensureVisibleUI;
-  ensureVisibleUI();loadStats();
-  const tabs=byId('tabs');
-  if(tabs){
-    tabs.addEventListener('click',()=>setTimeout(()=>{ensureVisibleUI();renderStats()},0));
-    new MutationObserver(()=>{ensureVisibleUI()}).observe(tabs,{childList:true});
-  }
-  setInterval(loadStats,60000);
-})();
-</script>
 <script id="bookmarks-v1">
 (function(){
   'use strict';
@@ -1263,6 +1191,163 @@ syncDiscoveryButton();
       if(typeof window.refreshPullStatsUI==='function')window.refreshPullStatsUI(false,'');
     }
   },true);
+})();
+</script>
+<script id="alerts-status-v22">
+(function(){
+  'use strict';
+  const AUTO_MS=15*60*1000;
+  const NEW_AGE_MS=60*60*1000;
+  const SOUND_KEY='underreported-sound-alerts-v2';
+  let stats=null;
+  let serverNewLinks=new Set();
+  let refreshState='scheduled';
+  let tickTimer=null;
+  let statsTimer=null;
+  let audioContext=null;
+  let audioReady=false;
+
+  const byId=id=>document.getElementById(id);
+  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function normalizeLink(v){try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}catch(e){return String(v||'').trim()}}
+  function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
+  function countdown(ms){
+    const total=Math.max(0,Math.ceil(ms/1000));
+    const m=Math.floor(total/60), sec=total%60;
+    if(m>=60){const h=Math.floor(m/60),rm=m%60;return `${h}h ${rm}m`;}
+    return `${m}m ${String(sec).padStart(2,'0')}s`;
+  }
+  function lastPull(){const fromStats=Date.parse(stats?.updatedAt||'')||0;return Math.max(fromStats,Number(window.lastSuccessfulPull)||0)}
+  function nextPull(){
+    let next=Number(window.nextScheduledPull)||0;
+    const now=Date.now();
+    if(next<=0){const last=lastPull();next=last?last+AUTO_MS:now+AUTO_MS;window.nextScheduledPull=next;}
+    return next;
+  }
+  function ensurePanel(){
+    let panel=byId('pull-stats-ui');
+    if(panel)return panel;
+    const toolbar=document.querySelector('.toolbar');if(!toolbar)return null;
+    panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel);return panel;
+  }
+  function soundEnabled(){try{return localStorage.getItem(SOUND_KEY)==='on'}catch(e){return false}}
+  function stateLabel(){
+    if(refreshState==='checking'||window.pullInProgress)return '↻ Auto refresh checking';
+    if(refreshState==='retrying')return '⚠ Auto refresh retrying';
+    const last=lastPull();if(last&&Date.now()-last>AUTO_MS*2.5)return '⚠ Feed update delayed';
+    return '✓ Auto refresh active';
+  }
+  function renderStatus(){
+    const panel=ensurePanel();if(!panel)return;
+    const fetched=Number(stats?.fetchedCount)||0,newCount=Number(stats?.newCount)||0,dupes=Number(stats?.duplicatesRemoved)||0,shown=Number(stats?.finalCount)||(typeof allItems!=='undefined'?allItems.length:0);
+    const last=lastPull(),next=nextPull(),remaining=next-Date.now();
+    const failed=refreshState==='retrying'||(last&&Date.now()-last>AUTO_MS*2.5);
+    const busy=refreshState==='checking'||window.pullInProgress;
+    panel.className=failed?'failed':busy?'busy':'ready';
+    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span><button id="sound-alerts-toggle" type="button" data-enabled="${soundEnabled()?'true':'false'}">${soundEnabled()?'🔊 Alerts on':'🔔 Enable sound'}</button></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
+    const sound=byId('sound-alerts-toggle');if(sound)sound.onclick=()=>{void enableSound(true)};
+  }
+
+  function synthPop(){
+    if(!audioContext||audioContext.state!=='running')return false;
+    try{
+      const now=audioContext.currentTime;
+      const gain=audioContext.createGain();gain.connect(audioContext.destination);
+      gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(.18,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.16);
+      [740,1040].forEach((freq,i)=>{const o=audioContext.createOscillator();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.045);o.connect(gain);o.start(now+i*.045);o.stop(now+.15);});
+      return true;
+    }catch(e){return false}
+  }
+  async function ensureAudio(){
+    try{
+      if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();
+      if(audioContext.state==='suspended')await audioContext.resume();
+      audioReady=audioContext.state==='running';
+    }catch(e){audioReady=false}
+    return audioReady;
+  }
+  async function enableSound(test){
+    const ok=await ensureAudio();
+    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
+    renderStatus();return ok;
+  }
+  window.enableNewArticleSound=enableSound;
+  window.playNewArticlePop=function(){if(!soundEnabled())return false;if(audioReady&&synthPop())return true;void ensureAudio().then(ok=>{if(ok)synthPop()});return false};
+  // A remembered preference is re-activated by the first normal user gesture,
+  // satisfying mobile autoplay rules without making every page load beep.
+  function activateRememberedSound(){if(soundEnabled()&&!audioReady)void ensureAudio()}
+  document.addEventListener('pointerdown',activateRememberedSound,{capture:true,passive:true});
+  document.addEventListener('keydown',activateRememberedSound,{capture:true});
+
+  function cardPublishedMs(card){
+    const text=card.querySelector('.meta span')?.textContent||'';
+    const d=Date.parse(text);return Number.isFinite(d)?d:0;
+  }
+  function cardIsNew(card){
+    const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
+    if(href&&serverNewLinks.has(href))return true;
+    const published=cardPublishedMs(card);
+    return !!published&&Date.now()-published>=-5*60*1000&&Date.now()-published<=NEW_AGE_MS;
+  }
+  window.decorateNewBadges=function(){
+    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
+      const h=card.querySelector('h3');if(!h)return;
+      const existing=h.querySelector('.new-badge');const fresh=cardIsNew(card);
+      if(fresh&&!existing){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';badge.title='Newly discovered or published within the last hour';h.appendChild(badge)}
+      else if(!fresh&&existing)existing.remove();
+    });
+  };
+
+  async function loadStats(){
+    try{
+      const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
+      stats=await r.json();
+      serverNewLinks=new Set((stats.newLinks||[]).map(normalizeLink));
+      const parsed=Date.parse(stats.updatedAt||'');
+      if(Number.isFinite(parsed)){
+        window.lastSuccessfulPull=Math.max(Number(window.lastSuccessfulPull)||0,parsed);
+        const now=Date.now(),next=Number(window.nextScheduledPull)||0;
+        if(next<=now&&refreshState!=='retrying')window.nextScheduledPull=Math.max(parsed+AUTO_MS,now+1000);
+      }
+    }catch(e){console.warn('Update statistics unavailable:',e)}
+    window.decorateNewBadges();renderStatus();
+  }
+
+  // Keep the Top discovery button behavior that the older status controller owned.
+  function wireTopButton(){
+    const btn=byId('refresh');if(!btn)return;
+    const current=()=>{try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}};
+    btn.hidden=current()!=='top';btn.type='button';btn.textContent='↻ Next Top Stories';
+    if(btn.dataset.v22Wired)return;btn.dataset.v22Wired='1';
+    btn.addEventListener('click',async()=>{
+      if(btn.disabled||current()!=='top')return;
+      btn.disabled=true;btn.textContent='⟳ Checking…';
+      try{if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false)}catch(e){console.error(e)}
+      finally{btn.disabled=false;btn.textContent='↻ Next Top Stories';renderStatus()}
+    });
+  }
+  window.syncTopDiscoveryButton=function(){wireTopButton();renderStatus()};
+
+  const originalRefresh=window.refreshNewsFromPage;
+  if(typeof originalRefresh==='function'&&!originalRefresh.__v22Wrapped){
+    const wrapped=async function(...args){
+      const before=Number(window.lastSuccessfulPull)||0;refreshState='checking';renderStatus();
+      try{return await originalRefresh.apply(this,args)}finally{
+        const after=Number(window.lastSuccessfulPull)||0;
+        refreshState=after>before?'scheduled':'retrying';
+        if(refreshState==='retrying'&&Number(window.nextScheduledPull)<=Date.now())window.nextScheduledPull=Date.now()+60*1000;
+        await loadStats();
+      }
+    };
+    wrapped.__v22Wrapped=true;window.refreshNewsFromPage=wrapped;
+  }
+
+  const feed=byId('news-feed');if(feed)new MutationObserver(()=>window.decorateNewBadges()).observe(feed,{childList:true,subtree:true});
+  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();window.decorateNewBadges();renderStatus()},0));
+  function tick(){renderStatus();tickTimer=setTimeout(tick,1000-(Date.now()%1000)+20)}
+  function refreshStatsLoop(){void loadStats();statsTimer=setTimeout(refreshStatsLoop,60000)}
+  wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);
+  window.__alertsStatusV22=true;
 })();
 </script>
 </body>

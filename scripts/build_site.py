@@ -34,6 +34,8 @@ PATCHERS = [
     'scripts/patch_v2_frontend.py',
     'scripts/dedupe_generated_ui.py',
     'scripts/normalize_generated_html.py',
+    # Final V2.2 UX layer owns the visible update panel and notification UX.
+    'scripts/patch_v22_alerts_status.py',
 ]
 
 
