@@ -17,7 +17,7 @@ if '<meta name="description"' not in s:
 # Keep the brand but make the masthead read like a publication instead of a dashboard.
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=3">\n<script src="assets/location-v2.js?v=2"></script>\n'''
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=4">\n<script src="assets/location-v2.js?v=2"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
@@ -34,4 +34,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported 2.1 frontend: compact cards, one status row, full scrollable category navigation, shared location service and health UI.')
+print('Applied Underreported 2.4 frontend: full-width desktop, compact mobile cards, full scrollable category navigation, shared location service and health UI.')
