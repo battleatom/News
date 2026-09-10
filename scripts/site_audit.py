@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 
 INDEX = Path('index.html')
 NEWS = Path('News')
+LOCATION_JS = Path('assets/location-content-v25.js')
 
 REQUIRED_BLOCK_IDS = (
     'site-features-v2', 'shared-page-state-bridge-v1', 'auto-refresh-timer-v1',
@@ -44,6 +45,7 @@ def likely_same_title(a, b):
 def main():
     errors, warnings = [], []
     html = INDEX.read_text(encoding='utf-8')
+    location_js = LOCATION_JS.read_text(encoding='utf-8') if LOCATION_JS.exists() else ''
 
     ids = re.findall(r'<(?:script|style)\b[^>]*\bid=["\']([^"\']+)["\']', html, flags=re.I)
     counts = Counter(ids)
@@ -101,8 +103,10 @@ def main():
         errors.append('10-story pagination constant is missing')
     if '__loadMoreNoJumpV281' not in html or 'window.scrollTo({top:y' not in html:
         errors.append('V2.8.1 Load More scroll-preservation marker is missing')
-    if '__locationDedupeV281' not in html or '__sameStateEventV281' not in html:
-        errors.append('V2.8.1 state event dedupe marker is missing')
+    if 'assets/location-content-v25.js?v=3' not in html:
+        errors.append('V2.8.1 location controller cache-busted asset reference is missing')
+    if '__locationDedupeV281' not in location_js or '__sameStateEventV281' not in location_js or 'stateUnique' not in location_js:
+        errors.append('V2.8.1 state event dedupe logic is missing from external location controller')
 
     tree = ET.parse(NEWS)
     items = tree.getroot().findall('./channel/item')
@@ -160,7 +164,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, status/audio wiring, publish-age NEW timing, no-jump pagination, state dedupe, tabs, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, status/audio wiring, publish-age NEW timing, no-jump pagination, external state dedupe, tabs, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
