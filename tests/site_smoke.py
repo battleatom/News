@@ -41,15 +41,6 @@ def assert_unique_visible_titles(page):
     assert not duplicates, f'Exact visible title duplicates: {sorted(duplicates)[:5]}'
 
 
-def wait_for_lead(page):
-    try:
-        page.wait_for_selector('#news-feed .lead-story-v2', timeout=3500)
-    except PlaywrightTimeoutError:
-        raise AssertionError('Top page does not expose a lead story')
-    assert page.locator('#news-feed .lead-story-v2').count()==1, 'Top page exposes more than one lead story'
-    assert 'Lead story' in page.locator('#news-feed .lead-story-v2').first.inner_text(), 'Lead story kicker missing'
-
-
 def desktop_suite(browser):
     context=browser.new_context(
         viewport={'width':1440,'height':1000},
@@ -95,8 +86,10 @@ def desktop_suite(browser):
         results[name]=len(card_titles(page))
 
     click_tab(page,'Top')
-    page.wait_for_timeout(300)
-    wait_for_lead(page)
+    page.wait_for_timeout(350)
+    assert page.locator('#news-feed .news-item').count()>=1, 'Top Stories rendered no cards'
+    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Oversized lead-card treatment is still present'
+    assert page.locator('#news-feed .news-item-v2-kicker').count()==0, 'Lead-story kicker is still present'
     before=card_titles(page)
     btn=page.locator('#refresh')
     assert btn.is_visible(), 'Next Top Stories button is not visible on Top'
@@ -175,14 +168,12 @@ def mobile_suite(browser):
     assert tab_overflow>20, 'Mobile category strip should scroll horizontally instead of hiding tabs'
     click_tab(page,'Top')
     page.wait_for_timeout(250)
-    wait_for_lead(page)
-    lead=page.locator('#news-feed .lead-story-v2').first
-    pad_top=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", lead.element_handle()))
-    pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", lead.element_handle()))
-    assert pad_top<=14 and pad_left<=13, f'Mobile lead card padding is too large: top={pad_top}, left={pad_left}'
-    regular=page.locator('#news-feed .news-item').nth(1)
-    regular_pad=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", regular.element_handle()))
-    assert regular_pad<=12, f'Mobile card padding is too large: {regular_pad}'
+    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Mobile oversized lead card still exists'
+    first=page.locator('#news-feed .news-item').first
+    assert first.count()==1, 'Mobile Top Stories rendered no first card'
+    pad_top=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", first.element_handle()))
+    pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", first.element_handle()))
+    assert pad_top<=12 and pad_left<=11, f'Mobile card padding is too large: top={pad_top}, left={pad_left}'
     assert page.locator('#pull-stats-ui').is_visible(), 'Mobile compact update row missing'
     assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Mobile duplicate update row is visible'
     context.close()
