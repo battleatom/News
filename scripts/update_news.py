@@ -214,7 +214,7 @@ TRUSTED_CATEGORY_FALLBACKS = {
     ],
 }
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "legislation": 24, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -595,6 +595,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -700,30 +702,74 @@ def underreported_source_allowed(item):
 def legislation_action_allowed(item):
     title = (item.get('title') or '').lower()
     source = (item.get('source') or '').lower()
-    if any(term in title for term in (
-        'public inspection: combined filings', 'public inspection: new postal products',
-        'personal vision', 'historic results', 'promises made, promises kept',
-        'patriot day', 'proclamation', 'remarks by', 'representative ', 'senator '
-    )):
-        if not any(term in title for term in (' bill ', ' h.r.', ' s.', ' act ', ' resolution ', 'passes', 'passed', 'signed', 'veto')):
-            return False
+    padded = f" {title} "
+
+    # Never treat promotional/ceremonial pages or generic pre-publication queues
+    # as legislation news, even when their titles happen to mention a bill.
+    reject_always = (
+        'public inspection:', 'personal vision', 'historic results',
+        'promises made', 'patriot day', 'proclamation', 'remarks by',
+        'statement from the president', 'fact sheet: president',
+    )
+    if any(term in title for term in reject_always):
+        return False
+
+    # Bare profile and amendment/database entries are not useful cards without
+    # an explanatory action headline.
+    if title.startswith(('representative ', 'senator ', 'text - ', 'actions - ')):
+        return False
+    if re.match(r'^s\.amdt\.\d+\s+to\s+', title):
+        return False
+
     years = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', title)]
     current_year = datetime.now(timezone.utc).year
     if years and min(years) < current_year - 2 and ('congress' in source or 'federal register' in source):
         return False
-    strong_actions = (
-        'signed into law', 'signs bill', 'signed bill', 'enacted', 'passes house', 'house passes',
-        'passes senate', 'senate passes', 'passed the house', 'passed the senate', 'veto',
-        'executive order', 'final rule', 'proposed rule', 'rulemaking', 'regulation', 'rescission',
-        'repeal', 'ordinance', 'amendment', 'resolution', 'legislation', ' bill ', ' h.r.', ' s.'
-    )
-    if any(term in f' {title} ' for term in strong_actions):
+
+    explicit_action = any(term in padded for term in (
+        ' signed into law ', ' signs bill ', ' signed bill ', ' enacted ',
+        ' passes house ', ' house passes ', ' passes senate ', ' senate passes ',
+        ' passed the house ', ' passed the senate ', ' vetoed ', ' vetoes ',
+        ' executive order ', ' final rule ', ' proposed rule ', ' rulemaking ',
+        ' rescission ', ' repeal ', ' ordinance ', ' resolution '
+    ))
+    if explicit_action:
         return True
-    if 'federal register' in source and any(term in title for term in (
-        'requirements', 'standards', 'eligibility', 'registration', 'fee for', 'ban on',
-        'regulation of', 'amendments to', 'rule on', 'rules for'
-    )):
+
+    # Established journalism may surface an introduced/proposed measure before
+    # the official database shows a clear status; keep it if the headline is
+    # explicitly about legislation/regulation.
+    government_source = any(term in source for term in (
+        'congress.gov','congress gov','federal register','white house','.gov','nmlegis'
+    ))
+    measure_terms = (' bill ', ' h.r.', ' s.', ' act ', ' legislation ', ' regulation ', ' ordinance ')
+    if not government_source and any(term in padded for term in measure_terms):
         return True
+
+    # Raw government pages are retained only for measures with broad public
+    # consequence. This avoids filling the tab with obscure naming/site bills.
+    high_impact = any(term in padded for term in (
+        ' war powers ', ' military ', ' national security ', ' veterans ',
+        ' medicaid ', ' medicare ', ' health care ', ' healthcare ', ' hospital ',
+        ' tax ', ' taxes ', ' budget ', ' spending ', ' housing ',
+        ' immigration ', ' border ', ' asylum ', ' voting ', ' election ',
+        ' civil rights ', ' privacy ', ' surveillance ', ' cybersecurity ',
+        ' artificial intelligence ', ' antitrust ', ' labor ', ' wage ', ' workers ',
+        ' education ', ' student ', ' abortion ', ' environment ', ' pollution ',
+        ' water ', ' climate ', ' energy ', ' consumer ', ' disability ', ' tribal ', ' indigenous '
+    ))
+    if government_source and high_impact and any(term in padded for term in measure_terms):
+        return True
+
+    # Substantive Federal Register rules can be useful even without the literal
+    # phrase "final rule," but routine notices and information collections are not.
+    if 'federal register' in source:
+        if any(term in title for term in ('information collection', 'combined filings', 'postal products', 'meeting notice', 'availability of')):
+            return False
+        return high_impact and any(term in title for term in (
+            'requirements', 'standards', 'eligibility', 'registration', 'fee for',
+            'ban on', 'regulation of', 'amendments to', 'rule on', 'rules for'
+        ))
     return False
 
 
@@ -779,6 +825,16 @@ def select_underreported(unique):
             'contamination','pollution','hospital','medicaid','workers','labor','privacy','surveillance',
             'civil rights','tribal','indigenous','veteran','fraud','regulation','legislation','bill','law'
         )) else 0
+        substantive_signal = any(t in text for t in (
+            'investigation','audit','inspector general','whistleblower','public records','lawsuit','settlement',
+            'contamination','pollution','hospital','medicaid','workers','labor','privacy','surveillance',
+            'civil rights','tribal','indigenous','veteran','fraud','regulation','legislation','bill','law',
+            'court','ruling','election','voting','killed','deaths','war','attack','strike','famine','humanitarian',
+            'wildfire','drought','flood','outbreak','recall','bankruptcy','layoffs','school','education','housing'
+        ))
+        public_interest_source = any(t in src_raw for t in UNDERREPORTED_PUBLIC_INTEREST_TOKENS)
+        if not substantive_signal and not public_interest_source:
+            continue
         celebrity_penalty = 10 if any(t in text for t in ('donald trump','president trump','elon musk')) and public_interest_bonus < 12 else 0
         score = impact + public_interest_bonus - celebrity_penalty
         if score < 24:
@@ -798,7 +854,7 @@ def select_underreported(unique):
         topic = underreported_topic(item)
         first_page = len(selected) < 10
         subject_cap = 1 if first_page else 2
-        topic_cap = 2 if first_page else 4
+        topic_cap = 1 if first_page else 4
         if not k or k in seen_keys or source_counts.get(src, 0) >= 2:
             continue
         if subs and max(subject_counts.get(x, 0) for x in subs) >= subject_cap:
