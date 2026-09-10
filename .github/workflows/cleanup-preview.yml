@@ -2,7 +2,7 @@ name: Underreported 2.0 Preview Validation
 
 on:
   push:
-    branches: [underreported-2.0-cleanup]
+    branches: [underreported-2.0-cleanup, v2.1-mobile-cleanup]
     paths-ignore:
       - 'index.html'
       - 'scripts/update_news.py'
@@ -13,17 +13,17 @@ permissions:
   contents: write
 
 concurrency:
-  group: underreported-2-preview
+  group: underreported-preview-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
   validate-preview:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout cleanup branch
+      - name: Checkout preview branch
         uses: actions/checkout@v4
         with:
-          ref: underreported-2.0-cleanup
+          ref: ${{ github.ref_name }}
           fetch-depth: 0
 
       - name: Optimize generated collector
@@ -44,9 +44,9 @@ jobs:
           workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
           required=(
               'data-underreported-version="2"',
-              'styles/v2.css?v=2',
+              'styles/v2.css?v=3',
               'assets/location-v2.js?v=2',
-              'assets/app-v2.js?v=2',
+              'assets/app-v2.js?v=3',
               'auto-refresh-timer-v1',
               'bookmarks-v1',
               'related-coverage-v1',
@@ -54,7 +54,13 @@ jobs:
           missing=[x for x in required if x not in html]
           if missing:
               raise SystemExit('Missing V2 generated markers: '+', '.join(missing))
-          forbidden=('setInterval(decorate,1500)', 'setInterval(()=>{ensureBookmarkTab();},1000)', 'setInterval(tick,1000)')
+          forbidden=(
+              'setInterval(decorate,1500)',
+              'setInterval(()=>{ensureBookmarkTab();},1000)',
+              'setInterval(tick,1000)',
+              'setInterval(ensureVisibleUI,500)',
+              'setInterval(renderStats,1000)',
+          )
           found=[x for x in forbidden if x in html]
           if found:
               raise SystemExit('Legacy polling remains: '+', '.join(found))
@@ -62,7 +68,7 @@ jobs:
               raise SystemExit('Market data is not ignored by news push trigger')
           if 'git merge --no-edit -X ours origin/main' in workflow:
               raise SystemExit('Unsafe automatic ours-merge remains in production workflow')
-          print('V2 static invariants pass.')
+          print('V2.1 static invariants pass.')
           PY
 
       - name: Install Playwright
@@ -92,5 +98,5 @@ jobs:
             echo 'Generated preview is already current.'
             exit 0
           fi
-          git commit -m 'Build validated Underreported 2.0 preview [skip ci]'
-          git push origin HEAD:underreported-2.0-cleanup
+          git commit -m 'Build validated Underreported preview [skip ci]'
+          git push origin HEAD:${{ github.ref_name }}
