@@ -67,8 +67,6 @@ def category_health(category_counts):
             "targetMax": maximum,
             "status": state,
         }
-    # Preserve visibility into any future/unregistered categories instead of
-    # silently dropping them from diagnostics.
     for category, count in sorted(category_counts.items()):
         if category not in health:
             health[category] = {
@@ -104,11 +102,13 @@ def main():
 
     if not finalize:
         previous_links = set(old.get("currentLinks", []))
-        new_count = sum(1 for link in links if link not in previous_links) if previous_links else len(links)
+        new_links = [link for link in links if link not in previous_links] if previous_links else list(links)
+        new_count = len(new_links)
         stats = {
             "updatedAt": now,
             "fetchedCount": len(items),
             "newCount": new_count,
+            "newLinks": new_links,
             "duplicatesRemoved": 0,
             "languageFiltered": 0,
             "finalCount": len(items),
@@ -124,9 +124,12 @@ def main():
 
     stats = old or {}
     before = int(stats.get("fetchedCount", len(items)))
+    final_link_set = set(links)
+    surviving_new_links = [link for link in stats.get("newLinks", []) if link in final_link_set]
     stats.update({
         "updatedAt": now,
         "fetchedCount": before,
+        "newLinks": surviving_new_links,
         "duplicatesRemoved": max(0, before - len(items)),
         "finalCount": len(items),
         "categoryCounts": dict(sorted(category_counts.items())),
