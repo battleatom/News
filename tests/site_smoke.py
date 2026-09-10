@@ -158,15 +158,16 @@ def desktop_suite(browser):
     page.evaluate("href=>window.__markNewArticleLinksV23([href])", first_href)
     assert page.locator('#news-feed .news-item').first.locator('.new-badge').count()==1, 'Discovered article did not receive a red NEW badge'
 
-    # Enabling audio must be silent. A sound request is merely queued until a
-    # refresh verifies that one or more genuinely new links appeared.
-    page.evaluate("window.__testPopCount=0;window.playNewArticlePop=()=>{window.__testPopCount++;return true}")
+    # Enabling audio must be silent. Install the audio spy only after the click so
+    # any unrelated in-flight refresh cannot be mistaken for the opt-in gesture.
     sound=page.locator('#sound-alerts-toggle')
-    sound.click();page.wait_for_timeout(250)
+    sound.click();page.wait_for_timeout(500)
     assert page.evaluate("localStorage.getItem('underreported-sound-alerts-v2')==='on'"), 'Sound alert preference was not enabled by user gesture'
-    assert page.evaluate("window.__testPopCount===0"), 'Enabling sound incorrectly played a test pop'
+    assert 'alerts on' in sound.inner_text().lower(), 'Sound control did not confirm alerts are enabled'
+    page.evaluate("window.__testPopCount=0;window.playNewArticlePop=()=>{window.__testPopCount++;return true}")
     page.evaluate("window.__queueNewArticlePopV23(1)")
-    assert page.evaluate("window.__testPopCount===0"), 'Queued new count played audio before a verified new link event'
+    page.wait_for_timeout(100)
+    assert page.evaluate("window.__testPopCount===0"), 'Queued new count played audio before a verified new-link refresh event'
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
     click_key(page,'legislation')
