@@ -1,5 +1,6 @@
 from pathlib import Path
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
 import html
 import re
 import urllib.parse
@@ -8,8 +9,16 @@ import xml.etree.ElementTree as ET
 
 NEWS = Path('News')
 MAX_SUPPORTING = 4
-BLOCKED_PAYWALL = ('new york times','the new york times','wall street journal','wsj','bloomberg','washington post','the washington post')
+SUPPORTING_MAX_AGE_DAYS = 120
+BLOCKED_PAYWALL = ('new york times','the new york times','wall street journal','wsj','bloomberg','washington post','the washington post','barron')
 OFFICIAL_SOURCES = ('congress.gov','congress gov','federal register','federalregister.gov','white house','whitehouse.gov','new mexico legislature','nmlegis.gov','governor of new mexico','farmington nm','san juan county')
+JOURNALISM_SOURCES = (
+    'associated press','ap news','reuters','npr','pbs','abc news','cbs news','nbc news','cnn','fox news','usa today',
+    'axios','politico','the hill','the guardian','propublica','kff health news','inside climate','grist','reveal',
+    'source new mexico','new mexico in depth','searchlight new mexico','santa fe new mexican','albuquerque journal',
+    'tri-city record','farmington daily times','ksje','navajo times','durango herald','the journal','colorado public radio',
+    'stateline','states newsroom','public radio','newsweek','time',
+)
 
 
 def clean(value):
@@ -33,13 +42,25 @@ def source_is_paywalled(source):
     return any(x in s for x in BLOCKED_PAYWALL)
 
 
+def source_is_journalism(source):
+    s=(source or '').lower()
+    return any(x in s for x in JOURNALISM_SOURCES)
+
+
+def parse_pubdate(pub):
+    try:
+        return parsedate_to_datetime(pub).astimezone(timezone.utc)
+    except Exception:
+        return None
+
+
 def fetch_supporting(title, primary_link):
     terms=[w for w in re.findall(r'[A-Za-z0-9]+',title) if len(w)>3][:14]
     if not terms:
         return [], ''
     query=' '.join(terms)
     try:
-        req=urllib.request.Request(feed_url(query),headers={'User-Agent':'Mozilla/5.0 LegislationTracker/1.0'})
+        req=urllib.request.Request(feed_url(query),headers={'User-Agent':'Mozilla/5.0 LegislationTracker/1.1'})
         with urllib.request.urlopen(req,timeout=15) as response:
             root=ET.fromstring(response.read())
     except Exception:
@@ -48,10 +69,11 @@ def fetch_supporting(title, primary_link):
     rows=[]
     official=''
     seen=set()
+    cutoff=datetime.now(timezone.utc)-timedelta(days=SUPPORTING_MAX_AGE_DAYS)
     for item in root.findall('.//item'):
         t=clean(item.findtext('title')); link=clean(item.findtext('link')); desc=clean(item.findtext('description'))
         source_el=item.find('source'); source=clean(source_el.text if source_el is not None else '')
-        pub=clean(item.findtext('pubDate'))
+        pub=clean(item.findtext('pubDate')); dt=parse_pubdate(pub)
         if not t or not link or link==primary_link or source_is_paywalled(source):
             continue
         overlap=len(target & words(t))
@@ -64,7 +86,15 @@ def fetch_supporting(title, primary_link):
         if not official and any(x in source.lower() for x in OFFICIAL_SOURCES):
             official=link
             continue
-        rows.append((overlap,t,link,source,pub,desc))
+        # The card footer is supporting REPORTING, not law-firm SEO, investment sites,
+        # random blogs, or stale articles about a similarly named older measure.
+        if not source_is_journalism(source):
+            continue
+        if not dt or dt < cutoff:
+            continue
+        age_days=max(0,(datetime.now(timezone.utc)-dt).days)
+        score=overlap*10-max(0,age_days/14)
+        rows.append((score,t,link,source,pub,desc))
     rows.sort(key=lambda x:x[0],reverse=True)
     return rows[:MAX_SUPPORTING], official
 
@@ -73,7 +103,7 @@ def jurisdiction(text):
     t=text.lower()
     if any(x in t for x in ('new mexico','nm legislature','nmlegis','governor michelle lujan grisham','state legislature')):
         return 'New Mexico'
-    if any(x in t for x in ('farmington','san juan county','city council','county commission','ordinance')):
+    if any(x in t for x in ('farmington','san juan county','city council','county commission','ordinance','durango','cortez','montezuma county','la plata county')):
         return 'Local / Four Corners'
     return 'Federal'
 
@@ -96,6 +126,8 @@ def status(text):
         return 'Advanced from committee'
     if any(x in t for x in ('introduced','introduces bill','proposes bill','proposed rule','proposal')):
         return 'Introduced / proposed'
+    if any(x in t for x in ('rescission','rescind','repeal')):
+        return 'Rule/law change proposed'
     return 'Active development'
 
 
@@ -108,7 +140,7 @@ def affected(text):
         ('Veterans, service members, and military families',('veteran','military','service member','va ')),
         ('Taxpayers, households, and businesses',('tax','budget','spending','credit','deduction')),
         ('Consumers and regulated businesses',('consumer','fee','insurance','antitrust','regulation')),
-        ('Immigrants and immigration agencies',('immigration','immigrant','border','asylum','visa')),
+        ('Immigrants and immigration agencies',('immigration','immigrant','border','asylum','visa','h-1b')),
         ('Tribal governments and Indigenous communities',('tribal','navajo','indigenous','native american')),
         ('Residents, utilities, and water users',('water','utility','electric','pollution','environment')),
     ]
@@ -128,6 +160,7 @@ def next_step(status_text):
         'Passed a chamber':'Action in the other chamber, reconciliation, or executive signature.',
         'Advanced from committee':'A floor vote or additional committee action.',
         'Introduced / proposed':'Committee hearings, amendments, public comment, or a floor vote.',
+        'Rule/law change proposed':'Public comment, agency action, legislative response, or litigation.',
     }.get(status_text,'Watch for the next formal vote, order, rulemaking step, or implementation action.')
 
 
@@ -149,7 +182,7 @@ def main():
     tree=ET.parse(NEWS); root=tree.getroot(); channel=root.find('channel')
     if channel is None:
         raise SystemExit('RSS channel not found')
-    count=0
+    count=0; support_count=0
     for item in channel.findall('item'):
         if clean(item.findtext('category'))!='legislation':
             continue
@@ -177,9 +210,10 @@ def main():
                 ET.SubElement(ar,'source').text=src
                 ET.SubElement(ar,'pubDate').text=pub
                 ET.SubElement(ar,'description').text=d
+                support_count+=1
         count+=1
     tree.write(NEWS,encoding='utf-8',xml_declaration=True)
-    print(f'Legislation enrichment complete: {count} cards with status, impact fields, and free supporting coverage.')
+    print(f'Legislation enrichment complete: {count} action-focused cards; {support_count} recent established-journalism supporting links attached.')
 
 if __name__=='__main__':
     main()
