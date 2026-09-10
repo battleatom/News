@@ -111,7 +111,10 @@ SCRIPT = r'''<script id="alerts-status-v22">
   }
   async function enableSound(test){
     const ok=await ensureAudio();
-    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
+    if(ok){
+      try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}
+      if(test&&typeof window.playNewArticlePop==='function')window.playNewArticlePop();
+    }
     renderStatus();return ok;
   }
   window.enableNewArticleSound=enableSound;
