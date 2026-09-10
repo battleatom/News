@@ -334,6 +334,26 @@ UNDERREPORTED_PUBLIC_INTEREST_TOKENS = (
 FOREIGN_ONLY_TERMS = ('germany', 'german', 'berlin', 'france', 'french', 'paris', 'united kingdom', 'britain', 'british', 'london', 'italy', 'italian', 'rome', 'spain', 'spanish', 'madrid', 'europe', 'european union', 'eu', 'ukraine', 'ukrainian', 'russia', 'russian', 'moscow', 'china', 'chinese', 'beijing', 'japan', 'japanese', 'tokyo', 'south korea', 'korean', 'india', 'indian', 'africa', 'african', 'south africa', 'nigeria', 'kenya', 'ethiopia', 'ghana', 'egypt', 'cairo', 'israel', 'israeli', 'gaza', 'palestine', 'iran', 'iranian', 'tehran', 'iraq', 'iraqi', 'syria', 'syrian', 'lebanon', 'turkey', 'turkish', 'australia', 'australian', 'canada', 'canadian', 'mexico', 'mexican', 'brazil', 'brazilian', 'argentina', 'argentine', 'colombia', 'philippines', 'indonesia', 'taiwan', 'new zealand', 'pakistan', 'afghanistan', 'north korea', 'nato', 'united nations', 'west bank')
 US_CONTEXT_TERMS = ('united states', 'u.s.', 'us ', 'america', 'american', 'washington dc', 'washington, d.c.', 'new mexico', 'farmington', 'san juan county', 'arizona', 'colorado', 'utah', 'nevada', 'texas', 'california', 'oregon', 'washington state', 'new york', 'florida', 'georgia', 'illinois', 'ohio', 'congress', 'senate', 'house of representatives', 'white house', 'pentagon', 'supreme court')
 
+PRESIDENTIAL_DIRECT_TERMS = (
+    "donald trump", "president trump", "trump", "white house",
+    "u.s. president", "us president", "president of the united states",
+    "oval office", "trump administration", "vice president vance",
+    "jd vance", "j.d. vance", "karoline leavitt", "white house press secretary",
+)
+PRESIDENTIAL_ACTION_TERMS = (
+    "executive order", "presidential action", "presidential memorandum",
+    "presidential proclamation", "cabinet meeting", "administration official",
+)
+
+def is_us_presidential_story(title, description=""):
+    title_text = f" {clean(title).lower()} "
+    full_text = f" {clean(title).lower()} {clean(description).lower()} "
+    if any(term in title_text for term in PRESIDENTIAL_DIRECT_TERMS):
+        return True
+    us_context = any(term in full_text for term in ("united states", "u.s.", "american", "white house"))
+    return us_context and any(term in full_text for term in PRESIDENTIAL_ACTION_TERMS)
+
+
 def source_is_trusted(source):
     s = re.sub(r"[^a-z0-9]+", " ", (source or "").lower()).strip()
     if not s:
@@ -398,6 +418,8 @@ def parse_items(root, category, source_override=None):
         published = parse_date(pub); source_el = item.find("source")
         source = source_override or clean(source_el.text if source_el is not None else "")
         if not source_is_trusted(source):
+            continue
+        if category == "presidential" and not is_us_presidential_story(title, desc):
             continue
         item_category = "world" if should_route_to_world(title, desc, category) else category
         if not title or not link or not published or published < cutoff or published > now + timedelta(minutes=10):
@@ -1010,6 +1032,33 @@ def select_category_stories(items, limit=30):
             break
     return selected
 
+
+def select_region_stories(items, per_state=8, limit=80):
+    ranked = sorted(items, key=lambda x: x["published"], reverse=True)
+    selected, seen = [], set()
+    states = []
+    for item in ranked:
+        state = (item.get("state") or "").strip()
+        if state and state not in states:
+            states.append(state)
+    for state in states:
+        state_items = [item for item in ranked if (item.get("state") or "").strip() == state]
+        for item in select_category_stories(state_items, limit=per_state):
+            k = key(item)
+            if not k or k in seen:
+                continue
+            selected.append(item); seen.add(k)
+            if len(selected) >= limit:
+                return selected
+    for item in ranked:
+        k = key(item)
+        if not k or k in seen:
+            continue
+        selected.append(item); seen.add(k)
+        if len(selected) >= limit:
+            break
+    return selected
+
 def why_matters(item):
     text = f"{item['title']} {item['description']}".lower()
     if any(t in text for t in ("war", "invasion", "airstrike", "missile", "ceasefire", "military", "troops")):
@@ -1091,8 +1140,6 @@ def main():
                             batch = parse_items(fetch(region_query), category)
                             for item in batch:
                                 item["region"] = region_name
-                                item["state"] = region_query_state(region_query)
-                                item["state"] = region_query_state(region_query)
                                 item["state"] = region_query_state(region_query)
                             region_count += len(batch)
                             items.extend(batch)
@@ -1181,7 +1228,7 @@ def main():
             selected_by_category[category] = []
             for region_name in ("southwest", "west", "mountain", "midwest", "south", "northeast", "pacific-northwest", "southeast"):
                 region_items = [x for x in category_items if x.get("region") == region_name]
-                selected_by_category[category].extend(select_category_stories(region_items, limit=30))
+                selected_by_category[category].extend(select_region_stories(region_items, per_state=8, limit=80))
         else:
             selected_by_category[category] = select_category_stories(category_items)
     top = select_top_stories(top_unique)
