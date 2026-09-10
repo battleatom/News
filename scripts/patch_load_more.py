@@ -115,12 +115,15 @@ function syncDiscoveryButton(){
 }
 function renderMoreWithoutJump(next){
   const y=window.scrollY;
+  const x=window.scrollX;
   const activeBefore=active;
   loadCounts[activeBefore]=next;
   canonicalRender(allItems);
-  requestAnimationFrame(()=>{
-    if(active===activeBefore)window.scrollTo({top:y,left:window.scrollX,behavior:'auto'});
-  });
+  const restore=()=>{if(active===activeBefore)window.scrollTo({top:y,left:x,behavior:'auto'})};
+  restore();
+  requestAnimationFrame(()=>{restore();requestAnimationFrame(restore)});
+  setTimeout(restore,0);
+  setTimeout(restore,60);
 }
 
 function paginatedNewsItems(items){
@@ -215,4 +218,4 @@ window.__loadMoreNoJumpV281=true;
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied Load More with preserved scroll position plus daily unseen Top Stories cycling.")
+print("Applied Load More with stable scroll restoration plus daily unseen Top Stories cycling.")
