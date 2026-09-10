@@ -63,6 +63,23 @@ async function refreshNewsFromPage(manual=false){
 
     const channel=xml.querySelector('channel');
     const updated=channel?.querySelector('lastBuildDate')?.textContent||new Date().toISOString();
+    const phase=newCount===0?'No new stories — feed is current':(result.removed?`Found ${newCount} new · removed ${result.removed} duplicate${result.removed===1?'':'s'}`:`Found ${newCount} new stor${newCount===1?'y':'ies'}`);
+    pullStatusHtml(allItems.length,false,'Rendering updated feed');
+
+    try{
+      canonicalBuildTabs();
+      canonicalRender(allItems);
+      decorateNewBadges();
+    }catch(renderError){
+      console.error('Feed downloaded successfully, but page rendering failed:',renderError);
+      nextScheduledPull=Date.now()+60000;
+      window.nextScheduledPull=nextScheduledPull;
+      if(status)status.textContent='Feed downloaded · display refresh failed';
+      pullStatusHtml(allItems.length,false,'Display refresh failed · retry scheduled');
+      return false;
+    }
+
+    // Only mark the pull successful after both data validation and rendering succeed.
     lastSuccessfulPull=Date.now();
     nextScheduledPull=lastSuccessfulPull+AUTO_PULL_MS;
     window.lastSuccessfulPull=lastSuccessfulPull;
@@ -70,20 +87,8 @@ async function refreshNewsFromPage(manual=false){
     const lastUpdateEl=document.getElementById('last-update');
     if(lastUpdateEl)lastUpdateEl.textContent='Last update: '+formatDate(updated);
     if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';
-
-    const phase=newCount===0?'No new stories — feed is current':(result.removed?`Found ${newCount} new · removed ${result.removed} duplicate${result.removed===1?'':'s'}`:`Found ${newCount} new stor${newCount===1?'y':'ies'}`);
     pullStatusHtml(allItems.length,false,phase);
-
-    try{
-      canonicalBuildTabs();
-      canonicalRender(allItems);
-      decorateNewBadges();
-      if(newCount>0)playNewArticlePop();
-    }catch(renderError){
-      console.error('Feed downloaded successfully, but page rendering failed:',renderError);
-      if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new';
-      pullStatusHtml(allItems.length,false,'Feed updated · display refresh issue');
-    }
+    if(newCount>0)playNewArticlePop();
     return true;
   }catch(e){
     console.error('News feed refresh failed after retries:',e);
@@ -117,4 +122,4 @@ if legacy_start in s2:
     s2 = s2.replace(legacy_start, modern_start, 1)
 
 P.write_text(s2, encoding='utf-8')
-print('Applied retrying refresh handling and routed initial page load through the same resilient feed loader.')
+print('Applied retrying refresh handling and require successful rendering before a pull is marked successful.')
