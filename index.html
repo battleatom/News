@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#0b1120">
 <title>Underreported — High-Impact News</title>
+<meta name="description" content="Underreported brings high-impact, local and undercovered stories together with source context and live updates.">
 
 
 
@@ -67,28 +68,9 @@
 
 
 <link rel="stylesheet" href="styles/theme.css?v=3">
-<style id="desktop-layout-fix-v1">
-@media (min-width:601px){
-  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
-  body{padding:10px!important}
-  .container{width:calc(100% - 20px)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;overflow:hidden!important}
-  header,.toolbar,.markets,.tabs,.pull-status,.content,footer,#news-feed,.section,.section-body,.news-item{min-width:0!important;max-width:100%!important}
-  .content,#news-feed,.section,.section-body{width:100%!important}
-  .news-item h3,.news-item h3 a,.description,.why,.meta{overflow-wrap:anywhere!important;word-break:normal!important}
-
-  /* Desktop is a dashboard: show every navigation tab without horizontal scrolling. */
-  .tabs{display:flex!important;flex-wrap:wrap!important;overflow-x:visible!important;overflow-y:visible!important;white-space:normal!important;align-items:center!important;justify-content:flex-start!important;gap:4px 5px!important;padding:8px 14px!important}
-  .tab{flex:0 0 auto!important;padding:7px 10px!important;font-size:10.5px!important}
-
-  /* Show the complete market strip on desktop instead of making it swipe horizontally. */
-  .markets{height:auto!important;min-height:32px!important;overflow:visible!important;white-space:normal!important}
-  .markets-track{width:100%!important;min-width:0!important;height:auto!important;min-height:32px!important;display:flex!important;flex-wrap:wrap!important;justify-content:space-between!important;align-items:center!important;gap:3px 12px!important;padding:5px 16px!important;white-space:normal!important}
-  .market{flex:0 0 auto!important}
-}
-</style>
 
 <style id="local-status-style">
-.toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:130px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location{display:none}.local-status .weather-condition{display:none}.local-status .local-sep{display:none}}
+.toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:150px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(prefers-color-scheme:dark){.local-status,.local-status .local-date,.local-status .local-time,.local-status .weather-temp{color:#e5e7eb}.local-status .weather-condition{color:#a1a1aa}}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location,.local-status .weather-condition,.local-status .local-sep{display:none}}
 </style>
 <link rel="stylesheet" href="styles/header.css?v=4">
 <style id="site-features-style">
@@ -109,11 +91,15 @@
 <style id="legislation-style-v1">
 .legislation-card .leg-top{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px}.leg-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(202,138,4,.09);border:1px solid rgba(202,138,4,.18);font-size:9px;font-weight:800;letter-spacing:.02em;color:#92400e}.leg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.leg-field{padding:9px 10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(118,118,128,.035)}.leg-field strong{display:block;margin-bottom:3px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui-subtle)}.leg-field span{font-size:11.5px;line-height:1.45;color:var(--ui-muted)}.leg-support{margin-top:13px;padding-top:11px;border-top:1px solid var(--ui-line)}.leg-support-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ui-subtle);margin-bottom:6px}.leg-support a{display:block;padding:6px 0;text-decoration:none;font-size:11.5px;font-weight:650;border-top:1px solid rgba(60,60,67,.07)}.leg-support a:first-of-type{border-top:0}.leg-support small{display:block;margin-top:2px;color:var(--ui-subtle);font-size:9px}.leg-official{margin-top:10px}.leg-official a{display:inline-flex;padding:7px 10px;border-radius:9px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);font-size:10px;font-weight:750;text-decoration:none}@media(max-width:600px){.leg-grid{grid-template-columns:1fr}.legislation-card .leg-top{gap:5px}}
 </style>
-<style id="related-coverage-v1-style">.related-coverage{margin:9px 0 0;padding:8px 10px;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{color:#475569}.related-coverage a{display:block;margin-top:4px;color:#475569;text-decoration:underline}.related-coverage .source{color:#94a3b8}</style>
+<style id="related-coverage-v1-style">.related-coverage{margin:11px 0 0;padding:10px 0 0;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{display:inline-block;color:#475569;margin-bottom:3px}.related-coverage a{display:block;margin-top:5px;color:#475569;text-decoration:none;font-weight:650}.related-coverage a:hover{text-decoration:underline}.related-coverage .source{color:#94a3b8;font-weight:500}</style>
+
+<link rel="stylesheet" href="styles/v2.css?v=2">
+<script src="assets/location-v2.js?v=2"></script>
 </head>
-<body><div class="container"><header><h1>UNDERREPORTED</h1><p>High-impact stories outside the usual news cycle.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
+<body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
+
 
 
 
@@ -904,12 +890,29 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 <script id="local-status-v1">
-const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],56:['🌧️','Freezing drizzle'],57:['🌧️','Freezing drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],66:['🌨️','Freezing rain'],67:['🌨️','Freezing rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],77:['🌨️','Snow grains'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
-function updateLocalClock(){const d=new Date();const date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});}
-async function getLocalCoords(){try{if(navigator.geolocation){const p=await new Promise((resolve,reject)=>navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:false,maximumAge:900000,timeout:6000}));return {lat:p.coords.latitude,lon:p.coords.longitude};}}catch(e){}try{const r=await fetch('https://ipapi.co/json/',{cache:'no-store'});const d=await r.json();if(d.latitude&&d.longitude)return {lat:Number(d.latitude),lon:Number(d.longitude),city:d.city,state:d.region_code};}catch(e){}return null;}
-async function loadLocalWeather(){const icon=document.getElementById('weather-icon'),temp=document.getElementById('weather-temp'),condition=document.getElementById('weather-condition'),location=document.getElementById('weather-location');try{const c=await getLocalCoords();if(!c)throw new Error('location unavailable');const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(c.lat)}&longitude=${encodeURIComponent(c.lon)}&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto`,{cache:'no-store'});if(!r.ok)throw new Error('weather unavailable');const d=await r.json();const code=Number(d.current?.weather_code);const w=weatherCodes[code]||['🌡️','Current conditions'];icon.textContent=w[0];temp.textContent=Math.round(Number(d.current?.temperature_2m))+'°';condition.textContent=w[1];if(c.city)location.textContent=c.city+(c.state?', '+c.state:'');}catch(e){condition.textContent='Weather unavailable';}}
-updateLocalClock();setInterval(updateLocalClock,1000);loadLocalWeather();setInterval(loadLocalWeather,5*60*1000);
+(function(){
+'use strict';
+const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
+let clockTimer=null,weatherTimer=null;
+function updateClock(){const d=new Date(),date=document.getElementById('local-date'),time=document.getElementById('local-time');if(!date||!time)return;date.textContent=d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'});time.textContent=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});clearTimeout(clockTimer);clockTimer=setTimeout(updateClock,Math.max(1000,60000-(d.getSeconds()*1000+d.getMilliseconds())));}
+async function coords(){if(window.UnderreportedLocation?.get)return window.UnderreportedLocation.get();throw new Error('Location service unavailable');}
+async function loadWeather(){const icon=document.getElementById('weather-icon'),temp=document.getElementById('weather-temp'),condition=document.getElementById('weather-condition'),location=document.getElementById('weather-location');try{const c=await coords();const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(c.lat)}&longitude=${encodeURIComponent(c.lon)}&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto`,{cache:'no-store'});if(!r.ok)throw new Error('weather unavailable');const d=await r.json(),code=Number(d.current?.weather_code),w=weatherCodes[code]||['🌡️','Current conditions'];icon.textContent=w[0];temp.textContent=Math.round(Number(d.current?.temperature_2m))+'°';condition.textContent=w[1];location.textContent=c.label||[c.city,c.state].filter(Boolean).join(', ');}catch(e){condition.textContent='Weather unavailable';}finally{clearTimeout(weatherTimer);weatherTimer=setTimeout(loadWeather,10*60*1000);}}
+function start(){updateClock();loadWeather();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
 </script>
 <script id="region-tab-v1">
 let detectedRegion=localStorage.getItem('underreported-region')||'southwest',detectedLocation=localStorage.getItem('underreported-location')||'';
@@ -929,9 +932,35 @@ function renderNfl(){
 function regionRender(items){if(active==='nfl'){renderNfl();return}const def=sections.find(x=>x[0]===active),accent=def?def[2]:'#111827';let list=items.filter(x=>(x.querySelector('category')?.textContent?.trim()||'world')===active);if(active==='region')list=list.filter(x=>(x.querySelector('region')?.textContent?.trim()||'')===detectedRegion);const root=document.getElementById('news-feed');root.innerHTML='';const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',accent);const head=document.createElement('div');head.className='section-header';const label=active==='region'?'🌎 '+regionLabels[detectedRegion]+' Region':(def?def[1]:'News');head.innerHTML=`<h2>${esc(label)}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);const body=document.createElement('div');body.className='section-body';if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',link=item.querySelector('link')?.textContent||'#',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(ar)});sec.appendChild(body);root.appendChild(sec)}
 render=regionRender;
 buildTabs=function(){const tabs=document.getElementById('tabs');tabs.innerHTML='';sections.forEach(([key,label,accent])=>{const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&detectedLocation?'🌎 '+regionLabels[detectedRegion]:label;b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);buildTabs();render(allItems);if(key==='region')detectUserRegion().then(()=>{if(active==='region')render(allItems)}).catch(()=>{});};b.style.setProperty('--accent',accent);tabs.appendChild(b)})};
-async function detectUserRegion(){try{let c;if(navigator.geolocation)c=await new Promise((r,j)=>navigator.geolocation.getCurrentPosition(r,j,{timeout:8000,maximumAge:300000}));const p=new URLSearchParams({localityLanguage:'en'});if(c){p.set('latitude',c.coords.latitude);p.set('longitude',c.coords.longitude)}const d=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+p,{cache:'no-store'}).then(r=>r.json()),code=(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();if(stateRegion[code])detectedRegion=stateRegion[code];detectedLocation=[d.city,d.principalSubdivisionCode?.replace(/^US-/,'')].filter(Boolean).join(', ');localStorage.setItem('underreported-region',detectedRegion);localStorage.setItem('underreported-location',detectedLocation);localStorage.setItem('underreported-state',code);buildTabs();if(active==='region')render(allItems)}catch(e){buildTabs()}}
-detectUserRegion();
-</script><script id="underreported-ui-v1">
+async function detectUserRegion(){try{let c;if(navigator.geolocation)c=await new Promise((r,j)=>navigator.geolocation.getCurrentPosition(r,j,{timeout:8000,maximumAge:300000}));const p=new URLSearchParams({localityLanguage:'en'});if(c){p.set('latitude',c.coords.latitude);p.set('longitude',c.coords.longitude)}const d=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+p,{cache:'no-store'}).then(r=>r.json()),code=(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();if(stateRegion[code])detectedRegion=stateRegion[code];detectedLocation=[d.city,d.principalSubdivisionCode?.replace(/^US-/,'')].filter(Boolean).join(', ');localStorage.setItem('underreported-region',detectedRegion);localStorage.setItem('underreported-location',detectedLocation);buildTabs();if(active==='region')render(allItems)}catch(e){buildTabs()}}
+
+</script><script id="region-location-v2">
+(function(){
+  'use strict';
+  async function sharedRegionLocation(){
+    try{
+      if(!window.UnderreportedLocation?.get)throw new Error('Shared location service unavailable');
+      const loc=await window.UnderreportedLocation.get();
+      const code=String(loc?.state||'').replace(/^US-/,'').toUpperCase();
+      if(code&&typeof stateRegion!=='undefined'&&stateRegion[code])detectedRegion=stateRegion[code];
+      if(loc?.label)detectedLocation=loc.label;
+      try{
+        localStorage.setItem('underreported-region',detectedRegion);
+        if(detectedLocation)localStorage.setItem('underreported-location',detectedLocation);
+        if(code)localStorage.setItem('underreported-state',code);
+      }catch(e){}
+      if(typeof buildTabs==='function')buildTabs();
+      if(typeof active!=='undefined'&&active==='region'&&typeof render==='function'&&typeof allItems!=='undefined')render(allItems);
+    }catch(e){
+      console.warn('Regional location unavailable:',e);
+      if(typeof buildTabs==='function')buildTabs();
+    }
+  }
+  detectUserRegion=sharedRegionLocation;
+  sharedRegionLocation();
+})();
+</script>
+<script id="underreported-ui-v1">
 const baseRenderForUnderreported=render;
 function renderUnderreported(items){
  const def=sections.find(x=>x[0]==='underreported'),accent=def?def[2]:'#7c3aed';
@@ -1118,35 +1147,48 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
   'use strict';
   const INTERVAL=15*60*1000;
   const RETRY=60*1000;
+  const BUSY_RETRY=30*1000;
+  let timer=null;
+
+  function schedule(delay){
+    clearTimeout(timer);
+    timer=setTimeout(run,Math.max(1000,Number(delay)||1000));
+    window.__autoRefreshTimeout=timer;
+  }
+
+  function ensureNextPull(){
+    if(typeof window.nextScheduledPull!=='number' || !window.nextScheduledPull){
+      const last=Number(window.lastSuccessfulPull)||0;
+      window.nextScheduledPull=last?last+INTERVAL:Date.now()+INTERVAL;
+    }
+    return window.nextScheduledPull;
+  }
+
+  async function run(){
+    try{
+      const due=ensureNextPull();
+      if(window.pullInProgress){schedule(BUSY_RETRY);return;}
+      if(Date.now()<due){schedule(due-Date.now());return;}
+      if(typeof window.refreshNewsFromPage!=='function'){schedule(RETRY);return;}
+      const before=Number(window.lastSuccessfulPull)||0;
+      try{await window.refreshNewsFromPage(false);}catch(err){console.error('Automatic news refresh failed:',err);}
+      const last=Number(window.lastSuccessfulPull)||0;
+      window.nextScheduledPull=last>before?last+INTERVAL:Date.now()+RETRY;
+      schedule(window.nextScheduledPull-Date.now());
+    }catch(err){
+      console.error('Automatic refresh scheduler error:',err);
+      window.nextScheduledPull=Date.now()+RETRY;
+      schedule(RETRY);
+    }
+  }
+
   function start(){
     if(window.__autoRefreshTimerV1)return;
     window.__autoRefreshTimerV1=true;
-    function tick(){
-      try{
-        if(window.pullInProgress)return;
-        if(typeof window.nextScheduledPull!=='number' || !window.nextScheduledPull){
-          const last=Number(window.lastSuccessfulPull)||0;
-          window.nextScheduledPull=last?last+INTERVAL:Date.now()+INTERVAL;
-        }
-        if(Date.now()<window.nextScheduledPull)return;
-        if(typeof window.refreshNewsFromPage!=='function')return;
-        const before=Number(window.lastSuccessfulPull)||0;
-        window.refreshNewsFromPage(false).then(function(){
-          const last=Number(window.lastSuccessfulPull)||0;
-          if(last>before)window.nextScheduledPull=last+INTERVAL;
-          else window.nextScheduledPull=Date.now()+RETRY;
-        }).catch(function(err){
-          console.error('Automatic news refresh failed:',err);
-          window.nextScheduledPull=Date.now()+RETRY;
-        });
-      }catch(e){
-        console.error('Automatic refresh timer error:',e);
-        window.nextScheduledPull=Date.now()+RETRY;
-      }
-    }
-    setInterval(tick,1000);
-    tick();
+    const due=ensureNextPull();
+    schedule(Math.max(1000,due-Date.now()));
   }
+
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
@@ -1231,152 +1273,91 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
   let bookmarked=new Set(loadBookmarks());
   let bookmarkData=loadBookmarkData();
   let rendering=false;
+  let decorateQueued=false;
 
-  function loadBookmarks(){
-    try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v:[];}catch(e){return[];}
-  }
+  function loadBookmarks(){try{const v=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(v)?v:[];}catch(e){return[];}}
   function saveBookmarks(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify([...bookmarked]));}catch(e){}}
-  function loadBookmarkData(){
-    try{const v=JSON.parse(localStorage.getItem(DATA_KEY)||'{}');return v&&typeof v==='object'?v:{};}catch(e){return{};}
-  }
+  function loadBookmarkData(){try{const v=JSON.parse(localStorage.getItem(DATA_KEY)||'{}');return v&&typeof v==='object'?v:{};}catch(e){return{};}}
   function saveBookmarkData(){try{localStorage.setItem(DATA_KEY,JSON.stringify(bookmarkData));}catch(e){}}
-  function readItem(item){
-    return {key:itemKey(item),title:itemTitle(item),link:itemLink(item),description:item?.querySelector?.('description')?.textContent||'',date:item?.querySelector?.('pubDate')?.textContent||'',source:item?.querySelector?.('source')?.textContent||''};
-  }
-  function rememberItem(item){
-    if(!item)return;
-    const data=readItem(item); if(!data.key)return;
-    bookmarkData[data.key]=data; saveBookmarkData();
-  }
-  function itemKey(item){
-    const link=(item?.querySelector?.('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
-    if(link)return 'l:'+link;
-    const title=(item?.querySelector?.('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-    return 't:'+title;
-  }
+  function itemKey(item){const link=(item?.querySelector?.('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');if(link)return 'l:'+link;const title=(item?.querySelector?.('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();return 't:'+title;}
   function itemTitle(item){return (item?.querySelector?.('title')?.textContent||'Untitled').trim();}
   function itemLink(item){return (item?.querySelector?.('link')?.textContent||'#').trim();}
   function escapeHtml(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function readItem(item){return {key:itemKey(item),title:itemTitle(item),link:itemLink(item),description:item?.querySelector?.('description')?.textContent||'',date:item?.querySelector?.('pubDate')?.textContent||'',source:item?.querySelector?.('source')?.textContent||''};}
+  function rememberItem(item){if(!item)return;const data=readItem(item);if(!data.key)return;bookmarkData[data.key]=data;saveBookmarkData();}
 
   function ensureBookmarkTab(){
-    const tabs=document.getElementById('tabs');
-    if(!tabs)return;
+    const tabs=document.getElementById('tabs');if(!tabs)return;
     let b=document.getElementById('bookmarks-tab');
     if(!b){
-      b=document.createElement('button');
-      b.id='bookmarks-tab'; b.className='tab'; b.type='button';
-      b.textContent=`🔖 Bookmarks (${bookmarked.size})`;
-      b.title='Saved articles';
-      b.addEventListener('click',()=>{bookmarkMode=true; active='bookmarks'; localStorage.setItem('underreported-active-tab','bookmarks'); renderBookmarks(); updateBookmarkTab();});
+      b=document.createElement('button');b.id='bookmarks-tab';b.className='tab';b.type='button';b.title='Saved articles';
+      b.addEventListener('click',()=>{bookmarkMode=true;active='bookmarks';localStorage.setItem('underreported-active-tab','bookmarks');renderBookmarks();updateBookmarkTab();});
       tabs.appendChild(b);
     }
-    b.textContent=`🔖 Bookmarks${bookmarked.size?` (${bookmarked.size})`:''}`;
-    b.classList.toggle('active',bookmarkMode);
+    updateBookmarkTab();
   }
-
-  function updateBookmarkTab(){
-    const b=document.getElementById('bookmarks-tab');
-    if(b){b.textContent=`🔖 Bookmarks${bookmarked.size?` (${bookmarked.size})`:''}`;b.classList.toggle('active',bookmarkMode);}
-  }
+  function updateBookmarkTab(){const b=document.getElementById('bookmarks-tab');if(b){b.textContent=`🔖 Bookmarks${bookmarked.size?` (${bookmarked.size})`:''}`;b.classList.toggle('active',bookmarkMode);}}
 
   function renderBookmarks(){
-    const root=document.getElementById('news-feed');
-    if(!root || rendering)return;
+    const root=document.getElementById('news-feed');if(!root||rendering)return;
     rendering=true;
     try{
       const current=(typeof allItems!=='undefined'?allItems:[]);
-      current.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
-      const currentByKey={}; current.forEach(x=>{currentByKey[itemKey(x)]=x;});
+      current.forEach(x=>{if(bookmarked.has(itemKey(x)))rememberItem(x);});
+      const currentByKey={};current.forEach(x=>{currentByKey[itemKey(x)]=x;});
       const items=[...bookmarked].map(k=>currentByKey[k]||bookmarkData[k]).filter(Boolean);
       root.innerHTML='';
-      const sec=document.createElement('section'); sec.className='section bookmark-section';
-      const head=document.createElement('div'); head.className='section-header';
-      head.innerHTML=`<h2>🔖 Bookmarks</h2><span class="count">${items.length} saved</span>`;
-      sec.appendChild(head);
-      const body=document.createElement('div'); body.className='section-body';
-      if(!items.length){body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';}
+      const sec=document.createElement('section');sec.className='section bookmark-section';
+      const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>🔖 Bookmarks</h2><span class="count">${items.length} saved</span>`;sec.appendChild(head);
+      const body=document.createElement('div');body.className='section-body';
+      if(!items.length)body.innerHTML='<div class="empty">No saved articles yet. Tap 🔖 on any article to save it.</div>';
       items.forEach((item,i)=>{
-        const ar=document.createElement('article'); ar.className='news-item';
-        const stored=typeof item==='object' && typeof item.querySelector!=='function';
+        const ar=document.createElement('article');ar.className='news-item';
+        const stored=typeof item==='object'&&typeof item.querySelector!=='function';
         const title=stored?(item.title||'Untitled'):itemTitle(item),link=stored?(item.link||'#'):itemLink(item),desc=stored?(item.description||''):item.querySelector('description')?.textContent||'',date=stored?(item.date||''):item.querySelector('pubDate')?.textContent||'',source=stored?(item.source||''):item.querySelector('source')?.textContent||'',bk=stored?(item.key||''):itemKey(item);
         ar.dataset.bookmarkKey=bk;
         ar.innerHTML=`<div class="bookmark-row"><h3><a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${escapeHtml(title)}</a></h3><button type="button" class="bookmark-btn saved" aria-label="Remove bookmark" title="Remove bookmark">🔖</button></div>${desc?`<p class="description">${escapeHtml(desc)}</p>`:''}<div class="meta"><span>${escapeHtml(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${escapeHtml(source)}</span>`:''}</div>`;
         ar.querySelector('.bookmark-btn').addEventListener('click',()=>{bookmarked.delete(bk);delete bookmarkData[bk];saveBookmarks();saveBookmarkData();updateBookmarkTab();renderBookmarks();});
         body.appendChild(ar);
       });
-      sec.appendChild(body); root.appendChild(sec);
-    } finally {
-      requestAnimationFrame(()=>{rendering=false;});
-    }
+      sec.appendChild(body);root.appendChild(sec);
+    }finally{requestAnimationFrame(()=>{rendering=false;});}
   }
 
   function addBookmarkButtons(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.classList.contains('bookmark-section'))return;
-      if(card.querySelector('.bookmark-btn'))return;
-      const titleLink=card.querySelector('h3 a');
-      if(!titleLink)return;
+    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
+      if(card.closest('.bookmark-section')||card.querySelector('.bookmark-btn'))return;
+      const titleLink=card.querySelector('h3 a');if(!titleLink)return;
       let key='';
       if(typeof allItems!=='undefined'){
         const title=(titleLink.textContent||'').replace(/^\d+\.\s*/,'').trim().toLowerCase();
-        const item=allItems.find(x=>itemTitle(x).toLowerCase()===title);
-        if(item)key=itemKey(item);
+        const item=allItems.find(x=>itemTitle(x).toLowerCase()===title);if(item)key=itemKey(item);
       }
-      if(!key){key='l:'+(titleLink.href||'').toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');}
-      const btn=document.createElement('button');
-      btn.type='button'; btn.className='bookmark-btn'+(bookmarked.has(key)?' saved':'');
-      btn.textContent='🔖';
-      btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
-      btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
-      btn.dataset.bookmarkKey=key;
-      btn.addEventListener('click',e=>{
-        e.preventDefault(); e.stopPropagation();
-        if(bookmarked.has(key)){bookmarked.delete(key);delete bookmarkData[key];}
-        else{
-          bookmarked.add(key);
-          if(typeof allItems!=='undefined'){
-            const item=allItems.find(x=>itemKey(x)===key);
-            if(item)rememberItem(item);
-          }
-        }
-        saveBookmarks(); saveBookmarkData();
-        btn.classList.toggle('saved',bookmarked.has(key));
-        btn.setAttribute('aria-label',bookmarked.has(key)?'Remove bookmark':'Bookmark article');
-        btn.title=bookmarked.has(key)?'Remove bookmark':'Bookmark article';
-        updateBookmarkTab();
-      });
-      const h=card.querySelector('h3');
-      h?.insertAdjacentElement('beforebegin',btn);
+      if(!key)key='l:'+(titleLink.href||'').toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
+      const btn=document.createElement('button');btn.type='button';btn.className='bookmark-btn'+(bookmarked.has(key)?' saved':'');btn.textContent='🔖';btn.dataset.bookmarkKey=key;
+      function sync(){const saved=bookmarked.has(key);btn.classList.toggle('saved',saved);btn.setAttribute('aria-label',saved?'Remove bookmark':'Bookmark article');btn.title=saved?'Remove bookmark':'Bookmark article';}
+      sync();
+      btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(bookmarked.has(key)){bookmarked.delete(key);delete bookmarkData[key];}else{bookmarked.add(key);if(typeof allItems!=='undefined'){const item=allItems.find(x=>itemKey(x)===key);if(item)rememberItem(item);}}saveBookmarks();saveBookmarkData();sync();updateBookmarkTab();});
+      const h=card.querySelector('h3');h?.insertAdjacentElement('beforebegin',btn);
     });
     updateBookmarkTab();
   }
 
-  function keepBookmarkView(){
-    if(bookmarkMode){renderBookmarks();}
-    else addBookmarkButtons();
-  }
+  function keepBookmarkView(){if(bookmarkMode)renderBookmarks();else addBookmarkButtons();}
+  function queueDecorate(){if(decorateQueued||rendering)return;decorateQueued=true;queueMicrotask(()=>{decorateQueued=false;keepBookmarkView();});}
 
-  const observer=new MutationObserver(()=>{if(rendering)return;setTimeout(keepBookmarkView,0);});
   function start(){
-    if(typeof allItems!=='undefined') allItems.forEach(x=>{if(bookmarked.has(itemKey(x))) rememberItem(x);});
-    ensureBookmarkTab();
-    if(typeof active!=='undefined' && active==='bookmarks')bookmarkMode=true;
-    const root=document.getElementById('news-feed'); if(root)observer.observe(root,{childList:true,subtree:true});
+    if(typeof allItems!=='undefined')allItems.forEach(x=>{if(bookmarked.has(itemKey(x)))rememberItem(x);});
+    ensureBookmarkTab();if(typeof active!=='undefined'&&active==='bookmarks')bookmarkMode=true;
+    const root=document.getElementById('news-feed');if(root)new MutationObserver(queueDecorate).observe(root,{childList:true,subtree:true});
     const tabs=document.getElementById('tabs');
     if(tabs){
-      tabs.addEventListener('click',e=>{
-        const tab=e.target.closest('.tab');
-        if(tab && tab.id!=='bookmarks-tab'){
-          bookmarkMode=false;
-          updateBookmarkTab();
-        }
-      });
-      new MutationObserver(()=>{ensureBookmarkTab();}).observe(tabs,{childList:true});
+      tabs.addEventListener('click',e=>{const tab=e.target.closest('.tab');if(tab&&tab.id!=='bookmarks-tab'){bookmarkMode=false;updateBookmarkTab();}});
+      new MutationObserver(()=>ensureBookmarkTab()).observe(tabs,{childList:true});
     }
-    setTimeout(()=>{ensureBookmarkTab();keepBookmarkView();},50);
-    setInterval(()=>{ensureBookmarkTab();},1000);
+    ensureBookmarkTab();keepBookmarkView();
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
 </script>
 <script id="nfl-live-v1">
@@ -1700,6 +1681,30 @@ syncDiscoveryButton();
  setInterval(updateLabel,2000);
 })();
 </script>
+<script id="related-coverage-v1">
+(function(){
+  'use strict';
+  let queued=false;
+  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
+  function decorate(){
+    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
+      if(card.querySelector('.related-coverage'))return;
+      const titleEl=card.querySelector('h3 a');if(!titleEl)return;
+      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
+      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);if(!item)return;
+      const related=[...item.querySelectorAll('relatedArticles article')];if(!related.length)return;
+      const box=document.createElement('div');box.className='related-coverage';box.dataset.sourceCount=String(related.length+1);
+      box.innerHTML=`<strong>Coverage · ${related.length+1} sources</strong>`+related.slice(0,4).map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
+      card.appendChild(box);
+    });
+  }
+  function queueDecorate(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;decorate();});}
+  function start(){const root=document.getElementById('news-feed');if(root)new MutationObserver(queueDecorate).observe(root,{childList:true,subtree:true});decorate();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
+
+<script src="assets/app-v2.js?v=2"></script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
@@ -1784,26 +1789,6 @@ syncDiscoveryButton();
       if(typeof window.refreshPullStatsUI==='function')window.refreshPullStatsUI(false,'');
     }
   },true);
-})();
-</script>
-<script id="related-coverage-v1">
-(function(){
-  function esc(v){return String(v??'').replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[c]));}
-  function decorate(){
-    document.querySelectorAll('.news-item').forEach(card=>{
-      if(card.querySelector('.related-coverage'))return;
-      const titleEl=card.querySelector('h3 a'); if(!titleEl)return;
-      const title=titleEl.textContent.replace(/^\d+\.\s*/,'').trim();
-      const item=(window.allItems||[]).find(x=>(x.querySelector('title')?.textContent||'').trim()===title);
-      if(!item)return;
-      const related=[...item.querySelectorAll('relatedArticles article')];
-      if(!related.length)return;
-      const box=document.createElement('div');box.className='related-coverage';
-      box.innerHTML='<strong>Similar coverage:</strong>'+related.map(r=>{const t=r.querySelector('title')?.textContent||'';const l=r.querySelector('link')?.textContent||'#';const src=r.querySelector('source')?.textContent||'';return `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer">${esc(t)}${src?' <span class="source">— '+esc(src)+'</span>':''}</a>`}).join('');
-      card.appendChild(box);
-    });
-  }
-  setInterval(decorate,1500);window.addEventListener('load',decorate);decorate();
 })();
 </script>
 </body>

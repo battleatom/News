@@ -4,6 +4,7 @@ import re
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
@@ -363,10 +364,18 @@ def parse_date(value):
         return None
 
 
+FETCH_CACHE = {}
+
+
 def fetch(query):
-    req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 NewsBrief/1.4"})
-    with urllib.request.urlopen(req, timeout=20) as response:
-        return ET.fromstring(response.read())
+    cache_key = str(query).strip()
+    payload = FETCH_CACHE.get(cache_key)
+    if payload is None:
+        req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 NewsBrief/2.0"})
+        with urllib.request.urlopen(req, timeout=20) as response:
+            payload = response.read()
+        FETCH_CACHE[cache_key] = payload
+    return ET.fromstring(payload)
 
 
 def parse_items(root, category, source_override=None):
@@ -534,6 +543,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 
@@ -1025,130 +1036,27 @@ def main():
         try:
             if category == "local":
                 items = []
-                for local_query in LOCAL_QUERIES:
-                    try:
-                        batch = parse_items(fetch(local_query), category)
-                        print(f"local/{local_query}: {len(batch)} fresh stories")
-                        items.extend(batch)
-                    except Exception as exc:
-                        print(f"Local feed failed for {local_query}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                worker_count = max(1, min(6, len(LOCAL_QUERIES)))
+                with ThreadPoolExecutor(max_workers=worker_count) as pool:
+                    jobs = {pool.submit(fetch, local_query): local_query for local_query in LOCAL_QUERIES}
+                    for job in as_completed(jobs):
+                        local_query = jobs[job]
                         try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            batch = parse_items(job.result(), category)
+                            print(f"local/{local_query}: {len(batch)} fresh stories")
                             items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
                         except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
+                            print(f"Local feed failed for {local_query}: {exc}")
                 usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
+                target = CATEGORY_POOL_MINIMUMS.get("local", 20)
+                if usable_count < target:
                     for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
                         try:
                             batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
                             items.extend(batch)
                             usable_count = len(select_category_stories(items, limit=30))
                             print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
-                                break
-                        except Exception as exc:
-                            print(f"Local fallback failed for {fallback_source}: {exc}")
-                usable_count = len(select_category_stories(items, limit=30))
-                if usable_count < 10:
-                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
-                        try:
-                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
-                            items.extend(batch)
-                            usable_count = len(select_category_stories(items, limit=30))
-                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
-                            if usable_count >= 15:
+                            if usable_count >= target:
                                 break
                         except Exception as exc:
                             print(f"Local fallback failed for {fallback_source}: {exc}")
