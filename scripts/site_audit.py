@@ -59,9 +59,13 @@ def main():
         errors.append('legacy pull-stats-ui-v1 controller remains alongside V2.2')
     if counts.get('new-badge-expiry-v1', 0):
         errors.append('retired minute-polling NEW badge controller remains alongside V2.6')
-    for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed'):
+    for marker in ('Next in', 'duplicates removed'):
         if marker not in html:
-            errors.append(f'V2.2 status/alert marker missing: {marker}')
+            errors.append(f'V2.2 status marker missing: {marker}')
+    if 'id="sound-alerts-toggle"' in html:
+        errors.append('retired alert/sound button is still present')
+    if 'infinite-scroll-sentinel' not in html or 'IntersectionObserver' not in html:
+        errors.append('infinite-scroll pagination is not wired into generated page')
     for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', '__classifyNewBadgeV26', 'serverFirstSeen', 'stats.firstSeenAt', 'New to Underreported within the last hour'):
         if marker not in html:
             errors.append(f'V2.6 new-article marker missing: {marker}')
@@ -89,8 +93,6 @@ def main():
     if 'story-search' in html:
         errors.append('retired story search UI is present')
 
-    if 'playNewArticlePop' not in html or 'enableNewArticleSound' not in html:
-        errors.append('new-article audio player/enable control is not wired into generated page')
     if html.count('id="auto-refresh-timer-v1"') != 1:
         errors.append('automatic refresh scheduler is not unique')
     if '15*60*1000' not in html and '15 * 60 * 1000' not in html:
@@ -134,7 +136,7 @@ def main():
 
     legislation_count = len(by_category.get('legislation', []))
     if legislation_count < 11:
-        errors.append(f'legislation pool has only {legislation_count} records; Load More cannot appear')
+        errors.append(f'legislation pool has only {legislation_count} records; infinite scroll cannot paginate')
     if official_legislation < min(10, legislation_count):
         errors.append(f'only {official_legislation}/{legislation_count} legislation records have official sources')
 
@@ -154,7 +156,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V2.2 status, V2.6 NEW timing, tabs, pagination, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V2.2 status, V2.6 NEW timing, tabs, infinite scroll, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
