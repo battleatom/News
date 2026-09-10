@@ -75,19 +75,23 @@ fallback_entries = '''    "presidential": [
         ("NPR", "site:npr.org Congress Supreme Court federal government agency"),
     ],
 '''
-# Remove earlier copies if this hygiene patch has already run, then insert one
-# canonical pair at the start of the existing fallback dictionary.
+fallback_anchor = 'TRUSTED_CATEGORY_FALLBACKS = {\n'
+fallback_start = s.find(fallback_anchor)
+if fallback_start < 0:
+    raise SystemExit('Could not locate trusted category fallbacks')
+fallback_body_start = fallback_start + len(fallback_anchor)
+fallback_end = s.find('\n}', fallback_body_start)
+if fallback_end < 0:
+    raise SystemExit('Could not locate end of trusted category fallbacks')
+fallback_body = s[fallback_body_start:fallback_end]
 for key in ('presidential', 'federal'):
-    s = re.sub(
+    fallback_body = re.sub(
         rf'    "{key}": \[\n(?:        .*\n)*?    \],\n',
         '',
-        s,
+        fallback_body,
         count=1,
-    ) if 'TRUSTED_CATEGORY_FALLBACKS = {' in s and s.find(f'    "{key}": [', s.find('TRUSTED_CATEGORY_FALLBACKS = {')) >= 0 else s
-fallback_anchor = 'TRUSTED_CATEGORY_FALLBACKS = {\n'
-if fallback_anchor not in s:
-    raise SystemExit('Could not locate trusted category fallbacks')
-s = s.replace(fallback_anchor, fallback_anchor + fallback_entries, 1)
+    )
+s = s[:fallback_body_start] + fallback_entries + fallback_body + s[fallback_end:]
 
 # Trigger the trusted fallback path at the category's actual minimum instead of
 # waiting until it falls below 10. This is the key reason NFL/Federal could show
