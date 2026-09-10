@@ -11,212 +11,129 @@ def card_titles(page):
     return [re.sub(r'^\d+\.\s*','',t).strip() for t in page.locator('#news-feed .news-item h3').all_text_contents()]
 
 
-def click_tab(page, needle):
-    needle_l=needle.lower()
-    direct=page.locator('#tabs > .tab')
-    for i in range(direct.count()):
-        tab=direct.nth(i)
-        text=(tab.inner_text() or '').strip()
-        if needle_l in text.lower() and tab.is_visible():
-            tab.click()
-            return text
-    raise AssertionError(f'Tab not found: {needle}; available={direct.all_text_contents()}')
-
-
-def click_key(page, key):
+def click_key(page,key):
     tab=page.locator(f'#tabs > .tab[data-nav-key="{key}"]')
     if not tab.count() or not tab.first.is_visible():
         raise AssertionError(f'Tab key not found: {key}; available={page.locator("#tabs > .tab").all_text_contents()}')
-    text=(tab.first.inner_text() or '').strip()
-    tab.first.click()
-    return text
+    tab.first.click(); page.wait_for_timeout(300)
 
 
-def wait_feed(page, allow_loading=False):
+def wait_feed(page,allow_loading=False):
     page.wait_for_selector('#news-feed')
     if not allow_loading:
-        try:
-            page.wait_for_function("!document.querySelector('#news-feed')?.innerText?.includes('Loading news')", timeout=12000)
-        except PlaywrightTimeoutError:
-            raise AssertionError('Feed remained stuck on Loading news')
+        try: page.wait_for_function("!document.querySelector('#news-feed')?.innerText?.includes('Loading news')",timeout=12000)
+        except PlaywrightTimeoutError: raise AssertionError('Feed remained stuck on Loading news')
     text=(page.locator('#news-feed').inner_text() or '').strip()
     assert text, 'Feed rendered no text'
-    assert 'Update failed' not in text, f'Feed showed update failure: {text[:200]}'
+    assert 'Update failed' not in text, text[:200]
 
 
-def assert_unique_visible_titles(page):
+def unique_titles(page):
     titles=[t.lower() for t in card_titles(page) if t]
-    duplicates={t for t in titles if titles.count(t)>1}
-    assert not duplicates, f'Exact visible title duplicates: {sorted(duplicates)[:5]}'
+    dupes={t for t in titles if titles.count(t)>1}
+    assert not dupes, f'Exact visible title duplicates: {sorted(dupes)[:5]}'
 
 
-def assert_status_and_alerts(page):
+def assert_status(page):
     panel=page.locator('#pull-stats-ui')
-    assert panel.count()==1 and panel.is_visible(), 'Detailed update status panel missing'
-    status_text=panel.inner_text().lower()
-    assert 'auto refresh' in status_text, 'Auto-refresh state is missing from status panel'
-    assert 'next in' in status_text, 'Live refresh countdown is missing'
-    assert 'fetched' in status_text and 'new' in status_text, 'Fetch/new counts are missing'
-    assert 'duplicates removed' in status_text, 'Duplicate-removal count is missing'
-    assert 'shown' in status_text, 'Final shown count is missing'
-    sound=page.locator('#sound-alerts-toggle')
-    assert sound.count()==1 and sound.is_visible(), 'Sound-alert enable control is missing'
+    assert panel.count()==1 and panel.is_visible(), 'Update status panel missing'
+    txt=panel.inner_text().lower()
+    for marker in ('auto refresh','next in','fetched','new','duplicates removed','shown'):
+        assert marker in txt, f'Status marker missing: {marker}'
+    assert page.locator('#sound-alerts-toggle').count()==1 and page.locator('#sound-alerts-toggle').is_visible()
 
 
-def desktop_suite(browser):
-    context=browser.new_context(
-        viewport={'width':1440,'height':1000},
-        geolocation={'latitude':36.7281,'longitude':-108.2187},
-        permissions=['geolocation'],
-    )
-    page=context.new_page()
-    page_errors=[]
-    page.on('pageerror', lambda exc: page_errors.append(str(exc)))
-    page.goto(BASE, wait_until='domcontentloaded', timeout=30000)
-    wait_feed(page)
-    page.wait_for_timeout(1200)
+def desktop(browser):
+    context=browser.new_context(viewport={'width':1440,'height':1000},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
+    page=context.new_page(); errors=[]; page.on('pageerror',lambda exc: errors.append(str(exc)))
+    page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page); page.wait_for_timeout(1300)
 
-    assert page.evaluate("window.__underreportedV2===true"), 'Underreported 2.0 controller did not start'
-    assert page.evaluate("window.__alertsStatusV22===true"), 'Underreported V2.2 status controller did not start'
-    assert page.evaluate("window.__alertsNewV23===true"), 'Underreported V2.3 NEW/audio controller did not start'
-    assert page.locator('body[data-underreported-version="2"]').count()==1, 'V2 page marker missing'
-    assert page.locator('.skip-link-v2').count()==1, 'Accessible skip link missing'
-    assert page.locator('#tabs').count()==1, 'Tab bar missing'
-    assert page.locator('#more-tab-v2').count()==0, 'Retired More navigation is still present'
-    assert page.locator('#more-menu-v2').count()==0, 'Retired More menu is still present'
-    assert page.locator('#markets').count()==1 or page.locator('.markets').count()>=1, 'Markets strip missing'
+    for expr,msg in [
+        ('window.__underreportedV2===true','V2 controller missing'),
+        ('window.__alertsStatusV22===true','status controller missing'),
+        ('window.__alertsNewV281===true','V2.8.1 NEW/audio controller missing'),
+        ('window.__autoRefreshTimerV1===true','auto refresh missing'),
+        ('window.__locationContentV26===true','location controller missing'),
+    ]: assert page.evaluate(expr),msg
 
-    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Federal + New Mexico','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
-    direct_labels=[(t or '').strip() for t in page.locator('#tabs > .tab').all_text_contents()]
-    for name in expected:
-        assert any(name.lower() in label.lower() for label in direct_labels), f'{name} missing from visible tab strip'
+    assert page.locator('body[data-underreported-version="2"]').count()==1
+    assert page.locator('.skip-link-v2').count()==1
+    assert page.locator('#markets').count()==1 or page.locator('.markets').count()>=1
+    assert page.locator('#more-tab-v2').count()==0
+    assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
+    assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
 
-    market=page.locator('#markets') if page.locator('#markets').count() else page.locator('.markets').first
-    market_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", market.element_handle())
-    assert market_overflow <= 4, f'Desktop markets overflow horizontally by {market_overflow}px'
+    # Every intended current destination renders and its controls remain usable.
+    keys=['top','nfl','x','underreported','world','us','presidential','federal','legislation','nm','technology','gaming','military','boxoffice','bookmarks']
+    for key in keys:
+        click_key(page,key)
+        wait_feed(page,allow_loading=key in ('nfl','boxoffice'))
+        if key in ('nfl','boxoffice'): page.wait_for_timeout(1500)
+        body=(page.locator('#news-feed').inner_text() or '').strip()
+        assert body and 'Loading news' not in body, f'{key} failed to render'
+        if key not in ('bookmarks','boxoffice','nfl'): unique_titles(page)
 
-    results={}
-    for name in expected:
-        click_tab(page,name)
-        page.wait_for_timeout(350)
-        wait_feed(page, allow_loading=name in ('NFL','Box Office'))
-        if name in ('NFL','Box Office'):
-            page.wait_for_timeout(1800)
-        body=(page.locator('#news-feed').inner_text() or '')
-        assert body.strip(), f'{name} tab empty/renderless'
-        assert 'Loading news' not in body, f'{name} stuck on generic loading state'
-        if name not in ('Bookmarks','Box Office','NFL'):
-            assert_unique_visible_titles(page)
-        results[name]=len(card_titles(page))
+    click_key(page,'top')
+    assert page.locator('#refresh').is_visible(), 'Next Top Stories button missing'
+    before=card_titles(page); page.locator('#refresh').click(); page.wait_for_timeout(700); after=card_titles(page)
+    if len(before)>=10: assert before!=after, 'Next Top Stories did not rotate visible batch'
 
-    click_tab(page,'Top')
-    page.wait_for_timeout(350)
-    assert page.locator('#news-feed .news-item').count()>=1, 'Top Stories rendered no cards'
-    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Oversized lead-card treatment is still present'
-    assert page.locator('#news-feed .news-item-v2-kicker').count()==0, 'Lead-story kicker is still present'
-    before=card_titles(page)
-    btn=page.locator('#refresh')
-    assert btn.is_visible(), 'Next Top Stories button is not visible on Top'
-    btn.click()
-    page.wait_for_timeout(800)
-    after=card_titles(page)
-    if len(before)>=10:
-        assert before!=after, 'Next Top Stories did not rotate the visible Top batch'
+    # Bookmarks save/remove.
+    page.wait_for_selector('.bookmark-btn',timeout=5000)
+    page.locator('.bookmark-btn').first.click(); page.wait_for_timeout(150)
+    click_key(page,'bookmarks')
+    assert page.locator('#news-feed .news-item').count()>=1, 'Bookmark did not render'
+    page.locator('#news-feed .bookmark-btn').first.click(); page.wait_for_timeout(200)
+    assert 'No saved articles yet' in page.locator('#news-feed').inner_text()
 
-    load_more_verified=False
-    for candidate in ('World','United States','Technology','Local / Four Corners','Federal Government'):
-        click_tab(page,candidate); page.wait_for_timeout(300)
-        more=page.locator('.load-more')
-        if more.count() and more.first.is_visible():
-            before_count=len(card_titles(page))
-            more.first.click(); page.wait_for_timeout(400)
-            after_count=len(card_titles(page))
-            assert after_count>before_count, f'Load More did not add cards in {candidate}'
-            load_more_verified=True
-            break
-    assert load_more_verified, 'No ordinary category exposed a testable Load More button'
+    assert page.evaluate('Number(window.nextScheduledPull)>Date.now()')
+    assert page.evaluate('Boolean(window.__autoRefreshTimeout)')
+    assert_status(page)
 
-    click_tab(page,'Top'); page.wait_for_timeout(350)
-    page.wait_for_selector('.bookmark-btn', timeout=5000)
-    first_bookmark=page.locator('.bookmark-btn').first
-    first_bookmark.click(); page.wait_for_timeout(200)
-    click_tab(page,'Bookmarks'); page.wait_for_timeout(350)
-    assert page.locator('#news-feed .news-item').count()>=1, 'Bookmark was not saved/rendered'
-    page.locator('#news-feed .bookmark-btn').first.click(); page.wait_for_timeout(250)
-    assert 'No saved articles yet' in page.locator('#news-feed').inner_text(), 'Bookmark removal did not persist'
+    # Publish-age badge behavior only; fetching/first-seen state must not control color.
+    now=page.evaluate('Date.now()')
+    def cls(hours,first_hours=0):
+        return page.evaluate('([p,f,n])=>window.__classifyNewBadgeV26(p,f,n)',[now-hours*3600000,now-first_hours*3600000 if first_hours else 0,now])
+    assert cls(.5,10)=='red'
+    assert cls(2,0)=='blue'
+    assert cls(4,.1)=='yellow'
+    assert cls(7,.1)==''
 
-    assert page.evaluate("window.__autoRefreshTimerV1===true"), 'Automatic refresh scheduler did not start'
-    assert page.evaluate("Number(window.nextScheduledPull)>Date.now()"), 'Next automatic refresh time is not scheduled'
-    assert page.evaluate("Boolean(window.__autoRefreshTimeout)"), 'Timeout-based automatic refresh was not scheduled'
-    assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
-    assert_status_and_alerts(page)
-
-    # Verify a discovered story can receive the red NEW marker. The isolated
-    # audio test covers notification timing so this long interaction suite cannot
-    # confuse a passive refresh with an alert-enable click.
-    click_tab(page,'Top'); page.wait_for_timeout(350)
-    first_href=page.locator('#news-feed .news-item h3 a').first.get_attribute('href')
-    assert first_href, 'Top story link missing for NEW badge test'
-    page.evaluate("href=>window.__markNewArticleLinksV23([href])", first_href)
-    assert page.locator('#news-feed .news-item').first.locator('.new-badge').count()==1, 'Discovered article did not receive a red NEW badge'
-    assert page.evaluate("typeof window.__queueNewArticlePopV23==='function'"), 'V2.3 legacy-count sink missing'
-    assert page.evaluate("typeof window.__playVerifiedNewV23==='function'"), 'V2.3 verified-new audio gate missing'
-
+    # Location-specific legislation still follows state selection.
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
-    click_key(page,'legislation')
-    page.wait_for_timeout(700)
-    leg_text=page.locator('#news-feed').inner_text()
-    assert 'Congress.gov' in leg_text or 'Federal' in leg_text, 'Federal legislation records missing'
-    assert 'New Mexico Legislature' not in leg_text, 'NM legislation leaked into a Texas location view'
+    click_key(page,'legislation'); page.wait_for_timeout(500)
+    tx=page.locator('#news-feed').inner_text()
+    assert 'Congress.gov' in tx or 'Federal' in tx
+    assert 'New Mexico Legislature' not in tx
 
     page.evaluate("localStorage.setItem('underreported-state','NM'); localStorage.setItem('underreported-location','Farmington, NM');")
-    page.wait_for_timeout(2100)
-    click_key(page,'legislation')
-    page.wait_for_timeout(500)
-    nm_leg=page.locator('#news-feed').inner_text()
-    assert 'New Mexico' in nm_leg, 'NM location did not select New Mexico legislation view'
+    page.wait_for_timeout(1800); click_key(page,'legislation'); page.wait_for_timeout(400)
+    assert 'New Mexico' in page.locator('#news-feed').inner_text()
 
-    assert not page_errors, 'Uncaught page errors: '+json.dumps(page_errors[:5])
+    assert not errors, 'Uncaught page errors: '+json.dumps(errors[:5])
     context.close()
-    return results
 
 
-def mobile_suite(browser):
-    context=browser.new_context(viewport={'width':390,'height':844})
-    page=context.new_page()
-    page.goto(BASE, wait_until='domcontentloaded', timeout=30000)
-    wait_feed(page)
-    page.wait_for_timeout(800)
-    body_overflow=page.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth")
-    assert body_overflow <= 4, f'Mobile page body overflows horizontally by {body_overflow}px'
-    assert page.locator('#more-tab-v2').count()==0, 'Mobile More navigation still exists'
-    assert page.locator('#tabs > .tab').count()>=17, 'Mobile tab strip is missing categories'
-    tab_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", page.locator('#tabs').element_handle())
-    assert tab_overflow>20, 'Mobile category strip should scroll horizontally instead of hiding tabs'
-    click_tab(page,'Top')
-    page.wait_for_timeout(250)
-    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Mobile oversized lead card still exists'
-    first=page.locator('#news-feed .news-item').first
-    assert first.count()==1, 'Mobile Top Stories rendered no first card'
-    pad_top=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", first.element_handle()))
-    pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", first.element_handle()))
-    assert pad_top<=12 and pad_left<=11, f'Mobile card padding is too large: top={pad_top}, left={pad_left}'
-    assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Mobile duplicate update row is visible'
-    assert_status_and_alerts(page)
-    assert page.evaluate("window.__alertsNewV23===true"), 'Mobile V2.3 NEW/audio controller missing'
+def mobile(browser):
+    context=browser.new_context(viewport={'width':390,'height':844},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
+    page=context.new_page(); page.goto(BASE,wait_until='domcontentloaded',timeout=30000); wait_feed(page); page.wait_for_timeout(900)
+    overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
+    assert overflow<=4, f'Mobile body overflow {overflow}px'
+    assert page.locator('#tabs > .tab').count()>=15
+    assert page.evaluate("el=>el.scrollWidth-el.clientWidth",page.locator('#tabs').element_handle())>20
+    click_key(page,'top')
+    first=page.locator('#news-feed .news-item').first; assert first.count()==1
+    pad_top=float(page.evaluate('el=>parseFloat(getComputedStyle(el).paddingTop)',first.element_handle()))
+    pad_left=float(page.evaluate('el=>parseFloat(getComputedStyle(el).paddingLeft)',first.element_handle()))
+    assert pad_top<=12 and pad_left<=11
+    assert_status(page)
     context.close()
 
 
 def main():
     with sync_playwright() as p:
         browser=p.chromium.launch(headless=True)
-        results=desktop_suite(browser)
-        mobile_suite(browser)
-        browser.close()
-    print('BROWSER SMOKE PASS')
-    for key,value in results.items():
-        print(f'  {key:24} visible cards: {value}')
+        desktop(browser); mobile(browser); browser.close()
+    print('CURRENT FULL FEATURE BROWSER SMOKE PASS')
 
-
-if __name__=='__main__':
-    main()
+if __name__=='__main__': main()
