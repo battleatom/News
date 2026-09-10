@@ -141,6 +141,9 @@ jobs:
             echo "All RSS update attempts failed. Preserving the existing News feed and continuing the workflow."
           fi
 
+      - name: Collect official legislation records
+        run: python scripts/collect_official_legislation.py
+
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
 
