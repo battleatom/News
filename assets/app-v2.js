@@ -66,6 +66,30 @@
 
   function queueNav(){if(navQueued)return;navQueued=true;queueMicrotask(enhanceTabs);}
 
+  function matchingFeedItem(card){
+    if(typeof allItems==='undefined')return null;
+    const title=(card.querySelector('h3 a')?.textContent||'').replace(/^\d+\.\s*/,'').trim();
+    if(!title)return null;
+    return allItems.find(x=>(x.querySelector('title')?.textContent||'').trim()===title)||null;
+  }
+
+  function addUnderreportedSignal(root){
+    if(currentActive()!=='underreported')return;
+    root.querySelectorAll('.underreported-item').forEach(card=>{
+      if(card.querySelector('.underreported-signal-v2'))return;
+      const item=matchingFeedItem(card);if(!item)return;
+      const related=[...item.querySelectorAll('related > article')];
+      const stored=Number(item.querySelector('underreportedScore')?.textContent||0);
+      const sources=Number(item.querySelector('supportingSourceCount')?.textContent||0)||new Set(related.map(r=>(r.querySelector('source')?.textContent||'').trim().toLowerCase()).filter(Boolean)).size;
+      const score=stored||Math.max(50,Math.min(96,96-sources*10));
+      const chip=document.createElement('span');chip.className='underreported-signal-v2';chip.textContent=`Underreported signal ${score}/100 · ${sources} supporting source${sources===1?'':'s'}`;
+      chip.title='Heuristic only: a higher score means fewer distinct supporting sources were found by the related-news search.';
+      chip.setAttribute('aria-label',chip.textContent+'. Heuristic only; higher means less supporting coverage was found.');
+      const topline=card.querySelector('.underreported-topline')||card;
+      topline.appendChild(chip);
+    });
+  }
+
   function decorateFeed(){
     feedQueued=false;
     const key=currentActive();
@@ -82,6 +106,7 @@
         if(target)target.insertAdjacentElement('beforebegin',kicker);
       }
     }
+    addUnderreportedSignal(root);
     root.querySelectorAll('.related-coverage[data-source-count]').forEach(box=>{
       const strong=box.querySelector('strong');if(strong)strong.textContent=`Coverage · ${box.dataset.sourceCount} sources`;
     });
