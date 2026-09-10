@@ -64,7 +64,6 @@
     const key=currentActive();
     document.body.dataset.activeTab=key;
     const root=document.getElementById('news-feed');if(!root)return;
-    /* V2.1 intentionally keeps Top Stories compact. Ranking provides hierarchy without an oversized feature card. */
     root.querySelectorAll('.lead-story-v2').forEach(card=>card.classList.remove('lead-story-v2'));
     root.querySelectorAll('.news-item-v2-kicker').forEach(kicker=>kicker.remove());
     addUnderreportedSignal(root);
@@ -109,9 +108,13 @@
   function start(){
     installHooks();
     const tabs=document.getElementById('tabs');if(tabs)new MutationObserver(queueNav).observe(tabs,{childList:true});
-    const root=document.getElementById('news-feed');if(root)new MutationObserver(queueFeed).observe(root,{childList:true,subtree:true});
+    const root=document.getElementById('news-feed');
+    // Rendering already queues decoration directly. Observe only top-level card-list
+    // changes as a safety net; nested badge/text mutations no longer retrigger work.
+    if(root)new MutationObserver(queueFeed).observe(root,{childList:true});
     queueNav();queueFeed();loadHealth();
     window.__underreportedV2=true;
+    window.__underreportedV28Optimized=true;
   }
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
