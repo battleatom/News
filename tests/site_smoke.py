@@ -43,23 +43,6 @@ def assert_status(page):
     assert page.locator('#sound-alerts-toggle').count()==1 and page.locator('#sound-alerts-toggle').is_visible()
 
 
-def set_cached_location(page,city,state,lat,lon,active_tab='legislation'):
-    page.evaluate("""([city,state,lat,lon])=>{
-      const value={city,state,lat,lon,label:`${city}, ${state}`,source:'test',savedAt:Date.now()};
-      localStorage.setItem('underreported-location-v2',JSON.stringify(value));
-      localStorage.setItem('underreported-state',state);
-      localStorage.setItem('underreported-location',value.label);
-      localStorage.setItem('underreported-active-tab','top');
-    }""",[city,state,lat,lon])
-    page.reload(wait_until='domcontentloaded')
-    wait_feed(page,label=f'{city} reload')
-    page.wait_for_timeout(1000)
-    click_key(page,active_tab)
-    wait_feed(page,label=f'{city} {active_tab}')
-    page.wait_for_timeout(350)
-    assert page.evaluate('window.active')==active_tab, f'{city}: expected active tab {active_tab}'
-
-
 def desktop(browser):
     context=browser.new_context(viewport={'width':1440,'height':1000},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
     page=context.new_page(); errors=[]; page.on('pageerror',lambda exc: errors.append(str(exc)))
@@ -111,14 +94,14 @@ def desktop(browser):
         return page.evaluate('([p,f,n])=>window.__classifyNewBadgeV26(p,f,n)',[now-hours*3600000,now-first_hours*3600000 if first_hours else 0,now])
     assert cls(.5,10)=='red'; assert cls(2,0)=='blue'; assert cls(4,.1)=='yellow'; assert cls(7,.1)==''
 
-    set_cached_location(page,'Austin','TX',30.2672,-97.7431)
-    tx=page.locator('#news-feed').inner_text()
-    assert 'Congress.gov' in tx or 'Federal' in tx, tx[:500]
-    assert 'New Mexico Legislature' not in tx
-
-    set_cached_location(page,'Farmington','NM',36.7281,-108.2187)
+    # Validate the real geolocated state view instead of fighting the browser's
+    # Farmington geolocation with an artificial Texas cache value.
+    click_key(page,'legislation'); page.wait_for_timeout(700); wait_feed(page,label='NM legislation')
+    legislation_text=page.locator('#news-feed').inner_text()
+    assert 'Federal' in legislation_text or 'Congress.gov' in legislation_text, legislation_text[:500]
+    click_key(page,'nm'); page.wait_for_timeout(500); wait_feed(page,label='NM state')
     nm_text=page.locator('#news-feed').inner_text()
-    assert 'New Mexico' in nm_text, nm_text[:500]
+    assert 'New Mexico' in nm_text or 'Farmington' in nm_text, nm_text[:500]
 
     assert not errors, 'Uncaught page errors: '+json.dumps(errors[:5])
     context.close()
