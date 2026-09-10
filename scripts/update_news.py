@@ -707,6 +707,82 @@ def attach_related(primary, related):
 
 
 
+
+
+def _top_title_terms(item):
+    """Return conservative, normalized headline terms for Top-event matching."""
+    title = clean(item.get('title') or '').lower()
+    source = clean(item.get('source') or '').lower().strip()
+    if source:
+        title = re.sub(rf"\s+(?:[-–—|:]\s*)?{re.escape(source)}\s*$", "", title, flags=re.I)
+    stop = {
+        'the','a','an','and','or','but','for','from','with','into','over','after','before','about','amid','during',
+        'this','that','these','those','says','said','new','news','latest','update','report','reported','according',
+        'officials','official','will','could','would','may','can','has','have','had','was','were','are','is','be','been',
+        'to','of','in','on','at','by','as','it','its','their','they','them','who','what','when','where','why','how',
+        'one','two','first','second','third','today','now','more','just','also','still','ap','cnn','cbs','nbc','fox','npr',
+        'bbc','reuters','times','post','associated','press'
+    }
+    canonical = {
+        'attacks':'attack','attacked':'attack','attacking':'attack',
+        'strikes':'strike','struck':'strike','striking':'strike',
+        'missiles':'missile','tankers':'tanker','ships':'ship',
+        'blocks':'block','blocked':'block','blocking':'block',
+        'rejects':'reject','rejected':'reject','rejecting':'reject',
+        'rules':'rule','ruled':'rule','ruling':'rule',
+        'maps':'map','districts':'district','elections':'election',
+        'votes':'vote','voting':'vote','voted':'vote',
+        'restrictions':'restriction','restricts':'restriction','restricted':'restriction',
+        'orders':'order','ordered':'order','lawsuits':'lawsuit',
+        'recalls':'recall','recalled':'recall',
+        'launches':'launch','launched':'launch',
+        'arrests':'arrest','arrested':'arrest',
+        'layoffs':'layoff','fires':'fire','fired':'fire',
+    }
+    out=set()
+    for raw in re.findall(r"[a-z0-9]+", title):
+        if len(raw) < 3 or raw in stop:
+            continue
+        out.add(canonical.get(raw, raw))
+    return out
+
+
+def same_top_event(a, b):
+    """Conservatively match two headlines to one event.
+
+    Top Stories should prefer a missed merge over a false Related Coverage link.
+    Long RSS descriptions and broad subjects such as Trump/Iran are intentionally
+    excluded from this decision.
+    """
+    ta, tb = _top_title_terms(a), _top_title_terms(b)
+    if not ta or not tb:
+        return False
+    shared = ta & tb
+    smaller = min(len(ta), len(tb))
+    containment = len(shared) / max(1, smaller)
+    jaccard = len(shared) / max(1, len(ta | tb))
+    broad = {
+        'trump','president','court','supreme','federal','government','state','house','senate','congress',
+        'iran','iranian','israel','israeli','war','military','election','midterm','administration','white'
+    }
+    distinctive = shared - broad
+
+    # Near-identical/reordered headlines.
+    if len(shared) >= 5 and (containment >= 0.38 or jaccard >= 0.28):
+        return True
+    if len(shared) >= 4 and containment >= 0.42:
+        return True
+
+    # Three shared terms can be enough when at least one is event-specific and
+    # the overlap covers a meaningful portion of the shorter headline. This
+    # catches "Missouri ... court ... map" while rejecting "Trump ... court"
+    # links about unrelated policy actions.
+    if len(shared) >= 3 and containment >= 0.30 and distinctive:
+        return True
+
+    return False
+
+
 def select_top_stories(unique):
     """Rank distinct news events first, then retain a diverse rotating Top Stories pool."""
     if not unique:
@@ -714,7 +790,9 @@ def select_top_stories(unique):
     newest_time = max(x["published"] for x in unique)
 
     # Build event clusters before scoring. Multi-outlet coverage is therefore a
-    # property of the event, not of one URL/headline key.
+    # property of the event, not of one URL/headline key. The Top matcher is
+    # intentionally stricter than the broader cleanup deduper because incorrect
+    # Related Coverage is worse than leaving two legitimate cards separate.
     ordered = sorted(
         unique,
         key=lambda item: (impact_score(item, newest_time), item["published"]),
@@ -724,9 +802,7 @@ def select_top_stories(unique):
     for item in ordered:
         match = None
         for cluster in clusters:
-            # Compare against a few members so differently worded follow-ups can
-            # join the same event without letting one broad topic swallow others.
-            if any(same_event_topic(member, item) for member in cluster[:4]):
+            if any(same_top_event(member, item) for member in cluster[:4]):
                 match = cluster
                 break
         if match is None:
@@ -749,8 +825,6 @@ def select_top_stories(unique):
         coverage_boost = min(36, max(0, outlet_count - 1) * 9) + (8 if outlet_count >= 4 else 0)
         score = impact_score(representative, newest_time) + coverage_boost
 
-        # Related coverage prefers distinct publishers first, then the newest
-        # remaining reports. This makes the coverage drawer more useful.
         related_candidates = sorted(
             [item for item in cluster if key(item) != key(representative)],
             key=lambda item: item["published"],
@@ -825,8 +899,6 @@ def select_top_stories(unique):
         if can_select(item, cluster_id, VISIBLE_SOURCE_CAP, True):
             add_item(item, cluster_id)
 
-    # If an unusually small source pool prevents ten stories, fill the visible
-    # window while preserving the normal whole-pool source cap.
     if len(selected) < VISIBLE_WINDOW:
         for _, _, _, cluster_id, item in ranked:
             if len(selected) >= VISIBLE_WINDOW:
@@ -834,14 +906,12 @@ def select_top_stories(unique):
             if can_select(item, cluster_id, MAX_PER_SOURCE, True):
                 add_item(item, cluster_id)
 
-    # Fill the deeper rotation while preserving subject/topic and source variety.
     for _, _, _, cluster_id, item in ranked:
         if len(selected) >= TOP_POOL_SIZE:
             break
         if can_select(item, cluster_id, MAX_PER_SOURCE, True):
             add_item(item, cluster_id)
 
-    # Final fallback only relaxes topic caps; event and publisher caps remain.
     if len(selected) < TOP_POOL_SIZE:
         for _, _, _, cluster_id, item in ranked:
             if len(selected) >= TOP_POOL_SIZE:
