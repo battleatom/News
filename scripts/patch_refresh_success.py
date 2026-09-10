@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 P = Path('index.html')
-MARKER = 'refresh-success-handling-v1'
+MARKER = 'refresh-success-handling-v2'
 
 s = P.read_text(encoding='utf-8')
 if MARKER in s:
