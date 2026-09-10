@@ -18,14 +18,11 @@ for tag, marker, close in (
         s = s[:a] + s[b + len(close):]
 
 # Older refresh code can report a count, but only the verified before/after link
-# comparison below may make a notification sound.
+# comparison below may make an automatic notification sound. The V2.2 sound
+# control remains the single owner of user-initiated enable/test clicks.
 s = s.replace(
     'if(newCount>0)playNewArticlePop();',
     "if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);",
-)
-s = s.replace(
-    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}",
-    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}}",
 )
 
 STYLE = r'''<style id="new-badge-v26-style">
@@ -184,12 +181,6 @@ SCRIPT = r'''<script id="alerts-new-v23">
     window.refreshNewsFromPage=wrapped;
     refreshWrapped=true;
   }
-
-  document.addEventListener('click',function(e){
-    const btn=e.target?.closest?.('#sound-alerts-toggle');if(!btn)return;
-    e.preventDefault();e.stopImmediatePropagation();
-    if(typeof window.enableNewArticleSound==='function')void window.enableNewArticleSound(false);
-  },true);
 
   restoreClient();wrapRefresh();void syncServerNew();
   const feed=document.getElementById('news-feed');
