@@ -1,0 +1,185 @@
+from pathlib import Path
+from datetime import datetime, timezone
+import html
+import re
+import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
+
+NEWS = Path('News')
+MAX_SUPPORTING = 4
+BLOCKED_PAYWALL = ('new york times','the new york times','wall street journal','wsj','bloomberg','washington post','the washington post')
+OFFICIAL_SOURCES = ('congress.gov','congress gov','federal register','federalregister.gov','white house','whitehouse.gov','new mexico legislature','nmlegis.gov','governor of new mexico','farmington nm','san juan county')
+
+
+def clean(value):
+    value = html.unescape(value or '')
+    value = re.sub(r'<[^>]+>', ' ', value)
+    return re.sub(r'\s+', ' ', value).strip()
+
+
+def feed_url(query):
+    q = urllib.parse.quote(query)
+    return f'https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en'
+
+
+def words(text):
+    stop={'the','a','an','to','of','in','on','for','and','with','is','as','at','from','by','after','new','says','said','that','this','are','was','were','has','have','had','into','over','its','their','will','amid','more','than'}
+    return {w for w in re.findall(r'[a-z0-9]+',(text or '').lower()) if len(w)>=4 and w not in stop}
+
+
+def source_is_paywalled(source):
+    s=(source or '').lower()
+    return any(x in s for x in BLOCKED_PAYWALL)
+
+
+def fetch_supporting(title, primary_link):
+    terms=[w for w in re.findall(r'[A-Za-z0-9]+',title) if len(w)>3][:14]
+    if not terms:
+        return [], ''
+    query=' '.join(terms)
+    try:
+        req=urllib.request.Request(feed_url(query),headers={'User-Agent':'Mozilla/5.0 LegislationTracker/1.0'})
+        with urllib.request.urlopen(req,timeout=15) as response:
+            root=ET.fromstring(response.read())
+    except Exception:
+        return [], ''
+    target=words(title)
+    rows=[]
+    official=''
+    seen=set()
+    for item in root.findall('.//item'):
+        t=clean(item.findtext('title')); link=clean(item.findtext('link')); desc=clean(item.findtext('description'))
+        source_el=item.find('source'); source=clean(source_el.text if source_el is not None else '')
+        pub=clean(item.findtext('pubDate'))
+        if not t or not link or link==primary_link or source_is_paywalled(source):
+            continue
+        overlap=len(target & words(t))
+        if overlap<2:
+            continue
+        sk=re.sub(r'[^a-z0-9]','',source.lower()) or link
+        if sk in seen:
+            continue
+        seen.add(sk)
+        if not official and any(x in source.lower() for x in OFFICIAL_SOURCES):
+            official=link
+            continue
+        rows.append((overlap,t,link,source,pub,desc))
+    rows.sort(key=lambda x:x[0],reverse=True)
+    return rows[:MAX_SUPPORTING], official
+
+
+def jurisdiction(text):
+    t=text.lower()
+    if any(x in t for x in ('new mexico','nm legislature','nmlegis','governor michelle lujan grisham','state legislature')):
+        return 'New Mexico'
+    if any(x in t for x in ('farmington','san juan county','city council','county commission','ordinance')):
+        return 'Local / Four Corners'
+    return 'Federal'
+
+
+def status(text):
+    t=text.lower()
+    if any(x in t for x in ('signed into law','signs bill','signed bill','enacted')):
+        return 'Signed / enacted'
+    if 'veto' in t:
+        return 'Vetoed'
+    if any(x in t for x in ('struck down','blocked by court','court blocks','judge blocks')):
+        return 'Blocked / struck down'
+    if any(x in t for x in ('final rule','final regulation')):
+        return 'Final rule issued'
+    if 'executive order' in t:
+        return 'Executive order issued'
+    if any(x in t for x in ('passes house','house passes','passes senate','senate passes','legislature passes','passed the house','passed the senate')):
+        return 'Passed a chamber'
+    if any(x in t for x in ('committee advances','advances bill','clears committee')):
+        return 'Advanced from committee'
+    if any(x in t for x in ('introduced','introduces bill','proposes bill','proposed rule','proposal')):
+        return 'Introduced / proposed'
+    return 'Active development'
+
+
+def affected(text):
+    t=text.lower()
+    groups=[
+        ('Patients, providers, and health programs',('medicaid','medicare','hospital','health care','healthcare','drug price')),
+        ('Workers and employers',('worker','labor','wage','overtime','union','workplace')),
+        ('Students, families, and schools',('school','student','teacher','education','college')),
+        ('Veterans, service members, and military families',('veteran','military','service member','va ')),
+        ('Taxpayers, households, and businesses',('tax','budget','spending','credit','deduction')),
+        ('Consumers and regulated businesses',('consumer','fee','insurance','antitrust','regulation')),
+        ('Immigrants and immigration agencies',('immigration','immigrant','border','asylum','visa')),
+        ('Tribal governments and Indigenous communities',('tribal','navajo','indigenous','native american')),
+        ('Residents, utilities, and water users',('water','utility','electric','pollution','environment')),
+    ]
+    for label,terms in groups:
+        if any(term in t for term in terms):
+            return label
+    return 'People and organizations subject to the measure'
+
+
+def next_step(status_text):
+    return {
+        'Signed / enacted':'Implementation and any agency guidance or court challenges.',
+        'Vetoed':'Watch for an override attempt, replacement legislation, or renewed proposal.',
+        'Blocked / struck down':'Watch for appeals, revised language, or enforcement changes.',
+        'Final rule issued':'Implementation, compliance deadlines, and possible legal challenges.',
+        'Executive order issued':'Agency implementation and any legal or congressional response.',
+        'Passed a chamber':'Action in the other chamber, reconciliation, or executive signature.',
+        'Advanced from committee':'A floor vote or additional committee action.',
+        'Introduced / proposed':'Committee hearings, amendments, public comment, or a floor vote.',
+    }.get(status_text,'Watch for the next formal vote, order, rulemaking step, or implementation action.')
+
+
+def effective_date(text):
+    m=re.search(r'\b(?:effective|takes effect|beginning|starts?)\s+(?:on\s+)?([A-Z][a-z]+\s+\d{1,2}(?:,\s+\d{4})?|\d{1,2}/\d{1,2}/\d{2,4}|\d{4})',text,re.I)
+    return m.group(1) if m else 'Not stated in the available summary'
+
+
+def set_text(item,tag,value):
+    el=item.find(tag)
+    if el is None:
+        el=ET.SubElement(item,tag)
+    el.text=value
+
+
+def main():
+    if not NEWS.exists():
+        raise SystemExit('News feed not found')
+    tree=ET.parse(NEWS); root=tree.getroot(); channel=root.find('channel')
+    if channel is None:
+        raise SystemExit('RSS channel not found')
+    count=0
+    for item in channel.findall('item'):
+        if clean(item.findtext('category'))!='legislation':
+            continue
+        title=clean(item.findtext('title')); desc=clean(item.findtext('description')); link=clean(item.findtext('link'))
+        source=clean(item.findtext('source')); text=f'{title} {desc} {source}'
+        st=status(text)
+        set_text(item,'jurisdiction',jurisdiction(text))
+        set_text(item,'status',st)
+        set_text(item,'whatItDoes',desc if len(desc)>=45 else title)
+        set_text(item,'whoAffected',affected(text))
+        set_text(item,'effectiveDate',effective_date(text))
+        set_text(item,'nextStep',next_step(st))
+        supporting,official=fetch_supporting(title,link)
+        if not official and any(x in source.lower() for x in OFFICIAL_SOURCES):
+            official=link
+        set_text(item,'officialSource',official)
+        for existing in list(item.findall('relatedArticles')):
+            item.remove(existing)
+        if supporting:
+            rel=ET.SubElement(item,'relatedArticles')
+            for _,t,l,src,pub,d in supporting:
+                ar=ET.SubElement(rel,'article')
+                ET.SubElement(ar,'title').text=t
+                ET.SubElement(ar,'link').text=l
+                ET.SubElement(ar,'source').text=src
+                ET.SubElement(ar,'pubDate').text=pub
+                ET.SubElement(ar,'description').text=d
+        count+=1
+    tree.write(NEWS,encoding='utf-8',xml_declaration=True)
+    print(f'Legislation enrichment complete: {count} cards with status, impact fields, and free supporting coverage.')
+
+if __name__=='__main__':
+    main()
