@@ -183,6 +183,9 @@ jobs:
       - name: Make legislation location aware
         run: python scripts/patch_legislation_location.py
 
+      - name: Add story search UI
+        run: python scripts/patch_story_search.py
+
       - name: Deduplicate generated UI blocks
         run: python scripts/dedupe_generated_ui.py
 
