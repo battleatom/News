@@ -64,21 +64,9 @@
     const key=currentActive();
     document.body.dataset.activeTab=key;
     const root=document.getElementById('news-feed');if(!root)return;
-    const first=root.querySelector('.news-item');
-
-    if(key==='top'&&first){
-      root.querySelectorAll('.lead-story-v2').forEach(card=>{if(card!==first)card.classList.remove('lead-story-v2');});
-      first.classList.add('lead-story-v2');
-      if(!first.querySelector('.news-item-v2-kicker')){
-        const kicker=document.createElement('div');kicker.className='news-item-v2-kicker';kicker.textContent='Lead story';
-        const target=first.querySelector('.bookmark-row')||first.querySelector('h3');
-        if(target)target.insertAdjacentElement('beforebegin',kicker);
-      }
-    }else{
-      root.querySelectorAll('.lead-story-v2').forEach(card=>card.classList.remove('lead-story-v2'));
-      root.querySelectorAll('.news-item-v2-kicker').forEach(kicker=>kicker.remove());
-    }
-
+    /* V2.1 intentionally keeps Top Stories compact. Ranking provides hierarchy without an oversized feature card. */
+    root.querySelectorAll('.lead-story-v2').forEach(card=>card.classList.remove('lead-story-v2'));
+    root.querySelectorAll('.news-item-v2-kicker').forEach(kicker=>kicker.remove());
     addUnderreportedSignal(root);
     root.querySelectorAll('.related-coverage[data-source-count]').forEach(box=>{
       const strong=box.querySelector('strong');
