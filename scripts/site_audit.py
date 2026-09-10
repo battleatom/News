@@ -58,13 +58,13 @@ def main():
     if counts.get('pull-stats-ui-v1', 0):
         errors.append('legacy pull-stats-ui-v1 controller remains alongside V2.2')
     if counts.get('new-badge-expiry-v1', 0):
-        errors.append('retired minute-polling NEW badge controller remains alongside V2.3')
-    for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed', 'serverNewLinks'):
+        errors.append('retired minute-polling NEW badge controller remains alongside V2.6')
+    for marker in ('sound-alerts-toggle', 'Next in', 'duplicates removed'):
         if marker not in html:
             errors.append(f'V2.2 status/alert marker missing: {marker}')
-    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', 'Newly discovered by Underreported within the last hour'):
+    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', '__classifyNewBadgeV26', 'serverFirstSeen', 'stats.firstSeenAt', 'New to Underreported within the last hour'):
         if marker not in html:
-            errors.append(f'V2.3 new-article marker missing: {marker}')
+            errors.append(f'V2.6 new-article marker missing: {marker}')
 
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
@@ -154,7 +154,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V2.2 status, V2.3 NEW/audio gating, tabs, pagination, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V2.2 status, V2.6 NEW timing, tabs, pagination, official legislation, and exact within-category dedupe verified.')
 
 
 if __name__ == '__main__':
