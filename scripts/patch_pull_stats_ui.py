@@ -68,7 +68,6 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
         const current=Number(window.lastSuccessfulPull)||0;
         lastPullMs=Math.max(parsed,current||0);
         if(!current||parsed>current)window.lastSuccessfulPull=parsed;
-        /* Never replace the live scheduler's future deadline with a stale stats-file timestamp. */
         const now=Date.now(),existingNext=Number(window.nextScheduledPull)||0;
         if(existingNext<=now){
           const feedBased=parsed+AUTO_PULL_MS;
@@ -84,8 +83,9 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
   ensureVisibleUI();loadStats();
   const tabs=byId('tabs');
   if(tabs){
+    // Tab clicks are enough to update visibility; app-v2 already observes tab rebuilds.
+    // Avoid a second MutationObserver watching the same container.
     tabs.addEventListener('click',()=>setTimeout(()=>{ensureVisibleUI();renderStats()},0));
-    new MutationObserver(()=>{ensureVisibleUI()}).observe(tabs,{childList:true});
   }
   setInterval(loadStats,60000);
 })();
