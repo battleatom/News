@@ -86,13 +86,14 @@ jobs:
           alerts=Path('scripts/patch_v23_new_alerts.py').read_text(encoding='utf-8')
           load=Path('scripts/patch_load_more.py').read_text(encoding='utf-8')
           loc=Path('assets/location-content-v25.js').read_text(encoding='utf-8')
-          required_html=('__alertsNewV281','__loadMoreNoJumpV281','__locationDedupeV281','sound-alerts-toggle','bookmarks-v1','related-coverage-v1','auto-refresh-timer-v1')
+          required_html=('__alertsNewV281','__loadMoreNoJumpV281','sound-alerts-toggle','bookmarks-v1','related-coverage-v1','auto-refresh-timer-v1','assets/location-content-v25.js?v=3')
           missing=[x for x in required_html if x not in html]
-          if missing: raise SystemExit('Missing V2.8.1 markers: '+', '.join(missing))
+          if missing: raise SystemExit('Missing V2.8.1 generated markers: '+', '.join(missing))
           for marker in ('RED_TTL=60*60*1000','BLUE_TTL=3*60*60*1000','YELLOW_TTL=6*60*60*1000','AUDIO_TTL=30*60*1000','__freshPublishedLinksV281'):
               if marker not in alerts: raise SystemExit('Missing alert rule '+marker)
           if 'window.scrollTo({top:y' not in load: raise SystemExit('Load More does not preserve scroll position')
-          if '__sameStateEventV281' not in loc or 'stateUnique' not in loc: raise SystemExit('State event dedupe missing')
+          for marker in ('__locationDedupeV281','__sameStateEventV281','stateUnique'):
+              if marker not in loc: raise SystemExit('State event dedupe missing: '+marker)
           print('V2.8.1 static invariants pass.')
           PY
 
