@@ -31,7 +31,8 @@ except ImportError as exc:
 
 NEWS = Path("News")
 CACHE = Path("content-brief-cache.json")
-MAX_BRIEF_CHARS = 520
+CACHE_VERSION = 2
+MAX_BRIEF_CHARS = 500
 MIN_ARTICLE_TEXT = 180
 FETCH_TIMEOUT = 9
 FETCH_WORKERS = 8
@@ -39,25 +40,28 @@ CACHE_LIMIT = 1800
 USER_AGENT = "Mozilla/5.0 (compatible; Underreported/3.0; +https://github.com/battleatom/News)"
 
 CATEGORY_OPENERS = {
-    "world": "International reporting says",
-    "us": "U.S. reporting says",
-    "presidential": "White House coverage says",
-    "federal": "Federal reporting says",
-    "legislation": "Legislative reporting says",
-    "nm": "New Mexico reporting says",
-    "local": "Local reporting says",
-    "region": "Regional reporting says",
-    "nfl": "NFL reporting says",
-    "technology": "Technology reporting says",
-    "gaming": "Gaming reporting says",
-    "military": "Defense reporting says",
-    "underreported": "Reporting on the issue says",
+    "world": "International reporting indicates",
+    "us": "U.S. reporting indicates",
+    "presidential": "White House coverage indicates",
+    "federal": "Federal reporting indicates",
+    "legislation": "Legislative reporting indicates",
+    "nm": "New Mexico reporting indicates",
+    "local": "Local reporting indicates",
+    "region": "Regional reporting indicates",
+    "nfl": "NFL reporting indicates",
+    "technology": "Technology reporting indicates",
+    "gaming": "Gaming reporting indicates",
+    "military": "Defense reporting indicates",
+    "underreported": "Reporting on the issue indicates",
 }
 
 BOILERPLATE = (
     "accept cookies", "cookie policy", "privacy policy", "terms of use", "sign up",
     "subscribe", "newsletter", "all rights reserved", "copyright", "advertisement",
     "read more", "continue reading", "download our app", "enable javascript",
+    "report a missed paper", "e-edition", "customer service", "contact us",
+    "posted by", "minute read", "min read", "outlets skipped it", "share this article",
+    "follow us", "related stories", "recommended for you", "click here",
 )
 
 COMMON_REWRITES = (
@@ -134,13 +138,25 @@ def resolve_publisher_url(url: str) -> str:
     return ""
 
 
+def text_is_clean(value: str, minimum: int = 80) -> bool:
+    value = clean(value)
+    low = value.lower()
+    if len(value) < minimum:
+        return False
+    if any(term in low for term in BOILERPLATE):
+        return False
+    if re.search(r"\b(?:https?://|www\.|[\w.+-]+@[\w.-]+\.[a-z]{2,})", value, re.I):
+        return False
+    return True
+
+
 def best_jsonld_body(soup: BeautifulSoup) -> str:
     found: list[str] = []
 
     def walk(value) -> None:
         if isinstance(value, dict):
             body = value.get("articleBody")
-            if isinstance(body, str) and len(clean(body)) >= MIN_ARTICLE_TEXT:
+            if isinstance(body, str) and text_is_clean(body, MIN_ARTICLE_TEXT):
                 found.append(clean(body))
             for child in value.values():
                 if isinstance(child, (dict, list)):
@@ -168,7 +184,7 @@ def meta_text(soup: BeautifulSoup) -> str:
     for selector, attr in selectors:
         node = soup.select_one(selector)
         value = clean(node.get(attr)) if node else ""
-        if len(value) >= 80:
+        if text_is_clean(value, 90):
             return value
     return ""
 
@@ -180,12 +196,17 @@ def paragraph_text(soup: BeautifulSoup) -> str:
     paragraphs: list[str] = []
     for p in container.find_all("p"):
         text = clean(p.get_text(" ", strip=True))
-        low = text.lower()
-        if len(text) < 45 or any(term in low for term in BOILERPLATE):
+        if not text_is_clean(text, 55):
+            continue
+        # Interviews/op-eds often expose isolated first-person fragments that make poor
+        # neutral briefs; skip those and favor reported factual paragraphs instead.
+        if re.match(r"^(?:i|i'm|i’ve|i'd|my|we|we're|we’ve|our)\b", text, re.I):
+            continue
+        if text.count("|") >= 2 or text.count("·") >= 2:
             continue
         if text not in paragraphs:
             paragraphs.append(text)
-        if len(paragraphs) >= 16 or sum(len(x) for x in paragraphs) > 7000:
+        if len(paragraphs) >= 14 or sum(len(x) for x in paragraphs) > 6500:
             break
     return " ".join(paragraphs)
 
@@ -209,15 +230,18 @@ def fetch_article(url: str) -> tuple[str, str, str]:
                 return publisher, "", "non-html"
             raw = response.read(900_000).decode("utf-8", "ignore")
         soup = BeautifulSoup(raw, "html.parser")
+
+        # Publisher-written meta summaries are usually the cleanest factual source for a
+        # compact card. Prefer them before walking page paragraphs.
+        meta = meta_text(soup)
+        if meta:
+            return publisher, meta, "article-meta"
         body = best_jsonld_body(soup)
         if len(body) >= MIN_ARTICLE_TEXT:
             return publisher, body, "article-body"
         body = paragraph_text(soup)
         if len(body) >= MIN_ARTICLE_TEXT:
             return publisher, body, "article-paragraphs"
-        meta = meta_text(soup)
-        if meta:
-            return publisher, meta, "article-meta"
         return publisher, "", "no-public-text"
     except Exception:
         return publisher, "", "fetch-blocked"
@@ -232,12 +256,18 @@ def split_sentences(text: str) -> list[str]:
     for part in parts:
         part = clean(part).strip(" -–—")
         low = part.lower()
-        if not 45 <= len(part) <= 520:
+        if not 40 <= len(part) <= 480:
             continue
         if any(term in low for term in BOILERPLATE):
             continue
+        if re.search(r"\b(?:https?://|www\.|[\w.+-]+@[\w.-]+\.[a-z]{2,})", part, re.I):
+            continue
+        if re.match(r"^(?:i|i'm|i’ve|i'd|my|we|we're|we’ve|our)\b", part, re.I):
+            continue
         # Avoid reproducing direct quotations in the digest.
         if part.count('"') >= 2 or "“" in part or "”" in part:
+            continue
+        if part.count("|") >= 2 or part.count("·") >= 2:
             continue
         if part not in out:
             out.append(part)
@@ -258,7 +288,12 @@ def sentence_score(sentence: str, title: str, position: int) -> float:
     words = set(re.findall(r"[a-z0-9]+", sentence.lower()))
     overlap = len(terms & words)
     numbers = min(2, len(re.findall(r"\b\d[\d,.%$-]*\b", sentence)))
-    return overlap * 4 + numbers * 1.5 + max(0, 6 - position * 0.5)
+    penalty = 0
+    if len(sentence) > 330:
+        penalty += 2
+    if sentence.count(":") > 2 or sentence.count(";") > 3:
+        penalty += 3
+    return overlap * 4 + numbers * 1.5 + max(0, 6 - position * 0.5) - penalty
 
 
 def simplify_attribution(sentence: str) -> str:
@@ -267,35 +302,33 @@ def simplify_attribution(sentence: str) -> str:
     s = re.sub(r"^(?:in a statement,?\s*|the report said(?: that)?\s*)", "", s, flags=re.I)
     for pattern, replacement in COMMON_REWRITES:
         s = re.sub(pattern, replacement, s, flags=re.I)
-    s = re.sub(r"\bwe\b", "the outlet", s, flags=re.I)
-    s = re.sub(r"\bour\b", "the outlet's", s, flags=re.I)
     return s.strip().rstrip(" .")
 
 
 def compress_fact(sentence: str) -> str:
     """Turn a source sentence into a shorter, structurally different factual clause."""
     s = simplify_attribution(sentence)
-    # Drop parenthetical asides and datelines; these often carry publisher-specific prose.
     s = re.sub(r"^\s*[A-Z][A-Z .,'-]{2,25}\s*[-—:]\s*", "", s)
     s = re.sub(r"\s*\([^)]{1,120}\)\s*", " ", s)
     s = re.sub(r"\s+", " ", s).strip(" ,;:-")
 
-    # Move a trailing context clause to the front. This changes sentence structure while
-    # preserving the same reported facts and avoids simple word-for-word substitution.
     pieces = re.split(r",\s+(?=(?:after|following|during|while|as|because|when)\b)", s, maxsplit=1, flags=re.I)
     if len(pieces) == 2 and len(pieces[1]) > 25:
-        s = f"{pieces[1].rstrip(' .')}, {pieces[0][0].lower() + pieces[0][1:] if pieces[0] else ''}"
+        lead = pieces[1].rstrip(" .")
+        rest = pieces[0].strip()
+        if rest:
+            rest = rest[0].lower() + rest[1:] if rest[0].isupper() and not rest[:2].isupper() else rest
+            s = f"{lead}, {rest}"
 
-    # Keep the digest concise; the original link remains the place for full detail.
-    if len(s) > 245:
-        cut = s[:246]
+    if len(s) > 235:
+        cut = s[:236]
         stop = max(cut.rfind(", "), cut.rfind("; "), cut.rfind(" "))
-        s = cut[:stop if stop > 150 else 245].rstrip(" ,;:") + "…"
+        s = cut[:stop if stop > 145 else 235].rstrip(" ,;:") + "…"
     return s
 
 
 def choose_facts(article_text: str, title: str) -> list[str]:
-    candidates = split_sentences(article_text)[:24]
+    candidates = split_sentences(article_text)[:22]
     ranked = sorted(
         enumerate(candidates),
         key=lambda pair: sentence_score(pair[1], title, pair[0]),
@@ -303,7 +336,7 @@ def choose_facts(article_text: str, title: str) -> list[str]:
     )
     selected: list[tuple[int, str]] = []
     for pos, sentence in ranked:
-        if similarity(sentence, title) > 0.91:
+        if similarity(sentence, title) > 0.92:
             continue
         if any(similarity(sentence, prior) > 0.72 for _, prior in selected):
             continue
@@ -329,7 +362,7 @@ def trim(text: str, limit: int = MAX_BRIEF_CHARS) -> str:
 def build_brief(title: str, source_text: str, source: str, category: str) -> str:
     title = strip_source_suffix(title, source)
     facts = choose_facts(source_text, title)
-    opener = CATEGORY_OPENERS.get(category, "Reporting says")
+    opener = CATEGORY_OPENERS.get(category, "Reporting indicates")
     if not facts:
         return ""
     first = compress_fact(facts[0])
@@ -339,7 +372,7 @@ def build_brief(title: str, source_text: str, source: str, category: str) -> str
     if len(facts) > 1:
         second = compress_fact(facts[1])
         if second:
-            brief += f" It also reports {second}."
+            brief += f" Additional details: {second}."
     return trim(brief)
 
 
@@ -350,24 +383,31 @@ def set_text(item: ET.Element, tag: str, value: str) -> None:
     el.text = value
 
 
+def fallback_brief(row: dict[str, str]) -> str:
+    title = strip_source_suffix(row["title"], row["source"]).rstrip(" .")
+    return trim(
+        f"{CATEGORY_OPENERS.get(row['category'], 'Reporting indicates')} this story concerns {title}. "
+        "The publisher did not expose enough public article text for a fuller brief."
+    )
+
+
 def process_row(index: int, row: dict[str, str], cached: dict | None) -> tuple[int, dict]:
-    if cached and cached.get("brief") and len(clean(cached.get("brief"))) >= 60:
+    if (
+        cached
+        and cached.get("cacheVersion") == CACHE_VERSION
+        and cached.get("brief")
+        and len(clean(cached.get("brief"))) >= 60
+    ):
         return index, cached
 
     publisher, article_text, kind = fetch_article(row["link"])
     brief = build_brief(row["title"], article_text, row["source"], row["category"]) if article_text else ""
-
-    # If a publisher blocks extraction, retain a clearly identified compact fallback rather
-    # than inventing details. The validation report makes these visible for judging quality.
     if not brief:
-        brief = (
-            f"{CATEGORY_OPENERS.get(row['category'], 'Reporting says')} this story concerns "
-            f"{strip_source_suffix(row['title'], row['source']).rstrip(' .')}. "
-            "The publisher did not expose enough public article text for a fuller brief."
-        )
+        brief = fallback_brief(row)
         kind = "headline-fallback"
 
     return index, {
+        "cacheVersion": CACHE_VERSION,
         "brief": trim(brief),
         "publisherUrl": publisher,
         "sourceKind": kind,
@@ -406,7 +446,13 @@ def main() -> None:
             try:
                 _, result = future.result()
             except Exception:
-                _, result = process_row(i, rows[i], None)
+                result = {
+                    "cacheVersion": CACHE_VERSION,
+                    "brief": fallback_brief(rows[i]),
+                    "publisherUrl": "",
+                    "sourceKind": "headline-fallback",
+                    "updatedAt": datetime.now(timezone.utc).isoformat(),
+                }
             results[i] = result
 
     counts: dict[str, int] = {}
