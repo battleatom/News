@@ -6,8 +6,12 @@ on:
     paths-ignore:
       - 'News'
       - 'index.html'
-      - 'scripts/update_news.py'
+      - 'update-stats.json'
+      - 'boxoffice.json'
+      - 'state-legislation.json'
+      - 'markets.json'
       - 'refresh-health.json'
+      - 'scripts/update_news.py'
   workflow_dispatch:
 
 permissions:
@@ -34,6 +38,7 @@ jobs:
           python scripts/patch_top_diversity.py
           python scripts/patch_event_dedupe.py
           python scripts/patch_dedupe_scope.py
+          python scripts/patch_site_cache.py
           python scripts/patch_public_interest_legislation.py
           python scripts/patch_public_interest_quality.py
           python scripts/patch_category_quality.py
@@ -41,7 +46,7 @@ jobs:
           python scripts/patch_region_state_tags.py
           python scripts/patch_presidential_us_only.py
 
-      - name: Generate branch-only preview feed
+      - name: Generate branch-only live news feed
         run: |
           success=0
           for attempt in 1 2 3; do
@@ -58,9 +63,21 @@ jobs:
             echo 'Preview feed generation failed after three attempts.'
             exit 1
           fi
+
+      - name: Run production enrichment and quality pipeline
+        run: |
           python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_v2.py
+          python scripts/enrich_world_content.py
+          python scripts/enrich_underreported.py
+          python scripts/enrich_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
           python scripts/clean_news.py
+          python scripts/record_pull_stats.py
           python scripts/dedupe_news_stories.py
+          python scripts/record_pull_stats.py --finalize
 
       - name: Build V2 page in canonical order
         run: python scripts/build_site.py
@@ -168,7 +185,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add News index.html scripts/update_news.py
+          git add News index.html update-stats.json boxoffice.json state-legislation.json scripts/update_news.py
           if git diff --cached --quiet; then
             echo 'Generated preview is already current.'
             exit 0
