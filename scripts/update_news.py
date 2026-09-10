@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 OUT = "News"
-SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "nm", "local", "region", "nfl", "technology", "gaming", "military"]
+SECTIONS = ["top", "underreported", "world", "us", "presidential", "federal", "legislation", "nm", "local", "region", "nfl", "technology", "gaming", "military"]
 MAX_AGE_HOURS = 48
 
 QUERIES = {
@@ -27,6 +27,18 @@ QUERIES = {
         "EPA FTC SEC FCC IRS federal regulation rule",
         "US Treasury State Department federal government agency",
         "federal budget spending government shutdown Congress",
+    ],
+    "legislation": [
+        "US Congress bill legislation passed signed law House Senate",
+        "executive order presidential action federal regulation final rule",
+        "site:congress.gov bill law House Senate",
+        "site:federalregister.gov rule regulation final rule",
+        "site:whitehouse.gov presidential actions executive order",
+        "New Mexico Legislature bill passed signed law governor",
+        "site:nmlegis.gov legislation bill",
+        "New Mexico executive order regulation governor",
+        "Farmington NM ordinance city council law",
+        "San Juan County NM ordinance commission regulation",
     ],
     "nm": "New Mexico government OR New Mexico news",
     "local": [
@@ -202,7 +214,7 @@ TRUSTED_CATEGORY_FALLBACKS = {
     ],
 }
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -244,6 +256,41 @@ TRUSTED_SPORTS_SOURCE_TOKENS = (
     "yahoo sports", "sports illustrated", "pro football talk",
 )
 TRUSTED_SOURCE_TOKENS = tuple(sorted(set(TRUSTED_SOURCE_TOKENS) | set(TRUSTED_SPORTS_SOURCE_TOKENS)))
+
+PUBLIC_INTEREST_SOURCE_TOKENS = (
+    "propublica", "the marshall project", "kff health news", "kaiser health news",
+    "inside climate news", "insideclimate news", "grist", "reveal", "center for public integrity",
+    "source new mexico", "searchlight new mexico", "stateline", "states newsroom",
+    "new mexico in depth", "capital and main", "the 19th", "route fifty", "route fifty",
+    "congress gov", "congress.gov", "federal register", "federalregister.gov",
+    "white house", "whitehouse.gov", "new mexico legislature", "nmlegis.gov",
+    "governor of new mexico", "gao", "government accountability office",
+)
+TRUSTED_SOURCE_TOKENS = tuple(sorted(set(TRUSTED_SOURCE_TOKENS) | set(PUBLIC_INTEREST_SOURCE_TOKENS)))
+
+UNDERREPORTED_DISCOVERY_QUERIES = [
+    ("ProPublica", "site:propublica.org investigation government health environment labor justice"),
+    ("The Marshall Project", "site:themarshallproject.org criminal justice prisons policing investigation"),
+    ("KFF Health News", "site:kffhealthnews.org health policy hospitals Medicaid investigation"),
+    ("Inside Climate News", "site:insideclimatenews.org climate water pollution environment investigation"),
+    ("Grist", "site:grist.org climate environment water energy policy"),
+    ("Reveal", "site:revealnews.org investigation labor housing justice government"),
+    ("New Mexico In Depth", "site:nmindepth.com New Mexico investigation government education health"),
+    ("Source New Mexico", "site:sourcenm.com New Mexico legislature environment health labor"),
+    ("Searchlight New Mexico", "site:searchlightnm.org New Mexico investigation children health government"),
+    ("Stateline", "site:stateline.org state policy legislation health housing labor"),
+]
+
+UNDERREPORTED_PAYWALL_SOURCE_TOKENS = (
+    "new york times", "the new york times", "wall street journal", "wsj",
+    "bloomberg", "washington post", "the washington post",
+)
+UNDERREPORTED_PUBLIC_INTEREST_TOKENS = (
+    "propublica", "marshall project", "kff health news", "kaiser health news",
+    "inside climate", "grist", "reveal", "public integrity", "source new mexico",
+    "searchlight new mexico", "new mexico in depth", "stateline", "states newsroom",
+    "npr", "pbs", "public radio",
+)
 
 FOREIGN_ONLY_TERMS = ('germany', 'german', 'berlin', 'france', 'french', 'paris', 'united kingdom', 'britain', 'british', 'london', 'italy', 'italian', 'rome', 'spain', 'spanish', 'madrid', 'europe', 'european union', 'eu', 'ukraine', 'ukrainian', 'russia', 'russian', 'moscow', 'china', 'chinese', 'beijing', 'japan', 'japanese', 'tokyo', 'south korea', 'korean', 'india', 'indian', 'africa', 'african', 'south africa', 'nigeria', 'kenya', 'ethiopia', 'ghana', 'egypt', 'cairo', 'israel', 'israeli', 'gaza', 'palestine', 'iran', 'iranian', 'tehran', 'iraq', 'iraqi', 'syria', 'syrian', 'lebanon', 'turkey', 'turkish', 'australia', 'australian', 'canada', 'canadian', 'mexico', 'mexican', 'brazil', 'brazilian', 'argentina', 'argentine', 'colombia', 'philippines', 'indonesia', 'taiwan', 'new zealand', 'pakistan', 'afghanistan', 'north korea', 'nato', 'united nations', 'west bank')
 US_CONTEXT_TERMS = ('united states', 'u.s.', 'us ', 'america', 'american', 'washington dc', 'washington, d.c.', 'new mexico', 'farmington', 'san juan county', 'arizona', 'colorado', 'utah', 'nevada', 'texas', 'california', 'oregon', 'washington state', 'new york', 'florida', 'georgia', 'illinois', 'ohio', 'congress', 'senate', 'house of representatives', 'white house', 'pentagon', 'supreme court')
@@ -535,6 +582,8 @@ def attach_related(primary, related):
 
 
 
+
+
 def select_top_stories(unique):
     """Keep a deep, diverse pool of distinct Top Stories and attach suppressed coverage."""
     if not unique:
@@ -586,32 +635,98 @@ def select_top_stories(unique):
     return selected
 
 
+def underreported_topic(item):
+    text = f"{item.get('title','')} {item.get('description','')}".lower()
+    groups = [
+        ("legislation-policy", ("bill", "legislation", "law", "executive order", "regulation", "rule", "ordinance")),
+        ("government-accountability", ("audit", "inspector general", "ethics", "misconduct", "oversight", "watchdog", "records request")),
+        ("healthcare", ("hospital", "medicaid", "medicare", "health care", "healthcare", "drug price", "nursing home")),
+        ("environment-water", ("water", "contamination", "pollution", "toxic", "climate", "drought", "environment")),
+        ("labor-workers", ("workers", "labor", "union", "wage", "workplace", "strike", "overtime")),
+        ("civil-rights", ("civil rights", "voting rights", "discrimination", "disability rights", "lgbt", "tribal rights")),
+        ("privacy-surveillance", ("privacy", "surveillance", "facial recognition", "data broker", "tracking", "spying")),
+        ("criminal-justice", ("prison", "jail", "policing", "police misconduct", "sentencing", "prosecutor", "criminal justice")),
+        ("education", ("school", "student", "teacher", "education", "college", "university")),
+        ("infrastructure", ("bridge", "road", "infrastructure", "power grid", "utility", "broadband")),
+        ("indigenous", ("tribal", "tribe", "navajo", "indigenous", "native american")),
+        ("consumer", ("consumer", "recall", "fraud", "scam", "fees", "insurance", "product safety")),
+        ("military-veterans", ("veteran", "va ", "pentagon", "military", "service member", "troops")),
+        ("science-public-health", ("research", "study", "disease", "outbreak", "public health", "science")),
+        ("corporate-accountability", ("company", "corporate", "antitrust", "monopoly", "layoffs", "bankruptcy", "whistleblower")),
+        ("international-human-impact", ("refugee", "famine", "humanitarian", "war crimes", "displaced", "aid")),
+    ]
+    for topic, terms in groups:
+        if any(term in text for term in terms):
+            return topic
+    return topic_key(item)
+
+
+def underreported_source_allowed(item):
+    source = source_key(item.get('source') or '')
+    raw = (item.get('source') or '').lower()
+    if any(token.replace(' ','') in source or token in raw for token in UNDERREPORTED_PAYWALL_SOURCE_TOKENS):
+        return False
+    return True
+
+
 def select_underreported(unique):
+    """Select high-impact, low-saturation public-interest stories with strong topic diversity."""
     if not unique:
         return []
     newest_time = max(x["published"] for x in unique)
-    coverage = {}
-    for item in unique:
-        k = key(item)
-        coverage.setdefault(k, set()).add(source_key(item["source"] or "Unknown"))
     candidates = []
     for item in unique:
-        k = key(item); sources = len(coverage.get(k, set())); impact = impact_score(item, newest_time)
-        if impact < 22:
+        if not underreported_source_allowed(item):
             continue
-        under_score = impact + max(0, 18 - sources * 6)
-        if sources <= 1:
-            under_score += 8
-        candidates.append((under_score, item["published"], item))
+        src_raw = (item.get('source') or '').lower()
+        impact = impact_score(item, newest_time)
+        text = f"{item.get('title','')} {item.get('description','')}".lower()
+        public_interest_bonus = 12 if any(t in src_raw for t in UNDERREPORTED_PUBLIC_INTEREST_TOKENS) else 0
+        public_interest_bonus += 8 if any(t in text for t in (
+            'investigation','audit','inspector general','whistleblower','public records','lawsuit','settlement',
+            'contamination','pollution','hospital','medicaid','workers','labor','privacy','surveillance',
+            'civil rights','tribal','indigenous','veteran','fraud','regulation','legislation','bill','law'
+        )) else 0
+        # Famous-person coverage is allowed, but fame alone should not make something underreported.
+        celebrity_penalty = 8 if any(t in text for t in ('donald trump','president trump','elon musk')) and public_interest_bonus < 12 else 0
+        score = impact + public_interest_bonus - celebrity_penalty
+        if score < 24:
+            continue
+        candidates.append((score, item["published"], item))
     candidates.sort(key=lambda x: (x[0], x[1]), reverse=True)
-    selected, seen_keys, source_counts = [], set(), {}
+
+    selected = []
+    seen_keys = set()
+    source_counts = {}
+    subject_counts = {}
+    topic_counts = {}
     for _, _, item in candidates:
-        k = key(item); source = source_key(item["source"] or "Unknown")
-        if k in seen_keys or source_counts.get(source, 0) >= 2:
+        k = key(item)
+        src = source_key(item.get('source') or 'Unknown')
+        subs = subject_keys(item)
+        topic = underreported_topic(item)
+        first_page = len(selected) < 10
+        subject_cap = 1 if first_page else 2
+        topic_cap = 2 if first_page else 4
+        if not k or k in seen_keys or source_counts.get(src, 0) >= 2:
             continue
-        selected.append(item); seen_keys.add(k); source_counts[source] = source_counts.get(source, 0) + 1
-        if len(selected) == 30:
+        if subs and max(subject_counts.get(x, 0) for x in subs) >= subject_cap:
+            continue
+        if topic_counts.get(topic, 0) >= topic_cap:
+            continue
+        related = next((prior for prior in selected if same_event_topic(prior, item)), None)
+        if related is not None:
+            attach_related(related, item)
+            continue
+        selected.append(item)
+        seen_keys.add(k)
+        source_counts[src] = source_counts.get(src, 0) + 1
+        topic_counts[topic] = topic_counts.get(topic, 0) + 1
+        for sub in subs:
+            subject_counts[sub] = subject_counts.get(sub, 0) + 1
+        if len(selected) >= 30:
             break
+    print('Underreported diversity: ' + str(len(selected)) + ' stories across ' + str(len(topic_counts)) + ' topic buckets.')
     return selected
 
 
@@ -825,6 +940,18 @@ def main():
                                 break
                         except Exception as exc:
                             print(f"Local fallback failed for {fallback_source}: {exc}")
+                usable_count = len(select_category_stories(items, limit=30))
+                if usable_count < 10:
+                    for fallback_source, fallback_query in TRUSTED_CATEGORY_FALLBACKS.get("local", []):
+                        try:
+                            batch = parse_items(fetch(fallback_query), category, source_override=fallback_source)
+                            items.extend(batch)
+                            usable_count = len(select_category_stories(items, limit=30))
+                            print(f"local fallback/{fallback_source}: {len(batch)} accepted; {usable_count} usable local stories")
+                            if usable_count >= 15:
+                                break
+                        except Exception as exc:
+                            print(f"Local fallback failed for {fallback_source}: {exc}")
             elif category == "region":
                 items = []
                 for region_name, region_queries in query.items():
@@ -840,15 +967,15 @@ def main():
                             print(f"Region feed failed for {region_name}/{region_query}: {exc}")
                     print(f"region/{region_name}: {region_count} fresh stories")
             else:
-                if category == "federal" and isinstance(query, list):
+                if category in ("federal", "legislation") and isinstance(query, list):
                     items = []
                     for federal_query in query:
                         try:
                             batch = parse_items(fetch(federal_query), category)
                             items.extend(batch)
-                            print(f"federal/{federal_query}: {len(batch)} fresh stories")
+                            print(f"{category}/{federal_query}: {len(batch)} fresh stories")
                         except Exception as exc:
-                            print(f"Federal feed failed for {federal_query}: {exc}")
+                            print(f"{category.title()} feed failed for {federal_query}: {exc}")
                 else:
                     combined_query = " OR ".join(f"({q})" for q in query) if isinstance(query, list) else query
                     items = parse_items(fetch(combined_query), category)
@@ -881,6 +1008,15 @@ def main():
         except Exception as exc:
             print(f"Top feed failed for {source_name}: {exc}")
 
+    underreported_discovery_items = []
+    for source_name, query in UNDERREPORTED_DISCOVERY_QUERIES:
+        try:
+            discovered = parse_items(fetch(query), "us", source_override=source_name)
+            underreported_discovery_items.extend(discovered)
+            print(f"underreported/{source_name}: {len(discovered)} fresh public-interest stories")
+        except Exception as exc:
+            print(f"Underreported discovery failed for {source_name}: {exc}")
+
     seen, unique = set(), []
     for item in sorted(all_items, key=lambda x: x["published"], reverse=True):
         k = key(item)
@@ -908,7 +1044,7 @@ def main():
         else:
             selected_by_category[category] = select_category_stories(category_items)
     top = select_top_stories(top_unique)
-    underreported = select_underreported(unique)
+    underreported = select_underreported(unique + underreported_discovery_items)
 
     top_items = []
     for item in top:
