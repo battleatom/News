@@ -23,6 +23,15 @@ def click_tab(page, needle):
     raise AssertionError(f'Tab not found: {needle}; available={direct.all_text_contents()}')
 
 
+def click_key(page, key):
+    tab=page.locator(f'#tabs > .tab[data-nav-key="{key}"]')
+    if not tab.count() or not tab.first.is_visible():
+        raise AssertionError(f'Tab key not found: {key}; available={page.locator("#tabs > .tab").all_text_contents()}')
+    text=(tab.first.inner_text() or '').strip()
+    tab.first.click()
+    return text
+
+
 def wait_feed(page, allow_loading=False):
     page.wait_for_selector('#news-feed')
     if not allow_loading:
@@ -136,7 +145,7 @@ def desktop_suite(browser):
     assert 'assets/new-article-pop.mp3' in audio.get('src',''), f'Wrong notification audio source: {audio}'
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
-    click_tab(page,'Laws & Legislation')
+    click_key(page,'legislation')
     page.wait_for_timeout(700)
     leg_text=page.locator('#news-feed').inner_text()
     assert 'Congress.gov' in leg_text or 'Federal' in leg_text, 'Federal legislation records missing'
@@ -144,7 +153,7 @@ def desktop_suite(browser):
 
     page.evaluate("localStorage.setItem('underreported-state','NM'); localStorage.setItem('underreported-location','Farmington, NM');")
     page.wait_for_timeout(2100)
-    click_tab(page,'Laws & Legislation')
+    click_key(page,'legislation')
     page.wait_for_timeout(500)
     nm_leg=page.locator('#news-feed').inner_text()
     assert 'New Mexico' in nm_leg, 'NM location did not select New Mexico legislation view'
