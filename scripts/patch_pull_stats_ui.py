@@ -12,7 +12,7 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
   function currentTab(){try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}}
   function escapeHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
   function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
-  function nextTime(){const target=Number(window.nextScheduledPull)||0;return target?shortTime(target):'—'}
+  function nextTime(){const target=Number(window.nextScheduledPull)||0;return target>Date.now()?shortTime(target):'soon'}
   function btnBusy(){const b=byId('refresh');return !!b?.disabled||b?.dataset.refreshing==='1'}
 
   function ensureVisibleUI(){
@@ -32,7 +32,12 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
           if(typeof window.cycleTopStoriesAndRefresh==='function')await window.cycleTopStoriesAndRefresh();
           else if(typeof window.refreshNewsFromPage==='function')await window.refreshNewsFromPage(false);
         }catch(e){console.error('Top Stories discovery refresh failed:',e)}
-        finally{btn.disabled=false;btn.dataset.refreshing='';btn.textContent='↻ Next Top Stories';renderStats()}
+        finally{
+          btn.disabled=false;btn.dataset.refreshing='';btn.textContent='↻ Next Top Stories';
+          const now=Date.now(),next=Number(window.nextScheduledPull)||0;
+          if(next<=now)window.nextScheduledPull=now+AUTO_PULL_MS;
+          renderStats();
+        }
       });
     }
     if(btn.dataset.refreshing!=='1')btn.textContent='↻ Next Top Stories';
@@ -62,7 +67,13 @@ SCRIPT = r'''<script id="pull-stats-ui-v1">
       if(Number.isFinite(parsed)){
         const current=Number(window.lastSuccessfulPull)||0;
         lastPullMs=Math.max(parsed,current||0);
-        if(!current||parsed>current){window.lastSuccessfulPull=parsed;window.nextScheduledPull=parsed+AUTO_PULL_MS}
+        if(!current||parsed>current)window.lastSuccessfulPull=parsed;
+        /* Never replace the live scheduler's future deadline with a stale stats-file timestamp. */
+        const now=Date.now(),existingNext=Number(window.nextScheduledPull)||0;
+        if(existingNext<=now){
+          const feedBased=parsed+AUTO_PULL_MS;
+          window.nextScheduledPull=feedBased>now?feedBased:now+AUTO_PULL_MS;
+        }
       }
     }catch(e){}
     renderStats(false,'');
@@ -101,4 +112,4 @@ s=s.replace('>↻ Refresh News</button>','>↻ Next Top Stories</button>',1)
 s=s.replace('</head>',STYLE+'\n</head>',1)
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Simplified update status to one compact user-facing row and removed high-frequency status polling.')
+print('Simplified update status to one compact user-facing row with a stable future refresh deadline.')
