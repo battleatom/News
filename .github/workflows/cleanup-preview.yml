@@ -63,6 +63,7 @@ jobs:
               'setInterval(ensureVisibleUI,500)',
               'setInterval(renderStats,1000)',
               'new-badge-expiry-v1',
+              'if(test)synthPop()',
           )
           found=[x for x in forbidden if x in html]
           if found:
