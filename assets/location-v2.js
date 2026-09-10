@@ -13,15 +13,17 @@
   }
   function legacy(){
     const label=localStorage.getItem('underreported-location')||'';
-    const state=localStorage.getItem('underreported-state')||((label.match(/,\s*([A-Z]{2})$/)||[])[1]||'');
+    const state=(localStorage.getItem('underreported-state')||((label.match(/,\s*([A-Z]{2})$/)||[])[1]||'')).toUpperCase();
     return {label,state};
   }
   function persist(v){
-    const out={...v,savedAt:Date.now()};
+    const state=String(v.state||'').replace(/^US-/,'').toUpperCase();
+    const label=v.label||[v.city,state].filter(Boolean).join(', ');
+    const out={...v,state,label,savedAt:Date.now()};
     try{
       localStorage.setItem(CACHE_KEY,JSON.stringify(out));
-      if(out.state)localStorage.setItem('underreported-state',String(out.state).toUpperCase());
-      if(out.label)localStorage.setItem('underreported-location',out.label);
+      if(state)localStorage.setItem('underreported-state',state);
+      if(label)localStorage.setItem('underreported-location',label);
     }catch(e){}
     window.dispatchEvent(new CustomEvent('underreported:location',{detail:out}));
     return out;
@@ -36,28 +38,37 @@
       );
     });
   }
+  async function reverseGeocode(coords){
+    try{
+      const q=new URLSearchParams({latitude:String(coords.lat),longitude:String(coords.lon),localityLanguage:'en'});
+      const r=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?'+q,{cache:'no-store'});
+      if(!r.ok)throw new Error('reverse geocode unavailable');
+      const d=await r.json();
+      const state=String(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();
+      const city=d.city||d.locality||'';
+      return {...coords,city,state,label:[city,state].filter(Boolean).join(', ')};
+    }catch(e){return coords;}
+  }
   async function ipCoords(){
     const r=await fetch('https://ipapi.co/json/',{cache:'no-store'});
     if(!r.ok)throw new Error('IP location unavailable');
     const d=await r.json();
     if(d.latitude==null||d.longitude==null)throw new Error('IP location incomplete');
-    const state=(d.region_code||'').toUpperCase();
-    const city=d.city||'';
+    const state=(d.region_code||'').toUpperCase(),city=d.city||'';
     return {lat:Number(d.latitude),lon:Number(d.longitude),city,state,label:[city,state].filter(Boolean).join(', '),source:'ip'};
   }
   async function resolve(force){
     if(!force){const cached=readCache();if(cached)return cached;}
     const old=legacy();
     try{
-      const coords=await browserCoords();
-      return persist({...coords,state:old.state||'',label:old.label||''});
+      let coords=await browserCoords();
+      coords=await reverseGeocode(coords);
+      if(!coords.state&&old.state)coords.state=old.state;
+      if(!coords.label&&old.label)coords.label=old.label;
+      return persist(coords);
     }catch(e){
       try{return persist(await ipCoords());}
-      catch(ipError){
-        const cached=readCache();
-        if(cached)return cached;
-        throw ipError;
-      }
+      catch(ipError){const cached=readCache();if(cached)return cached;throw ipError;}
     }
   }
 
