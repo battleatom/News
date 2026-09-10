@@ -23,6 +23,14 @@ s = s.replace(
     "if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);",
 )
 
+# V2.2 originally played a test tone when the user enabled alerts. Remove that
+# behavior at build time: opting in should be silent, and only a verified new
+# story event is allowed to make the audible pop.
+s = s.replace(
+    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}",
+    "if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){}}",
+)
+
 SCRIPT = r'''<script id="alerts-new-v23">
 (function(){
   'use strict';
