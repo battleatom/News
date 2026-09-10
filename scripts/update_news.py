@@ -1090,6 +1090,7 @@ def main():
                             for item in batch:
                                 item["region"] = region_name
                                 item["state"] = region_query_state(region_query)
+                                item["state"] = region_query_state(region_query)
                             region_count += len(batch)
                             items.extend(batch)
                         except Exception as exc:
