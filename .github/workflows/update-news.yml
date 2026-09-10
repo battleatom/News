@@ -6,6 +6,8 @@ on:
     paths-ignore:
       - 'News'
       - 'index.html'
+      - 'update-stats.json'
+      - 'boxoffice.json'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -32,31 +34,8 @@ jobs:
           git checkout main
           git reset --hard origin/main
 
-      - name: Ensure rolling 48-hour feed window
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('scripts/update_news.py')
-          s = p.read_text(encoding='utf-8')
-          s = s.replace('MAX_AGE_HOURS = 72', 'MAX_AGE_HOURS = 48')
-          s = s.replace('f"{query} when:3d"', 'f"{query} when:2d"')
-          p.write_text(s, encoding='utf-8')
-          print('Enforced rolling 48-hour RSS window.')
-          PY
-
-      - name: Ensure NFL feed category
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('scripts/update_news.py')
-          s = p.read_text(encoding='utf-8')
-          line = '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],'
-          s = re.sub(r'(?:\n?' + re.escape(line) + r'){1,}', '\n' + line, s)
-          if '    "technology": "technology AI cybersecurity science",' in s and line not in s:
-              s = s.replace('    "technology": "technology AI cybersecurity science",', line + '\n    "technology": "technology AI cybersecurity science",', 1)
-          p.write_text(s, encoding='utf-8')
-          PY
+      - name: Apply collector preflight
+        run: python scripts/preflight_feed.py
 
       - name: Patch news collector rules
         run: python scripts/patch_news_selector.py
@@ -66,6 +45,9 @@ jobs:
 
       - name: Strengthen event-level duplicate detection
         run: python scripts/patch_event_dedupe.py
+
+      - name: Keep exact-link dedupe category scoped
+        run: python scripts/patch_dedupe_scope.py
 
       - name: Patch site cache metadata
         run: python scripts/patch_site_cache.py
@@ -78,6 +60,9 @@ jobs:
 
       - name: Tighten category quality
         run: python scripts/patch_category_quality.py
+
+      - name: Canonicalize collector patch artifacts
+        run: python scripts/patch_collector_hygiene.py
 
       - name: Apply site theme
         run: python scripts/apply_clean_design.py
@@ -96,22 +81,6 @@ jobs:
 
       - name: Patch location-aware Regional tab
         run: python scripts/patch_region_tab.py
-
-      - name: Verify and enforce NFL and X tabs
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          p = Path('index.html')
-          s = p.read_text(encoding='utf-8')
-          pattern = r"const sections=\[[^;]*\];"
-          replacement = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a00'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
-          s2, n = re.subn(pattern, replacement, s, count=1)
-          if n != 1:
-              raise SystemExit('Could not locate sections declaration in index.html')
-          p.write_text(s2, encoding='utf-8')
-          print('NFL, X, and Laws & Legislation tabs verified.')
-          PY
 
       - name: Fix Regional tab click handling
         run: python scripts/fix_region_tab_click.py
@@ -159,7 +128,7 @@ jobs:
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
 
-      - name: Enrich Box Office and Farmington movie data
+      - name: Enrich Box Office and movie data
         run: python scripts/enrich_box_office.py
 
       - name: Add location-aware Box Office data
@@ -198,7 +167,7 @@ jobs:
       - name: Add live NFL scoreboard presentation
         run: python scripts/patch_nfl_live.py
 
-      - name: Expire NEW badges after one hour
+      - name: Expire NEW badges and wire notification audio
         run: python scripts/patch_new_badges.py
 
       - name: Add Load More pagination
@@ -207,48 +176,28 @@ jobs:
       - name: Add Laws & Legislation card UI
         run: python scripts/patch_legislation_ui.py
 
-      - name: Deduplicate generated UI styles
+      - name: Deduplicate generated UI blocks
         run: python scripts/dedupe_generated_ui.py
 
       - name: Normalize generated HTML structure
         run: python scripts/normalize_generated_html.py
 
-      - name: Validate generated page and scripts
+      - name: Audit generated site integrity
+        run: python scripts/site_audit.py
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py
+
+      - name: Remove generated bytecode and dead collector
         run: |
-          python -m py_compile scripts/*.py
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
-          script_refs=re.findall(r'(?:run:\s*python\s+|python\s+)(scripts/[A-Za-z0-9_./-]+\.py)', workflow)
-          missing=[p for p in sorted(set(script_refs)) if not Path(p).exists()]
-          if missing:
-              raise SystemExit('Workflow references missing scripts: '+', '.join(missing))
-          s=Path('index.html').read_text(encoding='utf-8')
-          required=['pull-stats-ui-v1','bookmarks-v1','auto-refresh-timer-v1','boxoffice-location-v1','shared-page-state-bridge-v1','legislation-ui-v1']
-          missing_ui=[m for m in required if m not in s]
-          if missing_ui:
-              raise SystemExit('Missing required UI markers: '+', '.join(missing_ui))
-          if s.count('id="auto-refresh-timer-v1"') != 1:
-              raise SystemExit('Expected exactly one auto refresh timer marker')
-          if s.count('id="shared-page-state-bridge-v1"') != 1:
-              raise SystemExit('Expected exactly one shared state bridge marker')
-          if s.count('id="legislation-ui-v1"') != 1:
-              raise SystemExit('Expected exactly one legislation UI marker')
-          if re.search(r'</html>\s*<(?:script|style)\b', s, flags=re.I):
-              raise SystemExit('Generated page contains script/style tags after </html>')
-          if '<html' not in s.lower() or '</html>' not in s.lower():
-              raise SystemExit('Invalid generated page')
-          if len(re.findall(r'const sections=', s)) != 1:
-              raise SystemExit('Generated page does not contain exactly one sections declaration')
-          print('Generated page, workflow references, HTML structure, and Python syntax validation passed.')
-          PY
+          rm -f scripts/collect_official_legislation.py
+          find scripts -type d -name __pycache__ -prune -exec rm -rf {} +
 
       - name: Commit and push changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add News index.html update-stats.json boxoffice.json scripts .github/workflows/update-news.yml
+          git add -A News index.html update-stats.json boxoffice.json scripts
           if git diff --cached --quiet; then
             echo 'No changes to commit.'
             exit 0
