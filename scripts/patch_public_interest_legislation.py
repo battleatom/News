@@ -30,7 +30,6 @@ if '    "legislation": [' not in s:
         raise SystemExit('Could not locate QUERIES insertion point')
     s = s.replace(anchor, block + anchor, 1)
 
-# Expand trusted public-interest / primary-government reporting sources.
 trusted_add = '''
 PUBLIC_INTEREST_SOURCE_TOKENS = (
     "propublica", "the marshall project", "kff health news", "kaiser health news",
@@ -98,7 +97,6 @@ elif 'LEGISLATION_JOURNALISM_QUERIES' not in s:
 '''
     s = s[:pos] + extra + s[pos:]
 
-# Legislation matters strongly for public-interest ranking.
 s = s.replace(
     'CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22,',
     'CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24,',
@@ -137,7 +135,6 @@ def underreported_source_allowed(item):
     title = (item.get('title') or '').lower()
     if any(token.replace(' ','') in source or token in raw for token in UNDERREPORTED_PAYWALL_SOURCE_TOKENS):
         return False
-    # Ceremonial/promotional government pages are not underreported journalism.
     ceremonial = ('patriot day', 'proclamation', 'personal vision', 'historic results', 'promises made', 'remarks by', 'statement from the president')
     if any(term in title for term in ceremonial):
         return False
@@ -149,7 +146,6 @@ def underreported_source_allowed(item):
     ))
     if government_source and not accountability_or_action:
         return False
-    # Google can surface archival Congress.gov pages as if they were new; reject obviously old measures.
     if 'congress' in raw:
         years = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', title)]
         current_year = datetime.now(timezone.utc).year
@@ -166,7 +162,6 @@ def legislation_action_allowed(item):
         'personal vision', 'historic results', 'promises made, promises kept',
         'patriot day', 'proclamation', 'remarks by', 'representative ', 'senator '
     )):
-        # A representative/senator page can survive only when the headline is explicitly about a measure/action.
         if not any(term in title for term in (' bill ', ' h.r.', ' s.', ' act ', ' resolution ', 'passes', 'passed', 'signed', 'veto')):
             return False
     years = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', title)]
@@ -210,7 +205,7 @@ def select_legislation_stories(items, limit=30):
         return []
     newest_time = max(x['published'] for x in valid)
     ranked = sorted(valid, key=lambda x: (legislation_score(x, newest_time), x['published']), reverse=True)
-    selected=[]; seen=set(); source_counts={}; event_counts={}
+    selected=[]; seen=set(); source_counts={}
     for item in ranked:
         k=key(item); src=source_key(item.get('source') or 'Unknown')
         if not k or k in seen or source_counts.get(src,0) >= 5:
@@ -283,15 +278,15 @@ def select_underreported(unique):
     return selected
 '''
 pattern = re.compile(r'def underreported_topic\(item\):.*?\n\ndef select_category_stories', re.S)
+replacement_selector = selector + '\n\ndef select_category_stories'
 if pattern.search(s):
-    s = pattern.sub(selector + '\n\ndef select_category_stories', s, count=1)
+    s = pattern.sub(lambda m: replacement_selector, s, count=1)
 else:
     pattern = re.compile(r'def select_underreported\(unique\):.*?\n\ndef select_category_stories', re.S)
-    s, n = pattern.subn(selector + '\n\ndef select_category_stories', s, count=1)
+    s, n = pattern.subn(lambda m: replacement_selector, s, count=1)
     if n != 1:
         raise SystemExit('Could not replace Underreported/legislation selectors')
 
-# Route legislation through its strict action selector instead of generic news selection.
 needle = '''def select_category_stories(items, limit=30):
     """Select up to 30 distinct stories, with Local queries treated as the geographic scope."""
 '''
@@ -301,7 +296,6 @@ replacement = needle + '''    if items and items[0].get("category") == "legislat
 if needle in s and 'return select_legislation_stories(items, limit=limit)' not in s:
     s = s.replace(needle, replacement, 1)
 
-# Fetch public-interest journalism exclusively for Underreported discovery.
 if 'underreported_discovery_items = []' not in s:
     anchor = '    seen, unique = set(), []\n'
     discovery = '''    underreported_discovery_items = []
@@ -320,7 +314,6 @@ if 'underreported_discovery_items = []' not in s:
 
 s = s.replace('underreported = select_underreported(unique)', 'underreported = select_underreported(unique + underreported_discovery_items)', 1)
 
-# Fetch each legislation query separately, as with Federal, so one giant query cannot starve subtopics.
 s = s.replace(
     'if category == "federal" and isinstance(query, list):',
     'if category in ("federal", "legislation") and isinstance(query, list):',
@@ -329,8 +322,6 @@ s = s.replace(
 s = s.replace('print(f"federal/{federal_query}: {len(batch)} fresh stories")', 'print(f"{category}/{federal_query}: {len(batch)} fresh stories")', 1)
 s = s.replace('print(f"Federal feed failed for {federal_query}: {exc}")', 'print(f"{category.title()} feed failed for {federal_query}: {exc}")', 1)
 
-# Always supplement legislation with established NM/Four Corners journalism;
-# the official federal feeds are numerous enough that a threshold-based fallback would never run.
 marker = '            print(f"{category}: {len(items)} fresh stories before dedupe")'
 if 'legislation journalism/{fallback_source}' not in s and marker in s:
     add = '''            if category == "legislation":
