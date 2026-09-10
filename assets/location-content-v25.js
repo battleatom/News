@@ -3,6 +3,7 @@
   if(window.__locationContentV25)return;
   const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
   const FEDERAL_TERMS=['congress','senate','house of representatives','capitol hill','supreme court','scotus','department of justice','justice department',' doj ','fbi','homeland security',' dhs ','treasury department','u.s. treasury','state department','federal reserve','ftc','fcc','sec ','epa','irs','fema','cdc','hhs','federal judge','federal court','federal appeals','federal agency','federal government','pentagon'];
+  const FOUR_CORNERS_CITIES=['farmington','aztec','bloomfield','kirtland','shiprock'];
 
   function category(item){return (item.querySelector('category')?.textContent||'').trim()}
   function text(item){return `${item.querySelector('title')?.textContent||''} ${item.querySelector('description')?.textContent||''} ${item.querySelector('source')?.textContent||''}`.toLowerCase()}
@@ -38,7 +39,7 @@
   }
   function localPool(items){
     const loc=location(), city=loc.city.toLowerCase(), exact=[];
-    if(loc.code==='NM')exact.push(...items.filter(i=>category(i)==='local'&&(!city||text(i).includes(city))));
+    if(loc.code==='NM')exact.push(...items.filter(i=>category(i)==='local'&&(!city||text(i).includes(city)||FOUR_CORNERS_CITIES.includes(city))));
     const state=statePool(items);
     if(city)exact.push(...state.filter(i=>text(i).includes(city)));
     let pool=unique(exact);
@@ -54,8 +55,10 @@
     const loc=location();
     const stateDef=typeof CANONICAL_SECTIONS!=='undefined'?CANONICAL_SECTIONS.find(x=>x[0]==='nm'):null;
     const localDef=typeof CANONICAL_SECTIONS!=='undefined'?CANONICAL_SECTIONS.find(x=>x[0]==='local'):null;
+    const cityKey=loc.city.toLowerCase();
+    const localName=loc.code==='NM'&&FOUR_CORNERS_CITIES.includes(cityKey)?'Four Corners':(loc.city||loc.name);
     if(stateDef)stateDef[1]=`🗺️ ${loc.name}`;
-    if(localDef)localDef[1]=`📍 Local / ${loc.city||loc.name}`;
+    if(localDef)localDef[1]=`📍 Local / ${localName}`;
   }
 
   const basePaginated=typeof paginatedNewsItems==='function'?paginatedNewsItems:null;
@@ -71,6 +74,7 @@
 
   function refreshLocationView(){
     updateLabels();
+    if(typeof loadCounts!=='undefined'){loadCounts.nm=10;loadCounts.local=10;loadCounts.legislation=10;}
     if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();
     if(typeof active!=='undefined'&&['nm','local','legislation'].includes(active)&&typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems);
   }
