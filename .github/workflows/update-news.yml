@@ -71,6 +71,9 @@ jobs:
       - name: Tag regional stories by state
         run: python scripts/patch_region_state_tags.py
 
+      - name: Enforce US-only Presidential coverage
+        run: python scripts/patch_presidential_us_only.py
+
       - name: Update RSS feed
         run: |
           success=0
