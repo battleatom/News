@@ -214,7 +214,7 @@ TRUSTED_CATEGORY_FALLBACKS = {
     ],
 }
 
-CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "legislation": 24, "legislation": 24, "legislation": 24, "legislation": 24, "legislation": 24, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
+CATEGORY_WEIGHT = {"world": 18, "us": 22, "presidential": 24, "federal": 22, "legislation": 24, "military": 20, "nfl": 18, "technology": 12, "gaming": 16, "nm": 8, "local": 6}
 HIGH_IMPACT_TERMS = {
     "war": 18, "invasion": 18, "attack": 16, "airstrike": 16, "missile": 16, "ceasefire": 15,
     "conflict": 12, "crisis": 12, "emergency": 12, "sanctions": 10, "tariff": 10, "tariffs": 10,
@@ -261,8 +261,7 @@ PUBLIC_INTEREST_SOURCE_TOKENS = (
     "propublica", "the marshall project", "kff health news", "kaiser health news",
     "inside climate news", "insideclimate news", "grist", "reveal", "center for public integrity",
     "source new mexico", "searchlight new mexico", "stateline", "states newsroom",
-    "new mexico in depth", "capital and main", "the 19th", "route fifty", "route fifty",
-    "congress gov", "congress.gov", "federal register", "federalregister.gov",
+    "new mexico in depth", "capital and main", "the 19th", "route fifty", "congress gov", "congress.gov", "federal register", "federalregister.gov",
     "white house", "whitehouse.gov", "new mexico legislature", "nmlegis.gov",
     "governor of new mexico", "gao", "government accountability office",
 )
@@ -515,6 +514,8 @@ def attach_related(primary, related):
     if any(key(x)==key(related) for x in related_list): return
     related_list.append(related)
     primary['_relatedArticles']=related_list[:4]
+
+
 
 
 

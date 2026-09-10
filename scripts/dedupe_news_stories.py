@@ -239,14 +239,16 @@ def main():
             removed_language += 1
             continue
         link = clean(item.findtext("link")).strip()
-        if link and link in seen_links:
+        category = clean(item.findtext("category")).strip()
+        link_key = (category, link)
+        if link and link_key in seen_links:
             removed_exact += 1
             continue
         if any(same_story(item, prior) for prior in kept):
             removed_similar += 1
             continue
         if link:
-            seen_links.add(link)
+            seen_links.add(link_key)
         kept.append(item)
     for item in items:
         channel.remove(item)
