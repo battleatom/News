@@ -77,7 +77,7 @@ function topDisplayItems(items){
 }
 function markTopStoriesSeen(items){const seen=readTopSeen();items.forEach(item=>seen.add(topStoryKey(item)));writeTopSeen(seen)}
 function syncDiscoveryButton(){if(typeof window.syncTopDiscoveryButton==='function')window.syncTopDiscoveryButton()}
-function paginatedNewsItems(items){
+function categoryData(items){
   let available;
   if(active==='top')available=topDisplayItems(items);
   else{
@@ -85,26 +85,32 @@ function paginatedNewsItems(items){
     available=categoryItems;
     if(active==='region')available=categoryItems.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);
   }
-  const count=Math.min(loadCounts[active]||STORIES_PER_PAGE,available.length);
-  return {available,count};
+  return {available,count:Math.min(loadCounts[active]||STORIES_PER_PAGE,available.length)};
+}
+function renderedData(){
+  const root=document.getElementById('news-feed');
+  const cards=root?[...root.querySelectorAll('.section-body .news-item')]:[];
+  return {available:cards,count:Math.min(loadCounts[active]||STORIES_PER_PAGE,cards.length)};
 }
 function applyVisibleCount(data){
   const root=document.getElementById('news-feed');if(!root)return;
   const cards=[...root.querySelectorAll('.section-body .news-item')];
-  cards.forEach((card,i)=>{if(i<data.count)card.removeAttribute('data-page-hidden');else card.setAttribute('data-page-hidden','true')});
+  const total=cards.length;
+  const count=Math.min(data.count,total);
+  cards.forEach((card,i)=>{if(i<count)card.removeAttribute('data-page-hidden');else card.setAttribute('data-page-hidden','true')});
   const countEl=root.querySelector('.section .section-header .count');
-  if(countEl)countEl.textContent=`Showing ${Math.min(data.count,cards.length)} of ${data.available.length} stories`;
+  if(countEl)countEl.textContent=`Showing ${count} of ${total} stories`;
   root.querySelectorAll('.load-more-wrap').forEach(el=>el.remove());
-  if(data.available.length<=data.count)return;
+  if(total<=count)return;
   const wrap=document.createElement('div');wrap.className='load-more-wrap';
   const button=document.createElement('button');button.type='button';button.className='load-more';
-  const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
-  button.textContent=`Load 10 more (${next} of ${data.available.length})`;
+  const next=Math.min(count+STORIES_PER_PAGE,total);
+  button.textContent=`Load 10 more (${next} of ${total})`;
   button.addEventListener('click',e=>{
     e.preventDefault();e.stopPropagation();
-    const y=window.scrollY, key=active;
+    const y=window.scrollY,key=active;
     loadCounts[key]=next;
-    applyVisibleCount({available:data.available,count:next});
+    applyVisibleCount({count:next});
     if(active===key&&Math.abs(window.scrollY-y)>2)window.scrollTo({top:y,left:window.scrollX,behavior:'auto'});
   });
   wrap.appendChild(button);root.appendChild(wrap);
@@ -115,13 +121,19 @@ canonicalRender=function(items){
   if(active==='bookmarks'||active==='boxoffice'){
     const out=baseCanonicalRenderWithPagination(items);syncDiscoveryButton();return out;
   }
-  const data=paginatedNewsItems(items);
-  if(active==='nfl'){
-    loadCounts.nfl=data.count;baseCanonicalRenderWithPagination(items);applyVisibleCount(data);syncDiscoveryButton();return;
+  // These tabs have specialized renderers that derive/merge records from multiple
+  // categories. They must receive the complete feed, then pagination is applied to
+  // the cards they actually rendered.
+  if(active==='nfl'||active==='legislation'||active==='nm'){
+    baseCanonicalRenderWithPagination(items);
+    const data=renderedData();
+    applyVisibleCount(data);
+    syncDiscoveryButton();
+    return;
   }
-  // Render the entire selected category once. Load More only reveals already-rendered cards.
+  const data=categoryData(items);
   baseCanonicalRenderWithPagination(data.available);
-  applyVisibleCount(data);
+  applyVisibleCount(renderedData());
   if(active==='top')markTopStoriesSeen(data.available.slice(0,data.count));
   syncDiscoveryButton();
 };
@@ -145,4 +157,4 @@ window.__loadMoreRevealOnlyV282=true;
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied reveal-only Load More pagination: no feed rerender and no scroll reset.")
+print("Applied reveal-only Load More pagination with specialized renderer preservation.")
