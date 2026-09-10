@@ -109,7 +109,7 @@ jobs:
           sleep 2
 
       - name: Full feature regression suite
-        run: python tests/site_smoke.py
+        run: python tests/site_smoke_v28.py
 
       - name: V2.7 ranking location and tag regression suite
         run: python tests/site_smoke_v26.py
