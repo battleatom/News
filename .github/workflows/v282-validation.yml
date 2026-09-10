@@ -1,0 +1,125 @@
+name: Underreported V2.8.2 Runtime Validation
+
+on:
+  push:
+    branches: [stabilize-v2.8.2-runtime]
+    paths-ignore:
+      - 'News'
+      - 'index.html'
+      - 'update-stats.json'
+      - 'boxoffice.json'
+      - 'state-legislation.json'
+      - 'markets.json'
+      - 'refresh-health.json'
+      - 'scripts/update_news.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: underreported-v282-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate-v282:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V2.8.2 branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+
+      - name: Apply production collector chain
+        run: |
+          python scripts/preflight_feed.py
+          python scripts/patch_news_selector.py
+          python scripts/patch_top_diversity.py
+          python scripts/patch_event_dedupe.py
+          python scripts/patch_dedupe_scope.py
+          python scripts/patch_site_cache.py
+          python scripts/patch_public_interest_legislation.py
+          python scripts/patch_public_interest_quality.py
+          python scripts/patch_category_quality.py
+          python scripts/patch_collector_hygiene.py
+          python scripts/patch_region_state_tags.py
+          python scripts/patch_presidential_us_only.py
+
+      - name: Generate fresh branch feed
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            echo "RSS update attempt ${attempt}/3"
+            if python scripts/update_news.py; then success=1; break; fi
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 15)); fi
+          done
+          test "$success" -eq 1
+
+      - name: Run production enrichment pipeline
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_v2.py
+          python scripts/enrich_world_content.py
+          python scripts/enrich_underreported.py
+          python scripts/enrich_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/record_pull_stats.py
+          python scripts/dedupe_news_stories.py
+          python scripts/record_pull_stats.py --finalize
+
+      - name: Build site
+        run: python scripts/build_site.py
+
+      - name: Audit generated site
+        run: python scripts/site_audit.py
+
+      - name: Validate V2.8.2 runtime ownership
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('index.html').read_text(encoding='utf-8')
+          required=('__loadMoreRevealOnlyV282','__alertsStatusV282','__alertsNewV282','sound-alerts-toggle','bookmarks-v1','related-coverage-v1','auto-refresh-timer-v1')
+          missing=[x for x in required if x not in html]
+          if missing: raise SystemExit('Missing V2.8.2 markers: '+', '.join(missing))
+          if html.count('window.playNewArticlePop=function') != 1: raise SystemExit('Audio player is not single-owner')
+          if 'let audioContext=null,audioUnlocked=false;' in html: raise SystemExit('Legacy audio engine remains')
+          if 'data-page-hidden' not in html: raise SystemExit('Reveal-only pagination missing')
+          print('V2.8.2 runtime ownership invariants pass.')
+          PY
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Start local preview
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v282-http.log 2>&1 &
+          sleep 2
+
+      - name: Full feature regression suite
+        run: python tests/site_smoke.py
+
+      - name: V2.8.2 targeted runtime suite
+        run: python tests/site_smoke_v281.py
+
+      - name: V2.8.2 sound timing suite
+        run: python tests/audio_v281.py
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/news-v282-http.log || true
+
+      - name: Commit validated generated preview
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json state-legislation.json scripts/update_news.py
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build validated V2.8.2 preview [skip ci]'
+          git push origin HEAD:${{ github.ref_name }}
