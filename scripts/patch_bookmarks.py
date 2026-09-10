@@ -92,7 +92,8 @@ SCRIPT = r'''<script id="bookmarks-v1">
     const root=document.getElementById('news-feed');if(root)new MutationObserver(queueDecorate).observe(root,{childList:true,subtree:true});
     const tabs=document.getElementById('tabs');
     if(tabs){
-      tabs.addEventListener('click',e=>{const tab=e.target.closest('.tab');if(tab&&tab.id!=='bookmarks-tab'){bookmarkMode=false;updateBookmarkTab();}});
+      /* Capture phase clears bookmark mode before a destination tab's onclick renders. */
+      tabs.addEventListener('click',e=>{const tab=e.target.closest('.tab');if(tab&&tab.id!=='bookmarks-tab'){bookmarkMode=false;updateBookmarkTab();}},true);
       new MutationObserver(()=>ensureBookmarkTab()).observe(tabs,{childList:true});
     }
     ensureBookmarkTab();keepBookmarkView();
@@ -119,4 +120,4 @@ s=s.replace('</head>',STYLE+'\n</head>',1)
 if '</body>' not in s:raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Installed event-driven persistent article bookmarks without polling.')
+print('Installed event-driven persistent article bookmarks with pre-render tab state cleanup.')

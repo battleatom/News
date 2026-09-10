@@ -1,68 +1,35 @@
 (function(){
   'use strict';
-  const PRIMARY=new Set(['top','underreported','world','us','region','x']);
   let navQueued=false,feedQueued=false;
 
   function sectionDefs(){return typeof sections!=='undefined'&&Array.isArray(sections)?sections:[];}
   function currentActive(){return typeof active!=='undefined'?active:'top';}
-  function cleanLabel(label){return String(label||'').replace(/^\S+\s+/,'').trim();}
-
-  function closeMore(){
-    const menu=document.getElementById('more-menu-v2'),btn=document.getElementById('more-tab-v2');
-    if(menu)menu.classList.remove('open');
-    if(btn)btn.setAttribute('aria-expanded','false');
-  }
-
-  function activateKey(key){
-    closeMore();
-    if(key==='bookmarks'){
-      const b=document.getElementById('bookmarks-tab');if(b)b.click();
-      return;
-    }
-    if(typeof active==='undefined')return;
-    active=key;
-    try{localStorage.setItem('underreported-active-tab',active);}catch(e){}
-    if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();
-    else if(typeof buildTabs==='function')buildTabs();
-    if(typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems);
-    else if(typeof render==='function'&&typeof allItems!=='undefined')render(allItems);
-  }
 
   function enhanceTabs(){
     navQueued=false;
     const tabs=document.getElementById('tabs');if(!tabs)return;
+    document.getElementById('more-tab-v2')?.remove();
+    document.getElementById('more-menu-v2')?.remove();
     const defs=sectionDefs();
-    const regular=[...tabs.querySelectorAll(':scope > .tab')].filter(b=>b.id!=='more-tab-v2'&&b.id!=='bookmarks-tab');
+    const regular=[...tabs.querySelectorAll(':scope > .tab')].filter(b=>b.id!=='bookmarks-tab');
     regular.forEach((b,i)=>{
       const key=defs[i]?.[0]||'';
       if(!key)return;
       b.dataset.navKey=key;
-      b.dataset.navSecondary=PRIMARY.has(key)?'false':'true';
+      b.removeAttribute('data-nav-secondary');
       b.setAttribute('aria-current',key===currentActive()?'page':'false');
+      b.style.removeProperty('order');
     });
     const bookmark=document.getElementById('bookmarks-tab');
-    if(bookmark){bookmark.dataset.navKey='bookmarks';bookmark.dataset.navSecondary='true';}
-
-    let more=document.getElementById('more-tab-v2');
-    if(!more){
-      more=document.createElement('button');more.id='more-tab-v2';more.type='button';more.className='tab';more.setAttribute('aria-haspopup','menu');more.setAttribute('aria-expanded','false');
-      more.addEventListener('click',e=>{e.stopPropagation();const menu=document.getElementById('more-menu-v2');if(!menu)return;const open=!menu.classList.contains('open');menu.classList.toggle('open',open);more.setAttribute('aria-expanded',String(open));});
-      tabs.appendChild(more);
-    }
-    let menu=document.getElementById('more-menu-v2');
-    if(!menu){menu=document.createElement('div');menu.id='more-menu-v2';menu.className='more-menu-v2';menu.setAttribute('role','menu');tabs.appendChild(menu);}
-
-    const secondary=defs.filter(d=>!PRIMARY.has(d[0]));
-    const activeKey=currentActive();
-    const activeDef=defs.find(d=>d[0]===activeKey);
-    more.textContent=!PRIMARY.has(activeKey)&&activeKey!=='bookmarks'&&activeDef?`More · ${cleanLabel(activeDef[1])}`:'More';
-    more.classList.toggle('active',!PRIMARY.has(activeKey)||activeKey==='bookmarks');
-    menu.innerHTML='';
-    secondary.forEach(([key,label])=>{
-      const b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');b.dataset.navKey=key;b.textContent=label;b.classList.toggle('active',key===activeKey);b.addEventListener('click',()=>activateKey(key));menu.appendChild(b);
-    });
     if(bookmark){
-      const b=document.createElement('button');b.type='button';b.setAttribute('role','menuitem');b.dataset.navKey='bookmarks';b.textContent=bookmark.textContent||'🔖 Bookmarks';b.classList.toggle('active',activeKey==='bookmarks');b.addEventListener('click',()=>activateKey('bookmarks'));menu.appendChild(b);
+      bookmark.dataset.navKey='bookmarks';
+      bookmark.removeAttribute('data-nav-secondary');
+      bookmark.style.removeProperty('order');
+      bookmark.setAttribute('aria-current',currentActive()==='bookmarks'?'page':'false');
+    }
+    const activeTab=tabs.querySelector('.tab.active');
+    if(activeTab&&window.innerWidth<=760){
+      requestAnimationFrame(()=>activeTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}));
     }
   }
 
@@ -97,21 +64,9 @@
     const key=currentActive();
     document.body.dataset.activeTab=key;
     const root=document.getElementById('news-feed');if(!root)return;
-    const first=root.querySelector('.news-item');
-
-    if(key==='top'&&first){
-      root.querySelectorAll('.lead-story-v2').forEach(card=>{if(card!==first)card.classList.remove('lead-story-v2');});
-      first.classList.add('lead-story-v2');
-      if(!first.querySelector('.news-item-v2-kicker')){
-        const kicker=document.createElement('div');kicker.className='news-item-v2-kicker';kicker.textContent='Lead story';
-        const target=first.querySelector('.bookmark-btn')||first.querySelector('h3');
-        if(target)target.insertAdjacentElement('beforebegin',kicker);
-      }
-    }else{
-      root.querySelectorAll('.lead-story-v2').forEach(card=>card.classList.remove('lead-story-v2'));
-      root.querySelectorAll('.news-item-v2-kicker').forEach(kicker=>kicker.remove());
-    }
-
+    /* V2.1 intentionally keeps Top Stories compact. Ranking provides hierarchy without an oversized feature card. */
+    root.querySelectorAll('.lead-story-v2').forEach(card=>card.classList.remove('lead-story-v2'));
+    root.querySelectorAll('.news-item-v2-kicker').forEach(kicker=>kicker.remove());
     addUnderreportedSignal(root);
     root.querySelectorAll('.related-coverage[data-source-count]').forEach(box=>{
       const strong=box.querySelector('strong');
@@ -127,7 +82,7 @@
       const r=await fetch('refresh-health.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)return;
       const d=await r.json();panel.dataset.health=d.status||'unknown';
       if(d.status==='degraded'){
-        const strong=panel.querySelector('strong');if(strong)strong.textContent='⚠ Feed refresh degraded';
+        const strong=panel.querySelector('strong');if(strong)strong.textContent='⚠ Feed refresh delayed';
         panel.title=d.message||'The last automated collection did not complete successfully; the previous feed is being served.';
       }
     }catch(e){}
@@ -155,8 +110,6 @@
     installHooks();
     const tabs=document.getElementById('tabs');if(tabs)new MutationObserver(queueNav).observe(tabs,{childList:true});
     const root=document.getElementById('news-feed');if(root)new MutationObserver(queueFeed).observe(root,{childList:true,subtree:true});
-    document.addEventListener('click',e=>{if(!e.target.closest('#more-tab-v2')&&!e.target.closest('#more-menu-v2'))closeMore();});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMore();});
     queueNav();queueFeed();loadHealth();
     window.__underreportedV2=true;
   }

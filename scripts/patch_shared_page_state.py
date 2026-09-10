@@ -23,6 +23,16 @@ s = P.read_text(encoding='utf-8')
 if 'refresh-success-handling-v1' not in s:
     raise SystemExit('Integrated refresh success handling marker is missing')
 
+# patch_site_features owns the canonical category list and intentionally assigns
+# sections=CANONICAL_SECTIONS at runtime. The generated base page historically
+# declared sections with const, which makes that legitimate assignment throw
+# "Assignment to constant variable" and abort the rest of site-features setup.
+# Make this one shared, intentionally mutable binding a true window global.
+if 'const sections=[' in s:
+    s = s.replace('const sections=[', 'var sections=[', 1)
+elif 'var sections=[' not in s:
+    raise SystemExit('Could not locate canonical sections declaration')
+
 # patch_site_features historically starts an eager loadNews(false) while the
 # document is still being parsed. The canonical DOMContentLoaded loader added by
 # patch_refresh_success.py starts a second fetch later. On mobile those two
@@ -70,4 +80,4 @@ if '</body>' not in s:
     raise SystemExit('Missing </body> in index.html')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Integrated resilient refresh handling, removed the duplicate startup fetch, exposed shared page state as real window globals, and installed the validation bridge.')
+print('Integrated resilient refresh handling, removed the duplicate startup fetch, exposed mutable shared page state as real window globals, and installed the validation bridge.')

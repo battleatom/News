@@ -20,22 +20,16 @@ def click_tab(page, needle):
         if needle_l in text.lower() and tab.is_visible():
             tab.click()
             return text
+    raise AssertionError(f'Tab not found: {needle}; available={direct.all_text_contents()}')
 
-    more=page.locator('#more-tab-v2')
-    if more.count() and more.is_visible():
-        more.click()
-        menu=page.locator('#more-menu-v2 button')
-        for i in range(menu.count()):
-            item=menu.nth(i)
-            text=(item.inner_text() or '').strip()
-            if needle_l in text.lower():
-                item.click()
-                return text
 
-    available=direct.all_text_contents()
-    if page.locator('#more-menu-v2 button').count():
-        available += page.locator('#more-menu-v2 button').all_text_contents()
-    raise AssertionError(f'Tab not found: {needle}; available={available}')
+def click_key(page, key):
+    tab=page.locator(f'#tabs > .tab[data-nav-key="{key}"]')
+    if not tab.count() or not tab.first.is_visible():
+        raise AssertionError(f'Tab key not found: {key}; available={page.locator("#tabs > .tab").all_text_contents()}')
+    text=(tab.first.inner_text() or '').strip()
+    tab.first.click()
+    return text
 
 
 def wait_feed(page, allow_loading=False):
@@ -67,25 +61,28 @@ def desktop_suite(browser):
     page.on('pageerror', lambda exc: page_errors.append(str(exc)))
     page.goto(BASE, wait_until='domcontentloaded', timeout=30000)
     wait_feed(page)
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(1200)
 
     assert page.evaluate("window.__underreportedV2===true"), 'Underreported 2.0 controller did not start'
     assert page.locator('body[data-underreported-version="2"]').count()==1, 'V2 page marker missing'
     assert page.locator('.skip-link-v2').count()==1, 'Accessible skip link missing'
     assert page.locator('#tabs').count()==1, 'Tab bar missing'
-    assert page.locator('#more-tab-v2').is_visible(), 'More navigation is missing'
+    assert page.locator('#more-tab-v2').count()==0, 'Retired More navigation is still present'
+    assert page.locator('#more-menu-v2').count()==0, 'Retired More menu is still present'
     assert page.locator('#markets').count()==1 or page.locator('.markets').count()>=1, 'Markets strip missing'
 
-    tab_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", page.locator('#tabs').element_handle())
-    assert tab_overflow <= 4, f'Desktop tabs overflow horizontally by {tab_overflow}px'
+    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Federal + New Mexico','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
+    direct_labels=[(t or '').strip() for t in page.locator('#tabs > .tab').all_text_contents()]
+    for name in expected:
+        assert any(name.lower() in label.lower() for label in direct_labels), f'{name} missing from visible tab strip'
+
     market=page.locator('#markets') if page.locator('#markets').count() else page.locator('.markets').first
     market_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", market.element_handle())
     assert market_overflow <= 4, f'Desktop markets overflow horizontally by {market_overflow}px'
 
-    expected=['Top','NFL','Top Issues','Underreported','World','United States','Presidential','Federal Government','Laws & Legislation','New Mexico','Local / Four Corners','Southwest','Technology','Gaming','Military','Box Office','Bookmarks']
     results={}
     for name in expected:
-        label=click_tab(page,name)
+        click_tab(page,name)
         page.wait_for_timeout(350)
         wait_feed(page, allow_loading=name in ('NFL','Box Office'))
         if name in ('NFL','Box Office'):
@@ -98,9 +95,10 @@ def desktop_suite(browser):
         results[name]=len(card_titles(page))
 
     click_tab(page,'Top')
-    page.wait_for_timeout(450)
-    assert page.locator('#news-feed .lead-story-v2').count()==1, 'Top page does not expose one lead story'
-    assert 'Lead story' in page.locator('#news-feed .lead-story-v2').first.inner_text(), 'Lead story kicker missing'
+    page.wait_for_timeout(350)
+    assert page.locator('#news-feed .news-item').count()>=1, 'Top Stories rendered no cards'
+    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Oversized lead-card treatment is still present'
+    assert page.locator('#news-feed .news-item-v2-kicker').count()==0, 'Lead-story kicker is still present'
     before=card_titles(page)
     btn=page.locator('#refresh')
     assert btn.is_visible(), 'Next Top Stories button is not visible on Top'
@@ -135,7 +133,10 @@ def desktop_suite(browser):
     assert page.evaluate("window.__autoRefreshTimerV1===true"), 'Automatic refresh scheduler did not start'
     assert page.evaluate("Number(window.nextScheduledPull)>Date.now()"), 'Next automatic refresh time is not scheduled'
     assert page.evaluate("Boolean(window.__autoRefreshTimeout)"), 'Timeout-based automatic refresh was not scheduled'
-    assert page.locator('#pull-stats-ui').count()==1, 'Pull statistics/status panel missing'
+    assert page.locator('#pull-stats-ui').count()==1 and page.locator('#pull-stats-ui').is_visible(), 'Compact update status panel missing'
+    assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Duplicate legacy update row is visible'
+    status_text=page.locator('#pull-stats-ui').inner_text()
+    assert 'duplicates removed' not in status_text.lower(), 'Developer duplicate counter leaked into compact user status'
 
     page.locator('body').click(position={'x':20,'y':20})
     page.wait_for_timeout(150)
@@ -144,7 +145,7 @@ def desktop_suite(browser):
     assert 'assets/new-article-pop.mp3' in audio.get('src',''), f'Wrong notification audio source: {audio}'
 
     page.evaluate("localStorage.setItem('underreported-state','TX'); localStorage.setItem('underreported-location','Austin, TX');")
-    click_tab(page,'Laws & Legislation')
+    click_key(page,'legislation')
     page.wait_for_timeout(700)
     leg_text=page.locator('#news-feed').inner_text()
     assert 'Congress.gov' in leg_text or 'Federal' in leg_text, 'Federal legislation records missing'
@@ -152,7 +153,7 @@ def desktop_suite(browser):
 
     page.evaluate("localStorage.setItem('underreported-state','NM'); localStorage.setItem('underreported-location','Farmington, NM');")
     page.wait_for_timeout(2100)
-    click_tab(page,'Laws & Legislation')
+    click_key(page,'legislation')
     page.wait_for_timeout(500)
     nm_leg=page.locator('#news-feed').inner_text()
     assert 'New Mexico' in nm_leg, 'NM location did not select New Mexico legislation view'
@@ -167,18 +168,23 @@ def mobile_suite(browser):
     page=context.new_page()
     page.goto(BASE, wait_until='domcontentloaded', timeout=30000)
     wait_feed(page)
-    page.wait_for_timeout(700)
+    page.wait_for_timeout(800)
     body_overflow=page.evaluate("document.documentElement.scrollWidth-document.documentElement.clientWidth")
     assert body_overflow <= 4, f'Mobile page body overflows horizontally by {body_overflow}px'
-    assert page.locator('#more-tab-v2').is_visible(), 'Mobile More navigation is missing'
-    page.locator('#more-tab-v2').click()
-    assert page.locator('#more-menu-v2.open').count()==1, 'Mobile More menu did not open'
-    assert page.locator('#more-menu-v2 button').count()>=6, 'Mobile More menu is incomplete'
-    page.keyboard.press('Escape')
-    assert page.locator('#more-menu-v2.open').count()==0, 'Escape did not close More menu'
+    assert page.locator('#more-tab-v2').count()==0, 'Mobile More navigation still exists'
+    assert page.locator('#tabs > .tab').count()>=17, 'Mobile tab strip is missing categories'
+    tab_overflow=page.evaluate("el=>el.scrollWidth-el.clientWidth", page.locator('#tabs').element_handle())
+    assert tab_overflow>20, 'Mobile category strip should scroll horizontally instead of hiding tabs'
     click_tab(page,'Top')
-    page.wait_for_timeout(300)
-    assert page.locator('#news-feed .lead-story-v2').count()==1, 'Mobile Top page lead story missing'
+    page.wait_for_timeout(250)
+    assert page.locator('#news-feed .lead-story-v2').count()==0, 'Mobile oversized lead card still exists'
+    first=page.locator('#news-feed .news-item').first
+    assert first.count()==1, 'Mobile Top Stories rendered no first card'
+    pad_top=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingTop)", first.element_handle()))
+    pad_left=float(page.evaluate("el=>parseFloat(getComputedStyle(el).paddingLeft)", first.element_handle()))
+    assert pad_top<=12 and pad_left<=11, f'Mobile card padding is too large: top={pad_top}, left={pad_left}'
+    assert page.locator('#pull-stats-ui').is_visible(), 'Mobile compact update row missing'
+    assert page.locator('#pull-status').count()==0 or not page.locator('#pull-status').is_visible(), 'Mobile duplicate update row is visible'
     context.close()
 
 
