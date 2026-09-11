@@ -1,12 +1,12 @@
 {
   "mode": "apply",
-  "generatedAt": "2026-09-11T15:31:35.142137+00:00",
-  "inputArticles": 400,
-  "outputArticles": 382,
+  "generatedAt": "2026-09-11T15:39:04.231043+00:00",
+  "inputArticles": 411,
+  "outputArticles": 391,
   "classifierActions": {
-    "keep": 196,
-    "review": 192,
-    "reroute": 12
+    "keep": 198,
+    "review": 200,
+    "reroute": 13
   },
   "rejectedSources": 0,
   "removedEventDuplicates": 4,
@@ -147,8 +147,8 @@
       "applied": false
     },
     {
-      "title": "Why Israel Reacted With Fury to U.K. Sanctions on West Bank Settlements - The New York Times",
-      "source": "The New York Times",
+      "title": "US to ban Canadian motorcycle, dairy, alcohol imports as trade war sizzles - Reuters",
+      "source": "Reuters",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -173,8 +173,8 @@
       "applied": false
     },
     {
-      "title": "Why Yemen Is Back on the Brink of War - The New York Times",
-      "source": "The New York Times",
+      "title": "Pilot warned Amazon cargo plane going too fast before deadly crash, data shows - BBC",
+      "source": "BBC",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -186,8 +186,8 @@
       "applied": false
     },
     {
-      "title": "Pilot warned Amazon cargo plane going too fast before deadly crash, data shows - BBC",
-      "source": "BBC",
+      "title": "Sweden's election could bring far right a place at the heart of government - Reuters",
+      "source": "Reuters",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -199,8 +199,8 @@
       "applied": false
     },
     {
-      "title": "Sweden's election could bring far right a place at the heart of government - Reuters",
-      "source": "Reuters",
+      "title": "No relief from inflation as Middle East clash lifts fuel prices to painful levels - AP News",
+      "source": "Associated Press",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -238,8 +238,8 @@
       "applied": false
     },
     {
-      "title": "Elena Rybakina becomes world No. 1 for first time after U.S. Open win over Zheng Qinwen - The New York Times",
-      "source": "The New York Times",
+      "title": "Oil surges past $101 to highest closing level since May as Middle East conflict intensifies - NBC News",
+      "source": "NBC News",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -248,6 +248,19 @@
       "scores": {},
       "evidence": [],
       "index": 14,
+      "applied": false
+    },
+    {
+      "title": "Elena Rybakina becomes world No. 1 for first time after U.S. Open win over Zheng Qinwen - nytimes.com",
+      "source": "The New York Times",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 15,
       "applied": false
     },
     {
@@ -260,72 +273,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 15,
-      "applied": false
-    },
-    {
-      "title": "Jimmy Kimmel releases James Talarico interview online amid FCC dispute - USA Today",
-      "source": "USA Today",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
       "index": 16,
-      "applied": false
-    },
-    {
-      "title": "A potential 2028 presidential contender plans $20 million to help Democrats - The Washington Post",
-      "source": "The Washington Post",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 17,
-      "applied": false
-    },
-    {
-      "title": "Inflation stayed hot in August with annual pace of 3.4%, raising the odds of a Fed hike - CBS News",
-      "source": "CBS News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 18,
-      "applied": false
-    },
-    {
-      "title": "Americans mark 25 years since September 11 attacks amid enduring grief, reflection - Reuters",
-      "source": "Reuters",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 19,
-      "applied": false
-    },
-    {
-      "title": "SEAL who killed bin Laden recalls 9/11 moment that changed his life: ‘Welcome to my world’ - Fox News",
-      "source": "Fox News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 20,
       "applied": false
     },
     {
@@ -338,7 +286,72 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
+      "index": 17,
+      "applied": false
+    },
+    {
+      "title": "Jimmy Kimmel releases James Talarico interview online amid FCC dispute - USA Today",
+      "source": "USA Today",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 18,
+      "applied": false
+    },
+    {
+      "title": "A potential 2028 presidential contender plans $20 million to help Democrats - The Washington Post",
+      "source": "The Washington Post",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 19,
+      "applied": false
+    },
+    {
+      "title": "Inflation stayed hot in August with annual pace of 3.4%, raising the odds of a Fed hike - CBS News",
+      "source": "CBS News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 20,
+      "applied": false
+    },
+    {
+      "title": "Americans mark 25 years since September 11 attacks amid enduring grief, reflection - Reuters",
+      "source": "Reuters",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
       "index": 21,
+      "applied": false
+    },
+    {
+      "title": "SEAL who killed bin Laden recalls 9/11 moment that changed his life: ‘Welcome to my world’ - Fox News",
+      "source": "Fox News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 22,
       "applied": false
     },
     {
@@ -351,7 +364,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 22,
+      "index": 23,
       "applied": false
     },
     {
@@ -364,24 +377,11 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 23,
-      "applied": false
-    },
-    {
-      "title": "1 dead, 2 injured after pedestrians hit in Chinatown in NYC, police say - CBS News",
-      "source": "CBS News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
       "index": 24,
       "applied": false
     },
     {
-      "title": "U.S. places sanctions on dozens of Iranian airlines as conflict escalates - The Washington Post",
+      "title": "The Washington Post - Breaking news and latest headlines, U.S. news, world news, and video - The Washington Post",
       "source": "The Washington Post",
       "current": "top",
       "action": "keep",
@@ -394,6 +394,32 @@
       "applied": false
     },
     {
+      "title": "1 dead, 2 injured after pedestrians hit in Chinatown in NYC, police say - CBS News",
+      "source": "CBS News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 26,
+      "applied": false
+    },
+    {
+      "title": "U.S. places sanctions on dozens of Iranian airlines as conflict escalates - The Washington Post",
+      "source": "The Washington Post",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 27,
+      "applied": false
+    },
+    {
       "title": "Brazil’s Supreme Court cancels session as political crisis deepens - AP News",
       "source": "Associated Press",
       "current": "top",
@@ -403,7 +429,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 26,
+      "index": 28,
       "applied": false
     },
     {
@@ -416,20 +442,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 27,
-      "applied": false
-    },
-    {
-      "title": "Oil surges past $101 to highest closing level since May as Middle East conflict intensifies - NBC News",
-      "source": "NBC News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 28,
+      "index": 29,
       "applied": false
     },
     {
@@ -442,111 +455,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 29,
-      "applied": false
-    },
-    {
-      "title": "Bernie Sanders speaks to the BBC about proposal to ban AI superintelligence - BBC",
-      "source": "BBC",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
       "index": 30,
-      "applied": false
-    },
-    {
-      "title": "China says it hopes to agree with the US on tariff reductions at ‘an early date’ - AP News",
-      "source": "Associated Press",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 31,
-      "applied": false
-    },
-    {
-      "title": "As immigration status for Salvadorans remains in limbo, businesses begin layoffs - The Washington Post",
-      "source": "The Washington Post",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 32,
-      "applied": false
-    },
-    {
-      "title": "Sapporo to move some beer production from Canada to US after tariffs - BBC",
-      "source": "BBC",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 33,
-      "applied": false
-    },
-    {
-      "title": "Emergency crew rescues worker injured during White House construction - The Washington Post",
-      "source": "The Washington Post",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 34,
-      "applied": false
-    },
-    {
-      "title": "Barbara Keating died in the 9/11 attack. She's finally being laid to rest - NPR",
-      "source": "NPR",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 35,
-      "applied": false
-    },
-    {
-      "title": "US consumer inflation picks up in August - Reuters",
-      "source": "Reuters",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 36,
-      "applied": false
-    },
-    {
-      "title": "US inflation accelerated last month as gas prices spiked, squeezing Americans’ finances - AP News",
-      "source": "Associated Press",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 37,
       "applied": false
     },
     {
@@ -559,7 +468,72 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 38,
+      "index": 31,
+      "applied": false
+    },
+    {
+      "title": "Bernie Sanders speaks to the BBC about proposal to ban AI superintelligence - BBC",
+      "source": "BBC",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 32,
+      "applied": false
+    },
+    {
+      "title": "China says it hopes to agree with the US on tariff reductions at ‘an early date’ - AP News",
+      "source": "Associated Press",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 33,
+      "applied": false
+    },
+    {
+      "title": "Sapporo to move some beer production from Canada to US after tariffs - BBC",
+      "source": "BBC",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 34,
+      "applied": false
+    },
+    {
+      "title": "Emergency crew rescues worker injured during White House construction - The Washington Post",
+      "source": "The Washington Post",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 35,
+      "applied": false
+    },
+    {
+      "title": "Barbara Keating died in the 9/11 attack. She's finally being laid to rest - NPR",
+      "source": "NPR",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 36,
       "applied": false
     },
     {
@@ -572,7 +546,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 39,
+      "index": 37,
       "applied": false
     },
     {
@@ -585,7 +559,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 40,
+      "index": 38,
       "applied": false
     },
     {
@@ -598,7 +572,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 41,
+      "index": 39,
       "applied": false
     },
     {
@@ -611,20 +585,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 42,
-      "applied": false
-    },
-    {
-      "title": "In a Club of Emerging Powers, China and India Vie for Influence - The New York Times",
-      "source": "The New York Times",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 43,
+      "index": 40,
       "applied": false
     },
     {
@@ -637,7 +598,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 44,
+      "index": 41,
       "applied": false
     },
     {
@@ -650,7 +611,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 45,
+      "index": 42,
       "applied": false
     },
     {
@@ -663,7 +624,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 46,
+      "index": 43,
       "applied": false
     },
     {
@@ -676,7 +637,20 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 47,
+      "index": 44,
+      "applied": false
+    },
+    {
+      "title": "‘It struck me as accurate’: Former chief of staff on recent claims about Senator Fetterman - CNN",
+      "source": "CNN",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 45,
       "applied": false
     },
     {
@@ -689,7 +663,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 48,
+      "index": 46,
       "applied": false
     },
     {
@@ -702,7 +676,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 49,
+      "index": 47,
       "applied": false
     },
     {
@@ -715,7 +689,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 50,
+      "index": 48,
       "applied": false
     },
     {
@@ -728,7 +702,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 51,
+      "index": 49,
       "applied": false
     },
     {
@@ -741,12 +715,38 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
+      "index": 50,
+      "applied": false
+    },
+    {
+      "title": "Pochettino warns against ‘arrogance’ for young USMNT prospects breaking through - The Athletic - nytimes.com",
+      "source": "The New York Times",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 51,
+      "applied": false
+    },
+    {
+      "title": "Trump Honors 9/11 Emergency Personnel in Washington - nytimes.com",
+      "source": "The New York Times",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
       "index": 52,
       "applied": false
     },
     {
-      "title": "Trump administration offers rare muted response on new sanctions against Israel - CNN",
-      "source": "CNN",
+      "title": "Dembele, Kvaratskhelia and Ruiz on beating Arsenal, the Ballon d’Or and chasing a third Champions League - nytimes.com",
+      "source": "The New York Times",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -758,7 +758,7 @@
       "applied": false
     },
     {
-      "title": "Pochettino warns against ‘arrogance’ for young USMNT prospects breaking through - The Athletic - The New York Times",
+      "title": "Why Israel Reacted With Fury to U.K. Sanctions on West Bank Settlements - nytimes.com",
       "source": "The New York Times",
       "current": "top",
       "action": "keep",
@@ -789,7 +789,7 @@
       "applied": false
     },
     {
-      "title": "Hurricane Helene Killed His Wife and Destroyed His Mobile Home. New Tenants Are Now Renting the Same Flood-Prone Land. - ProPublica",
+      "title": "Hurricane Helene Killed His Wife and Destroyed His Mobile Home. New Tenants Are Now Renting the Same Flood-Prone Land. - propublica.org",
       "source": "ProPublica",
       "current": "underreported",
       "action": "review",
@@ -864,7 +864,7 @@
       "applied": false
     },
     {
-      "title": "U.S. Postal Service Failed to Properly Handle Some Ballots During This Year’s Primary Elections, Audit Finds - ProPublica",
+      "title": "U.S. Postal Service Failed to Properly Handle Some Ballots During This Year’s Primary Elections, Audit Finds - propublica.org",
       "source": "ProPublica",
       "current": "underreported",
       "action": "review",
@@ -974,7 +974,7 @@
       "applied": false
     },
     {
-      "title": "EPA to Loosen Methane Rules, Boosting Pollution From Oil and Gas Wells - ProPublica",
+      "title": "EPA to Loosen Methane Rules, Boosting Pollution From Oil and Gas Wells - propublica.org",
       "source": "ProPublica",
       "current": "underreported",
       "action": "review",
@@ -1188,24 +1188,6 @@
       "applied": false
     },
     {
-      "title": "Trump Administration's No-Bond Detainment Policy For Immigrants Blocked A Ninth Time - KFF Health News",
-      "source": "KFF Health News",
-      "current": "underreported",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "underreported",
-      "confidence": 0.137,
-      "scores": {
-        "presidential": 2.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "administration"
-      ],
-      "index": 78,
-      "applied": false
-    },
-    {
       "title": "Friday, September 11, 2026 - KFF Health News",
       "source": "KFF Health News",
       "current": "underreported",
@@ -1219,7 +1201,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 79,
+      "index": 78,
       "applied": false
     },
     {
@@ -1236,7 +1218,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 80,
+      "index": 79,
       "applied": false
     },
     {
@@ -1253,11 +1235,28 @@
       "evidence": [
         "existing-category-prior"
       ],
+      "index": 80,
+      "applied": false
+    },
+    {
+      "title": "Ectopic Pregnancy Deaths Have Nearly Doubled. It’s Worse in States With Abortion Bans. - propublica.org",
+      "source": "ProPublica",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.327,
+      "scores": {
+        "underreported": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
       "index": 81,
       "applied": false
     },
     {
-      "title": "Ectopic Pregnancy Deaths Have Nearly Doubled. It’s Worse in States With Abortion Bans. - ProPublica",
+      "title": "New Mail Voting Rules Moved Forward Despite USPS Officials’ Concerns About Mass Disenfranchisement - propublica.org",
       "source": "ProPublica",
       "current": "underreported",
       "action": "review",
@@ -1274,8 +1273,8 @@
       "applied": false
     },
     {
-      "title": "New Mail Voting Rules Moved Forward Despite USPS Officials’ Concerns About Mass Disenfranchisement - ProPublica",
-      "source": "ProPublica",
+      "title": "Thursday, September 10, 2026 - KFF Health News",
+      "source": "KFF Health News",
       "current": "underreported",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1291,7 +1290,7 @@
       "applied": false
     },
     {
-      "title": "Thursday, September 10, 2026 - KFF Health News",
+      "title": "Wednesday, September 9, 2026 - KFF Health News",
       "source": "KFF Health News",
       "current": "underreported",
       "action": "review",
@@ -1342,6 +1341,25 @@
       "applied": false
     },
     {
+      "title": "US lawmakers urge secretive British court to open up about Apple case",
+      "source": "The Guardian",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.194,
+      "scores": {
+        "world": 2.0,
+        "legislation": 3.0,
+        "technology": 3.0
+      },
+      "evidence": [
+        "lawmakers"
+      ],
+      "index": 87,
+      "applied": false
+    },
+    {
       "title": "Iran-backed Houthis take full control of Red Sea coastline, tightening grip on crucial shipping lane",
       "source": "NBC News",
       "current": "world",
@@ -1356,7 +1374,7 @@
         "iran",
         "existing-category-prior"
       ],
-      "index": 87,
+      "index": 88,
       "applied": false
     },
     {
@@ -1373,7 +1391,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 88,
+      "index": 89,
       "applied": false
     },
     {
@@ -1391,7 +1409,7 @@
         "europe",
         "existing-category-prior"
       ],
-      "index": 89,
+      "index": 90,
       "applied": false
     },
     {
@@ -1408,28 +1426,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 90,
-      "applied": false
-    },
-    {
-      "title": "Nation pauses to remember September 11 on 25th anniversary | First Thing",
-      "source": "The Guardian",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
       "index": 91,
       "applied": false
     },
     {
-      "title": "Reshaping the Mossad: Inside Roman Gofman’s world of spies, Iran, and high-stakes strategy",
+      "title": "Inside Roman Gofman’s plan to reshape Mossad strategy, with Iran at the center",
       "source": "The Jerusalem Post",
       "current": "world",
       "action": "keep",
@@ -1500,23 +1501,6 @@
       "applied": false
     },
     {
-      "title": "Farmstay guest jailed for killing, burning owner who rejected his advances",
-      "source": "ABC News & Headlines – Australian Broadcasting Corporation",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 96,
-      "applied": false
-    },
-    {
       "title": "Current & Breaking News | National & World Updates",
       "source": "Time Magazine",
       "current": "world",
@@ -1530,7 +1514,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 97,
+      "index": 96,
       "applied": false
     },
     {
@@ -1547,7 +1531,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 98,
+      "index": 97,
       "applied": false
     },
     {
@@ -1565,7 +1549,7 @@
         "gaza",
         "existing-category-prior"
       ],
-      "index": 99,
+      "index": 98,
       "applied": false
     },
     {
@@ -1582,7 +1566,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 100,
+      "index": 99,
       "applied": false
     },
     {
@@ -1599,7 +1583,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 101,
+      "index": 100,
       "applied": false
     },
     {
@@ -1618,7 +1602,7 @@
         "russia",
         "existing-category-prior"
       ],
-      "index": 102,
+      "index": 101,
       "applied": false
     },
     {
@@ -1636,7 +1620,7 @@
       "evidence": [
         "lawmakers"
       ],
-      "index": 103,
+      "index": 102,
       "applied": false
     },
     {
@@ -1653,7 +1637,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 104,
+      "index": 103,
       "applied": false
     },
     {
@@ -1670,7 +1654,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 105,
+      "index": 104,
       "applied": false
     },
     {
@@ -1687,7 +1671,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 106,
+      "index": 105,
       "applied": false
     },
     {
@@ -1705,7 +1689,7 @@
       "evidence": [
         "u.s."
       ],
-      "index": 107,
+      "index": 106,
       "applied": false
     },
     {
@@ -1723,7 +1707,7 @@
         "iran",
         "existing-category-prior"
       ],
-      "index": 108,
+      "index": 107,
       "applied": false
     },
     {
@@ -1741,7 +1725,7 @@
       "evidence": [
         "u.s."
       ],
-      "index": 109,
+      "index": 108,
       "applied": false
     },
     {
@@ -1758,12 +1742,29 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 110,
+      "index": 109,
       "applied": false
     },
     {
       "title": "World commemorates 25 years since the September 11 attacks",
       "source": "CBS News",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 110,
+      "applied": false
+    },
+    {
+      "title": "Nation pauses to remember September 11 on 25th anniversary | First Thing",
+      "source": "The Guardian",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1997,6 +1998,25 @@
       "applied": false
     },
     {
+      "title": "New Mexico Democrats push back over Trump posts about renaming the state ‘New America’ - NBC News",
+      "source": "NBC News",
+      "current": "us",
+      "action": "review",
+      "reason": "ambiguous:nm",
+      "category": "nm",
+      "confidence": 0.633,
+      "scores": {
+        "us": 2.0,
+        "nm": 7.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico"
+      ],
+      "index": 124,
+      "applied": false
+    },
+    {
       "title": "Donald Trump promotes the idea of renaming New Mexico to 'New America' - The Jerusalem Post",
       "source": "The Jerusalem Post",
       "current": "us",
@@ -2013,7 +2033,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 124,
+      "index": 125,
       "applied": false
     },
     {
@@ -2030,7 +2050,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 125,
+      "index": 126,
       "applied": false
     },
     {
@@ -2048,7 +2068,7 @@
       "evidence": [
         "president"
       ],
-      "index": 126,
+      "index": 127,
       "applied": false
     },
     {
@@ -2065,7 +2085,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 127,
+      "index": 128,
       "applied": false
     },
     {
@@ -2083,7 +2103,7 @@
       "evidence": [
         "israel"
       ],
-      "index": 128,
+      "index": 129,
       "applied": false
     },
     {
@@ -2101,7 +2121,7 @@
         "u.s.",
         "existing-category-prior"
       ],
-      "index": 129,
+      "index": 130,
       "applied": false
     },
     {
@@ -2119,7 +2139,7 @@
         "u.s.",
         "existing-category-prior"
       ],
-      "index": 130,
+      "index": 131,
       "applied": false
     },
     {
@@ -2138,8 +2158,130 @@
         "pentagon",
         "war"
       ],
-      "index": 131,
+      "index": 132,
       "applied": true
+    },
+    {
+      "title": "Carney warns of tough times ahead in video message as retaliatory tariffs kick in - CBC",
+      "source": "CBC",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 133,
+      "applied": false
+    },
+    {
+      "title": "Lake Ontario/Lake America: What happens when a place has two different names? - BBC",
+      "source": "BBC",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 134,
+      "applied": false
+    },
+    {
+      "title": "Military and intelligence officials discuss smaller presence in the Middle East as US looks for another post-9/11 strategy - CNN",
+      "source": "CNN",
+      "current": "us",
+      "action": "review",
+      "reason": "ambiguous:military",
+      "category": "military",
+      "confidence": 0.364,
+      "scores": {
+        "world": 4.0,
+        "us": 2.0,
+        "military": 5.0
+      },
+      "evidence": [
+        "military"
+      ],
+      "index": 135,
+      "applied": false
+    },
+    {
+      "title": "Trump threatens to stop sale of Canadian Bombardier jets in US - BBC",
+      "source": "BBC",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 136,
+      "applied": false
+    },
+    {
+      "title": "Midterm elections head into the home stretch as candidates attend Labor Day events - pbs.org",
+      "source": "pbs.org",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 137,
+      "applied": false
+    },
+    {
+      "title": "A whiplash election year enters its final stretch as Trump holds wild cards - pbs.org",
+      "source": "pbs.org",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 138,
+      "applied": false
+    },
+    {
+      "title": "Armed man charged toward Democratic candidate for Ohio governor at fair, law enforcement says - pbs.org",
+      "source": "pbs.org",
+      "current": "us",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "us",
+      "confidence": 0.624,
+      "scores": {
+        "us": 4.0
+      },
+      "evidence": [
+        "governor",
+        "existing-category-prior"
+      ],
+      "index": 139,
+      "applied": false
     },
     {
       "title": "Trump and Musk super PACs unleash millions to boost Republicans in battleground races - Reuters",
@@ -2155,7 +2297,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 132,
+      "index": 140,
       "applied": false
     },
     {
@@ -2173,7 +2315,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 133,
+      "index": 141,
       "applied": false
     },
     {
@@ -2191,7 +2333,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 134,
+      "index": 142,
       "applied": false
     },
     {
@@ -2210,7 +2352,7 @@
       "evidence": [
         "military"
       ],
-      "index": 135,
+      "index": 143,
       "applied": false
     },
     {
@@ -2227,7 +2369,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 136,
+      "index": 144,
       "applied": false
     },
     {
@@ -2245,7 +2387,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 137,
+      "index": 145,
       "applied": false
     },
     {
@@ -2262,7 +2404,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 138,
+      "index": 146,
       "applied": false
     },
     {
@@ -2280,7 +2422,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 139,
+      "index": 147,
       "applied": false
     },
     {
@@ -2298,7 +2440,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 140,
+      "index": 148,
       "applied": false
     },
     {
@@ -2315,7 +2457,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 141,
+      "index": 149,
       "applied": false
     },
     {
@@ -2333,7 +2475,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 142,
+      "index": 150,
       "applied": false
     },
     {
@@ -2350,7 +2492,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 143,
+      "index": 151,
       "applied": false
     },
     {
@@ -2371,7 +2513,7 @@
         "doj",
         "federal"
       ],
-      "index": 144,
+      "index": 152,
       "applied": false
     },
     {
@@ -2389,7 +2531,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 145,
+      "index": 153,
       "applied": false
     },
     {
@@ -2407,7 +2549,27 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 146,
+      "index": 154,
+      "applied": false
+    },
+    {
+      "title": "Trump says Iran war will end right after U.S. midterm elections - Reuters",
+      "source": "Reuters",
+      "current": "presidential",
+      "action": "review",
+      "reason": "ambiguous:world",
+      "category": "world",
+      "confidence": 0.244,
+      "scores": {
+        "world": 4.0,
+        "us": 4.0,
+        "presidential": 2.0,
+        "military": 3.0
+      },
+      "evidence": [
+        "iran"
+      ],
+      "index": 155,
       "applied": false
     },
     {
@@ -2424,7 +2586,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 147,
+      "index": 156,
       "applied": false
     },
     {
@@ -2442,7 +2604,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 148,
+      "index": 157,
       "applied": false
     },
     {
@@ -2459,7 +2621,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 149,
+      "index": 158,
       "applied": false
     },
     {
@@ -2476,7 +2638,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 150,
+      "index": 159,
       "applied": false
     },
     {
@@ -2493,7 +2655,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 151,
+      "index": 160,
       "applied": false
     },
     {
@@ -2510,7 +2672,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 152,
+      "index": 161,
       "applied": false
     },
     {
@@ -2528,7 +2690,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 153,
+      "index": 162,
       "applied": false
     },
     {
@@ -2545,7 +2707,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 154,
+      "index": 163,
       "applied": false
     },
     {
@@ -2563,7 +2725,7 @@
       "evidence": [
         "irs"
       ],
-      "index": 155,
+      "index": 164,
       "applied": false
     },
     {
@@ -2581,7 +2743,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 156,
+      "index": 165,
       "applied": false
     },
     {
@@ -2598,7 +2760,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 157,
+      "index": 166,
       "applied": false
     },
     {
@@ -2616,7 +2778,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 158,
+      "index": 167,
       "applied": false
     },
     {
@@ -2633,7 +2795,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 159,
+      "index": 168,
       "applied": false
     },
     {
@@ -2650,7 +2812,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 160,
+      "index": 169,
       "applied": false
     },
     {
@@ -2667,7 +2829,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 161,
+      "index": 170,
       "applied": false
     },
     {
@@ -2685,24 +2847,7 @@
       "evidence": [
         "supreme court"
       ],
-      "index": 162,
-      "applied": false
-    },
-    {
-      "title": "Judge reinforces order barring immediate work on Trump arch in Washington - Reuters",
-      "source": "Reuters",
-      "current": "presidential",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "presidential",
-      "confidence": 0.327,
-      "scores": {
-        "presidential": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 163,
+      "index": 171,
       "applied": false
     },
     {
@@ -2721,7 +2866,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 164,
+      "index": 172,
       "applied": false
     },
     {
@@ -2738,7 +2883,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 165,
+      "index": 173,
       "applied": false
     },
     {
@@ -2757,7 +2902,7 @@
       "evidence": [
         "federal"
       ],
-      "index": 166,
+      "index": 174,
       "applied": false
     },
     {
@@ -2775,7 +2920,7 @@
         "dhs",
         "existing-category-prior"
       ],
-      "index": 167,
+      "index": 175,
       "applied": false
     },
     {
@@ -2792,7 +2937,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 168,
+      "index": 176,
       "applied": false
     },
     {
@@ -2811,7 +2956,7 @@
       "evidence": [
         "bill"
       ],
-      "index": 169,
+      "index": 177,
       "applied": false
     },
     {
@@ -2829,7 +2974,7 @@
         "supreme court",
         "existing-category-prior"
       ],
-      "index": 170,
+      "index": 178,
       "applied": false
     },
     {
@@ -2847,7 +2992,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 171,
+      "index": 179,
       "applied": false
     },
     {
@@ -2866,7 +3011,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 172,
+      "index": 180,
       "applied": false
     },
     {
@@ -2885,7 +3030,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 173,
+      "index": 181,
       "applied": false
     },
     {
@@ -2904,7 +3049,7 @@
       "evidence": [
         "ai"
       ],
-      "index": 174,
+      "index": 182,
       "applied": false
     },
     {
@@ -2923,7 +3068,7 @@
         "treasury",
         "existing-category-prior"
       ],
-      "index": 175,
+      "index": 183,
       "applied": false
     },
     {
@@ -2940,7 +3085,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 176,
+      "index": 184,
       "applied": false
     },
     {
@@ -2959,7 +3104,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 177,
+      "index": 185,
       "applied": false
     },
     {
@@ -2978,7 +3123,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 178,
+      "index": 186,
       "applied": false
     },
     {
@@ -2997,7 +3142,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 179,
+      "index": 187,
       "applied": false
     },
     {
@@ -3017,7 +3162,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 180,
+      "index": 188,
       "applied": false
     },
     {
@@ -3038,7 +3183,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 181,
+      "index": 189,
       "applied": false
     },
     {
@@ -3058,7 +3203,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 182,
+      "index": 190,
       "applied": false
     },
     {
@@ -3078,7 +3223,7 @@
         "santa fe",
         "existing-category-prior"
       ],
-      "index": 183,
+      "index": 191,
       "applied": false
     },
     {
@@ -3098,7 +3243,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 184,
+      "index": 192,
       "applied": false
     },
     {
@@ -3115,7 +3260,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 185,
+      "index": 193,
       "applied": false
     },
     {
@@ -3134,7 +3279,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 186,
+      "index": 194,
       "applied": false
     },
     {
@@ -3153,7 +3298,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 187,
+      "index": 195,
       "applied": false
     },
     {
@@ -3170,7 +3315,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 188,
+      "index": 196,
       "applied": false
     },
     {
@@ -3189,7 +3334,26 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 189,
+      "index": 197,
+      "applied": false
+    },
+    {
+      "title": "New Mexico Democrats push back over Trump posts about renaming the state ‘New America’ - NBC News",
+      "source": "NBC News",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 198,
       "applied": false
     },
     {
@@ -3208,7 +3372,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 190,
+      "index": 199,
       "applied": false
     },
     {
@@ -3227,7 +3391,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 191,
+      "index": 200,
       "applied": false
     },
     {
@@ -3246,7 +3410,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 192,
+      "index": 201,
       "applied": false
     },
     {
@@ -3265,7 +3429,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 193,
+      "index": 202,
       "applied": false
     },
     {
@@ -3284,7 +3448,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 194,
+      "index": 203,
       "applied": false
     },
     {
@@ -3303,7 +3467,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 195,
+      "index": 204,
       "applied": false
     },
     {
@@ -3322,7 +3486,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 196,
+      "index": 205,
       "applied": false
     },
     {
@@ -3341,11 +3505,11 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 197,
+      "index": 206,
       "applied": false
     },
     {
-      "title": "Lawmakers hear about one company's nuclear fusion plans in New Mexico - KRQE",
+      "title": "Lawmakers hear about one company’s nuclear fusion plans in New Mexico - KRQE",
       "source": "KRQE",
       "current": "nm",
       "action": "keep",
@@ -3361,7 +3525,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 198,
+      "index": 207,
       "applied": false
     },
     {
@@ -3381,7 +3545,7 @@
         "santa fe",
         "existing-category-prior"
       ],
-      "index": 199,
+      "index": 208,
       "applied": false
     },
     {
@@ -3398,7 +3562,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 200,
+      "index": 209,
       "applied": false
     },
     {
@@ -3417,7 +3581,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 201,
+      "index": 210,
       "applied": false
     },
     {
@@ -3436,26 +3600,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 202,
-      "applied": false
-    },
-    {
-      "title": "New Mexico State Fair kicks off with Route 66 Centennial Theme - KRQE",
-      "source": "KRQE",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 203,
+      "index": 211,
       "applied": false
     },
     {
@@ -3474,7 +3619,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 204,
+      "index": 212,
       "applied": false
     },
     {
@@ -3493,7 +3638,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 205,
+      "index": 213,
       "applied": false
     },
     {
@@ -3513,7 +3658,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 206,
+      "index": 214,
       "applied": false
     },
     {
@@ -3532,7 +3677,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 207,
+      "index": 215,
       "applied": false
     },
     {
@@ -3551,7 +3696,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 208,
+      "index": 216,
       "applied": false
     },
     {
@@ -3570,7 +3715,26 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 209,
+      "index": 217,
+      "applied": false
+    },
+    {
+      "title": "New Mexico State Fair kicks off with Route 66 Centennial Theme - KRQE",
+      "source": "KRQE",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 218,
       "applied": false
     },
     {
@@ -3591,7 +3755,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 210,
+      "index": 219,
       "applied": false
     },
     {
@@ -3611,7 +3775,7 @@
         "gallup",
         "existing-category-prior"
       ],
-      "index": 211,
+      "index": 220,
       "applied": false
     },
     {
@@ -3631,7 +3795,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 212,
+      "index": 221,
       "applied": false
     },
     {
@@ -3651,7 +3815,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 213,
+      "index": 222,
       "applied": false
     },
     {
@@ -3671,7 +3835,7 @@
         "cortez",
         "existing-category-prior"
       ],
-      "index": 214,
+      "index": 223,
       "applied": false
     },
     {
@@ -3691,7 +3855,7 @@
         "navajo nation",
         "existing-category-prior"
       ],
-      "index": 215,
+      "index": 224,
       "applied": false
     },
     {
@@ -3711,7 +3875,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 216,
+      "index": 225,
       "applied": false
     },
     {
@@ -3731,7 +3895,7 @@
         "gallup",
         "existing-category-prior"
       ],
-      "index": 217,
+      "index": 226,
       "applied": false
     },
     {
@@ -3751,7 +3915,7 @@
         "shiprock",
         "existing-category-prior"
       ],
-      "index": 218,
+      "index": 227,
       "applied": false
     },
     {
@@ -3773,7 +3937,7 @@
         "bloomfield",
         "existing-category-prior"
       ],
-      "index": 219,
+      "index": 228,
       "applied": false
     },
     {
@@ -3793,7 +3957,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 220,
+      "index": 229,
       "applied": false
     },
     {
@@ -3814,7 +3978,7 @@
         "san juan county",
         "existing-category-prior"
       ],
-      "index": 221,
+      "index": 230,
       "applied": false
     },
     {
@@ -3834,7 +3998,7 @@
         "aztec",
         "existing-category-prior"
       ],
-      "index": 222,
+      "index": 231,
       "applied": false
     },
     {
@@ -3854,7 +4018,7 @@
         "navajo nation",
         "existing-category-prior"
       ],
-      "index": 223,
+      "index": 232,
       "applied": false
     },
     {
@@ -3874,7 +4038,7 @@
         "navajo nation",
         "existing-category-prior"
       ],
-      "index": 224,
+      "index": 233,
       "applied": false
     },
     {
@@ -3894,7 +4058,7 @@
         "shiprock",
         "existing-category-prior"
       ],
-      "index": 225,
+      "index": 234,
       "applied": false
     },
     {
@@ -3914,7 +4078,7 @@
         "navajo nation",
         "existing-category-prior"
       ],
-      "index": 226,
+      "index": 235,
       "applied": false
     },
     {
@@ -3934,7 +4098,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 227,
+      "index": 236,
       "applied": false
     },
     {
@@ -3954,7 +4118,7 @@
         "san juan county",
         "existing-category-prior"
       ],
-      "index": 228,
+      "index": 237,
       "applied": false
     },
     {
@@ -3975,7 +4139,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 229,
+      "index": 238,
       "applied": false
     },
     {
@@ -3996,7 +4160,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 230,
+      "index": 239,
       "applied": false
     },
     {
@@ -4016,7 +4180,7 @@
         "navajo nation",
         "existing-category-prior"
       ],
-      "index": 231,
+      "index": 240,
       "applied": false
     },
     {
@@ -4036,7 +4200,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 232,
+      "index": 241,
       "applied": false
     },
     {
@@ -4056,7 +4220,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 233,
+      "index": 242,
       "applied": false
     },
     {
@@ -4076,7 +4240,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 234,
+      "index": 243,
       "applied": false
     },
     {
@@ -4093,7 +4257,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 235,
+      "index": 244,
       "applied": true
     },
     {
@@ -4110,7 +4274,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 236,
+      "index": 245,
       "applied": true
     },
     {
@@ -4127,7 +4291,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 237,
+      "index": 246,
       "applied": true
     },
     {
@@ -4145,7 +4309,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 238,
+      "index": 247,
       "applied": false
     },
     {
@@ -4164,7 +4328,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 239,
+      "index": 248,
       "applied": false
     },
     {
@@ -4181,7 +4345,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 240,
+      "index": 249,
       "applied": false
     },
     {
@@ -4199,7 +4363,7 @@
       "evidence": [
         "china"
       ],
-      "index": 241,
+      "index": 250,
       "applied": false
     },
     {
@@ -4216,7 +4380,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 242,
+      "index": 251,
       "applied": false
     },
     {
@@ -4233,7 +4397,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 243,
+      "index": 252,
       "applied": false
     },
     {
@@ -4250,7 +4414,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 244,
+      "index": 253,
       "applied": false
     },
     {
@@ -4268,7 +4432,7 @@
         "idaho",
         "existing-category-prior"
       ],
-      "index": 245,
+      "index": 254,
       "applied": false
     },
     {
@@ -4286,7 +4450,7 @@
         "montana",
         "existing-category-prior"
       ],
-      "index": 246,
+      "index": 255,
       "applied": false
     },
     {
@@ -4304,7 +4468,7 @@
         "montana",
         "existing-category-prior"
       ],
-      "index": 247,
+      "index": 256,
       "applied": false
     },
     {
@@ -4322,7 +4486,7 @@
         "montana",
         "existing-category-prior"
       ],
-      "index": 248,
+      "index": 257,
       "applied": false
     },
     {
@@ -4339,7 +4503,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 249,
+      "index": 258,
       "applied": false
     },
     {
@@ -4356,7 +4520,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 250,
+      "index": 259,
       "applied": false
     },
     {
@@ -4374,7 +4538,7 @@
       "evidence": [
         "doj"
       ],
-      "index": 251,
+      "index": 260,
       "applied": false
     },
     {
@@ -4391,7 +4555,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 252,
+      "index": 261,
       "applied": false
     },
     {
@@ -4408,7 +4572,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 253,
+      "index": 262,
       "applied": false
     },
     {
@@ -4425,7 +4589,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 254,
+      "index": 263,
       "applied": false
     },
     {
@@ -4442,11 +4606,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 255,
+      "index": 264,
       "applied": false
     },
     {
-      "title": "25 years after 9/11, Pennsylvania and New Jersey firefighters reflect on lessons from Ground Zero - CBS News",
+      "title": "25 years after 9/11, Massachusetts marks attacks with statewide moment of silence and \"Tribute in Light\" - CBS News",
       "source": "CBS News",
       "current": "region",
       "action": "review",
@@ -4459,12 +4623,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 256,
+      "index": 265,
       "applied": false
     },
     {
-      "title": "WATCH LIVE: Flight 93 memorial holds observance ceremony on 25th anniversary of attacks - pbs.org",
-      "source": "pbs.org",
+      "title": "Massachusetts law fails to address AI-generated child abuse images - The Boston Globe",
+      "source": "The Boston Globe",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4476,12 +4640,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 257,
+      "index": 266,
       "applied": false
     },
     {
-      "title": "WATCH LIVE: Pennsylvania ceremony honors the heroes of Flight 93 - Fox News",
-      "source": "Fox News",
+      "title": "Lindsay Clancy’s lawyer asks judge to find her not guilty after mistrial - The Guardian",
+      "source": "The Guardian",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4493,12 +4657,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 258,
+      "index": 267,
       "applied": false
     },
     {
-      "title": "Pennsylvania Is Building More EV Chargers. Will Drivers Come? - Inside Climate News",
-      "source": "Inside Climate News",
+      "title": "Massachusetts top court reprimands judge in ICE arrest evasion case - Reuters",
+      "source": "Reuters",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4510,7 +4674,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 259,
+      "index": 268,
       "applied": false
     },
     {
@@ -4527,7 +4691,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 260,
+      "index": 269,
       "applied": false
     },
     {
@@ -4544,7 +4708,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 261,
+      "index": 270,
       "applied": false
     },
     {
@@ -4561,7 +4725,27 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 262,
+      "index": 271,
+      "applied": false
+    },
+    {
+      "title": "American Airlines, Alaska Airlines join other carriers in raising bag fees amid rising fuel prices, Iran war - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "current": "region",
+      "action": "review",
+      "reason": "ambiguous:world",
+      "category": "world",
+      "confidence": 0.339,
+      "scores": {
+        "world": 4.0,
+        "us": 2.0,
+        "region": 2.0,
+        "military": 3.0
+      },
+      "evidence": [
+        "iran"
+      ],
+      "index": 272,
       "applied": false
     },
     {
@@ -4578,7 +4762,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 263,
+      "index": 273,
       "applied": false
     },
     {
@@ -4595,7 +4779,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 264,
+      "index": 274,
       "applied": false
     },
     {
@@ -4613,7 +4797,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 265,
+      "index": 275,
       "applied": false
     },
     {
@@ -4630,7 +4814,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 266,
+      "index": 276,
       "applied": false
     },
     {
@@ -4647,7 +4831,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 267,
+      "index": 277,
       "applied": false
     },
     {
@@ -4666,7 +4850,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 268,
+      "index": 278,
       "applied": false
     },
     {
@@ -4685,7 +4869,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 269,
+      "index": 279,
       "applied": false
     },
     {
@@ -4704,7 +4888,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 270,
+      "index": 280,
       "applied": false
     },
     {
@@ -4723,7 +4907,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 271,
+      "index": 281,
       "applied": false
     },
     {
@@ -4742,7 +4926,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 272,
+      "index": 282,
       "applied": false
     },
     {
@@ -4759,7 +4943,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 273,
+      "index": 283,
       "applied": false
     },
     {
@@ -4776,7 +4960,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 274,
+      "index": 284,
       "applied": false
     },
     {
@@ -4793,7 +4977,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 275,
+      "index": 285,
       "applied": false
     },
     {
@@ -4810,7 +4994,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 276,
+      "index": 286,
       "applied": false
     },
     {
@@ -4827,7 +5011,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 277,
+      "index": 287,
       "applied": false
     },
     {
@@ -4844,7 +5028,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 278,
+      "index": 288,
       "applied": false
     },
     {
@@ -4861,7 +5045,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 279,
+      "index": 289,
       "applied": false
     },
     {
@@ -4878,7 +5062,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 280,
+      "index": 290,
       "applied": false
     },
     {
@@ -4897,7 +5081,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 281,
+      "index": 291,
       "applied": false
     },
     {
@@ -4914,7 +5098,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 282,
+      "index": 292,
       "applied": false
     },
     {
@@ -4931,7 +5115,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 283,
+      "index": 293,
       "applied": false
     },
     {
@@ -4948,7 +5132,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 284,
+      "index": 294,
       "applied": false
     },
     {
@@ -4967,7 +5151,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 285,
+      "index": 295,
       "applied": false
     },
     {
@@ -4984,7 +5168,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 286,
+      "index": 296,
       "applied": false
     },
     {
@@ -5001,7 +5185,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 287,
+      "index": 297,
       "applied": false
     },
     {
@@ -5018,7 +5202,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 288,
+      "index": 298,
       "applied": false
     },
     {
@@ -5035,7 +5219,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 289,
+      "index": 299,
       "applied": false
     },
     {
@@ -5052,7 +5236,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 290,
+      "index": 300,
       "applied": false
     },
     {
@@ -5069,7 +5253,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 291,
+      "index": 301,
       "applied": false
     },
     {
@@ -5086,7 +5270,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 292,
+      "index": 302,
       "applied": false
     },
     {
@@ -5103,7 +5287,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 293,
+      "index": 303,
       "applied": false
     },
     {
@@ -5121,7 +5305,7 @@
         "openai",
         "existing-category-prior"
       ],
-      "index": 294,
+      "index": 304,
       "applied": false
     },
     {
@@ -5138,11 +5322,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 295,
+      "index": 305,
       "applied": false
     },
     {
-      "title": "Arizona’s lifeline for chip manufacturing is drying up - The Verge",
+      "title": "Arizona’s lifeline for chip manufacturing is drying up - theverge.com",
       "source": "The Verge",
       "current": "technology",
       "action": "keep",
@@ -5157,11 +5341,11 @@
         "chip",
         "existing-category-prior"
       ],
-      "index": 296,
+      "index": 306,
       "applied": false
     },
     {
-      "title": "Meta says it’s changing AI suggestions after posing invasive personal questions - The Verge",
+      "title": "Meta says it’s changing AI suggestions after posing invasive personal questions - theverge.com",
       "source": "The Verge",
       "current": "technology",
       "action": "keep",
@@ -5175,11 +5359,11 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 297,
+      "index": 307,
       "applied": false
     },
     {
-      "title": "New York City’s last pickpocket doesn’t need a smartphone - The Verge",
+      "title": "New York City’s last pickpocket doesn’t need a smartphone - theverge.com",
       "source": "The Verge",
       "current": "technology",
       "action": "review",
@@ -5192,11 +5376,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 298,
+      "index": 308,
       "applied": false
     },
     {
-      "title": "Why Apple’s next computer should be for the smart home - The Verge",
+      "title": "Why Apple’s next computer should be for the smart home - theverge.com",
       "source": "The Verge",
       "current": "technology",
       "action": "keep",
@@ -5210,7 +5394,7 @@
         "apple",
         "existing-category-prior"
       ],
-      "index": 299,
+      "index": 309,
       "applied": false
     },
     {
@@ -5228,7 +5412,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 300,
+      "index": 310,
       "applied": false
     },
     {
@@ -5246,7 +5430,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 301,
+      "index": 311,
       "applied": false
     },
     {
@@ -5263,7 +5447,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 302,
+      "index": 312,
       "applied": false
     },
     {
@@ -5281,7 +5465,7 @@
         "nvidia",
         "existing-category-prior"
       ],
-      "index": 303,
+      "index": 313,
       "applied": false
     },
     {
@@ -5299,7 +5483,7 @@
       "evidence": [
         "gaming"
       ],
-      "index": 304,
+      "index": 314,
       "applied": false
     },
     {
@@ -5316,11 +5500,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 305,
+      "index": 315,
       "applied": false
     },
     {
-      "title": "Apple addresses iPhone Duo copycats - The Verge",
+      "title": "Apple addresses iPhone Duo copycats - theverge.com",
       "source": "The Verge",
       "current": "technology",
       "action": "keep",
@@ -5334,7 +5518,7 @@
         "apple",
         "existing-category-prior"
       ],
-      "index": 306,
+      "index": 316,
       "applied": false
     },
     {
@@ -5352,7 +5536,7 @@
       "evidence": [
         "u.s."
       ],
-      "index": 307,
+      "index": 317,
       "applied": false
     },
     {
@@ -5370,7 +5554,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 308,
+      "index": 318,
       "applied": false
     },
     {
@@ -5388,7 +5572,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 309,
+      "index": 319,
       "applied": false
     },
     {
@@ -5405,7 +5589,44 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 310,
+      "index": 320,
+      "applied": false
+    },
+    {
+      "title": "Qualcomm, Amazon strike AI chip deal worth up to $60B - The Journal Record",
+      "source": "The Journal Record",
+      "current": "technology",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "technology",
+      "confidence": 0.799,
+      "scores": {
+        "technology": 9.0
+      },
+      "evidence": [
+        "ai",
+        "chip",
+        "existing-category-prior"
+      ],
+      "index": 321,
+      "applied": false
+    },
+    {
+      "title": "Amazon Luna Introduces Its Most Ambitious Feature Yet In A Rough Month For Cloud Gaming - GameSpot",
+      "source": "GameSpot",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.799,
+      "scores": {
+        "gaming": 9.0
+      },
+      "evidence": [
+        "gaming",
+        "existing-category-prior"
+      ],
+      "index": 322,
       "applied": false
     },
     {
@@ -5424,7 +5645,7 @@
         "xbox",
         "existing-category-prior"
       ],
-      "index": 311,
+      "index": 323,
       "applied": false
     },
     {
@@ -5442,7 +5663,7 @@
       "evidence": [
         "amd"
       ],
-      "index": 312,
+      "index": 324,
       "applied": false
     },
     {
@@ -5460,7 +5681,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 313,
+      "index": 325,
       "applied": false
     },
     {
@@ -5477,7 +5698,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 314,
+      "index": 326,
       "applied": false
     },
     {
@@ -5494,7 +5715,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 315,
+      "index": 327,
       "applied": false
     },
     {
@@ -5512,25 +5733,7 @@
         "console",
         "existing-category-prior"
       ],
-      "index": 316,
-      "applied": false
-    },
-    {
-      "title": "Nintendo Secures Legal Victory Against Sale of Switch Game Piracy Devices - IGN Nordic",
-      "source": "IGN",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "nintendo",
-        "existing-category-prior"
-      ],
-      "index": 317,
+      "index": 328,
       "applied": false
     },
     {
@@ -5548,7 +5751,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 318,
+      "index": 329,
       "applied": false
     },
     {
@@ -5566,7 +5769,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 319,
+      "index": 330,
       "applied": false
     },
     {
@@ -5584,7 +5787,7 @@
         "video game",
         "existing-category-prior"
       ],
-      "index": 320,
+      "index": 331,
       "applied": false
     },
     {
@@ -5602,7 +5805,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 321,
+      "index": 332,
       "applied": false
     },
     {
@@ -5619,7 +5822,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 322,
+      "index": 333,
       "applied": false
     },
     {
@@ -5636,7 +5839,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 323,
+      "index": 334,
       "applied": false
     },
     {
@@ -5654,25 +5857,7 @@
         "gaming",
         "existing-category-prior"
       ],
-      "index": 324,
-      "applied": false
-    },
-    {
-      "title": "Amazon Luna Introduces Its Most Ambitious Feature Yet In A Rough Month For Cloud Gaming - GameSpot",
-      "source": "GameSpot",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "gaming",
-        "existing-category-prior"
-      ],
-      "index": 325,
+      "index": 335,
       "applied": false
     },
     {
@@ -5689,7 +5874,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 326,
+      "index": 336,
       "applied": false
     },
     {
@@ -5707,7 +5892,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 327,
+      "index": 337,
       "applied": false
     },
     {
@@ -5725,25 +5910,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 328,
-      "applied": false
-    },
-    {
-      "title": "Kirby's 35th Anniversary Celebrations Begin In 2027, Here's The Official Logo - Nintendo Life",
-      "source": "Nintendo Life",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "nintendo",
-        "existing-category-prior"
-      ],
-      "index": 329,
+      "index": 338,
       "applied": false
     },
     {
@@ -5762,7 +5929,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 330,
+      "index": 339,
       "applied": false
     },
     {
@@ -5781,7 +5948,26 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 331,
+      "index": 340,
+      "applied": false
+    },
+    {
+      "title": "How NFL brought 49ers-Rams to 'sports mad' Australia - ESPN",
+      "source": "ESPN",
+      "current": "nfl",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nfl",
+      "confidence": 0.822,
+      "scores": {
+        "nfl": 10.0,
+        "technology": -8.0
+      },
+      "evidence": [
+        "nfl",
+        "existing-category-prior"
+      ],
+      "index": 341,
       "applied": false
     },
     {
@@ -5798,7 +5984,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 332,
+      "index": 342,
       "applied": false
     },
     {
@@ -5816,7 +6002,7 @@
       "evidence": [
         "iran"
       ],
-      "index": 333,
+      "index": 343,
       "applied": false
     },
     {
@@ -5835,7 +6021,7 @@
         "war",
         "existing-category-prior"
       ],
-      "index": 334,
+      "index": 344,
       "applied": false
     },
     {
@@ -5854,7 +6040,7 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 335,
+      "index": 345,
       "applied": false
     },
     {
@@ -5872,7 +6058,7 @@
       "evidence": [
         "iran"
       ],
-      "index": 336,
+      "index": 346,
       "applied": false
     },
     {
@@ -5890,7 +6076,7 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 337,
+      "index": 347,
       "applied": false
     },
     {
@@ -5908,7 +6094,7 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 338,
+      "index": 348,
       "applied": false
     },
     {
@@ -5927,7 +6113,7 @@
         "war",
         "existing-category-prior"
       ],
-      "index": 339,
+      "index": 349,
       "applied": false
     },
     {
@@ -5945,7 +6131,7 @@
         "air force",
         "existing-category-prior"
       ],
-      "index": 340,
+      "index": 350,
       "applied": false
     },
     {
@@ -5963,7 +6149,7 @@
         "troops",
         "existing-category-prior"
       ],
-      "index": 341,
+      "index": 351,
       "applied": false
     },
     {
@@ -5981,7 +6167,7 @@
         "navy",
         "existing-category-prior"
       ],
-      "index": 342,
+      "index": 352,
       "applied": false
     },
     {
@@ -6001,7 +6187,7 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 343,
+      "index": 353,
       "applied": false
     },
     {
@@ -6018,7 +6204,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 344,
+      "index": 354,
       "applied": false
     },
     {
@@ -6036,7 +6222,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 345,
+      "index": 355,
       "applied": false
     },
     {
@@ -6056,7 +6242,7 @@
         "troops",
         "existing-category-prior"
       ],
-      "index": 346,
+      "index": 356,
       "applied": false
     },
     {
@@ -6073,7 +6259,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 347,
+      "index": 357,
       "applied": false
     },
     {
@@ -6090,7 +6276,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 348,
+      "index": 358,
       "applied": false
     },
     {
@@ -6107,7 +6293,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 349,
+      "index": 359,
       "applied": false
     },
     {
@@ -6125,7 +6311,7 @@
         "navy",
         "existing-category-prior"
       ],
-      "index": 350,
+      "index": 360,
       "applied": false
     },
     {
@@ -6143,7 +6329,7 @@
       "evidence": [
         "ai"
       ],
-      "index": 351,
+      "index": 361,
       "applied": false
     },
     {
@@ -6160,7 +6346,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 352,
+      "index": 362,
       "applied": false
     },
     {
@@ -6178,7 +6364,7 @@
       "evidence": [
         "iran"
       ],
-      "index": 353,
+      "index": 363,
       "applied": false
     },
     {
@@ -6196,7 +6382,7 @@
         "pentagon",
         "existing-category-prior"
       ],
-      "index": 354,
+      "index": 364,
       "applied": false
     },
     {
@@ -6214,7 +6400,7 @@
       "evidence": [
         "ukraine"
       ],
-      "index": 355,
+      "index": 365,
       "applied": false
     },
     {
@@ -6231,7 +6417,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 356,
+      "index": 366,
       "applied": false
     },
     {
@@ -6249,7 +6435,7 @@
         "marines",
         "existing-category-prior"
       ],
-      "index": 357,
+      "index": 367,
       "applied": false
     },
     {
@@ -6266,7 +6452,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 358,
+      "index": 368,
       "applied": false
     },
     {
@@ -6283,7 +6469,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 359,
+      "index": 369,
       "applied": false
     },
     {
@@ -6300,7 +6486,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 360,
+      "index": 370,
       "applied": false
     },
     {
@@ -6317,7 +6503,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 361,
+      "index": 371,
       "applied": false
     },
     {
@@ -6335,7 +6521,7 @@
         "air force",
         "existing-category-prior"
       ],
-      "index": 362,
+      "index": 372,
       "applied": false
     },
     {
@@ -6353,7 +6539,7 @@
         "troops",
         "existing-category-prior"
       ],
-      "index": 363,
+      "index": 373,
       "applied": false
     },
     {
@@ -6372,7 +6558,7 @@
         "missile",
         "existing-category-prior"
       ],
-      "index": 364,
+      "index": 374,
       "applied": false
     },
     {
@@ -6391,7 +6577,7 @@
         "army",
         "existing-category-prior"
       ],
-      "index": 365,
+      "index": 375,
       "applied": false
     },
     {
@@ -6409,7 +6595,7 @@
         "army",
         "existing-category-prior"
       ],
-      "index": 366,
+      "index": 376,
       "applied": false
     },
     {
@@ -6427,7 +6613,7 @@
       "evidence": [
         "accountability"
       ],
-      "index": 367,
+      "index": 377,
       "applied": false
     },
     {
@@ -6445,7 +6631,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 368,
+      "index": 378,
       "applied": false
     },
     {
@@ -6464,7 +6650,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 369,
+      "index": 379,
       "applied": false
     },
     {
@@ -6482,7 +6668,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 370,
+      "index": 380,
       "applied": false
     },
     {
@@ -6499,7 +6685,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 371,
+      "index": 381,
       "applied": false
     },
     {
@@ -6517,7 +6703,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 372,
+      "index": 382,
       "applied": false
     },
     {
@@ -6535,7 +6721,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 373,
+      "index": 383,
       "applied": false
     },
     {
@@ -6553,7 +6739,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 374,
+      "index": 384,
       "applied": false
     },
     {
@@ -6571,7 +6757,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 375,
+      "index": 385,
       "applied": false
     },
     {
@@ -6589,7 +6775,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 376,
+      "index": 386,
       "applied": false
     },
     {
@@ -6606,7 +6792,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 377,
+      "index": 387,
       "applied": false
     },
     {
@@ -6623,7 +6809,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 378,
+      "index": 388,
       "applied": false
     },
     {
@@ -6640,7 +6826,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 379,
+      "index": 389,
       "applied": false
     },
     {
@@ -6657,7 +6843,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 380,
+      "index": 390,
       "applied": false
     },
     {
@@ -6674,7 +6860,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 381,
+      "index": 391,
       "applied": false
     },
     {
@@ -6691,7 +6877,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 382,
+      "index": 392,
       "applied": false
     },
     {
@@ -6708,7 +6894,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 383,
+      "index": 393,
       "applied": false
     },
     {
@@ -6725,7 +6911,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 384,
+      "index": 394,
       "applied": false
     },
     {
@@ -6742,7 +6928,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 385,
+      "index": 395,
       "applied": false
     },
     {
@@ -6759,7 +6945,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 386,
+      "index": 396,
       "applied": false
     },
     {
@@ -6776,7 +6962,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 387,
+      "index": 397,
       "applied": false
     },
     {
@@ -6794,7 +6980,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 388,
+      "index": 398,
       "applied": false
     },
     {
@@ -6812,7 +6998,7 @@
       "evidence": [
         "troops"
       ],
-      "index": 389,
+      "index": 399,
       "applied": false
     },
     {
@@ -6829,24 +7015,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 390,
-      "applied": false
-    },
-    {
-      "title": "OpenAI says its next-generation processors could be made at Samsung — double-sourcing with TSMC hints at massive volume requirements [Updated] - Tom's Hardware",
-      "source": "Tom's Hardware",
-      "current": "x",
-      "action": "reroute",
-      "reason": "semantic-match:technology",
-      "category": "technology",
-      "confidence": 0.742,
-      "scores": {
-        "technology": 7.0
-      },
-      "evidence": [
-        "openai"
-      ],
-      "index": 391,
+      "index": 400,
       "applied": false
     },
     {
@@ -6864,7 +7033,42 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 392,
+      "index": 401,
+      "applied": false
+    },
+    {
+      "title": "OpenAI says its next-generation processors could be made at Samsung — double-sourcing with TSMC hints at massive volume requirements [Updated] - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "x",
+      "action": "reroute",
+      "reason": "semantic-match:technology",
+      "category": "technology",
+      "confidence": 0.742,
+      "scores": {
+        "technology": 7.0
+      },
+      "evidence": [
+        "openai"
+      ],
+      "index": 402,
+      "applied": false
+    },
+    {
+      "title": "Nearly $6 million awarded to expand public Wi-Fi across New Mexico - KOAT",
+      "source": "KOAT",
+      "current": "x",
+      "action": "reroute",
+      "reason": "semantic-match:nm",
+      "category": "nm",
+      "confidence": 0.742,
+      "scores": {
+        "nm": 7.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico"
+      ],
+      "index": 403,
       "applied": false
     },
     {
@@ -6877,7 +7081,7 @@
       "confidence": 0.0,
       "scores": {},
       "evidence": [],
-      "index": 393,
+      "index": 404,
       "applied": false
     },
     {
@@ -6895,7 +7099,7 @@
         "supreme court",
         "federal"
       ],
-      "index": 394,
+      "index": 405,
       "applied": false
     },
     {
@@ -6912,7 +7116,7 @@
       "evidence": [
         "navajo nation"
       ],
-      "index": 395,
+      "index": 406,
       "applied": false
     },
     {
@@ -6930,7 +7134,7 @@
       "evidence": [
         "nfl"
       ],
-      "index": 396,
+      "index": 407,
       "applied": false
     },
     {
@@ -6948,7 +7152,7 @@
       "evidence": [
         "iran"
       ],
-      "index": 397,
+      "index": 408,
       "applied": false
     },
     {
@@ -6965,7 +7169,7 @@
       "evidence": [
         "gaming"
       ],
-      "index": 398,
+      "index": 409,
       "applied": false
     },
     {
@@ -6982,7 +7186,7 @@
       "evidence": [
         "u.s."
       ],
-      "index": 399,
+      "index": 410,
       "applied": false
     }
   ],
