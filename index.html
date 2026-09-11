@@ -18,11 +18,6 @@
 .bookmark-row{display:flex;align-items:flex-start;gap:8px}.bookmark-row h3{flex:1;margin:0}.bookmark-btn{border:0;background:transparent;padding:2px 4px;cursor:pointer;font-size:18px;line-height:1;opacity:.45;border-radius:6px}.bookmark-btn:hover,.bookmark-btn.saved{opacity:1}.bookmark-btn:focus-visible{outline:2px solid var(--accent,#2563eb);outline-offset:2px}.bookmark-section .bookmark-btn{opacity:1}.bookmark-section .news-item{position:relative}.bookmark-section .bookmark-row{padding-right:2px}@media(max-width:700px){.bookmark-btn{font-size:17px;padding:1px 3px}}
 </style>
 <style id="nfl-live-style">.nfl-live-note{padding:8px 11px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(255,255,255,.68);font-size:11px;line-height:1.35;color:#64748b}.nfl-live-note strong{color:#166534}.nfl-game-card{padding:12px 12px!important;min-height:0!important;margin:9px 0!important}.nfl-score-line{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;font-size:15px!important;line-height:1.3!important;color:#334155}.nfl-score-line .teams{font-size:18px!important;font-weight:900;color:#0f172a;letter-spacing:.01em}.nfl-score-line .status{font-size:12px!important;font-weight:800;color:#64748b}.nfl-score-line .tv{margin-left:auto;overflow:hidden;text-overflow:ellipsis;color:#475569;font-size:11px}.nfl-score-line a{font-size:11px}.nfl-live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 2px rgba(22,163,74,.12)}@media(max-width:600px){.nfl-live-note{font-size:11px;padding:8px 10px}.nfl-game-card{padding:11px 10px!important;margin:8px 0!important}.nfl-score-line{gap:6px;font-size:14px!important;line-height:1.3!important}.nfl-score-line .teams{font-size:17px!important;line-height:1.2!important;flex:1 1 100%}.nfl-score-line .status{font-size:11px!important;font-weight:800}.nfl-score-line .tv{font-size:11px;margin-left:0;flex:1 1 100%;white-space:normal}.nfl-score-line a{font-size:11px}}</style>
-<style id="load-more-style-v1">
-.load-more-wrap{display:flex;justify-content:center;width:100%;padding:18px 12px 8px;box-sizing:border-box}
-.load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
-.load-more:active{transform:translateY(1px)}
-</style>
 <style id="legislation-style-v1">
 .legislation-card .leg-top{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px}.leg-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(202,138,4,.09);border:1px solid rgba(202,138,4,.18);font-size:9px;font-weight:800;letter-spacing:.02em;color:#92400e}.leg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.leg-field{padding:9px 10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(118,118,128,.035)}.leg-field strong{display:block;margin-bottom:3px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui-subtle)}.leg-field span{font-size:11.5px;line-height:1.45;color:var(--ui-muted)}.leg-support{margin-top:13px;padding-top:11px;border-top:1px solid var(--ui-line)}.leg-support-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ui-subtle);margin-bottom:6px}.leg-support a{display:block;padding:6px 0;text-decoration:none;font-size:11.5px;font-weight:650;border-top:1px solid rgba(60,60,67,.07)}.leg-support a:first-of-type{border-top:0}.leg-support small{display:block;margin-top:2px;color:var(--ui-subtle);font-size:9px}.leg-official{margin-top:10px}.leg-official a{display:inline-flex;padding:7px 10px;border-radius:9px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);font-size:10px;font-weight:750;text-decoration:none}@media(max-width:600px){.leg-grid{grid-template-columns:1fr}.legislation-card .leg-top{gap:5px}}
 </style>
@@ -40,11 +35,9 @@
 #pull-stats-ui.failed .status-state{color:#b91c1c}
 #pull-stats-ui .status-new{font-weight:850;color:#dc2626}
 #pull-stats-ui .sep{color:#cbd5e1}
-#sound-alerts-toggle{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;padding:2px 7px;font:inherit;font-weight:800;line-height:1.35;cursor:pointer}
-#sound-alerts-toggle[data-enabled="true"]{border-color:#86efac;background:#f0fdf4;color:#166534}
 .new-badge{display:inline-flex!important;align-items:center!important;margin-left:6px!important;padding:2px 6px!important;border-radius:999px!important;background:#dc2626!important;color:#fff!important;font-size:9px!important;line-height:1.25!important;font-weight:900!important;letter-spacing:.04em!important;vertical-align:middle!important;box-shadow:0 1px 4px rgba(220,38,38,.24)!important}
-@media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}#sound-alerts-toggle{padding:2px 6px}}
-@media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}#sound-alerts-toggle{background:#242426;color:#e5e7eb;border-color:#3f3f46}#sound-alerts-toggle[data-enabled="true"]{background:#10261a;color:#86efac;border-color:#166534}}
+@media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}}
+@media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}}
 </style>
 <style id="new-badge-v26-style">
 .new-badge.new-badge-red{background:#dc2626!important;color:#fff!important}
@@ -55,6 +48,7 @@
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -446,9 +440,6 @@ const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL'
 sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
 var lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;
-let audioContext=null,audioUnlocked=false;
-function unlockPopAudio(){try{if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();audioUnlocked=true;}catch(e){audioUnlocked=false;}}
-function playNewArticlePop(){if(!audioUnlocked||!audioContext)return;try{const now=audioContext.currentTime;const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.setValueAtTime(620,now);osc.frequency.exponentialRampToValueAtTime(1080,now+0.055);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(0.16,now+0.008);gain.gain.exponentialRampToValueAtTime(0.0001,now+0.085);osc.connect(gain);gain.connect(audioContext.destination);osc.start(now);osc.stop(now+0.09);}catch(e){}}
 function normalizeDuplicateKey(item){const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');if(link)return 'l:'+link;const title=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();return 't:'+title;}
 function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const key=normalizeDuplicateKey(item);if(seen.has(key))continue;seen.add(key);out.push(item);}return {items:out,removed:items.length-out.length};}
 function canonicalBuildTabs(){const root=document.getElementById('tabs');if(!root)return;root.innerHTML='';const seen=new Set();CANONICAL_SECTIONS.forEach(([key,label,accent])=>{if(seen.has(key))return;seen.add(key);const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&typeof detectedLocation!=='undefined'&&detectedLocation?'🌎 '+(typeof regionLabels!=='undefined'?regionLabels[detectedRegion]:'Region'):label;b.style.setProperty('--accent',accent);b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);canonicalBuildTabs();canonicalRender(allItems)};root.appendChild(b)});}
@@ -494,7 +485,6 @@ async function refreshNewsFromPage(manual=false){
   if(status)status.textContent=manual?'Fetching…':'Updating…';
   pullStatusHtml(allItems.length,false,'Connecting to news feed');
   try{
-    if(manual)unlockPopAudio();
     const loaded=await fetchNewsDocument();
     const xml=loaded.xml;
     const fetched=loaded.items;
@@ -534,7 +524,6 @@ async function refreshNewsFromPage(manual=false){
     if(lastUpdateEl)lastUpdateEl.textContent='Last update: '+formatDate(updated);
     if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';
     pullStatusHtml(allItems.length,false,phase);
-    if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);
     return true;
   }catch(e){
     console.error('News feed refresh failed after retries:',e);
@@ -764,6 +753,7 @@ const TOP_SEEN_STORAGE = 'news-top-seen-v1';
 window.loadCounts = window.loadCounts || {};
 const loadCounts = window.loadCounts;
 window.topRotationKeys = window.topRotationKeys || [];
+window.__categoryRenderers = window.__categoryRenderers || {};
 
 function topStoryKey(item){
   const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
@@ -886,6 +876,14 @@ canonicalRender=function(items){
     syncDiscoveryButton();
     return out;
   }
+
+  const customRenderer=window.__categoryRenderers?.[active];
+  if(typeof customRenderer==='function'){
+    const out=customRenderer(items);
+    syncDiscoveryButton();
+    return out;
+  }
+
   if(active==='nfl'){
     const data=paginatedNewsItems(items);
     loadCounts.nfl=data.count;
@@ -898,6 +896,7 @@ canonicalRender=function(items){
     syncDiscoveryButton();
     return;
   }
+
   const data=paginatedNewsItems(items);
   baseCanonicalRenderWithPagination(data.visible);
   const root=document.getElementById('news-feed');
@@ -935,6 +934,7 @@ window.cycleTopStoriesAndRefresh=async function(){
 
 render=canonicalRender;
 window.render=canonicalRender;
+window.canonicalRender=canonicalRender;
 syncDiscoveryButton();
 </script>
 <script id="legislation-ui-v1">
@@ -942,6 +942,7 @@ syncDiscoveryButton();
   const insertAt=CANONICAL_SECTIONS.findIndex(x=>x[0]==='federal');
   if(!CANONICAL_SECTIONS.some(x=>x[0]==='legislation'))CANONICAL_SECTIONS.splice(insertAt>=0?insertAt+1:7,0,['legislation','📜 Laws & Legislation','#a16207']);
   sections=CANONICAL_SECTIONS;
+  window.__categoryRenderers=window.__categoryRenderers||{};
 
   function xtext(item,tag){return item.querySelector(tag)?.textContent?.trim()||''}
   function renderLegislationCards(visible,total,count){
@@ -966,15 +967,13 @@ syncDiscoveryButton();
     sec.appendChild(body);root.appendChild(sec);decorateNewBadges();
   }
 
-  const baseLegislationRender=canonicalRender;
-  canonicalRender=function(items){
-    if(active!=='legislation')return baseLegislationRender(items);
+  window.__categoryRenderers.legislation=function(items){
     const data=paginatedNewsItems(items);
     renderLegislationCards(data.visible,data.available.length,data.count);
     appendLoadMoreControl(data);
     if(typeof syncDiscoveryButton==='function')syncDiscoveryButton();
   };
-  render=canonicalRender;window.render=canonicalRender;window.canonicalRender=canonicalRender;
+
   canonicalBuildTabs();
 })();
 </script>
@@ -1061,20 +1060,22 @@ syncDiscoveryButton();
    if(def)def[1]=`📜 Federal + ${name}`;
    if(lastState!==code){lastState=code;if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();}
  }
- const previous=canonicalRender;
- canonicalRender=function(items){
-   if(active!=='legislation')return previous(items);
+
+ window.__categoryRenderers=window.__categoryRenderers||{};
+ const baseLegislationRenderer=window.__categoryRenderers.legislation;
+ if(typeof baseLegislationRenderer!=='function')throw new Error('Legislation category renderer missing before location patch');
+ window.__categoryRenderers.legislation=function(items){
    updateLabel();
    const code=stateCode();
    if(code!=='NM'&&!cacheLoaded)startCacheLoad().then(()=>{if(active==='legislation')canonicalRender(allItems)});
-   previous(locationItems(items));
+   baseLegislationRenderer(locationItems(items));
    const sec=document.querySelector('#news-feed .section');
    if(sec){
      const intro=sec.querySelector('.x-issues-intro');
      if(intro)intro.textContent=`Federal records come from Congress.gov. ${stateName()} follows your detected location. Official state records are used when available; otherwise established state news coverage is clearly labeled as supporting coverage.`;
    }
  };
- render=canonicalRender;window.render=canonicalRender;window.canonicalRender=canonicalRender;
+
  updateLabel();startCacheLoad();
  window.addEventListener('underreported:location',()=>{updateLabel();if(active==='legislation')canonicalRender(allItems)});
 })();
@@ -1193,19 +1194,13 @@ syncDiscoveryButton();
 (function(){
   'use strict';
   const AUTO_MS=15*60*1000;
-  const NEW_AGE_MS=60*60*1000;
-  const SOUND_KEY='underreported-sound-alerts-v2';
   let stats=null;
-  let serverNewLinks=new Set();
   let refreshState='scheduled';
   let tickTimer=null;
   let statsTimer=null;
-  let audioContext=null;
-  let audioReady=false;
 
   const byId=id=>document.getElementById(id);
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function normalizeLink(v){try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}catch(e){return String(v||'').trim()}}
   function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
   function countdown(ms){
     const total=Math.max(0,Math.ceil(ms/1000));
@@ -1226,7 +1221,6 @@ syncDiscoveryButton();
     const toolbar=document.querySelector('.toolbar');if(!toolbar)return null;
     panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel);return panel;
   }
-  function soundEnabled(){try{return localStorage.getItem(SOUND_KEY)==='on'}catch(e){return false}}
   function stateLabel(){
     if(refreshState==='checking'||window.pullInProgress)return '↻ Auto refresh checking';
     if(refreshState==='retrying')return '⚠ Auto refresh retrying';
@@ -1243,58 +1237,10 @@ syncDiscoveryButton();
     panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
   }
 
-  function synthPop(){
-    if(!audioContext||audioContext.state!=='running')return false;
-    try{
-      const now=audioContext.currentTime;
-      const gain=audioContext.createGain();gain.connect(audioContext.destination);
-      gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(.18,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.16);
-      [740,1040].forEach((freq,i)=>{const o=audioContext.createOscillator();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.045);o.connect(gain);o.start(now+i*.045);o.stop(now+.15);});
-      return true;
-    }catch(e){return false}
-  }
-  async function ensureAudio(){
-    try{
-      if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();
-      if(audioContext.state==='suspended')await audioContext.resume();
-      audioReady=audioContext.state==='running';
-    }catch(e){audioReady=false}
-    return audioReady;
-  }
-  async function enableSound(test){
-    const ok=await ensureAudio();
-    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
-    renderStatus();return ok;
-  }
-  window.enableNewArticleSound=async function(){return false};
-  window.playNewArticlePop=function(){return false};
-  // A remembered preference is re-activated by the first normal user gesture,
-  // satisfying mobile autoplay rules without making every page load beep.
-
-  function cardPublishedMs(card){
-    const text=card.querySelector('.meta span')?.textContent||'';
-    const d=Date.parse(text);return Number.isFinite(d)?d:0;
-  }
-  function cardIsNew(card){
-    const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
-    if(href&&serverNewLinks.has(href))return true;
-    const published=cardPublishedMs(card);
-    return !!published&&Date.now()-published>=-5*60*1000&&Date.now()-published<=NEW_AGE_MS;
-  }
-  window.decorateNewBadges=function(){
-    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
-      const h=card.querySelector('h3');if(!h)return;
-      const existing=h.querySelector('.new-badge');const fresh=cardIsNew(card);
-      if(fresh&&!existing){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';badge.title='Newly discovered or published within the last hour';h.appendChild(badge)}
-      else if(!fresh&&existing)existing.remove();
-    });
-  };
-
   async function loadStats(){
     try{
       const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
       stats=await r.json();
-      serverNewLinks=new Set((stats.newLinks||[]).map(normalizeLink));
       const parsed=Date.parse(stats.updatedAt||'');
       if(Number.isFinite(parsed)){
         window.lastSuccessfulPull=Math.max(Number(window.lastSuccessfulPull)||0,parsed);
@@ -1302,10 +1248,10 @@ syncDiscoveryButton();
         if(next<=now&&refreshState!=='retrying')window.nextScheduledPull=Math.max(parsed+AUTO_MS,now+1000);
       }
     }catch(e){console.warn('Update statistics unavailable:',e)}
-    window.decorateNewBadges();renderStatus();
+    if(typeof window.decorateNewBadges==='function')window.decorateNewBadges();
+    renderStatus();
   }
 
-  // Keep the Top discovery button behavior that the older status controller owned.
   function wireTopButton(){
     const btn=byId('refresh');if(!btn)return;
     const current=()=>{try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}};
@@ -1334,8 +1280,7 @@ syncDiscoveryButton();
     wrapped.__v22Wrapped=true;window.refreshNewsFromPage=wrapped;
   }
 
-  const feed=byId('news-feed');if(feed)new MutationObserver(()=>window.decorateNewBadges()).observe(feed,{childList:true,subtree:true});
-  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();window.decorateNewBadges();renderStatus()},0));
+  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();renderStatus()},0));
   function tick(){renderStatus();tickTimer=setTimeout(tick,1000-(Date.now()%1000)+20)}
   function refreshStatsLoop(){void loadStats();statsTimer=setTimeout(refreshStatsLoop,60000)}
   wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);
@@ -1462,14 +1407,6 @@ syncDiscoveryButton();
     decorate();
   }
 
-  window.__queueNewArticlePopV23=function(count){return Number(count)||0};
-  function playOnlyForVerifiedNew(count){
-    if(!(count>0))return false;
-    if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
-    return false;
-  }
-  window.__playVerifiedNewV23=playOnlyForVerifiedNew;
-
   function wrapRefresh(){
     if(refreshWrapped||typeof window.refreshNewsFromPage!=='function')return;
     const previous=window.refreshNewsFromPage;
@@ -1482,7 +1419,6 @@ syncDiscoveryButton();
       if(discovered.length)markClientNew(discovered);
       await syncServerNew();
       decorate();
-      playOnlyForVerifiedNew(discovered.length);
       return result;
     };
     wrapped.__v23Wrapped=true;
