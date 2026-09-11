@@ -121,6 +121,20 @@ jobs:
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
+      - name: Verify no strong duplicate pairs remain
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('verification-report.json').read_text(encoding='utf-8'))
+          pairs=report.get('residualStrongDuplicatePairs',[])
+          if pairs:
+              print('Residual strong duplicate pairs remain:')
+              for pair in pairs[:20]: print(pair)
+              raise SystemExit(1)
+          print('Final duplicate guard passed.')
+          PY
+
       - name: Finalize feed pull statistics
         run: python scripts/record_pull_stats.py --finalize
 
@@ -132,9 +146,6 @@ jobs:
 
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
-
-      - name: Add Underreported age border system
-        run: python scripts/patch_underreported_age_ui.py
 
       - name: Audit generated site integrity
         run: python scripts/site_audit.py

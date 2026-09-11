@@ -1,0 +1,91 @@
+name: Feed Stabilization Validation
+
+on:
+  push:
+    branches: [fix-feed-dedupe-rss-underreported]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: feed-stabilization-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Duplicate regression tests
+        run: python tests/verify_feed_regressions.py
+
+      - name: Collector preflight
+        run: python scripts/preflight_feed.py
+
+      - name: Generate live branch feed
+        run: python scripts/update_news.py
+
+      - name: Run production enrichment and Underreported ranking
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_v2.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+
+      - name: Run final verifier
+        run: python scripts/verify_feed.py --apply
+
+      - name: Assert duplicate guard and known false-positive protection
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('verification-report.json').read_text(encoding='utf-8'))
+          pairs=report.get('residualStrongDuplicatePairs',[])
+          assert not pairs, 'Strong duplicate pairs remain: '+repr(pairs[:10])
+          for cluster in report.get('clusters',[]):
+              titles=' '.join([cluster.get('kept','')]+cluster.get('removed',[])).lower()
+              if cluster.get('category')=='region' and cluster.get('size',0)>5 and 'football' in titles:
+                  raise AssertionError('Over-broad regional football cluster remains: '+repr(cluster))
+          print('Duplicate verification guard passed.')
+          PY
+
+      - name: Install content brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Create content briefs
+        run: python scripts/create_content_briefs.py
+
+      - name: Build site
+        run: python scripts/build_site.py
+
+      - name: Site audit
+        run: python scripts/site_audit.py
+
+      - name: Verify refresh and Underreported UI invariants
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('index.html').read_text(encoding='utf-8')
+          ui=Path('assets/v3-ui.js').read_text(encoding='utf-8')
+          workflow=Path('.github/workflows/update-news.yml').read_text(encoding='utf-8')
+          assert 'refresh-success-handling-v3' in html, 'New resilient refresh handler missing'
+          assert 'raw.githubusercontent.com/battleatom/News/main/News' in html, 'Raw feed fallback missing'
+          assert 'Feed temporarily unavailable · retrying' in html, 'Neutral transient feed state missing'
+          assert 'underreported-age-styles-v31' in ui, 'Stable Underreported age UI missing'
+          assert 'Add Underreported age border system' not in workflow, 'Post-build age patch still in production workflow'
+          print('Refresh and Underreported UI invariants passed.')
+          PY

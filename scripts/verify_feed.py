@@ -62,6 +62,7 @@ GENERIC = set().union(*EVENT_GROUPS.values()) | {
     "united", "states", "news", "breaking", "today", "latest", "new",
     "plan", "plans", "proposal", "proposals", "proposed", "announce", "announces",
     "announced", "says", "said", "could", "would", "may", "might", "people",
+    "week", "weeks", "season", "live", "results", "result", "schedule", "scores",
 }
 SOURCE_TIERS = {
     "reuters": 10, "associated press": 10, "ap news": 10, "bbc": 9,
@@ -70,11 +71,13 @@ SOURCE_TIERS = {
     "politico": 7, "the hill": 7, "ars technica": 8, "the verge": 8,
     "techcrunch": 7, "ign": 7, "gamespot": 7, "nfl.com": 8, "espn": 8,
 }
+
+HIGH_COLLISION_CATEGORIES = {"region", "local", "nm", "nfl", "technology", "gaming"}
 CATEGORY_ANCHOR_MIN = {
-    "technology": 3, "gaming": 3, "nfl": 3,
-    "world": 2, "military": 2, "federal": 2, "presidential": 2,
-    "legislation": 2, "us": 2, "nm": 2, "local": 2, "region": 2,
-    "top": 2, "underreported": 2,
+    "technology": 4, "gaming": 4, "nfl": 4,
+    "world": 3, "military": 3, "federal": 3, "presidential": 3,
+    "legislation": 3, "us": 3, "nm": 3, "local": 3, "region": 2,
+    "top": 3, "underreported": 3,
 }
 
 
@@ -97,6 +100,11 @@ def full_text(item: ET.Element) -> str:
 def normalized_tokens(item: ET.Element) -> set[str]:
     words = re.findall(r"[a-z0-9]+", full_text(item).lower())
     return {w for w in words if len(w) >= 3 and w not in legacy.STOP_WORDS}
+
+
+def title_specific_tokens(item: ET.Element) -> set[str]:
+    words = re.findall(r"[a-z0-9]+", title(item).lower())
+    return {w for w in words if len(w) >= 3 and w not in legacy.STOP_WORDS and w not in GENERIC}
 
 
 def specific_tokens(item: ET.Element) -> set[str]:
@@ -122,7 +130,7 @@ def amount_keys(item: ET.Element) -> set[str]:
             value = int(raw.replace(",", ""))
         except ValueError:
             continue
-        if 1900 <= value <= 2100:  # years are not distinctive event identifiers
+        if 1900 <= value <= 2100:
             continue
         if value >= 1000:
             keys.add(f"num:{value}")
@@ -130,11 +138,12 @@ def amount_keys(item: ET.Element) -> set[str]:
 
 
 def entity_keys(item: ET.Element) -> set[str]:
-    # Lightweight deterministic entity anchors. Multiword title phrases are preferred
-    # over arbitrary capitalization, and broad news words are removed.
     raw = title(item)
     chunks = re.findall(r"\b(?:[A-Z][a-z]+|[A-Z]{2,})(?:\s+(?:[A-Z][a-z]+|[A-Z]{2,})){0,3}\b", raw)
-    noise = {"the", "new", "united states", "white house", "president", "news", "breaking", "today"}
+    noise = {
+        "the", "new", "united states", "white house", "president", "news", "breaking", "today",
+        "rnc", "gop", "democrats", "republicans", "republican", "democrat",
+    }
     out = set()
     for chunk in chunks:
         key = re.sub(r"\s+", " ", chunk.lower()).strip()
@@ -143,14 +152,26 @@ def entity_keys(item: ET.Element) -> set[str]:
     return out
 
 
+def near_exact_title(a: ET.Element, b: ET.Element) -> bool:
+    ta = legacy.tokens(a)
+    tb = legacy.tokens(b)
+    if not ta or not tb:
+        return False
+    shared = len(ta & tb)
+    smaller = min(len(ta), len(tb))
+    return smaller >= 5 and shared >= 5 and shared / smaller >= 0.90
+
+
 def same_event(a: ET.Element, b: ET.Element) -> bool:
     if category(a) != category(b):
         return False
     if not legacy.looks_english(a) or not legacy.looks_english(b):
         return False
 
-    # Existing carefully tuned near-duplicate logic remains a strong signal.
-    if legacy.same_story(a, b):
+    cat = category(a)
+    if near_exact_title(a, b):
+        return True
+    if cat not in HIGH_COLLISION_CATEGORIES and legacy.same_story(a, b):
         return True
 
     ga, gb = event_groups(a), event_groups(b)
@@ -161,25 +182,24 @@ def same_event(a: ET.Element, b: ET.Element) -> bool:
     amounts = amount_keys(a) & amount_keys(b)
     entities = entity_keys(a) & entity_keys(b)
     shared = specific_tokens(a) & specific_tokens(b)
-    cat = category(a)
-    minimum = CATEGORY_ANCHOR_MIN.get(cat, 2)
+    title_shared = title_specific_tokens(a) & title_specific_tokens(b)
+    minimum = CATEGORY_ANCHOR_MIN.get(cat, 3)
 
-    # A distinctive amount is powerful, but still requires a semantic anchor.
-    if amounts and (entities or len(shared) >= 1):
+    if amounts and (entities or len(shared) >= 2):
         return True
 
-    # Same named subject + same event family + category-specific content anchors.
     if entities and len(shared) >= minimum:
-        return True
+        if cat not in HIGH_COLLISION_CATEGORIES or len(title_shared) >= 2:
+            return True
 
-    # Strong lexical overlap can identify differently worded copies without an
-    # easily extracted proper name. Use stricter thresholds for jargon-heavy tabs.
     ta, tb = specific_tokens(a), specific_tokens(b)
     if ta and tb:
         overlap = len(ta & tb) / max(1, min(len(ta), len(tb)))
-        threshold = 0.72 if cat in {"technology", "gaming", "nfl"} else 0.62
-        if len(ta & tb) >= max(3, minimum) and overlap >= threshold:
-            return True
+        threshold = 0.80 if cat in HIGH_COLLISION_CATEGORIES else 0.70
+        required = max(4, minimum)
+        if len(ta & tb) >= required and overlap >= threshold:
+            if cat not in HIGH_COLLISION_CATEGORIES or len(title_shared) >= 3:
+                return True
     return False
 
 
@@ -198,7 +218,6 @@ def representative_score(item: ET.Element) -> tuple:
     source_score = max((score for key, score in SOURCE_TIERS.items() if key in source), default=5)
     desc_len = min(len(clean(item.findtext("description"))), 1400)
     title_len = len(title(item))
-    # Tuple ordering gives source authority first, then recency/completeness/clarity.
     return (source_score, parsed_time(item), desc_len, min(title_len, 160))
 
 
@@ -250,6 +269,19 @@ def cluster_indices(items: list[ET.Element]) -> list[list[int]]:
     return list(groups.values())
 
 
+def residual_duplicate_pairs(items: list[ET.Element]) -> list[dict]:
+    pairs = []
+    by_category: dict[str, list[ET.Element]] = defaultdict(list)
+    for item in items:
+        by_category[category(item)].append(item)
+    for cat, group in by_category.items():
+        for pos, a in enumerate(group):
+            for b in group[pos + 1:]:
+                if near_exact_title(a, b):
+                    pairs.append({"category": cat, "a": title(a), "b": title(b)})
+    return pairs
+
+
 def run(feed: Path, apply: bool) -> dict:
     tree = ET.parse(feed)
     channel = tree.getroot().find("channel")
@@ -260,7 +292,6 @@ def run(feed: Path, apply: bool) -> dict:
     decisions = []
     rejected: set[int] = set()
 
-    # Source/category verification first.
     for i, item in enumerate(original_items):
         d = classify(item)
         d["index"] = i
@@ -277,8 +308,6 @@ def run(feed: Path, apply: bool) -> dict:
 
     candidate_indices = [i for i in range(len(original_items)) if i not in rejected]
     candidates = [original_items[i] for i in candidate_indices]
-
-    # True connected-component clustering solves A~B, B~C, A!~C chains.
     clusters = cluster_indices(candidates)
     removed_event: set[int] = set()
     cluster_report = []
@@ -309,6 +338,7 @@ def run(feed: Path, apply: bool) -> dict:
         item for i, item in enumerate(original_items)
         if i not in rejected and i not in removed_event and legacy.looks_english(item)
     ]
+    residual = residual_duplicate_pairs(final_items)
 
     if apply:
         for item in list(channel.findall("item")):
@@ -326,20 +356,23 @@ def run(feed: Path, apply: bool) -> dict:
         "classifierActions": dict(action_counts),
         "rejectedSources": len(rejected),
         "removedEventDuplicates": len(removed_event),
+        "residualStrongDuplicatePairs": residual,
         "clusters": cluster_report,
         "decisions": decisions,
         "policy": {
             "rerouteThreshold": HIGH_CONFIDENCE_REROUTE,
-            "eventClustering": "connected-components-per-tab",
+            "eventClustering": "connected-components-per-tab-strict",
             "representativeSelection": "source-authority, recency, completeness, title-clarity",
             "crossTabPolicy": "same event may appear once in each genuinely relevant tab",
             "yearsExcludedFromNumericFingerprint": True,
+            "highCollisionCategories": sorted(HIGH_COLLISION_CATEGORIES),
         },
     }
     REPORT.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(f"Verification gate: {len(original_items)} -> {len(final_items)} articles")
     print(f"Rejected sources: {len(rejected)}")
     print(f"Event duplicates removed: {len(removed_event)} across {len(cluster_report)} clusters")
+    print(f"Residual strong duplicate pairs: {len(residual)}")
     print("Classifier actions:", dict(action_counts))
     return report
 
