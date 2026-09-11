@@ -38,6 +38,8 @@ FOREIGN_TERMS = (
     "brazil", "brazilian", "argentina", "argentine", "colombia", "mexico", "mexican",
     "canada", "canadian", "united kingdom", "britain", "british", "england", "london",
     "france", "french", "germany", "german", "italy", "italian", "spain", "spanish",
+    "sweden", "swedish", "norway", "norwegian", "denmark", "danish", "finland", "finnish",
+    "poland", "polish", "netherlands", "dutch", "belgium", "belgian", "austria", "austrian",
     "european union", "europe", "ukraine", "ukrainian", "russia", "russian", "moscow",
     "china", "chinese", "beijing", "japan", "japanese", "south korea", "korean",
     "india", "indian", "pakistan", "iran", "iranian", "israel", "israeli", "gaza",
@@ -55,6 +57,20 @@ FOREIGN_FOCUS_TERMS = (
     "supreme federal court of brazil", "brazil supreme court",
 )
 
+LEGISLATION_SOURCE_TERMS = (
+    "congress.gov", "congress gov", "federalregister.gov", "federal register",
+    "nmlegis.gov", "new mexico legislature",
+)
+
+LEGISLATION_TITLE_PATTERNS = (
+    r"\bh\.?\s*r\.?\s*\d+\b",
+    r"\bs\.?\s*\d+\b",
+    r"\bh\.?\s*j\.?\s*res\.?\s*\d+\b",
+    r"\bs\.?\s*j\.?\s*res\.?\s*\d+\b",
+    r"\bh\.?\s*con\.?\s*res\.?\s*\d+\b",
+    r"\bs\.?\s*con\.?\s*res\.?\s*\d+\b",
+)
+
 
 def clean(value):
     value = html.unescape(value or "")
@@ -66,6 +82,28 @@ def has_any(text, terms):
     return any(term in text for term in terms)
 
 
+def set_category(item, category):
+    category_el = item.find("category")
+    if category_el is None:
+        category_el = ET.SubElement(item, "category")
+    category_el.text = category
+
+
+def is_official_legislation(item):
+    title = clean(item.findtext("title"))
+    source = clean(item.findtext("source"))
+    link = clean(item.findtext("link"))
+    official = clean(item.findtext("officialSource"))
+    bill_number = clean(item.findtext("billNumber"))
+    combined_source = f"{source} {link} {official}"
+
+    if has_any(combined_source, LEGISLATION_SOURCE_TERMS):
+        return True
+    if bill_number:
+        return True
+    return any(re.search(pattern, title, flags=re.I) for pattern in LEGISLATION_TITLE_PATTERNS)
+
+
 def federal_item_is_us(item):
     title = clean(item.findtext("title"))
     supporting = " ".join(
@@ -74,9 +112,8 @@ def federal_item_is_us(item):
     )
     full_text = f"{title} {supporting}".strip()
 
-    # Headline subject wins. A headline explicitly about Brazil, a Brazilian
-    # judge/official, or another foreign government belongs in World even if the
-    # article also mentions U.S. sanctions, Treasury, State, Congress, etc.
+    # Headline subject wins. A headline explicitly about another country,
+    # foreign court or foreign official cannot stay in U.S. Federal.
     if has_any(title, FOREIGN_TERMS) or has_any(title, FOREIGN_FOCUS_TERMS):
         return False
 
@@ -104,26 +141,51 @@ def main():
     if channel is None:
         raise SystemExit("RSS channel not found")
 
-    moved = 0
+    moved_world = 0
+    moved_legislation = 0
     kept_federal = 0
+
     for item in channel.findall("item"):
         category = clean(item.findtext("category"))
         if category != "federal":
             continue
+
+        # Official legislative records are a dedicated product surface. They must
+        # never remain in the general Federal news tab even if later verification
+        # sees words such as Congress, House, Senate, or federal.
+        if is_official_legislation(item):
+            set_category(item, "legislation")
+            moved_legislation += 1
+            continue
+
         if federal_item_is_us(item):
             kept_federal += 1
             continue
-        category_el = item.find("category")
-        if category_el is None:
-            category_el = ET.SubElement(item, "category")
-        category_el.text = "world"
+
+        set_category(item, "world")
         region_el = item.find("region")
         if region_el is not None:
             region_el.text = ""
-        moved += 1
+        moved_world += 1
+
+    # Fail closed if an official legislative record somehow remains in Federal.
+    leaked_legislation = [
+        clean(i.findtext("title"))
+        for i in channel.findall("item")
+        if clean(i.findtext("category")) == "federal" and is_official_legislation(i)
+    ]
+    if leaked_legislation:
+        raise SystemExit(
+            "Federal integrity check failed; legislation still present: "
+            + "; ".join(leaked_legislation[:10])
+        )
 
     tree.write(NEWS_FILE, encoding="utf-8", xml_declaration=True)
-    print(f"Federal US-only filter kept {kept_federal} U.S. federal stories and routed {moved} non-U.S./unclear stories to World.")
+    print(
+        "Federal integrity filter kept "
+        f"{kept_federal} U.S. federal stories, routed {moved_legislation} official legislative "
+        f"record(s) to Legislation, and routed {moved_world} non-U.S./unclear story/stories out of Federal."
+    )
 
 
 if __name__ == "__main__":
