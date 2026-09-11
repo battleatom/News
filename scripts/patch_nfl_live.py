@@ -9,7 +9,17 @@ while marker in s:
     if b<0: break
     s=s[:a]+s[b+9:]
 
-STYLE='''<style id="nfl-live-style">.nfl-live-note{padding:8px 11px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(255,255,255,.68);font-size:11px;line-height:1.35;color:#64748b}.nfl-live-note strong{color:#166534}.nfl-game-card{padding:12px 12px!important;min-height:0!important;margin:9px 0!important}.nfl-score-line{display:flex;align-items:center;gap:8px;min-width:0;flex-wrap:wrap;font-size:15px!important;line-height:1.3!important;color:#334155}.nfl-score-line .teams{font-size:18px!important;font-weight:900;color:#0f172a;letter-spacing:.01em}.nfl-score-line .status{font-size:12px!important;font-weight:800;color:#64748b}.nfl-score-line .tv{margin-left:auto;overflow:hidden;text-overflow:ellipsis;color:#475569;font-size:11px}.nfl-score-line a{font-size:11px}.nfl-live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 2px rgba(22,163,74,.12)}@media(max-width:600px){.nfl-live-note{font-size:11px;padding:8px 10px}.nfl-game-card{padding:11px 10px!important;margin:8px 0!important}.nfl-score-line{gap:6px;font-size:14px!important;line-height:1.3!important}.nfl-score-line .teams{font-size:17px!important;line-height:1.2!important;flex:1 1 100%}.nfl-score-line .status{font-size:11px!important;font-weight:800}.nfl-score-line .tv{font-size:11px;margin-left:0;flex:1 1 100%;white-space:normal}.nfl-score-line a{font-size:11px}}</style>'''
+STYLE='''<style id="nfl-live-style">
+.nfl-live-note{padding:8px 11px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(255,255,255,.68);font-size:11px;line-height:1.35;color:#64748b}.nfl-live-note strong{color:#166534}
+.nfl-games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
+.nfl-game-card{padding:10px 11px!important;min-height:126px!important;margin:0!important;display:flex;flex-direction:column;justify-content:space-between;gap:7px}
+.nfl-game-card.nfl-next{box-shadow:0 0 0 2px rgba(22,101,52,.16)}
+.nfl-game-top{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:18px}.nfl-badge{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#166534;background:rgba(22,163,74,.10);border-radius:999px;padding:3px 6px;white-space:nowrap}.nfl-badge.live{color:#b91c1c;background:rgba(239,68,68,.10)}.nfl-badge.final{color:#64748b;background:rgba(100,116,139,.10)}
+.nfl-matchup{display:grid;gap:5px}.nfl-team-row{display:flex;align-items:flex-start;justify-content:space-between;gap:7px;min-width:0}.nfl-team-name{font-size:13px;font-weight:850;line-height:1.16;color:#0f172a;min-width:0}.nfl-team-score{font-size:16px;font-weight:900;line-height:1;color:#0f172a;flex:0 0 auto}.nfl-at{font-size:9px;font-weight:800;color:#94a3b8;text-transform:uppercase;letter-spacing:.08em}
+.nfl-game-meta{display:flex;align-items:flex-end;justify-content:space-between;gap:6px;margin-top:auto}.nfl-status{font-size:10px!important;font-weight:800;color:#64748b;line-height:1.25}.nfl-tv{font-size:10px;color:#475569;text-align:right;line-height:1.2}.nfl-tv a{font-size:10px}.nfl-live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 2px rgba(22,163,74,.12)}
+@media(max-width:900px){.nfl-games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.nfl-live-note{font-size:11px;padding:7px 9px;margin-bottom:8px}.nfl-games-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nfl-game-card{padding:9px 9px!important;min-height:134px!important}.nfl-team-name{font-size:12.5px}.nfl-team-score{font-size:15px}.nfl-status,.nfl-tv,.nfl-tv a{font-size:9.5px}}
+</style>'''
 # Replace any previous NFL style block instead of stacking another override.
 s=re.sub(r'<style id="nfl-live-style">.*?</style>', '', s, flags=re.S)
 s=s.replace('</head>',STYLE+'\n</head>',1)
@@ -22,12 +32,37 @@ function renderNfl(){
  const h=document.createElement('div');h.className='section-header';h.innerHTML='<h2>🏈 NFL</h2><span class="count"><span class="nfl-live-dot"></span>Live scoreboard</span>';sec.appendChild(h);
  const body=document.createElement('div');body.className='section-body';body.innerHTML='<div class="loading">Loading live NFL scores…</div>';sec.appendChild(body);root.appendChild(sec);
  const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec';body.appendChild(note);
+ const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);
+ function eventTime(ev){const t=Date.parse(ev.date||'');return Number.isFinite(t)?t:0;}
+ function eventRank(ev){const state=ev.status?.type?.state;return state==='in'?0:state==='pre'?1:2;}
+ function sortedEvents(events){
+  return [...events].sort((a,b)=>{const ra=eventRank(a),rb=eventRank(b);if(ra!==rb)return ra-rb;const ta=eventTime(a),tb=eventTime(b);return ra===2?tb-ta:ta-tb;});
+ }
  async function load(){
   try{
    const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
-   [...body.querySelectorAll('.nfl-game-card,.nfl-empty,.loading,.nfl-error')].forEach(x=>x.remove());
+   [...body.querySelectorAll('.nfl-empty,.loading,.nfl-error')].forEach(x=>x.remove());grid.innerHTML='';
    if(!d.events?.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No NFL games currently scheduled.';body.appendChild(e);return;}
-   d.events.forEach(ev=>{const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home');const card=document.createElement('article');card.className='news-item nfl-game-card';const state=ev.status?.type?.state,detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled';const broadcasts=(c?.broadcasts||[]).flatMap(x=>x.names||[]).filter(Boolean);const watch=(ev.links||[]).find(x=>Array.isArray(x.rel)&&x.rel.some(r=>String(r).toLowerCase().includes('watch')));const when=state==='post'?'FINAL':detail;const away=esc(a?.team?.abbreviation||a?.team?.shortDisplayName||'AWAY'),home=esc(h?.team?.abbreviation||h?.team?.shortDisplayName||'HOME');const tv=broadcasts.length?esc(broadcasts.join(' · ')):'';const watchHtml=watch?.href?` <a href="${esc(watch.href)}" target="_blank" rel="noopener noreferrer">Watch</a>`:'';card.innerHTML=`<div class="nfl-score-line"><span class="teams">${away} ${esc(a?.score??'-')} @ ${home} ${esc(h?.score??'-')}</span><span class="status">${esc(when)}</span>${tv?`<span class="tv">${tv}${watchHtml}</span>`:''}</div>`;body.appendChild(card);});
+   const events=sortedEvents(d.events);
+   const hasLive=events.some(ev=>ev.status?.type?.state==='in');
+   const nextIndex=hasLive?-1:events.findIndex(ev=>ev.status?.type?.state==='pre');
+   events.forEach((ev,index)=>{
+    const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home');
+    const state=ev.status?.type?.state,detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled';
+    const broadcasts=(c?.broadcasts||[]).flatMap(x=>x.names||[]).filter(Boolean);
+    const watch=(ev.links||[]).find(x=>Array.isArray(x.rel)&&x.rel.some(r=>String(r).toLowerCase().includes('watch')));
+    const when=state==='post'?'FINAL':detail;
+    const awayName=esc(a?.team?.displayName||a?.team?.shortDisplayName||a?.team?.name||'Away');
+    const homeName=esc(h?.team?.displayName||h?.team?.shortDisplayName||h?.team?.name||'Home');
+    const awayScore=esc(a?.score??(state==='pre'?'0':'-')),homeScore=esc(h?.score??(state==='pre'?'0':'-'));
+    const tv=broadcasts.length?esc(broadcasts.join(' · ')):'';
+    const watchHtml=watch?.href?` <a href="${esc(watch.href)}" target="_blank" rel="noopener noreferrer">Watch</a>`:'';
+    const card=document.createElement('article');card.className='news-item nfl-game-card';
+    const isNext=index===nextIndex; if(isNext)card.classList.add('nfl-next');
+    const badge=state==='in'?'<span class="nfl-badge live">LIVE</span>':isNext?'<span class="nfl-badge">NEXT</span>':state==='post'?'<span class="nfl-badge final">FINAL</span>':'<span></span>';
+    card.innerHTML=`<div class="nfl-game-top">${badge}</div><div class="nfl-matchup"><div class="nfl-team-row"><span class="nfl-team-name">${awayName}</span><span class="nfl-team-score">${awayScore}</span></div><div class="nfl-at">at</div><div class="nfl-team-row"><span class="nfl-team-name">${homeName}</span><span class="nfl-team-score">${homeScore}</span></div></div><div class="nfl-game-meta"><span class="nfl-status">${esc(when)}</span>${tv?`<span class="nfl-tv">${tv}${watchHtml}</span>`:''}</div>`;
+    grid.appendChild(card);
+   });
   }catch(e){const old=body.querySelector('.nfl-error');if(!old){const err=document.createElement('div');err.className='empty nfl-error';err.textContent='NFL live data is temporarily unavailable; try Refresh.';body.appendChild(err);}}
  }
  load();if(nflRefreshTimer)clearInterval(nflRefreshTimer);nflRefreshTimer=setInterval(()=>{if(active==='nfl')load();},30000);
@@ -57,4 +92,4 @@ else window.addEventListener('load',scheduleSavedNflRestore,{once:true});
 </script>'''
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 p.write_text(s,encoding='utf-8')
-print('Added balanced, readable live NFL scoreboard through the canonical render router.')
+print('Added compact ordered NFL scoreboard grid with full team names.')
