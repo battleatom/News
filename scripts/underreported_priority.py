@@ -73,12 +73,25 @@ def item_text(item: ET.Element) -> str:
     return f"{clean(item.findtext('title'))} {clean(item.findtext('description'))}".lower()
 
 
+def term_present(text: str, term: str) -> bool:
+    """Match whole words/phrases so 'war' does not match 'Warriors'."""
+    words = [re.escape(part) for part in term.lower().split() if part]
+    if not words:
+        return False
+    pattern = r"\b" + r"\s+".join(words) + r"\b"
+    return re.search(pattern, text.lower()) is not None
+
+
+def any_term(text: str, terms) -> bool:
+    return any(term_present(text, term) for term in terms)
+
+
 def underreported_eligible(item: ET.Element) -> bool:
     """Keep public-interest reporting while rejecting routine consumer-tech/gaming churn."""
     text = item_text(item)
     source = clean(item.findtext("source")).lower()
-    public_interest = any(term in text for term in PUBLIC_INTEREST_TERMS)
-    low_value_signal = any(term in text for term in LOW_VALUE_TECH_GAMING_TERMS)
+    public_interest = any_term(text, PUBLIC_INTEREST_TERMS)
+    low_value_signal = any_term(text, LOW_VALUE_TECH_GAMING_TERMS)
     low_value_source = source in LOW_VALUE_TECH_GAMING_SOURCES
 
     # Product/release/review coverage from gaming/consumer-tech outlets is not
@@ -165,9 +178,9 @@ def importance_score(item: ET.Element) -> int:
         "humanitarian": 12, "famine": 15, "refugee": 10,
     }
     for term, weight in weighted.items():
-        if term in text:
+        if term_present(text, term):
             score += weight
-    if any(x in text for x in ("opinion", "review", "podcast", "how to", "guide", "sale", "deal")):
+    if any_term(text, ("opinion", "review", "podcast", "how to", "guide", "sale", "deal")):
         score -= 18
     return max(0, min(100, score))
 
@@ -218,7 +231,7 @@ def continuing_relevance_score(item: ET.Element, dt, now) -> int:
     text = item_text(item)
     age_days = max(0.0, (now - dt).total_seconds() / 86400) if dt else MAX_DAYS
     score = max(25, 70 - round(age_days * 2.5))
-    if any(term in text for term in CONTINUING_TERMS):
+    if any_term(text, CONTINUING_TERMS):
         score += 18
     if clean(item.findtext("whatNext")):
         score += 8
