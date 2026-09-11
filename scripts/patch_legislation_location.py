@@ -91,20 +91,22 @@ SCRIPT=r'''<script id="legislation-location-v1">
    if(def)def[1]=`📜 Federal + ${name}`;
    if(lastState!==code){lastState=code;if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();}
  }
- const previous=canonicalRender;
- canonicalRender=function(items){
-   if(active!=='legislation')return previous(items);
+
+ window.__categoryRenderers=window.__categoryRenderers||{};
+ const baseLegislationRenderer=window.__categoryRenderers.legislation;
+ if(typeof baseLegislationRenderer!=='function')throw new Error('Legislation category renderer missing before location patch');
+ window.__categoryRenderers.legislation=function(items){
    updateLabel();
    const code=stateCode();
    if(code!=='NM'&&!cacheLoaded)startCacheLoad().then(()=>{if(active==='legislation')canonicalRender(allItems)});
-   previous(locationItems(items));
+   baseLegislationRenderer(locationItems(items));
    const sec=document.querySelector('#news-feed .section');
    if(sec){
      const intro=sec.querySelector('.x-issues-intro');
      if(intro)intro.textContent=`Federal records come from Congress.gov. ${stateName()} follows your detected location. Official state records are used when available; otherwise established state news coverage is clearly labeled as supporting coverage.`;
    }
  };
- render=canonicalRender;window.render=canonicalRender;window.canonicalRender=canonicalRender;
+
  updateLabel();startCacheLoad();
  window.addEventListener('underreported:location',()=>{updateLabel();if(active==='legislation')canonicalRender(allItems)});
 })();
@@ -112,4 +114,4 @@ SCRIPT=r'''<script id="legislation-location-v1">
 if '</body>' not in s: raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Legislation follows detected state with official records first and state-news fallback coverage.')
+print('Legislation location now extends the registered category renderer without wrapping canonicalRender.')
