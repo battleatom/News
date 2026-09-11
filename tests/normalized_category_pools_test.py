@@ -28,6 +28,7 @@ def test_policy():
             assert policy == (20, 25, 30)
         else:
             assert policy == (30, 35, 40), (category, policy)
+    assert "legislation" not in normalized.POOL_POLICY
     assert normalized.core.MAX_AGE_HOURS == 96
     assert "when%3A4d" in normalized.core.feed_url("US news")
 
@@ -36,6 +37,11 @@ def test_normal_category_target():
     stories = [item("us", i, hours=i / 2) for i in range(60)]
     chosen = normalized.normalized_select_category(stories)
     assert len(chosen) == 35, len(chosen)
+
+
+def test_legislation_is_not_news_pool():
+    stories = [item("legislation", i) for i in range(40)]
+    assert normalized.normalized_select_category(stories) == []
 
 
 def test_local_target():
@@ -70,6 +76,7 @@ def test_previously_unprotected_fallbacks():
 if __name__ == "__main__":
     test_policy()
     test_normal_category_target()
+    test_legislation_is_not_news_pool()
     test_local_target()
     test_region_hard_cap_and_balance()
     test_previously_unprotected_fallbacks()
