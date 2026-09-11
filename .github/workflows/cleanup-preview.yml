@@ -99,7 +99,7 @@ jobs:
           required=(
               'data-underreported-version="2"',
               'styles/v2.css?v=5',
-              'assets/location-v2.js?v=2',
+              'assets/location-v2.js?v=3',
               'assets/app-v2.js?v=3',
               'assets/location-content-v25.js?v=2',
               'auto-refresh-timer-v1',
