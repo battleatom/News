@@ -111,6 +111,9 @@ jobs:
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
 
+      - name: Validate article/category relevance
+        run: python scripts/filter_category_relevance.py
+
       - name: Collect official legislation records
         run: python scripts/collect_official_legislation_v2.py
 
