@@ -3,8 +3,6 @@ from pathlib import Path
 path = Path("index.html")
 text = path.read_text(encoding="utf-8")
 
-section_old = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a05'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
-section_alt = "const sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a00'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b']];"
 # Leave the authoritative section declaration alone if it already contains X.
 if "['x','𝕏 Top Issues','#111827']" not in text:
     text = text.replace("['nfl','🏈 NFL','#166534'],", "['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],", 1)
@@ -16,13 +14,13 @@ while marker in text:
     text = text[:s] + text[e+9:]
 
 script = r'''<script id="x-issues-ui-v1">
-const baseRenderForX=render;
+window.__categoryRenderers=window.__categoryRenderers||{};
 function renderXIssues(items){
  const list=items.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='x');
  const root=document.getElementById('news-feed');root.innerHTML='';
  const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent','#111827');
  const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>𝕏 What's Trending</h2><span class="count">${list.length} category leaders</span>`;sec.appendChild(head);
- const intro=document.createElement('div');intro.className='x-issues-intro';intro.textContent='One leading issue per category. X activity identifies the conversation; independent reporting provides the explanation. A conversation is not proof of a claim.';sec.appendChild(intro);
+ const intro=document.createElement('div');intro.className='x-issues-intro';intro.textContent='Ten fixed topic slots surface one current conversation each. X activity identifies the conversation; independent reporting provides the explanation. A conversation is not proof of a claim.';sec.appendChild(intro);
  const body=document.createElement('div');body.className='section-body';
  list.forEach((item,i)=>{
    const ar=document.createElement('article');ar.className='news-item x-issue-item';
@@ -37,8 +35,8 @@ function renderXIssues(items){
  if(!list.length)body.innerHTML='<div class="empty">No X conversation met the requirements for publication right now.</div>';
  sec.appendChild(body);root.appendChild(sec);
 }
-render=function(items){if(active==='x'){renderXIssues(items);return}baseRenderForX(items)};
+window.__categoryRenderers.x=renderXIssues;
 </script>'''
 text=text.replace('</body>',script+'</body>',1)
 path.write_text(text,encoding='utf-8')
-print('Rebuilt X UI: one explainable issue per category.')
+print('Registered X through the canonical category renderer so all fixed topics render reliably.')
