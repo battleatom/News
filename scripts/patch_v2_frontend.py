@@ -17,7 +17,7 @@ if '<meta name="description"' not in s:
 # Keep the brand but make the masthead read like a publication instead of a dashboard.
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<script src="assets/location-v2.js?v=3"></script>\n'''
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<script src="assets/location-v2.js?v=4"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
