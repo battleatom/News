@@ -14,13 +14,16 @@ US_STATE_NAMES = (
 )
 STATE_ALT = '|'.join(re.escape(name) for name in US_STATE_NAMES)
 
-# Only remove titles that are themselves generic publisher/state landing pages.
+# Only remove titles that are themselves generic publisher/state/promotional landing pages.
 # Do not match a real article merely because the publisher appends a phrase such
 # as "ABC News - Breaking News, Latest News and Videos" to the article title.
 LANDING_PATTERNS = (
     re.compile(rf'^(?:{STATE_ALT})\s+-\s+(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
     re.compile(r'^(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
     re.compile(rf'^(?:{STATE_ALT})\s+-\s+(?:ABC|CBS|NBC|FOX) News\s+-\s+Latest News,\s*Weather(?:\s*(?:and|&)\s*Sports)?$', re.I),
+    # ESPN occasionally exposes its product/streaming landing page through Google
+    # News. This is navigation/marketing, not a reported news article.
+    re.compile(r'^Watch ESPN\s*-\s*Stream Live Sports(?:\s*&\s*ESPN Originals)?$', re.I),
 )
 
 

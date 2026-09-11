@@ -48,6 +48,44 @@ TECH_EMERGING = (
     'gpu','cpu','semiconductor','chip','wearable','foldable','satellite internet',
 )
 
+# Existing Technology items must now prove that the story itself is about
+# technology. A technology-focused publisher is not enough by itself.
+TECH_STRONG_TERMS = (
+    'artificial intelligence',' ai ','ai model','machine learning','large language model','llm',
+    'openai','anthropic','cybersecurity','cyberattack','ransomware','data breach','malware',
+    'semiconductor','chip','gpu','cpu','processor','quantum computing','robotics','humanoid robot',
+    'operating system','software','cloud computing','data center','database','browser','chrome',
+    'browser extension','iphone','ipad','android','macbook','windows','linux','smartphone','laptop',
+    'computer','pc display','monitor','hardware','wearable','smart glasses','virtual reality',
+    'mixed reality','spatial computing','satellite internet','app store','mobile app','tech industry',
+)
+TECH_COMPANIES = (
+    'apple','google','microsoft','nvidia','amd','intel','meta','amazon','qualcomm','samsung','tesla',
+    'linkedin','github','adobe','oracle','ibm','salesforce','spotify','tiktok','snap','x corp',
+)
+TECH_CONTEXT_TERMS = (
+    'device','platform','app','software','hardware','chip','processor','model','browser','extension',
+    'privacy','security','data','cloud','compute','computer','phone','smartphone','laptop','display',
+    'network','internet','digital','algorithm','developer','coding','programming','startup technology',
+)
+TECH_SUPPORT_TITLE_PATTERNS = (
+    re.compile(r'^\s*(?:question|help|support|troubleshooting)\s*[-–—:]', re.I),
+    re.compile(r'^\s*(?:how do i|how to fix|why does my|is my)\b', re.I),
+)
+FEDERAL_ROUTE_TERMS = (
+    'fcc','federal communications commission','ftc','federal trade commission','department of homeland security',
+    'dhs','congress','senate','house committee','supreme court','federal court','white house',
+    'justice department','department of justice','doj','federal government','federal regulator',
+)
+WORLD_ROUTE_TERMS = (
+    'climate change','global warming','global temperature','hottest month','temperature record',
+    'el niño','el nino','un climate','climate summit','world meteorological organization',
+)
+ENTERTAINMENT_ONLY_TERMS = (
+    'broadway','hbo max','hbo','netflix','disney+','tv show','television show','movie','film',
+    'actor','actress','concert','album','streaming premiere','season premiere','theater','theatre',
+)
+
 LOW_VALUE = ('opinion','review','how to','best ','deal','sale','guide','roundup','explainer')
 NON_ARTICLE_PREFIXES = (
     'tag:', 'topic:', 'category:', 'author:', 'authors:', 'archive:', 'archives:', 'page:',
@@ -63,6 +101,13 @@ def clean(value):
 
 def text(item, tag):
     return clean(item.findtext(tag))
+
+
+def set_text(item, tag, value):
+    node = item.find(tag)
+    if node is None:
+        node = ET.SubElement(item, tag)
+    node.text = value
 
 
 def parse_date(value):
@@ -102,8 +147,6 @@ def article_like_title(title):
     lower = value.lower().strip()
     if not value or any(lower.startswith(prefix) for prefix in NON_ARTICLE_PREFIXES):
         return False
-    # Reject obvious publisher taxonomy/navigation pages that sometimes enter
-    # Google News feeds as if they were stories.
     if re.match(r'^(?:tag|topic|category|author|archive|search)\s*[-–—:|]', lower):
         return False
     words = re.findall(r'[A-Za-z0-9][A-Za-z0-9+.-]*', value)
@@ -160,6 +203,30 @@ def refine_gaming(items):
         if len(kept) >= MAX_GAMING:
             break
     return kept
+
+
+def tech_relevance_decision(item):
+    title = text(item, 'title')
+    desc = text(item, 'description')
+    if not article_like_title(title):
+        return 'drop'
+    if any(pattern.search(title) for pattern in TECH_SUPPORT_TITLE_PATTERNS):
+        return 'drop'
+
+    # Padding spaces makes short tokens such as " ai " safer than raw substring matching.
+    raw = f' {title} {desc} '.lower()
+    strong = any(term in raw for term in TECH_STRONG_TERMS)
+    company_context = any(company in raw for company in TECH_COMPANIES) and any(term in raw for term in TECH_CONTEXT_TERMS)
+    if strong or company_context:
+        return 'technology'
+
+    if any(term in raw for term in FEDERAL_ROUTE_TERMS):
+        return 'federal'
+    if any(term in raw for term in WORLD_ROUTE_TERMS):
+        return 'world'
+    if any(term in raw for term in ENTERTAINMENT_ONLY_TERMS):
+        return 'drop'
+    return 'drop'
 
 
 def tech_score(item):
@@ -221,12 +288,23 @@ def fetch_upcoming_tech():
             ET.SubElement(item,'region').text = ''
             ET.SubElement(item,'whyMatters').text = 'Why it matters: This could shape upcoming devices, platforms, chips, AI systems, or the direction of consumer and enterprise technology.'
             ET.SubElement(item,'guid', {'isPermaLink':'false'}).text = hashlib.sha1(link.encode()).hexdigest()
-            found.append(item)
+            if tech_relevance_decision(item) == 'technology':
+                found.append(item)
     return found
 
 
 def refine_technology(existing):
-    combined = list(existing) + fetch_upcoming_tech()
+    technology = []
+    rerouted = []
+    for item in existing:
+        decision = tech_relevance_decision(item)
+        if decision == 'technology':
+            technology.append(item)
+        elif decision in ('federal','world'):
+            set_text(item, 'category', decision)
+            rerouted.append(item)
+
+    combined = technology + fetch_upcoming_tech()
     unique = []
     seen_links = set()
     seen_titles = set()
@@ -234,8 +312,6 @@ def refine_technology(existing):
         link = text(item,'link')
         title = text(item,'title')
         title_key = canonical_title(item)
-        if not article_like_title(title):
-            continue
         if not link or link in seen_links or not title_key or title_key in seen_titles:
             continue
         if any(near_same(item, prior) for prior in unique):
@@ -244,7 +320,7 @@ def refine_technology(existing):
         seen_titles.add(title_key)
         unique.append(item)
     unique.sort(key=lambda i: (tech_score(i), parse_date(text(i,'pubDate'))), reverse=True)
-    return unique[:MAX_TECH]
+    return unique[:MAX_TECH], rerouted
 
 
 def replace_category(channel, category, replacement):
@@ -270,12 +346,15 @@ def main():
     gaming = [i for i in items if text(i,'category') == 'gaming']
     tech = [i for i in items if text(i,'category') == 'technology']
     new_gaming = refine_gaming(gaming)
-    new_tech = refine_technology(tech)
-    replace_category(channel, 'technology', new_tech)
+    new_tech, rerouted = refine_technology(tech)
+    replace_category(channel, 'technology', new_tech + rerouted)
     replace_category(channel, 'gaming', new_gaming)
     tree.write(NEWS, encoding='utf-8', xml_declaration=True)
+    routed_federal = sum(1 for item in rerouted if text(item,'category') == 'federal')
+    routed_world = sum(1 for item in rerouted if text(item,'category') == 'world')
+    removed = len(tech) - len([item for item in tech if tech_relevance_decision(item) != 'drop'])
     print(f'Gaming quality: {len(gaming)} -> {len(new_gaming)} relevant, deduplicated stories.')
-    print(f'Technology quality: {len(tech)} existing -> {len(new_tech)} article-only stories; taxonomy pages removed.')
+    print(f'Technology quality: {len(tech)} existing -> {len(new_tech)} relevant stories; {routed_federal} rerouted Federal, {routed_world} rerouted World, {removed} rejected.')
 
 if __name__ == '__main__':
     main()
