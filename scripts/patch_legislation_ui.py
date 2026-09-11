@@ -24,6 +24,7 @@ script=r'''<script id="legislation-ui-v1">
   const insertAt=CANONICAL_SECTIONS.findIndex(x=>x[0]==='federal');
   if(!CANONICAL_SECTIONS.some(x=>x[0]==='legislation'))CANONICAL_SECTIONS.splice(insertAt>=0?insertAt+1:7,0,['legislation','📜 Laws & Legislation','#a16207']);
   sections=CANONICAL_SECTIONS;
+  window.__categoryRenderers=window.__categoryRenderers||{};
 
   function xtext(item,tag){return item.querySelector(tag)?.textContent?.trim()||''}
   function renderLegislationCards(visible,total,count){
@@ -48,18 +49,16 @@ script=r'''<script id="legislation-ui-v1">
     sec.appendChild(body);root.appendChild(sec);decorateNewBadges();
   }
 
-  const baseLegislationRender=canonicalRender;
-  canonicalRender=function(items){
-    if(active!=='legislation')return baseLegislationRender(items);
+  window.__categoryRenderers.legislation=function(items){
     const data=paginatedNewsItems(items);
     renderLegislationCards(data.visible,data.available.length,data.count);
     appendLoadMoreControl(data);
     if(typeof syncDiscoveryButton==='function')syncDiscoveryButton();
   };
-  render=canonicalRender;window.render=canonicalRender;window.canonicalRender=canonicalRender;
+
   canonicalBuildTabs();
 })();
 </script>'''
 s=s.replace('</body>',script+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Added location-aware Laws & Legislation cards with official records first and labeled supporting coverage.')
+print('Registered Laws & Legislation as a category renderer without wrapping canonicalRender.')
