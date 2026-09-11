@@ -49,9 +49,6 @@ source, n2 = re.subn(
 if n2 != 1:
     raise SystemExit("Could not canonicalize LOCAL_QUERIES")
 
-# A local publisher can carry AP/Reuters/national syndicated stories. Publisher
-# identity alone is therefore not sufficient for Local / Four Corners. Require
-# the headline/description itself to identify a Four Corners place or community.
 strict_local = '''    if items and items[0].get("category") == "local":
         local_terms = (
             "farmington", "san juan county", "aztec", "bloomfield", "kirtland",
@@ -87,12 +84,11 @@ if n3 != 1:
 
 collector.write_text(source, encoding="utf-8")
 
-# Federal has a dedicated state-event deduper for cases such as Missouri
-# redistricting. After that, use stricter similarity criteria than ordinary
-# categories so unrelated Supreme Court/agency stories do not collapse merely
-# because they share generic federal vocabulary.
-dedupe = Path("scripts/dedupe_news_stories.py")
-dtext = dedupe.read_text(encoding="utf-8")
+# Federal dedupe lives in the legacy engine when the event-cluster wrapper is present.
+dedupe_candidates = (
+    Path("scripts/dedupe_news_legacy.py"),
+    Path("scripts/dedupe_news_stories.py"),
+)
 old = '''    if ca == "federal" and same_federal_state_event(a, b):
         return True
 
@@ -112,10 +108,20 @@ new = '''    if ca == "federal":
 
     if smaller >= 5 and common / smaller >= 0.90:
 '''
-if old in dtext:
-    dtext = dtext.replace(old, new, 1)
-elif 'if ca == "federal":\n        if same_federal_state_event' not in dtext:
+
+verified = False
+for dedupe in dedupe_candidates:
+    if not dedupe.exists():
+        continue
+    dtext = dedupe.read_text(encoding="utf-8")
+    if 'if ca == "federal":\n        if same_federal_state_event' in dtext:
+        verified = True
+        continue
+    if old in dtext:
+        dedupe.write_text(dtext.replace(old, new, 1), encoding="utf-8")
+        verified = True
+
+if not verified:
     raise SystemExit("Could not install Federal-specific dedupe threshold")
 
-dedupe.write_text(dtext, encoding="utf-8")
 print("Enforced strict Four Corners story relevance and Federal-specific event dedupe.")
