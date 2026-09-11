@@ -40,23 +40,16 @@ while style_marker in text:
     text = text[:start] + text[end + len('</style>'):]
 
 # The live NFL renderer is installed immediately before this patch and used to
-# hard-limit itself to 10 stories. Make it honor the same count as Load More.
+# hard-limit itself to 10 stories. Make it honor the same count as pagination.
 text = text.replace(
     'allNfl.slice(0,10).forEach((item,i)=>',
     'allNfl.slice(0,Math.min((window.loadCounts?.nfl||10),allNfl.length)).forEach((item,i)=>',
     1,
 )
 
-style = r'''<style id="load-more-style-v1">
-.load-more-wrap{display:flex;justify-content:center;width:100%;padding:18px 12px 8px;box-sizing:border-box}
-.load-more{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#0f172a;padding:11px 20px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 2px 8px rgba(15,23,42,.08)}
-.load-more:active{transform:translateY(1px)}
-</style>'''
-text = text.replace('</head>', style + '\n</head>', 1)
-
-# Load More wraps canonicalRender because canonical tab clicks call that function
-# directly. Top Stories gets a persistent daily seen-set and a rotating order;
-# all other tabs keep normal pagination. NFL keeps its custom live-score renderer.
+# One canonical pagination router owns category paging and infinite scrolling.
+# Later feature modules register category-specific renderers instead of wrapping
+# canonicalRender again, keeping the render chain deterministic.
 script = r'''<script id="load-more-v1">
 const STORIES_PER_PAGE = 10;
 const TOP_DISCOVERY_MARKER = 'top-story-cycle-v1';
@@ -64,6 +57,7 @@ const TOP_SEEN_STORAGE = 'news-top-seen-v1';
 window.loadCounts = window.loadCounts || {};
 const loadCounts = window.loadCounts;
 window.topRotationKeys = window.topRotationKeys || [];
+window.__categoryRenderers = window.__categoryRenderers || {};
 
 function topStoryKey(item){
   const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');
@@ -135,25 +129,48 @@ function paginatedNewsItems(items){
 function appendLoadMoreControl(data){
   const root=document.getElementById('news-feed');
   if(!root)return;
-  root.querySelectorAll('.load-more-wrap').forEach(el=>el.remove());
+  root.querySelectorAll('.load-more-wrap,.infinite-scroll-sentinel').forEach(el=>el.remove());
+  if(window.__infiniteScrollObserver){
+    try{window.__infiniteScrollObserver.disconnect()}catch(e){}
+    window.__infiniteScrollObserver=null;
+  }
   if(data.available.length<=data.count)return;
-  const more=document.createElement('div');
-  more.className='load-more-wrap';
-  const button=document.createElement('button');
-  button.type='button';
-  button.className='load-more';
-  const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
-  button.textContent=`Load 10 more (${next} of ${data.available.length})`;
-  button.onclick=()=>{
-    const scrollY=window.scrollY;
+
+  const sentinel=document.createElement('div');
+  sentinel.className='infinite-scroll-sentinel';
+  sentinel.setAttribute('aria-hidden','true');
+  sentinel.style.cssText='height:1px;width:100%;margin-top:8px;';
+  root.appendChild(sentinel);
+
+  let loading=false;
+  const observer=new IntersectionObserver(entries=>{
+    if(loading||!entries.some(entry=>entry.isIntersecting))return;
+    loading=true;
+    observer.disconnect();
+
+    const cards=[...document.querySelectorAll('#news-feed .news-item')];
+    const anchor=cards[cards.length-1]||null;
+    const anchorHref=anchor?.querySelector('h3 a[href]')?.href||'';
+    const anchorTop=anchor?.getBoundingClientRect().top??null;
+    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+STORIES_PER_PAGE,data.available.length);
     loadCounts[active]=next;
     canonicalRender(allItems);
-    requestAnimationFrame(()=>window.scrollTo({top:scrollY,behavior:'auto'}));
-  };
-  more.appendChild(button);
-  // Keep pagination outside the category section. Several category renderers
-  // rebuild their section after canonicalRender and could otherwise delete it.
-  root.appendChild(more);
+
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(anchorHref&&anchorTop!==null){
+        const replacement=[...document.querySelectorAll('#news-feed .news-item h3 a[href]')]
+          .find(a=>a.href===anchorHref)?.closest('.news-item');
+        if(replacement){
+          const delta=replacement.getBoundingClientRect().top-anchorTop;
+          if(Math.abs(delta)>1)window.scrollBy({top:delta,left:0,behavior:'auto'});
+        }
+      }
+      loading=false;
+    }));
+  },{root:null,rootMargin:'700px 0px 700px 0px',threshold:0.01});
+
+  window.__infiniteScrollObserver=observer;
+  observer.observe(sentinel);
 }
 
 const baseCanonicalRenderWithPagination=canonicalRender;
@@ -163,6 +180,14 @@ canonicalRender=function(items){
     syncDiscoveryButton();
     return out;
   }
+
+  const customRenderer=window.__categoryRenderers?.[active];
+  if(typeof customRenderer==='function'){
+    const out=customRenderer(items);
+    syncDiscoveryButton();
+    return out;
+  }
+
   if(active==='nfl'){
     const data=paginatedNewsItems(items);
     loadCounts.nfl=data.count;
@@ -175,6 +200,7 @@ canonicalRender=function(items){
     syncDiscoveryButton();
     return;
   }
+
   const data=paginatedNewsItems(items);
   baseCanonicalRenderWithPagination(data.visible);
   const root=document.getElementById('news-feed');
@@ -212,9 +238,10 @@ window.cycleTopStoriesAndRefresh=async function(){
 
 render=canonicalRender;
 window.render=canonicalRender;
+window.canonicalRender=canonicalRender;
 syncDiscoveryButton();
 </script>'''
 
 text = text.replace('</body>', script + '\n</body>', 1)
 INDEX.write_text(text, encoding="utf-8")
-print("Applied page-level Load More plus daily unseen Top Stories cycling with passive full-feed refresh.")
+print("Installed one canonical pagination router with anchored infinite scrolling and custom category renderers.")

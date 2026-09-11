@@ -48,7 +48,6 @@ async function refreshNewsFromPage(manual=false){
   if(status)status.textContent=manual?'Fetching…':'Updating…';
   pullStatusHtml(allItems.length,false,'Connecting to news feed');
   try{
-    if(manual)unlockPopAudio();
     const loaded=await fetchNewsDocument();
     const xml=loaded.xml;
     const fetched=loaded.items;
@@ -88,7 +87,6 @@ async function refreshNewsFromPage(manual=false){
     if(lastUpdateEl)lastUpdateEl.textContent='Last update: '+formatDate(updated);
     if(status)status.textContent=allItems.length+' stories fetched · '+newCount+' new · '+result.removed+' duplicates removed';
     pullStatusHtml(allItems.length,false,phase);
-    if(newCount>0)playNewArticlePop();
     return true;
   }catch(e){
     console.error('News feed refresh failed after retries:',e);

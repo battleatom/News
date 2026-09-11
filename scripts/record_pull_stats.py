@@ -9,25 +9,26 @@ from datetime import datetime, timedelta, timezone
 NEWS_FILE = Path("News")
 STATS_FILE = Path("update-stats.json")
 
-# Desired retained story pools. The page still displays 10 initially and Load More
-# controls presentation; these ranges measure whether collection depth is healthy.
+# Healthy means the category has enough usable stories for its intended UI.
+# Counts above targetMax are useful depth, not a failure. Box Office is sourced
+# from boxoffice.json rather than the News XML, so it is intentionally not part
+# of this feed-health calculation.
 CATEGORY_TARGETS = {
     "top": (50, 60),
     "nfl": (20, 30),
-    "x": (5, 10),
-    "underreported": (10, 20),
-    "world": (25, 30),
-    "us": (25, 30),
-    "presidential": (20, 25),
-    "federal": (25, 30),
-    "legislation": (25, 35),
-    "nm": (20, 30),
-    "local": (20, 30),
-    "region": (20, 30),
-    "technology": (25, 30),
-    "gaming": (25, 30),
-    "military": (25, 30),
-    "boxoffice": (15, 25),
+    "x": (8, 15),
+    "underreported": (25, 35),
+    "world": (25, 45),
+    "us": (15, 30),
+    "presidential": (20, 30),
+    "federal": (8, 30),
+    "legislation": (15, 35),
+    "nm": (20, 35),
+    "local": (20, 35),
+    "region": (100, 500),
+    "technology": (20, 35),
+    "gaming": (12, 25),
+    "military": (3, 20),
 }
 
 
@@ -51,21 +52,27 @@ def feed_snapshot():
 
 def category_health(category_counts):
     health = {}
-    within = 0
+    ready = 0
+    above_target = 0
     for category, (minimum, maximum) in CATEGORY_TARGETS.items():
         count = int(category_counts.get(category, 0))
         if count < minimum:
             state = "low"
-        elif count > maximum:
-            state = "high"
+            depth = "below-minimum"
         else:
             state = "healthy"
-            within += 1
+            ready += 1
+            if count > maximum:
+                depth = "above-target"
+                above_target += 1
+            else:
+                depth = "target"
         health[category] = {
             "count": count,
             "targetMin": minimum,
             "targetMax": maximum,
             "status": state,
+            "depth": depth,
         }
     for category, count in sorted(category_counts.items()):
         if category not in health:
@@ -74,8 +81,9 @@ def category_health(category_counts):
                 "targetMin": None,
                 "targetMax": None,
                 "status": "untracked",
+                "depth": "untracked",
             }
-    return health, within
+    return health, ready, above_target
 
 
 def first_seen_map(links, previous_links, old, now_dt):
@@ -106,7 +114,7 @@ def main():
         raise SystemExit("News feed not found")
 
     items, links, category_counts = feed_snapshot()
-    health, healthy_count = category_health(category_counts)
+    health, ready_count, above_target_count = category_health(category_counts)
     now_dt = datetime.now(timezone.utc)
     now = now_dt.isoformat()
     old = {}
@@ -117,10 +125,11 @@ def main():
             old = {}
 
     health_summary = {
-        "healthy": healthy_count,
+        "healthy": ready_count,
+        "ready": ready_count,
         "tracked": len(CATEGORY_TARGETS),
         "low": sum(1 for value in health.values() if value["status"] == "low"),
-        "high": sum(1 for value in health.values() if value["status"] == "high"),
+        "aboveTarget": above_target_count,
     }
 
     if not finalize:
@@ -144,7 +153,7 @@ def main():
             "status": "pre-dedupe"
         }
         STATS_FILE.write_text(json.dumps(stats, indent=2) + "\n", encoding="utf-8")
-        print(f"Pull stats recorded: {len(items)} fetched, {new_count} new before dedupe; {healthy_count}/{len(CATEGORY_TARGETS)} category pools healthy.")
+        print(f"Pull stats recorded: {len(items)} fetched, {new_count} new before dedupe; {ready_count}/{len(CATEGORY_TARGETS)} category pools ready.")
         return
 
     stats = old or {}
@@ -167,7 +176,7 @@ def main():
         "status": "complete"
     })
     STATS_FILE.write_text(json.dumps(stats, indent=2) + "\n", encoding="utf-8")
-    print(f"Pull stats finalized: {before} fetched, {stats.get('newCount', 0)} new, {stats['duplicatesRemoved']} removed, {len(items)} final; {healthy_count}/{len(CATEGORY_TARGETS)} category pools healthy.")
+    print(f"Pull stats finalized: {before} fetched, {stats.get('newCount', 0)} new, {stats['duplicatesRemoved']} removed, {len(items)} final; {ready_count}/{len(CATEGORY_TARGETS)} category pools ready.")
 
 
 if __name__ == "__main__":

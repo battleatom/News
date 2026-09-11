@@ -17,13 +17,9 @@ for tag, marker, close in (
             break
         s = s[:a] + s[b + len(close):]
 
-# Older refresh code can report a count, but only the verified before/after link
-# comparison below may make an automatic notification sound. The V2.2 sound
-# control remains the single owner of user-initiated enable/test clicks.
-s = s.replace(
-    'if(newCount>0)playNewArticlePop();',
-    "if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);",
-)
+# Retired sound hooks from older generated refresh code should become inert and
+# should not require any audio implementation to exist.
+s = s.replace('if(newCount>0)playNewArticlePop();', '')
 
 STYLE = r'''<style id="new-badge-v26-style">
 .new-badge.new-badge-red{background:#dc2626!important;color:#fff!important}
@@ -154,14 +150,6 @@ SCRIPT = r'''<script id="alerts-new-v23">
     decorate();
   }
 
-  window.__queueNewArticlePopV23=function(count){return Number(count)||0};
-  function playOnlyForVerifiedNew(count){
-    if(!(count>0))return false;
-    if(typeof window.playNewArticlePop==='function')return window.playNewArticlePop();
-    return false;
-  }
-  window.__playVerifiedNewV23=playOnlyForVerifiedNew;
-
   function wrapRefresh(){
     if(refreshWrapped||typeof window.refreshNewsFromPage!=='function')return;
     const previous=window.refreshNewsFromPage;
@@ -174,7 +162,6 @@ SCRIPT = r'''<script id="alerts-new-v23">
       if(discovered.length)markClientNew(discovered);
       await syncServerNew();
       decorate();
-      playOnlyForVerifiedNew(discovered.length);
       return result;
     };
     wrapped.__v23Wrapped=true;
@@ -195,4 +182,4 @@ if '</body>' not in s:
     raise SystemExit('Generated page is missing </body>')
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Installed V2.6 red/blue/yellow NEW badges with persistent site first-seen timing and verified-new-only audio.')
+print('Installed V2.6 red/blue/yellow NEW badges with persistent site first-seen timing and no audio path.')

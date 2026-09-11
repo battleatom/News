@@ -135,6 +135,9 @@ jobs:
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
 
+      - name: Remove generic publisher landing pages
+        run: python scripts/filter_landing_pages.py
+
       - name: Record feed pull statistics
         run: python scripts/record_pull_stats.py
 
