@@ -72,12 +72,11 @@ SOURCE_TIERS = {
     "techcrunch": 7, "ign": 7, "gamespot": 7, "nfl.com": 8, "espn": 8,
 }
 
-# Categories with repeated vocabulary need stronger proof than politics/world.
 HIGH_COLLISION_CATEGORIES = {"region", "local", "nm", "nfl", "technology", "gaming"}
 CATEGORY_ANCHOR_MIN = {
     "technology": 4, "gaming": 4, "nfl": 4,
     "world": 3, "military": 3, "federal": 3, "presidential": 3,
-    "legislation": 3, "us": 3, "nm": 4, "local": 4, "region": 4,
+    "legislation": 3, "us": 3, "nm": 3, "local": 3, "region": 2,
     "top": 3, "underreported": 3,
 }
 
@@ -170,10 +169,6 @@ def same_event(a: ET.Element, b: ET.Element) -> bool:
         return False
 
     cat = category(a)
-
-    # Near-identical titles are safe in every category. Legacy broad overlap is
-    # intentionally disabled for high-collision tabs where repeated vocabulary
-    # (football, weather, state names, etc.) caused unrelated events to merge.
     if near_exact_title(a, b):
         return True
     if cat not in HIGH_COLLISION_CATEGORIES and legacy.same_story(a, b):
@@ -190,13 +185,9 @@ def same_event(a: ET.Element, b: ET.Element) -> bool:
     title_shared = title_specific_tokens(a) & title_specific_tokens(b)
     minimum = CATEGORY_ANCHOR_MIN.get(cat, 3)
 
-    # Distinctive amounts are strong identifiers, but require the same subject or
-    # two additional content anchors to avoid joining unrelated dollar stories.
     if amounts and (entities or len(shared) >= 2):
         return True
 
-    # Same named subject and event family must share enough event-specific words.
-    # Requiring title evidence in high-collision tabs prevents broad topic merges.
     if entities and len(shared) >= minimum:
         if cat not in HIGH_COLLISION_CATEGORIES or len(title_shared) >= 2:
             return True
@@ -279,11 +270,6 @@ def cluster_indices(items: list[ET.Element]) -> list[list[int]]:
 
 
 def residual_duplicate_pairs(items: list[ET.Element]) -> list[dict]:
-    """Report only strong duplicate pairs that survived clustering.
-
-    This is a guardrail, not a second looser dedupe pass. It catches accidental
-    regressions in the final feed without encouraging broad over-clustering.
-    """
     pairs = []
     by_category: dict[str, list[ET.Element]] = defaultdict(list)
     for item in items:
