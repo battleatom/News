@@ -194,17 +194,18 @@
       }
     }
 
-    function tickCompactStatus(){
-      sync();
-      window.__v3UtilityStatusTimer=setTimeout(tickCompactStatus,1000-(Date.now()%1000)+25);
-    }
-
     sync();
     applyMobileLayout();
     if(local)toolbar.insertBefore(compact,local);else toolbar.appendChild(compact);
     new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true,attributes:true});
     window.addEventListener('resize',applyMobileLayout,{passive:true});
-    tickCompactStatus();
+
+    // Keep the compact countdown independent from pull-status DOM mutations.
+    // A short interval makes the displayed seconds resilient to timer drift,
+    // throttling and mobile layout timing while remaining extremely cheap.
+    if(window.__v3UtilityStatusTimer)clearInterval(window.__v3UtilityStatusTimer);
+    window.__v3UtilityStatusTimer=setInterval(sync,250);
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();},{passive:true});
   }
 
   function refresh(){
