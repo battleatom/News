@@ -88,7 +88,7 @@ jobs:
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
 
-      - name: Expand Underreported discovery to 14 days
+      - name: Expand Underreported discovery to 120 days
         run: python scripts/underreported_priority.py --discover
 
       - name: Enrich Underreported context and long-term supporting coverage
@@ -121,6 +121,9 @@ jobs:
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
+      - name: Remove audit-level semantic duplicates
+        run: python scripts/final_semantic_dedupe.py
+
       - name: Verify no strong duplicate pairs remain
         run: |
           python - <<'PY'
@@ -132,7 +135,7 @@ jobs:
               print('Residual strong duplicate pairs remain:')
               for pair in pairs[:20]: print(pair)
               raise SystemExit(1)
-          print('Final duplicate guard passed.')
+          print('Verifier duplicate guard passed; audit-level semantic guard also completed.')
           PY
 
       - name: Finalize feed pull statistics
