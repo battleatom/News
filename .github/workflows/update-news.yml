@@ -45,6 +45,9 @@ jobs:
       - name: Collector preflight
         run: python scripts/preflight_feed.py
 
+      - name: Normalize category pool policy
+        run: python scripts/patch_category_pool_policy.py
+
       - name: Update RSS feed
         run: |
           success=0
