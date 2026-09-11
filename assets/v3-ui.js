@@ -1,4 +1,4 @@
-/* Underreported 3.0 — non-destructive presentation enhancements. */
+/* Underreported 3.1 — non-destructive presentation enhancements. */
 (function(){
   'use strict';
 
@@ -20,6 +20,50 @@
       if(typeof active!=='undefined'&&active)return String(active);
     }catch(e){}
     return document.body?.dataset?.activeTab||'';
+  }
+
+  function installAgeStyles(){
+    if(document.getElementById('underreported-age-styles-v31'))return;
+    const style=document.createElement('style');
+    style.id='underreported-age-styles-v31';
+    style.textContent=`
+      .news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
+      .news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
+      .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
+      .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
+      .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
+      .underreported-age-key{display:flex;flex-wrap:wrap;gap:8px 12px;margin:6px 0 12px;font-size:11px;opacity:.82}
+      .underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
+      .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px}
+      .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
+    `;
+    document.head.appendChild(style);
+  }
+
+  function decorateUnderreportedAge(card){
+    if(!card.classList.contains('underreported-item'))return;
+    card.classList.remove('age-blue','age-green','age-orange','age-purple','age-red');
+    const raw=card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
+    const dt=new Date(raw);
+    if(Number.isNaN(dt.getTime()))return;
+    const age=Math.max(0,(Date.now()-dt.getTime())/86400000);
+    let cls='age-red';
+    if(age<=2)cls='age-blue';
+    else if(age<=4)cls='age-green';
+    else if(age<=7)cls='age-orange';
+    else if(age<=10)cls='age-purple';
+    card.classList.add(cls);
+  }
+
+  function installUnderreportedLegend(){
+    if(currentSection()!=='underreported')return;
+    const section=document.querySelector('#news-feed .section');
+    if(!section||section.querySelector('.underreported-age-key'))return;
+    const key=document.createElement('div');
+    key.className='underreported-age-key';
+    key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
+    const body=section.querySelector('.section-body');
+    if(body)section.insertBefore(key,body);
   }
 
   function addImportance(card){
@@ -74,7 +118,9 @@
       decorateWhy(card);
       decorateSource(card);
       addImportance(card);
+      decorateUnderreportedAge(card);
     });
+    installUnderreportedLegend();
   }
 
   function processTabs(){
@@ -162,7 +208,8 @@
   }
 
   function refresh(){
-    if(document.body)document.body.dataset.underreportedVersion='3';
+    if(document.body)document.body.dataset.underreportedVersion='3.1';
+    installAgeStyles();
     installUtilityStatus();
     processTabs();
     processCards();
