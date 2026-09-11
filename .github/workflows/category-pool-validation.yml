@@ -1,0 +1,73 @@
+name: Category Pool Validation
+
+on:
+  push:
+    branches: [fix/category-pool-normalization-2026-09-11]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/category_pool_policy_test.py
+
+      - name: Run collector preflight and policy regression
+        run: |
+          python scripts/preflight_feed.py
+          python tests/category_pool_policy_test.py
+
+      - name: Run live collector with normalized pools
+        run: python scripts/update_news.py
+
+      - name: Run production category refinements
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_v2.py
+          python scripts/enrich_world_content.py
+          python scripts/enrich_legislation.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+
+      - name: Verify final feed
+        run: python scripts/verify_feed.py --apply
+
+      - name: Audit final category pools
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          counts=Counter((x.findtext('category') or '').strip() for x in ET.parse('News').getroot().findall('./channel/item'))
+          print('FINAL CATEGORY COUNTS:', dict(sorted(counts.items())))
+          caps={'world':40,'us':40,'presidential':40,'federal':40,'legislation':40,'nm':35,'local':30,'region':40,'nfl':40,'technology':40,'gaming':40,'military':40}
+          floors={'world':25,'us':25,'presidential':25,'federal':25,'nm':20,'local':15,'region':25,'nfl':25,'technology':25,'gaming':25,'military':25}
+          bad=[]
+          for cat,cap in caps.items():
+              if counts.get(cat,0)>cap: bad.append(f'{cat} exceeds cap: {counts.get(cat,0)} > {cap}')
+          for cat,floor in floors.items():
+              if counts.get(cat,0)<floor: bad.append(f'{cat} under validation floor: {counts.get(cat,0)} < {floor}')
+          if bad:
+              raise SystemExit('\n'.join(bad))
+          print('Category pool floors/caps passed.')
+          PY
+
+      - name: Build and audit site
+        run: |
+          python scripts/build_site.py
+          python scripts/site_audit.py
+
+      - name: Install browser
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Run responsive smoke
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/news-http.log 2>&1 &
+          sleep 2
+          python tests/site_smoke_v26.py
