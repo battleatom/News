@@ -41,3 +41,5 @@ jobs:
         run: python scripts/build_site.py
       - name: Audit site
         run: python scripts/site_audit.py
+
+# Branch-only validation; removed before merge.
