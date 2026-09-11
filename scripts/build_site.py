@@ -48,6 +48,8 @@ PATCHERS = [
     'scripts/patch_interaction_hotfix.py',
     # V3 content-brief experiment: reveal compact multi-line story summaries.
     'scripts/patch_content_brief_ui.py',
+    # Remove any legacy line clamp from Why It Matters after all presentation patches.
+    'scripts/patch_full_why_matters.py',
     # System Health runs last so earlier patchers cannot remove its indicator/panel.
     'scripts/patch_system_health.py',
 ]
