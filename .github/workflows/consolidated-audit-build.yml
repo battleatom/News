@@ -34,6 +34,7 @@ jobs:
       - name: Compare every tab and article with production baseline
         run: python scripts/consolidated_compare_audit.py baseline-News baseline-index.html
 
+      # Preserve the generated feed, page, verification output, baseline, and full article-by-article report.
       - name: Upload full audit evidence
         if: always()
         uses: actions/upload-artifact@v4
