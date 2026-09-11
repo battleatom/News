@@ -1,0 +1,71 @@
+name: Category Relevance Branch Test
+
+on:
+  push:
+    branches: [test-category-relevance-v3]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Compile changed Python
+        run: python -m py_compile scripts/refine_tech_gaming.py scripts/filter_landing_pages.py tests/category_relevance_smoke.py
+
+      - name: Save baseline feed
+        run: cp News /tmp/News.before
+
+      - name: Apply Technology relevance refinement
+        run: python scripts/refine_tech_gaming.py
+
+      - name: Remove publisher/promotional landing pages
+        run: python scripts/filter_landing_pages.py
+
+      - name: Run category relevance regression suite
+        run: python tests/category_relevance_smoke.py
+
+      - name: Verify reported live-feed examples
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          def load(path):
+              root=ET.parse(path).getroot()
+              out=[]
+              for item in root.findall('./channel/item'):
+                  title=(item.findtext('title') or '').strip()
+                  category=(item.findtext('category') or '').strip()
+                  out.append((title,category))
+              return out
+
+          before=load('/tmp/News.before')
+          after=load('News')
+          probes={
+              'Kimmel/FCC':'kimmel',
+              'Oh Mary/HBO':'oh, mary',
+              'Hottest month':'hottest month',
+              'PC question':'question - pc displays',
+              'Watch ESPN':'watch espn',
+          }
+          found=0
+          for label,needle in probes.items():
+              b=[x for x in before if needle in x[0].lower()]
+              a=[x for x in after if needle in x[0].lower()]
+              if b: found+=1
+              print(label, 'BEFORE=', b[:3], 'AFTER=', a[:3])
+              if label=='Kimmel/FCC' and b:
+                  assert a and all(cat=='federal' for _,cat in a), a
+              elif label=='Hottest month' and b:
+                  assert a and all(cat=='world' for _,cat in a), a
+              elif label in ('Oh Mary/HBO','PC question','Watch ESPN') and b:
+                  assert not a, a
+          assert found >= 3, f'Expected at least 3 reported examples in baseline feed; found {found}'
+          print('LIVE FEED EXAMPLE PASS — reported misclassifications were rerouted/removed as intended.')
+          PY
