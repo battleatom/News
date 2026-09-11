@@ -57,6 +57,14 @@
 .new-badge.new-badge-blue{background:#2563eb!important;color:#fff!important}
 .new-badge.new-badge-yellow{background:#facc15!important;color:#422006!important}
 </style>
+<style id="mobile-sticky-nav-v1">
+@media(max-width:760px){
+  html,body{overflow-x:clip!important}
+  html body .container{overflow:visible!important}
+  html body .toolbar{position:sticky!important;top:0!important;z-index:100!important}
+  html body .tabs{position:sticky!important;top:34px!important;z-index:99!important}
+}
+</style>
 <link rel="stylesheet" href="styles/content-briefs.css?v=1">
 <style id="full-why-matters-v1">html body .news-item .v3-why-text{display:block!important;-webkit-line-clamp:unset!important;line-clamp:unset!important;overflow:visible!important;white-space:normal!important}html body .news-item .why{max-height:none!important;overflow:visible!important}</style>
 <style id="system-health-v1-style">
@@ -65,6 +73,7 @@
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -488,13 +497,13 @@ function renderUnderreported(items){
 }
 render=function(items){if(active==='underreported'){renderUnderreported(items);return}baseRenderForUnderreported(items)};
 </script><script id="x-issues-ui-v1">
-const baseRenderForX=render;
+window.__categoryRenderers=window.__categoryRenderers||{};
 function renderXIssues(items){
  const list=items.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='x');
  const root=document.getElementById('news-feed');root.innerHTML='';
  const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent','#111827');
  const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>𝕏 What's Trending</h2><span class="count">${list.length} category leaders</span>`;sec.appendChild(head);
- const intro=document.createElement('div');intro.className='x-issues-intro';intro.textContent='One leading issue per category. X activity identifies the conversation; independent reporting provides the explanation. A conversation is not proof of a claim.';sec.appendChild(intro);
+ const intro=document.createElement('div');intro.className='x-issues-intro';intro.textContent='Ten fixed topic slots surface one current conversation each. X activity identifies the conversation; independent reporting provides the explanation. A conversation is not proof of a claim.';sec.appendChild(intro);
  const body=document.createElement('div');body.className='section-body';
  list.forEach((item,i)=>{
    const ar=document.createElement('article');ar.className='news-item x-issue-item';
@@ -509,7 +518,7 @@ function renderXIssues(items){
  if(!list.length)body.innerHTML='<div class="empty">No X conversation met the requirements for publication right now.</div>';
  sec.appendChild(body);root.appendChild(sec);
 }
-render=function(items){if(active==='x'){renderXIssues(items);return}baseRenderForX(items)};
+window.__categoryRenderers.x=renderXIssues;
 </script><script id="site-features-v2">
 /* refresh-success-handling-v3 */
 const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -517,7 +526,7 @@ sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
 var lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;
 function normalizeDuplicateKey(item){const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');if(link)return 'l:'+link;const title=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();return 't:'+title;}
-function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const key=normalizeDuplicateKey(item);if(seen.has(key))continue;seen.add(key);out.push(item);}return {items:out,removed:items.length-out.length};}
+function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const category=(item.querySelector('category')?.textContent||'world').trim().toLowerCase();const topic=(item.querySelector('xTopic')?.textContent||'').trim().toLowerCase();const identity=category==='x'&&topic?'x-topic:'+topic:category+'|'+normalizeDuplicateKey(item);if(seen.has(identity))continue;seen.add(identity);out.push(item);}return {items:out,removed:items.length-out.length};}
 function canonicalBuildTabs(){const root=document.getElementById('tabs');if(!root)return;root.innerHTML='';const seen=new Set();CANONICAL_SECTIONS.forEach(([key,label,accent])=>{if(seen.has(key))return;seen.add(key);const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&typeof detectedLocation!=='undefined'&&detectedLocation?'🌎 '+(typeof regionLabels!=='undefined'?regionLabels[detectedRegion]:'Region'):label;b.style.setProperty('--accent',accent);b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);canonicalBuildTabs();canonicalRender(allItems)};root.appendChild(b)});}
 function countdownText(ms){const sec=Math.max(0,Math.ceil(ms/1000));if(sec<=0)return 'now';const h=Math.floor(sec/3600),m=Math.floor((sec%3600)/60),s=sec%60;return h?`${h}h ${String(m).padStart(2,'0')}m`:m?`${m}m ${String(s).padStart(2,'0')}s`:`${s}s`;}
 function pullStatusHtml(count,failed=false,phase=''){ensurePullStatus();const root=document.getElementById('pull-status');if(!root)return;const last=lastSuccessfulPull?new Date(lastSuccessfulPull):null;const next=nextScheduledPull?new Date(nextScheduledPull):null;const left=next?countdownText(next.getTime()-Date.now()):'—';let lead=failed?'<span class="warn"><strong>⚠ Update failed</strong></span>':pullInProgress?'<span class="busy"><strong>↻ Fetching news…</strong></span>':'<span class="ok"><strong>✓ Auto update active</strong></span>';let extra=phase?`<span>${esc(phase)}</span><span class="sep">·</span>`:'';root.innerHTML=`${lead}<span class="sep">·</span>${extra}<span>Last fetch: <strong>${last?formatDate(last.toISOString()):'—'}</strong></span><span class="sep">·</span><span>Next fetch: <strong>${left}</strong></span><span class="sep">·</span><span class="count">${count||0} stories fetched</span>`;}
