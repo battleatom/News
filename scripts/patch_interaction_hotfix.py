@@ -24,6 +24,16 @@ s, removed_audio = re.subn(
 if not removed_audio and ('AudioContext' in s or 'playNewArticlePop' in s):
     raise SystemExit('Retired Web Audio block is still present but could not be removed safely')
 
+# Browser refresh dedupe must mirror the server rule: duplicates are collapsed
+# within a category, not across unrelated tabs. X is a fixed-slot product surface,
+# so each xTopic is its own identity even if a lead article also appears elsewhere.
+old_dedupe = "function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const key=normalizeDuplicateKey(item);if(seen.has(key))continue;seen.add(key);out.push(item);}return {items:out,removed:items.length-out.length};}"
+new_dedupe = "function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const category=(item.querySelector('category')?.textContent||'world').trim().toLowerCase();const topic=(item.querySelector('xTopic')?.textContent||'').trim().toLowerCase();const identity=category==='x'&&topic?'x-topic:'+topic:category+'|'+normalizeDuplicateKey(item);if(seen.has(identity))continue;seen.add(identity);out.push(item);}return {items:out,removed:items.length-out.length};}"
+if old_dedupe in s:
+    s=s.replace(old_dedupe,new_dedupe,1)
+elif new_dedupe not in s:
+    raise SystemExit('Could not locate browser duplicate filter for category-aware hardening')
+
 # Guard against stale generated fragments from older builds. These should be no-ops
 # on a clean build, but keeping the cleanup idempotent prevents old generated HTML
 # from resurrecting retired controls.
@@ -56,4 +66,4 @@ sticky = '''<style id="mobile-sticky-nav-v1">
 s=s.replace('</head>',sticky+'\n</head>',1)
 
 P.write_text(s, encoding='utf-8')
-print('Applied final interaction cleanup and mobile sticky navigation fix.')
+print('Applied final interaction cleanup, category-aware browser dedupe, and mobile sticky navigation fix.')
