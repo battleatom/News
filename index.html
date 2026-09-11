@@ -4,7 +4,17 @@
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#0b1120">
 <title>Underreported — High-Impact News</title>
 <meta name="description" content="Underreported brings high-impact, local and undercovered stories together with source context and live updates.">
-<link rel="stylesheet" href="styles/theme.css?v=3">
+<style id="underreported-age-border-v1">
+.news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
+.news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
+.news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
+.news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
+.news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
+.underreported-age-key{display:flex;flex-wrap:wrap;gap:8px 12px;margin:6px 0 12px;font-size:11px;opacity:.82}
+.underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
+.underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px}
+.underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
+</style><link rel="stylesheet" href="styles/theme.css?v=3">
 
 <style id="local-status-style">
 .toolbar{gap:9px}.local-status{margin-left:auto;display:flex;align-items:center;gap:9px;min-width:0;color:#475569;font-size:11px;white-space:nowrap}.local-status .local-date,.local-status .local-time{font-weight:700;color:#334155}.local-status .local-weather{display:inline-flex;align-items:center;gap:4px}.local-status .weather-temp{font-weight:800;color:#111827}.local-status .weather-condition{color:#64748b}.local-status .weather-location{color:#94a3b8;max-width:150px;overflow:hidden;text-overflow:ellipsis}.local-status .local-sep{color:#cbd5e1}@media(prefers-color-scheme:dark){.local-status,.local-status .local-date,.local-status .local-time,.local-status .weather-temp{color:#e5e7eb}.local-status .weather-condition{color:#a1a1aa}}@media(max-width:700px){.local-status{gap:5px;font-size:10px}.local-status .weather-location,.local-status .weather-condition,.local-status .local-sep{display:none}}
@@ -45,19 +55,10 @@
 .new-badge.new-badge-yellow{background:#facc15!important;color:#422006!important}
 </style>
 <link rel="stylesheet" href="styles/content-briefs.css?v=1">
-<style id="underreported-age-border-v1">
-.news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
-.news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
-.news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
-.news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
-.news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-.underreported-age-key{display:flex;flex-wrap:wrap;gap:8px 12px;margin:6px 0 12px;font-size:11px;opacity:.82}
-.underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
-.underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px}
-.underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
-</style></head>
+</head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -343,7 +344,44 @@ window.addEventListener('DOMContentLoaded',()=>{if(typeof window.refreshNewsFrom
   render=locationAwareRender;
 })();
 </script>
-<script id="local-status-v1">
+<script id="underreported-age-border-js-v1">
+(function(){
+  'use strict';
+  function decorate(){
+    if((typeof active!=='undefined'&&active!=='underreported')&&document.body?.dataset?.activeTab!=='underreported')return;
+    const cards=[...document.querySelectorAll('.underreported-item')];
+    cards.forEach(card=>{
+      card.classList.remove('age-blue','age-green','age-orange','age-purple','age-red');
+      const metaDate=card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
+      const dt=new Date(metaDate);
+      if(Number.isNaN(dt.getTime()))return;
+      const age=(Date.now()-dt.getTime())/86400000;
+      let cls='age-red';
+      if(age<=2)cls='age-blue';
+      else if(age<=4)cls='age-green';
+      else if(age<=7)cls='age-orange';
+      else if(age<=10)cls='age-purple';
+      card.classList.add(cls);
+    });
+    const section=document.querySelector('#news-feed .section');
+    if(section&&!section.querySelector('.underreported-age-key')){
+      const key=document.createElement('div');
+      key.className='underreported-age-key';
+      key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
+      const body=section.querySelector('.section-body');
+      if(body)section.insertBefore(key,body);
+    }
+  }
+  const obs=new MutationObserver(()=>requestAnimationFrame(decorate));
+  function start(){
+    decorate();
+    const feed=document.getElementById('news-feed');
+    if(feed)obs.observe(feed,{childList:true,subtree:true});
+    document.addEventListener('click',e=>{if(e.target.closest('.tab'))requestAnimationFrame(decorate)});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script><script id="local-status-v1">
 (function(){
 'use strict';
 const weatherCodes={0:['☀️','Clear'],1:['🌤️','Mostly clear'],2:['⛅','Partly cloudy'],3:['☁️','Cloudy'],45:['🌫️','Foggy'],48:['🌫️','Foggy'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],71:['🌨️','Light snow'],73:['❄️','Snow'],75:['❄️','Heavy snow'],80:['🌦️','Showers'],81:['🌧️','Showers'],82:['⛈️','Heavy showers'],85:['🌨️','Snow showers'],86:['❄️','Heavy snow showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Severe thunderstorm']};
@@ -454,7 +492,7 @@ function renderXIssues(items){
 }
 render=function(items){if(active==='x'){renderXIssues(items);return}baseRenderForX(items)};
 </script><script id="site-features-v2">
-/* refresh-success-handling-v2 */
+/* refresh-success-handling-v3 */
 const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
@@ -472,9 +510,10 @@ async function fetchNewsDocument(){
   const addUrl=(u)=>{if(u&&!urls.includes(u))urls.push(u)};
   try{addUrl(new URL('News',document.baseURI).href)}catch(e){}
   try{addUrl(new URL('./News',window.location.href).href)}catch(e){}
-  // GitHub Pages project-site fallback. This only runs if the normal relative
-  // URL failed and prevents a stale/odd browser base URL from breaking Refresh.
   try{addUrl(new URL('/News/News',window.location.origin).href)}catch(e){}
+  // Last-resort public-repo fallback. This avoids false "RSS failed" states when
+  // GitHub Pages/CDN briefly serves a stale or unavailable project-site asset.
+  addUrl('https://raw.githubusercontent.com/battleatom/News/main/News');
   let lastError=null;
   for(let attempt=0;attempt<3;attempt++){
     for(const base of urls){
@@ -490,7 +529,7 @@ async function fetchNewsDocument(){
         return {response,text,xml,items};
       }catch(e){lastError=e;}
     }
-    if(attempt<2)await new Promise(resolve=>setTimeout(resolve,600*(attempt+1)));
+    if(attempt<2)await new Promise(resolve=>setTimeout(resolve,700*(attempt+1)));
   }
   throw lastError||new Error('Unable to fetch News feed');
 }
@@ -529,12 +568,11 @@ async function refreshNewsFromPage(manual=false){
       console.error('Feed downloaded successfully, but page rendering failed:',renderError);
       nextScheduledPull=Date.now()+60000;
       window.nextScheduledPull=nextScheduledPull;
-      if(status)status.textContent='Feed downloaded · display refresh failed';
-      pullStatusHtml(allItems.length,false,'Display refresh failed · retry scheduled');
+      if(status)status.textContent='Feed downloaded · display retry scheduled';
+      pullStatusHtml(allItems.length,false,'Display refresh retry scheduled');
       return false;
     }
 
-    // Only mark the pull successful after both data validation and rendering succeed.
     lastSuccessfulPull=Date.now();
     nextScheduledPull=lastSuccessfulPull+AUTO_PULL_MS;
     window.lastSuccessfulPull=lastSuccessfulPull;
@@ -545,14 +583,18 @@ async function refreshNewsFromPage(manual=false){
     pullStatusHtml(allItems.length,false,phase);
     return true;
   }catch(e){
-    console.error('News feed refresh failed after retries:',e);
+    console.warn('News feed refresh temporarily unavailable after retries:',e);
+    nextScheduledPull=Date.now()+60000;
+    window.nextScheduledPull=nextScheduledPull;
     if(allItems.length){
       try{canonicalBuildTabs();canonicalRender(allItems);decorateNewBadges();}catch(renderExistingError){console.error('Unable to render existing feed after refresh failure:',renderExistingError);}
-      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';
-      pullStatusHtml(allItems.length,false,'Refresh unavailable · current feed kept');
+      if(status)status.textContent='Feed retry scheduled · showing '+allItems.length+' current stories';
+      pullStatusHtml(allItems.length,false,'Temporary feed delay · current stories kept');
     }else{
-      if(status)status.textContent='Update failed';
-      pullStatusHtml(0,true,'Unable to fetch or parse feed');
+      // Do not report a backend RSS failure from a transient browser/CDN fetch.
+      // Keep the UI neutral and automatically retry in one minute.
+      if(status)status.textContent='Feed temporarily unavailable · retrying';
+      pullStatusHtml(0,false,'Temporary feed delay · retry scheduled');
     }
     return false;
   }finally{
@@ -1455,42 +1497,5 @@ syncDiscoveryButton();
 </script>
 
 <script src="assets/location-content-v25.js?v=2"></script>
-<script id="underreported-age-border-js-v1">
-(function(){
-  'use strict';
-  function decorate(){
-    if((typeof active!=='undefined'&&active!=='underreported')&&document.body?.dataset?.activeTab!=='underreported')return;
-    const cards=[...document.querySelectorAll('.underreported-item')];
-    cards.forEach(card=>{
-      card.classList.remove('age-blue','age-green','age-orange','age-purple','age-red');
-      const metaDate=card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
-      const dt=new Date(metaDate);
-      if(Number.isNaN(dt.getTime()))return;
-      const age=(Date.now()-dt.getTime())/86400000;
-      let cls='age-red';
-      if(age<=2)cls='age-blue';
-      else if(age<=4)cls='age-green';
-      else if(age<=7)cls='age-orange';
-      else if(age<=10)cls='age-purple';
-      card.classList.add(cls);
-    });
-    const section=document.querySelector('#news-feed .section');
-    if(section&&!section.querySelector('.underreported-age-key')){
-      const key=document.createElement('div');
-      key.className='underreported-age-key';
-      key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
-      const body=section.querySelector('.section-body');
-      if(body)section.insertBefore(key,body);
-    }
-  }
-  const obs=new MutationObserver(()=>requestAnimationFrame(decorate));
-  function start(){
-    decorate();
-    const feed=document.getElementById('news-feed');
-    if(feed)obs.observe(feed,{childList:true,subtree:true});
-    document.addEventListener('click',e=>{if(e.target.closest('.tab'))requestAnimationFrame(decorate)});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
-})();
-</script></body>
+</body>
 </html>
