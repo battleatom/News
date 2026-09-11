@@ -6,27 +6,66 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
+# The data collectors run before this file. All page mutations are finalized here
+# in one deterministic order so feature patches cannot race one another.
 PATCHERS = [
-    'scripts/apply_clean_design.py','scripts/add_local_status.py','scripts/patch_header.py','scripts/persist_active_tab.py',
-    'scripts/patch_article_style.py','scripts/patch_region_tab.py','scripts/fix_region_tab_click.py','scripts/patch_location_state.py',
-    'scripts/patch_underreported_ui.py','scripts/patch_x_ui.py','scripts/patch_site_features.py','scripts/patch_refresh_success.py',
-    'scripts/patch_shared_page_state.py','scripts/patch_auto_refresh_timer.py','scripts/patch_boxoffice_ui.py','scripts/patch_pull_stats_ui.py',
-    'scripts/patch_bookmarks.py','scripts/patch_nfl_live.py','scripts/patch_load_more.py','scripts/patch_legislation_ui.py',
-    'scripts/patch_legislation_location.py','scripts/patch_related_ui.py','scripts/patch_v2_frontend.py','scripts/dedupe_generated_ui.py',
-    'scripts/normalize_generated_html.py','scripts/patch_v22_alerts_status.py','scripts/patch_v23_new_alerts.py',
-    'scripts/patch_v25_location_content.py','scripts/patch_interaction_hotfix.py','scripts/patch_content_brief_ui.py',
-    # Keep System Health last so earlier UI patchers cannot remove or restyle it.
+    'scripts/apply_clean_design.py',
+    'scripts/add_local_status.py',
+    'scripts/patch_header.py',
+    'scripts/persist_active_tab.py',
+    'scripts/patch_article_style.py',
+    'scripts/patch_region_tab.py',
+    'scripts/fix_region_tab_click.py',
+    'scripts/patch_location_state.py',
+    'scripts/patch_underreported_ui.py',
+    'scripts/patch_x_ui.py',
+    'scripts/patch_site_features.py',
+    # Keep refresh hardening explicit in the build graph instead of invoking it
+    # indirectly from patch_shared_page_state.py.
+    'scripts/patch_refresh_success.py',
+    'scripts/patch_shared_page_state.py',
+    'scripts/patch_auto_refresh_timer.py',
+    'scripts/patch_boxoffice_ui.py',
+    'scripts/patch_pull_stats_ui.py',
+    'scripts/patch_bookmarks.py',
+    'scripts/patch_nfl_live.py',
+    'scripts/patch_load_more.py',
+    'scripts/patch_legislation_ui.py',
+    'scripts/patch_legislation_location.py',
+    'scripts/patch_related_ui.py',
+    'scripts/patch_v2_frontend.py',
+    'scripts/dedupe_generated_ui.py',
+    'scripts/normalize_generated_html.py',
+    # V2.2 owns the visible refresh-status panel and browser audio unlock.
+    'scripts/patch_v22_alerts_status.py',
+    # V2.3 is the final event gate: server-backed NEW badges and sound only when
+    # a refresh actually introduces one or more new story links.
+    'scripts/patch_v23_new_alerts.py',
+    # V2.5 owns detected-state/local content pools and runs after legacy render wrappers.
+    'scripts/patch_v25_location_content.py',
+    # Final interaction-only compatibility fix. Keep this late so later patchers
+    # cannot restore the older audio or absolute-scroll behavior.
+    'scripts/patch_interaction_hotfix.py',
+    # V3 content-brief experiment: reveal compact multi-line story summaries.
+    'scripts/patch_content_brief_ui.py',
+    # System Health runs last so earlier patchers cannot remove its indicator/panel.
     'scripts/patch_system_health.py',
 ]
 
+
 def run(path: str) -> None:
-    target=ROOT/path
-    if not target.exists(): raise SystemExit(f'Missing required site build step: {path}')
-    print(f'\n=== {path} ===',flush=True)
-    subprocess.run([sys.executable,str(target)],cwd=ROOT,check=True)
+    target = ROOT / path
+    if not target.exists():
+        raise SystemExit(f'Missing required site build step: {path}')
+    print(f'\n=== {path} ===', flush=True)
+    subprocess.run([sys.executable, str(target)], cwd=ROOT, check=True)
+
 
 def main() -> None:
-    for patcher in PATCHERS: run(patcher)
+    for patcher in PATCHERS:
+        run(patcher)
     print('\nUnderreported site build complete.')
 
-if __name__=='__main__': main()
+
+if __name__ == '__main__':
+    main()
