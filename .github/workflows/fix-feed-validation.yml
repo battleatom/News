@@ -50,7 +50,6 @@ jobs:
           python - <<'PY'
           import sys
           import xml.etree.ElementTree as ET
-          from pathlib import Path
           sys.path.insert(0,'scripts')
           from classify_live_feed import classify
           root=ET.parse('News').getroot()
@@ -68,6 +67,9 @@ jobs:
       - name: Run final verifier
         run: python scripts/verify_feed.py --apply
 
+      - name: Remove audit-level semantic duplicates
+        run: python scripts/final_semantic_dedupe.py
+
       - name: Assert duplicate guard and known false-positive protection
         run: |
           python - <<'PY'
@@ -80,7 +82,7 @@ jobs:
               titles=' '.join([cluster.get('kept','')]+cluster.get('removed',[])).lower()
               if cluster.get('category')=='region' and cluster.get('size',0)>5 and 'football' in titles:
                   raise AssertionError('Over-broad regional football cluster remains: '+repr(cluster))
-          print('Duplicate verification guard passed.')
+          print('Verifier and audit-level duplicate guards passed.')
           PY
 
       - name: Install content brief dependencies
@@ -109,5 +111,6 @@ jobs:
           assert '61–120 days' in ui, '120-day Underreported age legend missing'
           assert '-webkit-line-clamp:unset!important' in ui, 'WHY IT MATTERS unclamp override missing'
           assert 'Add Underreported age border system' not in workflow, 'Post-build age patch still in production workflow'
-          print('Refresh and Underreported UI invariants passed.')
+          assert 'final_semantic_dedupe.py' in workflow, 'Audit-level duplicate cleanup missing from production workflow'
+          print('Refresh, duplicate, and Underreported UI invariants passed.')
           PY
