@@ -28,6 +28,10 @@ assert cluster.primary_score(cp)>cluster.primary_score(cu)  # neutral wire-servi
 other=item('presidential','President Jordan meets technology executives','CNN','The president met technology executives about a separate software policy discussion.','other')
 assert not cluster.event_match(cp,other,allow_cross_tab=True)
 
+# Different explicit dollar amounts are separate events even with the same actor and cash language.
+different_amount=item('presidential','President Jordan gave $45,000 in cash gifts to aides','Reuters','President Jordan reported $45,000 in separate personal cash gifts.','different')
+assert not cluster.event_match(cu,different_amount,allow_cross_tab=True)
+
 # Commemoration coverage needs a concrete shared event anchor, not just broad anniversary words.
 d=item('us','Apollo 11 anniversary marked at July 20 memorial ceremony','CBS News','Families gather July 20 for Apollo 11 remembrance events marking the anniversary.','d')
 e=item('us','July 20 events commemorate Apollo 11 anniversary','NBC News','Commemoration ceremonies and tributes mark Apollo 11 on July 20.','e')
