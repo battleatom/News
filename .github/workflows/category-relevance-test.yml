@@ -27,6 +27,9 @@ jobs:
       - name: Remove publisher/promotional landing pages
         run: python scripts/filter_landing_pages.py
 
+      - name: Apply normal production dedupe
+        run: python scripts/dedupe_news_stories.py
+
       - name: Run category relevance regression suite
         run: python tests/category_relevance_smoke.py
 
@@ -34,7 +37,6 @@ jobs:
         run: |
           python - <<'PY'
           import xml.etree.ElementTree as ET
-          from pathlib import Path
 
           def load(path):
               root=ET.parse(path).getroot()
@@ -48,24 +50,24 @@ jobs:
           before=load('/tmp/News.before')
           after=load('News')
           probes={
-              'Kimmel/FCC':'kimmel',
+              'Kimmel/FCC':'kimmel’s abc show',
               'Oh Mary/HBO':'oh, mary',
-              'Hottest month':'hottest month',
-              'PC question':'question - pc displays',
-              'Watch ESPN':'watch espn',
+              'Hottest month':'hottest month ever recorded',
+              'PC question':'question - pc displays orange light',
+              'Watch ESPN':'watch espn - stream live sports',
           }
           found=0
           for label,needle in probes.items():
               b=[x for x in before if needle in x[0].lower()]
               a=[x for x in after if needle in x[0].lower()]
               if b: found+=1
-              print(label, 'BEFORE=', b[:3], 'AFTER=', a[:3])
+              print(label, 'BEFORE=', b, 'AFTER=', a)
               if label=='Kimmel/FCC' and b:
                   assert a and all(cat=='federal' for _,cat in a), a
               elif label=='Hottest month' and b:
                   assert a and all(cat=='world' for _,cat in a), a
               elif label in ('Oh Mary/HBO','PC question','Watch ESPN') and b:
                   assert not a, a
-          assert found >= 3, f'Expected at least 3 reported examples in baseline feed; found {found}'
+          assert found >= 4, f'Expected at least 4 reported examples in baseline feed; found {found}'
           print('LIVE FEED EXAMPLE PASS — reported misclassifications were rerouted/removed as intended.')
           PY
