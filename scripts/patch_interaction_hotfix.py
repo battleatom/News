@@ -10,13 +10,19 @@ s = s.replace('if(newCount>0)playNewArticlePop();', '')
 s = s.replace("if(newCount>0&&typeof window.__queueNewArticlePopV23==='function')window.__queueNewArticlePopV23(newCount);", '')
 s = s.replace('if(manual)unlockPopAudio();', '')
 s = s.replace('let audioContext=null,audioUnlocked=false;\n', '')
-s = re.sub(
-    r'function unlockPopAudio\(\)\{.*?\}\nfunction playNewArticlePop\(\)\{.*?\}\n',
-    '',
+
+# Older site-features builds placed both Web Audio helpers directly before
+# normalizeDuplicateKey(). Remove that entire helper block by its stable boundary
+# rather than trying to balance nested JavaScript braces with a regex.
+s, removed_audio = re.subn(
+    r'function unlockPopAudio\(\)\{.*?\nfunction normalizeDuplicateKey',
+    'function normalizeDuplicateKey',
     s,
     count=1,
     flags=re.S,
 )
+if not removed_audio and ('AudioContext' in s or 'playNewArticlePop' in s):
+    raise SystemExit('Retired Web Audio block is still present but could not be removed safely')
 
 # Guard against stale generated fragments from older builds. These should be no-ops
 # on a clean build, but keeping the cleanup idempotent prevents old generated HTML
