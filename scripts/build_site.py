@@ -48,6 +48,8 @@ PATCHERS = [
     'scripts/patch_interaction_hotfix.py',
     # V3 content-brief experiment: reveal compact multi-line story summaries.
     'scripts/patch_content_brief_ui.py',
+    # Keep Why It Matters fully visible after the compact V3 styling is applied.
+    'scripts/patch_full_why_matters.py',
     # System Health runs last so earlier patchers cannot remove its indicator/panel.
     'scripts/patch_system_health.py',
 ]

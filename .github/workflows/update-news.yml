@@ -121,6 +121,9 @@ jobs:
       - name: Record pre-verification feed statistics
         run: python scripts/record_pull_stats.py
 
+      - name: Collapse same-event coverage into supporting links
+        run: python scripts/cluster_related_coverage.py
+
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
@@ -146,6 +149,9 @@ jobs:
 
       - name: Create original factual content briefs
         run: python scripts/create_content_briefs.py
+
+      - name: Regenerate Why It Matters from final paraphrased briefs
+        run: python scripts/update_why_matters.py
 
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
