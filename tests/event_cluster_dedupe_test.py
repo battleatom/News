@@ -33,6 +33,34 @@ def synthetic_regressions():
     assert not event_dedupe.same_us_event(d, f), "Different immigration events were incorrectly clustered"
     assert not event_dedupe.same_us_event(a, item("Trump proposes $5,000 gaming prize", category="technology")), "Cross-category stories must not cluster"
 
+    # Regional sports regression: generic football/game/prediction language must not
+    # merge unrelated matchups that happen to appear in the same regional feed.
+    florida_miami = item(
+        "Florida A&M vs Miami football prediction, odds and game preview",
+        category="region",
+    )
+    michigan_oklahoma = item(
+        "Michigan vs Oklahoma football prediction, odds and game preview",
+        category="region",
+    )
+    assert not event_dedupe.legacy.same_story(
+        florida_miami, michigan_oklahoma
+    ), "Unrelated regional college football matchups were incorrectly clustered"
+
+    # Genuine duplicate coverage of one regional sports event should still collapse
+    # when two stable named anchors identify the same matchup.
+    miami_a = item(
+        "Miami Hurricanes vs Florida Gators football game preview and prediction",
+        category="region",
+    )
+    miami_b = item(
+        "Florida Gators at Miami Hurricanes: prediction and game preview",
+        category="region",
+    )
+    assert event_dedupe.legacy.same_story(
+        miami_a, miami_b
+    ), "Same regional sports event was not clustered"
+
 
 def live_feed_diagnostic():
     news = ROOT / "News"
