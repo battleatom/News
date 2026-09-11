@@ -1,0 +1,66 @@
+name: Validate Feed Quality Fix
+on:
+  push:
+    branches: [fix/feed-clustering-legislation-why-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/*.py tests/feed_quality_regression_test.py
+      - name: Feed quality regression tests
+        run: python tests/feed_quality_regression_test.py
+      - name: Run normalized live collector
+        run: python scripts/update_news_normalized.py
+      - name: Refine Technology and Gaming
+        run: python scripts/refine_tech_gaming.py
+      - name: Collect strict official legislation
+        run: python scripts/collect_official_legislation_strict.py
+      - name: Enrich legislation
+        run: python scripts/enrich_legislation.py
+      - name: Enforce official-only legislation
+        run: python scripts/enforce_official_legislation.py
+      - name: Cluster same-event coverage
+        run: python scripts/cluster_related_coverage.py
+      - name: Final feed verification
+        run: python scripts/verify_feed.py --apply
+      - name: Validate legislation and clustering result
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          root=ET.parse('News').getroot();items=root.findall('.//item')
+          leg=[x for x in items if (x.findtext('category') or '').strip()=='legislation']
+          assert leg and all((x.findtext('officialSource') or '').strip() for x in leg)
+          counts=Counter((x.findtext('category') or '').strip() for x in items)
+          related=sum(len(x.findall('relatedArticles/article')) for x in items)
+          print('Counts:',dict(counts));print('Supporting links:',related)
+          assert related>0,'No related coverage links were produced'
+          PY
+      - name: Install content brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+      - name: Generate paraphrased briefs
+        run: python scripts/create_content_briefs.py
+      - name: Generate Why It Matters from paraphrased briefs
+        run: python scripts/update_why_matters.py
+      - name: Build site
+        run: python scripts/build_site.py
+      - name: Validate generated UI
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index.html').read_text()
+          assert 'full-why-matters-v1' in s
+          assert '-webkit-line-clamp:unset!important' in s
+          assert 'coverageItem(' not in s
+          assert 'stateCoverage(' not in s
+          assert 'Only official legislative records appear as cards' in s
+          print('Generated UI validation passed.')
+          PY
+      - name: Site audit
+        run: python scripts/site_audit.py
+# Temporary branch-only validation; remove before merge.
