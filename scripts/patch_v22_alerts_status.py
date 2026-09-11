@@ -3,8 +3,8 @@ from pathlib import Path
 P = Path('index.html')
 s = P.read_text(encoding='utf-8')
 
-# V2.2 owns the visible refresh-status panel. Remove the older status controller
-# so two independent scripts cannot overwrite each other's text/state.
+# V2.2 owns the visible refresh-status panel. Remove older status controllers so
+# only one script can update refresh state and metrics.
 for tag, marker, close in (
     ('script', 'pull-stats-ui-v1', '</script>'),
     ('style', 'pull-stats-ui-v1-style', '</style>'),
@@ -29,30 +29,22 @@ STYLE = r'''<style id="alerts-status-v22-style">
 #pull-stats-ui.failed .status-state{color:#b91c1c}
 #pull-stats-ui .status-new{font-weight:850;color:#dc2626}
 #pull-stats-ui .sep{color:#cbd5e1}
-#sound-alerts-toggle{appearance:none;border:1px solid #cbd5e1;border-radius:999px;background:#fff;color:#334155;padding:2px 7px;font:inherit;font-weight:800;line-height:1.35;cursor:pointer}
-#sound-alerts-toggle[data-enabled="true"]{border-color:#86efac;background:#f0fdf4;color:#166534}
 .new-badge{display:inline-flex!important;align-items:center!important;margin-left:6px!important;padding:2px 6px!important;border-radius:999px!important;background:#dc2626!important;color:#fff!important;font-size:9px!important;line-height:1.25!important;font-weight:900!important;letter-spacing:.04em!important;vertical-align:middle!important;box-shadow:0 1px 4px rgba(220,38,38,.24)!important}
-@media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}#sound-alerts-toggle{padding:2px 6px}}
-@media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}#sound-alerts-toggle{background:#242426;color:#e5e7eb;border-color:#3f3f46}#sound-alerts-toggle[data-enabled="true"]{background:#10261a;color:#86efac;border-color:#166534}}
+@media(max-width:700px){#pull-stats-ui{padding:6px 9px!important;font-size:9.5px!important}#pull-stats-ui .status-line{gap:3px 6px}}
+@media(prefers-color-scheme:dark){#pull-stats-ui{background:#171719!important;color:#d1d1d6!important}#pull-stats-ui .status-line+.status-line{color:#a1a1aa}}
 </style>'''
 
 SCRIPT = r'''<script id="alerts-status-v22">
 (function(){
   'use strict';
   const AUTO_MS=15*60*1000;
-  const NEW_AGE_MS=60*60*1000;
-  const SOUND_KEY='underreported-sound-alerts-v2';
   let stats=null;
-  let serverNewLinks=new Set();
   let refreshState='scheduled';
   let tickTimer=null;
   let statsTimer=null;
-  let audioContext=null;
-  let audioReady=false;
 
   const byId=id=>document.getElementById(id);
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function normalizeLink(v){try{const u=new URL(String(v||''),location.href);u.hash='';return u.href}catch(e){return String(v||'').trim()}}
   function shortTime(ms){if(!ms)return '—';try{return new Date(ms).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}catch(e){return '—'}}
   function countdown(ms){
     const total=Math.max(0,Math.ceil(ms/1000));
@@ -73,7 +65,6 @@ SCRIPT = r'''<script id="alerts-status-v22">
     const toolbar=document.querySelector('.toolbar');if(!toolbar)return null;
     panel=document.createElement('div');panel.id='pull-stats-ui';panel.setAttribute('role','status');panel.setAttribute('aria-live','polite');toolbar.insertAdjacentElement('afterend',panel);return panel;
   }
-  function soundEnabled(){try{return localStorage.getItem(SOUND_KEY)==='on'}catch(e){return false}}
   function stateLabel(){
     if(refreshState==='checking'||window.pullInProgress)return '↻ Auto refresh checking';
     if(refreshState==='retrying')return '⚠ Auto refresh retrying';
@@ -87,65 +78,13 @@ SCRIPT = r'''<script id="alerts-status-v22">
     const failed=refreshState==='retrying'||(last&&Date.now()-last>AUTO_MS*2.5);
     const busy=refreshState==='checking'||window.pullInProgress;
     panel.className=failed?'failed':busy?'busy':'ready';
-    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span><button id="sound-alerts-toggle" type="button" data-enabled="${soundEnabled()?'true':'false'}">${soundEnabled()?'🔊 Alerts on':'🔔 Enable sound'}</button></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
-    const sound=byId('sound-alerts-toggle');if(sound)sound.onclick=()=>{void enableSound(true)};
+    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
   }
-
-  function synthPop(){
-    if(!audioContext||audioContext.state!=='running')return false;
-    try{
-      const now=audioContext.currentTime;
-      const gain=audioContext.createGain();gain.connect(audioContext.destination);
-      gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(.18,now+.012);gain.gain.exponentialRampToValueAtTime(.0001,now+.16);
-      [740,1040].forEach((freq,i)=>{const o=audioContext.createOscillator();o.type='sine';o.frequency.setValueAtTime(freq,now+i*.045);o.connect(gain);o.start(now+i*.045);o.stop(now+.15);});
-      return true;
-    }catch(e){return false}
-  }
-  async function ensureAudio(){
-    try{
-      if(!audioContext)audioContext=new (window.AudioContext||window.webkitAudioContext)();
-      if(audioContext.state==='suspended')await audioContext.resume();
-      audioReady=audioContext.state==='running';
-    }catch(e){audioReady=false}
-    return audioReady;
-  }
-  async function enableSound(test){
-    const ok=await ensureAudio();
-    if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
-    renderStatus();return ok;
-  }
-  window.enableNewArticleSound=enableSound;
-  window.playNewArticlePop=function(){if(!soundEnabled())return false;if(audioReady&&synthPop())return true;void ensureAudio().then(ok=>{if(ok)synthPop()});return false};
-  // A remembered preference is re-activated by the first normal user gesture,
-  // satisfying mobile autoplay rules without making every page load beep.
-  function activateRememberedSound(){if(soundEnabled()&&!audioReady)void ensureAudio()}
-  document.addEventListener('pointerdown',activateRememberedSound,{capture:true,passive:true});
-  document.addEventListener('keydown',activateRememberedSound,{capture:true});
-
-  function cardPublishedMs(card){
-    const text=card.querySelector('.meta span')?.textContent||'';
-    const d=Date.parse(text);return Number.isFinite(d)?d:0;
-  }
-  function cardIsNew(card){
-    const href=normalizeLink(card.querySelector('h3 a[href]')?.href||'');
-    if(href&&serverNewLinks.has(href))return true;
-    const published=cardPublishedMs(card);
-    return !!published&&Date.now()-published>=-5*60*1000&&Date.now()-published<=NEW_AGE_MS;
-  }
-  window.decorateNewBadges=function(){
-    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
-      const h=card.querySelector('h3');if(!h)return;
-      const existing=h.querySelector('.new-badge');const fresh=cardIsNew(card);
-      if(fresh&&!existing){const badge=document.createElement('span');badge.className='new-badge';badge.textContent='NEW';badge.title='Newly discovered or published within the last hour';h.appendChild(badge)}
-      else if(!fresh&&existing)existing.remove();
-    });
-  };
 
   async function loadStats(){
     try{
       const r=await fetch('update-stats.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('HTTP '+r.status);
       stats=await r.json();
-      serverNewLinks=new Set((stats.newLinks||[]).map(normalizeLink));
       const parsed=Date.parse(stats.updatedAt||'');
       if(Number.isFinite(parsed)){
         window.lastSuccessfulPull=Math.max(Number(window.lastSuccessfulPull)||0,parsed);
@@ -153,10 +92,10 @@ SCRIPT = r'''<script id="alerts-status-v22">
         if(next<=now&&refreshState!=='retrying')window.nextScheduledPull=Math.max(parsed+AUTO_MS,now+1000);
       }
     }catch(e){console.warn('Update statistics unavailable:',e)}
-    window.decorateNewBadges();renderStatus();
+    if(typeof window.decorateNewBadges==='function')window.decorateNewBadges();
+    renderStatus();
   }
 
-  // Keep the Top discovery button behavior that the older status controller owned.
   function wireTopButton(){
     const btn=byId('refresh');if(!btn)return;
     const current=()=>{try{return typeof active!=='undefined'?active:(window.active||'top')}catch(e){return window.active||'top'}};
@@ -185,8 +124,7 @@ SCRIPT = r'''<script id="alerts-status-v22">
     wrapped.__v22Wrapped=true;window.refreshNewsFromPage=wrapped;
   }
 
-  const feed=byId('news-feed');if(feed)new MutationObserver(()=>window.decorateNewBadges()).observe(feed,{childList:true,subtree:true});
-  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();window.decorateNewBadges();renderStatus()},0));
+  const tabs=byId('tabs');if(tabs)tabs.addEventListener('click',()=>setTimeout(()=>{wireTopButton();renderStatus()},0));
   function tick(){renderStatus();tickTimer=setTimeout(tick,1000-(Date.now()%1000)+20)}
   function refreshStatsLoop(){void loadStats();statsTimer=setTimeout(refreshStatsLoop,60000)}
   wireTopButton();void loadStats();tick();statsTimer=setTimeout(refreshStatsLoop,60000);
@@ -199,4 +137,4 @@ if '</head>' not in s or '</body>' not in s:
 s = s.replace('</head>', STYLE + '\n</head>', 1)
 s = s.replace('</body>', SCRIPT + '\n</body>', 1)
 P.write_text(s, encoding='utf-8')
-print('Installed V2.2 NEW badges, explicit mobile-safe sound alerts, detailed fetch metrics, countdown, and auto-refresh state.')
+print('Installed V2.2 refresh status, fetch metrics, countdown, and Top Stories controls without retired audio code.')
