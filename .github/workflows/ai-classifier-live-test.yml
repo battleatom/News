@@ -7,6 +7,11 @@ on:
       - 'News'
       - 'News.classified-preview'
       - 'classifier-report.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/classify_live_feed.py'
+      - '.github/workflows/ai-classifier-live-test.yml'
   workflow_dispatch:
 
 concurrency:
@@ -70,6 +75,7 @@ jobs:
           retention-days: 14
 
       - name: Save latest test report on branch
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
