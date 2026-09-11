@@ -127,6 +127,12 @@ jobs:
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
+      - name: Enforce final U.S. Federal and legislation routing
+        run: python scripts/enforce_us_federal.py
+
+      - name: Re-enforce official-only Legislation after final routing
+        run: python scripts/enforce_official_legislation.py
+
       - name: Verify no strong duplicate pairs remain
         run: |
           python - <<'PY'
