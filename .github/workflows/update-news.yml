@@ -20,79 +20,113 @@ on:
 concurrency:
   group: update-news-feed
   cancel-in-progress: true
+
 permissions:
   contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with: {fetch-depth: 0}
+        with:
+          fetch-depth: 0
+
       - name: Sync latest main
         run: |
           git fetch origin main
           git checkout main
           git reset --hard origin/main
+
       - name: Validate stable Python before collection
         run: python -m py_compile scripts/*.py
+
       - name: Collector preflight
         run: python scripts/preflight_feed.py
+
       - name: Update RSS feed
         run: |
           success=0
           for attempt in 1 2 3; do
             echo "RSS update attempt ${attempt}/3"
-            if python scripts/update_news_normalized.py; then success=1; break; fi
-            if [ "$attempt" -lt 3 ]; then delay=$((attempt * 20)); echo "RSS update failed; retrying in ${delay}s."; sleep "$delay"; fi
+            if python scripts/update_news_normalized.py; then
+              success=1
+              break
+            fi
+            if [ "$attempt" -lt 3 ]; then
+              delay=$((attempt * 20))
+              echo "RSS update failed; retrying in ${delay}s."
+              sleep "$delay"
+            fi
           done
           if [ "$success" -ne 1 ]; then
             python - <<'PY'
           import json
           from datetime import datetime, timezone
           with open('refresh-health.json','w',encoding='utf-8') as f:
-              json.dump({'status':'degraded','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'News collection failed after three attempts. No replacement feed was published.'},f,indent=2);f.write('\n')
+              json.dump({'status':'degraded','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'News collection failed after three attempts. No replacement feed was published.'},f,indent=2)
+              f.write('\n')
           PY
+            echo "Collection failed after three attempts; failing workflow instead of publishing stale data."
             exit 1
           fi
           python - <<'PY'
           import json
           from datetime import datetime, timezone
           with open('refresh-health.json','w',encoding='utf-8') as f:
-              json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2);f.write('\n')
+              json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2)
+              f.write('\n')
           PY
+
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
+
       - name: Collect strict official legislation records
         run: python scripts/collect_official_legislation_strict.py
+
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
+
       - name: Expand Underreported discovery to 14 days
         run: python scripts/underreported_priority.py --discover
+
       - name: Enrich Underreported context and long-term supporting coverage
         run: python scripts/enrich_underreported.py
+
       - name: Rank Underreported by importance freshness and coverage
         run: python scripts/underreported_priority.py --rank
+
       - name: Enrich Laws & Legislation
         run: python scripts/enrich_legislation.py
+
       - name: Enforce official-only Legislation cards
         run: python scripts/enforce_official_legislation.py
+
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
+
       - name: Enrich Box Office and movie data
         run: python scripts/enrich_box_office.py
+
       - name: Add location-aware Box Office data
         run: python scripts/patch_boxoffice_location.py
+
       - name: Clean commerce and paywall-heavy links
         run: python scripts/clean_news.py
+
       - name: Remove generic publisher landing pages
         run: python scripts/filter_landing_pages.py
+
       - name: Record pre-verification feed statistics
         run: python scripts/record_pull_stats.py
+
       - name: Collapse same-event coverage into supporting links
         run: python scripts/cluster_related_coverage.py
+
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
+
       - name: Verify no strong duplicate pairs remain
         run: |
           python - <<'PY'
@@ -101,39 +135,61 @@ jobs:
           report=json.loads(Path('verification-report.json').read_text(encoding='utf-8'))
           pairs=report.get('residualStrongDuplicatePairs',[])
           if pairs:
+              print('Residual strong duplicate pairs remain:')
               for pair in pairs[:20]: print(pair)
               raise SystemExit(1)
           print('Final duplicate guard passed.')
           PY
+
       - name: Finalize feed pull statistics
         run: python scripts/record_pull_stats.py --finalize
+
       - name: Install content brief extraction dependencies
         run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
       - name: Create original factual content briefs
         run: python scripts/create_content_briefs.py
+
       - name: Regenerate Why It Matters from final paraphrased briefs
         run: python scripts/update_why_matters.py
+
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
+
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
+
       - name: Validate final Python syntax
         run: python -m py_compile scripts/*.py
+
       - name: Remove generated bytecode and dead collector
         run: |
           rm -f scripts/collect_official_legislation.py
           find scripts -type d -name __pycache__ -prune -exec rm -rf {} +
+
       - name: Commit and push validated changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json scripts
-          if git diff --cached --quiet; then echo 'No changes to commit.'; exit 0; fi
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+            exit 0
+          fi
           git commit -m 'Automated news feed update'
           for attempt in 1 2 3; do
-            if git push origin main; then echo "Push succeeded on attempt ${attempt}."; exit 0; fi
+            if git push origin main; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push rejected; rebasing onto latest main before retry ${attempt}."
             git fetch origin main
-            if ! git rebase origin/main; then git rebase --abort || true; exit 1; fi
+            if ! git rebase origin/main; then
+              echo 'Concurrent changes conflict with this generated update; refusing to resolve silently.'
+              git rebase --abort || true
+              exit 1
+            fi
             if [ "$attempt" -lt 3 ]; then sleep 3; fi
           done
+          echo 'Push failed after 3 attempts.'
           exit 1
