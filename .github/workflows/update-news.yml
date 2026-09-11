@@ -50,7 +50,7 @@ jobs:
           success=0
           for attempt in 1 2 3; do
             echo "RSS update attempt ${attempt}/3"
-            if python scripts/update_news.py; then
+            if python scripts/update_news_normalized.py; then
               success=1
               break
             fi
@@ -82,8 +82,8 @@ jobs:
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
 
-      - name: Collect official legislation records
-        run: python scripts/collect_official_legislation_v2.py
+      - name: Collect strict official legislation records
+        run: python scripts/collect_official_legislation_strict.py
 
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
@@ -99,6 +99,9 @@ jobs:
 
       - name: Enrich Laws & Legislation
         run: python scripts/enrich_legislation.py
+
+      - name: Enforce official-only Legislation cards
+        run: python scripts/enforce_official_legislation.py
 
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
