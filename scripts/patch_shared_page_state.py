@@ -13,43 +13,31 @@ SCRIPT = r'''<script id="shared-page-state-bridge-v1">
 </script>'''
 
 s = P.read_text(encoding='utf-8')
-if 'refresh-success-handling-v2' not in s:
+refresh_v3 = 'refresh-success-handling-v3' in s
+refresh_v2 = 'refresh-success-handling-v2' in s
+if not (refresh_v3 or refresh_v2):
     raise SystemExit('Explicit render-aware refresh success handling step must run before shared page state')
 
-# patch_site_features owns the canonical category list and intentionally assigns
-# sections=CANONICAL_SECTIONS at runtime. The generated base page historically
-# declared sections with const, which makes that legitimate assignment throw
-# "Assignment to constant variable" and abort the rest of site-features setup.
-# Make this one shared, intentionally mutable binding a true window global.
 if 'const sections=[' in s:
     s = s.replace('const sections=[', 'var sections=[', 1)
 elif 'var sections=[' not in s:
     raise SystemExit('Could not locate canonical sections declaration')
 
-# patch_site_features historically starts an eager loadNews(false) while the
-# document is still being parsed. The canonical DOMContentLoaded loader added by
-# patch_refresh_success.py starts a second fetch later. On mobile those two
-# requests can race: one fills allItems while the other failure leaves the page
-# stuck on "Loading news...". Remove the eager startup call so there is exactly
-# one initial feed load, after every renderer (including NFL and Load More) exists.
 site_script = re.compile(r'(<script id="site-features-v2">.*?)(?:\r?\n)?loadNews\(false\);(\s*</script>)', re.S)
 s, removed_eager_load = site_script.subn(r'\1\2', s, count=1)
 if removed_eager_load != 1:
     raise SystemExit('Could not remove eager site-features loadNews(false) startup call')
 
-# If a later refresh fails after another path already populated allItems, render
-# those existing items rather than allowing a stale "Loading news..." placeholder
-# to remain visible.
-fallback_anchor = "if(allItems.length){\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
-fallback_replacement = "if(allItems.length){\n      try{canonicalBuildTabs();canonicalRender(allItems);decorateNewBadges();}catch(renderExistingError){console.error('Unable to render existing feed after refresh failure:',renderExistingError);}\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
-if fallback_anchor in s:
-    s = s.replace(fallback_anchor, fallback_replacement, 1)
-else:
-    raise SystemExit('Could not add existing-feed render fallback to refresh handler')
+# V3 already renders existing allItems inside its transient-failure catch. Older
+# generated pages need the fallback injected here for backward compatibility.
+if not refresh_v3:
+    fallback_anchor = "if(allItems.length){\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
+    fallback_replacement = "if(allItems.length){\n      try{canonicalBuildTabs();canonicalRender(allItems);decorateNewBadges();}catch(renderExistingError){console.error('Unable to render existing feed after refresh failure:',renderExistingError);}\n      if(status)status.textContent='Refresh unavailable · showing '+allItems.length+' current stories';"
+    if fallback_anchor in s:
+        s = s.replace(fallback_anchor, fallback_replacement, 1)
+    else:
+        raise SystemExit('Could not add existing-feed render fallback to refresh handler')
 
-# The page's canonical state used top-level let declarations. Those are lexical
-# globals and therefore invisible to window-based feature modules. Convert only
-# the shared state declarations to var so they are true window globals.
 old_all = "let allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';"
 new_all = "var allItems=[],active=localStorage.getItem('underreported-active-tab')||'top';"
 if old_all in s:
