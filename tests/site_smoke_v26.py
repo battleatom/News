@@ -94,6 +94,30 @@ def badge_checks(page):
     assert state(10,4)=='', 'Yellow NEW must expire three hours after first seen'
 
 
+def content_brief_checks(page):
+    assert page.locator('html[data-content-briefs="1"]').count()==1, 'V3 content brief presentation marker missing'
+    stats=page.evaluate("""() => {
+      const items=(window.allItems||[]);
+      const generated=items.filter(i=>(i.querySelector('briefGenerated')?.textContent||'')==='true');
+      const backed=generated.filter(i=>(i.querySelector('briefSource')?.textContent||'')!=='headline-fallback');
+      const rendered=[...document.querySelectorAll('#news-feed .news-item .description')].filter(el=>el.textContent.trim().length>=35);
+      return {total:items.length,generated:generated.length,backed:backed.length,rendered:rendered.length};
+    }""")
+    assert stats['generated']>=max(10,int(stats['total']*.8)), f'Too few generated content briefs: {stats}'
+    assert stats['backed']>=max(10,int(stats['total']*.05)), f'Article-backed content briefs missing: {stats}'
+    assert stats['rendered']>0, f'No usable content briefs rendered on cards: {stats}'
+
+
+def infinite_scroll_check(page):
+    sentinel=page.locator('.infinite-scroll-sentinel')
+    assert sentinel.count()==1, 'Infinite-scroll sentinel missing'
+    before=page.locator('#news-feed .news-item').count()
+    sentinel.scroll_into_view_if_needed()
+    page.wait_for_function('(before)=>document.querySelectorAll("#news-feed .news-item").length>before', before, timeout=5000)
+    after=page.locator('#news-feed .news-item').count()
+    assert after>before, f'Infinite scroll did not add stories: {before} -> {after}'
+
+
 def synthetic_denver_mix(page):
     return page.evaluate("""() => {
       const rows=[];
@@ -154,10 +178,9 @@ def farmington_suite(browser):
       .map(i=>`${i.querySelector('title')?.textContent||''} ${i.querySelector('description')?.textContent||''}`.toLowerCase())""")
     local_terms=('farmington','san juan county','aztec','bloomfield','kirtland','shiprock','four corners')
     assert all(any(term in text for term in local_terms) for text in local_texts), f'Non-local story was labeled Local: {local_texts}'
-    more=page.locator('.load-more');assert more.count() and more.is_visible(), 'Merged State feed has no Load More'
-    before=page.locator('#news-feed .news-item').count();more.click();page.wait_for_timeout(350);after=page.locator('#news-feed .news-item').count()
-    assert after>before, 'Merged State Load More did not add stories'
+    infinite_scroll_check(page)
     badge_checks(page)
+    content_brief_checks(page)
     assert not errors, f'Browser errors: {errors[:5]}'
     context.close()
 
@@ -196,6 +219,7 @@ def mobile_suite(browser):
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile page overflows horizontally by {overflow}px'
     badge_checks(page)
+    content_brief_checks(page)
     cleared=page.evaluate("""() => {
       localStorage.setItem('underreported-location-v2','{}');
       localStorage.setItem('underreported-location','Old City, NM');
@@ -217,7 +241,7 @@ def main():
         browser=p.chromium.launch(headless=True)
         farmington_suite(browser);denver_suite(browser);mobile_suite(browser)
         browser.close()
-    print('V2.7 REFINEMENT SMOKE PASS — event-first Top ranking, publisher diversity, strict Local accuracy, location clearing, Presidential filter, and NEW badges.')
+    print('V3.1 SMOKE PASS — ranking, location, Presidential filter, NEW badges, content briefs, infinite scroll, and responsive UI.')
 
 
 if __name__=='__main__':
