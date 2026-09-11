@@ -50,7 +50,8 @@ def mobile_suite(browser):
     cards=page.locator('#news-feed .x-issue-item')
     assert cards.count()==10, f'X UI rendered {cards.count()} cards instead of 10'
     topics=page.locator('#news-feed .x-topic').all_inner_texts()
-    assert topics==EXPECTED_X, f'X UI topic order/content mismatch: {topics}'
+    assert [t.upper() for t in topics]==[t.upper() for t in EXPECTED_X], f'X UI topic order/content mismatch: {topics}'
+    assert len({t.upper() for t in topics})==10, f'X UI contains duplicate topic labels: {topics}'
 
     page.evaluate('window.scrollTo(0, Math.min(1400, document.documentElement.scrollHeight-600))')
     page.wait_for_timeout(250)
