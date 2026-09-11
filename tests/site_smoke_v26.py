@@ -113,7 +113,7 @@ def infinite_scroll_check(page):
     assert sentinel.count()==1, 'Infinite-scroll sentinel missing'
     before=page.locator('#news-feed .news-item').count()
     sentinel.scroll_into_view_if_needed()
-    page.wait_for_function('(before)=>document.querySelectorAll("#news-feed .news-item").length>before', before, timeout=5000)
+    page.wait_for_function('(before)=>document.querySelectorAll("#news-feed .news-item").length>before', arg=before, timeout=5000)
     after=page.locator('#news-feed .news-item').count()
     assert after>before, f'Infinite scroll did not add stories: {before} -> {after}'
 
