@@ -1,0 +1,55 @@
+name: Validate Cross Tab Event Canonicalization
+on:
+  push:
+    branches: [fix/cross-tab-event-canonicalization-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/cluster_related_coverage.py tests/feed_quality_regression_test.py
+      - name: Feed quality regressions
+        run: python tests/feed_quality_regression_test.py
+      - name: Audit current overlapping tabs before canonicalization
+        run: |
+          python - <<'PY'
+          import sys,xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import cluster_related_coverage as c
+          items=ET.parse('News').getroot().findall('.//item')
+          rows=[x for x in items if c.vf.category(x) in {'us','presidential','federal'}]
+          pairs=[]
+          for i,a in enumerate(rows):
+              for b in rows[i+1:]:
+                  if c.vf.category(a)!=c.vf.category(b) and c.event_match(a,b,allow_cross_tab=True):
+                      pairs.append((c.vf.category(a),c.vf.title(a),c.vf.category(b),c.vf.title(b)))
+          print('Cross-tab event pairs before:',len(pairs))
+          for p in pairs[:20]: print(p)
+          PY
+      - name: Canonicalize current feed copy
+        run: python scripts/cluster_related_coverage.py
+      - name: Verify overlapping event cards are canonical
+        run: |
+          python - <<'PY'
+          import sys,xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import cluster_related_coverage as c
+          items=ET.parse('News').getroot().findall('.//item')
+          rows=[x for x in items if c.vf.category(x) in {'us','presidential','federal'}]
+          pairs=[]
+          for i,a in enumerate(rows):
+              for b in rows[i+1:]:
+                  if c.vf.category(a)!=c.vf.category(b) and c.event_match(a,b,allow_cross_tab=True):
+                      pairs.append((c.vf.title(a),c.vf.title(b)))
+          assert not pairs,pairs[:10]
+          payment=[x for x in rows if 'usd:5000' in c.vf.amount_keys(x)]
+          print('Standalone $5,000 cards after:',len(payment))
+          for x in payment: print(c.vf.category(x),c.vf.title(x),len(x.findall('./relatedArticles/article')))
+          assert len(payment)<=1,[(c.vf.category(x),c.vf.title(x)) for x in payment]
+          print('Cross-tab canonicalization passed.')
+          PY
+# Temporary branch-only validation workflow; remove before merge.
