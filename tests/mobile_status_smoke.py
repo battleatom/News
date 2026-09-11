@@ -25,10 +25,23 @@ def main():
         assert 'fetched' in first.lower(), f'Mobile fetch count is missing: {first}'
         assert any(word in first.lower() for word in ('auto update', 'checking', 'retrying', 'update delayed')), f'Mobile auto-update state is missing: {first}'
 
+        # The page intentionally performs one feed refresh on DOMContentLoaded.
+        # That successful refresh resets nextScheduledPull to a fresh 15-minute
+        # deadline, so do not mistake that one-time reset for a frozen countdown.
+        page.wait_for_function("""() => {
+          const text=document.getElementById('status')?.textContent||'';
+          const finished=/stories fetched|refresh unavailable|update failed/i.test(text);
+          return finished && !window.pullInProgress && Number(window.nextScheduledPull)>Date.now();
+        }""", timeout=15000)
+        page.wait_for_timeout(250)
+
         countdown1 = status.get_attribute('data-countdown') or ''
+        target1 = page.evaluate('Number(window.nextScheduledPull)||0')
         assert countdown1 and ('m' in countdown1 or 'h' in countdown1), f'Mobile countdown is missing: {countdown1}'
         page.wait_for_timeout(1250)
         countdown2 = status.get_attribute('data-countdown') or ''
+        target2 = page.evaluate('Number(window.nextScheduledPull)||0')
+        assert abs(target2-target1) < 100, f'Countdown deadline unexpectedly moved after initial refresh: {target1} -> {target2}'
         assert countdown2 and countdown2 != countdown1, f'Mobile countdown is not live: {countdown1} -> {countdown2}'
 
         local = page.locator('#local-status')
