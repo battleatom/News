@@ -1,0 +1,84 @@
+name: Consolidated Build Audit
+on:
+  push:
+    branches: [consolidated-build-audit]
+    paths-ignore:
+      - 'consolidated-audit-report.json'
+      - 'candidate-vs-main-report.json'
+      - 'News'
+      - 'index.html'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Preserve working-main baseline
+        run: |
+          git show origin/main:News > /tmp/News.main
+          git show origin/main:index.html > /tmp/index.main.html
+      - name: Syntax and preflight
+        run: |
+          python -m py_compile scripts/*.py
+          python scripts/preflight_feed.py
+      - name: Pull fresh candidate feed
+        run: python scripts/update_news_normalized.py
+      - name: Candidate enrichment and normalization
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/record_pull_stats.py --finalize
+      - name: Audit every candidate article
+        run: python scripts/consolidated_audit.py
+      - name: Build candidate site
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+      - name: Compare candidate to working main
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,xml.etree.ElementTree as ET
+          from collections import Counter
+          def load(p):
+            items=ET.parse(p).getroot().findall('.//item')
+            return items,Counter((x.findtext('category') or '').strip() for x in items)
+          old,oc=load('/tmp/News.main'); new,nc=load('News')
+          def keys(xs): return {(x.findtext('title') or '').strip() for x in xs}
+          a,b=keys(old),keys(new)
+          report={'mainTotal':len(old),'candidateTotal':len(new),'mainCategoryCounts':dict(oc),'candidateCategoryCounts':dict(nc),'newTitles':sorted(b-a),'droppedTitles':sorted(a-b),'candidateAuditExists':__import__('pathlib').Path('consolidated-audit-report.json').exists()}
+          open('candidate-vs-main-report.json','w').write(json.dumps(report,indent=2)+'\n')
+          print(json.dumps(report,indent=2))
+          PY
+      - name: Commit audit reports only
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add consolidated-audit-report.json candidate-vs-main-report.json 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m 'Record consolidated candidate audit results'
+          git push origin HEAD:consolidated-build-audit
