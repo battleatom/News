@@ -28,6 +28,7 @@ EXPECTED_TOPICS = [name for name, _ in CATEGORIES]
 
 STOP = {"the","a","an","to","of","in","on","for","and","with","is","as","at","from","by","after","new","says","said","that","this","are","was","were","has","have","had","into","over","its","their","will","news","latest","x","twitter","post","posts","users","people"}
 GENERIC = {"trump", "elon musk", "donald trump", "taylor swift", "kim kardashian", "celebrity", "breaking news", "viral", "x", "twitter"}
+LOCAL_FEED_CATEGORIES = {"nm", "local", "region"}
 
 
 def clean(value):
@@ -149,8 +150,11 @@ def existing_candidates(items, query):
     qwords=words(query)
     out=[]
     for item in items:
-        cat=clean(item.findtext("category"))
-        if cat in {"x","legislation","boxoffice"}: continue
+        cat=clean(item.findtext("category")).lower()
+        # X is national/global by default. State, local and regional feed pools must
+        # not win a slot merely through keyword overlap. They can still surface via
+        # the independent U.S.-wide trend/broad searches when genuinely widespread.
+        if cat in {"x","legislation","boxoffice"} | LOCAL_FEED_CATEGORIES: continue
         d=news_item_data(item)
         if not d["dt"] or not d["title"]: continue
         overlap=len((words(d["title"]) | words(d["desc"])) & qwords)
@@ -161,8 +165,8 @@ def existing_candidates(items, query):
 
 
 def best_issue(query, trend_names, items, used_leads):
-    # Prefer the already-collected feed. On the production second pass this feed has
-    # already passed the normal source/category verifier, so the X lead inherits that gate.
+    # Prefer the already-collected national/global feed. Local/state/regional cards
+    # are excluded here and must independently qualify through U.S.-wide trend search.
     pools=[existing_candidates(items,query),trend_candidates(query,trend_names),broad_candidates(query)]
     def score(row):
         overlap,d,name=row
