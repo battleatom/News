@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 """Collapse repeated same-event cards into one primary card with supporting links.
 
-This runs before the final verifier. It is category-agnostic for normal news tabs:
-no topic-specific blocklist is used. Event matching combines the verifier's strict
-matcher with conservative fingerprints for named entities, event vocabulary,
-amounts/dates and headline anchors. Official legislation is intentionally excluded.
+Runs before the final verifier as an early consolidation pass. Matching is generic:
+syndicated-copy similarity, event vocabulary, amounts/dates, named actors/entities,
+and headline anchors. Official legislation and special editorial surfaces are excluded.
 """
 from __future__ import annotations
-import copy
 import re
 import xml.etree.ElementTree as ET
 from collections import defaultdict
@@ -22,6 +20,7 @@ EVENT_WORDS={
  'military':{'war','airstrike','missile','strike','troops','invasion','ceasefire','attack','raid'},
  'courts':{'court','judge','ruling','lawsuit','appeal','injunction','supreme'},
  'elections':{'election','midterm','vote','ballot','campaign'},
+ 'economy':{'tariff','tariffs','trade','economy','market','prices','wages'},
  'disaster':{'hurricane','tornado','wildfire','flood','earthquake','storm','evacuation'},
  'crime':{'shooting','murder','homicide','arrest','charged','indictment','stabbing'},
  'technology':{'cybersecurity','breach','hack','outage','vulnerability','launch'},
@@ -40,8 +39,7 @@ def groups(item):
     return {k for k,v in EVENT_WORDS.items() if t&v}|vf.event_groups(item)
 
 def slash_date_keys(item):
-    text=vf.full_text(item).lower()
-    out=set()
+    text=vf.full_text(item).lower();out=set()
     for m,d in re.findall(r'\b(\d{1,2})/(\d{1,2})\b',text):
         mi,di=int(m),int(d)
         if 1<=mi<=12 and 1<=di<=31: out.add(f'date:{mi}/{di}')
@@ -51,17 +49,21 @@ def slash_date_keys(item):
 
 def same_event(a,b):
     if vf.category(a)!=vf.category(b): return False
-    if vf.same_event(a,b): return True
+    if vf.syndicated_copy(a,b) or vf.same_event(a,b): return True
     ga,gb=groups(a),groups(b)
     if not ga&gb: return False
-    shared=toks(a)&toks(b); tshared=title_toks(a)&title_toks(b)
+    shared=toks(a)&toks(b);tshared=title_toks(a)&title_toks(b)
     entities=vf.entity_keys(a)&vf.entity_keys(b)
+    actors=vf.actor_keys(a)&vf.actor_keys(b)
     numbers=vf.amount_keys(a)&vf.amount_keys(b)
     dates=slash_date_keys(a)&slash_date_keys(b)
-    # Strong event fingerprints. A broad person/subject by itself never clusters.
+    # Broad person/organization overlap alone never clusters. It must be paired
+    # with an independent event fingerprint or meaningful lexical agreement.
+    if numbers and (actors or entities): return True
     if numbers and len(shared)>=2: return True
-    if dates and len(shared)>=2: return True
+    if dates and (actors or entities) and len(shared)>=2: return True
     if entities and len(tshared)>=2 and len(shared)>=3: return True
+    if actors and len(tshared)>=2 and len(shared)>=3: return True
     if len(tshared)>=4 and len(shared)>=4: return True
     return False
 
@@ -71,35 +73,36 @@ def related_key(node):
 def attach(primary,other):
     rel=primary.find('relatedArticles')
     if rel is None: rel=ET.SubElement(primary,'relatedArticles')
-    existing={related_key(x) for x in rel.findall('article')}
-    k=related_key(other)
-    if not k or k in existing: return
+    existing={related_key(x) for x in rel.findall('article')};k=related_key(other)
+    if not k or k in existing: return False
     ar=ET.SubElement(rel,'article')
     for tag in ('title','link','source','pubDate'):
         value=(other.findtext(tag) or '').strip()
         if value: ET.SubElement(ar,tag).text=value
+    return True
 
 def main():
-    tree=ET.parse(NEWS); channel=tree.getroot().find('channel')
-    items=list(channel.findall('item')); bycat=defaultdict(list)
+    tree=ET.parse(NEWS);channel=tree.getroot().find('channel')
+    items=list(channel.findall('item'));bycat=defaultdict(list)
     for item in items:
         cat=vf.category(item)
         if cat not in EXCLUDED: bycat[cat].append(item)
-    removed=set(); clusters=0; attached=0
-    for cat,rows in bycat.items():
+    removed=set();clusters=0;attached=0
+    for rows in bycat.values():
         used=set()
         for i,a in enumerate(rows):
             if i in used: continue
             cluster=[a]
             for j in range(i+1,len(rows)):
                 if j in used: continue
-                if any(same_event(member,rows[j]) for member in cluster[:4]):
-                    cluster.append(rows[j]); used.add(j)
+                if any(same_event(member,rows[j]) for member in cluster[:6]):
+                    cluster.append(rows[j]);used.add(j)
             if len(cluster)<2: continue
-            primary=max(cluster,key=vf.representative_score); clusters+=1
+            primary=max(cluster,key=vf.representative_score);clusters+=1
             for other in cluster:
                 if other is primary: continue
-                attach(primary,other); attached+=1; removed.add(id(other))
+                if attach(primary,other): attached+=1
+                removed.add(id(other))
     if removed:
         for item in list(channel.findall('item')):
             if id(item) in removed: channel.remove(item)
