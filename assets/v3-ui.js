@@ -1,4 +1,4 @@
-/* Underreported 3.1 — non-destructive presentation enhancements. */
+/* Underreported 3.2 — deeper archive and full editorial context. */
 (function(){
   'use strict';
 
@@ -23,9 +23,10 @@
   }
 
   function installAgeStyles(){
-    if(document.getElementById('underreported-age-styles-v31'))return;
+    if(document.getElementById('underreported-age-styles-v32'))return;
+    document.getElementById('underreported-age-styles-v31')?.remove();
     const style=document.createElement('style');
-    style.id='underreported-age-styles-v31';
+    style.id='underreported-age-styles-v32';
     style.textContent=`
       .news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
       .news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
@@ -36,6 +37,7 @@
       .underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
       .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px}
       .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
+      html body .v3-why-text{display:block!important;-webkit-line-clamp:unset!important;-webkit-box-orient:initial!important;overflow:visible!important;white-space:normal!important}
     `;
     document.head.appendChild(style);
   }
@@ -49,9 +51,9 @@
     const age=Math.max(0,(Date.now()-dt.getTime())/86400000);
     let cls='age-red';
     if(age<=2)cls='age-blue';
-    else if(age<=4)cls='age-green';
-    else if(age<=7)cls='age-orange';
-    else if(age<=10)cls='age-purple';
+    else if(age<=7)cls='age-green';
+    else if(age<=30)cls='age-orange';
+    else if(age<=60)cls='age-purple';
     card.classList.add(cls);
   }
 
@@ -61,7 +63,7 @@
     if(!section||section.querySelector('.underreported-age-key'))return;
     const key=document.createElement('div');
     key.className='underreported-age-key';
-    key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
+    key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>3–7 days</span><span><i class="o"></i>8–30 days</span><span><i class="p"></i>31–60 days</span><span><i class="r"></i>61–120 days</span>';
     const body=section.querySelector('.section-body');
     if(body)section.insertBefore(key,body);
   }
@@ -208,7 +210,7 @@
   }
 
   function refresh(){
-    if(document.body)document.body.dataset.underreportedVersion='3.1';
+    if(document.body)document.body.dataset.underreportedVersion='3.2';
     installAgeStyles();
     installUtilityStatus();
     processTabs();
