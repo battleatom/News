@@ -2,13 +2,15 @@
 """Normalized production collector wrapper.
 
 Keeps the stable collector intact while applying one consistent pool policy:
-- ordinary tabs: minimum 30, target 35, hard max 40
+- ordinary news tabs: minimum 30, target 35, hard max 40
 - Local: minimum 20, target 25, hard max 30
 - Region: one 40-story tab pool, balanced across its eight region buckets
 - collection window: up to four days so quiet tabs can backfill with older stories
   while selectors continue to sort newest first.
 
 X Top Issues and Underreported are intentionally outside this policy.
+Legislation is also intentionally excluded: that tab is populated only by the
+separate official-record collector, never by journalism cards.
 """
 from __future__ import annotations
 
@@ -21,7 +23,6 @@ POOL_POLICY = {
     "us": (30, 35, 40),
     "presidential": (30, 35, 40),
     "federal": (30, 35, 40),
-    "legislation": (30, 35, 40),
     "nm": (30, 35, 40),
     "region": (30, 35, 40),
     "nfl": (30, 35, 40),
@@ -81,10 +82,13 @@ _region_total = 0
 
 def normalized_select_category(items, limit=None):
     category = items[0].get("category") if items else ""
+    if category == "legislation":
+        # The official collector runs immediately after this collector and is the
+        # sole source of cards for the Legislation tab. Journalism may later be
+        # attached only as supporting related coverage.
+        return []
     _minimum, target, hard_max = POOL_POLICY.get(category, (30, 35, 40))
     requested = target if limit is None else min(int(limit), hard_max)
-    # Explicit Local calls from the stable collector request 30 while our target
-    # is 25; keep Local intentionally smaller unless a caller asks for less.
     if category == "local":
         requested = min(requested, target)
     return _original_select_category(items, limit=requested)
@@ -97,7 +101,6 @@ def normalized_select_region(items, per_state=8, limit=80):
     remaining = max(0, hard_max - _region_total)
     if not items or remaining == 0:
         return []
-    # core.main invokes this once for each of eight named region buckets.
     bucket_cap = min(5, remaining)
     chosen = _original_select_region(items, per_state=per_state, limit=bucket_cap)
     _region_total += len(chosen)
