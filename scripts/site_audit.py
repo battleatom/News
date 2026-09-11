@@ -17,6 +17,7 @@ EXPECTED_TABS = (
     'top','nfl','x','underreported','world','us','presidential','federal','legislation',
     'nm','local','region','technology','gaming','military','boxoffice',
 )
+LANDING_TITLE = re.compile(r'\bbreaking news\s*,\s*latest news(?:\s+and\s+videos)?\b', re.I)
 
 
 def clean(v):
@@ -62,13 +63,15 @@ def main():
     for marker in ('Next in', 'duplicates removed'):
         if marker not in html:
             errors.append(f'V2.2 status marker missing: {marker}')
-    if 'id="sound-alerts-toggle"' in html:
-        errors.append('retired alert/sound button is still present')
+    if 'id="sound-alerts-toggle"' in html or 'AudioContext' in html or 'playNewArticlePop' in html:
+        errors.append('retired alert/audio implementation remains in generated page')
     if 'infinite-scroll-sentinel' not in html or 'IntersectionObserver' not in html:
         errors.append('infinite-scroll pagination is not wired into generated page')
-    for marker in ('__queueNewArticlePopV23', '__markNewArticleLinksV23', '__classifyNewBadgeV26', 'serverFirstSeen', 'stats.firstSeenAt', 'New to Underreported within the last hour'):
+    for marker in ('__markNewArticleLinksV23', '__classifyNewBadgeV26', 'serverFirstSeen', 'stats.firstSeenAt', 'New to Underreported within the last hour'):
         if marker not in html:
             errors.append(f'V2.6 new-article marker missing: {marker}')
+    if 'data-content-briefs="1"' not in html or 'styles/content-briefs.css' not in html:
+        errors.append('V3 content brief presentation marker or stylesheet is missing')
 
     for tab in EXPECTED_TABS:
         if not re.search(rf"\['{re.escape(tab)}'\s*,", html):
@@ -87,8 +90,10 @@ def main():
         errors.append('live NFL renderer is not registered with the canonical router')
 
     wrapper_count = len(re.findall(r'canonicalRender\s*=\s*function\s*\(items\)', html))
-    if wrapper_count:
-        warnings.append(f'{wrapper_count} legacy canonicalRender wrapper assignment(s) remain for later consolidation')
+    if wrapper_count != 1:
+        errors.append(f'expected one canonical pagination wrapper, found {wrapper_count}')
+    if 'window.__categoryRenderers.legislation' not in html:
+        errors.append('legislation is not registered through the category renderer registry')
 
     if 'story-search' in html:
         errors.append('retired story search UI is present')
@@ -105,6 +110,9 @@ def main():
     by_category = defaultdict(list)
     same_cat_links = defaultdict(list)
     official_legislation = 0
+    brief_generated = 0
+    brief_article_backed = 0
+    landing_pages = []
     for item in items:
         cat = clean(item.findtext('category')) or 'world'
         title = clean(item.findtext('title'))
@@ -114,10 +122,18 @@ def main():
             same_cat_links[(cat, link)].append(title)
         if cat == 'legislation' and clean(item.findtext('officialSource')):
             official_legislation += 1
+        if clean(item.findtext('briefGenerated')).lower() == 'true':
+            brief_generated += 1
+            if clean(item.findtext('briefSource')) not in ('', 'headline-fallback'):
+                brief_article_backed += 1
+        if LANDING_TITLE.search(title):
+            landing_pages.append(title)
 
     exact_dups = [(cat, link, titles) for (cat,link),titles in same_cat_links.items() if len(titles) > 1]
     if exact_dups:
         errors.append(f'{len(exact_dups)} exact-link duplicate(s) remain inside a category')
+    if landing_pages:
+        errors.append(f'{len(landing_pages)} generic publisher landing page(s) remain in the feed')
 
     semantic = []
     for cat, rows in by_category.items():
@@ -140,12 +156,18 @@ def main():
     if official_legislation < min(10, legislation_count):
         errors.append(f'only {official_legislation}/{legislation_count} legislation records have official sources')
 
+    if brief_generated < max(10, int(len(items) * .80)):
+        errors.append(f'only {brief_generated}/{len(items)} feed items have generated content briefs')
+    if brief_article_backed < max(10, int(len(items) * .05)):
+        errors.append(f'only {brief_article_backed}/{len(items)} content briefs are article-backed')
+
     pool_order = ['top','nfl','x','underreported','world','us','presidential','federal','legislation','nm','local','region','technology','gaming','military']
     print('SITE AUDIT — FEED POOLS')
     for cat in pool_order:
         print(f'  {cat:14} {len(by_category.get(cat, [])):3}')
     print(f'  total          {len(items):3}')
     print(f'  official legis {official_legislation:3}')
+    print(f'  content briefs {brief_generated:3} generated / {brief_article_backed:3} article-backed')
     print(f'  generated ids  {len(counts):3} unique')
     print(f'  likely dupes   {len(semantic):3} pairs')
     for cat,a,b in semantic[:8]:
@@ -156,7 +178,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V2.2 status, V2.6 NEW timing, tabs, infinite scroll, official legislation, and exact within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V3 content briefs, NEW timing, tabs, infinite scroll, official legislation, and within-category dedupe verified.')
 
 
 if __name__ == '__main__':
