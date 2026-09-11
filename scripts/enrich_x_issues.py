@@ -50,7 +50,7 @@ def date(value):
 def fetch(query, days=MAX_AGE_DAYS):
     q = urllib.parse.quote(f"{query} when:{days}d")
     url = f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.2"})
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.3"})
     with urllib.request.urlopen(req, timeout=15) as response:
         return ET.fromstring(response.read())
 
@@ -67,12 +67,21 @@ def news_item_data(item):
     }
 
 
+def lead_keys(data):
+    title=re.sub(r"[^a-z0-9]+"," ",(data.get("title") or "").lower()).strip()
+    link=(data.get("link") or "").lower().split("#",1)[0].rstrip("/")
+    out=set()
+    if title: out.add("t:"+title)
+    if link: out.add("l:"+link)
+    return out
+
+
 def fetch_trend_names():
     urls = ["https://twitter-trends.snaplytics.io/", "https://www.techtwitter.com/twitter-trending/archive"]
     names = []
     for url in urls:
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.2"})
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 Underreported-X/3.3"})
             with urllib.request.urlopen(req, timeout=15) as response:
                 text = response.read().decode("utf-8", errors="ignore")
             text = re.sub(r"<script[\s\S]*?</script>|<style[\s\S]*?</style>|<[^>]+>", " ", text, flags=re.I)
@@ -148,26 +157,24 @@ def existing_candidates(items, query):
         if overlap:
             out.append((overlap,d,""))
     out.sort(key=lambda x:(x[0],x[1]["dt"]),reverse=True)
-    return out[:30]
+    return out[:40]
 
 
-def best_issue(query, trend_names, items):
+def best_issue(query, trend_names, items, used_leads):
     # Prefer the already-collected feed. On the production second pass this feed has
     # already passed the normal source/category verifier, so the X lead inherits that gate.
-    candidates=existing_candidates(items,query)
-    if not candidates:
-        candidates=trend_candidates(query,trend_names)
-    if not candidates:
-        candidates=broad_candidates(query)
-    if not candidates:
-        return None
+    pools=[existing_candidates(items,query),trend_candidates(query,trend_names),broad_candidates(query)]
     def score(row):
         overlap,d,name=row
         concrete=len(words(d["title"]))
         explanation=min(len(d["desc"]),500)/100
         age=(datetime.now(timezone.utc)-d["dt"]).total_seconds()/86400
         return overlap*8+concrete+explanation-age*2
-    return max(candidates,key=score)
+    for candidates in pools:
+        eligible=[row for row in candidates if not (lead_keys(row[1]) & used_leads)]
+        if eligible:
+            return max(eligible,key=score)
+    return None
 
 
 def related_reporting(signal_title, query):
@@ -201,12 +208,13 @@ def main():
     base_items=[x for x in all_items if clean(x.findtext("category"))!="x"]
     trend_names=fetch_trend_names()
 
-    created=[]
+    created=[]; used_leads=set()
     for category,query in CATEGORIES:
-        best=best_issue(query,trend_names,base_items)
+        best=best_issue(query,trend_names,base_items,used_leads)
         if not best:
-            raise SystemExit(f"X Top Issues failed: no publishable lead for fixed topic {category!r}")
+            raise SystemExit(f"X Top Issues failed: no unique publishable lead for fixed topic {category!r}")
         _,lead,trend=best
+        used_leads.update(lead_keys(lead))
         reports=related_reporting(lead["title"],query)
         issue=ET.Element("item")
         ET.SubElement(issue,"title").text=lead["title"]
@@ -235,6 +243,6 @@ def main():
     if len(created)!=10 or created!=EXPECTED_TOPICS:
         raise SystemExit(f"X Top Issues validation failed: expected {EXPECTED_TOPICS}, got {created}")
     tree.write(NEWS,encoding="utf-8",xml_declaration=True)
-    print("X Top Issues: created exactly 10 fixed topic slots: " + ", ".join(created))
+    print("X Top Issues: created exactly 10 fixed topic slots with unique leads: " + ", ".join(created))
 
 if __name__=="__main__": main()
