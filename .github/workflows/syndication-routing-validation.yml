@@ -1,0 +1,72 @@
+name: Validate Syndication Event Routing
+on:
+  push:
+    branches: [fix/syndication-event-routing-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/verify_feed.py scripts/cluster_related_coverage.py tests/feed_quality_regression_test.py
+      - name: Regression tests
+        run: python tests/feed_quality_regression_test.py
+      - name: Run normalized live collector
+        run: python scripts/update_news_normalized.py
+      - name: Refine Technology and Gaming
+        run: python scripts/refine_tech_gaming.py
+      - name: Collect official legislation
+        run: python scripts/collect_official_legislation_strict.py
+      - name: Enrich World and Underreported
+        run: |
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+      - name: Enrich and guard legislation
+        run: |
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+      - name: Initial X pool
+        run: python scripts/enrich_x_issues.py
+      - name: Clean cluster and verify
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed.py --apply
+      - name: Validate verifier output
+        run: |
+          python - <<'PY'
+          import json,xml.etree.ElementTree as ET
+          from pathlib import Path
+          r=json.loads(Path('verification-report.json').read_text())
+          assert not r.get('residualStrongDuplicatePairs'), r.get('residualStrongDuplicatePairs')[:10]
+          assert r['outputArticles'] > 250, r['outputArticles']
+          assert 'supportingLinksAttached' in r
+          items=ET.parse('News').getroot().findall('.//item')
+          bad=[]
+          for cat in {i.findtext('category','').strip() for i in items}:
+              rows=[i for i in items if i.findtext('category','').strip()==cat]
+              for p,a in enumerate(rows):
+                  for b in rows[p+1:]:
+                      ta=(a.findtext('title') or '').lower();tb=(b.findtext('title') or '').lower()
+                      if ta==tb: bad.append((cat,ta))
+          assert not bad, bad[:10]
+          print('Verifier output passed:', r['outputArticles'], 'articles;', r['supportingLinksAttached'], 'supporting links attached')
+          PY
+      - name: Rebuild X and content briefs
+        run: |
+          python scripts/enrich_x_issues.py
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+      - name: Build and audit site
+        run: |
+          python scripts/build_site.py
+          python scripts/site_audit.py
+# Temporary branch-only workflow; remove before merge.
