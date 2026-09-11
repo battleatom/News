@@ -30,8 +30,8 @@ jobs:
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-http.log 2>&1 &
           echo $! > /tmp/news-http.pid
           sleep 2
-      - name: Test V3 news cards, infinite scroll, NEW badges and responsive UI
-        run: python tests/site_smoke_v26.py
+      - name: Test feed logic, X rendering, infinite scroll and responsive UI
+        run: python tests/site_smoke_v32.py
       - name: Test mobile fetch status and live countdown
         run: python tests/mobile_status_smoke.py
       - name: Verify deployed GitHub Pages matches this build
