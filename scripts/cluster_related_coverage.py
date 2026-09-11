@@ -92,15 +92,23 @@ def event_match(a,b,allow_cross_tab=False):
     shared=toks(a)&toks(b);tshared=title_toks(a)&title_toks(b)
     entities=vf.entity_keys(a)&vf.entity_keys(b)
     actors=vf.actor_keys(a)&vf.actor_keys(b)
-    exact_usd=usd_keys(a)&usd_keys(b)
+    usd_a,usd_b=usd_keys(a),usd_keys(b)
+    exact_usd=usd_a&usd_b
     generic_numbers=(vf.amount_keys(a)&vf.amount_keys(b))-exact_usd
     dates=slash_date_keys(a)&slash_date_keys(b)
 
-    # Exact currency + same event type + same named actor/entity is the strongest
-    # reusable identity for payment/proposal coverage. A time window prevents unrelated
-    # later stories with the same amount from being merged.
-    if exact_usd and shared_groups and (actors or entities) and near_in_time(a,b): return True
+    # Two different explicit dollar values are a hard negative for the monetary path.
+    # This blocks a story about one cash amount from bridging into another merely because
+    # the same public figure or organization appears in both.
+    conflicting_usd=bool(usd_a and usd_b and not exact_usd)
+
+    # Exact currency + same named actor/entity in the same news cycle is strong enough
+    # to identify one proposal/event even when one headline says "promise" and another
+    # says "dividend", "checks", or focuses on reaction to the same announcement.
+    if exact_usd and (actors or entities) and near_in_time(a,b): return True
     if exact_usd and shared_groups and len(shared)>=2 and near_in_time(a,b): return True
+
+    if conflicting_usd: return False
 
     # Non-currency numbers are weaker and require substantially more agreement.
     if generic_numbers and shared_groups and (actors or entities) and len(tshared)>=2 and len(shared)>=4 and near_in_time(a,b): return True
@@ -186,7 +194,6 @@ def consolidate_cross_tab(items,removed):
     for family in OVERLAP_FAMILIES:
         rows=[x for x in items if vf.category(x) in family and id(x) not in removed]
         for cluster in component_clusters(rows,lambda a,b:event_match(a,b,allow_cross_tab=True)):
-            # Only count true cross-tab clusters here; same-tab duplicates were handled above.
             if len({vf.category(x) for x in cluster})<2: continue
             c,a=collapse_cluster(cluster,removed,force_canonical=True);clusters+=c;attached+=a
     return clusters,attached
