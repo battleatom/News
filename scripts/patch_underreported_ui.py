@@ -28,6 +28,9 @@ function renderUnderreported(items){
    const happened=item.querySelector('whatHappened')?.textContent||'',missing=item.querySelector('whatIsMissing')?.textContent||'';
    const background=item.querySelector('background')?.textContent||'',next=item.querySelector('whatNext')?.textContent||'';
    const coverage=item.querySelector('coverage')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';
+   const ageBand=(item.querySelector('ageBand')?.textContent||'').trim().toLowerCase();
+   if(ageBand)ar.dataset.ageBand=ageBand;
+   if(date)ar.dataset.pubDate=date;
    let relatedHtml='';
    const related=item.querySelectorAll('related > article');
    if(related.length){
