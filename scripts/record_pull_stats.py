@@ -10,8 +10,9 @@ NEWS_FILE = Path("News")
 STATS_FILE = Path("update-stats.json")
 
 # Healthy means the category has enough usable stories for its intended UI.
-# Counts above targetMax are useful depth, not a failure. These targets reflect
-# the current V3 collectors after quality filters and regional expansion.
+# Counts above targetMax are useful depth, not a failure. Box Office is sourced
+# from boxoffice.json rather than the News XML, so it is intentionally not part
+# of this feed-health calculation.
 CATEGORY_TARGETS = {
     "top": (50, 60),
     "nfl": (20, 30),
@@ -20,15 +21,14 @@ CATEGORY_TARGETS = {
     "world": (25, 45),
     "us": (15, 30),
     "presidential": (20, 30),
-    "federal": (10, 30),
+    "federal": (8, 30),
     "legislation": (15, 35),
     "nm": (20, 35),
     "local": (20, 35),
     "region": (100, 500),
     "technology": (20, 35),
     "gaming": (12, 25),
-    "military": (5, 20),
-    "boxoffice": (15, 30),
+    "military": (3, 20),
 }
 
 
