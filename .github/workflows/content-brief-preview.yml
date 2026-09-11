@@ -1,0 +1,88 @@
+name: V3 Content Brief Preview
+
+on:
+  push:
+    branches: [v3-content-briefs]
+    paths:
+      - 'scripts/create_content_briefs.py'
+      - 'scripts/patch_content_brief_ui.py'
+      - 'styles/content-briefs.css'
+      - '.github/workflows/content-brief-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v3-content-brief-preview
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout content brief branch
+        uses: actions/checkout@v4
+        with:
+          ref: v3-content-briefs
+          fetch-depth: 0
+
+      - name: Install article extraction dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Generate article-backed content briefs
+        run: python scripts/create_content_briefs.py
+
+      - name: Apply content brief presentation
+        run: python scripts/patch_content_brief_ui.py
+
+      - name: Validate briefs and preview markers
+        run: |
+          python -m py_compile scripts/create_content_briefs.py scripts/patch_content_brief_ui.py
+          python - <<'PY'
+          from collections import Counter
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          html = Path('index.html').read_text(encoding='utf-8')
+          for marker in ('data-content-briefs="1"', 'styles/content-briefs.css?v=1'):
+              if marker not in html:
+                  raise SystemExit('Missing content brief preview marker: ' + marker)
+
+          items = ET.parse('News').getroot().findall('.//item')
+          if not items:
+              raise SystemExit('No news items found')
+          missing = [i.findtext('title') or 'Untitled' for i in items
+                     if i.findtext('briefGenerated') != 'true' or len((i.findtext('description') or '').strip()) < 60]
+          if missing:
+              raise SystemExit(f'{len(missing)} cards are missing usable briefs; first: {missing[0]}')
+
+          counts = Counter((i.findtext('briefSource') or 'unknown') for i in items)
+          backed = sum(v for k, v in counts.items() if k != 'headline-fallback')
+          minimum = max(10, int(len(items) * 0.05))
+          print('Brief sources:', dict(counts))
+          print(f'Article-backed briefs: {backed}/{len(items)}; minimum quality gate: {minimum}')
+          if backed < minimum:
+              raise SystemExit('Too few article-backed briefs for a meaningful live test')
+          PY
+
+      - name: Smoke-test static preview files
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/content-preview.log 2>&1 &
+          server=$!
+          sleep 2
+          curl --fail --silent http://127.0.0.1:8765/index.html >/dev/null
+          curl --fail --silent http://127.0.0.1:8765/News >/dev/null
+          kill "$server"
+
+      - name: Commit validated live preview
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html content-brief-cache.json
+          if git diff --cached --quiet; then
+            echo 'Content brief preview is already current.'
+            exit 0
+          fi
+          git commit -m 'Build live V3 content brief preview [skip ci]'
+          git push origin HEAD:v3-content-briefs

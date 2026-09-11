@@ -144,6 +144,9 @@ jobs:
       - name: Finalize feed pull statistics
         run: python scripts/record_pull_stats.py --finalize
 
+      - name: Create original factual content briefs
+        run: python scripts/create_content_briefs.py
+
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
 
