@@ -1,0 +1,63 @@
+name: NFL Local Time Validation
+
+on:
+  push:
+    branches:
+      - improve/nfl-rotation-local-time-2026-09-11
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax
+        run: python -m py_compile scripts/patch_nfl_live.py
+      - name: NFL behavior contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('scripts/patch_nfl_live.py').read_text()
+          required=[
+              "Intl.DateTimeFormat().resolvedOptions().timeZone",
+              "timeZone:'America/New_York'",
+              "finals roll off at 6:00 AM local",
+              "new Date(d.getFullYear(),d.getMonth(),d.getDate()+1,6,0,0,0)",
+              "state==='pre'?'Scheduled':detail",
+              "Your time ·",
+              "Eastern ·",
+              ".filter(ev=>keepCompletedGame(ev))",
+              "setInterval(()=>{if(active==='nfl')load();},30000)",
+          ]
+          missing=[x for x in required if x not in s]
+          if missing:
+              raise SystemExit('Missing NFL contract markers: '+repr(missing))
+          print('NFL local-time and final-rotation contract OK')
+          PY
+      - name: Build site
+        run: python scripts/build_site.py
+      - name: Audit generated site
+        run: python scripts/site_audit.py
+      - name: Generated NFL contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index.html').read_text()
+          for marker in [
+              'nfl-kickoff',
+              'Your time ·',
+              'Eastern ·',
+              'finals roll off at 6:00 AM local',
+              "timeZone:'America/New_York'",
+          ]:
+              if marker not in s:
+                  raise SystemExit('Generated index missing '+marker)
+          print('Generated NFL markup contract OK')
+          PY
