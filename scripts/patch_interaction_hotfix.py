@@ -36,5 +36,24 @@ s = s.replace(
     '',
 )
 
+# Sticky positioning is defeated when an ancestor establishes a clipping scroll
+# container. Desktop already behaves correctly; on mobile let the main container
+# remain visible while clipping only page-level horizontal overflow. This keeps the
+# utility bar at the viewport top and the category rail directly below it.
+marker = '<style id="mobile-sticky-nav-v1">'
+while marker in s:
+    start=s.find(marker); end=s.find('</style>',start)
+    if end < 0: break
+    s=s[:start]+s[end+8:]
+sticky = '''<style id="mobile-sticky-nav-v1">
+@media(max-width:760px){
+  html,body{overflow-x:clip!important}
+  html body .container{overflow:visible!important}
+  html body .toolbar{position:sticky!important;top:0!important;z-index:100!important}
+  html body .tabs{position:sticky!important;top:34px!important;z-index:99!important}
+}
+</style>'''
+s=s.replace('</head>',sticky+'\n</head>',1)
+
 P.write_text(s, encoding='utf-8')
-print('Applied final interaction cleanup; retired Web Audio code removed from generated page.')
+print('Applied final interaction cleanup and mobile sticky navigation fix.')
