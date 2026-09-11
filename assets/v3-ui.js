@@ -93,6 +93,17 @@
     return text||'Auto update';
   }
 
+  function compactCountdown(){
+    const target=Number(window.nextScheduledPull)||0;
+    if(!target)return '';
+    const total=Math.max(0,Math.ceil((target-Date.now())/1000));
+    const h=Math.floor(total/3600);
+    const m=Math.floor((total%3600)/60);
+    const s=total%60;
+    if(h)return `${h}h ${String(m).padStart(2,'0')}m`;
+    return `${m}m ${String(s).padStart(2,'0')}s`;
+  }
+
   function installUtilityStatus(){
     const toolbar=document.querySelector('.toolbar');
     const pull=document.getElementById('pull-stats-ui');
@@ -108,7 +119,7 @@
       const allText=pull.textContent.replace(/\s+/g,' ').trim();
       const countdownMatch=(lines[0]||allText).match(/Next in\s+([^•]+)/i);
       const fetchedMatch=allText.match(/(\d+)\s+fetched/i);
-      const countdown=countdownMatch?.[1]?.trim()||'';
+      const countdown=compactCountdown()||countdownMatch?.[1]?.trim()||'';
       const fetched=fetchedMatch?.[1]||'';
       const parts=[state];
       if(fetched)parts.push(fetched+' fetched');
@@ -137,11 +148,17 @@
       }
     }
 
+    function tickCompactStatus(){
+      sync();
+      window.__v3UtilityStatusTimer=setTimeout(tickCompactStatus,1000-(Date.now()%1000)+25);
+    }
+
     sync();
     applyMobileLayout();
     if(local)toolbar.insertBefore(compact,local);else toolbar.appendChild(compact);
     new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true,attributes:true});
     window.addEventListener('resize',applyMobileLayout,{passive:true});
+    tickCompactStatus();
   }
 
   function refresh(){
