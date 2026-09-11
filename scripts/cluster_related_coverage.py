@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Collapse repeated same-event cards into one primary card with supporting links.
+"""Collapse repeated coverage into one primary card plus ranked supporting links.
 
-Runs before the final verifier as an early consolidation pass. Matching is generic:
-syndicated-copy similarity, event vocabulary, amounts/dates, named actors/entities,
-and headline anchors. Official legislation and special editorial surfaces are excluded.
+Two passes run before the final verifier:
+1. Per-tab consolidation for normal news sections.
+2. Cross-tab canonicalization for overlapping civic-news tabs (U.S., Presidential,
+   Federal Government) so one real-world event does not occupy multiple cards.
+
+Matching is generic: syndication similarity, exact monetary fingerprints, event
+vocabulary, dates, named actors/entities and headline anchors. No person, party,
+outlet ideology, or current topic is hard-coded into event identity.
 """
 from __future__ import annotations
 import re
@@ -14,9 +19,10 @@ import verify_feed as vf
 
 NEWS=Path('News')
 EXCLUDED={'legislation','x','boxoffice'}
+OVERLAP_FAMILIES=(frozenset({'us','presidential','federal'}),)
 EVENT_WORDS={
  'commemoration':{'anniversary','memorial','remembrance','commemoration','commemorate','tribute','patriot'},
- 'payments':{'payment','payments','check','checks','rebate','rebates','dividend','dividends','stimulus','refund','refunds','bonus','payout','cash'},
+ 'payments':{'payment','payments','check','checks','rebate','rebates','dividend','dividends','stimulus','refund','refunds','bonus','payout','cash','promise','promises','promised','pledge','pledges','pledged'},
  'military':{'war','airstrike','missile','strike','troops','invasion','ceasefire','attack','raid'},
  'courts':{'court','judge','ruling','lawsuit','appeal','injunction','supreme'},
  'elections':{'election','midterm','vote','ballot','campaign'},
@@ -27,6 +33,20 @@ EVENT_WORDS={
  'sports':{'game','match','injury','trade','playoff','championship','score'},
 }
 STOP=vf.GENERIC|{'coverage','reporting','story','marks','mark','remember','remembering'}
+
+# Primary-card source order is based on original/straight-news authority, not political
+# viewpoint. Wire services lead; major national networks are peers. Recency and article
+# completeness break ties within a tier.
+PRIMARY_SOURCE_TIERS={
+ 'reuters':100,'associated press':100,'ap news':100,
+ 'bbc':92,'npr':92,
+ 'cbs news':86,'nbc news':86,'abc news':86,'fox news':86,'cnn':86,
+ 'the new york times':82,'the washington post':82,'usa today':80,
+ 'politico':78,'the hill':78,
+ 'ars technica':82,'the verge':82,'techcrunch':78,
+ 'nfl.com':82,'espn':82,'ign':78,'gamespot':78,
+}
+MAX_STRONG_EVENT_SPAN_SECONDS=5*24*60*60
 
 def toks(item):
     return {w for w in re.findall(r'[a-z0-9]+',vf.full_text(item).lower()) if len(w)>=3 and w not in STOP}
@@ -47,39 +67,136 @@ def slash_date_keys(item):
         out.add(f'date:{month}:{int(day)}')
     return out
 
+def usd_keys(item):
+    return {k for k in vf.amount_keys(item) if k.startswith('usd:')}
+
+def near_in_time(a,b):
+    ta,tb=vf.parsed_time(a),vf.parsed_time(b)
+    return not ta or not tb or abs(ta-tb)<=MAX_STRONG_EVENT_SPAN_SECONDS
+
 def same_event(a,b):
     if vf.category(a)!=vf.category(b): return False
-    if vf.syndicated_copy(a,b) or vf.same_event(a,b): return True
-    ga,gb=groups(a),groups(b)
-    if not ga&gb: return False
+    return event_match(a,b,allow_cross_tab=False)
+
+def in_same_overlap_family(a,b):
+    ca,cb=vf.category(a),vf.category(b)
+    return any(ca in fam and cb in fam for fam in OVERLAP_FAMILIES)
+
+def event_match(a,b,allow_cross_tab=False):
+    if not allow_cross_tab and vf.category(a)!=vf.category(b): return False
+    if allow_cross_tab and not in_same_overlap_family(a,b): return False
+    if vf.syndicated_copy(a,b): return True
+    if not allow_cross_tab and vf.same_event(a,b): return True
+
+    ga,gb=groups(a),groups(b);shared_groups=ga&gb
     shared=toks(a)&toks(b);tshared=title_toks(a)&title_toks(b)
     entities=vf.entity_keys(a)&vf.entity_keys(b)
     actors=vf.actor_keys(a)&vf.actor_keys(b)
-    numbers=vf.amount_keys(a)&vf.amount_keys(b)
+    usd_a,usd_b=usd_keys(a),usd_keys(b)
+    exact_usd=usd_a&usd_b
+    generic_numbers=(vf.amount_keys(a)&vf.amount_keys(b))-exact_usd
     dates=slash_date_keys(a)&slash_date_keys(b)
-    # Broad person/organization overlap alone never clusters. It must be paired
-    # with an independent event fingerprint or meaningful lexical agreement.
-    if numbers and (actors or entities): return True
-    if numbers and len(shared)>=2: return True
-    if dates and (actors or entities) and len(shared)>=2: return True
-    if entities and len(tshared)>=2 and len(shared)>=3: return True
-    if actors and len(tshared)>=2 and len(shared)>=3: return True
-    if len(tshared)>=4 and len(shared)>=4: return True
+
+    # Two different explicit dollar values are a hard negative for the monetary path.
+    # This blocks a story about one cash amount from bridging into another merely because
+    # the same public figure or organization appears in both.
+    conflicting_usd=bool(usd_a and usd_b and not exact_usd)
+
+    # Exact currency + same named actor/entity in the same news cycle is strong enough
+    # to identify one proposal/event even when one headline says "promise" and another
+    # says "dividend", "checks", or focuses on reaction to the same announcement.
+    if exact_usd and (actors or entities) and near_in_time(a,b): return True
+    if exact_usd and shared_groups and len(shared)>=2 and near_in_time(a,b): return True
+
+    if conflicting_usd: return False
+
+    # Non-currency numbers are weaker and require substantially more agreement.
+    if generic_numbers and shared_groups and (actors or entities) and len(tshared)>=2 and len(shared)>=4 and near_in_time(a,b): return True
+
+    if dates and shared_groups and (actors or entities) and len(shared)>=2: return True
+    if shared_groups and entities and len(tshared)>=3 and len(shared)>=4: return True
+    if shared_groups and actors and len(tshared)>=3 and len(shared)>=4: return True
+    if shared_groups and len(tshared)>=5 and len(shared)>=5: return True
     return False
+
+def source_tier(item):
+    source=(item.findtext('source') or '').strip().lower()
+    return max((score for key,score in PRIMARY_SOURCE_TIERS.items() if key in source),default=60)
+
+def primary_score(item):
+    return (source_tier(item),)+vf.representative_score(item)[1:]
+
+def canonical_category(cluster):
+    cats={vf.category(x) for x in cluster}
+    return max(cats,key=lambda c:(vf.SPECIFICITY.get(c,0),c))
+
+def set_category(item,value):
+    node=item.find('category')
+    if node is None: node=ET.SubElement(item,'category')
+    node.text=value
 
 def related_key(node):
     return ((node.findtext('link') or '').strip() or (node.findtext('title') or '').strip()).lower()
 
-def attach(primary,other):
+def append_related_node(primary,node):
     rel=primary.find('relatedArticles')
     if rel is None: rel=ET.SubElement(primary,'relatedArticles')
-    existing={related_key(x) for x in rel.findall('article')};k=related_key(other)
-    if not k or k in existing: return False
+    existing={related_key(x) for x in rel.findall('article')};k=related_key(node)
+    if not k or k in existing: return 0
     ar=ET.SubElement(rel,'article')
     for tag in ('title','link','source','pubDate'):
-        value=(other.findtext(tag) or '').strip()
+        value=(node.findtext(tag) or '').strip()
         if value: ET.SubElement(ar,tag).text=value
-    return True
+    return 1
+
+def attach(primary,other):
+    # Preserve both the removed card and any coverage already nested beneath it.
+    added=append_related_node(primary,other)
+    for nested in other.findall('./relatedArticles/article'):
+        added+=append_related_node(primary,nested)
+    return added
+
+def component_clusters(rows,matcher):
+    if not rows: return []
+    parent=list(range(len(rows)))
+    def find(x):
+        while parent[x]!=x:
+            parent[x]=parent[parent[x]];x=parent[x]
+        return x
+    def union(a,b):
+        ra,rb=find(a),find(b)
+        if ra!=rb: parent[rb]=ra
+    for i,a in enumerate(rows):
+        for j in range(i+1,len(rows)):
+            if matcher(a,rows[j]): union(i,j)
+    out=defaultdict(list)
+    for i,row in enumerate(rows): out[find(i)].append(row)
+    return list(out.values())
+
+def collapse_cluster(cluster,removed,force_canonical=False):
+    cluster=[x for x in cluster if id(x) not in removed]
+    if len(cluster)<2: return (0,0)
+    primary=max(cluster,key=primary_score)
+    if force_canonical: set_category(primary,canonical_category(cluster))
+    added=0
+    for other in sorted((x for x in cluster if x is not primary),key=primary_score,reverse=True):
+        added+=attach(primary,other);removed.add(id(other))
+    return (1,added)
+
+def consolidate_rows(rows,removed):
+    clusters=attached=0
+    for cluster in component_clusters([x for x in rows if id(x) not in removed],same_event):
+        c,a=collapse_cluster(cluster,removed);clusters+=c;attached+=a
+    return clusters,attached
+
+def consolidate_cross_tab(items,removed):
+    clusters=attached=0
+    for family in OVERLAP_FAMILIES:
+        rows=[x for x in items if vf.category(x) in family and id(x) not in removed]
+        for cluster in component_clusters(rows,lambda a,b:event_match(a,b,allow_cross_tab=True)):
+            if len({vf.category(x) for x in cluster})<2: continue
+            c,a=collapse_cluster(cluster,removed,force_canonical=True);clusters+=c;attached+=a
+    return clusters,attached
 
 def main():
     tree=ET.parse(NEWS);channel=tree.getroot().find('channel')
@@ -87,26 +204,18 @@ def main():
     for item in items:
         cat=vf.category(item)
         if cat not in EXCLUDED: bycat[cat].append(item)
-    removed=set();clusters=0;attached=0
+
+    removed=set();clusters=attached=0
     for rows in bycat.values():
-        used=set()
-        for i,a in enumerate(rows):
-            if i in used: continue
-            cluster=[a]
-            for j in range(i+1,len(rows)):
-                if j in used: continue
-                if any(same_event(member,rows[j]) for member in cluster[:6]):
-                    cluster.append(rows[j]);used.add(j)
-            if len(cluster)<2: continue
-            primary=max(cluster,key=vf.representative_score);clusters+=1
-            for other in cluster:
-                if other is primary: continue
-                if attach(primary,other): attached+=1
-                removed.add(id(other))
+        c,a=consolidate_rows(rows,removed);clusters+=c;attached+=a
+
+    cross_c,cross_a=consolidate_cross_tab(items,removed)
+    clusters+=cross_c;attached+=cross_a
+
     if removed:
         for item in list(channel.findall('item')):
             if id(item) in removed: channel.remove(item)
     tree.write(NEWS,encoding='utf-8',xml_declaration=True)
-    print(f'Related coverage clustering: {clusters} event cluster(s), {attached} duplicate card(s) moved to supporting links.')
+    print(f'Related coverage clustering: {clusters} event cluster(s), {attached} supporting link(s) retained; {cross_c} cross-tab cluster(s).')
 
 if __name__=='__main__': main()

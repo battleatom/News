@@ -6,9 +6,9 @@ sys.path.insert(0,str(ROOT/'scripts'))
 def load(name,path):
  s=importlib.util.spec_from_file_location(name,ROOT/path);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 cluster=load('cluster',Path('scripts/cluster_related_coverage.py'));why=load('why',Path('scripts/update_why_matters.py'));vf=cluster.vf
-def item(cat,title,source,desc,link):
+def item(cat,title,source,desc,link,date='Fri, 11 Sep 2026 12:00:00 GMT'):
  x=ET.Element('item')
- for tag,val in [('title',title),('link',link),('description',desc),('pubDate','Fri, 11 Sep 2026 12:00:00 GMT'),('source',source),('category',cat)]:ET.SubElement(x,tag).text=val
+ for tag,val in [('title',title),('link',link),('description',desc),('pubDate',date),('source',source),('category',cat)]:ET.SubElement(x,tag).text=val
  return x
 
 # Same-event amount + actor fingerprint, without topic-specific hard-coding.
@@ -16,6 +16,21 @@ a=item('presidential','Alex Morgan proposes $5,000 payments to supporters','Reut
 b=item('presidential','$5,000 support payment proposal from Morgan draws questions','AP News','Officials discussed eligibility for the $5,000 support payment proposal from Alex Morgan.','b')
 c=item('presidential','Alex Morgan meets technology executives','BBC','The official met technology executives about a separate issue.','c')
 assert cluster.same_event(a,b);assert not cluster.same_event(a,c)
+
+# The same event entering U.S. and Presidential must canonicalize across tabs.
+cu=item('us','President Jordan offers $5,000 payments if budget measure passes','Fox News','President Jordan described a $5,000 payment proposal tied to passage of the measure.','cu')
+cp=item('presidential','$5,000 payment proposal from President Jordan faces questions','Reuters','The same $5,000 payment proposal from President Jordan is being reviewed after the announcement.','cp')
+assert cluster.event_match(cu,cp,allow_cross_tab=True)
+assert cluster.canonical_category([cu,cp])=='presidential'
+assert cluster.primary_score(cp)>cluster.primary_score(cu)  # neutral wire-service preference
+
+# An unrelated story about the same actor must not bridge into the payment event.
+other=item('presidential','President Jordan meets technology executives','CNN','The president met technology executives about a separate software policy discussion.','other')
+assert not cluster.event_match(cp,other,allow_cross_tab=True)
+
+# Different explicit dollar amounts are separate events even with the same actor and cash language.
+different_amount=item('presidential','President Jordan gave $45,000 in cash gifts to aides','Reuters','President Jordan reported $45,000 in separate personal cash gifts.','different')
+assert not cluster.event_match(cu,different_amount,allow_cross_tab=True)
 
 # Commemoration coverage needs a concrete shared event anchor, not just broad anniversary words.
 d=item('us','Apollo 11 anniversary marked at July 20 memorial ceremony','CBS News','Families gather July 20 for Apollo 11 remembrance events marking the anniversary.','d')
