@@ -144,7 +144,7 @@ def existing_candidates(items, query):
         if cat in {"x","legislation","boxoffice"}: continue
         d=news_item_data(item)
         if not d["dt"] or not d["title"]: continue
-        overlap=len((words(d["title"])+words(d["desc"])) & qwords) if False else len((words(d["title"]) | words(d["desc"])) & qwords)
+        overlap=len((words(d["title"]) | words(d["desc"])) & qwords)
         if overlap:
             out.append((overlap,d,""))
     out.sort(key=lambda x:(x[0],x[1]["dt"]),reverse=True)
@@ -152,11 +152,13 @@ def existing_candidates(items, query):
 
 
 def best_issue(query, trend_names, items):
-    candidates=trend_candidates(query,trend_names)
+    # Prefer the already-collected feed. On the production second pass this feed has
+    # already passed the normal source/category verifier, so the X lead inherits that gate.
+    candidates=existing_candidates(items,query)
+    if not candidates:
+        candidates=trend_candidates(query,trend_names)
     if not candidates:
         candidates=broad_candidates(query)
-    if not candidates:
-        candidates=existing_candidates(items,query)
     if not candidates:
         return None
     def score(row):
