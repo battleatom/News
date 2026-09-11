@@ -43,7 +43,13 @@
   function decorateUnderreportedAge(card){
     if(!card.classList.contains('underreported-item'))return;
     card.classList.remove('age-blue','age-green','age-orange','age-purple','age-red');
-    const raw=card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
+    const valid=new Set(['blue','green','orange','purple','red']);
+    const feedBand=String(card.dataset.ageBand||'').trim().toLowerCase();
+    if(valid.has(feedBand)){
+      card.classList.add('age-'+feedBand);
+      return;
+    }
+    const raw=card.dataset.pubDate||card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
     const dt=new Date(raw);
     if(Number.isNaN(dt.getTime()))return;
     const age=Math.max(0,(Date.now()-dt.getTime())/86400000);
@@ -200,9 +206,6 @@
     new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true,attributes:true});
     window.addEventListener('resize',applyMobileLayout,{passive:true});
 
-    // Keep the compact countdown independent from pull-status DOM mutations.
-    // A short interval makes the displayed seconds resilient to timer drift,
-    // throttling and mobile layout timing while remaining extremely cheap.
     if(window.__v3UtilityStatusTimer)clearInterval(window.__v3UtilityStatusTimer);
     window.__v3UtilityStatusTimer=setInterval(sync,250);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();},{passive:true});
