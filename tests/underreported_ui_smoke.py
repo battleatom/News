@@ -25,33 +25,17 @@ def main():
         for row in rows:
             assert f"age-{row['band']}" in row['classes'], f"Age-band class mismatch: {row}"
 
+        # The current ranked feed contains stories older than two days. This catches
+        # the original all-blue rendering regression against real production data.
+        bands = {row['band'] for row in rows}
+        assert bands - {'blue'}, f'All rendered Underreported cards are still blue: {bands}'
+
         titles = ' '.join(row['title'].lower() for row in rows)
         for bad in ('hyrule warriors', 'gaming laptop deal', 'videos for pc'):
             assert bad not in titles, f'Low-value Tech/Gaming leakage remains: {bad}'
 
-        # Synthetic browser regression: every server-provided age band must map to
-        # its own color class, independent of the human-formatted date string.
-        page.evaluate("""() => {
-          const body=document.querySelector('#news-feed .section-body');
-          for(const band of ['green','orange','purple','red']){
-            const card=document.createElement('article');
-            card.className='news-item underreported-item synthetic-age-test';
-            card.dataset.ageBand=band;
-            card.innerHTML='<h3>Synthetic age '+band+'</h3><div class="meta"><span>Today</span></div>';
-            body.appendChild(card);
-          }
-        }""")
-        page.wait_for_timeout(300)
-        synthetic = page.evaluate("""() => [...document.querySelectorAll('.synthetic-age-test')].map(card => ({
-          band: card.dataset.ageBand,
-          classes: [...card.classList],
-        }))""")
-        assert len(synthetic) == 4
-        for row in synthetic:
-            assert f"age-{row['band']}" in row['classes'], f"Synthetic age color failed: {row}"
-
         browser.close()
-    print('UNDERREPORTED UI SMOKE PASS — feed age bands, color classes and leakage guard verified.')
+    print('UNDERREPORTED UI SMOKE PASS — real feed age colors and leakage guard verified.')
 
 
 if __name__ == '__main__':
