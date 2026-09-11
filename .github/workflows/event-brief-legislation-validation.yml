@@ -1,0 +1,84 @@
+name: Validate Legislation Briefs and Event Consolidation
+
+on:
+  push:
+    branches: [fix/legislation-briefs-event-clustering-2026-09-11]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/*.py tests/event_consolidation_v2_test.py tests/why_matters_sync_test.py tests/official_legislation_guard_test.py tests/normalized_category_pools_test.py
+      - name: Regression tests
+        run: |
+          python tests/event_consolidation_v2_test.py
+          python tests/why_matters_sync_test.py
+          python tests/official_legislation_guard_test.py
+          python tests/normalized_category_pools_test.py
+      - name: Run normalized live collector
+        run: python scripts/update_news_normalized.py
+      - name: Collect strict official legislation
+        run: python scripts/collect_official_legislation_strict.py
+      - name: Enrich legislation supporting coverage
+        run: python scripts/enrich_legislation.py
+      - name: Enforce official-only legislation
+        run: python scripts/enforce_official_legislation.py
+      - name: First verification pass
+        run: python scripts/verify_feed.py --apply
+      - name: Consolidate same-event coverage
+        run: python scripts/event_consolidate.py
+      - name: Re-verify consolidated feed
+        run: python scripts/verify_feed.py --apply
+      - name: Validate official Legislation and duplicate policy
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          root=ET.parse('News').getroot()
+          rows=[x for x in root.findall('.//item') if (x.findtext('category') or '').strip()=='legislation']
+          assert rows, 'No legislation records collected'
+          for x in rows:
+              assert (x.findtext('officialSource') or '').strip(), x.findtext('title')
+              assert (x.findtext('status') or '').strip().lower()!='supporting coverage', x.findtext('title')
+          print(f'{len(rows)} official legislation cards; zero standalone news cards.')
+          PY
+      - name: Install content brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+      - name: Generate paraphrased content briefs
+        run: python scripts/create_content_briefs.py
+      - name: Sync Why It Matters
+        run: python scripts/sync_why_matters.py
+      - name: Validate Why It Matters provenance
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          rows=ET.parse('News').getroot().findall('.//item')
+          briefs=[x for x in rows if (x.findtext('briefGenerated') or '').strip().lower()=='true' and (x.findtext('category') or '').strip()!='legislation']
+          assert briefs, 'No generated briefs to validate'
+          missing=[x.findtext('title') for x in briefs if (x.findtext('whyMattersSource') or '').strip()!='content-brief-v1']
+          assert not missing, missing[:10]
+          print(f'{len(briefs)} paraphrased briefs have synchronized Why It Matters text.')
+          PY
+      - name: Build site
+        run: python scripts/build_site.py
+      - name: Validate frontend guards
+        run: |
+          grep -q 'why-matters-full-v1' index.html
+          ! grep -q 'function coverageItem' index.html
+          ! grep -q 'function stateCoverage' index.html
+          grep -q 'Only official legislative records appear as cards' index.html
+      - name: Audit site
+        run: python scripts/site_audit.py
+      - name: Install Playwright Chromium
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start local site
+        run: python -m http.server 8000 >/tmp/news-http.log 2>&1 &
+      - name: Existing responsive smoke
+        run: python tests/site_smoke_v26.py
