@@ -8,6 +8,7 @@ subprocess.run([sys.executable,'scripts/system_health.py','--stage','test'],cwd=
 data=json.loads((ROOT/'refresh-health.json').read_text(encoding='utf-8'))
 assert data['status']=='healthy',data
 assert data['code'] is None
+assert data['stage']=='test'
 assert len(data['systems'])==4
 assert all(x['status']=='healthy' for x in data['systems'])
 subprocess.run([sys.executable,'scripts/build_site.py'],cwd=ROOT,check=True)
