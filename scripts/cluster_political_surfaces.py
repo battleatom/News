@@ -26,20 +26,23 @@ def cross_same_event(a: ET.Element, b: ET.Element) -> bool:
     if vf.syndicated_copy(a, b) or vf.near_exact_title(a, b):
         return True
 
-    groups = vf.event_groups(a) & vf.event_groups(b)
-    if not groups:
-        return False
-
     amounts = vf.amount_keys(a) & vf.amount_keys(b)
     actors = vf.actor_keys(a) & vf.actor_keys(b)
     entities = vf.entity_keys(a) & vf.entity_keys(b)
     shared = vf.specific_tokens(a) & vf.specific_tokens(b)
     title_shared = vf.title_specific_tokens(a) & vf.title_specific_tokens(b)
+    groups = vf.event_groups(a) & vf.event_groups(b)
 
-    # Very strong generic event signatures. No politician/topic is hard-coded.
-    if amounts and (actors or entities) and groups:
+    # A distinctive amount plus the same named actor/entity is a strong event key,
+    # even when one headline says "pledge" and another says "payment/dividend".
+    # The amount alone is never sufficient.
+    if amounts and (actors or entities):
         return True
-    if amounts and len(shared) >= 2 and groups:
+    if not groups:
+        return False
+
+    # Other strong generic event signatures. No politician/topic is hard-coded.
+    if amounts and len(shared) >= 2:
         return True
     if (actors or entities) and len(title_shared) >= 3 and len(shared) >= 4:
         return True
@@ -138,6 +141,16 @@ def main() -> None:
     for item in list(channel.findall("item")):
         if id(item) in removed_ids:
             channel.remove(item)
+
+    # Fail closed if any strong cross-tab event pair survived this pass.
+    survivors = [i for i in channel.findall("item") if vf.category(i) in POLITICAL_SURFACES]
+    residual = []
+    for pos, a in enumerate(survivors):
+        for b in survivors[pos + 1:]:
+            if cross_same_event(a, b):
+                residual.append((vf.title(a), vf.title(b)))
+    if residual:
+        raise SystemExit(f"Residual political cross-tab duplicates remain: {residual[:10]}")
 
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
     print(
