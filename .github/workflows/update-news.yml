@@ -141,6 +141,23 @@ jobs:
           print('Final duplicate guard passed.')
           PY
 
+      - name: Rebuild fixed X Top Issues from verified feed
+        run: python scripts/enrich_x_issues.py
+
+      - name: Verify exactly ten fixed X topics
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          items=ET.parse('News').getroot().findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          print('X topics:',topics)
+          if len(x)!=10 or topics!=expected or len(set(topics))!=10:
+              raise SystemExit(f'X validation failed: expected exactly ten fixed topics, got {topics}')
+          print('X fixed-topic guard passed.')
+          PY
+
       - name: Finalize feed pull statistics
         run: python scripts/record_pull_stats.py --finalize
 
