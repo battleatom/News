@@ -100,6 +100,9 @@ jobs:
       - name: Enrich Laws & Legislation
         run: python scripts/enrich_legislation.py
 
+      - name: Enforce official-only Legislation cards
+        run: python scripts/enforce_official_legislation.py
+
       - name: Enrich X Top Issues
         run: python scripts/enrich_x_issues.py
 
