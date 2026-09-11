@@ -84,6 +84,15 @@
     });
   }
 
+  function compactStateLabel(value){
+    const text=String(value||'').replace(/^\s*[✓↻⚠]\s*/,'').trim();
+    if(/auto refresh active/i.test(text))return 'Auto update';
+    if(/auto refresh checking/i.test(text))return 'Checking';
+    if(/auto refresh retrying/i.test(text))return 'Retrying';
+    if(/feed update delayed/i.test(text))return 'Update delayed';
+    return text||'Auto update';
+  }
+
   function installUtilityStatus(){
     const toolbar=document.querySelector('.toolbar');
     const pull=document.getElementById('pull-stats-ui');
@@ -92,15 +101,47 @@
     const compact=document.createElement('span');
     compact.id='v3-auto-status';
     compact.setAttribute('aria-label','Automatic refresh status');
+
     function sync(){
-      const state=pull.querySelector('.status-state')?.textContent?.trim()||pull.querySelector('strong')?.textContent?.trim()||'Auto update active';
-      const fresh=pull.querySelector('.status-new')?.textContent?.trim()||'';
-      compact.textContent=fresh?state+' · '+fresh:state;
-      compact.title=pull.textContent.replace(/\s+/g,' ').trim();
+      const state=compactStateLabel(pull.querySelector('.status-state')?.textContent?.trim()||'Auto update');
+      const lines=[...pull.querySelectorAll('.status-line')].map(line=>line.textContent.replace(/\s+/g,' ').trim());
+      const allText=pull.textContent.replace(/\s+/g,' ').trim();
+      const countdownMatch=(lines[0]||allText).match(/Next in\s+([^•]+)/i);
+      const fetchedMatch=allText.match(/(\d+)\s+fetched/i);
+      const countdown=countdownMatch?.[1]?.trim()||'';
+      const fetched=fetchedMatch?.[1]||'';
+      const parts=[state];
+      if(fetched)parts.push(fetched+' fetched');
+      if(countdown)parts.push(countdown);
+      compact.textContent=parts.join(' · ');
+      compact.dataset.countdown=countdown;
+      compact.dataset.fetched=fetched;
+      compact.title=allText;
     }
+
+    function applyMobileLayout(){
+      const mobile=window.matchMedia('(max-width:760px)').matches;
+      const status=document.getElementById('status');
+      if(mobile){
+        compact.style.setProperty('display','inline-flex','important');
+        compact.style.setProperty('flex','1 1 145px','important');
+        compact.style.setProperty('max-width','200px','important');
+        compact.style.setProperty('font-size','8.5px','important');
+        if(status)status.style.setProperty('display','none','important');
+      }else{
+        compact.style.removeProperty('display');
+        compact.style.removeProperty('flex');
+        compact.style.removeProperty('max-width');
+        compact.style.removeProperty('font-size');
+        if(status)status.style.removeProperty('display');
+      }
+    }
+
     sync();
+    applyMobileLayout();
     if(local)toolbar.insertBefore(compact,local);else toolbar.appendChild(compact);
     new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true,attributes:true});
+    window.addEventListener('resize',applyMobileLayout,{passive:true});
   }
 
   function refresh(){
