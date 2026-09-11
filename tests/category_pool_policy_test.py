@@ -4,6 +4,7 @@ import importlib.util
 import subprocess
 import sys
 
+# Branch regression for normalized category pool sizing and backfill behavior.
 ROOT = Path(__file__).resolve().parent.parent
 subprocess.run([sys.executable, 'scripts/patch_category_pool_policy.py'], cwd=ROOT, check=True)
 
