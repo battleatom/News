@@ -124,6 +124,12 @@ jobs:
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
+      - name: Consolidate same-event coverage and preserve supporting links
+        run: python scripts/event_consolidate.py
+
+      - name: Re-verify consolidated feed
+        run: python scripts/verify_feed.py --apply
+
       - name: Verify no strong duplicate pairs remain
         run: |
           python - <<'PY'
@@ -146,6 +152,9 @@ jobs:
 
       - name: Create original factual content briefs
         run: python scripts/create_content_briefs.py
+
+      - name: Sync Why It Matters to paraphrased briefs
+        run: python scripts/sync_why_matters.py
 
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
