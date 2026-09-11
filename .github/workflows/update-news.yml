@@ -88,8 +88,14 @@ jobs:
       - name: Enrich World news content
         run: python scripts/enrich_world_content.py
 
+      - name: Expand Underreported discovery to 14 days
+        run: python scripts/underreported_priority.py --discover
+
       - name: Enrich Underreported context and long-term supporting coverage
         run: python scripts/enrich_underreported.py
+
+      - name: Rank Underreported by importance freshness and coverage
+        run: python scripts/underreported_priority.py --rank
 
       - name: Enrich Laws & Legislation
         run: python scripts/enrich_legislation.py
@@ -126,6 +132,9 @@ jobs:
 
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
+
+      - name: Add Underreported age border system
+        run: python scripts/patch_underreported_age_ui.py
 
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
