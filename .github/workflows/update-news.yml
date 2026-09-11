@@ -127,6 +127,9 @@ jobs:
       - name: Final source, category and event verification
         run: python scripts/verify_feed.py --apply
 
+      - name: Collapse repeated coverage across U.S. political tabs
+        run: python scripts/cluster_political_surfaces.py
+
       - name: Verify no strong duplicate pairs remain
         run: |
           python - <<'PY'
