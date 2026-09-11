@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import argparse
 import html
-import math
 import re
 import urllib.parse
 import urllib.request
@@ -12,11 +11,17 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 
+from classify_live_feed import classify
 from update_news import UNDERREPORTED_DISCOVERY_QUERIES, source_is_trusted, underreported_source_allowed
 
 NEWS = Path("News")
-MAX_DAYS = 14
-MAX_ITEMS = 30
+
+# Underreported is intentionally a deeper archive than the normal 48-hour feed.
+# Keep enough history to surface important stories that never received sustained
+# mainstream attention, while still strongly preferring newer material.
+MAX_DAYS = 120
+MAX_ITEMS = 80
+EXCLUDED_UNDERREPORTED_CATEGORIES = {"technology", "gaming"}
 
 
 def clean(value: str | None) -> str:
@@ -44,6 +49,20 @@ def feed_url(query: str) -> str:
     return f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 
+def underreported_topic_allowed(item: ET.Element) -> bool:
+    """Keep Technology and Gaming content out of the Underreported surface.
+
+    Underreported is an editorial public-interest archive, not a second Tech or
+    Gaming tab. The shared classifier is used so this decision stays consistent
+    with the rest of the site instead of relying on a brittle keyword blacklist.
+    """
+    try:
+        decision = classify(item)
+    except Exception:
+        return True
+    return str(decision.get("category", "")).lower() not in EXCLUDED_UNDERREPORTED_CATEGORIES
+
+
 def discover() -> None:
     tree = ET.parse(NEWS)
     root = tree.getroot()
@@ -59,44 +78,49 @@ def discover() -> None:
 
     for source_name, query in UNDERREPORTED_DISCOVERY_QUERIES:
         try:
-            req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 UnderreportedPriority/1.0"})
+            req = urllib.request.Request(feed_url(query), headers={"User-Agent": "Mozilla/5.0 UnderreportedPriority/2.0"})
             with urllib.request.urlopen(req, timeout=20) as response:
                 feed = ET.fromstring(response.read())
         except Exception as exc:
-            print(f"Underreported 14-day discovery failed for {source_name}: {exc}")
+            print(f"Underreported {MAX_DAYS}-day discovery failed for {source_name}: {exc}")
             continue
 
         for src in feed.findall(".//item"):
-            title = clean(src.findtext("title"))
+            article_title = clean(src.findtext("title"))
             link = clean(src.findtext("link"))
             desc = clean(src.findtext("description"))
             pub = clean(src.findtext("pubDate"))
             dt = parse_date(pub)
             source_el = src.find("source")
             source = source_name or clean(source_el.text if source_el is not None else "")
-            if not title or not link or not dt or dt.timestamp() < cutoff or dt > now:
+            if not article_title or not link or not dt or dt.timestamp() < cutoff or dt > now:
                 continue
             if not source_is_trusted(source):
                 continue
-            candidate = {"title": title, "description": desc, "source": source}
+            candidate = {"title": article_title, "description": desc, "source": source}
             if not underreported_source_allowed(candidate):
                 continue
-            nt = norm_title(title)
+            nt = norm_title(article_title)
             if nt in seen_titles or link in seen_links:
                 continue
-            item = ET.SubElement(channel, "item")
-            ET.SubElement(item, "title").text = title
+
+            item = ET.Element("item")
+            ET.SubElement(item, "title").text = article_title
             ET.SubElement(item, "link").text = link
             ET.SubElement(item, "description").text = desc
             ET.SubElement(item, "pubDate").text = pub
             ET.SubElement(item, "source").text = source
             ET.SubElement(item, "category").text = "underreported"
+            if not underreported_topic_allowed(item):
+                continue
+
+            channel.append(item)
             seen_titles.add(nt)
             seen_links.add(link)
             added += 1
 
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
-    print(f"Underreported 14-day discovery added {added} candidate story/stories.")
+    print(f"Underreported {MAX_DAYS}-day discovery added {added} candidate story/stories.")
 
 
 def importance_score(item: ET.Element) -> int:
@@ -135,10 +159,14 @@ def age_band(dt, now) -> str:
     if not dt:
         return "unknown"
     d = max(0.0, (now - dt).total_seconds() / 86400)
-    if d <= 2: return "blue"
-    if d <= 4: return "green"
-    if d <= 7: return "orange"
-    if d <= 10: return "purple"
+    if d <= 2:
+        return "blue"
+    if d <= 7:
+        return "green"
+    if d <= 30:
+        return "orange"
+    if d <= 60:
+        return "purple"
     return "red"
 
 
@@ -162,26 +190,34 @@ def rank() -> None:
     rest = [x for x in all_items if clean(x.findtext("category")).lower() not in {"top", "underreported"}]
 
     ranked = []
+    excluded_topic = 0
     for item in under:
         dt = parse_date(item.findtext("pubDate"))
         age_days = (now - dt).total_seconds() / 86400 if dt else 999
         if age_days > MAX_DAYS:
             continue
+        if not underreported_topic_allowed(item):
+            excluded_topic += 1
+            continue
+
         importance = importance_score(item)
         freshness = freshness_score(dt, now)
         try:
             under_score = int(float(clean(item.findtext("underreportedScore")) or 70))
         except Exception:
             under_score = 70
-        priority = round(importance * 0.45 + freshness * 0.30 + under_score * 0.25)
+
+        # Older public-interest reporting can remain competitive when its impact
+        # and low-coverage scores are high; recency no longer dominates the tab.
+        priority = round(importance * 0.50 + freshness * 0.15 + under_score * 0.35)
         band = age_band(dt, now)
         set_text(item, "importanceScore", importance)
         set_text(item, "freshnessScore", freshness)
         set_text(item, "underreportedPriority", priority)
         set_text(item, "ageBand", band)
-        ranked.append((priority, freshness, under_score, dt.timestamp() if dt else 0, item))
+        ranked.append((priority, importance, under_score, freshness, dt.timestamp() if dt else 0, item))
 
-    ranked.sort(key=lambda row: (row[0], row[1], row[2], row[3]), reverse=True)
+    ranked.sort(key=lambda row: (row[0], row[1], row[2], row[3], row[4]), reverse=True)
     selected = [row[-1] for row in ranked[:MAX_ITEMS]]
 
     for item in all_items:
@@ -189,7 +225,10 @@ def rank() -> None:
     for item in top + selected + rest:
         channel.append(item)
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
-    print(f"Underreported priority ranking retained {len(selected)} stories from the last {MAX_DAYS} days.")
+    print(
+        f"Underreported priority ranking retained {len(selected)} stories from the last {MAX_DAYS} days; "
+        f"excluded {excluded_topic} Technology/Gaming story/stories."
+    )
 
 
 def main() -> None:
