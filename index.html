@@ -4,87 +4,6 @@
 <meta charset="UTF-8"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#0b1120">
 <title>Underreported — High-Impact News</title>
 <meta name="description" content="Underreported brings high-impact, local and undercovered stories together with source context and live updates.">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <link rel="stylesheet" href="styles/theme.css?v=3">
 
 <style id="local-status-style">
@@ -136,6 +55,7 @@
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -915,25 +835,48 @@ function paginatedNewsItems(items){
 function appendLoadMoreControl(data){
   const root=document.getElementById('news-feed');
   if(!root)return;
-  root.querySelectorAll('.load-more-wrap').forEach(el=>el.remove());
+  root.querySelectorAll('.load-more-wrap,.infinite-scroll-sentinel').forEach(el=>el.remove());
+  if(window.__infiniteScrollObserver){
+    try{window.__infiniteScrollObserver.disconnect()}catch(e){}
+    window.__infiniteScrollObserver=null;
+  }
   if(data.available.length<=data.count)return;
-  const more=document.createElement('div');
-  more.className='load-more-wrap';
-  const button=document.createElement('button');
-  button.type='button';
-  button.className='load-more';
-  const next=Math.min(data.count+STORIES_PER_PAGE,data.available.length);
-  button.textContent=`Load 10 more (${next} of ${data.available.length})`;
-  button.onclick=()=>{
-    const scrollY=window.scrollY;
+
+  const sentinel=document.createElement('div');
+  sentinel.className='infinite-scroll-sentinel';
+  sentinel.setAttribute('aria-hidden','true');
+  sentinel.style.cssText='height:1px;width:100%;margin-top:8px;';
+  root.appendChild(sentinel);
+
+  let loading=false;
+  const observer=new IntersectionObserver(entries=>{
+    if(loading||!entries.some(entry=>entry.isIntersecting))return;
+    loading=true;
+    observer.disconnect();
+
+    const cards=[...document.querySelectorAll('#news-feed .news-item')];
+    const anchor=cards[cards.length-1]||null;
+    const anchorHref=anchor?.querySelector('h3 a[href]')?.href||'';
+    const anchorTop=anchor?.getBoundingClientRect().top??null;
+    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+STORIES_PER_PAGE,data.available.length);
     loadCounts[active]=next;
     canonicalRender(allItems);
-    requestAnimationFrame(()=>window.scrollTo({top:scrollY,behavior:'auto'}));
-  };
-  more.appendChild(button);
-  // Keep pagination outside the category section. Several category renderers
-  // rebuild their section after canonicalRender and could otherwise delete it.
-  root.appendChild(more);
+
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(anchorHref&&anchorTop!==null){
+        const replacement=[...document.querySelectorAll('#news-feed .news-item h3 a[href]')]
+          .find(a=>a.href===anchorHref)?.closest('.news-item');
+        if(replacement){
+          const delta=replacement.getBoundingClientRect().top-anchorTop;
+          if(Math.abs(delta)>1)window.scrollBy({top:delta,left:0,behavior:'auto'});
+        }
+      }
+      loading=false;
+    }));
+  },{root:null,rootMargin:'700px 0px 700px 0px',threshold:0.01});
+
+  window.__infiniteScrollObserver=observer;
+  observer.observe(sentinel);
 }
 
 const baseCanonicalRenderWithPagination=canonicalRender;
@@ -1297,8 +1240,7 @@ syncDiscoveryButton();
     const failed=refreshState==='retrying'||(last&&Date.now()-last>AUTO_MS*2.5);
     const busy=refreshState==='checking'||window.pullInProgress;
     panel.className=failed?'failed':busy?'busy':'ready';
-    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span><button id="sound-alerts-toggle" type="button" data-enabled="${soundEnabled()?'true':'false'}">${soundEnabled()?'🔊 Alerts on':'🔔 Enable sound'}</button></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
-    const sound=byId('sound-alerts-toggle');if(sound)sound.onclick=()=>{void enableSound(true)};
+    panel.innerHTML=`<div class="status-line"><span class="status-state">${esc(stateLabel())}</span><span class="sep">•</span><span>Next in <strong>${esc(countdown(remaining))}</strong></span><span class="sep">•</span><span>Next ${esc(shortTime(next))}</span></div><div class="status-line"><span>Last fetch <strong>${esc(shortTime(last))}</strong></span><span class="sep">•</span><span>${fetched} fetched</span><span class="sep">•</span><span class="status-new">${newCount} new</span><span class="sep">•</span><span>${dupes} duplicates removed</span><span class="sep">•</span><span>${shown} shown</span></div>`;
   }
 
   function synthPop(){
@@ -1324,13 +1266,10 @@ syncDiscoveryButton();
     if(ok){try{localStorage.setItem(SOUND_KEY,'on')}catch(e){};if(test)synthPop();}
     renderStatus();return ok;
   }
-  window.enableNewArticleSound=enableSound;
-  window.playNewArticlePop=function(){if(!soundEnabled())return false;if(audioReady&&synthPop())return true;void ensureAudio().then(ok=>{if(ok)synthPop()});return false};
+  window.enableNewArticleSound=async function(){return false};
+  window.playNewArticlePop=function(){return false};
   // A remembered preference is re-activated by the first normal user gesture,
   // satisfying mobile autoplay rules without making every page load beep.
-  function activateRememberedSound(){if(soundEnabled()&&!audioReady)void ensureAudio()}
-  document.addEventListener('pointerdown',activateRememberedSound,{capture:true,passive:true});
-  document.addEventListener('keydown',activateRememberedSound,{capture:true});
 
   function cardPublishedMs(card){
     const text=card.querySelector('.meta span')?.textContent||'';
