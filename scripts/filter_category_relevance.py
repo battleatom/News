@@ -10,8 +10,8 @@ TECH_ANCHORS = (
     'apple', 'google', 'microsoft', 'nvidia', 'amd', 'intel', 'meta ai', 'openai',
     'anthropic', 'chip', 'semiconductor', 'gpu', 'cpu', 'robot', 'robotics',
     'quantum', 'cloud computing', 'browser', 'internet', 'privacy', 'encryption',
-    'social media', 'app ', 'apps ', 'platform', 'satellite', 'spacex', 'tesla',
-    'virtual reality', 'augmented reality', 'vr ', 'ar ', 'device', 'technology',
+    'social media', 'app ', 'apps ', 'satellite', 'spacex', 'tesla',
+    'virtual reality', 'augmented reality', 'vr ', 'device', 'operating system',
 )
 
 FEDERAL_ANCHORS = (
@@ -46,7 +46,11 @@ def text(item, tag):
 
 
 def raw(item):
-    return f"{text(item, 'title')} {text(item, 'description')}".lower()
+    desc = text(item, 'description')
+    # Content-brief fallbacks can begin with a category label. Do not let that
+    # generated label prove its own classification on later refreshes/tests.
+    desc = re.sub(r'^(?:Technology|International|Federal|U\.S\.|Local) reporting indicates\s+', '', desc, flags=re.I)
+    return f"{text(item, 'title')} {desc}".lower()
 
 
 def has_any(value, terms):
@@ -61,15 +65,16 @@ def is_junk(item):
 
 def classify_technology(item):
     body = raw(item)
-    # Government action is primarily Federal unless technology is itself the
-    # regulated subject (AI, privacy, platforms, chips, telecom, etc.).
+    # Explicit FCC/government stories are Federal unless the regulated subject
+    # is itself clearly a technology issue such as AI, privacy or chips.
     federal = has_any(body, FEDERAL_ANCHORS)
     tech = has_any(body, TECH_ANCHORS)
-    if federal and not tech:
+    strong_regulated_tech = any(term in body for term in ('artificial intelligence',' ai ','privacy','cybersecurity','semiconductor','chip','telecom','broadband','social media','software','app '))
+    if federal and not strong_regulated_tech:
         return 'federal'
-    # Climate records are World unless the story is specifically about a
-    # technology used to measure, mitigate or respond to them.
-    if has_any(body, WORLD_ANCHORS) and not tech:
+    # Climate/temperature records belong in World unless the actual subject is
+    # a technology response or measurement system.
+    if has_any(body, WORLD_ANCHORS) and not any(term in body for term in ('climate technology','carbon capture','battery','sensor','satellite technology')):
         return 'world'
     # Entertainment from a technology publisher is not Technology merely
     # because it mentions a streaming service.
