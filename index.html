@@ -57,12 +57,14 @@
 .new-badge.new-badge-yellow{background:#facc15!important;color:#422006!important}
 </style>
 <link rel="stylesheet" href="styles/content-briefs.css?v=1">
+<style id="full-why-matters-v1">html body .news-item .v3-why-text{display:block!important;-webkit-line-clamp:unset!important;line-clamp:unset!important;overflow:visible!important;white-space:normal!important}html body .news-item .why{max-height:none!important;overflow:visible!important}</style>
 <style id="system-health-v1-style">
 .sh-wrap{position:relative;display:inline-flex;align-items:center}.sh-button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:inherit;font:inherit;font-weight:800;cursor:pointer;padding:5px 7px;border-radius:9px}.sh-button:hover{background:rgba(127,127,127,.09)}.sh-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8;box-shadow:0 0 0 2px rgba(148,163,184,.14)}.sh-wrap.healthy .sh-dot,.sh-system.healthy i{background:#16a34a}.sh-wrap.degraded .sh-dot,.sh-system.degraded i{background:#eab308}.sh-wrap.partial .sh-dot,.sh-system.partial i{background:#f97316}.sh-wrap.critical .sh-dot,.sh-system.critical i{background:#dc2626}.sh-panel{position:absolute;z-index:50;top:calc(100% + 8px);left:0;width:min(360px,calc(100vw - 24px));padding:12px;border:1px solid var(--ui-line);border-radius:14px;background:#fff;color:#334155;box-shadow:0 14px 38px rgba(15,23,42,.18);font-size:11px}.sh-panel[hidden]{display:none}.sh-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px}.sh-title{font-weight:900}.sh-code{font-family:monospace;font-weight:800}.sh-system{display:flex;align-items:center;gap:7px;padding:5px 0;border-top:1px solid rgba(127,127,127,.1)}.sh-system i{width:8px;height:8px;border-radius:50%;background:#94a3b8;flex:none}.sh-system span{flex:1}.sh-meta{margin-top:9px;padding-top:8px;border-top:1px solid var(--ui-line);color:#64748b;line-height:1.55}@media(prefers-color-scheme:dark){.sh-panel{background:#1c1c1e;color:#e5e7eb}.sh-meta{color:#a1a1aa}}@media(max-width:700px){.sh-label{font-size:9px}.sh-panel{position:fixed;top:74px;left:12px;right:12px;width:auto}}
 </style>
 </head>
 <body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
+var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
@@ -1057,103 +1059,17 @@ syncDiscoveryButton();
 (function(){
  'use strict';
  const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
- const LEGISLATIVE_TERMS=['bill','legislation','legislature','law','lawsuit','regulation','rule','governor','state senate','state house','general assembly','capitol','veto','signed','ordinance','budget'];
  let stateCache=null,cacheLoaded=false,cachePromise=null,lastState='';
- function stateCode(){
-   let code=(localStorage.getItem('underreported-state')||'').toUpperCase();
-   if(STATES[code])return code;
-   const loc=(localStorage.getItem('underreported-location')||'').toUpperCase();
-   const m=loc.match(/(?:,\s*|\b)([A-Z]{2})$/); return m&&STATES[m[1]]?m[1]:'NM';
- }
+ function stateCode(){let code=(localStorage.getItem('underreported-state')||'').toUpperCase();if(STATES[code])return code;const loc=(localStorage.getItem('underreported-location')||'').toUpperCase();const m=loc.match(/(?:,\s*|\b)([A-Z]{2})$/);return m&&STATES[m[1]]?m[1]:'NM'}
  function stateName(){return STATES[stateCode()]||'New Mexico'}
  function x(doc,tag,value){const e=doc.createElement(tag);e.textContent=value||'';return e}
- function itemText(item){return `${item.querySelector('title')?.textContent||''} ${item.querySelector('description')?.textContent||''} ${item.querySelector('source')?.textContent||''}`.toLowerCase()}
- function itemKey(item){return (item.querySelector('link')?.textContent||item.querySelector('title')?.textContent||'').trim().toLowerCase()}
- function matchesState(item,code,name){
-   const tagged=(item.querySelector('state')?.textContent||'').trim().toLowerCase();
-   if(tagged)return tagged===code.toLowerCase()||tagged===name.toLowerCase();
-   return itemText(item).includes(name.toLowerCase());
- }
- function jsonItem(rec){
-   const doc=document.implementation.createDocument('','item'); const item=doc.documentElement;
-   const link=rec.officialSource||rec.indexSource||'#';
-   item.appendChild(x(doc,'title',`${rec.billNumber||''} — ${rec.title||'State legislation'}`));
-   item.appendChild(x(doc,'link',link)); item.appendChild(x(doc,'description',rec.description||rec.title||''));
-   item.appendChild(x(doc,'pubDate',rec.latestActionDate||rec.statusDate||'')); item.appendChild(x(doc,'source',`${rec.stateName||stateName()} Legislature`));
-   item.appendChild(x(doc,'category','legislation')); item.appendChild(x(doc,'jurisdiction',rec.stateName||stateName()));
-   item.appendChild(x(doc,'status',rec.status||'Active')); item.appendChild(x(doc,'whatItDoes',rec.description||rec.title||''));
-   item.appendChild(x(doc,'whoAffected','Residents, organizations, agencies, or programs covered by the measure'));
-   item.appendChild(x(doc,'effectiveDate','See official bill text / enacted law'));
-   item.appendChild(x(doc,'nextStep',/passed|enrolled/i.test(rec.status||'')?'Implementation, executive action, or final procedural steps.':'Watch the next committee, floor, or executive action.'));
-   item.appendChild(x(doc,'officialSource',rec.officialSource||'')); item.appendChild(x(doc,'billNumber',rec.billNumber||''));
-   item.appendChild(x(doc,'latestAction',rec.latestAction||'')); item.appendChild(x(doc,'sponsor',rec.sponsor||''));
-   return item;
- }
- function coverageItem(src,name){
-   const doc=document.implementation.createDocument('','item');const item=doc.documentElement;
-   const title=src.querySelector('title')?.textContent||'State government update';
-   const link=src.querySelector('link')?.textContent||'#';const desc=src.querySelector('description')?.textContent||'';
-   const date=src.querySelector('pubDate')?.textContent||'';const source=src.querySelector('source')?.textContent||'News coverage';
-   item.appendChild(x(doc,'title',title));item.appendChild(x(doc,'link',link));item.appendChild(x(doc,'description',desc));
-   item.appendChild(x(doc,'pubDate',date));item.appendChild(x(doc,'source',source));item.appendChild(x(doc,'category','legislation'));
-   item.appendChild(x(doc,'jurisdiction',`${name} · news coverage`));item.appendChild(x(doc,'status','Supporting coverage'));
-   item.appendChild(x(doc,'whatItDoes',desc||title));item.appendChild(x(doc,'whoAffected',`${name} residents, agencies, businesses, or programs affected by the reported action`));
-   item.appendChild(x(doc,'effectiveDate','See the official state record for controlling dates'));item.appendChild(x(doc,'nextStep',`Follow the ${name} legislature or agency for the next official action.`));
-   return item;
- }
- function startCacheLoad(){
-   if(cacheLoaded||cachePromise)return cachePromise;
-   cachePromise=fetch('state-legislation.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('state cache unavailable');return r.json()}).then(d=>{stateCache=d;cacheLoaded=true;return d}).catch(()=>{cacheLoaded=true;stateCache=null;return null});
-   return cachePromise;
- }
- function stateCoverage(items,code,name){
-   const candidates=items.filter(i=>['region','nm','us','top'].includes((i.querySelector('category')?.textContent||'').trim())&&matchesState(i,code,name));
-   const priority=candidates.filter(i=>LEGISLATIVE_TERMS.some(term=>itemText(i).includes(term)));
-   const ordered=[...priority,...candidates.filter(i=>!priority.includes(i))].sort((a,b)=>(Date.parse(b.querySelector('pubDate')?.textContent||'')||0)-(Date.parse(a.querySelector('pubDate')?.textContent||'')||0));
-   const seen=new Set(),out=[];
-   for(const src of ordered){const k=itemKey(src);if(!k||seen.has(k))continue;seen.add(k);out.push(coverageItem(src,name));if(out.length>=18)break;}
-   return out;
- }
- function locationItems(items){
-   const code=stateCode(),name=STATES[code]||'State';
-   const nonLeg=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')!=='legislation');
-   const federal=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation' && /federal/i.test(i.querySelector('jurisdiction')?.textContent||''));
-   let stateRows=[];
-   if(code==='NM'){
-     stateRows=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation' && /new mexico/i.test(i.querySelector('jurisdiction')?.textContent||''));
-   }else{
-     stateRows=((stateCache?.states||{})[code]?.bills||[]).map(jsonItem);
-   }
-   if(stateRows.length<10){
-     const seen=new Set(stateRows.map(itemKey));
-     for(const row of stateCoverage(items,code,name)){const k=itemKey(row);if(!k||seen.has(k))continue;seen.add(k);stateRows.push(row);if(stateRows.length>=18)break;}
-   }
-   return nonLeg.concat(federal,stateRows);
- }
- function updateLabel(){
-   const code=stateCode(),name=STATES[code]||'State';
-   const def=CANONICAL_SECTIONS.find(x=>x[0]==='legislation');
-   if(def)def[1]=`📜 Federal + ${name}`;
-   if(lastState!==code){lastState=code;if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();}
- }
-
- window.__categoryRenderers=window.__categoryRenderers||{};
- const baseLegislationRenderer=window.__categoryRenderers.legislation;
- if(typeof baseLegislationRenderer!=='function')throw new Error('Legislation category renderer missing before location patch');
- window.__categoryRenderers.legislation=function(items){
-   updateLabel();
-   const code=stateCode();
-   if(code!=='NM'&&!cacheLoaded)startCacheLoad().then(()=>{if(active==='legislation')canonicalRender(allItems)});
-   baseLegislationRenderer(locationItems(items));
-   const sec=document.querySelector('#news-feed .section');
-   if(sec){
-     const intro=sec.querySelector('.x-issues-intro');
-     if(intro)intro.textContent=`Federal records come from Congress.gov. ${stateName()} follows your detected location. Official state records are used when available; otherwise established state news coverage is clearly labeled as supporting coverage.`;
-   }
- };
-
- updateLabel();startCacheLoad();
- window.addEventListener('underreported:location',()=>{updateLabel();if(active==='legislation')canonicalRender(allItems)});
+ function jsonItem(rec){const doc=document.implementation.createDocument('','item'),item=doc.documentElement;const link=rec.officialSource||rec.indexSource||'#';item.appendChild(x(doc,'title',`${rec.billNumber||''} — ${rec.title||'State legislation'}`));item.appendChild(x(doc,'link',link));item.appendChild(x(doc,'description',rec.description||rec.title||''));item.appendChild(x(doc,'pubDate',rec.latestActionDate||rec.statusDate||''));item.appendChild(x(doc,'source',`${rec.stateName||stateName()} Legislature`));item.appendChild(x(doc,'category','legislation'));item.appendChild(x(doc,'jurisdiction',rec.stateName||stateName()));item.appendChild(x(doc,'status',rec.status||'Active'));item.appendChild(x(doc,'whatItDoes',rec.description||rec.title||''));item.appendChild(x(doc,'whoAffected','Residents, organizations, agencies, or programs covered by the measure'));item.appendChild(x(doc,'effectiveDate','See official bill text / enacted law'));item.appendChild(x(doc,'nextStep',/passed|enrolled/i.test(rec.status||'')?'Implementation, executive action, or final procedural steps.':'Watch the next committee, floor, or executive action.'));item.appendChild(x(doc,'officialSource',rec.officialSource||link));item.appendChild(x(doc,'billNumber',rec.billNumber||''));item.appendChild(x(doc,'latestAction',rec.latestAction||''));item.appendChild(x(doc,'sponsor',rec.sponsor||''));return item}
+ function startCacheLoad(){if(cacheLoaded||cachePromise)return cachePromise;cachePromise=fetch('state-legislation.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('state cache unavailable');return r.json()}).then(d=>{stateCache=d;cacheLoaded=true;return d}).catch(()=>{cacheLoaded=true;stateCache=null;return null});return cachePromise}
+ function locationItems(items){const code=stateCode();const nonLeg=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')!=='legislation');const federal=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation'&&/federal/i.test(i.querySelector('jurisdiction')?.textContent||''));let stateRows=[];if(code==='NM')stateRows=items.filter(i=>(i.querySelector('category')?.textContent?.trim()||'')==='legislation'&&/new mexico/i.test(i.querySelector('jurisdiction')?.textContent||''));else stateRows=((stateCache?.states||{})[code]?.bills||[]).map(jsonItem);return nonLeg.concat(federal,stateRows)}
+ function updateLabel(){const code=stateCode(),name=STATES[code]||'State';const def=CANONICAL_SECTIONS.find(x=>x[0]==='legislation');if(def)def[1]=`📜 Federal + ${name}`;if(lastState!==code){lastState=code;if(typeof canonicalBuildTabs==='function')canonicalBuildTabs()}}
+ window.__categoryRenderers=window.__categoryRenderers||{};const base=window.__categoryRenderers.legislation;if(typeof base!=='function')throw new Error('Legislation category renderer missing before location patch');
+ window.__categoryRenderers.legislation=function(items){updateLabel();const code=stateCode();if(code!=='NM'&&!cacheLoaded)startCacheLoad().then(()=>{if(active==='legislation')canonicalRender(allItems)});base(locationItems(items));const intro=document.querySelector('#news-feed .section .x-issues-intro');if(intro)intro.textContent=`Federal records come from Congress.gov. ${stateName()} follows your detected location. Only official legislative records appear as cards; related journalism may appear only as supporting links on a matching official record.`};
+ updateLabel();startCacheLoad();window.addEventListener('underreported:location',()=>{updateLabel();if(active==='legislation')canonicalRender(allItems)});
 })();
 </script>
 <script id="related-coverage-v1">
