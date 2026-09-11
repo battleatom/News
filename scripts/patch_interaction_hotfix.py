@@ -45,24 +45,9 @@ old = """function appendLoadMoreControl(data){
   button.textContent=`Load 10 more (${next} of ${data.available.length})`;
   button.onclick=()=>{
     const scrollY=window.scrollY;
-    const oldCards=[...document.querySelectorAll('#news-feed .news-item')];
-    const anchor=oldCards[oldCards.length-1]||null;
-    const anchorHref=anchor?.querySelector('h3 a[href]')?.href||'';
-    const anchorTop=anchor?.getBoundingClientRect().top??null;
     loadCounts[active]=next;
     canonicalRender(allItems);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      if(anchorHref&&anchorTop!==null){
-        const replacement=[...document.querySelectorAll('#news-feed .news-item h3 a[href]')]
-          .find(a=>a.href===anchorHref)?.closest('.news-item');
-        if(replacement){
-          const delta=replacement.getBoundingClientRect().top-anchorTop;
-          window.scrollBy({top:delta,left:0,behavior:'auto'});
-          return;
-        }
-      }
-      window.scrollTo({top:scrollY,behavior:'auto'});
-    }));
+    requestAnimationFrame(()=>window.scrollTo({top:scrollY,behavior:'auto'}));
   };
   more.appendChild(button);
   // Keep pagination outside the category section. Several category renderers
@@ -115,9 +100,10 @@ new = """function appendLoadMoreControl(data){
   window.__infiniteScrollObserver=observer;
   observer.observe(sentinel);
 }"""
-if old not in s:
-    raise SystemExit('Expected Load More control implementation not found')
-s = s.replace(old, new, 1)
+if old in s:
+    s = s.replace(old, new, 1)
+elif new not in s:
+    raise SystemExit('Expected Load More or infinite-scroll implementation not found')
 
 P.write_text(s, encoding='utf-8')
-print('Removed alert button/audio path and replaced Load More with anchored infinite scrolling.')
+print('Removed alert button/audio path and ensured anchored infinite scrolling.')
