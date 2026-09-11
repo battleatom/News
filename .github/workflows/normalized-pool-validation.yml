@@ -1,0 +1,43 @@
+name: Validate Normalized Category Pools
+
+on:
+  push:
+    branches: [fix/normalized-category-pools-2026-09-11]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/*.py tests/normalized_category_pools_test.py
+      - name: Pool regression tests
+        run: python tests/normalized_category_pools_test.py
+      - name: Run normalized live collector
+        run: python scripts/update_news_normalized.py
+      - name: Verify generated category caps and pool quality
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          root=ET.parse('News').getroot()
+          counts=Counter((x.findtext('category') or '').strip() for x in root.findall('.//item'))
+          print('Generated category counts:', dict(sorted(counts.items())))
+          ordinary=('world','us','presidential','federal','legislation','nm','region','nfl','technology','gaming','military')
+          for cat in ordinary:
+              assert counts[cat] <= 40, (cat, counts[cat])
+          assert counts['local'] <= 30, counts['local']
+          assert counts['region'] <= 40, counts['region']
+          assert counts['underreported'] <= 30, counts['underreported']
+          print('Category cap validation passed.')
+          PY
+      - name: Existing feed verification
+        run: python scripts/verify_feed.py
+      - name: Build site
+        run: python scripts/build_site.py
+      - name: Audit site
+        run: python scripts/site_audit.py
