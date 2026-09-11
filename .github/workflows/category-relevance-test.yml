@@ -1,0 +1,45 @@
+name: Category Relevance Test
+
+on:
+  push:
+    branches: [fix-category-relevance-v2]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run relevance gate
+        run: python scripts/filter_category_relevance.py
+      - name: Verify reported misclassifications are corrected
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          root=ET.parse('News').getroot()
+          items=root.findall('.//item')
+          rows=[((i.findtext('title') or ''),(i.findtext('category') or '')) for i in items]
+          def matches(needle):
+              return [(t,c) for t,c in rows if needle.lower() in t.lower()]
+          checks={
+            'Kimmel': matches('Kimmel'),
+            'Oh, Mary': matches('Oh, Mary'),
+            'Hottest Month': matches('Hottest Month Ever Recorded'),
+            'Watch ESPN': matches('Watch ESPN - Stream Live Sports'),
+            'Question PC': matches('Question - Pc displays orange light'),
+          }
+          print(checks)
+          assert not checks['Oh, Mary'], checks['Oh, Mary']
+          assert not checks['Watch ESPN'], checks['Watch ESPN']
+          assert not checks['Question PC'], checks['Question PC']
+          assert all(c != 'technology' for _,c in checks['Kimmel']), checks['Kimmel']
+          assert all(c != 'technology' for _,c in checks['Hottest Month']), checks['Hottest Month']
+          tech=[(t,c) for t,c in rows if c=='technology']
+          assert len(tech) >= 10, f'Technology over-filtered: {len(tech)}'
+          print(f'PASS: {len(tech)} Technology stories remain after relevance gate')
+          PY
+      - name: Validate syntax
+        run: python -m py_compile scripts/filter_category_relevance.py
