@@ -32,6 +32,8 @@ jobs:
           sleep 2
       - name: Test V3 news cards, infinite scroll, NEW badges and responsive UI
         run: python tests/site_smoke_v26.py
+      - name: Test mobile fetch status and live countdown
+        run: python tests/mobile_status_smoke.py
       - name: Show server log on failure
         if: failure()
         run: cat /tmp/news-http.log || true
