@@ -1,0 +1,30 @@
+name: System Health Validation
+on:
+  push:
+    branches: [feature/system-health-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/system_health_test.py tests/system_health_smoke.py
+      - name: Run diagnostics and build regression
+        run: python tests/system_health_test.py
+      - name: Audit generated site
+        run: python scripts/site_audit.py
+      - name: Install browser
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start branch site
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/news-http.log 2>&1 &
+          sleep 2
+      - name: Test expandable System Health UI
+        run: python tests/system_health_smoke.py
+      - name: Run normal responsive smoke
+        run: python tests/site_smoke_v26.py
