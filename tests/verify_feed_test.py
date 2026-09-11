@@ -14,7 +14,9 @@ import verify_feed as vf
 def item(title: str, category: str, source: str = "Reuters", description: str = "") -> ET.Element:
     node = ET.Element("item")
     ET.SubElement(node, "title").text = title
-    ET.SubElement(node, "description").text = description or title
+    ET.SubElement(node, "description").text = description or (
+        title + ". The story is part of a developing national issue and officials are reviewing the details."
+    )
     ET.SubElement(node, "source").text = source
     ET.SubElement(node, "category").text = category
     ET.SubElement(node, "link").text = "https://example.com/" + str(abs(hash((title, category, source))))
