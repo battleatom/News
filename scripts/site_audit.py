@@ -4,6 +4,8 @@ import difflib
 import re
 import xml.etree.ElementTree as ET
 
+from filter_landing_pages import is_landing_page
+
 INDEX = Path('index.html')
 NEWS = Path('News')
 
@@ -17,7 +19,6 @@ EXPECTED_TABS = (
     'top','nfl','x','underreported','world','us','presidential','federal','legislation',
     'nm','local','region','technology','gaming','military','boxoffice',
 )
-LANDING_TITLE = re.compile(r'\bbreaking news\s*,\s*latest news(?:\s+and\s+videos)?\b', re.I)
 
 
 def clean(v):
@@ -126,7 +127,7 @@ def main():
             brief_generated += 1
             if clean(item.findtext('briefSource')) not in ('', 'headline-fallback'):
                 brief_article_backed += 1
-        if LANDING_TITLE.search(title):
+        if is_landing_page(item):
             landing_pages.append(title)
 
     exact_dups = [(cat, link, titles) for (cat,link),titles in same_cat_links.items() if len(titles) > 1]
