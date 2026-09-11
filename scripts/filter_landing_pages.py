@@ -4,13 +4,23 @@ from pathlib import Path
 
 NEWS_FILE = Path('News')
 
-# Strong landing-page signatures only. These are publisher/navigation pages, not
-# individual news stories, and can otherwise survive similarity dedupe because
-# their titles contain a location plus generic publisher branding.
+US_STATE_NAMES = (
+    'Alabama','Alaska','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia',
+    'Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Maryland','Massachusetts',
+    'Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey',
+    'New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island',
+    'South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia',
+    'Wisconsin','Wyoming','District of Columbia','Washington, D.C.','Washington DC',
+)
+STATE_ALT = '|'.join(re.escape(name) for name in US_STATE_NAMES)
+
+# Only remove titles that are themselves generic publisher/state landing pages.
+# Do not match a real article merely because the publisher appends a phrase such
+# as "ABC News - Breaking News, Latest News and Videos" to the article title.
 LANDING_PATTERNS = (
-    re.compile(r'\bbreaking news\s*,\s*latest news(?:\s+and\s+videos)?\b', re.I),
-    re.compile(r'\blatest news\s*,\s*weather(?:\s*(?:and|&)\s*sports)?\b', re.I),
-    re.compile(r'\bnews headlines(?:\s*,\s*weather)?\b', re.I),
+    re.compile(rf'^(?:{STATE_ALT})\s+-\s+(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
+    re.compile(r'^(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
+    re.compile(rf'^(?:{STATE_ALT})\s+-\s+(?:ABC|CBS|NBC|FOX) News\s+-\s+Latest News,\s*Weather(?:\s*(?:and|&)\s*Sports)?$', re.I),
 )
 
 
@@ -22,7 +32,7 @@ def is_landing_page(item) -> bool:
     title = clean(item.findtext('title'))
     if not title:
         return True
-    return any(pattern.search(title) for pattern in LANDING_PATTERNS)
+    return any(pattern.fullmatch(title) for pattern in LANDING_PATTERNS)
 
 
 def main():
