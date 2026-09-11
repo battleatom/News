@@ -63,6 +63,12 @@ jobs:
           print('Duplicate verification guard passed.')
           PY
 
+      - name: Install content brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Create content briefs
+        run: python scripts/create_content_briefs.py
+
       - name: Build site
         run: python scripts/build_site.py
 
