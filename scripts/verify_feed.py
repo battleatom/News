@@ -187,6 +187,10 @@ def syndicated_copy(a: ET.Element, b: ET.Element) -> bool:
 def same_event(a: ET.Element, b: ET.Element) -> bool:
     if category(a) != category(b):
         return False
+    link_a = clean(a.findtext("link")).lower()
+    link_b = clean(b.findtext("link")).lower()
+    if link_a and link_a == link_b:
+        return True
     if not legacy.looks_english(a) or not legacy.looks_english(b):
         return False
     cat = category(a)
