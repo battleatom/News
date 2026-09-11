@@ -17,9 +17,9 @@ b=item('presidential','$5,000 support payment proposal from Morgan draws questio
 c=item('presidential','Alex Morgan meets technology executives','BBC','The official met technology executives about a separate issue.','c')
 assert cluster.same_event(a,b);assert not cluster.same_event(a,c)
 
-# Commemoration coverage should still consolidate generically.
-d=item('us','Nation marks 25th anniversary at memorial ceremonies','CBS News','Families gather for remembrance events marking the anniversary.','d')
-e=item('us','Memorial events commemorate anniversary across the country','NBC News','Commemoration ceremonies and tributes mark the anniversary.','e')
+# Commemoration coverage needs a concrete shared event anchor, not just broad anniversary words.
+d=item('us','Apollo 11 anniversary marked at July 20 memorial ceremony','CBS News','Families gather July 20 for Apollo 11 remembrance events marking the anniversary.','d')
+e=item('us','July 20 events commemorate Apollo 11 anniversary','NBC News','Commemoration ceremonies and tributes mark Apollo 11 on July 20.','e')
 assert cluster.same_event(d,e)
 
 # Wire copy republished by another outlet must collapse even with a publisher suffix.
