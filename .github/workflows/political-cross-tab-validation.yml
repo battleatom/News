@@ -1,0 +1,56 @@
+name: Validate Political Cross-Tab Clustering
+on:
+  push:
+    branches: [fix/political-cross-tab-clustering-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/source_priority.py scripts/cluster_political_surfaces.py tests/political_cross_tab_test.py
+      - name: Regression tests
+        run: python tests/political_cross_tab_test.py
+      - name: Analyze current US and Presidential feed
+        run: |
+          cp News /tmp/News.before
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          rows=ET.parse('News').getroot().findall('.//item')
+          for cat in ('us','presidential'):
+              vals=[i.findtext('title','') for i in rows if i.findtext('category','').strip()==cat and '5,000' in i.findtext('title','')]
+              print(cat,'$5,000 cards before:',len(vals))
+              for v in vals: print(' -',v)
+          PY
+          python scripts/cluster_political_surfaces.py
+          python - <<'PY'
+          import sys,xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import cluster_political_surfaces as cps
+          rows=[i for i in ET.parse('News').getroot().findall('.//item') if i.findtext('category','').strip() in cps.POLITICAL_SURFACES]
+          residual=[]
+          for p,a in enumerate(rows):
+              for b in rows[p+1:]:
+                  if cps.cross_same_event(a,b): residual.append((a.findtext('title'),b.findtext('title')))
+          if residual:
+              print('Residual cross-tab event pairs:',residual[:20])
+              raise SystemExit(1)
+          vals=[i for i in rows if '5,000' in i.findtext('title','')]
+          print('Political-family $5,000 cards after:',len(vals))
+          for v in vals:
+              print(' -',v.findtext('category'),v.findtext('source'),v.findtext('title'))
+              rel=v.find('relatedArticles')
+              print('   coverage links:',len(rel.findall('article')) if rel is not None else 0)
+          print('No cross-tab political duplicate pairs remain.')
+          PY
+      - name: Build and audit site after clustering
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+# Temporary branch-only validation workflow; remove before merge.
