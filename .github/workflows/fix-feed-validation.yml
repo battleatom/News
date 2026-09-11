@@ -2,7 +2,7 @@ name: Feed Stabilization Validation
 
 on:
   push:
-    branches: [fix-feed-dedupe-rss-underreported]
+    branches: [fix-feed-dedupe-rss-underreported, expand-underreported-pool]
   workflow_dispatch:
 
 permissions:
@@ -45,6 +45,26 @@ jobs:
           python scripts/clean_news.py
           python scripts/filter_landing_pages.py
 
+      - name: Verify expanded Underreported pool and exclusions
+        run: |
+          python - <<'PY'
+          import sys
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from classify_live_feed import classify
+          root=ET.parse('News').getroot()
+          items=[x for x in root.findall('.//item') if (x.findtext('category') or '').strip().lower()=='underreported']
+          assert len(items) >= 50, f'Underreported pool too small after 120-day discovery: {len(items)}'
+          bad=[]
+          for item in items:
+              d=classify(item)
+              if str(d.get('category','')).lower() in {'technology','gaming'}:
+                  bad.append((item.findtext('title') or '', d.get('category'), d.get('confidence')))
+          assert not bad, 'Technology/Gaming leaked into Underreported: '+repr(bad[:10])
+          print(f'Underreported validation passed with {len(items)} retained stories and no Technology/Gaming classifications.')
+          PY
+
       - name: Run final verifier
         run: python scripts/verify_feed.py --apply
 
@@ -85,7 +105,9 @@ jobs:
           assert 'refresh-success-handling-v3' in html, 'New resilient refresh handler missing'
           assert 'raw.githubusercontent.com/battleatom/News/main/News' in html, 'Raw feed fallback missing'
           assert 'Feed temporarily unavailable · retrying' in html, 'Neutral transient feed state missing'
-          assert 'underreported-age-styles-v31' in ui, 'Stable Underreported age UI missing'
+          assert 'underreported-age-styles-v32' in ui, 'Extended Underreported age UI missing'
+          assert '61–120 days' in ui, '120-day Underreported age legend missing'
+          assert '-webkit-line-clamp:unset!important' in ui, 'WHY IT MATTERS unclamp override missing'
           assert 'Add Underreported age border system' not in workflow, 'Post-build age patch still in production workflow'
           print('Refresh and Underreported UI invariants passed.')
           PY
