@@ -35,6 +35,15 @@ US_STATE_NAMES = {
     "utah", "vermont", "virginia", "washington", "west virginia", "wisconsin", "wyoming", "district of columbia"
 }
 
+# Regional feeds often contain several unrelated college/pro sports stories at once.
+# Generic game vocabulary must never be enough to collapse them into one story.
+REGION_SPORTS_WORDS = {
+    "football", "basketball", "baseball", "soccer", "hockey", "softball", "volleyball", "sports", "sport",
+    "game", "games", "match", "matches", "week", "season", "team", "teams", "player", "players", "coach",
+    "coaches", "college", "university", "prediction", "predictions", "odds", "preview", "ranked", "ranking",
+    "rankings", "score", "scores", "vs", "versus", "win", "wins", "loss", "losses"
+}
+
 # State-centered federal disputes often generate many slightly different headlines
 # from the same event. Keep one representative Federal story instead of allowing
 # one state/case to dominate the category.
@@ -129,6 +138,25 @@ def same_federal_state_event(a, b):
     return len(shared_specific) >= 2
 
 
+def region_sports_story(item):
+    return bool(tokens(item) & REGION_SPORTS_WORDS)
+
+
+def same_region_sports_event(a, b):
+    """Conservatively dedupe regional sports coverage by shared named anchors.
+
+    Two unrelated games can share words such as football, week, game, prediction,
+    college and ranked. Require at least two non-generic shared anchors (usually
+    team, school, city, player or coach names) unless the titles are nearly exact.
+    """
+    if not (region_sports_story(a) or region_sports_story(b)):
+        return False
+    if very_close_title(a, b, minimum_common=5, ratio=0.94):
+        return True
+    shared_named = (content_tokens(a) & content_tokens(b)) - REGION_SPORTS_WORDS
+    return len(shared_named) >= 2
+
+
 def very_close_title(a, b, minimum_common=5, ratio=0.94):
     ta, tb = tokens(a), tokens(b)
     common = len(ta & tb)
@@ -157,7 +185,7 @@ def same_story(a, b):
 
     # Sports, technology and gaming headlines naturally reuse many category words.
     # The old generic 65% overlap rule collapsed whole NFL weeks and product events.
-    # Use exact/near-exact title matching here, plus the dedicated gaming event rule.
+    # Use exact/near-exact title matching here, plus dedicated event rules.
     if ca == "nfl":
         return very_close_title(a, b, minimum_common=5, ratio=0.94)
     if ca == "technology":
@@ -166,6 +194,8 @@ def same_story(a, b):
         if same_gaming_event(a, b):
             return True
         return very_close_title(a, b, minimum_common=5, ratio=0.95)
+    if ca == "region" and (region_sports_story(a) or region_sports_story(b)):
+        return same_region_sports_event(a, b)
     if ca == "federal":
         if same_federal_state_event(a, b):
             return True
