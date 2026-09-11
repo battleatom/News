@@ -1,0 +1,46 @@
+name: Validate X Fixed Topics
+on:
+  push:
+    branches: [fix/x-static-ten-topics-2026-09-11]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python -m py_compile scripts/*.py tests/x_static_topics_test.py
+      - name: Static X contract test
+        run: python tests/x_static_topics_test.py
+      - name: Run normalized collector
+        run: python scripts/update_news_normalized.py
+      - name: Refine Technology and Gaming
+        run: python scripts/refine_tech_gaming.py
+      - name: Clean links
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+      - name: Verify collected feed
+        run: python scripts/verify_feed.py --apply
+      - name: Build exactly ten X topics from verified feed
+        run: python scripts/enrich_x_issues.py
+      - name: Re-run X builder to verify idempotency
+        run: python scripts/enrich_x_issues.py
+      - name: Validate exact fixed X set
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          root=ET.parse('News').getroot();items=root.findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          assert len(x)==10, topics
+          assert topics==expected, topics
+          assert len(set(topics))==10, topics
+          assert all((i.findtext('title') or '').strip() for i in x)
+          assert all((i.findtext('link') or '').strip() for i in x)
+          print('Validated exactly ten fixed X topics:', topics)
+          PY
+# Temporary branch-only workflow; remove before merge.
