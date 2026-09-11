@@ -66,6 +66,11 @@ def mobile_suite(browser):
 
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile page overflows horizontally by {overflow}px'
+
+    # Content briefs are a standard news-card feature, while X uses its own
+    # explainable-issue card layout. Validate briefs after returning to Top so
+    # the smoke test checks the feature on the surface where it is rendered.
+    base.click_key(page,'top')
     base.badge_checks(page)
     base.content_brief_checks(page)
     assert not errors, f'Mobile browser errors: {errors[:5]}'
