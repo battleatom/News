@@ -1,0 +1,34 @@
+name: Event Cluster Dedupe Test
+
+on:
+  push:
+    branches: [test-event-cluster-dedupe]
+    paths:
+      - 'scripts/dedupe_news_stories.py'
+      - 'scripts/dedupe_news_legacy.py'
+      - 'tests/event_cluster_dedupe_test.py'
+      - '.github/workflows/event-cluster-dedupe-test.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/dedupe_news_stories.py'
+      - 'scripts/dedupe_news_legacy.py'
+      - 'tests/event_cluster_dedupe_test.py'
+      - '.github/workflows/event-cluster-dedupe-test.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/dedupe_news_legacy.py scripts/dedupe_news_stories.py tests/event_cluster_dedupe_test.py
+      - name: Run synthetic and live-feed event dedupe tests
+        run: python tests/event_cluster_dedupe_test.py
+      - name: Verify full dedupe pipeline on feed copy
+        run: |
+          cp News /tmp/News.original
+          python scripts/dedupe_news_stories.py
+          python scripts/site_audit.py
+          mv /tmp/News.original News
