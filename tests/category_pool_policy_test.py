@@ -3,6 +3,7 @@ from pathlib import Path
 import importlib.util
 import subprocess
 import sys
+import urllib.parse
 
 # Branch regression for normalized category pool sizing and backfill behavior.
 ROOT = Path(__file__).resolve().parent.parent
@@ -13,7 +14,7 @@ mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
 assert mod.MAX_AGE_HOURS == 72
-assert 'when:3d' in mod.feed_url('test query')
+assert 'when:3d' in urllib.parse.unquote(mod.feed_url('test query'))
 
 expected_minimums = {
     'world': 30, 'us': 30, 'presidential': 30, 'federal': 30,
