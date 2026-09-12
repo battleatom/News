@@ -135,27 +135,23 @@ def _specialist(item):
     return any(token in source for token in ENTERTAINMENT_SPECIALIST_SOURCES)
 
 
-def _headline_terms(item):
+def _ent_title_terms(item):
     stop = {
-        "the", "and", "for", "with", "from", "into", "after", "before", "about",
-        "new", "says", "said", "news", "actor", "actress", "film", "movie",
-        "music", "artist", "entertainment", "hollywood", "television", "series",
+        "the","and","for","with","from","into","after","before","about","amid","during",
+        "this","that","says","said","new","news","latest","update","report","reports",
+        "actor","actress","film","movie","music","artist","singer","series","television","tv",
+        "entertainment","hollywood","project",
     }
-    return {
-        w for w in re.findall(r"[a-z0-9]+", (item.get("title") or "").lower())
-        if len(w) >= 4 and w not in stop
-    }
+    return {w for w in re.findall(r"[a-z0-9]+", (item.get("title") or "").lower()) if len(w) >= 3 and w not in stop}
 
 
 def _same_entertainment_event(a, b):
-    ta, tb = _headline_terms(a), _headline_terms(b)
+    ta, tb = _ent_title_terms(a), _ent_title_terms(b)
+    if not ta or not tb:
+        return False
     shared = ta & tb
-    if len(shared) >= 3:
-        return True
-    ea, eb = _entity_phrases(a), _entity_phrases(b)
-    if ea & eb and len(shared) >= 2:
-        return True
-    return False
+    smaller = min(len(ta), len(tb))
+    return smaller >= 3 and len(shared) >= 3 and len(shared) / smaller >= 0.70
 
 
 def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
