@@ -125,7 +125,7 @@ jobs:
         run: python scripts/cluster_related_coverage.py
 
       - name: Final source, category and event verification
-        run: python scripts/verify_feed.py --apply
+        run: python scripts/verify_feed_v4.py --apply
 
       - name: Enforce final U.S. Federal and legislation routing
         run: python scripts/enforce_us_federal.py
