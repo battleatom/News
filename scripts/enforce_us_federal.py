@@ -26,12 +26,23 @@ US_FEDERAL_STRONG = (
 
 # These are commonly U.S. federal phrases in U.S.-focused feeds, but are not
 # country-specific by themselves. They are only accepted when no foreign-country
-# signal is present.
+# signal is present, unless the headline also has clear U.S. subject evidence.
 US_FEDERAL_GENERIC = (
     "federal government", "federal judge", "federal court", "federal appeals court",
     "federal agency", "federal law", "federal lawsuit", "federal prosecutor",
     "federal prosecutors", "federal regulation", "federal rule", "federal funding",
     "supreme court",
+)
+
+# U.S.-subject terms that disambiguate a generic federal phrase when a foreign
+# word is only contextual/comparative. Example: a U.S. federal appeals court
+# comparing a Trump migrant-detention policy to Japanese American internment is
+# still a U.S. Federal story; "Japanese" is not the story's jurisdiction.
+US_SUBJECT_CONTEXT = (
+    "donald trump", "trump", "joe biden", "biden", "white house",
+    "migrant detention", "immigration policy", "immigration", "deportation",
+    "ice detention", "border policy", "asylum policy", "american internment",
+    "japanese american internment", "u.s. policy", "us policy",
 )
 
 FOREIGN_TERMS = (
@@ -111,6 +122,12 @@ def federal_item_is_us(item):
         for tag in ("description", "source", "whyMatters")
     )
     full_text = f"{title} {supporting}".strip()
+
+    # The central headline subject wins over a foreign comparison/reference. A
+    # generic U.S.-federal institution plus an unmistakably U.S. policy/actor is
+    # enough to establish jurisdiction before inspecting incidental foreign terms.
+    if has_any(title, US_FEDERAL_GENERIC) and has_any(title, US_SUBJECT_CONTEXT):
+        return True
 
     # Headline subject wins. A headline explicitly about another country,
     # foreign court or foreign official cannot stay in U.S. Federal.
