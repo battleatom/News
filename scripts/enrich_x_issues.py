@@ -26,6 +26,22 @@ CATEGORIES = [
 ]
 EXPECTED_TOPICS = [name for name, _ in CATEGORIES]
 
+# These are intentionally aligned with the final editorial-integrity gate.  The
+# collector must never create a fixed X slot from a weak overlap such as "public"
+# for Health and leave the validator to discover the mismatch later.
+TOPIC_TERMS = {
+    "Health": {"health", "medical", "medicine", "disease", "hospital", "fda", "doctor", "public health", "medicaid", "medicare"},
+    "Technology & AI": {"technology", "artificial intelligence", "ai", "openai", "google", "apple", "microsoft", "cybersecurity", "software", "chip", "semiconductor", "data breach"},
+    "Celebrities & Public Figures": {"actor", "actress", "singer", "rapper", "musician", "celebrity", "star", "athlete", "director", "artist"},
+    "World": {"international", "world", "war", "diplomacy", "summit", "foreign", "ukraine", "russia", "china", "iran", "israel", "gaza", "europe", "brics"},
+    "Politics & Government": {"white house", "congress", "senate", "supreme court", "president", "election", "government", "federal", "governor"},
+    "Entertainment": {"movie", "film", "television", "tv", "music", "album", "streaming", "entertainment", "actor", "actress", "singer"},
+    "Sports": {"nfl", "nba", "mlb", "nhl", "soccer", "football", "basketball", "baseball", "sports", "athlete", "game"},
+    "Business & Economy": {"economy", "business", "stocks", "market", "tariff", "jobs", "company", "companies", "earnings", "bank", "inflation"},
+    "Gaming": {"gaming", "video game", "playstation", "xbox", "nintendo", "steam", "console", "game studio", "dlc"},
+    "Science": {"science", "research", "study", "nasa", "space", "climate", "scientist", "physics", "biology", "astronomy"},
+}
+
 STOP = {"the","a","an","to","of","in","on","for","and","with","is","as","at","from","by","after","new","says","said","that","this","are","was","were","has","have","had","into","over","its","their","will","news","latest","x","twitter","post","posts","users","people"}
 GENERIC = {"trump", "elon musk", "donald trump", "taylor swift", "kim kardashian", "celebrity", "breaking news", "viral", "x", "twitter"}
 LOCAL_FEED_CATEGORIES = {"nm", "local", "region"}
@@ -75,6 +91,18 @@ def lead_keys(data):
     if title: out.add("t:"+title)
     if link: out.add("l:"+link)
     return out
+
+
+def topic_relevant(category, data):
+    terms = TOPIC_TERMS.get(category, set())
+    full = " " + f"{data.get('title','')} {data.get('desc','')}".lower() + " "
+    for term in terms:
+        if " " in term:
+            if f" {term} " in full:
+                return True
+        elif re.search(r"\b" + re.escape(term) + r"\b", full):
+            return True
+    return False
 
 
 def fetch_trend_names():
@@ -164,7 +192,7 @@ def existing_candidates(items, query):
     return out[:40]
 
 
-def best_issue(query, trend_names, items, used_leads):
+def best_issue(category, query, trend_names, items, used_leads):
     # Prefer the already-collected national/global feed. Local/state/regional cards
     # are excluded here and must independently qualify through U.S.-wide trend search.
     pools=[existing_candidates(items,query),trend_candidates(query,trend_names),broad_candidates(query)]
@@ -175,7 +203,7 @@ def best_issue(query, trend_names, items, used_leads):
         age=(datetime.now(timezone.utc)-d["dt"]).total_seconds()/86400
         return overlap*8+concrete+explanation-age*2
     for candidates in pools:
-        eligible=[row for row in candidates if not (lead_keys(row[1]) & used_leads)]
+        eligible=[row for row in candidates if topic_relevant(category,row[1]) and not (lead_keys(row[1]) & used_leads)]
         if eligible:
             return max(eligible,key=score)
     return None
@@ -214,7 +242,7 @@ def main():
 
     created=[]; used_leads=set()
     for category,query in CATEGORIES:
-        best=best_issue(query,trend_names,base_items,used_leads)
+        best=best_issue(category,query,trend_names,base_items,used_leads)
         if not best:
             raise SystemExit(f"X Top Issues failed: no unique publishable lead for fixed topic {category!r}")
         _,lead,trend=best
