@@ -2,7 +2,7 @@
 """Final editorial-integrity pass for V4.
 
 Runs after generic routing/deduplication and after X is rebuilt. It is intentionally
-conservative: obvious U.S. domestic leakage is removed from World, generic landing
+conservative: obvious U.S. domestic leakage is removed from World, generic/non-story
 pages are dropped, weak Related Coverage links are pruned, low-value Technology
 shopping/gaming leakage is corrected, and fixed X slots are repaired from already
 verified feed stories when their lead is not relevant to the slot.
@@ -14,6 +14,8 @@ import xml.etree.ElementTree as ET
 from datetime import timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
+
+from filter_landing_pages import is_landing_page
 
 NEWS = Path('News')
 
@@ -42,6 +44,10 @@ US_DOMESTIC = US_STATES | {
     'philadelphia','baltimore','cleveland','milwaukee','minneapolis','st louis','kansas city','farmington','albuquerque'
 }
 SPORTS = {'nfl','football','basketball','baseball','hockey','soccer','ncaa','college football','bears','hoosiers','game','match'}
+INTERNATIONAL_CONTEXT = {
+    'war','military','troops','missile','airstrike','invasion','ceasefire','sanctions','diplomacy','diplomatic','summit',
+    'prime minister','president','government','foreign minister','trade agreement','treaty','nato','united nations','brics'
+}
 TECH_SHOPPING = ('where to preorder','where to pre-order','preorder the','pre-order the','best deals','deal of the day','buy now','gift guide')
 GAMING = {'gaming','video game','playstation','xbox','nintendo','switch','steam','skyrim','game mod','dlc','gamepass','game pass'}
 GENERIC_LANDING = (
@@ -111,10 +117,19 @@ def obvious_domestic_world(item):
     title=text(item,'title').lower(); desc=text(item,'description').lower(); full=f'{title} {desc}'
     foreign=phrases(full,FOREIGN)
     domestic=phrases(full,US_DOMESTIC)
+    title_domestic=phrases(title,US_DOMESTIC)
     state_meta=text(item,'state').lower()
     sports=phrases(full,SPORTS)
-    if foreign: return False
-    if state_meta and state_meta in US_STATES: return True
+    intl_context=phrases(full,INTERNATIONAL_CONTEXT)
+    # A U.S. place can be the actual subject even when a foreign place/culture is
+    # mentioned (e.g. a Germany-themed event in Minnesota). Only preserve World
+    # when the story also carries genuine international-policy/conflict context.
+    if title_domestic and not intl_context:
+        return True
+    if foreign:
+        return False
+    if state_meta and state_meta in US_STATES:
+        return True
     return bool(domestic and sports)
 
 
@@ -168,7 +183,6 @@ def repair_x(channel):
         else:
             channel.append(replacement)
         repaired+=1
-    # Preserve the canonical fixed order at the end of the feed.
     all_x=[i for i in list(channel.findall('item')) if text(i,'category').lower()=='x']
     for i in all_x: channel.remove(i)
     final_by_topic={text(i,'xTopic'):i for i in all_x}
@@ -186,7 +200,7 @@ def main():
     world_to_us=tech_to_gaming=dropped=related_removed=0
     for item in list(channel.findall('item')):
         title=text(item,'title'); cat=text(item,'category').lower()
-        if any(p.search(title) for p in GENERIC_LANDING):
+        if is_landing_page(item) or any(p.search(title) for p in GENERIC_LANDING):
             channel.remove(item); dropped+=1; continue
         if cat=='world' and obvious_domestic_world(item):
             set_text(item,'category','us'); world_to_us+=1
