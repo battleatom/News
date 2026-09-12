@@ -17,7 +17,7 @@ def collect():
     except Exception as exc:
         print('Entertainment primary feed failed:',exc)
     own=sum(1 for x in items if x.get('category')=='entertainment')
-    target=core.CATEGORY_POOL_MINIMUMS.get('entertainment',20)
+    target=core.CATEGORY_POOL_MINIMUMS.get('entertainment',24)
     if own < target:
         for source,q in core.TRUSTED_CATEGORY_FALLBACKS.get('entertainment',[]):
             try:
@@ -31,6 +31,8 @@ def collect():
                 print(f'Entertainment fallback failed for {source}: {exc}')
     selected=v4.select_entertainment([x for x in items if x.get('category')=='entertainment'],v4.ENTERTAINMENT_LIMIT)
     print('Selected Entertainment stories:',len(selected))
+    print('  Clean:',sum(1 for x in selected if x.get('entertainmentSafety')=='clean'))
+    print('  Dirty-only:',sum(1 for x in selected if x.get('entertainmentSafety')=='dirty'))
     return selected
 
 def append_node(channel,item):
@@ -41,6 +43,9 @@ def append_node(channel,item):
     add('pubDate',item.get('pubDate'));add('source',item.get('source'));add('category','entertainment')
     add('region','');add('state','');add('imageUrl',item.get('imageUrl',''))
     add('entertainmentTier',item.get('entertainmentTier',''))
+    add('entertainmentSafety',item.get('entertainmentSafety','clean'))
+    add('entertainmentLabel',item.get('entertainmentLabel','ENTERTAINMENT'))
+    add('entertainmentScore',item.get('entertainmentScore',''))
     add('whyMatters','Why it matters: It may affect careers, productions, releases, contracts, audiences, or the wider entertainment industry.')
     channel.append(n)
 
