@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  if(window.__locationContentV27)return;
+  if(window.__locationContentV28)return;
 
   const LOCAL_RADIUS_MILES=150;
   const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
@@ -21,14 +21,16 @@
     const stateName=STATES[code]||'';
     const label=String(cached?.label||localStorage.getItem('underreported-location')||'');
     const city=String(cached?.city||label.split(',')[0]||'').trim();
-    const lat=Number(cached?.lat),lon=Number(cached?.lon);
+    const rawLat=cached?.lat,rawLon=cached?.lon;
+    const lat=rawLat==null||rawLat===''?null:Number(rawLat),lon=rawLon==null||rawLon===''?null:Number(rawLon);
     return {code,name:stateName,city,region:STATE_REGION[code]||'',lat:Number.isFinite(lat)?lat:null,lon:Number.isFinite(lon)?lon:null,label};
   }
 
+  function numericField(item,names){const raw=field(item,names);if(raw==='')return null;const n=Number(raw);return Number.isFinite(n)?n:null}
   function itemCoords(item){
-    const lat=Number(field(item,['latitude','lat','locationLatitude','geoLat']));
-    const lon=Number(field(item,['longitude','lon','lng','locationLongitude','geoLon']));
-    return Number.isFinite(lat)&&Number.isFinite(lon)?{lat,lon}:null;
+    const lat=numericField(item,['latitude','lat','locationLatitude','geoLat']);
+    const lon=numericField(item,['longitude','lon','lng','locationLongitude','geoLon']);
+    return lat!=null&&lon!=null?{lat,lon}:null;
   }
   function radians(v){return v*Math.PI/180}
   function distanceMiles(a,b){
@@ -39,14 +41,26 @@
   }
   function distanceToUser(item,loc){return distanceMiles(loc,itemCoords(item))}
 
-  function itemState(item){return field(item,['state','stateCode']).toLowerCase()}
-  function itemRegion(item){return field(item,['region']).toLowerCase()}
+  function normalizedStateCode(value){
+    const raw=String(value||'').trim();if(!raw)return '';
+    const upper=raw.replace(/^US-/i,'').toUpperCase();if(STATES[upper])return upper;
+    const hit=Object.entries(STATES).find(([,name])=>name.toLowerCase()===raw.toLowerCase());return hit?hit[0]:'';
+  }
+  function itemStateCode(item){return normalizedStateCode(field(item,['state','stateCode']))}
+  function inferredStateCode(item){
+    const tagged=itemStateCode(item);if(tagged)return tagged;
+    const t=` ${text(item)} `;
+    for(const [code,name] of Object.entries(STATES)){if(t.includes(` ${name.toLowerCase()} `))return code}
+    return '';
+  }
+  function itemRegion(item){
+    const tagged=field(item,['region']).toLowerCase();if(tagged)return tagged;
+    const code=inferredStateCode(item);return STATE_REGION[code]||'';
+  }
   function matchesState(item,loc){
     if(!loc.code&&!loc.name)return false;
-    const tagged=itemState(item);
-    if(tagged)return tagged===loc.code.toLowerCase()||tagged===loc.name.toLowerCase();
-    const t=text(item);
-    return Boolean(loc.name&&t.includes(loc.name.toLowerCase()));
+    const code=inferredStateCode(item);if(code)return code===loc.code;
+    const t=text(item);return Boolean(loc.name&&t.includes(loc.name.toLowerCase()));
   }
   function matchesCity(item,loc){return Boolean(loc.city&&text(item).includes(loc.city.toLowerCase()))}
   function matchesRegion(item,loc){return Boolean(loc.region&&itemRegion(item)===loc.region)}
@@ -69,8 +83,7 @@
   }
 
   function statePool(items){
-    const loc=location();
-    if(!loc.code&&!loc.name)return [];
+    const loc=location();if(!loc.code&&!loc.name)return [];
     const candidates=items.filter(item=>{
       const cat=category(item);
       if(cat==='nm'&&loc.code==='NM')return true;
@@ -82,7 +95,7 @@
   function localPool(items){
     const loc=location();
     const candidates=items.filter(i=>['local','region','nm','us','top'].includes(category(i)));
-    if(!candidates.length)return [];
+    if(!candidates.length||(!loc.city&&!loc.code&&loc.lat==null))return [];
 
     if(loc.lat!=null&&loc.lon!=null){
       const geotagged=candidates.map(item=>({item,d:distanceToUser(item,loc)})).filter(x=>x.d!=null).sort((a,b)=>a.d-b.d);
@@ -91,22 +104,24 @@
       if(geotagged.length){
         const nearestDistance=geotagged[0].d;
         const nearest=geotagged.filter(x=>x.d<=nearestDistance+25).map(x=>x.item);
-        return rank(nearest,loc).map(i=>cloneAs(i,'local','Nearest available')).slice(0,90);
+        return rank(nearest,loc).map(i=>cloneAs(i,'local','Nearest verified market')).slice(0,90);
       }
     }
 
     const cityMatches=candidates.filter(i=>matchesCity(i,loc));
-    if(cityMatches.length)return rank(cityMatches,loc).map(i=>cloneAs(i,'local','City')).slice(0,90);
-    const stateMatches=candidates.filter(i=>matchesState(i,loc));
-    if(stateMatches.length)return rank(stateMatches,loc).map(i=>cloneAs(i,'local','Closest available in state')).slice(0,90);
-    const regionMatches=candidates.filter(i=>matchesRegion(i,loc));
-    return rank(regionMatches,loc).map(i=>cloneAs(i,'local','Closest available in region')).slice(0,90);
+    if(cityMatches.length)return rank(cityMatches,loc).map(i=>cloneAs(i,'local','City verified')).slice(0,90);
+
+    // Without usable coordinates, do not turn the entire state/region into "Local".
+    // Only use explicitly local-category stories that can still be tied to the user's state.
+    const stateLocal=candidates.filter(i=>category(i)==='local'&&matchesState(i,loc));
+    if(stateLocal.length)return rank(stateLocal,loc).map(i=>cloneAs(i,'local','Nearest verified in state')).slice(0,90);
+    return [];
   }
 
   function regionPool(items){
-    const loc=location();
-    if(!loc.region)return [];
-    return rank(items.filter(i=>category(i)==='region'&&matchesRegion(i,loc)),loc).map(i=>cloneAs(i,'region','Regional')).slice(0,90);
+    const loc=location();if(!loc.region)return [];
+    const candidates=items.filter(i=>['region','local','nm','us','top'].includes(category(i))&&matchesRegion(i,loc));
+    return rank(candidates,loc).map(i=>cloneAs(i,'region','Regional')).slice(0,90);
   }
 
   function updateLabels(){
@@ -123,13 +138,13 @@
 
   const basePaginated=typeof paginatedNewsItems==='function'?paginatedNewsItems:null;
   if(basePaginated){
-    const v27=function(items){
+    const v28=function(items){
       if(active==='nm')return basePaginated(statePool(items));
       if(active==='local')return basePaginated(localPool(items));
       if(active==='region')return basePaginated(regionPool(items));
       return basePaginated(items);
     };
-    paginatedNewsItems=v27;window.paginatedNewsItems=v27;
+    paginatedNewsItems=v28;window.paginatedNewsItems=v28;
   }
 
   function refreshLocationView(){
@@ -143,10 +158,14 @@
   window.__locationRegionPoolV27=regionPool;
   window.__locationDistanceMilesV27=distanceMiles;
   window.__locationRadiusMilesV27=LOCAL_RADIUS_MILES;
+  window.__locationStatePoolV28=statePool;
+  window.__locationLocalPoolV28=localPool;
+  window.__locationRegionPoolV28=regionPool;
   window.addEventListener('underreported:location',refreshLocationView);
   updateLabels();
   if(window.UnderreportedLocation?.get)window.UnderreportedLocation.get().then(refreshLocationView).catch(()=>refreshLocationView());
   window.__locationContentV25=true;
   window.__locationContentV26=true;
   window.__locationContentV27=true;
+  window.__locationContentV28=true;
 })();
