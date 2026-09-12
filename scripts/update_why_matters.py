@@ -18,6 +18,7 @@ def why_for(item):
  elif has(text,'breach','hack','cybersecurity','privacy','surveillance','outage','ai','software'):impact='It may affect privacy, security, access to technology, users, or how the technology is regulated and deployed.'
  elif has(text,'wildfire','flood','hurricane','tornado','earthquake','drought','climate'):impact='It may affect public safety, infrastructure, property, emergency response, or environmental conditions.'
  elif cat=='nfl' or has(text,'nfl','quarterback','playoffs','touchdown'):impact='It may affect team availability, standings, roster decisions, or upcoming games.'
+ elif cat=='entertainment':impact='It may affect the artist or production involved, audiences, release plans, contracts, careers, or the wider entertainment industry.'
  elif cat in {'presidential','federal','us','world','nm','local','region'}:impact='It may affect public policy, government operations, communities, or people directly connected to the development.'
  else:impact='It may affect the people, organizations, services, or decisions directly connected to the development.'
  return 'Why it matters: '+impact

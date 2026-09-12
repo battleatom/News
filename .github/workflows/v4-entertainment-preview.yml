@@ -1,0 +1,48 @@
+name: V4 Entertainment Diagnostic
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v4-entertainment-diagnostic
+  cancel-in-progress: true
+
+jobs:
+  entertainment-diagnostic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V4
+        uses: actions/checkout@v4
+        with:
+          ref: V4
+          fetch-depth: 1
+
+      - name: Validate scripts
+        run: python -m py_compile scripts/update_news_v4.py scripts/update_entertainment_only_v4.py
+
+      - name: Build Entertainment candidate in runner only
+        run: python scripts/update_entertainment_only_v4.py
+
+      - name: Verify Entertainment candidate
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          items=ET.parse('News').getroot().findall('.//item')
+          ent=[x for x in items if (x.findtext('category') or '').strip()=='entertainment']
+          clean=[x for x in ent if (x.findtext('entertainmentSafety') or '').strip()=='clean']
+          dirty=[x for x in ent if (x.findtext('entertainmentSafety') or '').strip()=='dirty']
+          adult=[x for x in dirty if (x.findtext('entertainmentLabel') or '').strip() in {'ADULT INDUSTRY','ADULT BUSINESS/LEGAL','CREATOR','ADULT AWARDS'}]
+          tagged=[x for x in ent if (x.findtext('entertainmentLabel') or '').strip()]
+          print('Entertainment:',len(ent),'Clean:',len(clean),'Dirty:',len(dirty),'Adult:',len(adult))
+          if len(clean) < 10: raise SystemExit(f'Clean pool too small: {len(clean)}')
+          if len(dirty) < 10: raise SystemExit(f'Dirty pool too small: {len(dirty)}')
+          if len(adult) < 5: raise SystemExit(f'Adult-industry pool too small: {len(adult)}')
+          if len(tagged) != len(ent): raise SystemExit('Entertainment ranking metadata incomplete')
+          if len(clean)+len(dirty) != len(ent): raise SystemExit('Entertainment safety metadata incomplete')
+          PY
+
+      - name: Diagnostic complete
+        run: echo 'Entertainment diagnostic passed. No repository files were written.'

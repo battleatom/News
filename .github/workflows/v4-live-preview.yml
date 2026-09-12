@@ -1,0 +1,14 @@
+name: V4 Legacy Preview (Paused)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  paused:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Legacy preview paused
+        run: echo 'Legacy V4 preview writer is paused. The stable-candidate workflow owns generated V4 output.'

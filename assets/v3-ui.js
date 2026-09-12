@@ -207,7 +207,7 @@
     window.addEventListener('resize',applyMobileLayout,{passive:true});
 
     if(window.__v3UtilityStatusTimer)clearInterval(window.__v3UtilityStatusTimer);
-    window.__v3UtilityStatusTimer=setInterval(sync,250);
+    window.__v3UtilityStatusTimer=setInterval(sync,1000);
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();},{passive:true});
   }
 

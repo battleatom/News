@@ -14,15 +14,18 @@
   function legacy(){
     const label=localStorage.getItem('underreported-location')||'';
     const state=(localStorage.getItem('underreported-state')||((label.match(/,\s*([A-Z]{2})$/)||[])[1]||'')).toUpperCase();
-    return {label,state};
+    const county=localStorage.getItem('underreported-county')||'';
+    return {label,state,county};
   }
   function persist(v){
     const state=String(v.state||'').replace(/^US-/,'').toUpperCase();
+    const county=String(v.county||'').trim();
     const label=v.label||[v.city,state].filter(Boolean).join(', ');
-    const out={...v,state,label,savedAt:Date.now()};
+    const out={...v,state,county,label,savedAt:Date.now()};
     try{
       localStorage.setItem(CACHE_KEY,JSON.stringify(out));
       if(state)localStorage.setItem('underreported-state',state);
+      if(county)localStorage.setItem('underreported-county',county);
       if(label)localStorage.setItem('underreported-location',label);
     }catch(e){}
     window.dispatchEvent(new CustomEvent('underreported:location',{detail:out}));
@@ -38,6 +41,13 @@
       );
     });
   }
+  function countyFromReverse(d){
+    const direct=String(d.county||d.countyName||'').trim();
+    if(direct)return direct;
+    const admin=Array.isArray(d.localityInfo?.administrative)?d.localityInfo.administrative:[];
+    const named=admin.map(x=>String(x?.name||'').trim()).filter(Boolean);
+    return named.find(n=>/(county|parish|borough|census area|municipality)$/i.test(n))||'';
+  }
   async function reverseGeocode(coords){
     try{
       const q=new URLSearchParams({latitude:String(coords.lat),longitude:String(coords.lon),localityLanguage:'en'});
@@ -46,7 +56,8 @@
       const d=await r.json();
       const state=String(d.principalSubdivisionCode||'').replace(/^US-/,'').toUpperCase();
       const city=d.city||d.locality||'';
-      return {...coords,city,state,label:[city,state].filter(Boolean).join(', ')};
+      const county=countyFromReverse(d);
+      return {...coords,city,state,county,label:[city,state].filter(Boolean).join(', ')};
     }catch(e){return coords;}
   }
   async function ipCoords(){
@@ -55,7 +66,7 @@
     const d=await r.json();
     if(d.latitude==null||d.longitude==null)throw new Error('IP location incomplete');
     const state=(d.region_code||'').toUpperCase(),city=d.city||'';
-    return {lat:Number(d.latitude),lon:Number(d.longitude),city,state,label:[city,state].filter(Boolean).join(', '),source:'ip'};
+    return {lat:Number(d.latitude),lon:Number(d.longitude),city,state,county:'',label:[city,state].filter(Boolean).join(', '),source:'ip'};
   }
   async function resolve(force){
     if(!force){const cached=readCache();if(cached)return cached;}
@@ -66,7 +77,7 @@
       if(coords.state)return persist(coords);
       try{return persist(await ipCoords());}
       catch(ipError){
-        if(old.state||old.label)return persist({...coords,state:old.state,label:old.label,source:'device-unresolved'});
+        if(old.state||old.label)return persist({...coords,state:old.state,county:old.county,label:old.label,source:'device-unresolved'});
         return persist(coords);
       }
     }catch(e){
@@ -88,6 +99,7 @@
         localStorage.removeItem(CACHE_KEY);
         localStorage.removeItem('underreported-location');
         localStorage.removeItem('underreported-state');
+        localStorage.removeItem('underreported-county');
       }catch(e){}
     },
   };

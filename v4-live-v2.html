@@ -1,0 +1,13 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading V4 Preview…</title></head><body><p style="font-family:system-ui;padding:24px">Loading V4 preview…</p><script>
+(async()=>{
+  const stamp=Date.now();
+  const r=await fetch('index.html?v4preview='+stamp,{cache:'no-store'});
+  let h=await r.text();
+  // Remove any pre-existing Entertainment V4 script so a stale cached copy cannot win the duplicate-load guard.
+  h=h.replace(/<script[^>]+src=["'][^"']*assets\/entertainment-v4\.js[^"']*["'][^>]*><\/script>/gi,'');
+  const inject='<script src="assets/entertainment-v4.js?v=toggle-'+stamp+'"><\/script>';
+  h=h.replace('</body>',inject+'</body>');
+  document.open();document.write(h);document.close();
+})().catch(e=>{document.body.innerHTML='<pre style="padding:20px">V4 preview failed to load: '+String(e)+'</pre>';});
+</script></body></html>

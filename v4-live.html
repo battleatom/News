@@ -1,0 +1,10 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Loading V4 Preview…</title></head><body><p style="font-family:system-ui;padding:24px">Loading V4 preview…</p><script>
+(async()=>{
+  const r=await fetch('index.html?v4='+Date.now(),{cache:'no-store'});
+  let h=await r.text();
+  const inject='<script src="assets/entertainment-v4.js?v=4-'+Date.now()+'"><\/script>';
+  h=h.replace('</body>',inject+'</body>');
+  document.open();document.write(h);document.close();
+})().catch(e=>{document.body.innerHTML='<pre style="padding:20px">V4 preview failed to load: '+String(e)+'</pre>';});
+</script></body></html>
