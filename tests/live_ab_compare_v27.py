@@ -13,7 +13,11 @@ LOCATION={
 }
 
 def norm_title(s):
-    s=re.sub(r'\s+(?:[-–—|:]\s*)?(?:Reuters|AP News|Associated Press|BBC|CNN|Fox News|NBC News|ABC News|CBS News|NPR|USA Today|IGN|GameSpot|PC Gamer|Polygon)\s*$','',s or '',flags=re.I)
+    s=(s or '').strip()
+    # Rendering can prefix cards with an ordinal ("1. Headline"). It is UI,
+    # not part of the story identity, so strip it before comparing builds.
+    s=re.sub(r'^\s*\d+\s*[.)]\s*','',s)
+    s=re.sub(r'\s+(?:[-–—|:]\s*)?(?:Reuters|AP News|Associated Press|BBC|CNN|Fox News|NBC News|ABC News|CBS News|NPR|USA Today|IGN|GameSpot|PC Gamer|Polygon)\s*$','',s,flags=re.I)
     return re.sub(r'[^a-z0-9]+',' ',s.lower()).strip()
 
 def setup(page):
@@ -34,7 +38,6 @@ def click_key(page,key):
     return True
 
 def collect_titles(page):
-    # Load as much as the current UI exposes, without changing page logic.
     for _ in range(12):
         before=page.locator('#news-feed .news-item').count()
         sentinel=page.locator('#infinite-scroll-sentinel')
