@@ -12,6 +12,10 @@ import re
 import update_news_normalized as normalized
 
 core = normalized.core
+POOL_POLICY = normalized.POOL_POLICY
+NEWS_MARKETS = normalized.NEWS_MARKETS
+MARKET_BY_ID = normalized.MARKET_BY_ID
+source_token = normalized.source_token
 
 # Map generic Region search queries to the geography they are allowed to populate.
 REGION_QUERY_META = {}
@@ -36,10 +40,10 @@ STATE_ABBREVIATIONS = {
 }
 
 SOURCE_STATES = {}
-for market in normalized.NEWS_MARKETS:
+for market in NEWS_MARKETS:
     state = market.get("stateName", "")
     for src in market.get("sources", []):
-        token = normalized.source_token(src)
+        token = source_token(src)
         if token:
             SOURCE_STATES.setdefault(token, set()).add(state)
 
@@ -71,31 +75,27 @@ def _other_state_mentions(raw, expected_state):
 
 
 def _source_supports_state(item, state_name):
-    token = normalized.source_token(item.get("source") or "")
+    token = source_token(item.get("source") or "")
     states = SOURCE_STATES.get(token, set())
     return bool(state_name and len(states) == 1 and state_name in states)
 
 
 def strict_local_story_relevant(item, market):
-    """A Local card must prove the market, not merely the state.
-
-    Direct city mention is strongest. A newsroom explicitly assigned to exactly one
-    market is also accepted unless the story clearly names a different state.
-    State-name-only matches from generic search results are rejected.
-    """
+    """A Local card must prove the market, not merely the state."""
     raw = _raw_text(item)
     city = str(market.get("city") or "").strip()
     state = str(market.get("stateName") or "").strip()
     if city and re.search(rf"\b{re.escape(city)}\b", raw, flags=re.I):
         return True
 
-    source = normalized.source_token(item.get("source") or "")
-    approved_sources = {normalized.source_token(x) for x in market.get("sources", [])}
+    source = source_token(item.get("source") or "")
+    approved_sources = {source_token(x) for x in market.get("sources", [])}
     if source and source in approved_sources:
         if _other_state_mentions(raw, state):
             return False
         return True
 
+    # A state-only match is intentionally insufficient for Local.
     return False
 
 
@@ -124,9 +124,8 @@ def validated_parse_items(root, category, source_override=None):
     if category == "local":
         kept = []
         for item in items:
-            market = normalized.MARKET_BY_ID.get(item.get("marketId", ""))
+            market = MARKET_BY_ID.get(item.get("marketId", ""))
             if market is None:
-                # Legacy untagged Local items are not trusted into the nationwide bank.
                 continue
             if strict_local_story_relevant(item, market):
                 kept.append(item)
