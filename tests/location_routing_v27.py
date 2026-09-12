@@ -16,6 +16,8 @@ def static_checks():
     assert 'locationscope' not in lower or 'scope_key' in lower
     assert "observer.observe(root,{childlist:true})" in lower, 'Location observer must not watch the full subtree'
     assert 'bar.innerhtml!==next' in lower, 'Location scope bar must avoid idempotent DOM rewrites'
+    assert 'matchesexactcity' in lower, 'Local pool must distinguish exact city from county-area matches'
+    assert "['region','local'].includes(category(i))" in lower, 'Regional pool must not reuse the statewide NM pool'
 
 
 def browser_checks():
@@ -31,10 +33,9 @@ def browser_checks():
         page.on('pageerror', lambda exc: page_errors.append(str(exc)))
         page.goto(BASE,wait_until='domcontentloaded',timeout=30000)
         page.wait_for_selector('#tabs',timeout=10000)
-        page.wait_for_function('window.__locationContentV35===true',timeout=10000)
-        page.wait_for_timeout(1400)
+        page.wait_for_function('window.__locationContentV36===true',timeout=10000)
+        page.wait_for_timeout(1600)
 
-        # Local and Region are now nested under the user's state hub.
         assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0, 'Local should not remain a top-level tab'
         assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0, 'Region should not remain a top-level tab'
         state_tab=page.locator('#tabs > .tab[data-nav-key="nm"]')
@@ -50,13 +51,42 @@ def browser_checks():
         assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
         assert 'San Juan County' in joined or 'County' in joined, f'Missing county scope: {joined}'
 
-        radius=page.evaluate('window.__locationRadiusMilesV35')
+        radius=page.evaluate('window.__locationRadiusMilesV36')
         assert radius==150, f'Expected 150-mile radius, got {radius}'
-        approx=page.evaluate('window.__locationDistanceMilesV35({lat:0,lon:0},{lat:1,lon:0})')
+        approx=page.evaluate('window.__locationDistanceMilesV36({lat:0,lon:0},{lat:1,lon:0})')
         assert 68 < approx < 70, f'Haversine distance is incorrect: {approx}'
 
-        # Reproduce the mobile failure mode: repeated scroll/load-more mutations must
-        # not create a MutationObserver render loop or blank the application.
+        # The four location filters must resolve to different ordered pools instead
+        # of all repainting the same NM articles.
+        pools=page.evaluate("""
+        () => {
+          const title=i=>i.querySelector('title')?.textContent?.trim()||'';
+          const sig=fn=>fn(allItems).slice(0,8).map(title).filter(Boolean);
+          return {
+            state:sig(window.__locationStatePoolV36),
+            county:sig(window.__locationCountyPoolV36),
+            local:sig(window.__locationLocalPoolV36),
+            region:sig(window.__locationRegionPoolV36),
+          };
+        }
+        """)
+        nonempty={k:v for k,v in pools.items() if v}
+        assert len(nonempty)>=3, f'Too few populated location scopes: {pools}'
+        signatures={k:'||'.join(v) for k,v in nonempty.items()}
+        assert len(set(signatures.values()))==len(signatures), f'Location scopes returned identical feeds: {signatures}'
+
+        # Verify clicks also repaint the visible cards, not merely the active pill.
+        visible={}
+        for scope in ('state','county','local','region'):
+            btn=page.locator(f'.location-scope-btn[data-scope="{scope}"]')
+            if not btn.count():
+                continue
+            btn.click();page.wait_for_timeout(220)
+            titles=page.locator('#news-feed .news-item h3').all_inner_texts()[:6]
+            if titles:visible[scope]='||'.join(titles)
+        assert len(visible)>=3, visible
+        assert len(set(visible.values()))==len(visible), f'Location buttons painted identical visible cards: {visible}'
+
         before=page.locator('#news-feed').inner_text()
         for _ in range(6):
             page.evaluate('window.scrollTo(0, document.body.scrollHeight)')
@@ -66,9 +96,9 @@ def browser_checks():
         assert page.locator('.location-scope-bar').count()==1, 'Location scope bar duplicated or disappeared'
         assert not page_errors, f'Browser errors during location scroll test: {page_errors}'
 
-        assert page.evaluate('typeof window.__locationLocalPoolV35==="function"')
-        assert page.evaluate('typeof window.__locationRegionPoolV35==="function"')
-        assert page.evaluate('typeof window.__locationCountyPoolV35==="function"')
+        assert page.evaluate('typeof window.__locationLocalPoolV36==="function"')
+        assert page.evaluate('typeof window.__locationRegionPoolV36==="function"')
+        assert page.evaluate('typeof window.__locationCountyPoolV36==="function"')
         assert page.evaluate('window.__presidentialRelevantV26===undefined'), 'Legacy browser Presidential classifier remains active'
 
         context.close();browser.close()
@@ -77,7 +107,7 @@ def browser_checks():
 def main():
     static_checks()
     browser_checks()
-    print('Location routing V35 passed: state hub, county/local/region scopes, 150-mile logic, and scroll stability.')
+    print('Location routing V36 passed: distinct state/county/local/region pools, 150-mile logic, and scroll stability.')
 
 
 if __name__=='__main__':
