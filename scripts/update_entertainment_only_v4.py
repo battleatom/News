@@ -8,31 +8,44 @@ import update_news_v4 as v4
 core=v4.core
 NEWS=Path('News')
 
+# Preview deliberately samples both professional and broad-entertainment outlets so
+# the Clean/Dirty toggle always has a meaningful live pool to exercise.
+PREVIEW_SOURCES=[
+    ('People','site:people.com celebrity actor actress dating relationship baby wedding fashion charity'),
+    ('TMZ','site:tmz.com celebrity actor actress dating fashion adult film star'),
+    ('E! News','site:eonline.com celebrity actor actress dating relationship fashion red carpet'),
+    ('Variety','site:variety.com actor actress Hollywood television film entertainment'),
+    ('Billboard','site:billboard.com music artist singer rapper tour album'),
+    ('Deadline','site:deadline.com actor actress television film Hollywood'),
+]
+
 def collect():
     items=[]
     query=core.QUERIES.get('entertainment', [])
     combined=' OR '.join(f'({q})' for q in query) if isinstance(query,list) else query
     try:
-        items.extend(core.parse_items(core.fetch(combined),'entertainment'))
+        batch=core.parse_items(core.fetch(combined),'entertainment')
+        items.extend(batch)
+        print(f'entertainment primary: {len(batch)} accepted')
     except Exception as exc:
         print('Entertainment primary feed failed:',exc)
-    own=sum(1 for x in items if x.get('category')=='entertainment')
-    target=core.CATEGORY_POOL_MINIMUMS.get('entertainment',24)
-    if own < target:
-        for source,q in core.TRUSTED_CATEGORY_FALLBACKS.get('entertainment',[]):
-            try:
-                batch=core.parse_items(core.fetch(q),'entertainment',source_override=source)
-                items.extend(batch)
-                own=sum(1 for x in items if x.get('category')=='entertainment')
-                print(f'entertainment fallback/{source}: {len(batch)} accepted; {own} total')
-                if own>=target:
-                    break
-            except Exception as exc:
-                print(f'Entertainment fallback failed for {source}: {exc}')
+
+    # Always sample each preview source instead of stopping as soon as one outlet
+    # fills the numeric quota. Source diversity is part of the feature being tested.
+    for source,q in PREVIEW_SOURCES:
+        try:
+            batch=core.parse_items(core.fetch(q),'entertainment',source_override=source)
+            items.extend(batch)
+            print(f'entertainment preview/{source}: {len(batch)} accepted')
+        except Exception as exc:
+            print(f'Entertainment preview failed for {source}: {exc}')
+
     selected=v4.select_entertainment([x for x in items if x.get('category')=='entertainment'],v4.ENTERTAINMENT_LIMIT)
+    clean=sum(1 for x in selected if x.get('entertainmentSafety')=='clean')
+    dirty=sum(1 for x in selected if x.get('entertainmentSafety')=='dirty')
     print('Selected Entertainment stories:',len(selected))
-    print('  Clean:',sum(1 for x in selected if x.get('entertainmentSafety')=='clean'))
-    print('  Dirty-only:',sum(1 for x in selected if x.get('entertainmentSafety')=='dirty'))
+    print('  Clean:',clean)
+    print('  Dirty-only:',dirty)
     return selected
 
 def append_node(channel,item):
