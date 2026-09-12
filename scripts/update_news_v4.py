@@ -65,7 +65,6 @@ core.TRUSTED_CATEGORY_FALLBACKS["entertainment"] = [
 ]
 
 _original_select = core.select_category_stories
-_original_build = core.build
 
 
 def _source_key(item):
@@ -82,6 +81,25 @@ def _entertainment_relevant(item):
 def _specialist(item):
     source = (item.get("source") or "").lower()
     return any(token in source for token in ENTERTAINMENT_SPECIALIST_SOURCES)
+
+
+def _ent_title_terms(item):
+    stop = {
+        "the","a","an","and","or","but","for","from","with","into","over","after","before",
+        "about","amid","during","this","that","new","news","latest","says","said","actor",
+        "actress","film","movie","music","artist","singer","series","television","tv",
+        "entertainment","hollywood","project",
+    }
+    return {w for w in re.findall(r"[a-z0-9]+", (item.get("title") or "").lower()) if len(w) >= 3 and w not in stop}
+
+
+def _same_entertainment_event(a, b):
+    ta, tb = _ent_title_terms(a), _ent_title_terms(b)
+    if not ta or not tb:
+        return False
+    shared = ta & tb
+    smaller = min(len(ta), len(tb))
+    return smaller >= 3 and len(shared) >= 3 and len(shared) / smaller >= 0.70
 
 
 def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
@@ -111,7 +129,7 @@ def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
         src = _source_key(item)
         if not k or k in seen or source_counts.get(src, 0) >= 3:
             continue
-        if any(core.same_event_topic(prior, item) for prior in selected):
+        if any(_same_entertainment_event(prior, item) for prior in selected):
             continue
         copy = dict(item)
         copy["entertainmentTier"] = "under-the-radar"
