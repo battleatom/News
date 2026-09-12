@@ -7,6 +7,7 @@ on:
       - 'scripts/update_entertainment_only_v4.py'
       - 'scripts/update_news_v4.py'
       - 'assets/entertainment-v4.js'
+      - 'assets/location-content-v25.js'
       - 'v4-live.html'
       - '.github/workflows/v4-entertainment-preview.yml'
   workflow_dispatch:
@@ -50,7 +51,8 @@ jobs:
           dirty=[x for x in ent if (x.findtext('entertainmentSafety') or '').strip()=='dirty']
           tagged=[x for x in ent if (x.findtext('entertainmentLabel') or '').strip()]
           print('Entertainment stories:',len(ent),'clean:',len(clean),'dirty-only:',len(dirty),'ranked:',len(tagged))
-          if not ent: raise SystemExit('Entertainment feed is empty')
+          if len(clean) < 10: raise SystemExit(f'Clean Entertainment pool too small: {len(clean)}')
+          if len(dirty) < 10: raise SystemExit(f'Dirty Entertainment pool too small: {len(dirty)}')
           if len(tagged)!=len(ent): raise SystemExit('Entertainment importance metadata incomplete')
           if len(clean)+len(dirty)!=len(ent): raise SystemExit('Entertainment Clean/Dirty metadata incomplete')
           PY
@@ -64,5 +66,7 @@ jobs:
             echo 'Entertainment preview already current.'
             exit 0
           fi
+          git pull --rebase origin V4
+          git add News index.html
           git commit -m 'Refresh V4 Entertainment preview [skip ci]'
           git push origin HEAD:V4
