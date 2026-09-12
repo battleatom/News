@@ -10,6 +10,7 @@ sys.path.insert(0,str(ROOT/'scripts'))
 spec=importlib.util.spec_from_file_location('integrity',ROOT/'scripts/enforce_editorial_integrity.py')
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 import classify_live_feed as classifier
+import enforce_us_federal as federal_guard
 from filter_landing_pages import is_landing_page
 
 
@@ -37,6 +38,13 @@ assert gd['action']=='reroute' and gd['category']=='gaming' and gd['confidence']
 ai=item('world','Two of the world’s top AI chief executives publicly agree on slowing AI development','Anthropic executives discussed slowing artificial intelligence development.')
 ad=classifier.classify(ai)
 assert ad['action']=='reroute' and ad['category']=='technology' and ad['confidence']>=0.80, ad
+
+# A foreign historical comparison must not flip a clearly U.S. federal-policy story
+# back into World after the semantic verifier has correctly routed it to Federal.
+fed=item('federal','Federal appeals court compares Trump migrant detention policy to Japanese American internment','The court considered a Trump administration immigration detention policy.')
+assert federal_guard.federal_item_is_us(fed), 'U.S. federal court story was misread as foreign because of historical comparison'
+foreign_court=item('federal','Brazil federal court blocks Bolsonaro election appeal','Brazilian judges issued the ruling.')
+assert not federal_guard.federal_item_is_us(foreign_court), 'actual foreign court story was incorrectly kept in U.S. Federal'
 
 # Generic broadcast/program/roundup pages are not event-specific news. Short event
 # headlines remain valid; there is deliberately no minimum word-count rule.
