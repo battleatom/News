@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 from pathlib import Path
 from datetime import datetime, timezone
+from email.utils import format_datetime
+from urllib.request import Request, urlopen
+from urllib.parse import urljoin
+import html as html_lib
+import re
 import xml.etree.ElementTree as ET
 
 import update_news_v4 as v4
@@ -31,8 +36,23 @@ DIRTY_PREVIEW_SOURCES=[
 ]
 
 ADULT_TRADE_SOURCES={'avn','xbiz'}
-DIRTY_RESERVE=6
-ADULT_RESERVE=3
+DIRTY_RESERVE=8
+ADULT_RESERVE=4
+
+# Dirty mode is meant to cover adult performers/industry, not become an explicit
+# content feed. These terms remove overt scene/product promotion from the direct
+# trade fallback while retaining performer, awards, legal, business and platform news.
+XBIZ_EXPLICIT_SKIP=(
+    'gangbang','anal scene','first anal','sex toy','stroker','dildo','sex doll',
+    'masturbator','porn scene','hardcore','blowjob','oral scene','double penetration',
+)
+XBIZ_KEEP_HINTS=(
+    'performer','star','actress','actor','award','wins','winner','featured','feature',
+    'interview','podcast','launch','platform','business','company','studio','industry',
+    'legal','lawsuit','court','regulation','compliance','creator','onlyfans','fansly',
+    'model','agency','director','producer','executive','joins','hired','signs','deal',
+    'event','conference','expands','expansion','partnership','acquires','acquisition',
+)
 
 
 def _key(item):
@@ -49,8 +69,7 @@ def _decorate_dirty(item, adult_trade=False):
     copy['entertainmentLabel']='ADULT INDUSTRY' if adult_trade else label
     copy['entertainmentScore']=max(280 if adult_trade else 220,score if label in {'MAJOR','CAREER'} else 0)
     copy['entertainmentTier']='under-the-radar'
-    # Never render source thumbnails for the adult-industry reserve. Mature-topic
-    # headlines can be reported, but the card itself stays non-explicit.
+    # Never render source thumbnails for adult-industry reserve stories.
     if adult_trade:
         copy['imageUrl']=''
     return copy
@@ -72,6 +91,74 @@ def _newest_distinct(items, limit):
     return out
 
 
+def _strip_tags(value):
+    value=re.sub(r'<[^>]+>',' ',value or '')
+    value=html_lib.unescape(value)
+    return re.sub(r'\s+',' ',value).strip()
+
+
+def _parse_xbiz_date(fragment):
+    # XBIZ cards expose dates as strings such as "Sep 10, 2026".
+    matches=re.findall(r'\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+20\d{2}\b',fragment)
+    if not matches:
+        return None
+    full=re.search(r'\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2},\s+20\d{2}\b',fragment)
+    if not full:
+        return None
+    try:
+        return datetime.strptime(full.group(0),'%b %d, %Y').replace(tzinfo=timezone.utc)
+    except Exception:
+        return None
+
+
+def fetch_xbiz_direct(limit=12):
+    """Direct fallback because Google News frequently suppresses adult-trade domains."""
+    url='https://www.xbiz.com/news/'
+    try:
+        req=Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; UnderreportedV4/1.0)'})
+        raw=urlopen(req,timeout=20).read().decode('utf-8','ignore')
+    except Exception as exc:
+        print('XBIZ direct fallback failed:',exc)
+        return []
+
+    # Find article anchors. Keep the surrounding card text so we can recover the
+    # real publication date instead of inventing one.
+    found=[];seen=set()
+    for m in re.finditer(r'<a\b[^>]*href=["\']([^"\']*/news/\d+/[^"\']+)["\'][^>]*>(.*?)</a>',raw,re.I|re.S):
+        href=html_lib.unescape(m.group(1))
+        title=_strip_tags(m.group(2))
+        if len(title)<12:
+            continue
+        lower=title.lower()
+        if any(term in lower for term in XBIZ_EXPLICIT_SKIP):
+            continue
+        if not any(term in lower for term in XBIZ_KEEP_HINTS):
+            continue
+        link=urljoin(url,href)
+        if link in seen:
+            continue
+        nearby=raw[max(0,m.start()-700):min(len(raw),m.end()+900)]
+        published=_parse_xbiz_date(_strip_tags(nearby))
+        if published is None:
+            continue
+        seen.add(link)
+        found.append({
+            'title':title,
+            'link':link,
+            'description':f'XBIZ reports an adult-entertainment industry development involving {title}.',
+            'pubDate':format_datetime(published),
+            'published':published,
+            'source':'XBIZ',
+            'category':'entertainment',
+            'imageUrl':'',
+            '_dirty_source':'XBIZ',
+        })
+        if len(found)>=limit:
+            break
+    print(f'entertainment dirty/XBIZ direct: {len(found)} accepted')
+    return found
+
+
 def collect():
     items=[]
     forced_dirty=[]
@@ -85,8 +172,6 @@ def collect():
     except Exception as exc:
         print('Entertainment primary feed failed:',exc)
 
-    # Always sample each mainstream preview source instead of stopping as soon as
-    # one outlet fills the numeric quota.
     for source,q in PREVIEW_SOURCES:
         try:
             batch=core.parse_items(core.fetch(q),'entertainment',source_override=source)
@@ -95,16 +180,13 @@ def collect():
         except Exception as exc:
             print(f'Entertainment preview failed for {source}: {exc}')
 
-    # Dedicated Dirty-mode collection. These batches are retained separately so
-    # importance ranking cannot accidentally crowd every mature-topic story out.
     for source,q in DIRTY_PREVIEW_SOURCES:
         try:
             batch=core.parse_items(core.fetch(q),'entertainment',source_override=source)
             items.extend(batch)
             source_key=source.strip().lower()
             for item in batch:
-                tagged=dict(item)
-                tagged['_dirty_source']=source
+                tagged=dict(item);tagged['_dirty_source']=source
                 forced_dirty.append(tagged)
                 if source_key in ADULT_TRADE_SOURCES:
                     forced_adult.append(tagged)
@@ -112,10 +194,16 @@ def collect():
         except Exception as exc:
             print(f'Entertainment dirty preview failed for {source}: {exc}')
 
+    # If Google News yields no adult-trade stories, pull a restrained subset
+    # directly from XBIZ's public news page.
+    if not forced_adult:
+        direct=fetch_xbiz_direct()
+        items.extend(direct)
+        forced_dirty.extend(direct)
+        forced_adult.extend(direct)
+
     selected=v4.select_entertainment([x for x in items if x.get('category')=='entertainment'],v4.ENTERTAINMENT_LIMIT)
 
-    # Force a small verified Dirty reserve into the final pool. Adult-trade items
-    # are reserved first when available, then other mature/gossip/lifestyle items.
     existing={_key(x) for x in selected}
     reserve=[]
     for item in _newest_distinct(forced_adult,ADULT_RESERVE):
@@ -135,8 +223,6 @@ def collect():
         keep=max(0,v4.ENTERTAINMENT_LIMIT-len(reserve))
         selected=selected[:keep]+reserve
 
-    # Any item that came from the dedicated Dirty pools remains Dirty even if the
-    # wording of its headline would otherwise classify it as Clean.
     forced_map={_key(x):x for x in forced_dirty}
     normalized=[]
     for item in selected:
