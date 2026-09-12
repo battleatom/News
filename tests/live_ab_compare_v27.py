@@ -11,6 +11,10 @@ LOCATION={
     'lat':36.7281,'lon':-108.2187,'city':'Farmington','state':'NM',
     'label':'Farmington, NM','source':'test','savedAt':9999999999999,
 }
+REQUIRED_V4_TABS={
+    'top','nfl','x','underreported','entertainment','world','us','presidential',
+    'federal','legislation','nm','technology','gaming','military','boxoffice'
+}
 
 def norm_title(s):
     s=(s or '').strip()
@@ -97,5 +101,19 @@ def main():
     print('MAIN ERRORS',len(main['errors']),main['errors'][:5])
     print('BRANCH ERRORS',len(branch['errors']),branch['errors'][:5])
     print('REPORT',OUT)
+
+    # V3 is a comparison baseline, not a gate. V4 itself must be clean.
+    if branch['errors']:
+        raise SystemExit(f"V4 browser emitted {len(branch['errors'])} JavaScript error(s): {branch['errors'][:5]}")
+    missing=sorted(REQUIRED_V4_TABS-set(branch['tabs']))
+    if missing:
+        raise SystemExit(f"V4 is missing required top-level tabs: {missing}")
+    duplicate_tabs=[r['tab'] for r in rows if r['branchDuplicates']>0]
+    if duplicate_tabs:
+        raise SystemExit(f"V4 rendered duplicate story titles in: {duplicate_tabs}")
+    empty_required=[k for k in REQUIRED_V4_TABS-{'boxoffice'} if branch['data'].get(k,{}).get('count',0)==0]
+    if empty_required:
+        raise SystemExit(f"V4 rendered empty required news tabs: {sorted(empty_required)}")
+    print('V4 A/B RELEASE GATE PASSED: required tabs populated, no duplicate titles, no browser errors.')
 
 if __name__=='__main__':main()
