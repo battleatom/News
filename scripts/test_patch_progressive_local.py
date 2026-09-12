@@ -4,9 +4,8 @@ import re
 p=Path('assets/location-content-v25.js')
 s=p.read_text(encoding='utf-8')
 
-# V32 test: use active publisher markets instead of requiring every article to carry coordinates.
-# The routing algorithm is generic; this registry is separate data that can be expanded nationwide
-# without changing Local/Region selection logic.
+# V33 test: active publisher markets drive Local, while Region ranks the already
+# collector-approved regional pool by nearest known market without re-consuming it as Local.
 market_js="""
   const NEWS_MARKETS={
     'tri city record':{id:'farmington-nm',city:'Farmington',state:'NM',lat:36.7281,lon:-108.2187},
@@ -75,28 +74,24 @@ new="""  function nearestLocalSelection(items,loc){
 
   function regionPool(items){
     const loc=location();if(!loc.city&&!loc.code&&loc.lat==null)return [];
-    const local=nearestLocalSelection(items,loc);
-    const used=new Set(local.usedMarkets);
-    const localKeys=new Set(local.selected.map(itemKey));
     const regional=[];const seen=new Set();let marketCount=0;
-    const add=arr=>rank(arr,loc).forEach(item=>{const k=itemKey(item);if(k&&!localKeys.has(k)&&!seen.has(k)){seen.add(k);regional.push(item)}});
+    const add=arr=>rank(arr,loc).forEach(item=>{const k=itemKey(item);if(k&&!seen.has(k)){seen.add(k);regional.push(item)}});
 
-    const candidates=items.filter(i=>['local','region','nm'].includes(category(i)));
+    // Core routing already hands this wrapper the Region candidate set. Rank known
+    // publisher markets nearest-first, then retain any remaining collector-approved
+    // regional stories. Do not run Local selection again on the Region-only pool.
+    const candidates=items.filter(i=>category(i)==='region'||category(i)==='local'||category(i)==='nm');
     for(const group of marketGroups(candidates,loc)){
-      if(used.has(group.market.id))continue;
       add(group.items);marketCount++;
       if(marketCount>=REGION_MAX_MARKETS||regional.length>=12)break;
     }
-
-    // Collector-confirmed regional stories are the safe fallback when publisher-market
-    // metadata is incomplete. Exclude anything already displayed in Local.
-    if(regional.length<5)add(items.filter(i=>category(i)==='region'));
-    return regional.map(i=>cloneAs(i,'region','Next closest news markets')).slice(0,90);
+    add(items.filter(i=>category(i)==='region'));
+    return regional.map(i=>cloneAs(i,'region','Nearest regional news markets')).slice(0,90);
   }
 """
 s=s[:old.start()]+new+s[old.end():]
 
-s=s.replace("  window.__locationContentV28=true;", "  window.__locationMarketPolicyV32={minLocalStories:8,maxLocalMarkets:3,maxRegionMarkets:6};\n  window.__locationContentV28=true;\n  window.__locationContentV29=true;\n  window.__locationContentV30=true;\n  window.__locationContentV31=true;\n  window.__locationContentV32=true;")
+s=s.replace("  window.__locationContentV28=true;", "  window.__locationMarketPolicyV33={minLocalStories:8,maxLocalMarkets:3,maxRegionMarkets:6};\n  window.__locationContentV28=true;\n  window.__locationContentV29=true;\n  window.__locationContentV30=true;\n  window.__locationContentV31=true;\n  window.__locationContentV32=true;\n  window.__locationContentV33=true;")
 
 p.write_text(s,encoding='utf-8')
-print('Applied V32 nearest-active-market test with collector-confirmed regional fallback and Local/Region overlap protection.')
+print('Applied V33 nearest-active-market test: Local chooses closest active markets; Region ranks its prefiltered regional pool nearest-first.')
