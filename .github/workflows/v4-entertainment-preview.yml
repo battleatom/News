@@ -1,0 +1,63 @@
+name: V4 Entertainment Preview
+
+on:
+  push:
+    branches: [V4]
+    paths:
+      - 'scripts/update_entertainment_only_v4.py'
+      - 'scripts/update_news_v4.py'
+      - 'assets/entertainment-v4.js'
+      - 'v4-live.html'
+      - '.github/workflows/v4-entertainment-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v4-entertainment-preview
+  cancel-in-progress: true
+
+jobs:
+  entertainment-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V4
+        uses: actions/checkout@v4
+        with:
+          ref: V4
+          fetch-depth: 0
+
+      - name: Validate scripts
+        run: python -m py_compile scripts/update_news_v4.py scripts/update_entertainment_only_v4.py
+
+      - name: Pull Entertainment only
+        run: python scripts/update_entertainment_only_v4.py
+
+      - name: Ensure V4 UI is injected
+        run: python scripts/patch_entertainment_v4_ui.py
+
+      - name: Regenerate Why It Matters
+        run: python scripts/update_why_matters.py
+
+      - name: Verify Entertainment exists
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          items=ET.parse('News').getroot().findall('.//item')
+          ent=[x for x in items if (x.findtext('category') or '').strip()=='entertainment']
+          print('Entertainment stories:',len(ent))
+          if not ent: raise SystemExit('Entertainment feed is empty')
+          PY
+
+      - name: Commit fast preview feed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html
+          if git diff --cached --quiet; then
+            echo 'Entertainment preview already current.'
+            exit 0
+          fi
+          git commit -m 'Refresh V4 Entertainment preview [skip ci]'
+          git push origin HEAD:V4
