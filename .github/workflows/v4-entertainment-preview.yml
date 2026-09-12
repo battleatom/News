@@ -66,7 +66,6 @@ jobs:
             echo 'Entertainment preview already current.'
             exit 0
           fi
-          git pull --rebase origin V4
-          git add News index.html
           git commit -m 'Refresh V4 Entertainment preview [skip ci]'
+          git pull --rebase origin V4
           git push origin HEAD:V4
