@@ -1,8 +1,6 @@
-name: Test V4
+name: V4 Snapshot Diagnostic
 
 on:
-  push:
-    branches: [V4]
   workflow_dispatch:
 
 permissions:
@@ -37,7 +35,7 @@ jobs:
       - name: Run generic feed verification regressions
         run: python tests/verify_feed_test.py
 
-      - name: Run site integrity audit on actual V4 feed
+      - name: Run site integrity audit on committed V4 snapshot
         run: python scripts/site_audit.py
 
       - name: Install Playwright
@@ -45,17 +43,17 @@ jobs:
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
 
-      - name: Start actual V4 and stable V3 sites
+      - name: Start committed V4 and stable V3 sites
         run: |
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v4-http.log 2>&1 &
           echo $! > /tmp/news-v4-http.pid
           (cd baseline-v3 && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-v3-http.log 2>&1 &)
           sleep 2
 
-      - name: Test nationwide location routing on actual V4 feed
+      - name: Test nationwide location routing
         run: python tests/location_routing_v27.py
 
-      - name: Test Entertainment browser UI and red footnote on actual V4 feed
+      - name: Test Entertainment browser UI and red footnote
         run: python tests/entertainment_v4_ui_test.py
 
       - name: Run stable-V3 vs V4 browser comparison
@@ -69,7 +67,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v3-v4-live-ab-comparison
+          name: v3-v4-snapshot-comparison
           path: live-ab-report.json
           retention-days: 14
 
