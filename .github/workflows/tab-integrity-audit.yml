@@ -1,0 +1,16 @@
+name: Tab Integrity Audit
+on:
+  push:
+    branches: [audit/tab-integrity-2026-09-12]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile audit
+        run: python -m py_compile scripts/audit_tab_integrity.py
+      - name: Deep scan current feed
+        run: python scripts/audit_tab_integrity.py
