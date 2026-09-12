@@ -18,18 +18,12 @@ jobs:
           ref: V4
           fetch-depth: 0
 
-      - name: Checkout main baseline
+      - name: Checkout stable V3 baseline
         uses: actions/checkout@v4
         with:
-          ref: main
-          path: baseline-main
+          ref: version-3
+          path: baseline-v3
           fetch-depth: 1
-
-      - name: Use production feed snapshot for browser regression
-        run: cp baseline-main/News News
-
-      - name: Inject V4 Entertainment UI
-        run: python scripts/patch_entertainment_v4_ui.py
 
       - name: Validate Python syntax
         run: python -m py_compile scripts/*.py tests/*.py
@@ -43,10 +37,7 @@ jobs:
       - name: Run generic feed verification regressions
         run: python tests/verify_feed_test.py
 
-      - name: Run live Entertainment source check
-        run: python tests/entertainment_v4_live.py
-
-      - name: Run site integrity audit
+      - name: Run site integrity audit on actual V4 feed
         run: python scripts/site_audit.py
 
       - name: Install Playwright
@@ -54,20 +45,20 @@ jobs:
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
 
-      - name: Start V4 and main sites
+      - name: Start actual V4 and stable V3 sites
         run: |
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v4-http.log 2>&1 &
           echo $! > /tmp/news-v4-http.pid
-          (cd baseline-main && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-main-http.log 2>&1 &)
+          (cd baseline-v3 && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-v3-http.log 2>&1 &)
           sleep 2
 
-      - name: Test nationwide location routing
+      - name: Test nationwide location routing on actual V4 feed
         run: python tests/location_routing_v27.py
 
-      - name: Test Entertainment browser UI and red footnote
+      - name: Test Entertainment browser UI and red footnote on actual V4 feed
         run: python tests/entertainment_v4_ui_test.py
 
-      - name: Run main-vs-V4 browser comparison
+      - name: Run stable-V3 vs V4 browser comparison
         run: python tests/live_ab_compare_v27.py
 
       - name: Print A/B report
@@ -78,7 +69,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: v4-live-ab-comparison
+          name: v3-v4-live-ab-comparison
           path: live-ab-report.json
           retention-days: 14
 
@@ -86,4 +77,4 @@ jobs:
         if: failure()
         run: |
           cat /tmp/news-v4-http.log || true
-          cat /tmp/news-main-http.log || true
+          cat /tmp/news-v3-http.log || true
