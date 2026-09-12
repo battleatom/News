@@ -163,8 +163,9 @@ jobs:
       - name: Verify exactly ten relevant fixed X topics
         run: |
           python - <<'PY'
-          import importlib.util, xml.etree.ElementTree as ET
+          import importlib.util, sys, xml.etree.ElementTree as ET
           from pathlib import Path
+          sys.path.insert(0, str(Path('scripts').resolve()))
           spec=importlib.util.spec_from_file_location('integrity',Path('scripts/enforce_editorial_integrity.py'))
           m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
           expected=list(m.TOPIC_RULES)
