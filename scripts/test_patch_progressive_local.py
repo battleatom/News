@@ -4,9 +4,9 @@ import re
 p=Path('assets/location-content-v25.js')
 s=p.read_text(encoding='utf-8')
 
-# V31 test: use active publisher markets instead of requiring every article to carry coordinates.
-# The routing algorithm is generic; this registry is deliberately separate data that can be
-# expanded nationwide without changing the Local/Region filtering logic.
+# V32 test: use active publisher markets instead of requiring every article to carry coordinates.
+# The routing algorithm is generic; this registry is separate data that can be expanded nationwide
+# without changing Local/Region selection logic.
 market_js="""
   const NEWS_MARKETS={
     'tri city record':{id:'farmington-nm',city:'Farmington',state:'NM',lat:36.7281,lon:-108.2187},
@@ -58,11 +58,8 @@ new="""  function nearestLocalSelection(items,loc){
     const selected=[];const seen=new Set();const usedMarkets=[];
     const add=arr=>rank(arr,loc).forEach(item=>{const k=itemKey(item);if(k&&!seen.has(k)){seen.add(k);selected.push(item)}});
 
-    // Exact user-city coverage is always first, even from a national outlet.
     add(items.filter(i=>['local','region','nm','us','top'].includes(category(i))&&matchesCity(i,loc)&&matchesState(i,loc)));
 
-    // Then choose the closest ACTIVE publisher markets represented in today's feed.
-    // This handles rural users whose nearest newsroom may be in another city or state.
     for(const group of marketGroups(candidates,loc)){
       if(selected.length>=LOCAL_MIN_STORIES||usedMarkets.length>=LOCAL_MAX_MARKETS)break;
       add(group.items);usedMarkets.push(group.market.id);
@@ -80,10 +77,10 @@ new="""  function nearestLocalSelection(items,loc){
     const loc=location();if(!loc.city&&!loc.code&&loc.lat==null)return [];
     const local=nearestLocalSelection(items,loc);
     const used=new Set(local.usedMarkets);
+    const localKeys=new Set(local.selected.map(itemKey));
     const regional=[];const seen=new Set();let marketCount=0;
-    const add=arr=>rank(arr,loc).forEach(item=>{const k=itemKey(item);if(k&&!seen.has(k)){seen.add(k);regional.push(item)}});
+    const add=arr=>rank(arr,loc).forEach(item=>{const k=itemKey(item);if(k&&!localKeys.has(k)&&!seen.has(k)){seen.add(k);regional.push(item)}});
 
-    // Region begins with the next closest ACTIVE markets after Local's market set.
     const candidates=items.filter(i=>['local','region','nm'].includes(category(i)));
     for(const group of marketGroups(candidates,loc)){
       if(used.has(group.market.id))continue;
@@ -91,15 +88,15 @@ new="""  function nearestLocalSelection(items,loc){
       if(marketCount>=REGION_MAX_MARKETS||regional.length>=12)break;
     }
 
-    // If market metadata is sparse, retain explicitly regional collector records,
-    // but never promote arbitrary national/top stories just to fill the tab.
-    if(regional.length<5)add(items.filter(i=>category(i)==='region'&&!sourceMarket(i)));
+    // Collector-confirmed regional stories are the safe fallback when publisher-market
+    // metadata is incomplete. Exclude anything already displayed in Local.
+    if(regional.length<5)add(items.filter(i=>category(i)==='region'));
     return regional.map(i=>cloneAs(i,'region','Next closest news markets')).slice(0,90);
   }
 """
 s=s[:old.start()]+new+s[old.end():]
 
-s=s.replace("  window.__locationContentV28=true;", "  window.__locationMarketPolicyV31={minLocalStories:8,maxLocalMarkets:3,maxRegionMarkets:6};\n  window.__locationContentV28=true;\n  window.__locationContentV29=true;\n  window.__locationContentV30=true;\n  window.__locationContentV31=true;")
+s=s.replace("  window.__locationContentV28=true;", "  window.__locationMarketPolicyV32={minLocalStories:8,maxLocalMarkets:3,maxRegionMarkets:6};\n  window.__locationContentV28=true;\n  window.__locationContentV29=true;\n  window.__locationContentV30=true;\n  window.__locationContentV31=true;\n  window.__locationContentV32=true;")
 
 p.write_text(s,encoding='utf-8')
-print('Applied V31 nearest-active-market test: exact city first, then closest publisher markets; Region uses the next closest markets.')
+print('Applied V32 nearest-active-market test with collector-confirmed regional fallback and Local/Region overlap protection.')
