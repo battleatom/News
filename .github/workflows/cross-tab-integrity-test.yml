@@ -14,15 +14,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Compile integrity pass
-        run: python -m py_compile scripts/cross_tab_integrity.py
+        run: python -m py_compile scripts/cross_tab_integrity_fast.py
       - name: Audit current feed without mutation
-        run: python scripts/cross_tab_integrity.py --report /tmp/cross-tab-dry.json
+        run: python scripts/cross_tab_integrity_fast.py --report /tmp/cross-tab-dry.json
       - name: Apply to isolated feed copy
         run: |
           cp News /tmp/News.test
-          python scripts/cross_tab_integrity.py --feed /tmp/News.test --report /tmp/cross-tab-apply.json --apply
+          python scripts/cross_tab_integrity_fast.py --feed /tmp/News.test --report /tmp/cross-tab-apply.json --apply
       - name: Recheck isolated result
-        run: python scripts/cross_tab_integrity.py --feed /tmp/News.test --report /tmp/cross-tab-recheck.json
+        run: python scripts/cross_tab_integrity_fast.py --feed /tmp/News.test --report /tmp/cross-tab-recheck.json
       - name: Cross-reference category preservation
         run: |
           python - <<'PY'
@@ -38,7 +38,7 @@ jobs:
           for cat,n in before.items():
               if n >= 10 and after[cat] < max(8, int(n*.75)):
                   raise SystemExit(f'{cat} over-pruned: {n} -> {after[cat]}')
-          if report['residualStrongCrossTabPairs']:
+          if report['residualStrongCrossTabClusters']:
               raise SystemExit('Residual strong cross-tab duplicates remain')
           print('Cross-reference passed; category pools preserved.')
           PY
