@@ -22,38 +22,58 @@ cu=item('us','President Jordan offers $5,000 payments if budget measure passes',
 cp=item('presidential','$5,000 payment proposal from President Jordan faces questions','Reuters','The same $5,000 payment proposal from President Jordan is being reviewed after the announcement.','cp')
 assert cluster.event_match(cu,cp,allow_cross_tab=True)
 assert cluster.canonical_category([cu,cp])=='presidential'
-assert cluster.primary_score(cp)>cluster.primary_score(cu)  # neutral wire-service preference
+assert cluster.primary_score(cp)>cluster.primary_score(cu)
 
-# An unrelated story about the same actor must not bridge into the payment event.
 other=item('presidential','President Jordan meets technology executives','CNN','The president met technology executives about a separate software policy discussion.','other')
 assert not cluster.event_match(cp,other,allow_cross_tab=True)
 
-# Different explicit dollar amounts are separate events even with the same actor and cash language.
 different_amount=item('presidential','President Jordan gave $45,000 in cash gifts to aides','Reuters','President Jordan reported $45,000 in separate personal cash gifts.','different')
 assert not cluster.event_match(cu,different_amount,allow_cross_tab=True)
 
-# Commemoration coverage needs a concrete shared event anchor, not just broad anniversary words.
 d=item('us','Apollo 11 anniversary marked at July 20 memorial ceremony','CBS News','Families gather July 20 for Apollo 11 remembrance events marking the anniversary.','d')
 e=item('us','July 20 events commemorate Apollo 11 anniversary','NBC News','Commemoration ceremonies and tributes mark Apollo 11 on July 20.','e')
 assert cluster.same_event(d,e)
 
-# Wire copy republished by another outlet must collapse even with a publisher suffix.
 f=item('nm','Chatbot invented fake police testimony in murder appeal, state high court says - Finance Daily','Finance Daily','By Staff WASHINGTON Sept 11 - A defense lawyer appealing a murder conviction submitted a brief containing invented police testimony.','f')
 g=item('nm','Chatbot invented fake police testimony in murder appeal, state high court says - Wire Service','Reuters','By Staff WASHINGTON Sept 11 - A defense lawyer appealing a murder conviction submitted a brief containing invented police testimony.','g')
 assert vf.syndicated_copy(f,g);assert cluster.same_event(f,g)
 
-# Related-but-distinct stories sharing only a broad actor/entity must remain separate.
 h=item('us','Aerospace maker highlights its U.S. factories after trade dispute','Reuters','The manufacturer described its domestic footprint after a trade dispute.','h')
 i=item('us','Country announces broad food tariffs in separate trade action','NPR','Officials announced tariffs on agricultural imports under a different measure.','i')
 assert not cluster.same_event(h,i)
 
-# More-specific destinations may route at the classifier's normal confidence,
-# while equally broad destinations still require the stricter threshold.
 assert vf.should_reroute('us',{'action':'reroute','category':'presidential','confidence':0.74})
 assert not vf.should_reroute('world',{'action':'reroute','category':'us','confidence':0.74})
 
 w=item('us','Agency issues update','Reuters','The final paraphrased brief says Medicaid benefits and hospital access may change.','w')
 assert 'health' in why.why_for(w).lower() or 'care' in why.why_for(w).lower()
+
+# Contextual Why It Matters: output must track the event, not a generic tab template.
+tech_gpu=item('technology','Nvidia unveils new GPU','The Verge','Nvidia announced a new GPU aimed at PC buyers.','tech-gpu')
+tech_gpu_why=why.why_for(tech_gpu).lower()
+assert 'performance' in tech_gpu_why and 'pricing' in tech_gpu_why
+assert 'privacy, security, access to technology' not in tech_gpu_why
+
+tech_unclear=item('technology','Company discusses technology strategy','Reuters','Executives outlined plans without announcing a product, price, security event, or policy change.','tech-unclear')
+tech_unclear_why=why.why_for(tech_unclear).lower()
+assert 'does not establish a concrete downstream effect yet' in tech_unclear_why
+
+game_delay=item('gaming','Major game delayed into 2027','IGN','The publisher delayed the release after development changes.','game-delay')
+game_delay_why=why.why_for(game_delay).lower()
+assert 'release calendar' in game_delay_why and 'competing games' in game_delay_why
+
+game_price=item('gaming','Game Pass subscription price increases','GameSpot','Microsoft announced a Game Pass subscription price increase for players.','game-price')
+game_price_why=why.why_for(game_price).lower()
+assert 'player cost' in game_price_why and 'value of the service' in game_price_why
+
+ent_personal=item('entertainment','Actor and partner announce pregnancy','People','The couple announced they are expecting a baby.','ent-personal')
+ent_personal_why=why.why_for(ent_personal).lower()
+assert 'personal celebrity update' in ent_personal_why and 'does not indicate a broader entertainment-industry impact' in ent_personal_why
+
+ent_legal=item('entertainment','Actor sued over contract dispute','Variety','The lawsuit concerns a film contract and an active production.','ent-legal')
+ent_legal_why=why.why_for(ent_legal).lower()
+assert 'career' in ent_legal_why and 'contracts' in ent_legal_why
+
 loc=(ROOT/'scripts/patch_legislation_location.py').read_text();assert 'coverageItem(' not in loc and 'stateCoverage(' not in loc;assert 'Only official legislative records appear as cards' in loc
 full=(ROOT/'scripts/patch_full_why_matters.py').read_text();assert '-webkit-line-clamp:unset' in full and 'overflow:visible' in full
 print('Feed quality regression tests passed.')
