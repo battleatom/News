@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """V4 collector entrypoint.
 
-Adds a verified Entertainment tab on top of the normalized nationwide collector.
-Editorial policy:
-- first five Entertainment cards are the newest verified stories
-- remaining cards prioritize credible specialist entertainment reporting that is
-  less likely to dominate mainstream national coverage
-- Entertainment cards that overlap an Underreported event receive explicit
-  cross-links in the generated RSS for the UI to highlight in red
-- source-provided Entertainment images are preserved when safely available
+Entertainment policy:
+- stories are ranked by editorial importance first, then recency/source quality
+- every Entertainment item is tagged clean or dirty for the persistent UI filter
+- Clean = professional/consequential entertainment news
+- Dirty = Clean plus gossip, relationships, lifestyle/fashion, nudity headlines,
+  adult-industry reporting, philanthropy/family/celebrity-life coverage
+- source-provided images are preserved when safely available
+- Entertainment cards may cross-link to matching Underreported coverage
 """
 from __future__ import annotations
 
@@ -20,15 +20,15 @@ import update_news_normalized as normalized
 
 core = normalized.core
 
-ENTERTAINMENT_LIMIT = 25
-ENTERTAINMENT_NEWEST = 5
+ENTERTAINMENT_LIMIT = 35
 ENTERTAINMENT_SPECIALIST_SOURCES = (
     "variety", "billboard", "rolling stone", "deadline", "hollywood reporter",
-    "entertainment weekly", "people", "pitchfork", "vulture",
+    "entertainment weekly", "people", "pitchfork", "vulture", "tmz",
+    "e news", "page six", "us weekly",
 )
 ENTERTAINMENT_REJECT_TERMS = (
-    "horoscope", "astrology", "best dressed", "worst dressed", "bikini",
-    "spotted with", "dating rumor", "dating rumours", "lookalike", "fan theory",
+    "horoscope", "astrology", "fan theory", "fan theories", "celebrity lookalike",
+    "death hoax", "fake death",
 )
 ENTERTAINMENT_TERMS = (
     "actor", "actress", "singer", "rapper", "musician", "artist", "band",
@@ -36,6 +36,49 @@ ENTERTAINMENT_TERMS = (
     "hollywood", "film", "movie", "television", "tv", "series", "album",
     "song", "single", "tour", "concert", "music", "entertainment", "award",
     "grammy", "emmy", "oscar", "screen actors guild", "sag-aftra",
+    "dating", "relationship", "boyfriend", "girlfriend", "engaged", "engagement",
+    "married", "wedding", "pregnant", "pregnancy", "baby", "children", "kids",
+    "charity", "philanthropy", "foundation", "gala", "red carpet", "fashion",
+    "bikini", "swimsuit", "sheer", "see-through", "nude", "naked",
+    "adult film", "adult entertainment", "porn star", "onlyfans",
+)
+
+DIRTY_TERMS = (
+    "dating", "relationship", "boyfriend", "girlfriend", "romance", "romantic",
+    "breakup", "break-up", "split", "cheating", "affair", "feud", "gossip",
+    "rumor", "rumour", "spotted with", "engaged", "engagement", "married", "wedding",
+    "pregnant", "pregnancy", "baby", "gave birth", "children", "kids", "family",
+    "charity", "philanthropy", "foundation", "donation", "gala", "red carpet",
+    "fashion", "dress", "outfit", "bikini", "swimsuit", "sheer", "see-through",
+    "see through", "nude", "naked", "topless", "adult film", "adult entertainment",
+    "porn star", "pornstar", "onlyfans", "playboy",
+)
+ADULT_OR_NUDITY_TERMS = (
+    "adult film", "adult entertainment", "porn star", "pornstar", "onlyfans",
+    "nude", "naked", "topless", "sex scene", "sex tape",
+)
+
+MAJOR_TERMS = (
+    "dies", "died", "death", "dead", "hospitalized", "hospitalised", "cancer",
+    "serious illness", "injury", "arrested", "arrest", "charged", "indicted",
+    "lawsuit", "sued", "abuse", "assault", "harassment", "investigation",
+    "strike", "bankruptcy", "shutdown", "shuts down", "closure", "layoffs",
+)
+CAREER_TERMS = (
+    "cast", "casting", "joins", "starring", "role", "movie", "film", "series",
+    "renewed", "renewal", "canceled", "cancelled", "premiere", "release", "album",
+    "single", "tour", "concert", "contract", "deal", "signs", "award", "awards",
+    "oscar", "emmy", "grammy", "retire", "retirement", "debut", "box office",
+)
+HUMAN_INTEREST_TERMS = (
+    "charity", "philanthropy", "foundation", "donation", "baby", "pregnant",
+    "pregnancy", "gave birth", "children", "kids", "engaged", "engagement",
+    "married", "wedding", "dating", "relationship", "interview", "gala",
+)
+LIFESTYLE_TERMS = (
+    "fashion", "dress", "outfit", "red carpet", "bikini", "swimsuit", "sheer",
+    "see-through", "see through", "nude", "naked", "topless", "feud", "gossip",
+    "rumor", "rumour", "breakup", "break-up", "spotted with",
 )
 
 if "entertainment" not in core.SECTIONS:
@@ -48,18 +91,25 @@ core.QUERIES["entertainment"] = [
     "actor actress lawsuit health death interview entertainment industry",
     "music artist lawsuit award contract tour entertainment industry",
     "Hollywood actor actress director producer entertainment industry news",
+    "celebrity dating relationship marriage baby pregnancy philanthropy charity",
+    "celebrity fashion red carpet gala bikini swimsuit sheer nude headline",
+    "adult film star adult entertainment actor actress industry news",
 ]
 
 _entertainment_sources = (
     "variety", "billboard", "rolling stone", "deadline", "hollywood reporter",
-    "entertainment weekly", "people", "pitchfork", "vulture",
+    "entertainment weekly", "people", "pitchfork", "vulture", "tmz",
+    "e news", "page six", "us weekly",
 )
 core.TRUSTED_SOURCE_TOKENS = tuple(sorted(set(core.TRUSTED_SOURCE_TOKENS) | set(_entertainment_sources)))
-core.CATEGORY_POOL_MINIMUMS["entertainment"] = 20
-normalized.POOL_POLICY["entertainment"] = (20, ENTERTAINMENT_LIMIT, 30)
+core.CATEGORY_POOL_MINIMUMS["entertainment"] = 24
+normalized.POOL_POLICY["entertainment"] = (24, ENTERTAINMENT_LIMIT, 45)
 core.TRUSTED_CATEGORY_FALLBACKS["entertainment"] = [
     ("Variety", "site:variety.com actor actress Hollywood television film entertainment"),
     ("Billboard", "site:billboard.com music artist singer rapper tour album"),
+    ("People", "site:people.com celebrity actor actress dating relationship baby wedding fashion charity"),
+    ("TMZ", "site:tmz.com celebrity actor actress dating fashion adult film star"),
+    ("E! News", "site:eonline.com celebrity actor actress dating relationship fashion red carpet"),
     ("Rolling Stone", "site:rollingstone.com music artist actor entertainment"),
     ("Deadline", "site:deadline.com actor actress television film Hollywood"),
     ("The Hollywood Reporter", "site:hollywoodreporter.com actor actress film television entertainment"),
@@ -68,7 +118,6 @@ core.TRUSTED_CATEGORY_FALLBACKS["entertainment"] = [
 
 _original_parse_items = core.parse_items
 _original_select = core.select_category_stories
-_original_build = core.build
 
 
 def _safe_image_url(value):
@@ -135,6 +184,24 @@ def _specialist(item):
     return any(token in source for token in ENTERTAINMENT_SPECIALIST_SOURCES)
 
 
+def entertainment_safety(item):
+    text = f"{item.get('title','')} {item.get('description','')}".lower()
+    return "dirty" if any(term in text for term in DIRTY_TERMS) else "clean"
+
+
+def entertainment_importance(item):
+    text = f"{item.get('title','')} {item.get('description','')}".lower()
+    if any(term in text for term in MAJOR_TERMS):
+        return 500, "MAJOR"
+    if any(term in text for term in CAREER_TERMS):
+        return 400, "CAREER"
+    if any(term in text for term in HUMAN_INTEREST_TERMS):
+        return 300, "PEOPLE"
+    if any(term in text for term in LIFESTYLE_TERMS):
+        return 200, "LIFESTYLE"
+    return 350, "ENTERTAINMENT"
+
+
 def _ent_title_terms(item):
     stop = {
         "the","and","for","with","from","into","after","before","about","amid","during",
@@ -154,41 +221,37 @@ def _same_entertainment_event(a, b):
     return smaller >= 3 and len(shared) >= 3 and len(shared) / smaller >= 0.70
 
 
-def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
-    items = [x for x in items if _entertainment_relevant(x)]
-    ranked = sorted(items, key=lambda x: x["published"], reverse=True)
-    selected = []
-    seen = set()
+def _rank_key(item):
+    score, _ = entertainment_importance(item)
+    specialist_bonus = 25 if _specialist(item) else 0
+    return (score + specialist_bonus, item["published"])
 
+
+def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
+    ranked = sorted([x for x in items if _entertainment_relevant(x)], key=_rank_key, reverse=True)
+    selected, seen, source_counts = [], set(), {}
     for item in ranked:
         k = core.key(item)
-        if not k or k in seen:
-            continue
-        copy = dict(item)
-        copy["entertainmentTier"] = "newest"
-        selected.append(copy)
-        seen.add(k)
-        if len(selected) >= min(ENTERTAINMENT_NEWEST, limit):
-            break
-
-    remainder = [x for x in ranked if core.key(x) and core.key(x) not in seen]
-    remainder.sort(key=lambda x: (_specialist(x), x["published"]), reverse=True)
-    source_counts = {}
-    for item in remainder:
-        k = core.key(item)
         src = _source_key(item)
-        if not k or k in seen or source_counts.get(src, 0) >= 3:
+        if not k or k in seen or source_counts.get(src, 0) >= 4:
             continue
         if any(_same_entertainment_event(prior, item) for prior in selected):
             continue
         copy = dict(item)
-        copy["entertainmentTier"] = "under-the-radar"
+        score, label = entertainment_importance(copy)
+        copy["entertainmentSafety"] = entertainment_safety(copy)
+        copy["entertainmentLabel"] = label
+        copy["entertainmentScore"] = score
+        copy["entertainmentTier"] = "under-the-radar" if _specialist(copy) and len(selected) >= 5 else "ranked"
+        # Avoid rendering potentially explicit source thumbnails on adult/nudity stories.
+        full = f"{copy.get('title','')} {copy.get('description','')}".lower()
+        if any(term in full for term in ADULT_OR_NUDITY_TERMS):
+            copy["imageUrl"] = ""
         selected.append(copy)
         seen.add(k)
         source_counts[src] = source_counts.get(src, 0) + 1
         if len(selected) >= limit:
             break
-
     return selected
 
 
@@ -229,11 +292,7 @@ def _attach_underreported_links(items):
         links = []
         for under in underreported:
             if _related_to_underreported(ent, under):
-                links.append({
-                    "title": under.get("title", ""),
-                    "link": under.get("link", ""),
-                    "source": under.get("source", ""),
-                })
+                links.append({"title": under.get("title", ""), "link": under.get("link", ""), "source": under.get("source", "")})
             if len(links) >= 2:
                 break
         if links:
@@ -247,7 +306,7 @@ def v4_build(items):
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>', '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
     for item in items:
         guid = core.hashlib.sha1((item["link"] + "|" + item["category"]).encode("utf-8")).hexdigest()
-        out += ["<item>", f'<title>{esc(item["title"])}</title>', f'<link>{esc(item["link"])}</link>', f'<description>{esc(item.get("description", ""))}</description>', f'<pubDate>{esc(item["pubDate"])}</pubDate>', f'<source>{esc(item["source"])}</source>', f'<category>{esc(item["category"])}</category>', f'<region>{esc(item.get("region", ""))}</region>', f'<state>{esc(item.get("state", ""))}</state>', f'<marketId>{esc(item.get("marketId", ""))}</marketId>', f'<marketCity>{esc(item.get("marketCity", ""))}</marketCity>', f'<marketState>{esc(item.get("marketState", ""))}</marketState>', f'<latitude>{esc(item.get("latitude", ""))}</latitude>', f'<longitude>{esc(item.get("longitude", ""))}</longitude>', f'<imageUrl>{esc(item.get("imageUrl", ""))}</imageUrl>', f'<entertainmentTier>{esc(item.get("entertainmentTier", ""))}</entertainmentTier>', f'<whyMatters>{esc(item.get("whyMatters", ""))}</whyMatters>']
+        out += ["<item>", f'<title>{esc(item["title"])}</title>', f'<link>{esc(item["link"])}</link>', f'<description>{esc(item.get("description", ""))}</description>', f'<pubDate>{esc(item["pubDate"])}</pubDate>', f'<source>{esc(item["source"])}</source>', f'<category>{esc(item["category"])}</category>', f'<region>{esc(item.get("region", ""))}</region>', f'<state>{esc(item.get("state", ""))}</state>', f'<marketId>{esc(item.get("marketId", ""))}</marketId>', f'<marketCity>{esc(item.get("marketCity", ""))}</marketCity>', f'<marketState>{esc(item.get("marketState", ""))}</marketState>', f'<latitude>{esc(item.get("latitude", ""))}</latitude>', f'<longitude>{esc(item.get("longitude", ""))}</longitude>', f'<imageUrl>{esc(item.get("imageUrl", ""))}</imageUrl>', f'<entertainmentTier>{esc(item.get("entertainmentTier", ""))}</entertainmentTier>', f'<entertainmentSafety>{esc(item.get("entertainmentSafety", ""))}</entertainmentSafety>', f'<entertainmentLabel>{esc(item.get("entertainmentLabel", ""))}</entertainmentLabel>', f'<entertainmentScore>{esc(item.get("entertainmentScore", ""))}</entertainmentScore>', f'<whyMatters>{esc(item.get("whyMatters", ""))}</whyMatters>']
         related = item.get('_relatedArticles', [])
         if related:
             out.append('<relatedArticles>')
@@ -269,7 +328,7 @@ core.build = v4_build
 
 
 def main():
-    print("V4 Entertainment enabled: newest 5 + verified under-the-radar coverage + source images + Underreported cross-links")
+    print("V4 Entertainment enabled: persistent Clean/Dirty modes + importance hierarchy + verified broad coverage")
     normalized.main()
 
 
