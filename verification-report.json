@@ -1,23 +1,23 @@
 {
   "mode": "apply",
-  "generatedAt": "2026-09-12T01:36:51.943150+00:00",
-  "inputArticles": 411,
-  "outputArticles": 399,
+  "generatedAt": "2026-09-12T11:09:40.913432+00:00",
+  "inputArticles": 409,
+  "outputArticles": 397,
   "classifierActions": {
-    "keep": 198,
-    "review": 206,
-    "reroute": 5,
-    "reject": 2
+    "keep": 190,
+    "review": 212,
+    "reroute": 6,
+    "reject": 1
   },
-  "rejectedSources": 2,
+  "rejectedSources": 1,
   "removedEventDuplicates": 0,
   "supportingLinksAttached": 0,
   "residualStrongDuplicatePairs": [],
   "clusters": [],
   "decisions": [
     {
-      "title": "Trump says Iran war will end right after U.S. midterm elections - Reuters",
-      "source": "Reuters",
+      "title": "Iran war won't end until after US midterm elections, says Trump - BBC",
+      "source": "BBC",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -26,19 +26,6 @@
       "scores": {},
       "evidence": [],
       "index": 0,
-      "applied": false
-    },
-    {
-      "title": "U.S. military says it destroyed 5 Iranian oil tankers after attacks on Navy warship - NPR",
-      "source": "NPR",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 1,
       "applied": false
     },
     {
@@ -51,12 +38,25 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 2,
+      "index": 1,
       "applied": false
     },
     {
       "title": "Supreme Court blocks Missouri from using new map favoring GOP in midterm elections - CBS News",
       "source": "CBS News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 2,
+      "applied": false
+    },
+    {
+      "title": "U.S. military says it destroyed 5 Iranian oil tankers after attacks on Navy warship - NPR",
+      "source": "NPR",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -107,8 +107,8 @@
       "applied": false
     },
     {
-      "title": "Trump's trip to GOP soiree in Texas is briefly delayed after Air Force One's emergency slide deploys - AP News",
-      "source": "Associated Press",
+      "title": "President Trump arrives in Dublin to meet Ireland’s leaders before attending golf tournament - CNN",
+      "source": "CNN",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -117,6 +117,32 @@
       "scores": {},
       "evidence": [],
       "index": 7,
+      "applied": false
+    },
+    {
+      "title": "US to ban Canadian motorcycle, dairy, alcohol imports as trade war sizzles - Reuters",
+      "source": "Reuters",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 8,
+      "applied": false
+    },
+    {
+      "title": "Frances Tiafoe rallies to win all-American clash, shares memorable moment afterward - USA Today",
+      "source": "USA Today",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 9,
       "applied": false
     },
     {
@@ -129,38 +155,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 8,
-      "applied": false
-    },
-    {
-      "title": "Why LIV Golf filed for bankruptcy: $5 billion lost and what happens next - The Athletic - The New York Times",
-      "source": "The New York Times",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 9,
-      "applied": false
-    },
-    {
-      "title": "Netanyahu rejects claim he was warned ahead of Oct. 7, as 2023 attack fuels pre-election furor - CBS News",
-      "source": "CBS News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
       "index": 10,
       "applied": false
     },
     {
-      "title": "US to ban Canadian motorcycle, dairy, alcohol imports as trade war sizzles - Reuters",
-      "source": "Reuters",
+      "title": "Gen. Dan Caine reflects on responding to 9/11 attacks: \"No doubt\" nation was at war - CBS News",
+      "source": "CBS News",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -185,8 +185,8 @@
       "applied": false
     },
     {
-      "title": "No relief from inflation as Middle East clashes lifts fuel prices to painful levels - AP News",
-      "source": "Associated Press",
+      "title": "Inflation remained stubbornly high last month, fueled in part by rising gas prices - NPR",
+      "source": "NPR",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -195,71 +195,6 @@
       "scores": {},
       "evidence": [],
       "index": 13,
-      "applied": false
-    },
-    {
-      "title": "Inflation ticked up in August, setting the stage for the Fed to hike interest rates - NBC News",
-      "source": "NBC News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 14,
-      "applied": false
-    },
-    {
-      "title": "U.S. Airstrikes Targeting Houthis Killed Scores of Civilians in Yemen - The New York Times",
-      "source": "The New York Times",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 15,
-      "applied": false
-    },
-    {
-      "title": "US marks 25 years since the Sept. 11 attacks - AP News",
-      "source": "Associated Press",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 16,
-      "applied": false
-    },
-    {
-      "title": "Ken Paxton dodges confrontation while slamming James Talarico as weak - NBC News",
-      "source": "NBC News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 17,
-      "applied": false
-    },
-    {
-      "title": "US diesel prices soar past $6 a gallon, deepening strain for hauling everyday goods - AP News",
-      "source": "Associated Press",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 18,
       "applied": false
     },
     {
@@ -272,7 +207,33 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 19,
+      "index": 14,
+      "applied": false
+    },
+    {
+      "title": "Ken Paxton dodges confrontation while slamming James Talarico as weak - NBC News",
+      "source": "NBC News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 15,
+      "applied": false
+    },
+    {
+      "title": "Washington Pole Vaulter Hits Top 10 All-Time Mark, Ties Twin Sister - Huskies Wire",
+      "source": "USA Today",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 16,
       "applied": false
     },
     {
@@ -285,20 +246,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 20,
-      "applied": false
-    },
-    {
-      "title": "White House copper tariff plan stalls amid affordability concerns, sources say - Reuters",
-      "source": "Reuters",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 21,
+      "index": 17,
       "applied": false
     },
     {
@@ -311,20 +259,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 22,
-      "applied": false
-    },
-    {
-      "title": "After election triumph, German far-right seeks allies to form state government - Reuters",
-      "source": "Reuters",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 23,
+      "index": 18,
       "applied": false
     },
     {
@@ -337,7 +272,33 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 24,
+      "index": 19,
+      "applied": false
+    },
+    {
+      "title": "Twenty-five years after September 11, Americans reflect on attack that changed a nation - Reuters",
+      "source": "Reuters",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 20,
+      "applied": false
+    },
+    {
+      "title": "Board votes to rename Nashville International Airport for Dolly Parton - NBC News",
+      "source": "NBC News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 21,
       "applied": false
     },
     {
@@ -350,46 +311,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 25,
-      "applied": false
-    },
-    {
-      "title": "Tech company discloses first-of-its-kind A.I. cyberattack of one government against another - NBC News",
-      "source": "NBC News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 26,
-      "applied": false
-    },
-    {
-      "title": "Norway's Princess Astrid dies two days after brother King Harald's funeral - USA Today",
-      "source": "USA Today",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 27,
-      "applied": false
-    },
-    {
-      "title": "Elena Rybakina stops Coco Gauff’s U.S. Open surge to face Aryna Sabalenka in the final - The New York Times",
-      "source": "The New York Times",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 28,
+      "index": 22,
       "applied": false
     },
     {
@@ -402,12 +324,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 29,
+      "index": 23,
       "applied": false
     },
     {
-      "title": "Five dead and 86 missing as 'heartbreaking' fire breaks out on Philippines ferry - BBC",
-      "source": "BBC",
+      "title": "White House copper tariff plan stalls amid affordability concerns, sources say - Reuters",
+      "source": "Reuters",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -415,12 +337,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 30,
+      "index": 24,
       "applied": false
     },
     {
-      "title": "Sweden's election could mark major milestone for Europe's populist right - CBS News",
-      "source": "CBS News",
+      "title": "Brazil’s Supreme Court cancels session as political crisis deepens - AP News",
+      "source": "Associated Press",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -428,12 +350,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 31,
+      "index": 25,
       "applied": false
     },
     {
-      "title": "At BRICS Summit, China and India Vie for Influence - The New York Times",
-      "source": "The New York Times",
+      "title": "What to know about Sunday’s election in Sweden, NATO’s newest member - AP News",
+      "source": "Associated Press",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -441,12 +363,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 32,
+      "index": 26,
       "applied": false
     },
     {
-      "title": "Bernie Sanders speaks to the BBC about proposal to ban AI superintelligence - BBC",
-      "source": "BBC",
+      "title": "US diesel prices soar past $6 a gallon, deepening strain for hauling everyday goods - AP News",
+      "source": "Associated Press",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -454,12 +376,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 33,
+      "index": 27,
       "applied": false
     },
     {
-      "title": "USA Basketball schedule: When Caitlin Clark plays next in FIBA World Cup - Hawkeyes Wire",
-      "source": "USA Today",
+      "title": "The long tail of the 9/11 attacks for one Afghan family - NPR",
+      "source": "NPR",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -467,20 +389,7 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 34,
-      "applied": false
-    },
-    {
-      "title": "Pamela Anderson recalls spending 'everything I had in my bank' to beat fatal diagnosis - USA Today",
-      "source": "USA Today",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 35,
+      "index": 28,
       "applied": false
     },
     {
@@ -493,12 +402,103 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
+      "index": 29,
+      "applied": false
+    },
+    {
+      "title": "Sweden's election could mark major milestone for Europe's populist right - CBS News",
+      "source": "CBS News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 30,
+      "applied": false
+    },
+    {
+      "title": "Inflation ticked up in August, setting the stage for the Fed to hike interest rates - NBC News",
+      "source": "NBC News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 31,
+      "applied": false
+    },
+    {
+      "title": "LIV Golf files for bankruptcy protection, will attempt to restructure - The Athletic - The New York Times",
+      "source": "The New York Times",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 32,
+      "applied": false
+    },
+    {
+      "title": "First use of Alien Terrorist Removal Court sends Afghan woman back after Election Day ISIS plot: DOJ - Fox News",
+      "source": "Fox News",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 33,
+      "applied": false
+    },
+    {
+      "title": "Pamela Anderson recalls spending 'everything I had in my bank' to beat fatal diagnosis - USA Today",
+      "source": "USA Today",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 34,
+      "applied": false
+    },
+    {
+      "title": "Bernie Sanders speaks to the BBC about proposal to ban AI superintelligence - BBC",
+      "source": "BBC",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 35,
+      "applied": false
+    },
+    {
+      "title": "Anthropic says it blocked possible attempts to use AI to develop bioweapons - CNN",
+      "source": "CNN",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
       "index": 36,
       "applied": false
     },
     {
-      "title": "Barbara Keating died in the 9/11 attack. She's finally being laid to rest - NPR",
-      "source": "NPR",
+      "title": "China says it hopes to agree with the US on tariff reductions at ‘an early date’ - AP News",
+      "source": "Associated Press",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -510,7 +510,7 @@
       "applied": false
     },
     {
-      "title": "Man arrested after firefighter attack during Sheffield rescue - BBC",
+      "title": "Five dead and 86 missing as 'heartbreaking' fire breaks out on Philippines ferry - BBC",
       "source": "BBC",
       "current": "top",
       "action": "keep",
@@ -523,8 +523,8 @@
       "applied": false
     },
     {
-      "title": "Hurricane Lowell passing just west of Hawaii, bringing heavy rain, strong winds, punishing waves - CBS News",
-      "source": "CBS News",
+      "title": "USA Basketball schedule: When Caitlin Clark plays next in FIBA World Cup - Hawkeyes Wire",
+      "source": "USA Today",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -536,8 +536,8 @@
       "applied": false
     },
     {
-      "title": "Top election forecaster: GOP losing ground with Hispanic voters in key Texas races - CNN",
-      "source": "CNN",
+      "title": "Man arrested after firefighter attack during Sheffield rescue - BBC",
+      "source": "BBC",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -549,7 +549,7 @@
       "applied": false
     },
     {
-      "title": "Police Uncover Scheme Using Fake Horse Passports to Traffic Animals - The New York Times",
+      "title": "In tennis, the one-handed backhand’s unwanted Grand Slam milestone is natural selection - The New York Times",
       "source": "The New York Times",
       "current": "top",
       "action": "keep",
@@ -562,8 +562,8 @@
       "applied": false
     },
     {
-      "title": "US Congress - BBC",
-      "source": "BBC",
+      "title": "Aurora police rely on drivers yielding the right of way in emergency situations - CBS News",
+      "source": "CBS News",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -572,6 +572,45 @@
       "scores": {},
       "evidence": [],
       "index": 42,
+      "applied": false
+    },
+    {
+      "title": "Lil Durk: Grammy-winning US rapper acquitted in murder-for-hire trial - BBC",
+      "source": "BBC",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 43,
+      "applied": false
+    },
+    {
+      "title": "Police Uncover Scheme Using Fake Horse Passports to Traffic Animals - The New York Times",
+      "source": "The New York Times",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 44,
+      "applied": false
+    },
+    {
+      "title": "Canada's former leader Justin Trudeau launches production company - Reuters",
+      "source": "Reuters",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 45,
       "applied": false
     },
     {
@@ -584,11 +623,11 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 43,
+      "index": 46,
       "applied": false
     },
     {
-      "title": "For 'horrible moment,' Bush White House thought US military shot down Flight 93 - Fox News",
+      "title": "Texas Attorney General Ken Paxton announces distribution of more than 7 million free eggs statewide - Fox News",
       "source": "Fox News",
       "current": "top",
       "action": "keep",
@@ -597,24 +636,11 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 44,
+      "index": 47,
       "applied": false
     },
     {
-      "title": "Republican cavalry arrives for Ken Paxton as big-bucks Texas offensive opens cash floodgates - Fox News",
-      "source": "Fox News",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 45,
-      "applied": false
-    },
-    {
-      "title": "From DOGE to space lasers, Alex Gibney peels back the many layers of Elon Musk - NPR",
+      "title": "From DOGE to \"space lasers,\" Alex Gibney peels back the many layers of Elon Musk - NPR",
       "source": "NPR",
       "current": "top",
       "action": "keep",
@@ -623,7 +649,20 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 46,
+      "index": 48,
+      "applied": false
+    },
+    {
+      "title": "As data centers spread, not all U.S. housing markets react the same way - NPR",
+      "source": "NPR",
+      "current": "top",
+      "action": "keep",
+      "reason": "ranking-surface-not-rerouted",
+      "category": "top",
+      "confidence": 1.0,
+      "scores": {},
+      "evidence": [],
+      "index": 49,
       "applied": false
     },
     {
@@ -636,51 +675,12 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 47,
-      "applied": false
-    },
-    {
-      "title": "NASA's quiet supersonic jet 1 step closer to flying over US cities - USA Today",
-      "source": "USA Today",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 48,
-      "applied": false
-    },
-    {
-      "title": "Drinking very hot beverages could triple cancer risk, large study finds - CNN",
-      "source": "CNN",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 49,
-      "applied": false
-    },
-    {
-      "title": "David Lavery: Law Society CEO found 'guilty of gross misconduct' over character reference - BBC",
-      "source": "BBC",
-      "current": "top",
-      "action": "keep",
-      "reason": "ranking-surface-not-rerouted",
-      "category": "top",
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
       "index": 50,
       "applied": false
     },
     {
-      "title": "Colin Kaepernick reflects on Jay-Z 'disappointing' him, losing the NFL and finding his power - NPR",
-      "source": "NPR",
+      "title": "Sophie Cunningham has a bikini boat day during the WNBA break, Sydney Sweeney's ad is a talker & replacing LSU - Fox News",
+      "source": "Fox News",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -692,8 +692,8 @@
       "applied": false
     },
     {
-      "title": "There’s a simple way the Fed could help calm the bond market - CNN",
-      "source": "CNN",
+      "title": "Moscow Claims Ukraine Planned to Start a War Between Russia and the U.K. - The New York Times",
+      "source": "The New York Times",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -705,8 +705,8 @@
       "applied": false
     },
     {
-      "title": "WATCH: Ilhan Omar refuses to address police raid on home her son shares with felon roommate - Fox News",
-      "source": "Fox News",
+      "title": "Arrests, deportations and deaths: Track the data on Trump’s immigration crackdown - CNN",
+      "source": "CNN",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -718,8 +718,8 @@
       "applied": false
     },
     {
-      "title": "Is Patagonia the new data center hub? + Harley-Davidson's role in the trade war - NPR",
-      "source": "NPR",
+      "title": "New York Rangers depth chart: Breaking down the 2026-27 forwards - The New York Times",
+      "source": "The New York Times",
       "current": "top",
       "action": "keep",
       "reason": "ranking-surface-not-rerouted",
@@ -749,6 +749,27 @@
       "applied": false
     },
     {
+      "title": "Appeals court hands Trump a loss on mail voting as Supreme Court considers his executive order - Durango Herald",
+      "source": "Durango Herald",
+      "current": "underreported",
+      "action": "review",
+      "reason": "ambiguous:local",
+      "category": "local",
+      "confidence": 0.327,
+      "scores": {
+        "presidential": 5.0,
+        "federal": 6.0,
+        "legislation": 4.0,
+        "local": 6.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "durango"
+      ],
+      "index": 56,
+      "applied": false
+    },
+    {
       "title": "Hurricane Helene Killed His Wife and Destroyed His Mobile Home. New Tenants Are Now Renting the Same Flood-Prone Land. - ProPublica",
       "source": "ProPublica",
       "current": "underreported",
@@ -762,66 +783,30 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 56,
-      "applied": false
-    },
-    {
-      "title": "Trump says he 'will not sign' bipartisan housing bill, but doesn't threaten veto either - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:legislation",
-      "category": "legislation",
-      "confidence": 0.434,
-      "scores": {
-        "legislation": 4.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "bill"
-      ],
       "index": 57,
       "applied": false
     },
     {
-      "title": "Missouri’s GOP-friendly congressional map returns to Supreme Court - The Hill",
-      "source": "The Hill",
+      "title": "Hegseth is shaking up the Pentagon as the US wages war - but at what cost? - BBC",
+      "source": "BBC",
       "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:federal",
-      "category": "federal",
-      "confidence": 0.58,
+      "action": "reroute",
+      "reason": "semantic-match:military",
+      "category": "military",
+      "confidence": 0.746,
       "scores": {
-        "federal": 6.0,
+        "military": 10.0,
         "underreported": 2.0
       },
       "evidence": [
-        "supreme court"
+        "pentagon",
+        "war"
       ],
       "index": 58,
       "applied": false
     },
     {
-      "title": "New grand jury subpoenas being sent in investigation targeting Trump-Russia probe, AP sources say - Front - The Journal",
-      "source": "The Journal",
-      "current": "underreported",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "underreported",
-      "confidence": 0.364,
-      "scores": {
-        "world": 4.0,
-        "underreported": 5.0
-      },
-      "evidence": [
-        "investigation",
-        "existing-category-prior"
-      ],
-      "index": 59,
-      "applied": false
-    },
-    {
-      "title": "U.S. Postal Service Failed to Properly Handle Some Ballots During This Year’s Primary Elections, Audit Finds - ProPublica",
+      "title": "U.S. Postal Service Failed to Properly Handle Some Ballots During This Year’s Primary Elections, Audit Finds - propublica.org",
       "source": "ProPublica",
       "current": "underreported",
       "action": "review",
@@ -834,6 +819,25 @@
       },
       "evidence": [
         "u.s."
+      ],
+      "index": 59,
+      "applied": false
+    },
+    {
+      "title": "Military services again requiring recruits to get flu shots as Air Force outbreak grows - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "current": "underreported",
+      "action": "reroute",
+      "reason": "semantic-match:military",
+      "category": "military",
+      "confidence": 0.746,
+      "scores": {
+        "military": 10.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "military",
+        "air force"
       ],
       "index": 60,
       "applied": false
@@ -858,24 +862,6 @@
       "applied": false
     },
     {
-      "title": "What to know about the Amazon cargo plane crash in Miami that killed 5 workers in a van - Durango Herald",
-      "source": "Durango Herald",
-      "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:local",
-      "category": "local",
-      "confidence": 0.58,
-      "scores": {
-        "local": 6.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "durango"
-      ],
-      "index": 62,
-      "applied": false
-    },
-    {
       "title": "Archbishop of Santa Fe urges action on New Mexico water drought crisis - KOB 4",
       "source": "KOB 4",
       "current": "underreported",
@@ -891,6 +877,25 @@
       "evidence": [
         "new mexico",
         "santa fe"
+      ],
+      "index": 62,
+      "applied": false
+    },
+    {
+      "title": "New Mexico’s plan to reduce wildfire risk currently ‘nowhere near enough’ - Source New Mexico",
+      "source": "Source New Mexico",
+      "current": "underreported",
+      "action": "review",
+      "reason": "ambiguous:nm",
+      "category": "nm",
+      "confidence": 0.633,
+      "scores": {
+        "nm": 7.0,
+        "region": -2.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "new mexico"
       ],
       "index": 63,
       "applied": false
@@ -932,7 +937,7 @@
       "applied": false
     },
     {
-      "title": "New Mexico’s plan to reduce wildfire risk currently ‘nowhere near enough’ - Source New Mexico",
+      "title": "New Mexico Election 2026: US Senator - Source New Mexico",
       "source": "Source New Mexico",
       "current": "underreported",
       "action": "review",
@@ -951,25 +956,6 @@
       "applied": false
     },
     {
-      "title": "New Mexico Election 2026: US Senator - Source New Mexico",
-      "source": "Source New Mexico",
-      "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:nm",
-      "category": "nm",
-      "confidence": 0.633,
-      "scores": {
-        "nm": 7.0,
-        "region": -2.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "new mexico"
-      ],
-      "index": 67,
-      "applied": false
-    },
-    {
       "title": "A Texas LNG Plant Pumps Out Chronic, Unpermitted Pollution, a Watchdog Finds - Inside Climate News",
       "source": "Inside Climate News",
       "current": "underreported",
@@ -983,24 +969,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 68,
-      "applied": false
-    },
-    {
-      "title": "Ectopic Pregnancy Deaths Have Nearly Doubled. It’s Worse in States With Abortion Bans. - ProPublica",
-      "source": "ProPublica",
-      "current": "underreported",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "underreported",
-      "confidence": 0.327,
-      "scores": {
-        "underreported": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 69,
+      "index": 67,
       "applied": false
     },
     {
@@ -1018,7 +987,7 @@
       "evidence": [
         "epa"
       ],
-      "index": 70,
+      "index": 68,
       "applied": false
     },
     {
@@ -1035,7 +1004,24 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 71,
+      "index": 69,
+      "applied": false
+    },
+    {
+      "title": "Ectopic Pregnancy Deaths Have Nearly Doubled. It’s Worse in States With Abortion Bans. - propublica.org",
+      "source": "ProPublica",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.327,
+      "scores": {
+        "underreported": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 70,
       "applied": false
     },
     {
@@ -1054,7 +1040,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 72,
+      "index": 71,
       "applied": false
     },
     {
@@ -1071,27 +1057,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 73,
-      "applied": false
-    },
-    {
-      "title": "Health Care Authority to mail New Mexicans on Medicaid affected by federal changes - Searchlight New Mexico",
-      "source": "Searchlight New Mexico",
-      "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:nm",
-      "category": "nm",
-      "confidence": 0.579,
-      "scores": {
-        "federal": 3.0,
-        "nm": 7.0,
-        "region": -2.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "new mexico"
-      ],
-      "index": 74,
+      "index": 72,
       "applied": false
     },
     {
@@ -1108,24 +1074,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 75,
-      "applied": false
-    },
-    {
-      "title": "'Never, ever forget' - America marks 25th anniversary of 9/11 attacks - BBC",
-      "source": "BBC",
-      "current": "underreported",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "underreported",
-      "confidence": 0.327,
-      "scores": {
-        "underreported": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 76,
+      "index": 73,
       "applied": false
     },
     {
@@ -1143,42 +1092,25 @@
       "evidence": [
         "u.s."
       ],
-      "index": 77,
+      "index": 74,
       "applied": false
     },
     {
-      "title": "CIA warned of threat of 'explosive airplane' years before 9/11, documents show - BBC",
-      "source": "BBC",
+      "title": "Trump Administration's No-Bond Detainment Policy For Immigrants Blocked A Ninth Time - KFF Health News",
+      "source": "KFF Health News",
       "current": "underreported",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "underreported",
-      "confidence": 0.327,
+      "confidence": 0.137,
       "scores": {
+        "presidential": 2.0,
         "underreported": 2.0
       },
       "evidence": [
-        "existing-category-prior"
+        "administration"
       ],
-      "index": 78,
-      "applied": false
-    },
-    {
-      "title": "The biggest real-world risks of AI as researchers warn about rapid growth - CBS News",
-      "source": "CBS News",
-      "current": "underreported",
-      "action": "review",
-      "reason": "ambiguous:technology",
-      "category": "technology",
-      "confidence": 0.434,
-      "scores": {
-        "technology": 4.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "ai"
-      ],
-      "index": 79,
+      "index": 75,
       "applied": false
     },
     {
@@ -1195,7 +1127,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 80,
+      "index": 76,
       "applied": false
     },
     {
@@ -1215,7 +1147,7 @@
       "evidence": [
         "durango"
       ],
-      "index": 81,
+      "index": 77,
       "applied": false
     },
     {
@@ -1232,24 +1164,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 82,
-      "applied": false
-    },
-    {
-      "title": "Thursday, September 10, 2026 - KFF Health News",
-      "source": "KFF Health News",
-      "current": "underreported",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "underreported",
-      "confidence": 0.327,
-      "scores": {
-        "underreported": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 83,
+      "index": 78,
       "applied": false
     },
     {
@@ -1266,30 +1181,118 @@
       "evidence": [
         "existing-category-prior"
       ],
+      "index": 79,
+      "applied": false
+    },
+    {
+      "title": "Prosecutor says man accused of charging toward Ohio governor candidate wanted to ask questions - Tri City Record",
+      "source": "Tri-City Record",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.137,
+      "scores": {
+        "us": 2.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "governor"
+      ],
+      "index": 80,
+      "applied": false
+    },
+    {
+      "title": "Democrats Demand Trump Administration Halt Collection of Patients’ ER Records - KFF Health News",
+      "source": "KFF Health News",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.137,
+      "scores": {
+        "presidential": 2.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "administration"
+      ],
+      "index": 81,
+      "applied": false
+    },
+    {
+      "title": "Indiana vs. Howard Prediction, Odds, Picks For College Football Week 2 - FOX Sports",
+      "source": "FOX Sports",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.327,
+      "scores": {
+        "nfl": -2.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 82,
+      "applied": false
+    },
+    {
+      "title": "Putin assures Trump that Moscow doesn’t have aggressive plans toward Europe, Kremlin says - Front - The Journal",
+      "source": "The Journal",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.137,
+      "scores": {
+        "world": 2.0,
+        "underreported": 2.0
+      },
+      "evidence": [
+        "europe"
+      ],
+      "index": 83,
+      "applied": false
+    },
+    {
+      "title": "How North Carolina Wasted the Chance To Fix Hog Pollution - Inside Climate News",
+      "source": "Inside Climate News",
+      "current": "underreported",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "underreported",
+      "confidence": 0.327,
+      "scores": {
+        "underreported": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
       "index": 84,
       "applied": false
     },
     {
-      "title": "Tyler Johnson-Huff gives Wyoming lead over Indian Hill with TD run",
-      "source": "Yahoo Sports",
+      "title": "BRICS summit opens in New Delhi amid wars, global tensions, tariffs",
+      "source": "Al Jazeera",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "world",
-      "confidence": 0.289,
+      "confidence": 0.327,
       "scores": {
-        "world": 2.0,
-        "region": 3.0
+        "world": 2.0
       },
       "evidence": [
-        "wyoming"
+        "existing-category-prior"
       ],
       "index": 85,
       "applied": false
     },
     {
-      "title": "'Never, ever forget' - America marks 25th anniversary of 9/11 attacks",
-      "source": "BBC",
+      "title": "Trump: A united Ireland would be a great thing",
+      "source": "The Telegraph",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1305,25 +1308,81 @@
       "applied": false
     },
     {
-      "title": "First NYC fire chief to arrive at World Trade Center on 9/11 shares his story",
-      "source": "CBS News",
+      "title": "As China rises, Australia is increasingly enmeshed in the US war machine. Is the alliance still worth the risk?",
+      "source": "The Guardian",
       "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
+      "action": "keep",
+      "reason": "category-confirmed",
       "category": "world",
-      "confidence": 0.327,
+      "confidence": 0.44,
       "scores": {
-        "world": 2.0
+        "world": 5.0,
+        "military": 3.0
       },
       "evidence": [
+        "china",
         "existing-category-prior"
       ],
       "index": 87,
       "applied": false
     },
     {
-      "title": "Apollo Global in talks to acquire J&J's orthopedics unit, Bloomberg News reports",
-      "source": "Reuters",
+      "title": "Wyoming holds on to beat Indian Hill in triple-overtime CHL thriller",
+      "source": "Yahoo Sports",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.289,
+      "scores": {
+        "world": 2.0,
+        "region": 3.0
+      },
+      "evidence": [
+        "wyoming"
+      ],
+      "index": 88,
+      "applied": false
+    },
+    {
+      "title": "Indiana vs. Howard Prediction, Odds, Picks For College Football Week 2",
+      "source": "FOX Sports",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0,
+        "nfl": -2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 89,
+      "applied": false
+    },
+    {
+      "title": "'Look out': The inside story of 9/11, told by an advisor on Air Force One",
+      "source": "ABC News & Headlines – Australian Broadcasting Corporation",
+      "current": "world",
+      "action": "review",
+      "reason": "ambiguous:military",
+      "category": "military",
+      "confidence": 0.516,
+      "scores": {
+        "world": 2.0,
+        "military": 5.0
+      },
+      "evidence": [
+        "air force"
+      ],
+      "index": 90,
+      "applied": false
+    },
+    {
+      "title": "Yankees, sports world remember 25th anniversary of 9/11 with 'God Bless America' and moments of silence",
+      "source": "Fox News",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1335,7 +1394,42 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 88,
+      "index": 91,
+      "applied": false
+    },
+    {
+      "title": "Trump says he would be OK with China building cars in US",
+      "source": "Reuters",
+      "current": "world",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "world",
+      "confidence": 0.668,
+      "scores": {
+        "world": 5.0
+      },
+      "evidence": [
+        "china",
+        "existing-category-prior"
+      ],
+      "index": 92,
+      "applied": false
+    },
+    {
+      "title": "Why brazen museum thefts keep happening nearly a year after Louvre heist",
+      "source": "BBC",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 93,
       "applied": false
     },
     {
@@ -1352,7 +1446,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 89,
+      "index": 94,
       "applied": false
     },
     {
@@ -1369,78 +1463,25 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 90,
+      "index": 95,
       "applied": false
     },
     {
-      "title": "At the Venice Film Festival, grappling with the state of the world and crying with Oasis",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 91,
-      "applied": false
-    },
-    {
-      "title": "Ireland holds its breath as its leftwing president prepares to meet Trump",
-      "source": "The Guardian",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.137,
-      "scores": {
-        "world": 2.0,
-        "presidential": 2.0
-      },
-      "evidence": [
-        "president"
-      ],
-      "index": 92,
-      "applied": false
-    },
-    {
-      "title": "Breaking News, World News and Video from Al Jazeera",
-      "source": "Al Jazeera",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 93,
-      "applied": false
-    },
-    {
-      "title": "Saudi Arabia tells Trump now is the time for military action as Iran-backed Houthis advance",
-      "source": "Fox News",
+      "title": "As Trump squeezes the International Criminal Court, more countries are leaving",
+      "source": "PBS",
       "current": "world",
       "action": "keep",
       "reason": "category-confirmed",
       "category": "world",
-      "confidence": 0.39,
+      "confidence": 0.668,
       "scores": {
-        "world": 6.0,
-        "military": 5.0
+        "world": 5.0
       },
       "evidence": [
-        "iran",
+        "international",
         "existing-category-prior"
       ],
-      "index": 94,
+      "index": 96,
       "applied": false
     },
     {
@@ -1460,24 +1501,7 @@
         "iran",
         "existing-category-prior"
       ],
-      "index": 95,
-      "applied": false
-    },
-    {
-      "title": "The most striking pictures of the week",
-      "source": "Sky News",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 96,
+      "index": 97,
       "applied": false
     },
     {
@@ -1495,7 +1519,7 @@
         "europe",
         "existing-category-prior"
       ],
-      "index": 97,
+      "index": 98,
       "applied": false
     },
     {
@@ -1512,7 +1536,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 98,
+      "index": 99,
       "applied": false
     },
     {
@@ -1530,7 +1554,7 @@
         "nato",
         "existing-category-prior"
       ],
-      "index": 99,
+      "index": 100,
       "applied": false
     },
     {
@@ -1547,7 +1571,24 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 100,
+      "index": 101,
+      "applied": false
+    },
+    {
+      "title": "9/11 then and now: Photos show how the World Trade Center area has changed in 25 years",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 102,
       "applied": false
     },
     {
@@ -1565,24 +1606,7 @@
         "gaza",
         "existing-category-prior"
       ],
-      "index": 101,
-      "applied": false
-    },
-    {
-      "title": "WATCH: What Trump told reporters near Ground Zero in 2001",
-      "source": "PBS",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 102,
+      "index": 103,
       "applied": false
     },
     {
@@ -1599,11 +1623,28 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 103,
+      "index": 104,
       "applied": false
     },
     {
-      "title": "Russia sends bones of medieval warrior prince to Ukraine front to boost morale",
+      "title": "1 dead, 2 injured after pedestrians hit in Chinatown in NYC, police say",
+      "source": "CBS News",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 105,
+      "applied": false
+    },
+    {
+      "title": "Russia sends bones of medieval warrior prince to Ukraine front to boost morale - defensenews.com",
       "source": "Defense News",
       "current": "world",
       "action": "keep",
@@ -1618,7 +1659,7 @@
         "russia",
         "existing-category-prior"
       ],
-      "index": 104,
+      "index": 106,
       "applied": false
     },
     {
@@ -1636,7 +1677,7 @@
       "evidence": [
         "lawmakers"
       ],
-      "index": 105,
+      "index": 107,
       "applied": false
     },
     {
@@ -1654,64 +1695,29 @@
         "sanctions",
         "existing-category-prior"
       ],
-      "index": 106,
-      "applied": false
-    },
-    {
-      "title": "Five Bold Predictions: Indiana Expected To Blow Out Howard",
-      "source": "Yahoo Sports",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 107,
-      "applied": false
-    },
-    {
-      "title": "Family calls for changes to stretch of Indiana Avenue on Far South Side after deadly crash",
-      "source": "CBS News",
-      "current": "world",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "world",
-      "confidence": 0.327,
-      "scores": {
-        "world": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
       "index": 108,
       "applied": false
     },
     {
-      "title": "Indiana Football vs. Howard: Preview and How to Watch Live Tomorrow",
-      "source": "Yahoo Sports",
+      "title": "Saudi Arabia shuts oil pipeline after Iraq drone strikes",
+      "source": "The Telegraph",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "world",
-      "confidence": 0.137,
+      "confidence": 0.327,
       "scores": {
-        "world": 2.0,
-        "nfl": 2.0
+        "world": 2.0
       },
       "evidence": [
-        "football"
+        "existing-category-prior"
       ],
       "index": 109,
       "applied": false
     },
     {
-      "title": "CIA warned of threat of 'explosive airplane' years before 9/11, documents show",
-      "source": "BBC",
+      "title": "BRICS meets in India: What’s on the agenda, why it matters",
+      "source": "Al Jazeera",
       "current": "world",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1727,44 +1733,42 @@
       "applied": false
     },
     {
-      "title": "Lightning Houthi advance in Yemen may bring dangerous new dimension to Iran war",
-      "source": "BBC",
+      "title": "Where to watch USA vs. Spain: Channel, live stream, time, TV schedule for FIBA Women's World Cup semifinal",
+      "source": "Yahoo Sports",
       "current": "world",
-      "action": "keep",
-      "reason": "category-confirmed",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
       "category": "world",
-      "confidence": 0.517,
+      "confidence": 0.327,
       "scores": {
-        "world": 6.0,
-        "military": 3.0
+        "world": 2.0
       },
       "evidence": [
-        "iran",
         "existing-category-prior"
       ],
       "index": 111,
       "applied": false
     },
     {
-      "title": "Strikes shut down key Saudi pipeline as Iran-backed Houthis tighten grip on crucial shipping lane",
-      "source": "NBC News",
+      "title": "Highlights from Wyoming's wild Week 4 CHL win over Indian Hill",
+      "source": "Yahoo Sports",
       "current": "world",
-      "action": "keep",
-      "reason": "category-confirmed",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
       "category": "world",
-      "confidence": 0.707,
+      "confidence": 0.289,
       "scores": {
-        "world": 6.0
+        "world": 2.0,
+        "region": 3.0
       },
       "evidence": [
-        "iran",
-        "existing-category-prior"
+        "wyoming"
       ],
       "index": 112,
       "applied": false
     },
     {
-      "title": "Ex-Astros World Series champion with 11.74 ERA DFA'd by Mets",
+      "title": "‘Who Cares?’ – Ex-Indiana Coach Rips Media for Stirring Controversy Over Caitlin Clark Not Starting for Team USA in World Cup",
       "source": "Yahoo Sports",
       "current": "world",
       "action": "review",
@@ -1781,25 +1785,25 @@
       "applied": false
     },
     {
-      "title": "Trump, former U.S. presidents mark 25 years since 9/11 attacks at separate ceremonies",
-      "source": "CBC",
+      "title": "Wyoming stops Indian Hill 2-point conversion for wild 3-OT win",
+      "source": "Yahoo Sports",
       "current": "world",
       "action": "review",
-      "reason": "ambiguous:us",
-      "category": "us",
-      "confidence": 0.434,
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.289,
       "scores": {
         "world": 2.0,
-        "us": 4.0
+        "region": 3.0
       },
       "evidence": [
-        "u.s."
+        "wyoming"
       ],
       "index": 114,
       "applied": false
     },
     {
-      "title": "How 9/11 changed the world - The Latest",
+      "title": "US rapper Lil Durk found not guilty of murder-for-hire scheme",
       "source": "The Guardian",
       "current": "world",
       "action": "review",
@@ -1816,6 +1820,97 @@
       "applied": false
     },
     {
+      "title": "California woman charged with murder after allegedly killing husband with flagpole",
+      "source": "The Guardian",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.327,
+      "scores": {
+        "world": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 116,
+      "applied": false
+    },
+    {
+      "title": "Tyler Johnson-Huff gives Wyoming lead over Indian Hill with TD run",
+      "source": "Yahoo Sports",
+      "current": "world",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "world",
+      "confidence": 0.289,
+      "scores": {
+        "world": 2.0,
+        "region": 3.0
+      },
+      "evidence": [
+        "wyoming"
+      ],
+      "index": 117,
+      "applied": false
+    },
+    {
+      "title": "Trade 'war' or not, are Canada and the United States now dug in? - CBC",
+      "source": "CBC",
+      "current": "us",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "us",
+      "confidence": 0.517,
+      "scores": {
+        "us": 6.0,
+        "military": 3.0
+      },
+      "evidence": [
+        "united states",
+        "existing-category-prior"
+      ],
+      "index": 118,
+      "applied": false
+    },
+    {
+      "title": "As China rises, Australia is increasingly enmeshed in the US war machine. Is the alliance still worth the risk? - The Guardian",
+      "source": "The Guardian",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.194,
+      "scores": {
+        "world": 3.0,
+        "us": 2.0,
+        "military": 3.0
+      },
+      "evidence": [
+        "war"
+      ],
+      "index": 119,
+      "applied": false
+    },
+    {
+      "title": "‘War on terror’: How 9/11 changed the language of conflict - Al Jazeera",
+      "source": "Al Jazeera",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.289,
+      "scores": {
+        "us": 2.0,
+        "military": 3.0
+      },
+      "evidence": [
+        "war"
+      ],
+      "index": 120,
+      "applied": false
+    },
+    {
       "title": "'Never, ever forget' - America marks 25th anniversary of 9/11 attacks - BBC",
       "source": "BBC",
       "current": "us",
@@ -1829,7 +1924,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 116,
+      "index": 121,
       "applied": false
     },
     {
@@ -1846,7 +1941,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 117,
+      "index": 122,
       "applied": false
     },
     {
@@ -1864,12 +1959,12 @@
       "evidence": [
         "china"
       ],
-      "index": 118,
+      "index": 123,
       "applied": false
     },
     {
-      "title": "9/11 entrenched Islamophobia in US politics. But it doesn’t work the way you think | Moustafa Bayoumi - The Guardian",
-      "source": "The Guardian",
+      "title": "As diseases loom, CDC's response to measles deaths stirs fears about agency's reliability - NPR",
+      "source": "NPR",
       "current": "us",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -1881,7 +1976,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 119,
+      "index": 124,
       "applied": false
     },
     {
@@ -1899,60 +1994,7 @@
         "united states",
         "existing-category-prior"
       ],
-      "index": 120,
-      "applied": false
-    },
-    {
-      "title": "How 9/11 conspiracy theories moved into mainstream American politics - Al Jazeera",
-      "source": "Al Jazeera",
-      "current": "us",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "us",
-      "confidence": 0.624,
-      "scores": {
-        "us": 4.0
-      },
-      "evidence": [
-        "american",
-        "existing-category-prior"
-      ],
-      "index": 121,
-      "applied": false
-    },
-    {
-      "title": "Carney says he's still regularly speaking with Trump despite latest trade rift - CBC",
-      "source": "CBC",
-      "current": "us",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "us",
-      "confidence": 0.327,
-      "scores": {
-        "us": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 122,
-      "applied": false
-    },
-    {
-      "title": "Hillary Clinton warns the U.S. has let its guard down on terrorism 25 years after 9/11 - NBC News",
-      "source": "NBC News",
-      "current": "us",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "us",
-      "confidence": 0.707,
-      "scores": {
-        "us": 6.0
-      },
-      "evidence": [
-        "u.s.",
-        "existing-category-prior"
-      ],
-      "index": 123,
+      "index": 125,
       "applied": false
     },
     {
@@ -1970,7 +2012,7 @@
       "evidence": [
         "europe"
       ],
-      "index": 124,
+      "index": 126,
       "applied": false
     },
     {
@@ -1987,7 +2029,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 125,
+      "index": 127,
       "applied": false
     },
     {
@@ -2005,7 +2047,7 @@
       "evidence": [
         "senate"
       ],
-      "index": 126,
+      "index": 128,
       "applied": false
     },
     {
@@ -2023,7 +2065,7 @@
         "u.s.",
         "existing-category-prior"
       ],
-      "index": 127,
+      "index": 129,
       "applied": false
     },
     {
@@ -2042,7 +2084,7 @@
         "supreme court",
         "federal"
       ],
-      "index": 128,
+      "index": 130,
       "applied": false
     },
     {
@@ -2061,26 +2103,59 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 129,
+      "index": 131,
       "applied": false
     },
     {
-      "title": "What to know about Canada's escalating trade war with the U.S. - NPR",
-      "source": "NPR",
+      "title": "9/11 entrenched Islamophobia in US politics. But it doesn’t work the way you think | Moustafa Bayoumi - The Guardian",
+      "source": "The Guardian",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 132,
+      "applied": false
+    },
+    {
+      "title": "How 9/11 conspiracy theories moved into mainstream American politics - Al Jazeera",
+      "source": "Al Jazeera",
       "current": "us",
       "action": "keep",
       "reason": "category-confirmed",
       "category": "us",
-      "confidence": 0.517,
+      "confidence": 0.624,
       "scores": {
-        "us": 6.0,
-        "military": 3.0
+        "us": 4.0
       },
       "evidence": [
-        "u.s.",
+        "american",
         "existing-category-prior"
       ],
-      "index": 130,
+      "index": 133,
+      "applied": false
+    },
+    {
+      "title": "Carney says he's still regularly speaking with Trump despite latest trade rift - CBC",
+      "source": "CBC",
+      "current": "us",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "us",
+      "confidence": 0.327,
+      "scores": {
+        "us": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 134,
       "applied": false
     },
     {
@@ -2097,7 +2172,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 131,
+      "index": 135,
       "applied": false
     },
     {
@@ -2115,7 +2190,7 @@
       "evidence": [
         "president"
       ],
-      "index": 132,
+      "index": 136,
       "applied": false
     },
     {
@@ -2133,7 +2208,7 @@
         "american",
         "existing-category-prior"
       ],
-      "index": 133,
+      "index": 137,
       "applied": false
     },
     {
@@ -2152,7 +2227,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 134,
+      "index": 138,
       "applied": false
     },
     {
@@ -2169,29 +2244,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 135,
+      "index": 139,
       "applied": false
     },
     {
-      "title": "US bans Canadian dairy, alcohol and motorcycles as trade war escalates - The Guardian",
-      "source": "The Guardian",
-      "current": "us",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "us",
-      "confidence": 0.289,
-      "scores": {
-        "us": 2.0,
-        "military": 3.0
-      },
-      "evidence": [
-        "war"
-      ],
-      "index": 136,
-      "applied": false
-    },
-    {
-      "title": "Trump and Musk super PACs unleash millions to boost Republicans in battleground races - Reuters",
+      "title": "Trump says he would 'love' to see a united Ireland - Reuters",
       "source": "Reuters",
       "current": "presidential",
       "action": "review",
@@ -2204,7 +2261,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 137,
+      "index": 140,
       "applied": false
     },
     {
@@ -2222,7 +2279,77 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 138,
+      "index": 141,
+      "applied": false
+    },
+    {
+      "title": "Fact Check: Trump implied US owns the moon. An international space treaty says otherwise - Yahoo News Canada",
+      "source": "Yahoo News Canada",
+      "current": "presidential",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "presidential",
+      "confidence": 0.289,
+      "scores": {
+        "world": 3.0,
+        "presidential": 2.0
+      },
+      "evidence": [
+        "international"
+      ],
+      "index": 142,
+      "applied": false
+    },
+    {
+      "title": "Trump says he would be OK with China building cars in US - Reuters",
+      "source": "Reuters",
+      "current": "presidential",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "presidential",
+      "confidence": 0.289,
+      "scores": {
+        "world": 3.0,
+        "presidential": 2.0
+      },
+      "evidence": [
+        "china"
+      ],
+      "index": 143,
+      "applied": false
+    },
+    {
+      "title": "Trump and Musk super PACs unleash millions to boost Republicans in battleground races - Reuters",
+      "source": "Reuters",
+      "current": "presidential",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "presidential",
+      "confidence": 0.327,
+      "scores": {
+        "presidential": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 144,
+      "applied": false
+    },
+    {
+      "title": "Crypto investor pardoned by Trump donates £36 million to Farage's Reform UK - Reuters",
+      "source": "Reuters",
+      "current": "presidential",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "presidential",
+      "confidence": 0.327,
+      "scores": {
+        "presidential": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 145,
       "applied": false
     },
     {
@@ -2240,7 +2367,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 139,
+      "index": 146,
       "applied": false
     },
     {
@@ -2257,7 +2384,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 140,
+      "index": 147,
       "applied": false
     },
     {
@@ -2275,7 +2402,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 141,
+      "index": 148,
       "applied": false
     },
     {
@@ -2294,7 +2421,7 @@
         "president",
         "existing-category-prior"
       ],
-      "index": 142,
+      "index": 149,
       "applied": false
     },
     {
@@ -2311,7 +2438,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 143,
+      "index": 150,
       "applied": false
     },
     {
@@ -2329,7 +2456,7 @@
       "evidence": [
         "military"
       ],
-      "index": 144,
+      "index": 151,
       "applied": false
     },
     {
@@ -2346,7 +2473,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 145,
+      "index": 152,
       "applied": false
     },
     {
@@ -2363,7 +2490,25 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 146,
+      "index": 153,
+      "applied": false
+    },
+    {
+      "title": "Trump administration to sanction unnamed 'large' bank on Monday, Bessent says - Reuters",
+      "source": "Reuters",
+      "current": "presidential",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "presidential",
+      "confidence": 0.624,
+      "scores": {
+        "presidential": 4.0
+      },
+      "evidence": [
+        "administration",
+        "existing-category-prior"
+      ],
+      "index": 154,
       "applied": false
     },
     {
@@ -2381,7 +2526,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 147,
+      "index": 155,
       "applied": false
     },
     {
@@ -2398,7 +2543,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 148,
+      "index": 156,
       "applied": false
     },
     {
@@ -2417,7 +2562,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 149,
+      "index": 157,
       "applied": false
     },
     {
@@ -2435,7 +2580,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 150,
+      "index": 158,
       "applied": false
     },
     {
@@ -2453,7 +2598,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 151,
+      "index": 159,
       "applied": false
     },
     {
@@ -2470,7 +2615,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 152,
+      "index": 160,
       "applied": false
     },
     {
@@ -2488,7 +2633,7 @@
         "white house",
         "existing-category-prior"
       ],
-      "index": 153,
+      "index": 161,
       "applied": false
     },
     {
@@ -2505,7 +2650,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 154,
+      "index": 162,
       "applied": false
     },
     {
@@ -2526,7 +2671,7 @@
         "doj",
         "federal"
       ],
-      "index": 155,
+      "index": 163,
       "applied": false
     },
     {
@@ -2544,7 +2689,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 156,
+      "index": 164,
       "applied": false
     },
     {
@@ -2562,7 +2707,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 157,
+      "index": 165,
       "applied": false
     },
     {
@@ -2582,7 +2727,7 @@
       "evidence": [
         "iran"
       ],
-      "index": 158,
+      "index": 166,
       "applied": false
     },
     {
@@ -2599,7 +2744,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 159,
+      "index": 167,
       "applied": false
     },
     {
@@ -2617,7 +2762,7 @@
         "administration",
         "existing-category-prior"
       ],
-      "index": 160,
+      "index": 168,
       "applied": false
     },
     {
@@ -2634,7 +2779,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 161,
+      "index": 169,
       "applied": false
     },
     {
@@ -2651,7 +2796,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 162,
+      "index": 170,
       "applied": false
     },
     {
@@ -2668,7 +2813,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 163,
+      "index": 171,
       "applied": false
     },
     {
@@ -2685,77 +2830,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 164,
-      "applied": false
-    },
-    {
-      "title": "Australia sees no threat to US ties after White House criticism of social media reforms - Reuters",
-      "source": "Reuters",
-      "current": "presidential",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "presidential",
-      "confidence": 0.742,
-      "scores": {
-        "presidential": 7.0
-      },
-      "evidence": [
-        "white house",
-        "existing-category-prior"
-      ],
-      "index": 165,
-      "applied": false
-    },
-    {
-      "title": "New Mexicans deride Trump's 'New America' idea - Reuters",
-      "source": "Reuters",
-      "current": "presidential",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "presidential",
-      "confidence": 0.327,
-      "scores": {
-        "presidential": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 166,
-      "applied": false
-    },
-    {
-      "title": "Trump administration cuts criticism of Confederate statue that stood at Arlington Cemetery - Reuters",
-      "source": "Reuters",
-      "current": "presidential",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "presidential",
-      "confidence": 0.624,
-      "scores": {
-        "presidential": 4.0
-      },
-      "evidence": [
-        "administration",
-        "existing-category-prior"
-      ],
-      "index": 167,
-      "applied": false
-    },
-    {
-      "title": "Kansas Republicans throw weight behind Bombardier jobs after Trump threat - Reuters",
-      "source": "Reuters",
-      "current": "presidential",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "presidential",
-      "confidence": 0.327,
-      "scores": {
-        "presidential": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 168,
+      "index": 172,
       "applied": false
     },
     {
@@ -2774,7 +2849,7 @@
         "senate",
         "existing-category-prior"
       ],
-      "index": 169,
+      "index": 173,
       "applied": false
     },
     {
@@ -2792,7 +2867,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 170,
+      "index": 174,
       "applied": false
     },
     {
@@ -2811,7 +2886,7 @@
       "evidence": [
         "new mexico"
       ],
-      "index": 171,
+      "index": 175,
       "applied": false
     },
     {
@@ -2829,7 +2904,7 @@
         "senate",
         "existing-category-prior"
       ],
-      "index": 172,
+      "index": 176,
       "applied": false
     },
     {
@@ -2846,7 +2921,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 173,
+      "index": 177,
       "applied": false
     },
     {
@@ -2863,7 +2938,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 174,
+      "index": 178,
       "applied": false
     },
     {
@@ -2882,7 +2957,7 @@
       "evidence": [
         "federal"
       ],
-      "index": 175,
+      "index": 179,
       "applied": false
     },
     {
@@ -2899,7 +2974,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 176,
+      "index": 180,
       "applied": false
     },
     {
@@ -2917,7 +2992,7 @@
         "dhs",
         "existing-category-prior"
       ],
-      "index": 177,
+      "index": 181,
       "applied": false
     },
     {
@@ -2934,12 +3009,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 178,
+      "index": 182,
       "applied": false
     },
     {
-      "title": "Federal Judges Rebuke ICE Detention as Similar to WWII Internment Camps - Newsweek",
-      "source": "Newsweek",
+      "title": "Federal Judges Rebuke ICE Detention as Similar to WWII Internment Camps - newsweek.com",
+      "source": "newsweek.com",
       "current": "federal",
       "action": "keep",
       "reason": "category-confirmed",
@@ -2952,7 +3027,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 179,
+      "index": 183,
       "applied": false
     },
     {
@@ -2970,7 +3045,7 @@
       "evidence": [
         "federal"
       ],
-      "index": 180,
+      "index": 184,
       "applied": false
     },
     {
@@ -2987,7 +3062,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 181,
+      "index": 185,
       "applied": false
     },
     {
@@ -3005,7 +3080,7 @@
         "supreme court",
         "existing-category-prior"
       ],
-      "index": 182,
+      "index": 186,
       "applied": false
     },
     {
@@ -3023,7 +3098,7 @@
         "scotus",
         "existing-category-prior"
       ],
-      "index": 183,
+      "index": 187,
       "applied": false
     },
     {
@@ -3042,7 +3117,7 @@
         "federal",
         "existing-category-prior"
       ],
-      "index": 184,
+      "index": 188,
       "applied": false
     },
     {
@@ -3061,7 +3136,7 @@
       "evidence": [
         "ai"
       ],
-      "index": 185,
+      "index": 189,
       "applied": false
     },
     {
@@ -3080,7 +3155,25 @@
         "treasury",
         "existing-category-prior"
       ],
-      "index": 186,
+      "index": 190,
+      "applied": false
+    },
+    {
+      "title": "NM United knows it squandered points against Indy Eleven - Albuquerque Journal",
+      "source": "Albuquerque Journal",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.668,
+      "scores": {
+        "nm": 5.0
+      },
+      "evidence": [
+        "albuquerque",
+        "existing-category-prior"
+      ],
+      "index": 191,
       "applied": false
     },
     {
@@ -3101,7 +3194,256 @@
         "santa fe",
         "existing-category-prior"
       ],
-      "index": 187,
+      "index": 192,
+      "applied": false
+    },
+    {
+      "title": "As interest in uranium mining increases in New Mexico, residents raise concerns - KRQE",
+      "source": "KRQE",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 193,
+      "applied": false
+    },
+    {
+      "title": "New Mexico needs new Public Regulation Commission - Santa Fe New Mexican",
+      "source": "Santa Fe New Mexican",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.735,
+      "scores": {
+        "legislation": 4.0,
+        "nm": 12.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "santa fe",
+        "existing-category-prior"
+      ],
+      "index": 194,
+      "applied": false
+    },
+    {
+      "title": "Mercyhurst Lakers at New Mexico Lobos NCAAF Prediction, Picks & Odds for Sept. 12, 2026 - Yahoo Sports",
+      "source": "Yahoo Sports",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 195,
+      "applied": false
+    },
+    {
+      "title": "Unvaccinated Valencia County child tests positive for measles, marking 19th New Mexico case in 2026 - Source New Mexico",
+      "source": "Source New Mexico",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 196,
+      "applied": false
+    },
+    {
+      "title": "New Mexico lawyer fined for using AI-generated brief containing fabricated testimony - The Guardian",
+      "source": "The Guardian",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 197,
+      "applied": false
+    },
+    {
+      "title": "Lawyer cites fake witnesses in murder case and blames ChatGPT - Reuters",
+      "source": "Reuters",
+      "current": "nm",
+      "action": "review",
+      "reason": "ambiguous:technology",
+      "category": "technology",
+      "confidence": 0.633,
+      "scores": {
+        "nm": 2.0,
+        "technology": 7.0
+      },
+      "evidence": [
+        "chatgpt"
+      ],
+      "index": 198,
+      "applied": false
+    },
+    {
+      "title": "Mexican gray wolf’s accidental death after trapping sparks legal debate in New Mexico - KOAT",
+      "source": "KOAT",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 199,
+      "applied": false
+    },
+    {
+      "title": "Why are authorities finally searching Epstein's ranch in New Mexico? - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 200,
+      "applied": false
+    },
+    {
+      "title": "Nearly a decade after the Cambridge Analytica scandal, New Mexico alone is taking Facebook to trial - AP News",
+      "source": "AP News",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 201,
+      "applied": false
+    },
+    {
+      "title": "Why Trump can't rename New Mexico as \"New America\" - Axios",
+      "source": "Axios",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 202,
+      "applied": false
+    },
+    {
+      "title": "Friday heat in New Mexico followed by rain chances and cooler temps - KOB 4",
+      "source": "KOB 4",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 203,
+      "applied": false
+    },
+    {
+      "title": "The New Mexico Open tees off Monday. Here's three things to know - Albuquerque Journal",
+      "source": "Albuquerque Journal",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.862,
+      "scores": {
+        "nm": 12.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "albuquerque",
+        "existing-category-prior"
+      ],
+      "index": 204,
+      "applied": false
+    },
+    {
+      "title": "New Mexico Higher Education Department provides funding to expand access to food resources - KRQE",
+      "source": "KRQE",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 205,
       "applied": false
     },
     {
@@ -3120,7 +3462,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 188,
+      "index": 206,
       "applied": false
     },
     {
@@ -3138,25 +3480,7 @@
         "albuquerque",
         "existing-category-prior"
       ],
-      "index": 189,
-      "applied": false
-    },
-    {
-      "title": "Albuquerque bans crypto ATMs after scams cost New Mexicans millions - KOAT",
-      "source": "KOAT",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.668,
-      "scores": {
-        "nm": 5.0
-      },
-      "evidence": [
-        "albuquerque",
-        "existing-category-prior"
-      ],
-      "index": 190,
+      "index": 207,
       "applied": false
     },
     {
@@ -3176,198 +3500,7 @@
         "santa fe",
         "existing-category-prior"
       ],
-      "index": 191,
-      "applied": false
-    },
-    {
-      "title": "Unvaccinated Valencia County child tests positive for measles, marking 19th New Mexico case in 2026 - Source New Mexico",
-      "source": "Source New Mexico",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 192,
-      "applied": false
-    },
-    {
-      "title": "New Mexico lawyer fined for using AI-generated brief containing fabricated testimony - The Guardian",
-      "source": "The Guardian",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 193,
-      "applied": false
-    },
-    {
-      "title": "New Mexico Department of Justice presents Mark Zuckerberg deposition in state’s Facebook case - Tri City Record",
-      "source": "Tri City Record",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.588,
-      "scores": {
-        "federal": 5.0,
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 194,
-      "applied": false
-    },
-    {
-      "title": "Lawyer cites fake witnesses in murder case and blames ChatGPT - Reuters",
-      "source": "Reuters",
-      "current": "nm",
-      "action": "review",
-      "reason": "ambiguous:technology",
-      "category": "technology",
-      "confidence": 0.633,
-      "scores": {
-        "nm": 2.0,
-        "technology": 7.0
-      },
-      "evidence": [
-        "chatgpt"
-      ],
-      "index": 195,
-      "applied": false
-    },
-    {
-      "title": "New Mexico’s suicide rate is dropping. Here’s what early data shows. - Searchlight New Mexico",
-      "source": "Searchlight New Mexico",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 196,
-      "applied": false
-    },
-    {
-      "title": "New Mexico State vs Hawaii Prediction, Picks & Odds: College Football Week 2 - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0,
-        "nfl": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 197,
-      "applied": false
-    },
-    {
-      "title": "Why are authorities finally searching Epstein's ranch in New Mexico? - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 198,
-      "applied": false
-    },
-    {
-      "title": "Nearly a decade after the Cambridge Analytica scandal, New Mexico alone is taking Facebook to trial - AP News",
-      "source": "AP News",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 199,
-      "applied": false
-    },
-    {
-      "title": "Why Trump can't rename New Mexico as \"New America\" - Axios",
-      "source": "Axios",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 200,
-      "applied": false
-    },
-    {
-      "title": "Friday heat in New Mexico followed by rain chances and cooler temps - KOB 4",
-      "source": "KOB 4",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 201,
+      "index": 208,
       "applied": false
     },
     {
@@ -3388,7 +3521,7 @@
         "santa fe",
         "existing-category-prior"
       ],
-      "index": 202,
+      "index": 209,
       "applied": false
     },
     {
@@ -3407,7 +3540,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 203,
+      "index": 210,
       "applied": false
     },
     {
@@ -3429,7 +3562,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 204,
+      "index": 211,
       "applied": false
     },
     {
@@ -3448,28 +3581,26 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 205,
+      "index": 212,
       "applied": false
     },
     {
-      "title": "New Mexico lawmakers respond to warnings about AI safety - KOB 4",
-      "source": "KOB 4",
+      "title": "New Mexico AG backs Forward Party’s legal battle for ballot access - Source New Mexico",
+      "source": "Source New Mexico",
       "current": "nm",
       "action": "keep",
       "reason": "category-confirmed",
       "category": "nm",
-      "confidence": 0.63,
+      "confidence": 0.799,
       "scores": {
-        "legislation": 3.0,
         "nm": 9.0,
-        "region": -2.0,
-        "technology": 4.0
+        "region": -2.0
       },
       "evidence": [
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 206,
+      "index": 213,
       "applied": false
     },
     {
@@ -3488,7 +3619,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 207,
+      "index": 214,
       "applied": false
     },
     {
@@ -3507,7 +3638,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 208,
+      "index": 215,
       "applied": false
     },
     {
@@ -3526,7 +3657,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 209,
+      "index": 216,
       "applied": false
     },
     {
@@ -3545,7 +3676,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 210,
+      "index": 217,
       "applied": false
     },
     {
@@ -3564,83 +3695,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 211,
-      "applied": false
-    },
-    {
-      "title": "New Mexico Higher Education Department provides funding to expand access to food resources - KRQE",
-      "source": "KRQE",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 212,
-      "applied": false
-    },
-    {
-      "title": "Mexican gray wolf’s accidental death after trapping sparks legal debate in New Mexico - KOAT",
-      "source": "KOAT",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 213,
-      "applied": false
-    },
-    {
-      "title": "25 years later: Archive videos display how 9/11 impacted New Mexico - KOAT",
-      "source": "KOAT",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 214,
-      "applied": false
-    },
-    {
-      "title": "What we know from latest Project Jupiter update - Searchlight New Mexico",
-      "source": "Searchlight New Mexico",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 215,
+      "index": 218,
       "applied": false
     },
     {
@@ -3659,26 +3714,7 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 216,
-      "applied": false
-    },
-    {
-      "title": "Nearly $6 million awarded to expand public Wi-Fi across New Mexico - KOAT",
-      "source": "KOAT",
-      "current": "nm",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "nm",
-      "confidence": 0.799,
-      "scores": {
-        "nm": 9.0,
-        "region": -2.0
-      },
-      "evidence": [
-        "new mexico",
-        "existing-category-prior"
-      ],
-      "index": 217,
+      "index": 219,
       "applied": false
     },
     {
@@ -3697,11 +3733,30 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 218,
+      "index": 220,
       "applied": false
     },
     {
-      "title": "New Mexico State Parks offer free entry for Girl Scouts from Sept. 12 to 13 - KRQE",
+      "title": "New Mexico’s 2nd Congressional District race gains national attention at RNC midterm convention - KOAT",
+      "source": "KOAT",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.799,
+      "scores": {
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 221,
+      "applied": false
+    },
+    {
+      "title": "New Mexico will stay mostly dry with near record heat through the weekend - KRQE",
       "source": "KRQE",
       "current": "nm",
       "action": "keep",
@@ -3716,7 +3771,27 @@
         "new mexico",
         "existing-category-prior"
       ],
-      "index": 219,
+      "index": 222,
+      "applied": false
+    },
+    {
+      "title": "Lawmakers hear about one company’s nuclear fusion plans in New Mexico - KRQE",
+      "source": "KRQE",
+      "current": "nm",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nm",
+      "confidence": 0.672,
+      "scores": {
+        "legislation": 3.0,
+        "nm": 9.0,
+        "region": -2.0
+      },
+      "evidence": [
+        "new mexico",
+        "existing-category-prior"
+      ],
+      "index": 223,
       "applied": false
     },
     {
@@ -3736,11 +3811,11 @@
         "san juan county",
         "existing-category-prior"
       ],
-      "index": 220,
+      "index": 224,
       "applied": false
     },
     {
-      "title": "Gov. Polis appoints judge to 6th Judicial District bench in Durango - Durango Herald",
+      "title": "Greene has 3 hits and Dingler hits slump-breaking homer in Tigers’ 6-2 win over Rockies - Durango Herald",
       "source": "Durango Herald",
       "current": "local",
       "action": "keep",
@@ -3756,7 +3831,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 221,
+      "index": 225,
       "applied": false
     },
     {
@@ -3776,26 +3851,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 222,
-      "applied": false
-    },
-    {
-      "title": "Navajo Nation Fair: Arizona cowboys take early lead in bareback, bull riding events - Navajo Times",
-      "source": "Navajo Times",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.772,
-      "scores": {
-        "nm": -2.0,
-        "local": 8.0
-      },
-      "evidence": [
-        "navajo nation",
-        "existing-category-prior"
-      ],
-      "index": 223,
+      "index": 226,
       "applied": false
     },
     {
@@ -3816,7 +3872,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 224,
+      "index": 227,
       "applied": false
     },
     {
@@ -3836,7 +3892,7 @@
         "gallup",
         "existing-category-prior"
       ],
-      "index": 225,
+      "index": 228,
       "applied": false
     },
     {
@@ -3856,7 +3912,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 226,
+      "index": 229,
       "applied": false
     },
     {
@@ -3876,7 +3932,28 @@
         "cortez",
         "existing-category-prior"
       ],
-      "index": 227,
+      "index": 230,
+      "applied": false
+    },
+    {
+      "title": "‘Road Apple Rally’ returns to Farmington for 45th year - Yahoo Sports",
+      "source": "Yahoo Sports",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.708,
+      "scores": {
+        "nm": -2.0,
+        "local": 10.0,
+        "region": -3.0,
+        "technology": 3.0
+      },
+      "evidence": [
+        "farmington",
+        "existing-category-prior"
+      ],
+      "index": 231,
       "applied": false
     },
     {
@@ -3896,90 +3973,11 @@
         "gallup",
         "existing-category-prior"
       ],
-      "index": 228,
-      "applied": false
-    },
-    {
-      "title": "In Durango, first responders honor lives lost on 9/11 - Durango Herald",
-      "source": "Durango Herald",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.772,
-      "scores": {
-        "nm": -2.0,
-        "local": 8.0,
-        "region": -3.0
-      },
-      "evidence": [
-        "durango",
-        "existing-category-prior"
-      ],
-      "index": 229,
-      "applied": false
-    },
-    {
-      "title": "Colorado’s fall colors are arriving early. Drought is partly to blame - Durango Herald",
-      "source": "Durango Herald",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.772,
-      "scores": {
-        "nm": -2.0,
-        "local": 8.0
-      },
-      "evidence": [
-        "durango",
-        "existing-category-prior"
-      ],
-      "index": 230,
-      "applied": false
-    },
-    {
-      "title": "What to watch: Colorado Division I football Week 2 - Durango Herald",
-      "source": "Durango Herald",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.677,
-      "scores": {
-        "nm": -2.0,
-        "local": 8.0,
-        "nfl": 2.0
-      },
-      "evidence": [
-        "durango",
-        "existing-category-prior"
-      ],
-      "index": 231,
-      "applied": false
-    },
-    {
-      "title": "Neighbors post warning signs in response to suspected drug activity near Park Elementary in Durango - Durango Herald",
-      "source": "Durango Herald",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.772,
-      "scores": {
-        "nm": -2.0,
-        "local": 8.0,
-        "region": -3.0
-      },
-      "evidence": [
-        "durango",
-        "existing-category-prior"
-      ],
       "index": 232,
       "applied": false
     },
     {
-      "title": "Bear euthanized in Durango found to have trash blocking intestine - Durango Herald",
+      "title": "Gov. Polis appoints judge to 6th Judicial District bench in Durango - Durango Herald",
       "source": "Durango Herald",
       "current": "local",
       "action": "keep",
@@ -3999,6 +3997,105 @@
       "applied": false
     },
     {
+      "title": "In Durango, first responders honor lives lost on 9/11 - Durango Herald",
+      "source": "Durango Herald",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.772,
+      "scores": {
+        "nm": -2.0,
+        "local": 8.0,
+        "region": -3.0
+      },
+      "evidence": [
+        "durango",
+        "existing-category-prior"
+      ],
+      "index": 234,
+      "applied": false
+    },
+    {
+      "title": "Colorado’s fall colors are arriving early. Drought is partly to blame - Durango Herald",
+      "source": "Durango Herald",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.772,
+      "scores": {
+        "nm": -2.0,
+        "local": 8.0
+      },
+      "evidence": [
+        "durango",
+        "existing-category-prior"
+      ],
+      "index": 235,
+      "applied": false
+    },
+    {
+      "title": "What to watch: Colorado Division I football Week 2 - Durango Herald",
+      "source": "Durango Herald",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.677,
+      "scores": {
+        "nm": -2.0,
+        "local": 8.0,
+        "nfl": 2.0
+      },
+      "evidence": [
+        "durango",
+        "existing-category-prior"
+      ],
+      "index": 236,
+      "applied": false
+    },
+    {
+      "title": "Neighbors post warning signs in response to suspected drug activity near Park Elementary in Durango - Durango Herald",
+      "source": "Durango Herald",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.772,
+      "scores": {
+        "nm": -2.0,
+        "local": 8.0,
+        "region": -3.0
+      },
+      "evidence": [
+        "durango",
+        "existing-category-prior"
+      ],
+      "index": 237,
+      "applied": false
+    },
+    {
+      "title": "Bear euthanized in Durango found to have trash blocking intestine - Durango Herald",
+      "source": "Durango Herald",
+      "current": "local",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "local",
+      "confidence": 0.772,
+      "scores": {
+        "nm": -2.0,
+        "local": 8.0,
+        "region": -3.0
+      },
+      "evidence": [
+        "durango",
+        "existing-category-prior"
+      ],
+      "index": 238,
+      "applied": false
+    },
+    {
       "title": "Rural Colorado needs more ways to access primary care - Durango Herald",
       "source": "Durango Herald",
       "current": "local",
@@ -4015,7 +4112,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 234,
+      "index": 239,
       "applied": false
     },
     {
@@ -4035,7 +4132,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 235,
+      "index": 240,
       "applied": false
     },
     {
@@ -4055,7 +4152,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 236,
+      "index": 241,
       "applied": false
     },
     {
@@ -4077,7 +4174,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 237,
+      "index": 242,
       "applied": false
     },
     {
@@ -4097,7 +4194,7 @@
         "farmington",
         "existing-category-prior"
       ],
-      "index": 238,
+      "index": 243,
       "applied": false
     },
     {
@@ -4117,7 +4214,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 239,
+      "index": 244,
       "applied": false
     },
     {
@@ -4137,7 +4234,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 240,
+      "index": 245,
       "applied": false
     },
     {
@@ -4158,7 +4255,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 241,
+      "index": 246,
       "applied": false
     },
     {
@@ -4178,7 +4275,7 @@
         "durango",
         "existing-category-prior"
       ],
-      "index": 242,
+      "index": 247,
       "applied": false
     },
     {
@@ -4199,156 +4296,67 @@
         "la plata county",
         "existing-category-prior"
       ],
-      "index": 243,
-      "applied": false
-    },
-    {
-      "title": "Shiprock man convicted in child sex crime case - Tri City Record",
-      "source": "Tri City Record",
-      "current": "local",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "local",
-      "confidence": 0.799,
-      "scores": {
-        "nm": -2.0,
-        "local": 9.0,
-        "region": -3.0
-      },
-      "evidence": [
-        "shiprock",
-        "existing-category-prior"
-      ],
-      "index": 244,
-      "applied": false
-    },
-    {
-      "title": "Colorado volunteers show up for Xcel Energy's Day of Service - CBS News",
-      "source": "CBS News",
-      "current": "region",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "region",
-      "confidence": 0.668,
-      "scores": {
-        "region": 5.0
-      },
-      "evidence": [
-        "colorado",
-        "existing-category-prior"
-      ],
-      "index": 245,
-      "applied": false
-    },
-    {
-      "title": "25 years later, Colorado Springs reflects on 9/11’s lasting impact, both mental and physical - KRDO",
-      "source": "KRDO",
-      "current": "region",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "region",
-      "confidence": 0.668,
-      "scores": {
-        "region": 5.0
-      },
-      "evidence": [
-        "colorado",
-        "existing-category-prior"
-      ],
-      "index": 246,
-      "applied": false
-    },
-    {
-      "title": "Northern Colorado Bears at Wyoming Cowboys NCAAF Prediction, Picks & Odds for Sept. 12, 2026 - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "region",
-      "confidence": 0.772,
-      "scores": {
-        "region": 8.0
-      },
-      "evidence": [
-        "colorado",
-        "wyoming",
-        "existing-category-prior"
-      ],
-      "index": 247,
-      "applied": false
-    },
-    {
-      "title": "Northern Colorado high school students get a hands-on experience in the future of medical technology - Denver7",
-      "source": "Denver7",
-      "current": "region",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "region",
-      "confidence": 0.668,
-      "scores": {
-        "region": 5.0
-      },
-      "evidence": [
-        "colorado",
-        "existing-category-prior"
-      ],
       "index": 248,
       "applied": false
     },
     {
-      "title": "Police find ‘no credible threat’ after bomb threat at Silverthorn hotel - The Denver Post",
-      "source": "The Denver Post",
+      "title": "How to Watch Utah State vs. Washington: TV Channel, Live Stream, Time - FOX Sports",
+      "source": "FOX Sports",
       "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
+      "action": "keep",
+      "reason": "category-confirmed",
       "category": "region",
-      "confidence": 0.327,
+      "confidence": 0.668,
       "scores": {
-        "region": 2.0
+        "region": 5.0
       },
       "evidence": [
+        "utah",
         "existing-category-prior"
       ],
       "index": 249,
       "applied": false
     },
     {
-      "title": "California woman charged with murder after allegedly killing husband with flagpole - The Guardian",
-      "source": "The Guardian",
+      "title": "How to watch Arkansas football vs Utah, time, date, TV, prediction - Yahoo Sports",
+      "source": "Yahoo Sports",
       "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
+      "action": "keep",
+      "reason": "category-confirmed",
       "category": "region",
-      "confidence": 0.327,
+      "confidence": 0.516,
       "scores": {
-        "region": 2.0
+        "region": 5.0,
+        "nfl": 2.0
       },
       "evidence": [
+        "utah",
         "existing-category-prior"
       ],
       "index": 250,
       "applied": false
     },
     {
-      "title": "California's Lucas Fire explodes to 3,400 acres, forcing evacuations in Mendocino and Lake counties - CBS News",
-      "source": "CBS News",
+      "title": "3 Husky Objectives for Utah State - Sports Illustrated",
+      "source": "Sports Illustrated",
       "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
+      "action": "keep",
+      "reason": "category-confirmed",
       "category": "region",
-      "confidence": 0.327,
+      "confidence": 0.668,
       "scores": {
-        "region": 2.0
+        "region": 5.0
       },
       "evidence": [
+        "utah",
         "existing-category-prior"
       ],
       "index": 251,
       "applied": false
     },
     {
-      "title": "Well-preserved tooth from Pacific mastodon found in a creek in San Francisco Bay Area - AP News",
-      "source": "AP News",
+      "title": "Three Bold Predictions for Oregon Ducks vs. Oklahoma State Cowboys - Sports Illustrated",
+      "source": "Sports Illustrated",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4364,8 +4372,8 @@
       "applied": false
     },
     {
-      "title": "Boo Bash Fall Festival to Make California Debut September 18, Bringing 100,000+ Square-Foot Immersive Pumpkin Patch to Escondido - Yahoo Finance Singapore",
-      "source": "Yahoo Finance Singapore",
+      "title": "By 2023, a Washington State entrepreneur had developed a credit system for fashion brands to fund textile - The Times of India",
+      "source": "The Times of India",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4381,28 +4389,8 @@
       "applied": false
     },
     {
-      "title": "Wyoming QB David Dupee fires 10-yard touchdown pass to Charlie Walker - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "region",
-      "confidence": 0.364,
-      "scores": {
-        "region": 5.0,
-        "nfl": 4.0,
-        "technology": -6.0
-      },
-      "evidence": [
-        "wyoming",
-        "existing-category-prior"
-      ],
-      "index": 254,
-      "applied": false
-    },
-    {
-      "title": "Rep. Escobar says ICE blamed Venezuelans for confrontations at Camp East Montana - KVIA",
-      "source": "KVIA",
+      "title": "Jurassic squid-like animal unearthed in Wyoming is “fattest” ever discovered - BBC Wildlife Magazine",
+      "source": "BBC Wildlife Magazine",
       "current": "region",
       "action": "keep",
       "reason": "category-confirmed",
@@ -4412,51 +4400,32 @@
         "region": 5.0
       },
       "evidence": [
-        "montana",
+        "wyoming",
+        "existing-category-prior"
+      ],
+      "index": 254,
+      "applied": false
+    },
+    {
+      "title": "16-year-old Decelise Champion shines in Wisconsin volleyball debut - Yahoo Sports",
+      "source": "Yahoo Sports",
+      "current": "region",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "region",
+      "confidence": 0.327,
+      "scores": {
+        "region": 2.0
+      },
+      "evidence": [
         "existing-category-prior"
       ],
       "index": 255,
       "applied": false
     },
     {
-      "title": "Iowa HBPA President Fined Over ‘Threatening And Intimidating’ Conduct Toward Stewards - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.137,
-      "scores": {
-        "presidential": 2.0,
-        "region": 2.0
-      },
-      "evidence": [
-        "president"
-      ],
-      "index": 256,
-      "applied": false
-    },
-    {
-      "title": "Why a Cy-Hawk Football Win Could Affect the Future of Basketball in Iowa - Sports Illustrated",
-      "source": "Sports Illustrated",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.137,
-      "scores": {
-        "region": 2.0,
-        "nfl": 2.0
-      },
-      "evidence": [
-        "football"
-      ],
-      "index": 257,
-      "applied": false
-    },
-    {
-      "title": "How to watch Iowa State vs No. 21 Iowa: TV, live stream, preview for Saturday’s game - NBC Sports",
-      "source": "NBC Sports",
+      "title": "Where to watch Wisconsin vs. Western Illinois: Time, TV channel - badgerswire.usatoday.com",
+      "source": "badgerswire.usatoday.com",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4468,20 +4437,55 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 258,
+      "index": 256,
       "applied": false
     },
     {
-      "title": "Kirk Herbstreit Floats Iowa As Dark Horse Contender For College Football Playoff - Yahoo Sports",
-      "source": "Yahoo Sports",
+      "title": "Massive snake found in the engine of a car in Wisconsin - NBC News",
+      "source": "NBC News",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "region",
       "confidence": 0.327,
       "scores": {
+        "region": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 257,
+      "applied": false
+    },
+    {
+      "title": "From Wisconsin walk-on to Bills defensive coordinator: The making of Jim Leonhard - NFL.com",
+      "source": "NFL.com",
+      "current": "region",
+      "action": "review",
+      "reason": "ambiguous:nfl",
+      "category": "nfl",
+      "confidence": 0.677,
+      "scores": {
         "region": 2.0,
-        "nfl": -2.0
+        "nfl": 8.0,
+        "technology": -8.0
+      },
+      "evidence": [
+        "nfl"
+      ],
+      "index": 258,
+      "applied": false
+    },
+    {
+      "title": "Texas vs. Ohio State Has One Matchup Nobody Is Talking About Enough - Sports Illustrated",
+      "source": "Sports Illustrated",
+      "current": "region",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "region",
+      "confidence": 0.327,
+      "scores": {
+        "region": 2.0
       },
       "evidence": [
         "existing-category-prior"
@@ -4490,8 +4494,8 @@
       "applied": false
     },
     {
-      "title": "Previewing the Iowa matchup with BHGP - Yahoo Sports",
-      "source": "Yahoo Sports",
+      "title": "Dallas police, firefighters frustrated after top city leader no-show - CBS News",
+      "source": "CBS News",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4507,16 +4511,15 @@
       "applied": false
     },
     {
-      "title": "Tennessee high school football scores for Week 4 of 2026 TSSAA season - Yahoo Sports",
-      "source": "Yahoo Sports",
+      "title": "'Garage Sale Murder': How a doorbell camera captured Texas woman's murder - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "region",
       "confidence": 0.327,
       "scores": {
-        "region": 2.0,
-        "nfl": -4.0
+        "region": 2.0
       },
       "evidence": [
         "existing-category-prior"
@@ -4525,8 +4528,8 @@
       "applied": false
     },
     {
-      "title": "What to watch for from Tennessee against Georgia Tech - Yahoo Sports",
-      "source": "Yahoo Sports",
+      "title": "Texas man remembered by Fox News hosts after repeat offender arrested in savage park bench slaying - Fox News",
+      "source": "Fox News",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4542,43 +4545,7 @@
       "applied": false
     },
     {
-      "title": "WATCH: Georgia Tech vs. Tennessee Preview and What Tennessee Football Fans Need to Know - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.137,
-      "scores": {
-        "region": 2.0,
-        "nfl": 2.0
-      },
-      "evidence": [
-        "football"
-      ],
-      "index": 263,
-      "applied": false
-    },
-    {
-      "title": "Tennessee private schools eye exit to avoid 'big three football factories' - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.137,
-      "scores": {
-        "region": 2.0,
-        "nfl": 2.0
-      },
-      "evidence": [
-        "football"
-      ],
-      "index": 264,
-      "applied": false
-    },
-    {
-      "title": "Kentucky vs. Alabama Injury Report: Starting OL Michael Carroll ruled out - Yahoo Sports",
+      "title": "New York Jets Flight Connections 09/12/26 - Yahoo Sports",
       "source": "Yahoo Sports",
       "current": "region",
       "action": "review",
@@ -4591,11 +4558,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 265,
+      "index": 263,
       "applied": false
     },
     {
-      "title": "Rainy weather returns to NYC area this weekend. Get the First Alert Forecast. - CBS News",
+      "title": "First Alert Weather: Increasing clouds Saturday in New York - 9/11/26 - CBS News",
       "source": "CBS News",
       "current": "region",
       "action": "review",
@@ -4608,7 +4575,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 266,
+      "index": 264,
       "applied": false
     },
     {
@@ -4625,7 +4592,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 267,
+      "index": 265,
       "applied": false
     },
     {
@@ -4642,12 +4609,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 268,
+      "index": 266,
       "applied": false
     },
     {
-      "title": "New York Mets Make Mark Vientos Decision Hours Before Yankees Game - Yahoo Sports",
-      "source": "Yahoo Sports",
+      "title": "Boy, 15, found clinging to capsized boat off Alaska after surviving for days at sea - Sky News",
+      "source": "Sky News",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4659,7 +4626,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 269,
+      "index": 267,
       "applied": false
     },
     {
@@ -4676,7 +4643,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 270,
+      "index": 268,
       "applied": false
     },
     {
@@ -4693,7 +4660,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 271,
+      "index": 269,
       "applied": false
     },
     {
@@ -4710,12 +4677,48 @@
       "evidence": [
         "existing-category-prior"
       ],
+      "index": 270,
+      "applied": false
+    },
+    {
+      "title": "South Alabama vs Tulane Prediction, Pick, College Football Odds for Saturday, Sept. 12 - Yahoo Sports",
+      "source": "Yahoo Sports",
+      "current": "region",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "region",
+      "confidence": 0.327,
+      "scores": {
+        "region": 2.0,
+        "nfl": -2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 271,
+      "applied": false
+    },
+    {
+      "title": "An Overdue Trash Bill Left This Alabama Woman in Handcuffs. She’s Not Alone. - Inside Climate News",
+      "source": "Inside Climate News",
+      "current": "region",
+      "action": "review",
+      "reason": "ambiguous:legislation",
+      "category": "legislation",
+      "confidence": 0.434,
+      "scores": {
+        "legislation": 4.0,
+        "region": 2.0
+      },
+      "evidence": [
+        "bill"
+      ],
       "index": 272,
       "applied": false
     },
     {
-      "title": "Teen rescued after clinging to fishing boat in Bering Sea off Alaska - CBS News",
-      "source": "CBS News",
+      "title": "Fast Eddie: Tulane vs South Alabama...Who Does He Pick? - Sports Illustrated",
+      "source": "Sports Illustrated",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -4731,15 +4734,16 @@
       "applied": false
     },
     {
-      "title": "Man arrested in death of woman found hanging from tree in Mississippi - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
+      "title": "News 3 PrepZone Week 4: Alabama high school football highlights - Yahoo Sports",
+      "source": "Yahoo Sports",
       "current": "region",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "region",
       "confidence": 0.327,
       "scores": {
-        "region": 2.0
+        "region": 2.0,
+        "nfl": -4.0
       },
       "evidence": [
         "existing-category-prior"
@@ -4748,89 +4752,22 @@
       "applied": false
     },
     {
-      "title": "Arrest made in Tasia Fortune hanging death in Mississippi - USA Today",
-      "source": "USA Today",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.327,
+      "title": "NFL Week 1 predictions: Upsets, fantasy sleepers, stat lines - ESPN",
+      "source": "ESPN",
+      "current": "nfl",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nfl",
+      "confidence": 0.822,
       "scores": {
-        "region": 2.0
+        "nfl": 10.0,
+        "technology": -8.0
       },
       "evidence": [
+        "nfl",
         "existing-category-prior"
       ],
       "index": 275,
-      "applied": false
-    },
-    {
-      "title": "Mississippi State football news: Nick Saban a believer in 'real deal' KaMario Taylor - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "region",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "region",
-      "confidence": 0.137,
-      "scores": {
-        "region": 2.0,
-        "nfl": 2.0
-      },
-      "evidence": [
-        "football"
-      ],
-      "index": 276,
-      "applied": false
-    },
-    {
-      "title": "Bears' Odunze feels 'ready' for Panthers despite questionable tag - ESPN",
-      "source": "ESPN",
-      "current": "nfl",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "nfl",
-      "confidence": 0.327,
-      "scores": {
-        "nfl": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 277,
-      "applied": false
-    },
-    {
-      "title": "Cowboys and Saints are perfect trade partners after Malik Davis injury - Yahoo Sports",
-      "source": "Yahoo Sports",
-      "current": "nfl",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "nfl",
-      "confidence": 0.327,
-      "scores": {
-        "nfl": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 278,
-      "applied": false
-    },
-    {
-      "title": "49ers vs. Rams: Three Bold Predictions for Thursday Night’s NFC West Bout Down Under - Sports Illustrated",
-      "source": "Sports Illustrated",
-      "current": "nfl",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "nfl",
-      "confidence": 0.327,
-      "scores": {
-        "nfl": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 279,
       "applied": false
     },
     {
@@ -4849,7 +4786,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 280,
+      "index": 276,
       "applied": false
     },
     {
@@ -4868,7 +4805,24 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 281,
+      "index": 277,
+      "applied": false
+    },
+    {
+      "title": "Bears' Odunze feels 'ready' for Panthers despite questionable tag - ESPN",
+      "source": "ESPN",
+      "current": "nfl",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "nfl",
+      "confidence": 0.327,
+      "scores": {
+        "nfl": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 278,
       "applied": false
     },
     {
@@ -4885,11 +4839,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 282,
+      "index": 279,
       "applied": false
     },
     {
-      "title": "Cowboys' Malik Davis (hip) injured in practice, out for opener - ESPN",
+      "title": "Cowboys RB Malik Davis set for hip surgery, headed to IR - ESPN",
       "source": "ESPN",
       "current": "nfl",
       "action": "review",
@@ -4902,7 +4856,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 283,
+      "index": 280,
       "applied": false
     },
     {
@@ -4919,7 +4873,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 284,
+      "index": 281,
       "applied": false
     },
     {
@@ -4936,7 +4890,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 285,
+      "index": 282,
       "applied": false
     },
     {
@@ -4953,7 +4907,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 286,
+      "index": 283,
       "applied": false
     },
     {
@@ -4970,7 +4924,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 287,
+      "index": 284,
       "applied": false
     },
     {
@@ -4987,7 +4941,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 288,
+      "index": 285,
       "applied": false
     },
     {
@@ -5004,7 +4958,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 289,
+      "index": 286,
       "applied": false
     },
     {
@@ -5021,7 +4975,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 290,
+      "index": 287,
       "applied": false
     },
     {
@@ -5038,7 +4992,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 291,
+      "index": 288,
       "applied": false
     },
     {
@@ -5055,7 +5009,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 292,
+      "index": 289,
       "applied": false
     },
     {
@@ -5072,7 +5026,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 293,
+      "index": 290,
       "applied": false
     },
     {
@@ -5089,7 +5043,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 294,
+      "index": 291,
       "applied": false
     },
     {
@@ -5106,7 +5060,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 295,
+      "index": 292,
       "applied": false
     },
     {
@@ -5123,7 +5077,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 296,
+      "index": 293,
       "applied": false
     },
     {
@@ -5140,7 +5094,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 297,
+      "index": 294,
       "applied": false
     },
     {
@@ -5157,7 +5111,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 298,
+      "index": 295,
       "applied": false
     },
     {
@@ -5176,7 +5130,27 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 299,
+      "index": 296,
+      "applied": false
+    },
+    {
+      "title": "Bold NFL touchdown total predictions for Week 1 - Yahoo Sports",
+      "source": "Yahoo Sports",
+      "current": "nfl",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "nfl",
+      "confidence": 0.892,
+      "scores": {
+        "nfl": 14.0,
+        "technology": -14.0
+      },
+      "evidence": [
+        "nfl",
+        "touchdown",
+        "existing-category-prior"
+      ],
+      "index": 297,
       "applied": false
     },
     {
@@ -5195,7 +5169,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 300,
+      "index": 298,
       "applied": false
     },
     {
@@ -5214,7 +5188,7 @@
         "nfl",
         "existing-category-prior"
       ],
-      "index": 301,
+      "index": 299,
       "applied": false
     },
     {
@@ -5231,7 +5205,113 @@
       "evidence": [
         "existing-category-prior"
       ],
+      "index": 300,
+      "applied": false
+    },
+    {
+      "title": "Can Goff, new-look Lions offense set aside disappointing 2025? - ESPN",
+      "source": "ESPN",
+      "current": "nfl",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "nfl",
+      "confidence": 0.327,
+      "scores": {
+        "nfl": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 301,
+      "applied": false
+    },
+    {
+      "title": "Lucky PC scavenger discovers 12 RTX 3070 GPUs from the crypto mining era — cards survived years of basement storage with only minor signs of wear - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "technology",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "technology",
+      "confidence": 0.327,
+      "scores": {
+        "technology": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
       "index": 302,
+      "applied": false
+    },
+    {
+      "title": "Apple's A20 Pro shatters Geekbench 7 single-core record — 2nm chip beats desktop Intel Core i9 and AMD Ryzen 9 by up to 32% - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "technology",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "technology",
+      "confidence": 0.935,
+      "scores": {
+        "technology": 18.0
+      },
+      "evidence": [
+        "chip",
+        "amd",
+        "intel",
+        "apple",
+        "existing-category-prior"
+      ],
+      "index": 303,
+      "applied": false
+    },
+    {
+      "title": "Consumer Rights Wiki documents at least 44 instances in which Sony says you own your games — project is direct assault on Sony's claim in recent ownership lawsuit - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "technology",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "technology",
+      "confidence": 0.327,
+      "scores": {
+        "technology": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 304,
+      "applied": false
+    },
+    {
+      "title": "‘I’m Really Terrified’: A Mathematician Grapples With AI’s Recent Breakthroughs - WIRED",
+      "source": "Wired",
+      "current": "technology",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "technology",
+      "confidence": 0.327,
+      "scores": {
+        "technology": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 305,
+      "applied": false
+    },
+    {
+      "title": "Engineer turns simulated fly brain into a crypto day trader, posts downloadable sim to GitHub — 166,700 virtual neurons read candlestick charts for dopamine hits - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "technology",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "technology",
+      "confidence": 0.327,
+      "scores": {
+        "technology": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 306,
       "applied": false
     },
     {
@@ -5249,7 +5329,25 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 303,
+      "index": 307,
+      "applied": false
+    },
+    {
+      "title": "Y Combinator’s Garry Tan wants US open-weight AI labs to ‘distill’ frontier models, too - TechCrunch",
+      "source": "TechCrunch",
+      "current": "technology",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "technology",
+      "confidence": 0.707,
+      "scores": {
+        "technology": 6.0
+      },
+      "evidence": [
+        "ai",
+        "existing-category-prior"
+      ],
+      "index": 308,
       "applied": false
     },
     {
@@ -5267,7 +5365,7 @@
         "openai",
         "existing-category-prior"
       ],
-      "index": 304,
+      "index": 309,
       "applied": false
     },
     {
@@ -5285,7 +5383,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 305,
+      "index": 310,
       "applied": false
     },
     {
@@ -5303,7 +5401,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 306,
+      "index": 311,
       "applied": false
     },
     {
@@ -5321,7 +5419,7 @@
         "ai",
         "existing-category-prior"
       ],
-      "index": 307,
+      "index": 312,
       "applied": false
     },
     {
@@ -5338,7 +5436,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 308,
+      "index": 313,
       "applied": false
     },
     {
@@ -5355,67 +5453,12 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 309,
+      "index": 314,
       "applied": false
     },
     {
-      "title": "Nscale adds former OpenAI exec Fidji Simo to its board ahead of potential IPO - TechCrunch",
-      "source": "TechCrunch",
-      "current": "technology",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "technology",
-      "confidence": 0.799,
-      "scores": {
-        "technology": 9.0
-      },
-      "evidence": [
-        "openai",
-        "existing-category-prior"
-      ],
-      "index": 310,
-      "applied": false
-    },
-    {
-      "title": "China-modified Nvidia RTX 5090 with massive 96GB of memory appears on Alibaba for less than $4,000 — 3x more VRAM at 65% the cost of the original - Tom's Hardware",
+      "title": "Deals Archive | September 2026 - Tom's Hardware",
       "source": "Tom's Hardware",
-      "current": "technology",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "technology",
-      "confidence": 0.629,
-      "scores": {
-        "world": 3.0,
-        "technology": 8.0
-      },
-      "evidence": [
-        "nvidia",
-        "existing-category-prior"
-      ],
-      "index": 311,
-      "applied": false
-    },
-    {
-      "title": "Sanctioned Chinese supercomputer maker stripped of IO500 benchmark crown, Intel-powered Aurora retakes the lead — record-breaking ParaStor F9000 storage system doesn't meet reproducibility requirements - Tom's Hardware",
-      "source": "Tom's Hardware",
-      "current": "technology",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "technology",
-      "confidence": 0.742,
-      "scores": {
-        "technology": 7.0
-      },
-      "evidence": [
-        "intel",
-        "existing-category-prior"
-      ],
-      "index": 312,
-      "applied": false
-    },
-    {
-      "title": "We unfolded the iPhone Duo - The Verge",
-      "source": "The Verge",
       "current": "technology",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -5425,93 +5468,58 @@
         "technology": 2.0
       },
       "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 313,
-      "applied": false
-    },
-    {
-      "title": "Anthropic spent this week in hot water over cybersecurity - The Verge",
-      "source": "The Verge",
-      "current": "technology",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "technology",
-      "confidence": 0.714,
-      "scores": {
-        "technology": 9.0,
-        "underreported": 2.0
-      },
-      "evidence": [
-        "cybersecurity",
-        "existing-category-prior"
-      ],
-      "index": 314,
-      "applied": false
-    },
-    {
-      "title": "using AI companions - WIRED - WIRED",
-      "source": "Wired",
-      "current": "technology",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "technology",
-      "confidence": 0.707,
-      "scores": {
-        "technology": 6.0
-      },
-      "evidence": [
-        "ai",
         "existing-category-prior"
       ],
       "index": 315,
       "applied": false
     },
     {
-      "title": "Save 20% on this 144-in-1 screwdriver set, perfect for hobbyists and PC builders under $40 — epic starter toolkit ships with electric and precision drivers, along with 120 magnetic bits and 22 maintenance tools - Tom's Hardware",
-      "source": "Tom's Hardware",
-      "current": "technology",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "technology",
-      "confidence": 0.327,
+      "title": "Where To Pre-Order The Legend Of Zelda: Ocarina Of Time & Zelda Nintendo Switch 2 Console - Nintendo Life",
+      "source": "Nintendo Life",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.892,
       "scores": {
-        "technology": 2.0
+        "gaming": 14.0
       },
       "evidence": [
+        "nintendo",
+        "console",
         "existing-category-prior"
       ],
       "index": 316,
       "applied": false
     },
     {
-      "title": "The White House says Truth Social is the ‘most powerful and popular social media platform in the world’ - The Verge",
-      "source": "The Verge",
-      "current": "federal",
-      "action": "review",
-      "reason": "ambiguous:presidential",
-      "category": "presidential",
-      "confidence": 0.516,
+      "title": "Review: Lies Of P: Complete Edition (Switch 2) - No Strings On This Superb, Immersive Soulslike - Nintendo Life",
+      "source": "Nintendo Life",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.799,
       "scores": {
-        "presidential": 5.0,
-        "federal": 2.0
+        "gaming": 9.0
       },
       "evidence": [
-        "white house"
+        "nintendo",
+        "existing-category-prior"
       ],
       "index": 317,
       "applied": false
     },
     {
-      "title": "Can Goff, new-look Lions offense set aside disappointing 2025? - ESPN",
-      "source": "ESPN",
-      "current": "nfl",
+      "title": "Planet Zoo 2 Has Incredibly Lifelike Animals And Wild Game Reserves to Put Them In | IGN Preview - IGN",
+      "source": "IGN",
+      "current": "gaming",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
-      "category": "nfl",
+      "category": "gaming",
       "confidence": 0.327,
       "scores": {
-        "nfl": 2.0
+        "gaming": 2.0
       },
       "evidence": [
         "existing-category-prior"
@@ -5520,7 +5528,7 @@
       "applied": false
     },
     {
-      "title": "Where can i find friends suggestions on switch 2? - Nintendo Switch 2 Forum - Page 1 - Nintendo Life",
+      "title": "Date Everything! (2025) | Switch eShop Game - Nintendo Life",
       "source": "Nintendo Life",
       "current": "gaming",
       "action": "keep",
@@ -5535,6 +5543,128 @@
         "existing-category-prior"
       ],
       "index": 319,
+      "applied": false
+    },
+    {
+      "title": "The Best Nintendo Switch 2 Games - Nintendo Life",
+      "source": "Nintendo Life",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.799,
+      "scores": {
+        "gaming": 9.0
+      },
+      "evidence": [
+        "nintendo",
+        "existing-category-prior"
+      ],
+      "index": 320,
+      "applied": false
+    },
+    {
+      "title": "Nintendo Switch 2 Game Reviews - IGN",
+      "source": "IGN",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.799,
+      "scores": {
+        "gaming": 9.0
+      },
+      "evidence": [
+        "nintendo",
+        "existing-category-prior"
+      ],
+      "index": 321,
+      "applied": false
+    },
+    {
+      "title": "Super Monkey Ball Triple Pack Physical Release Rolls Onto Switch This November - Nintendo Life",
+      "source": "Nintendo Life",
+      "current": "gaming",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "gaming",
+      "confidence": 0.799,
+      "scores": {
+        "gaming": 9.0
+      },
+      "evidence": [
+        "nintendo",
+        "existing-category-prior"
+      ],
+      "index": 322,
+      "applied": false
+    },
+    {
+      "title": "Undercover Cops Review for Arcade Games: I Forget These Are Cops - GameFAQs",
+      "source": "GameSpot",
+      "current": "gaming",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "gaming",
+      "confidence": 0.327,
+      "scores": {
+        "gaming": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 323,
+      "applied": false
+    },
+    {
+      "title": "BlizzCon 2026 Opening Ceremony: Start Time, How To Watch, And What To Expect - GameSpot",
+      "source": "GameSpot",
+      "current": "gaming",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "gaming",
+      "confidence": 0.327,
+      "scores": {
+        "gaming": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 324,
+      "applied": false
+    },
+    {
+      "title": "Len Hafer [Articles] - IGN",
+      "source": "IGN",
+      "current": "gaming",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "gaming",
+      "confidence": 0.327,
+      "scores": {
+        "gaming": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 325,
+      "applied": false
+    },
+    {
+      "title": "Fallout 5 and Classic Fallout Remasters Officially Confirmed by Bethesda - Polygon.com",
+      "source": "Polygon",
+      "current": "gaming",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "gaming",
+      "confidence": 0.327,
+      "scores": {
+        "gaming": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 326,
       "applied": false
     },
     {
@@ -5553,7 +5683,7 @@
         "xbox",
         "existing-category-prior"
       ],
-      "index": 320,
+      "index": 327,
       "applied": false
     },
     {
@@ -5571,7 +5701,7 @@
         "nintendo",
         "existing-category-prior"
       ],
-      "index": 321,
+      "index": 328,
       "applied": false
     },
     {
@@ -5588,7 +5718,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 322,
+      "index": 329,
       "applied": false
     },
     {
@@ -5605,42 +5735,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 323,
-      "applied": false
-    },
-    {
-      "title": "The New SteelSeries Aeon Pro Wireless Gaming Controller With Infinite Battery Life Is Now Available - IGN",
-      "source": "IGN",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "gaming",
-        "existing-category-prior"
-      ],
-      "index": 324,
-      "applied": false
-    },
-    {
-      "title": "Polyarc, Dev Behind the Critically Acclaimed Moss Series, Is Shutting Down - IGN",
-      "source": "IGN",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 325,
+      "index": 330,
       "applied": false
     },
     {
@@ -5658,7 +5753,24 @@
         "playstation",
         "existing-category-prior"
       ],
-      "index": 326,
+      "index": 331,
+      "applied": false
+    },
+    {
+      "title": "Silksong's New Replacement Is About to Become the Best Action Game of the Year - Polygon.com",
+      "source": "Polygon",
+      "current": "gaming",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "gaming",
+      "confidence": 0.327,
+      "scores": {
+        "gaming": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 332,
       "applied": false
     },
     {
@@ -5677,7 +5789,7 @@
         "openai",
         "chatgpt"
       ],
-      "index": 327,
+      "index": 333,
       "applied": true
     },
     {
@@ -5694,25 +5806,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 328,
-      "applied": false
-    },
-    {
-      "title": "Nintendo Switch 2 Game Reviews - IGN",
-      "source": "IGN",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "nintendo",
-        "existing-category-prior"
-      ],
-      "index": 329,
+      "index": 334,
       "applied": false
     },
     {
@@ -5729,163 +5823,24 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 330,
-      "applied": false
-    },
-    {
-      "title": "Roblox Rolls Out Massive Updates at RDC 2026 - Polygon.com",
-      "source": "Polygon",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 331,
-      "applied": false
-    },
-    {
-      "title": "Roblox games are escaping Roblox: Creators will soon be able to export standalone apps for PC, console, and mobile - PC Gamer",
-      "source": "PC Gamer",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.742,
-      "scores": {
-        "gaming": 7.0
-      },
-      "evidence": [
-        "console",
-        "existing-category-prior"
-      ],
-      "index": 332,
-      "applied": false
-    },
-    {
-      "title": "Go Ahead And Take Vacation Time To Play GTA 6 - GameSpot",
-      "source": "GameSpot",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 333,
-      "applied": false
-    },
-    {
-      "title": "'We're not giving away pistols and cocaine to people': Miami Beach votes in favor of Grand Theft Auto 6 collab despite concerns - PC Gamer",
-      "source": "PC Gamer",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 334,
-      "applied": false
-    },
-    {
-      "title": "8 Big Changes That Prove The Ocarina Of Time Remake Is More Than A Link To The Past - GameSpot",
-      "source": "GameSpot",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
       "index": 335,
       "applied": false
     },
     {
-      "title": "Metroid Ravenous’ Surprise Reveal Was Secretly the Star of Nintendo’s Busy Week - Polygon.com",
+      "title": "Netflix’s Best Genre-Blending Series Finally Gives Fans What They Want in Season 2 - Polygon.com",
       "source": "Polygon",
       "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
       "category": "gaming",
-      "confidence": 0.799,
+      "confidence": 0.327,
       "scores": {
-        "gaming": 9.0
+        "gaming": 2.0
       },
       "evidence": [
-        "nintendo",
         "existing-category-prior"
       ],
       "index": 336,
-      "applied": false
-    },
-    {
-      "title": "GTA 6's PS5 Controller Pre-Orders Are Already Getting Ruined by Scalpers - Polygon.com",
-      "source": "Polygon",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 337,
-      "applied": false
-    },
-    {
-      "title": "GTA 6 Developer Is Fighting Drones And Hackers To Keep The Game’s Secrets Safe - GameSpot",
-      "source": "GameSpot",
-      "current": "gaming",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "gaming",
-      "confidence": 0.327,
-      "scores": {
-        "gaming": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 338,
-      "applied": false
-    },
-    {
-      "title": "Feature: 26 Details You Might Have Missed From The Zelda: Ocarina Of Time Switch 2 Reveal - Nintendo Life",
-      "source": "Nintendo Life",
-      "current": "gaming",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "gaming",
-      "confidence": 0.799,
-      "scores": {
-        "gaming": 9.0
-      },
-      "evidence": [
-        "nintendo",
-        "existing-category-prior"
-      ],
-      "index": 339,
       "applied": false
     },
     {
@@ -5902,7 +5857,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 340,
+      "index": 337,
       "applied": false
     },
     {
@@ -5919,7 +5874,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 341,
+      "index": 338,
       "applied": false
     },
     {
@@ -5936,11 +5891,47 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 342,
+      "index": 339,
       "applied": false
     },
     {
-      "title": "Pentagon looks to AI to identify space and missile threats - Defense News",
+      "title": "Top moments, highlights as 49ers beat Rams in Australia - ESPN",
+      "source": "ESPN",
+      "current": "nfl",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "nfl",
+      "confidence": 0.327,
+      "scores": {
+        "nfl": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 340,
+      "applied": false
+    },
+    {
+      "title": "Military services again requiring recruits to get flu shots as Air Force outbreak grows - ABC News - Breaking News, Latest News and Videos",
+      "source": "ABC News - Breaking News, Latest News and Videos",
+      "current": "military",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "military",
+      "confidence": 0.862,
+      "scores": {
+        "military": 12.0
+      },
+      "evidence": [
+        "military",
+        "air force",
+        "existing-category-prior"
+      ],
+      "index": 341,
+      "applied": false
+    },
+    {
+      "title": "Pentagon looks to AI to identify space and missile threats - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -5956,7 +5947,7 @@
         "missile",
         "existing-category-prior"
       ],
-      "index": 343,
+      "index": 342,
       "applied": false
     },
     {
@@ -5976,24 +5967,7 @@
         "war",
         "existing-category-prior"
       ],
-      "index": 344,
-      "applied": false
-    },
-    {
-      "title": "2 US jets downed by Iranian fire; search and rescue mission underway for 1 crew member - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "current": "military",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "military",
-      "confidence": 0.327,
-      "scores": {
-        "military": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 345,
+      "index": 343,
       "applied": false
     },
     {
@@ -6010,7 +5984,24 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 346,
+      "index": 344,
+      "applied": false
+    },
+    {
+      "title": "Dems plot to take on Hegseth if they win in November - Politico",
+      "source": "Politico",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.327,
+      "scores": {
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 345,
       "applied": false
     },
     {
@@ -6029,7 +6020,7 @@
         "army",
         "existing-category-prior"
       ],
-      "index": 347,
+      "index": 346,
       "applied": false
     },
     {
@@ -6048,7 +6039,7 @@
         "war",
         "existing-category-prior"
       ],
-      "index": 348,
+      "index": 347,
       "applied": false
     },
     {
@@ -6066,30 +6057,11 @@
         "army",
         "existing-category-prior"
       ],
-      "index": 349,
+      "index": 348,
       "applied": false
     },
     {
-      "title": "Military and intelligence officials discuss smaller presence in the Middle East as US looks for another post-9/11 strategy - CNN",
-      "source": "CNN",
-      "current": "military",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "military",
-      "confidence": 0.524,
-      "scores": {
-        "world": 4.0,
-        "military": 7.0
-      },
-      "evidence": [
-        "military",
-        "existing-category-prior"
-      ],
-      "index": 350,
-      "applied": false
-    },
-    {
-      "title": "Saudi crown prince sought US military help with Houthis, sources say - Defense News",
+      "title": "Saudi crown prince sought US military help with Houthis, sources say - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -6103,11 +6075,11 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 351,
+      "index": 349,
       "applied": false
     },
     {
-      "title": "Polish prime minister: Poland to develop its own Starlink - Defense News",
+      "title": "Polish prime minister: Poland to develop its own Starlink - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6120,11 +6092,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 352,
+      "index": 350,
       "applied": false
     },
     {
-      "title": "US refutes claims that Iran captured Saildrone USV - Defense News",
+      "title": "US refutes claims that Iran captured Saildrone USV - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6138,61 +6110,43 @@
       "evidence": [
         "iran"
       ],
+      "index": 351,
+      "applied": false
+    },
+    {
+      "title": "German military eyes cruise missiles from Covenant, a surprise vendor setting up shop - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "military",
+      "confidence": 0.742,
+      "scores": {
+        "military": 7.0
+      },
+      "evidence": [
+        "military",
+        "existing-category-prior"
+      ],
+      "index": 352,
+      "applied": false
+    },
+    {
+      "title": "India puts domestic industry at heart of new military equipment orders - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "keep",
+      "reason": "category-confirmed",
+      "category": "military",
+      "confidence": 0.742,
+      "scores": {
+        "military": 7.0
+      },
+      "evidence": [
+        "military",
+        "existing-category-prior"
+      ],
       "index": 353,
-      "applied": false
-    },
-    {
-      "title": "German military eyes cruise missiles from Covenant, a surprise vendor setting up shop - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "military",
-      "confidence": 0.742,
-      "scores": {
-        "military": 7.0
-      },
-      "evidence": [
-        "military",
-        "existing-category-prior"
-      ],
-      "index": 354,
-      "applied": false
-    },
-    {
-      "title": "India puts domestic industry at heart of new military equipment orders - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "military",
-      "confidence": 0.742,
-      "scores": {
-        "military": 7.0
-      },
-      "evidence": [
-        "military",
-        "existing-category-prior"
-      ],
-      "index": 355,
-      "applied": false
-    },
-    {
-      "title": "Flu outbreak among Air Force recruits at Joint Base San Antonio after Hegseth ends mandatory flu vaccine - ABC News - Breaking News, Latest News and Videos",
-      "source": "ABC News - Breaking News, Latest News and Videos",
-      "current": "military",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "military",
-      "confidence": 0.742,
-      "scores": {
-        "military": 7.0
-      },
-      "evidence": [
-        "air force",
-        "existing-category-prior"
-      ],
-      "index": 356,
       "applied": false
     },
     {
@@ -6210,11 +6164,11 @@
         "troops",
         "existing-category-prior"
       ],
-      "index": 357,
+      "index": 354,
       "applied": false
     },
     {
-      "title": "Iran attack on base in Jordan damaged American military aircraft, US official says - Defense News",
+      "title": "Iran attack on base in Jordan damaged American military aircraft, US official says - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -6230,11 +6184,11 @@
         "military",
         "existing-category-prior"
       ],
-      "index": 358,
+      "index": 355,
       "applied": false
     },
     {
-      "title": "Iran likely to reverse-engineer captured US underwater drone - Defense News",
+      "title": "Iran likely to reverse-engineer captured US underwater drone - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6248,11 +6202,63 @@
       "evidence": [
         "iran"
       ],
+      "index": 356,
+      "applied": false
+    },
+    {
+      "title": "US radar maker Echodyne mulls European production as drone warfare fuels demand - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.327,
+      "scores": {
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 357,
+      "applied": false
+    },
+    {
+      "title": "Elbit Systems’ American subsidiary rebrands as Twenty-Six Defense - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.137,
+      "scores": {
+        "us": 2.0,
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 358,
+      "applied": false
+    },
+    {
+      "title": "Twenty-Six Defense to Strengthen Innovation and Domestic Manufacturing for America’s Warfighters - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.327,
+      "scores": {
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
       "index": 359,
       "applied": false
     },
     {
-      "title": "US radar maker Echodyne mulls European production as drone warfare fuels demand - Defense News",
+      "title": "Saab tapped to continue work on Sweden’s next flagship fighter jet - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6269,15 +6275,14 @@
       "applied": false
     },
     {
-      "title": "Elbit Systems’ American subsidiary rebrands as Twenty-Six Defense - Defense News",
+      "title": "Author Jaroslaw Adamowski - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
       "category": "military",
-      "confidence": 0.137,
+      "confidence": 0.327,
       "scores": {
-        "us": 2.0,
         "military": 2.0
       },
       "evidence": [
@@ -6287,7 +6292,7 @@
       "applied": false
     },
     {
-      "title": "Twenty-Six Defense to Strengthen Innovation and Domestic Manufacturing for America’s Warfighters - Defense News",
+      "title": "Anduril doubles down on Poland with autonomous aircraft pitch for F-35, Apache - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6304,94 +6309,7 @@
       "applied": false
     },
     {
-      "title": "Saab tapped to continue work on Sweden’s next flagship fighter jet - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "military",
-      "confidence": 0.327,
-      "scores": {
-        "military": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 363,
-      "applied": false
-    },
-    {
-      "title": "Iran and US hit tankers in biggest wave of attacks on shipping since war began - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "keep",
-      "reason": "category-confirmed",
-      "category": "military",
-      "confidence": 0.364,
-      "scores": {
-        "world": 4.0,
-        "military": 5.0
-      },
-      "evidence": [
-        "war",
-        "existing-category-prior"
-      ],
-      "index": 364,
-      "applied": false
-    },
-    {
-      "title": "Parry Labs - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "military",
-      "confidence": 0.327,
-      "scores": {
-        "military": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 365,
-      "applied": false
-    },
-    {
-      "title": "Author Jaroslaw Adamowski - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "military",
-      "confidence": 0.327,
-      "scores": {
-        "military": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 366,
-      "applied": false
-    },
-    {
-      "title": "Anduril doubles down on Poland with autonomous aircraft pitch for F-35, Apache - Defense News",
-      "source": "Defense News",
-      "current": "military",
-      "action": "review",
-      "reason": "insufficient-semantic-evidence",
-      "category": "military",
-      "confidence": 0.327,
-      "scores": {
-        "military": 2.0
-      },
-      "evidence": [
-        "existing-category-prior"
-      ],
-      "index": 367,
-      "applied": false
-    },
-    {
-      "title": "US Navy’s next-generation fighter decision to be unveiled soon, sources say - Defense News",
+      "title": "US Navy’s next-generation fighter decision to be unveiled soon, sources say - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -6405,11 +6323,11 @@
         "navy",
         "existing-category-prior"
       ],
-      "index": 368,
+      "index": 363,
       "applied": false
     },
     {
-      "title": "US Air Force seeks ‘rapidly deployable’ drone swarms for base security - Defense News",
+      "title": "US Air Force seeks ‘rapidly deployable’ drone swarms for base security - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -6423,7 +6341,7 @@
         "air force",
         "existing-category-prior"
       ],
-      "index": 369,
+      "index": 364,
       "applied": false
     },
     {
@@ -6441,11 +6359,11 @@
       "evidence": [
         "iran"
       ],
-      "index": 370,
+      "index": 365,
       "applied": false
     },
     {
-      "title": "Defense startup’s AI aims to make every munition count - Defense News",
+      "title": "Defense startup’s AI aims to make every munition count - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6459,11 +6377,11 @@
       "evidence": [
         "ai"
       ],
-      "index": 371,
+      "index": 366,
       "applied": false
     },
     {
-      "title": "Technology and Innovation - Defense News",
+      "title": "Technology and Innovation - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6476,11 +6394,11 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 372,
+      "index": 367,
       "applied": false
     },
     {
-      "title": "South Korea supercharges defense budget to record levels - Defense News",
+      "title": "Author Gordon Arthur - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6493,11 +6411,28 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 373,
+      "index": 368,
       "applied": false
     },
     {
-      "title": "Pentagon News: The latest stories and analysis on DoD decisions and policies - Defense News",
+      "title": "South Korea supercharges defense budget to record levels - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.327,
+      "scores": {
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 369,
+      "applied": false
+    },
+    {
+      "title": "Pentagon News: The latest stories and analysis on DoD decisions and policies - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "keep",
@@ -6511,11 +6446,11 @@
         "pentagon",
         "existing-category-prior"
       ],
-      "index": 374,
+      "index": 370,
       "applied": false
     },
     {
-      "title": "Iran says it captured US submarine drone in Strait of Hormuz - Defense News",
+      "title": "Iran says it captured US submarine drone in Strait of Hormuz - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6529,11 +6464,11 @@
       "evidence": [
         "iran"
       ],
-      "index": 375,
+      "index": 371,
       "applied": false
     },
     {
-      "title": "Ukraine contracting around 1,000 Patriot missiles from allies, defense chief says - Defense News",
+      "title": "Ukraine contracting around 1,000 Patriot missiles from allies, defense chief says - defensenews.com",
       "source": "Defense News",
       "current": "military",
       "action": "review",
@@ -6547,7 +6482,24 @@
       "evidence": [
         "ukraine"
       ],
-      "index": 376,
+      "index": 372,
+      "applied": false
+    },
+    {
+      "title": "Latest - Defense News - defensenews.com",
+      "source": "Defense News",
+      "current": "military",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "military",
+      "confidence": 0.327,
+      "scores": {
+        "military": 2.0
+      },
+      "evidence": [
+        "existing-category-prior"
+      ],
+      "index": 373,
       "applied": false
     },
     {
@@ -6565,7 +6517,7 @@
       "evidence": [
         "accountability"
       ],
-      "index": 377,
+      "index": 374,
       "applied": false
     },
     {
@@ -6583,7 +6535,25 @@
       "evidence": [
         "congress"
       ],
-      "index": 378,
+      "index": 375,
+      "applied": false
+    },
+    {
+      "title": "H.R. 7661 — Text - H.R.7661 - 119th Congress (2025-2026): Stop the Sexualization of Children Act",
+      "source": "Congress.gov",
+      "current": "legislation",
+      "action": "review",
+      "reason": "ambiguous:federal",
+      "category": "federal",
+      "confidence": 0.516,
+      "scores": {
+        "federal": 5.0,
+        "legislation": 2.0
+      },
+      "evidence": [
+        "congress"
+      ],
+      "index": 376,
       "applied": false
     },
     {
@@ -6603,7 +6573,7 @@
       "evidence": [
         "artificial intelligence"
       ],
-      "index": 379,
+      "index": 377,
       "applied": false
     },
     {
@@ -6622,7 +6592,25 @@
       "evidence": [
         "congress"
       ],
-      "index": 380,
+      "index": 378,
+      "applied": false
+    },
+    {
+      "title": "H.R. 9345 — 119th Congress (2025-2026): Medicaid Equal Standards Act",
+      "source": "Congress.gov",
+      "current": "legislation",
+      "action": "review",
+      "reason": "ambiguous:federal",
+      "category": "federal",
+      "confidence": 0.516,
+      "scores": {
+        "federal": 5.0,
+        "legislation": 2.0
+      },
+      "evidence": [
+        "congress"
+      ],
+      "index": 379,
       "applied": false
     },
     {
@@ -6639,7 +6627,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 381,
+      "index": 380,
       "applied": false
     },
     {
@@ -6657,7 +6645,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 382,
+      "index": 381,
       "applied": false
     },
     {
@@ -6675,7 +6663,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 383,
+      "index": 382,
       "applied": false
     },
     {
@@ -6693,7 +6681,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 384,
+      "index": 383,
       "applied": false
     },
     {
@@ -6711,25 +6699,7 @@
       "evidence": [
         "congress"
       ],
-      "index": 385,
-      "applied": false
-    },
-    {
-      "title": "H.R. 7661 — Text - H.R.7661 - 119th Congress (2025-2026): Stop the Sexualization of Children Act",
-      "source": "Congress.gov",
-      "current": "legislation",
-      "action": "review",
-      "reason": "ambiguous:federal",
-      "category": "federal",
-      "confidence": 0.516,
-      "scores": {
-        "federal": 5.0,
-        "legislation": 2.0
-      },
-      "evidence": [
-        "congress"
-      ],
-      "index": 386,
+      "index": 384,
       "applied": false
     },
     {
@@ -6746,7 +6716,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 387,
+      "index": 385,
       "applied": false
     },
     {
@@ -6763,7 +6733,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 388,
+      "index": 386,
       "applied": false
     },
     {
@@ -6780,7 +6750,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 389,
+      "index": 387,
       "applied": false
     },
     {
@@ -6797,7 +6767,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 390,
+      "index": 388,
       "applied": false
     },
     {
@@ -6814,7 +6784,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 391,
+      "index": 389,
       "applied": false
     },
     {
@@ -6831,7 +6801,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 392,
+      "index": 390,
       "applied": false
     },
     {
@@ -6848,7 +6818,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 393,
+      "index": 391,
       "applied": false
     },
     {
@@ -6865,7 +6835,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 394,
+      "index": 392,
       "applied": false
     },
     {
@@ -6882,7 +6852,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 395,
+      "index": 393,
       "applied": false
     },
     {
@@ -6899,7 +6869,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 396,
+      "index": 394,
       "applied": false
     },
     {
@@ -6916,7 +6886,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 397,
+      "index": 395,
       "applied": false
     },
     {
@@ -6934,7 +6904,7 @@
       "evidence": [
         "existing-category-prior"
       ],
-      "index": 398,
+      "index": 396,
       "applied": false
     },
     {
@@ -6952,7 +6922,7 @@
       "evidence": [
         "troops"
       ],
-      "index": 399,
+      "index": 397,
       "applied": false
     },
     {
@@ -6968,6 +6938,43 @@
       },
       "evidence": [
         "existing-category-prior"
+      ],
+      "index": 398,
+      "applied": false
+    },
+    {
+      "title": "Trump Administration's No-Bond Detainment Policy For Immigrants Blocked A Ninth Time - KFF Health News",
+      "source": "KFF Health News",
+      "current": "x",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "x",
+      "confidence": 0.327,
+      "scores": {
+        "presidential": 2.0
+      },
+      "evidence": [
+        "administration"
+      ],
+      "index": 399,
+      "applied": false
+    },
+    {
+      "title": "Apple's A20 Pro shatters Geekbench 7 single-core record — 2nm chip beats desktop Intel Core i9 and AMD Ryzen 9 by up to 32% - Tom's Hardware",
+      "source": "Tom's Hardware",
+      "current": "x",
+      "action": "reroute",
+      "reason": "semantic-match:technology",
+      "category": "technology",
+      "confidence": 0.916,
+      "scores": {
+        "technology": 16.0
+      },
+      "evidence": [
+        "chip",
+        "amd",
+        "intel",
+        "apple"
       ],
       "index": 400,
       "applied": false
@@ -6990,38 +6997,8 @@
       "applied": false
     },
     {
-      "title": "OpenAI employee takes down ChatGPT-coded RuneScape clone following Jagex cease-and-desist - PC Gamer",
-      "source": "PC Gamer",
-      "current": "x",
-      "action": "reroute",
-      "reason": "semantic-match:technology",
-      "category": "technology",
-      "confidence": 0.892,
-      "scores": {
-        "technology": 14.0
-      },
-      "evidence": [
-        "openai",
-        "chatgpt"
-      ],
-      "index": 402,
-      "applied": false
-    },
-    {
-      "title": "More Than 5,000 Leaders Across Entertainment, Academia and Public Life Unite to Reject “Genocide” Accusation Against Israel - Creative Community for Peace",
-      "source": "Creative Community for Peace",
-      "current": "x",
-      "action": "reject",
-      "reason": "unapproved-source",
-      "category": null,
-      "confidence": 1.0,
-      "scores": {},
-      "evidence": [],
-      "index": 403
-    },
-    {
-      "title": "USA Basketball schedule: When Caitlin Clark plays next in FIBA World Cup - Hawkeyes Wire",
-      "source": "USA Today",
+      "title": "‘Who Cares?’ – Ex-Indiana Coach Rips Media for Stirring Controversy Over Caitlin Clark Not Starting for Team USA in World Cup",
+      "source": "Yahoo Sports",
       "current": "x",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -7029,7 +7006,7 @@
       "confidence": 0.0,
       "scores": {},
       "evidence": [],
-      "index": 404,
+      "index": 402,
       "applied": false
     },
     {
@@ -7047,12 +7024,12 @@
         "supreme court",
         "federal"
       ],
-      "index": 405,
+      "index": 403,
       "applied": false
     },
     {
-      "title": "French TV Disruptor Jeremy Zag Talks Building ‘Miraculous’ Universe, Plans For A Live-Action Series & Latest On Katy Perry Animated Movie ‘Melody’ - Yahoo",
-      "source": "Yahoo",
+      "title": "Fox News Entertainment newsletter: King Charles shuts down Harry and Meghan; Prince George starts at Eton - 930 WFMD Free Talk",
+      "source": "930 WFMD Free Talk",
       "current": "x",
       "action": "reject",
       "reason": "unapproved-source",
@@ -7060,10 +7037,10 @@
       "confidence": 1.0,
       "scores": {},
       "evidence": [],
-      "index": 406
+      "index": 404
     },
     {
-      "title": "Why Guardians might finally trade away All-Star Gold Glove OF after years of rumors - Yahoo Sports",
+      "title": "Where to watch USA vs. Spain: Channel, live stream, time, TV schedule for FIBA Women's World Cup semifinal",
       "source": "Yahoo Sports",
       "current": "x",
       "action": "review",
@@ -7072,7 +7049,7 @@
       "confidence": 0.0,
       "scores": {},
       "evidence": [],
-      "index": 407,
+      "index": 405,
       "applied": false
     },
     {
@@ -7091,30 +7068,12 @@
       "evidence": [
         "durango"
       ],
-      "index": 408,
+      "index": 406,
       "applied": false
     },
     {
-      "title": "Kojima’s Physint Dropped By PlayStation, Rescued By Xbox - GameSpot",
-      "source": "GameSpot",
-      "current": "x",
-      "action": "reroute",
-      "reason": "semantic-match:gaming",
-      "category": "gaming",
-      "confidence": 0.892,
-      "scores": {
-        "gaming": 14.0
-      },
-      "evidence": [
-        "playstation",
-        "xbox"
-      ],
-      "index": 409,
-      "applied": false
-    },
-    {
-      "title": "A Texas LNG Plant Pumps Out Chronic, Unpermitted Pollution, a Watchdog Finds - Inside Climate News",
-      "source": "Inside Climate News",
+      "title": "Consumer Rights Wiki documents at least 44 instances in which Sony says you own your games — project is direct assault on Sony's claim in recent ownership lawsuit - Tom's Hardware",
+      "source": "Tom's Hardware",
       "current": "x",
       "action": "review",
       "reason": "insufficient-semantic-evidence",
@@ -7122,7 +7081,20 @@
       "confidence": 0.0,
       "scores": {},
       "evidence": [],
-      "index": 410,
+      "index": 407,
+      "applied": false
+    },
+    {
+      "title": "From DOGE to \"space lasers,\" Alex Gibney peels back the many layers of Elon Musk - NPR",
+      "source": "NPR",
+      "current": "x",
+      "action": "review",
+      "reason": "insufficient-semantic-evidence",
+      "category": "x",
+      "confidence": 0.0,
+      "scores": {},
+      "evidence": [],
+      "index": 408,
       "applied": false
     }
   ],
