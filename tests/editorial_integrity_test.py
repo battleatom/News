@@ -30,6 +30,15 @@ assert not m.obvious_domestic_world(b)
 mn=item('world','A little bit of Germany here in Minnesota','A German-American institute is holding an Oktoberfest celebration in St. Paul.')
 assert m.obvious_domestic_world(mn), 'Minnesota cultural event incorrectly survives as World'
 
+# Ordinary sports must not leak into the United States tab. NFL-specific stories use
+# the dedicated NFL tab, while genuine law/government sports stories stay eligible.
+college=item('us','Oklahoma State football news: Cowboys shock college football world with upset of No. 6 Oregon','The Cowboys won the game on Saturday.','Oklahoma','Yahoo Sports')
+assert m.us_sports_disposition(college)=='drop', 'college football survived the U.S. sports gate'
+nfl=item('us','Chiefs quarterback throws four touchdowns in NFL opener','Kansas City won its NFL game.','Missouri','CBS Sports')
+assert m.us_sports_disposition(nfl)=='nfl', 'NFL story did not route to the NFL tab'
+policy=item('us','Congress examines NCAA antitrust rules affecting college football','Lawmakers questioned whether federal law should change.','', 'Reuters')
+assert m.us_sports_disposition(policy) is None, 'sports policy story was incorrectly removed from U.S. news'
+
 # User-reported domain leakage: strong headline evidence should beat the broad World prior.
 game=item('world',"'StarCraft 3,' an Open-World Shooter Game Coming in 2030; First Look Revealed",'A publisher revealed a new StarCraft game.')
 gd=classifier.classify(game)
