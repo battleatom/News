@@ -1,0 +1,79 @@
+name: Content Category Regression Fresh-Main Test
+
+on:
+  push:
+    branches:
+      - test/content-category-regression-2026-09-12b
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile all Python
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Run editorial regressions
+        run: python tests/editorial_integrity_test.py
+      - name: Run existing category relevance regression
+        run: python tests/category_relevance_smoke.py
+      - name: Snapshot category counts
+        run: |
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          from collections import Counter
+          items=ET.parse('News').getroot().findall('./channel/item')
+          counts=Counter((i.findtext('category') or '').strip() for i in items)
+          json.dump({'total':len(items),'counts':dict(counts)},open('/tmp/before.json','w'),indent=2)
+          print('BEFORE',len(items),dict(counts))
+          PY
+      - name: Run production post-collection quality flow
+        run: |
+          python scripts/filter_landing_pages.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enforce_editorial_integrity.py
+      - name: Verify final category and content quality
+        run: |
+          python - <<'PY'
+          import json, sys, xml.etree.ElementTree as ET
+          from collections import Counter
+          sys.path.insert(0,'scripts')
+          import classify_live_feed as classifier
+          from filter_landing_pages import is_landing_page
+          items=ET.parse('News').getroot().findall('./channel/item')
+          counts=Counter((i.findtext('category') or '').strip() for i in items)
+          before=json.load(open('/tmp/before.json'))
+          bad_nonstory=[(i.findtext('title') or '') for i in items if is_landing_page(i)]
+          assert not bad_nonstory, 'non-story pages remain: '+repr(bad_nonstory[:10])
+          bad_world=[]
+          for i in items:
+              cat=(i.findtext('category') or '').strip().lower()
+              if cat!='world': continue
+              d=classifier.classify(i)
+              dest=d.get('category') or ''
+              conf=float(d.get('confidence') or 0)
+              more_specific=classifier.SPECIFICITY.get(dest,0)>=classifier.SPECIFICITY.get(cat,0)+2
+              if d.get('action')=='reroute' and dest!=cat and (conf>=.80 or (conf>=.72 and more_specific)):
+                  bad_world.append(((i.findtext('title') or ''),dest,conf,d.get('evidence')))
+          assert not bad_world, 'high-confidence World misroutes remain: '+repr(bad_world[:12])
+          for cat,n in before['counts'].items():
+              if n>=10 and cat not in {'top','x','underreported','boxoffice','entertainment'}:
+                  assert counts[cat]>=max(6,int(n*.60)), f'{cat} over-filtered: {n}->{counts[cat]}'
+          print('AFTER',len(items),dict(counts))
+          print('CONTENT/CATEGORY QUALITY PASS')
+          PY
+      - name: Verify final reroutes did not reintroduce cross-tab collisions
+        run: |
+          python scripts/cross_tab_integrity_fast.py --report /tmp/post-final-cross-tab.json
+          python - <<'PY'
+          import json
+          r=json.load(open('/tmp/post-final-cross-tab.json'))
+          assert r['crossTabDuplicatesRemoved']==0, 'final routing reintroduced cross-tab duplicates: '+repr(r['clusters'][:8])
+          print('POST-FINAL CROSS-TAB PASS')
+          PY
