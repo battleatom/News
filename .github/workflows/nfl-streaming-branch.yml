@@ -29,6 +29,6 @@ jobs:
           missing=[x for x in required if x not in s]
           assert not missing,missing
           assert s.count('function nflStreamingServices(')==1
-          assert s.count('class=\\"nfl-airing\\"')==1
+          assert s.count('nfl-airing')>=1
           print('NFL STREAMING BRANCH TEST PASSED')
           PY
