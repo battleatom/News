@@ -37,7 +37,8 @@ def farmington_suite(browser):
     assert 'All' in joined and 'Statewide' in joined, f'Missing state hub scopes: {joined}'
     assert 'Farmington' in joined or 'Local' in joined, f'Missing local scope: {joined}'
     assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
-    assert 'San Juan County' in joined or 'County' in joined, f'Missing county scope: {joined}'
+    assert 'San Juan County' not in joined and 'County' not in joined, f'County scope should be hidden: {joined}'
+    assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, 'County scope button is still rendered'
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
@@ -70,6 +71,7 @@ def denver_suite(browser):
     labels=location_scope_labels(page)
     joined=' | '.join(labels)
     assert 'Statewide' in joined and ('Denver' in joined or 'Local' in joined), f'Denver location scopes invalid: {joined}'
+    assert 'County' not in joined and page.locator('.location-scope-btn[data-scope="county"]').count()==0, f'County scope should be hidden in Denver: {joined}'
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
@@ -128,7 +130,7 @@ def main():
         denver_suite(browser)
         mobile_suite(browser)
         browser.close()
-    print('V4 SMOKE PASS — feed logic, Presidential routing, X renderer, V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
+    print('V4 SMOKE PASS — feed logic, Presidential routing, X renderer, city-only V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
 
 
 if __name__=='__main__':
