@@ -1,0 +1,93 @@
+name: Build V4 Live Preview
+
+on:
+  push:
+    branches: [V4]
+    paths:
+      - 'scripts/**'
+      - 'assets/**'
+      - 'data/**'
+      - '.github/workflows/v4-live-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v4-live-preview
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V4
+        uses: actions/checkout@v4
+        with:
+          ref: V4
+          fetch-depth: 0
+
+      - name: Validate Python
+        run: python -m py_compile scripts/*.py
+
+      - name: Collect V4 news
+        run: python scripts/update_news_v4.py
+
+      - name: Refine Technology and Gaming
+        run: python scripts/refine_tech_gaming.py
+
+      - name: Collect official legislation
+        run: python scripts/collect_official_legislation_strict.py
+
+      - name: Enrich World
+        run: python scripts/enrich_world_content.py
+
+      - name: Expand and rank Underreported
+        run: |
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+
+      - name: Enrich legislation and X
+        run: |
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+
+      - name: Enrich Box Office
+        run: |
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+
+      - name: Clean and verify feed
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+
+      - name: Build paraphrased briefs
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+
+      - name: Build site and inject V4 UI
+        run: |
+          python scripts/build_site.py
+          python scripts/patch_entertainment_v4_ui.py
+          python scripts/site_audit.py
+
+      - name: Commit V4 live preview files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '418982+github-actions[bot]@users.noreply.github.com'
+          git add News index.html content-brief-cache.json verification-report.json boxoffice.json refresh-health.json 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo 'V4 live preview already current.'
+            exit 0
+          fi
+          git commit -m 'Build V4 live preview [skip ci]'
+          git push origin HEAD:V4
