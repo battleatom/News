@@ -12,10 +12,21 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout test branch
+        uses: actions/checkout@v4
         with:
           ref: test/consolidation-location-dedupe-v1
           fetch-depth: 0
+
+      - name: Checkout main baseline
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: baseline-main
+          fetch-depth: 1
+
+      - name: Use the same live feed for both builds
+        run: cp baseline-main/News News
 
       - name: Validate Python syntax
         run: python -m py_compile scripts/*.py tests/*.py
@@ -31,15 +42,33 @@ jobs:
           python -m pip install --quiet playwright
           python -m playwright install --with-deps chromium
 
-      - name: Start local test site
+      - name: Start branch and main sites
         run: |
           python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-test-http.log 2>&1 &
           echo $! > /tmp/news-test-http.pid
+          (cd baseline-main && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-main-http.log 2>&1 &)
           sleep 2
 
       - name: Test generic location routing
         run: python tests/location_routing_v27.py
 
-      - name: Show server log on failure
+      - name: Run live main-vs-branch A/B tab comparison
+        run: python tests/live_ab_compare_v27.py
+
+      - name: Print A/B report
+        if: always()
+        run: cat live-ab-report.json || true
+
+      - name: Upload A/B comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-ab-comparison
+          path: live-ab-report.json
+          retention-days: 14
+
+      - name: Show server logs on failure
         if: failure()
-        run: cat /tmp/news-test-http.log || true
+        run: |
+          cat /tmp/news-test-http.log || true
+          cat /tmp/news-main-http.log || true
