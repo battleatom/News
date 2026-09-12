@@ -21,7 +21,7 @@ def item(n, source='Variety', title=None, category='entertainment', description=
         'pubDate': (now-timedelta(minutes=n)).strftime('%a, %d %b %Y %H:%M:%S GMT'),
     }
 
-sample=[item(i, source='Reuters' if i<7 else 'Variety') for i in range(12)]
+sample=[item(i, source=f'Entertainment Source {i}') for i in range(12)]
 selected=v4.select_entertainment(sample,limit=10)
 assert len(selected)==10, len(selected)
 assert all(x.get('entertainmentSafety') in {'clean','dirty'} for x in selected)
@@ -53,4 +53,4 @@ assert v4.core.source_is_trusted('Variety')
 assert v4.core.source_is_trusted('Billboard')
 assert v4.core.source_is_trusted('People')
 assert v4.core.source_is_trusted('TMZ')
-print('V4 Entertainment tests passed: importance hierarchy, Clean/Dirty tagging, expanded specialist trust, and red-footnote feed linkage.')
+print('V4 Entertainment tests passed: importance hierarchy, Clean/Dirty tagging, publisher diversity, expanded specialist trust, and red-footnote feed linkage.')
