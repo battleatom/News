@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-"""Build short original factual briefs for Underreported cards.
+"""Build concise, complete factual briefs for news cards.
 
-The headline, link, source, category and ranking are left untouched. For Google News
-RSS links, the script resolves the publisher URL, reads only publicly returned HTML,
-extracts article/meta text, and writes a short digest into <description>. It does not
-attempt to bypass logins, paywalls, robots challenges, or other access controls.
+The script reads publicly returned article text, selects up to two useful facts,
+paraphrases them into complete sentences, and never cuts a sentence with an
+ellipsis. Headline, link, source, category, and ranking are left untouched.
 """
-
 import html
 import json
 import re
@@ -31,29 +29,14 @@ except ImportError as exc:
 
 NEWS = Path("News")
 CACHE = Path("content-brief-cache.json")
-CACHE_VERSION = 2
-MAX_BRIEF_CHARS = 500
+CACHE_VERSION = 3
 MIN_ARTICLE_TEXT = 180
 FETCH_TIMEOUT = 9
 FETCH_WORKERS = 8
 CACHE_LIMIT = 1800
-USER_AGENT = "Mozilla/5.0 (compatible; Underreported/3.0; +https://github.com/battleatom/News)"
-
-CATEGORY_OPENERS = {
-    "world": "International reporting indicates",
-    "us": "U.S. reporting indicates",
-    "presidential": "White House coverage indicates",
-    "federal": "Federal reporting indicates",
-    "legislation": "Legislative reporting indicates",
-    "nm": "New Mexico reporting indicates",
-    "local": "Local reporting indicates",
-    "region": "Regional reporting indicates",
-    "nfl": "NFL reporting indicates",
-    "technology": "Technology reporting indicates",
-    "gaming": "Gaming reporting indicates",
-    "military": "Defense reporting indicates",
-    "underreported": "Reporting on the issue indicates",
-}
+MAX_FACT_CHARS = 285
+MAX_BRIEF_CHARS = 560
+USER_AGENT = "Mozilla/5.0 (compatible; Underreported/4.0; +https://github.com/battleatom/News)"
 
 BOILERPLATE = (
     "accept cookies", "cookie policy", "privacy policy", "terms of use", "sign up",
@@ -71,7 +54,6 @@ COMMON_REWRITES = (
     (r"\bannounced\b", "outlined"),
     (r"\bannounces\b", "outlines"),
     (r"\bwill\b", "is expected to"),
-    (r"\bafter\b", "following"),
     (r"\bamid\b", "during"),
     (r"\bhowever\b", "at the same time"),
     (r"\bmore than\b", "over"),
@@ -107,11 +89,7 @@ def load_cache() -> dict[str, dict]:
 
 
 def save_cache(cache: dict[str, dict]) -> None:
-    rows = sorted(
-        cache.items(),
-        key=lambda pair: str(pair[1].get("updatedAt", "")),
-        reverse=True,
-    )[:CACHE_LIMIT]
+    rows = sorted(cache.items(), key=lambda pair: str(pair[1].get("updatedAt", "")), reverse=True)[:CACHE_LIMIT]
     CACHE.write_text(json.dumps(dict(rows), indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
@@ -141,9 +119,7 @@ def resolve_publisher_url(url: str) -> str:
 def text_is_clean(value: str, minimum: int = 80) -> bool:
     value = clean(value)
     low = value.lower()
-    if len(value) < minimum:
-        return False
-    if any(term in low for term in BOILERPLATE):
+    if len(value) < minimum or any(term in low for term in BOILERPLATE):
         return False
     if re.search(r"\b(?:https?://|www\.|[\w.+-]+@[\w.-]+\.[a-z]{2,})", value, re.I):
         return False
@@ -198,15 +174,13 @@ def paragraph_text(soup: BeautifulSoup) -> str:
         text = clean(p.get_text(" ", strip=True))
         if not text_is_clean(text, 55):
             continue
-        # Interviews/op-eds often expose isolated first-person fragments that make poor
-        # neutral briefs; skip those and favor reported factual paragraphs instead.
         if re.match(r"^(?:i|i'm|i’ve|i'd|my|we|we're|we’ve|our)\b", text, re.I):
             continue
         if text.count("|") >= 2 or text.count("·") >= 2:
             continue
         if text not in paragraphs:
             paragraphs.append(text)
-        if len(paragraphs) >= 14 or sum(len(x) for x in paragraphs) > 6500:
+        if len(paragraphs) >= 16 or sum(len(x) for x in paragraphs) > 7500:
             break
     return " ".join(paragraphs)
 
@@ -230,9 +204,6 @@ def fetch_article(url: str) -> tuple[str, str, str]:
                 return publisher, "", "non-html"
             raw = response.read(900_000).decode("utf-8", "ignore")
         soup = BeautifulSoup(raw, "html.parser")
-
-        # Publisher-written meta summaries are usually the cleanest factual source for a
-        # compact card. Prefer them before walking page paragraphs.
         meta = meta_text(soup)
         if meta:
             return publisher, meta, "article-meta"
@@ -251,12 +222,12 @@ def split_sentences(text: str) -> list[str]:
     text = clean(text)
     if not text:
         return []
-    parts = re.split(r"(?<=[.!?])\s+(?=[A-Z0-9\"'])", text)
+    parts = re.split(r'(?<=[.!?])\s+(?=[A-Z0-9"\'])', text)
     out: list[str] = []
     for part in parts:
         part = clean(part).strip(" -–—")
         low = part.lower()
-        if not 40 <= len(part) <= 480:
+        if not 45 <= len(part) <= 520:
             continue
         if any(term in low for term in BOILERPLATE):
             continue
@@ -264,7 +235,6 @@ def split_sentences(text: str) -> list[str]:
             continue
         if re.match(r"^(?:i|i'm|i’ve|i'd|my|we|we're|we’ve|our)\b", part, re.I):
             continue
-        # Avoid reproducing direct quotations in the digest.
         if part.count('"') >= 2 or "“" in part or "”" in part:
             continue
         if part.count("|") >= 2 or part.count("·") >= 2:
@@ -287,13 +257,9 @@ def sentence_score(sentence: str, title: str, position: int) -> float:
     terms = title_terms(title)
     words = set(re.findall(r"[a-z0-9]+", sentence.lower()))
     overlap = len(terms & words)
-    numbers = min(2, len(re.findall(r"\b\d[\d,.%$-]*\b", sentence)))
-    penalty = 0
-    if len(sentence) > 330:
-        penalty += 2
-    if sentence.count(":") > 2 or sentence.count(";") > 3:
-        penalty += 3
-    return overlap * 4 + numbers * 1.5 + max(0, 6 - position * 0.5) - penalty
+    numbers = min(2, len(re.findall(r"\b(?:\$?\d[\d,.]*%?|20\d{2})\b", sentence)))
+    length_penalty = max(0, (len(sentence) - 260) / 55)
+    return overlap * 4 + numbers * 1.5 + max(0, 6 - position * 0.45) - length_penalty
 
 
 def simplify_attribution(sentence: str) -> str:
@@ -305,75 +271,67 @@ def simplify_attribution(sentence: str) -> str:
     return s.strip().rstrip(" .")
 
 
-def compress_fact(sentence: str) -> str:
-    """Turn a source sentence into a shorter, structurally different factual clause."""
+def complete_clause(sentence: str, limit: int = MAX_FACT_CHARS) -> str:
+    """Shorten only at a grammatical clause boundary; never use an ellipsis."""
     s = simplify_attribution(sentence)
     s = re.sub(r"^\s*[A-Z][A-Z .,'-]{2,25}\s*[-—:]\s*", "", s)
     s = re.sub(r"\s*\([^)]{1,120}\)\s*", " ", s)
     s = re.sub(r"\s+", " ", s).strip(" ,;:-")
-
-    pieces = re.split(r",\s+(?=(?:after|following|during|while|as|because|when)\b)", s, maxsplit=1, flags=re.I)
-    if len(pieces) == 2 and len(pieces[1]) > 25:
-        lead = pieces[1].rstrip(" .")
-        rest = pieces[0].strip()
-        if rest:
-            rest = rest[0].lower() + rest[1:] if rest[0].isupper() and not rest[:2].isupper() else rest
-            s = f"{lead}, {rest}"
-
-    if len(s) > 235:
-        cut = s[:236]
-        stop = max(cut.rfind(", "), cut.rfind("; "), cut.rfind(" "))
-        s = cut[:stop if stop > 145 else 235].rstrip(" ,;:") + "…"
-    return s
+    if not s:
+        return ""
+    if len(s) <= limit:
+        return s
+    split_patterns = (
+        r"\s+[—–-]\s+",
+        r";\s+",
+        r",\s+(?=(?:which|who|while|although|though|because|after|before|as|with|including|according to)\b)",
+    )
+    for pattern in split_patterns:
+        first = re.split(pattern, s, maxsplit=1, flags=re.I)[0].strip(" ,;:-")
+        if 85 <= len(first) <= limit and re.search(r"\b(?:is|are|was|were|has|have|had|will|can|could|may|might|plans?|launched?|released?|reported|outlined|raised?|cut|delayed?|won|lost|filed|joined|signed|acquired|approved|rejected|announced)\b", first, re.I):
+            return first
+    return ""
 
 
 def choose_facts(article_text: str, title: str) -> list[str]:
-    candidates = split_sentences(article_text)[:22]
-    ranked = sorted(
-        enumerate(candidates),
-        key=lambda pair: sentence_score(pair[1], title, pair[0]),
-        reverse=True,
-    )
+    candidates = split_sentences(article_text)[:26]
+    ranked = sorted(enumerate(candidates), key=lambda pair: sentence_score(pair[1], title, pair[0]), reverse=True)
     selected: list[tuple[int, str]] = []
-    for pos, sentence in ranked:
-        if similarity(sentence, title) > 0.92:
+    for pos, sentence_value in ranked:
+        shortened = complete_clause(sentence_value)
+        if not shortened:
             continue
-        if any(similarity(sentence, prior) > 0.72 for _, prior in selected):
+        if similarity(shortened, title) > 0.93:
             continue
-        selected.append((pos, sentence))
+        if any(similarity(shortened, prior) > 0.72 for _, prior in selected):
+            continue
+        selected.append((pos, shortened))
         if len(selected) == 2:
             break
     selected.sort(key=lambda pair: pair[0])
-    return [sentence for _, sentence in selected]
+    return [sentence_value for _, sentence_value in selected]
 
 
-def trim(text: str, limit: int = MAX_BRIEF_CHARS) -> str:
-    text = clean(text)
-    if len(text) <= limit:
-        return text
-    cut = text[: limit + 1]
-    stop = max(cut.rfind(". "), cut.rfind("; "), cut.rfind(", "))
-    if stop >= int(limit * 0.65):
-        return cut[: stop + 1].rstrip()
-    stop = cut.rfind(" ")
-    return (cut[:stop] if stop > 0 else cut[:limit]).rstrip(" ,;:") + "…"
+def sentence(text: str) -> str:
+    value = clean(text).rstrip(" .!?")
+    if not value:
+        return ""
+    if value[0].islower():
+        value = value[0].upper() + value[1:]
+    return value + "."
 
 
 def build_brief(title: str, source_text: str, source: str, category: str) -> str:
     title = strip_source_suffix(title, source)
     facts = choose_facts(source_text, title)
-    opener = CATEGORY_OPENERS.get(category, "Reporting indicates")
     if not facts:
         return ""
-    first = compress_fact(facts[0])
-    if not first:
-        return ""
-    brief = f"{opener} {first}."
-    if len(facts) > 1:
-        second = compress_fact(facts[1])
-        if second:
-            brief += f" Additional details: {second}."
-    return trim(brief)
+    first = sentence(facts[0])
+    second = sentence(facts[1]) if len(facts) > 1 else ""
+    brief = " ".join(x for x in (first, second) if x)
+    if len(brief) > MAX_BRIEF_CHARS and second:
+        brief = first
+    return brief
 
 
 def set_text(item: ET.Element, tag: str, value: str) -> None:
@@ -385,30 +343,25 @@ def set_text(item: ET.Element, tag: str, value: str) -> None:
 
 def fallback_brief(row: dict[str, str]) -> str:
     title = strip_source_suffix(row["title"], row["source"]).rstrip(" .")
-    return trim(
-        f"{CATEGORY_OPENERS.get(row['category'], 'Reporting indicates')} this story concerns {title}. "
-        "The publisher did not expose enough public article text for a fuller brief."
+    return (
+        f"This story centers on {title}. "
+        "The publisher did not expose enough public article text for a fuller verified brief."
     )
 
 
 def process_row(index: int, row: dict[str, str], cached: dict | None) -> tuple[int, dict]:
-    if (
-        cached
-        and cached.get("cacheVersion") == CACHE_VERSION
-        and cached.get("brief")
-        and len(clean(cached.get("brief"))) >= 60
-    ):
-        return index, cached
-
+    if cached and cached.get("cacheVersion") == CACHE_VERSION and cached.get("brief"):
+        brief = clean(cached.get("brief"))
+        if len(brief) >= 60 and "…" not in brief:
+            return index, cached
     publisher, article_text, kind = fetch_article(row["link"])
     brief = build_brief(row["title"], article_text, row["source"], row["category"]) if article_text else ""
     if not brief:
         brief = fallback_brief(row)
         kind = "headline-fallback"
-
     return index, {
         "cacheVersion": CACHE_VERSION,
-        "brief": trim(brief),
+        "brief": brief,
         "publisherUrl": publisher,
         "sourceKind": kind,
         "updatedAt": datetime.now(timezone.utc).isoformat(),

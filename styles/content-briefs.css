@@ -1,25 +1,20 @@
-/* V3 content-brief experiment: show enough summary to provide substance without returning to tall cards. */
+/* Story briefs are short by construction. Show the complete brief instead of clipping it. */
 html body .news-item .description{
-  display:-webkit-box!important;
-  -webkit-box-orient:vertical!important;
-  -webkit-line-clamp:3!important;
-  overflow:hidden!important;
+  display:block!important;
+  overflow:visible!important;
   margin:5px 0 6px!important;
   font-size:11.25px!important;
   line-height:1.38!important;
   color:#596579!important;
-}
-html body[data-active-tab="top"] .lead-story-v2 .description{
-  -webkit-line-clamp:4!important;
 }
 @media(prefers-color-scheme:dark){
   html body .news-item .description{color:#b7bdc8!important}
 }
 @media(max-width:760px){
   html body .news-item .description{
-    -webkit-line-clamp:2!important;
+    display:block!important;
+    overflow:visible!important;
     font-size:10.75px!important;
     line-height:1.36!important;
   }
-  html body[data-active-tab="top"] .lead-story-v2 .description{-webkit-line-clamp:3!important}
 }
