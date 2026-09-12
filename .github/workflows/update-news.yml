@@ -50,7 +50,7 @@ jobs:
           success=0
           for attempt in 1 2 3; do
             echo "RSS update attempt ${attempt}/3"
-            if python scripts/update_news_normalized.py; then
+            if python scripts/update_news_v4.py; then
               success=1
               break
             fi
@@ -179,6 +179,9 @@ jobs:
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
 
+      - name: Inject V4 Entertainment UI
+        run: python scripts/patch_entertainment_v4_ui.py
+
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
 
@@ -194,7 +197,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json scripts
+          git add -A News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json scripts assets
           if git diff --cached --quiet; then
             echo 'No changes to commit.'
             exit 0
