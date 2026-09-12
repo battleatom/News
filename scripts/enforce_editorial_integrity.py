@@ -1,329 +1,218 @@
 #!/usr/bin/env python3
-"""Shared semantic category/source classifier for the live News feed.
+"""Final editorial-integrity pass for V4.
 
-The standalone command still writes a shadow report/preview, while verify_feed.py
-imports classify() for production routing. Headline evidence is weighted more than
-body/description evidence because the title normally identifies the central event.
+Runs after generic routing/deduplication and after X is rebuilt. It is intentionally
+conservative: obvious U.S. domestic leakage is removed from World, generic/non-story
+pages are dropped, weak Related Coverage links are pruned, low-value Technology
+shopping/gaming leakage is corrected, and fixed X slots are repaired from already
+verified feed stories when their lead is not relevant to the slot.
 """
-
 from __future__ import annotations
 
-import json
-import math
 import re
-import sys
 import xml.etree.ElementTree as ET
-from collections import Counter, defaultdict
-from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import timezone
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
-NEWS_PATH = ROOT / "News"
-REPORT_PATH = ROOT / "classifier-report.json"
-PREVIEW_PATH = ROOT / "News.classified-preview"
+from filter_landing_pages import is_landing_page
 
-sys.path.insert(0, str(ROOT / "scripts"))
-try:
-    from update_news import source_is_trusted  # reuse production allowlist logic
-except Exception as exc:
-    raise SystemExit(f"Could not load production source trust policy: {exc}")
+NEWS = Path('News')
 
-SUPPORTED = [
-    "world", "us", "presidential", "federal", "legislation", "nm", "local",
-    "region", "nfl", "technology", "gaming", "military", "underreported",
-]
-
-US_STATE_NAMES = {
+STOP = {
+    'the','a','an','and','or','but','for','from','with','into','over','after','before','about','amid','during',
+    'this','that','these','those','says','said','say','new','news','latest','update','report','reports','reported',
+    'according','officials','official','will','could','would','may','can','has','have','had','was','were','are','is',
+    'be','been','being','to','of','in','on','at','by','as','it','its','their','they','them','who','what','when','where',
+    'why','how','one','two','first','second','today','now','more','just','also','still','live','coverage'
+}
+US_STATES = {
     'alabama','alaska','arizona','arkansas','california','colorado','connecticut','delaware','florida','georgia','hawaii',
     'idaho','illinois','indiana','iowa','kansas','kentucky','louisiana','maine','maryland','massachusetts','michigan',
     'minnesota','mississippi','missouri','montana','nebraska','nevada','new hampshire','new jersey','new mexico','new york',
     'north carolina','north dakota','ohio','oklahoma','oregon','pennsylvania','rhode island','south carolina','south dakota',
-    'tennessee','texas','utah','vermont','virginia','washington','west virginia','wisconsin','wyoming',
+    'tennessee','texas','utah','vermont','virginia','washington','west virginia','wisconsin','wyoming'
+}
+FOREIGN = {
+    'canada','canadian','mexico','mexican','brazil','brazilian','argentina','europe','european','britain','british','uk','ireland',
+    'irish','france','french','germany','german','italy','spain','ukraine','ukrainian','russia','russian','china','chinese','japan',
+    'india','indian','iran','iranian','israel','israeli','gaza','palestine','palestinian','iraq','syria','lebanon','turkey',
+    'australia','australian','taiwan','korea','korean','africa','african','nato','united nations','brics'
+}
+US_DOMESTIC = US_STATES | {
+    'chicago','detroit','indianapolis','houston','dallas','miami','atlanta','denver','phoenix','seattle','portland','boston',
+    'philadelphia','baltimore','cleveland','milwaukee','minneapolis','st louis','kansas city','farmington','albuquerque'
+}
+SPORTS = {'nfl','football','basketball','baseball','hockey','soccer','ncaa','college football','bears','hoosiers','game','match'}
+INTERNATIONAL_CONTEXT = {
+    'war','military','troops','missile','airstrike','invasion','ceasefire','sanctions','diplomacy','diplomatic','summit',
+    'prime minister','president','government','foreign minister','trade agreement','treaty','nato','united nations','brics'
+}
+TECH_SHOPPING = ('where to preorder','where to pre-order','preorder the','pre-order the','best deals','deal of the day','buy now','gift guide')
+GAMING = {'gaming','video game','playstation','xbox','nintendo','switch','steam','skyrim','game mod','dlc','gamepass','game pass'}
+GENERIC_LANDING = (
+    re.compile(r'^all coverage\b', re.I), re.compile(r'^latest news\b', re.I), re.compile(r'^news$|^home$', re.I),
+)
+
+TOPIC_RULES = {
+    'Health': ({'health','medical','medicine','disease','hospital','fda','doctor','public health','medicaid','medicare'}, {'world','us','federal','nm'}),
+    'Technology & AI': ({'technology','artificial intelligence',' ai ','openai','google','apple','microsoft','cybersecurity','software','chip','semiconductor','data breach'}, {'technology'}),
+    'Celebrities & Public Figures': ({'actor','actress','singer','rapper','musician','celebrity','star','athlete','director','artist'}, {'entertainment'}),
+    'World': ({'international','world','war','diplomacy','summit','foreign','ukraine','russia','china','iran','israel','gaza','europe','brics'}, {'world','military'}),
+    'Politics & Government': ({'white house','congress','senate','supreme court','president','election','government','federal','governor'}, {'presidential','federal','us'}),
+    'Entertainment': ({'movie','film','television',' tv ','music','album','streaming','entertainment','actor','actress','singer'}, {'entertainment'}),
+    'Sports': ({'nfl','nba','mlb','nhl','soccer','football','basketball','baseball','sports','athlete','game'}, {'nfl'}),
+    'Business & Economy': ({'economy','business','stocks','market','tariff','jobs','company','companies','earnings','bank','inflation'}, {'us','world','federal'}),
+    'Gaming': ({'gaming','video game','playstation','xbox','nintendo','steam','console','game studio','dlc'}, {'gaming'}),
+    'Science': ({'science','research','study','nasa','space','climate','scientist','physics','biology','astronomy'}, {'world','us','technology'}),
 }
 
-# Weighted semantic vocabulary. Phrase matches count more than single words.
-SIGNALS = {
-    "world": {
-        "international": 3, "foreign": 2, "diplomatic": 3, "diplomacy": 3,
-        "sanctions": 3, "nato": 4, "united nations": 4, "ukraine": 4,
-        "russia": 4, "china": 3, "iran": 4, "israel": 4, "gaza": 4,
-        "europe": 2, "asia": 2, "africa": 2, "middle east": 4,
-    },
-    "us": {
-        "united states": 4, "u.s.": 4, "american": 2, "nationwide": 2,
-        "state officials": 2, "governor": 2, "state law": 2,
-    },
-    "presidential": {
-        "president trump": 6, "donald trump": 6, "white house": 5,
-        "president": 2, "executive order": 5, "presidential": 5,
-        "administration": 2, "cabinet": 3,
-    },
-    "federal": {
-        "congress": 5, "senate": 4, "house of representatives": 5,
-        "supreme court": 6, "scotus": 6, "department of justice": 5,
-        "doj": 4, "fbi": 4, "dhs": 4, "federal": 3, "treasury": 3,
-        "epa": 3, "sec": 3, "fcc": 3, "irs": 3,
-    },
-    "legislation": {
-        "bill": 4, "legislation": 6, "signed into law": 7, "lawmakers": 3,
-        "statute": 5, "regulation": 4, "rulemaking": 5, "ordinance": 6,
-        "executive order": 4, "final rule": 6,
-    },
-    "nm": {
-        "new mexico": 7, "santa fe": 3, "albuquerque": 3, "nm legislature": 7,
-        "new mexico governor": 6,
-    },
-    "local": {
-        "farmington": 8, "san juan county": 8, "aztec": 7, "bloomfield": 7,
-        "kirtland": 6, "shiprock": 7, "four corners": 8, "durango": 6,
-        "la plata county": 7, "cortez": 6, "montezuma county": 7,
-        "navajo nation": 6, "gallup": 5,
-    },
-    "region": {
-        "arizona": 3, "colorado": 3, "utah": 3, "nevada": 3, "wyoming": 3,
-        "montana": 3, "idaho": 3, "southwest": 4, "rocky mountain": 4,
-        "pacific northwest": 4,
-    },
-    "nfl": {
-        "nfl": 8, "national football league": 8, "touchdown": 4,
-        "quarterback": 4, "super bowl": 7, "football": 2, "roster": 3,
-        "free agency": 4, "training camp": 4,
-    },
-    "technology": {
-        "artificial intelligence": 7, " ai ": 4, "openai": 7, "chatgpt": 7,
-        "cybersecurity": 7, "data breach": 7, "cyberattack": 7, "software": 4,
-        "semiconductor": 6, "chip": 3, "nvidia": 6, "amd": 5, "intel": 5,
-        "microsoft": 4, "google": 3, "apple": 3, "cloud computing": 6,
-        "robotics": 5, "quantum computing": 7, "tech company": 4,
-        "anthropic": 7, "machine learning": 6, "large language model": 6,
-    },
-    "gaming": {
-        "video game": 7, "gaming": 7, "playstation": 7, "xbox": 7,
-        "nintendo": 7, "steam": 5, "game studio": 6, "console": 5,
-        "pc gaming": 7, "esports": 6, "gameplay": 5, "open-world": 4,
-        "open world": 4, "shooter": 3, "rpg": 4, "starcraft": 8,
-    },
-    "military": {
-        "pentagon": 7, "military": 5, "troops": 5, "armed forces": 6,
-        "air force": 5, "army": 4, "navy": 4, "marines": 5, "missile": 4,
-        "airstrike": 5, "defense department": 7, "war": 3,
-    },
-    "underreported": {
-        "investigation": 3, "public records": 4, "accountability": 4,
-        "infrastructure": 2, "water": 2, "environmental": 2, "rural": 2,
-        "tribal": 3, "public health": 3,
-    },
-}
 
-NEGATIVE = {
-    "technology": {"touchdown": -6, "nfl": -8, "recipe": -5, "celebrity": -3},
-    "gaming": {"casino": -7, "gambling": -7, "sportsbook": -7},
-    "nfl": {"soccer": -5, "college football": -4, "high school football": -6},
-    "world": {"local weather": -4},
-}
-
-SPECIFICITY = {
-    "local": 9, "nm": 8, "presidential": 8, "legislation": 8, "nfl": 8,
-    "gaming": 8, "technology": 7, "military": 7, "federal": 7, "region": 6,
-    "world": 4, "us": 4, "underreported": 2,
-}
-
-NON_ROUTABLE_INPUT = {"top"}
-TITLE_SIGNAL_BONUS = 1.5  # title hit total = 2.5x the normal semantic weight
+def text(item, tag):
+    return re.sub(r'\s+', ' ', item.findtext(tag) or '').strip()
 
 
-def normalized_text(value: str) -> str:
-    return " " + re.sub(r"\s+", " ", value or "").lower().strip() + " "
+def set_text(item, tag, value):
+    node=item.find(tag)
+    if node is None: node=ET.SubElement(item,tag)
+    node.text=value
 
 
-def title_text_of(item: ET.Element) -> str:
-    return normalized_text(item.findtext("title", ""))
+def tokens(value):
+    return {w for w in re.findall(r'[a-z0-9]+', value.lower()) if len(w)>=3 and w not in STOP}
 
 
-def text_of(item: ET.Element) -> str:
-    parts = [item.findtext("title", ""), item.findtext("description", "")]
-    return normalized_text(" ".join(parts))
+def phrases(value, terms):
+    padded=' '+value.lower()+' '
+    return {term for term in terms if (' '+term+' ' in padded if ' ' in term else re.search(r'\b'+re.escape(term)+r'\b', padded))}
 
 
-def phrase_present(text: str, phrase: str) -> bool:
-    p = phrase.lower()
-    if p.startswith(" ") or p.endswith(" "):
-        return p in text
-    if " " in p or "." in p or "-" in p:
-        return p in text
-    return re.search(rf"\b{re.escape(p)}\b", text) is not None
+def named_entities(value):
+    chunks=re.findall(r'\b(?:[A-Z][a-zA-Z’\'-]+|[A-Z]{2,})(?:\s+(?:[A-Z][a-zA-Z’\'-]+|[A-Z]{2,})){0,3}\b', value)
+    noise={'The','This','That','News','Breaking','United States','White House','Associated Press'}
+    return {c.lower() for c in chunks if c not in noise and len(c)>=4}
 
 
-def score_categories(text: str, current: str, title_text: str = "") -> dict[str, float]:
-    scores = {cat: 0.0 for cat in SUPPORTED}
-    evidence = defaultdict(list)
-    for cat, terms in SIGNALS.items():
-        for term, weight in terms.items():
-            if phrase_present(text, term):
-                scores[cat] += weight
-                evidence[cat].append(term.strip())
-                if title_text and phrase_present(title_text, term):
-                    scores[cat] += weight * TITLE_SIGNAL_BONUS
-                    evidence[cat].append(f"title:{term.strip()}")
-    for cat, terms in NEGATIVE.items():
-        for term, weight in terms.items():
-            if phrase_present(text, term):
-                scores[cat] += weight
-                evidence[cat].append(f"!{term}")
-
-    # A U.S. state in an ordinary World/US article is strong domestic evidence,
-    # but do not steal validated Local/Region/NM inventory from location routing.
-    if current not in {"local", "region", "nm"}:
-        state_hits = [state for state in US_STATE_NAMES if phrase_present(text, state)]
-        if state_hits:
-            scores["us"] += 4.0
-            evidence["us"].append(f"us-state:{state_hits[0]}")
-            if title_text and any(phrase_present(title_text, state) for state in state_hits):
-                scores["us"] += 4.0
-                evidence["us"].append(f"title-us-state:{state_hits[0]}")
-
-    # Provider/collector category is only a weak prior.
-    if current in scores:
-        scores[current] += 2.0
-        evidence[current].append("existing-category-prior")
-
-    if scores["local"] >= 7:
-        scores["nm"] -= 2
-        scores["region"] -= 3
-    elif scores["nm"] >= 6:
-        scores["region"] -= 2
-
-    return scores, evidence
+def related_enough(primary, related_title):
+    a=tokens(text(primary,'title')); b=tokens(related_title)
+    if not a or not b: return False
+    shared=a&b
+    if len(shared)>=4 and len(shared)/max(1,min(len(a),len(b)))>=0.55: return True
+    entities=named_entities(text(primary,'title')) & named_entities(related_title)
+    return bool(entities and len(shared)>=2)
 
 
-def confidence(scores: dict[str, float], winner: str) -> float:
-    ordered = sorted(scores.values(), reverse=True)
-    top = ordered[0] if ordered else 0.0
-    second = ordered[1] if len(ordered) > 1 else 0.0
-    if top <= 0:
-        return 0.0
-    strength = 1.0 - math.exp(-top / 8.0)
-    separation = max(0.0, min(1.0, (top - second) / max(4.0, top)))
-    return round(min(0.99, 0.62 * strength + 0.38 * separation), 3)
+def prune_related(item):
+    rel=item.find('relatedArticles')
+    if rel is None: return 0
+    removed=0
+    for article in list(rel.findall('article')):
+        if not related_enough(item,text(article,'title')):
+            rel.remove(article); removed+=1
+    if not rel.findall('article'): item.remove(rel)
+    return removed
 
 
-def classify(item: ET.Element) -> dict:
-    source = (item.findtext("source") or "").strip()
-    current = (item.findtext("category") or "").strip().lower()
-    title = (item.findtext("title") or "").strip()
-
-    if not source or not source_is_trusted(source):
-        return {
-            "title": title, "source": source, "current": current,
-            "action": "reject", "reason": "unapproved-source", "category": None,
-            "confidence": 1.0, "scores": {}, "evidence": [],
-        }
-
-    if current in NON_ROUTABLE_INPUT:
-        return {
-            "title": title, "source": source, "current": current,
-            "action": "keep", "reason": "ranking-surface-not-rerouted", "category": current,
-            "confidence": 1.0, "scores": {}, "evidence": [],
-        }
-
-    text = text_of(item)
-    title_text = title_text_of(item)
-    scores, evidence = score_categories(text, current, title_text)
-    ranked = sorted(scores, key=lambda c: (scores[c], SPECIFICITY.get(c, 0)), reverse=True)
-    winner = ranked[0]
-    top_score = scores[winner]
-    conf = confidence(scores, winner)
-
-    if top_score < 4.0:
-        return {
-            "title": title, "source": source, "current": current,
-            "action": "review", "reason": "insufficient-semantic-evidence",
-            "category": current or None, "confidence": conf,
-            "scores": {k: round(v, 2) for k, v in scores.items() if v},
-            "evidence": evidence.get(winner, [])[:10],
-        }
-
-    if winner == current:
-        action, reason = "keep", "category-confirmed"
-    elif conf >= 0.72:
-        action, reason = "reroute", f"central-subject-match:{winner}"
-    else:
-        action, reason = "review", f"ambiguous:{winner}"
-
-    return {
-        "title": title, "source": source, "current": current,
-        "action": action, "reason": reason, "category": winner,
-        "confidence": conf,
-        "scores": {k: round(v, 2) for k, v in scores.items() if v},
-        "evidence": evidence.get(winner, [])[:10],
-    }
+def obvious_domestic_world(item):
+    title=text(item,'title').lower(); desc=text(item,'description').lower(); full=f'{title} {desc}'
+    foreign=phrases(full,FOREIGN)
+    domestic=phrases(full,US_DOMESTIC)
+    title_domestic=phrases(title,US_DOMESTIC)
+    state_meta=text(item,'state').lower()
+    sports=phrases(full,SPORTS)
+    intl_context=phrases(full,INTERNATIONAL_CONTEXT)
+    # A U.S. place can be the actual subject even when a foreign place/culture is
+    # mentioned (e.g. a Germany-themed event in Minnesota). Only preserve World
+    # when the story also carries genuine international-policy/conflict context.
+    if title_domestic and not intl_context:
+        return True
+    if foreign:
+        return False
+    if state_meta and state_meta in US_STATES:
+        return True
+    return bool(domestic and sports)
 
 
-def main() -> None:
-    if not NEWS_PATH.exists():
-        raise SystemExit("News feed not found. Run scripts/update_news.py first.")
-
-    tree = ET.parse(NEWS_PATH)
-    root = tree.getroot()
-    channel = root.find("channel")
-    if channel is None:
-        raise SystemExit("Invalid RSS: missing channel")
-
-    decisions = []
-    counts = Counter()
-    transitions = Counter()
-
-    preview_root = deepcopy(root)
-    preview_channel = preview_root.find("channel")
-    preview_items = list(preview_channel.findall("item")) if preview_channel is not None else []
-
-    for original, preview in zip(channel.findall("item"), preview_items):
-        d = classify(original)
-        decisions.append(d)
-        counts[d["action"]] += 1
-        if d["action"] == "reroute":
-            transitions[f"{d['current']}->{d['category']}"] += 1
-            cat = preview.find("category")
-            if cat is None:
-                cat = ET.SubElement(preview, "category")
-            cat.text = d["category"]
-            ET.SubElement(preview, "classifierConfidence").text = str(d["confidence"])
-            ET.SubElement(preview, "classifierOriginalCategory").text = d["current"]
-        elif d["action"] == "reject":
-            preview_channel.remove(preview)
-        elif d["action"] == "review":
-            ET.SubElement(preview, "classifierReview").text = "true"
-            ET.SubElement(preview, "classifierConfidence").text = str(d["confidence"])
-
-    total = len(decisions)
-    report = {
-        "mode": "shadow-live-test",
-        "generatedAt": datetime.now(timezone.utc).isoformat(),
-        "input": str(NEWS_PATH.name),
-        "totalArticles": total,
-        "summary": dict(counts),
-        "reroutes": dict(transitions.most_common()),
-        "policy": {
-            "sourceValidation": "production update_news.source_is_trusted",
-            "rerouteThreshold": 0.72,
-            "minimumSemanticScore": 4.0,
-            "titleSignalMultiplier": 1.0 + TITLE_SIGNAL_BONUS,
-            "productionFeedModified": False,
-        },
-        "decisions": decisions,
-    }
-
-    REPORT_PATH.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-    ET.ElementTree(preview_root).write(PREVIEW_PATH, encoding="utf-8", xml_declaration=True)
-
-    print(f"Classifier shadow test: {total} articles")
-    print("Actions:", dict(counts))
-    if transitions:
-        print("Top reroutes:", dict(transitions.most_common(12)))
-    print(f"Report: {REPORT_PATH.name}")
-    print(f"Preview: {PREVIEW_PATH.name}")
+def x_relevant(item, topic):
+    rules=TOPIC_RULES.get(topic)
+    if not rules: return False
+    terms,cats=rules
+    full=' '+f"{text(item,'title')} {text(item,'description')}".lower()+' '
+    cat=text(item,'category').lower()
+    hits=sum(1 for term in terms if (term in full if ' ' in term else re.search(r'\b'+re.escape(term)+r'\b',full)))
+    return hits>=1 and (cat=='x' or cat in cats)
 
 
-if __name__ == "__main__":
-    main()
+def published(item):
+    try: return parsedate_to_datetime(text(item,'pubDate')).astimezone(timezone.utc).timestamp()
+    except Exception: return 0
+
+
+def clone_x_from(candidate, topic):
+    out=ET.Element('item')
+    for tag in ('title','link','description','pubDate','source'):
+        ET.SubElement(out,tag).text=text(candidate,tag)
+    ET.SubElement(out,'category').text='x'
+    ET.SubElement(out,'xTopic').text=topic
+    ET.SubElement(out,'xSignal').text='Top public X conversation'
+    ET.SubElement(out,'xWhyTrending').text='This fixed topic slot is populated by a current, independently reported story that matches the topic.'
+    ET.SubElement(out,'xWhatPeopleAreSaying').text='People on X may discuss the issue from different perspectives; the trend signal does not make unverified claims factual.'
+    ET.SubElement(out,'xConfirmed').text='Independent reporting confirms the underlying news event described above.'
+    ET.SubElement(out,'xUnconfirmed').text='Rumors, screenshots, accusations, and interpretations circulating on X are not treated as facts unless independently verified.'
+    return out
+
+
+def repair_x(channel):
+    items=list(channel.findall('item'))
+    x_items=[i for i in items if text(i,'category').lower()=='x']
+    base=[i for i in items if text(i,'category').lower() not in {'x','local','region','nm','legislation','boxoffice'}]
+    by_topic={text(i,'xTopic'):i for i in x_items}
+    used={text(i,'link') for i in x_items if text(i,'link')}
+    repaired=0
+    for topic in TOPIC_RULES:
+        current=by_topic.get(topic)
+        if current is not None and x_relevant(current,topic):
+            continue
+        candidates=[i for i in base if text(i,'link') not in used and x_relevant(i,topic)]
+        if not candidates:
+            raise SystemExit(f'Editorial integrity failed: no relevant replacement for X topic {topic}')
+        replacement=clone_x_from(max(candidates,key=published),topic)
+        used.add(text(replacement,'link'))
+        if current is not None:
+            idx=list(channel).index(current); channel.remove(current); channel.insert(idx,replacement)
+        else:
+            channel.append(replacement)
+        repaired+=1
+    all_x=[i for i in list(channel.findall('item')) if text(i,'category').lower()=='x']
+    for i in all_x: channel.remove(i)
+    final_by_topic={text(i,'xTopic'):i for i in all_x}
+    for topic in TOPIC_RULES:
+        item=final_by_topic.get(topic)
+        if item is None or not x_relevant(item,topic):
+            raise SystemExit(f'Editorial integrity failed: X topic {topic} is missing or irrelevant after repair')
+        channel.append(item)
+    return repaired
+
+
+def main():
+    tree=ET.parse(NEWS); channel=tree.getroot().find('channel')
+    if channel is None: raise SystemExit('RSS channel not found')
+    world_to_us=tech_to_gaming=dropped=related_removed=0
+    for item in list(channel.findall('item')):
+        title=text(item,'title'); cat=text(item,'category').lower()
+        if is_landing_page(item) or any(p.search(title) for p in GENERIC_LANDING):
+            channel.remove(item); dropped+=1; continue
+        if cat=='world' and obvious_domestic_world(item):
+            set_text(item,'category','us'); world_to_us+=1
+        elif cat=='technology':
+            low=title.lower(); full=f" {title} {text(item,'description')} ".lower()
+            if any(term in low for term in TECH_SHOPPING):
+                channel.remove(item); dropped+=1; continue
+            if any(term in full for term in GAMING):
+                set_text(item,'category','gaming'); tech_to_gaming+=1
+        related_removed+=prune_related(item)
+    repaired_x=repair_x(channel)
+    tree.write(NEWS,encoding='utf-8',xml_declaration=True)
+    print(f'Editorial integrity: World→US {world_to_us}; Technology→Gaming {tech_to_gaming}; dropped {dropped}; unrelated supporting links pruned {related_removed}; X slots repaired {repaired_x}.')
+
+if __name__=='__main__': main()
