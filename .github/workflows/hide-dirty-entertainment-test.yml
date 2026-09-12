@@ -1,0 +1,25 @@
+name: Hide Dirty Entertainment Test
+
+on:
+  push:
+    branches: [fix/hide-dirty-entertainment-v4]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Install Playwright
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start local site
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 >/tmp/news-http.log 2>&1 &
+          sleep 2
+      - name: Verify hidden Dirty Entertainment UI and preserved backing pool
+        run: python tests/entertainment_v4_ui_test.py
+      - name: Run general V4 smoke
+        run: python tests/site_smoke_v32.py
