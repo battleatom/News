@@ -13,10 +13,11 @@ US_STATE_NAMES = (
     'Wisconsin','Wyoming','District of Columbia','Washington, D.C.','Washington DC',
 )
 STATE_ALT = '|'.join(re.escape(name) for name in US_STATE_NAMES)
+MONTH_ALT = r'(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:t(?:ember)?)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)'
 
-# Only remove titles that are themselves generic publisher/state/promotional landing pages.
-# Do not match a real article merely because the publisher appends a phrase such
-# as "ABC News - Breaking News, Latest News and Videos" to the article title.
+# This filter is intentionally title-shape based instead of using a word-count
+# minimum. Short event headlines such as "Russia destroys hospital" are valid news;
+# station/program pages and dated roundup episodes are not specific news events.
 LANDING_PATTERNS = (
     re.compile(rf'^(?:{STATE_ALT})\s+-\s+(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
     re.compile(r'^(?:ABC|CBS|NBC|FOX) News\s+-\s+Breaking News,\s*Latest News(?: and Videos)?$', re.I),
@@ -24,6 +25,16 @@ LANDING_PATTERNS = (
     # ESPN occasionally exposes its product/streaming landing page through Google
     # News. This is navigation/marketing, not a reported news article.
     re.compile(r'^Watch ESPN\s*-\s*Stream Live Sports(?:\s*&\s*ESPN Originals)?$', re.I),
+    # Broadcast/program listings describe a show or timeslot rather than one event.
+    # Examples seen in production: "Local 10 World News @06:30 PM" and
+    # "The National News Desk Weekend Edition".
+    re.compile(r'^(?:Local\s+\d+\s+)?(?:World|National|Local)?\s*News\s*@\s*\d{1,2}:\d{2}\s*(?:AM|PM)$', re.I),
+    re.compile(r'^(?:The\s+)?National News Desk(?:\s+Weekend Edition)?$', re.I),
+    re.compile(r'^(?:The\s+)?(?:World|National|Local) News(?:\s+(?:Morning|Midday|Evening|Weekend) Edition)?$', re.I),
+    # Dated roundup/show episode titles are containers for multiple stories, not a
+    # single article. Keep event-specific "roundup" headlines that name a subject.
+    re.compile(rf'^(?:The\s+)?News Roundup(?:\s+For)?\s+{MONTH_ALT}\s+\d{{1,2}}(?:,\s*\d{{4}})?(?:\s*[:\-–—].*)?$', re.I),
+    re.compile(r'^News Roundup(?:\s+For)?\s+\d{1,2}[/-]\d{1,2}(?:[/-]\d{2,4})?(?:\s*[:\-–—].*)?$', re.I),
 )
 
 
@@ -53,9 +64,9 @@ def main():
         channel.remove(item)
 
     tree.write(NEWS_FILE, encoding='utf-8', xml_declaration=True)
-    print(f'Removed {len(removed)} generic publisher landing-page item(s).')
+    print(f'Removed {len(removed)} generic publisher/program/landing-page item(s).')
     for title in removed[:8]:
-        print(f'  landing page: {title}')
+        print(f'  non-story page: {title}')
 
 
 if __name__ == '__main__':
