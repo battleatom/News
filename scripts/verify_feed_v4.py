@@ -2,10 +2,11 @@
 """V4 final verification wrapper.
 
 Loads the V4 collector policy so Entertainment specialist sources are trusted, keeps
-Entertainment on its editorial surface, and finalizes verified Entertainment GUIDs
-and Underreported cross-links after the generic verifier finishes.
+Entertainment on its editorial surface, finalizes verified Entertainment GUIDs and
+Underreported cross-links, and applies the conservative cross-tab duplicate guard.
 """
 import re
+import sys
 
 import classify_live_feed as classifier
 import update_news_v4 as v4
@@ -34,5 +35,16 @@ verify_feed.EDITORIAL_SURFACES = set(verify_feed.EDITORIAL_SURFACES) | {"enterta
 
 if __name__ == "__main__":
     verify_feed.main()
+
+    # The generic verifier intentionally clusters within tabs. Follow it with a
+    # conservative cross-tab pass that removes only obvious duplicate copies among
+    # ordinary subject tabs, preserving the removed coverage as relatedArticles.
+    import cross_tab_integrity_fast
+    cross_tab_integrity_fast.run(
+        'News',
+        'cross-tab-integrity-report.json',
+        '--apply' in sys.argv,
+    )
+
     import finalize_entertainment_v4
     finalize_entertainment_v4.main()
