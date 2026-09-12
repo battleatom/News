@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """V4 final verification wrapper.
 
-Loads the V4 collector policy so Entertainment specialist sources are trusted, and
-marks Entertainment as an editorial surface that the generic category classifier
-must not reroute into unrelated tabs.
+Loads the V4 collector policy so Entertainment specialist sources are trusted, keeps
+Entertainment on its editorial surface, and finalizes verified Entertainment GUIDs
+and Underreported cross-links after the generic verifier finishes.
 """
 import re
 
@@ -34,3 +34,5 @@ verify_feed.EDITORIAL_SURFACES = set(verify_feed.EDITORIAL_SURFACES) | {"enterta
 
 if __name__ == "__main__":
     verify_feed.main()
+    import finalize_entertainment_v4
+    finalize_entertainment_v4.main()
