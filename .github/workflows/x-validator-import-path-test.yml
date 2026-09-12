@@ -1,0 +1,34 @@
+name: X Validator Import Path Test
+
+on:
+  push:
+    branches: [fix/x-validator-import-path-2026-09-12]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Run editorial integrity regression
+        run: python tests/editorial_integrity_test.py
+      - name: Run exact production X validator
+        run: |
+          python - <<'PY'
+          import importlib.util, sys, xml.etree.ElementTree as ET
+          from pathlib import Path
+          sys.path.insert(0, str(Path('scripts').resolve()))
+          spec=importlib.util.spec_from_file_location('integrity',Path('scripts/enforce_editorial_integrity.py'))
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          expected=list(m.TOPIC_RULES)
+          items=ET.parse('News').getroot().findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          print('X topics:',topics)
+          if len(x)!=10 or topics!=expected or len(set(topics))!=10:
+              raise SystemExit(f'X validation failed: expected exactly ten fixed topics, got {topics}')
+          bad=[topic for topic,item in zip(topics,x) if not m.x_relevant(item,topic)]
+          if bad: raise SystemExit('X relevance validation failed: '+repr(bad))
+          print('X fixed-topic relevance guard passed.')
+          PY
