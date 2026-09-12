@@ -19,6 +19,7 @@
 
   function text(item,tag){return item.querySelector(tag)?.textContent?.trim()||''}
   function safe(v){return typeof esc==='function'?esc(v):String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  function safeImage(v){try{const u=new URL(v,location.href);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
 
   function renderEntertainment(items){
     const data=typeof paginatedNewsItems==='function'?paginatedNewsItems(items):{available:items.filter(i=>text(i,'category')===KEY),visible:items.filter(i=>text(i,'category')===KEY),count:items.length};
@@ -52,11 +53,13 @@
       const why=text(item,'whyMatters');
       const date=text(item,'pubDate');
       const source=text(item,'source');
+      const image=safeImage(text(item,'imageUrl'));
       const tier=text(item,'entertainmentTier')||(i<5?'newest':'under-the-radar');
       const badge=tier==='newest'?'NEWEST':'UNDER THE RADAR';
       const under=[...item.querySelectorAll('underreportedLinks > article')].slice(0,2);
       const underHtml=under.length?`<div class="ent-underreported-links"><strong>UNDERREPORTED CONNECTION</strong>${under.map(r=>{const rt=text(r,'title'),rl=text(r,'link'),rs=text(r,'source');return `<a href="${safe(rl)}" target="_blank" rel="noopener noreferrer">${safe(rt)}${rs?` <span>· ${safe(rs)}</span>`:''}</a>`}).join('')}</div>`:'';
-      ar.innerHTML=`<div class="ent-tier ${tier==='newest'?'newest':'radar'}">${badge}</div><h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
+      const imageHtml=image?`<a class="ent-image-link" href="${safe(link)}" target="_blank" rel="noopener noreferrer"><img class="ent-card-image" src="${safe(image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.ent-image-link')?.remove()"></a>`:'';
+      ar.innerHTML=`<div class="ent-tier ${tier==='newest'?'newest':'radar'}">${badge}</div>${imageHtml}<h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
       body.appendChild(ar);
     });
 
@@ -77,7 +80,7 @@
 
   const style=document.createElement('style');
   style.id='entertainment-v4-style';
-  style.textContent='.ent-tier{display:inline-flex;margin:0 0 7px;padding:3px 7px;border-radius:999px;font-size:8.5px;font-weight:900;letter-spacing:.08em}.ent-tier.newest{background:rgba(190,24,93,.10);color:#be185d;border:1px solid rgba(190,24,93,.22)}.ent-tier.radar{background:rgba(100,116,139,.10);color:#475569;border:1px solid rgba(100,116,139,.18)}.ent-underreported-links{margin-top:10px;padding:9px 10px;border-left:4px solid #dc2626;background:rgba(220,38,38,.06);border-radius:8px}.ent-underreported-links strong{display:block;margin-bottom:4px;color:#dc2626;font-size:8.5px;letter-spacing:.08em}.ent-underreported-links a{display:block;margin-top:4px;color:#dc2626!important;text-decoration:none;font-size:10.5px;font-weight:800;line-height:1.35}.ent-underreported-links a:hover{text-decoration:underline}.ent-underreported-links span{font-weight:600;opacity:.8}';
+  style.textContent='.ent-tier{display:inline-flex;margin:0 0 7px;padding:3px 7px;border-radius:999px;font-size:8.5px;font-weight:900;letter-spacing:.08em}.ent-tier.newest{background:rgba(190,24,93,.10);color:#be185d;border:1px solid rgba(190,24,93,.22)}.ent-tier.radar{background:rgba(100,116,139,.10);color:#475569;border:1px solid rgba(100,116,139,.18)}.ent-image-link{display:block;margin:0 0 10px;border-radius:10px;overflow:hidden;background:rgba(100,116,139,.08)}.ent-card-image{display:block;width:100%;max-height:320px;object-fit:cover;aspect-ratio:16/9}.ent-underreported-links{margin-top:10px;padding:9px 10px;border-left:4px solid #dc2626;background:rgba(220,38,38,.06);border-radius:8px}.ent-underreported-links strong{display:block;margin-bottom:4px;color:#dc2626;font-size:8.5px;letter-spacing:.08em}.ent-underreported-links a{display:block;margin-top:4px;color:#dc2626!important;text-decoration:none;font-size:10.5px;font-weight:800;line-height:1.35}.ent-underreported-links a:hover{text-decoration:underline}.ent-underreported-links span{font-weight:600;opacity:.8}@media (min-width:800px){.ent-card-image{max-height:360px}}';
   document.head.appendChild(style);
 
   let tries=0;
