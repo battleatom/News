@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Compile location collector changes
-        run: python -m py_compile scripts/update_news_location_validated.py scripts/update_news_v4.py tests/location_validation_test.py
+        run: python -m py_compile scripts/update_news_location_validated.py scripts/update_news_v4.py tests/location_validation_test.py tests/location_relative_region_browser_test.py
       - name: Run location validation regressions
         run: python tests/location_validation_test.py
       - name: Run normalized category policy regressions
@@ -54,3 +54,14 @@ jobs:
               raise SystemExit('Location integrity validation failed')
           print('GENERATED LOCATION INTEGRITY PASSED')
           PY
+      - name: Install Chromium for browser routing regression
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start branch site
+        run: |
+          python -m http.server 8765 >/tmp/location-site.log 2>&1 &
+          echo $! >/tmp/location-site.pid
+          sleep 2
+      - name: Verify Region changes with user location
+        run: python tests/location_relative_region_browser_test.py
