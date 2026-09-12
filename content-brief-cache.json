@@ -1,4 +1,648 @@
 {
+  "https://news.google.com/rss/articles/CBMigAJBVV95cUxPRUN5RzRiVS1fY2lUSVlzRnVsR3c0UUNFU0F6ZmhFczFaVzNUZlhuMWhtOHlxWlZvT2MzdmkwMFJ5YUNDSXBoMGcza2d4YTZpSE9WbWc4aFYwcTZTYU9GR29IbjZDN19xb1JtQ3VDN1cwdWVvVC1TWHFPZW5GNW5HSmdoMmdPTE5fVEZEMjR4azVVeTd3bHhOdkhnNWh5ZE8zb3kwWU11T2ozQzNoVEJhai1KcF9xa0xzWlM4ODRvd2dDUnVJSGRKOFdRQXpGY3FxV3ItSWJSYjQySTl5TTl1aEdGZVNCYUM2Z2pKLTZkd25CZ2JkODVZSERZLV9IOUVW?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates Along with recent traffic pattern updates, this extended express service aims to improve the flow of traffic and overall fan experience at Bank of America Stadium.",
+    "publisherUrl": "https://www.panthers.com/news/tepper-sports-entertainment-and-charlotte-area-transit-system-team-up-to-launch-the-game-day-express-an-extended-express-service-for-gamedays",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:08.639083+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=43&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 43 — Disability & Survivor Pensions Changes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=43&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:08.180003+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=264&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns SB 264 — Election Rights & Troops At Elections. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=264&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:08.175814+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi_gFBVV95cUxQLTRLblRwYjZXQVNzOU9WNXNfY2NpVnNyZGhvdVBVMWRkYjIyLXJFc04yekxUODZyZlMzWkxlQUtsY1pid01hRXl1dE9Kc0sxdkZ2ak01eHdpNHRicTZ6VUk0RkwyVHJUMjMyWnNERGtnT0NZcWZJZjd6eU9hSk5mN3JmU3FqNi1zYWtvbTJNSVNuNHpyNEREUy1hUGszNk43NXBEb3k4b0lrUTY5RVNJWllwLVJxZHMxSUdha2ZvbElBVVdtbl9Lem1kNkNrVzlwczBmaEZqeXItZHhlQ3FHaUFzV1RzT1VyaVlNQmVVUkJQNFQ2cEZ6OHNMSk5lZw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns This week on Tom's Hardware Premium: September 12, 2026 — Benchmarking Qwen 3.8, the splintered compute economy and AI breakthroughs. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.tomshardware.com/tech-industry/this-week-on-toms-hardware-premium-september-12-2026-benchmarking-qwen-3-8-the-splintered-compute-economy-and-ai-breakthroughs",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:08.051624+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=108&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 108 — Watershed District Taxes And Directors. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=108&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:08.010169+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=109&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 109 — Water Project Fund Changes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=109&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.959999+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=34&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 34 — School Nurse Licensure Provisions. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=34&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.890091+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=124&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 124 — New Americans Division In Wsd. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=124&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.810877+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=30&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 30 — Teacher Residency Act Changes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=30&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.603544+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=151&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns SB 151 — Corporate Income Tax Changes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=151&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.582396+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=253&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 253 — Public Education Changes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=253&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.356066+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiggFBVV95cUxQMTJuU01BSExSd3BnTE5sR3VjSVdzeE43aHYwbTRjUENsTUU2RWxiV3E4UllRS2U5SVhJdnlpa0JUQ3hEYnliY2ZMM2hpOXhTSGpSMEpReEpZYnpndUgyUEJDSXhISkZXNGJDNFJBdmlQbG56Mk82RjVjS2RBSE5nT1Jn?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates this story concerns Deadly Russian strikes hit Ukraine after Putin's warning to European leaders. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.cbc.ca/news/world/russia-ukraine-strikes-putin-warning-9.7341677",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.293939+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBjTmk2UmlaWFBjM2JfQnJlUXp1M1JtczVnLTRYS05CTC1QeGd1cmxfMFRKTzFxUmNuR1NDblZEUXkwZGV6QkxISDVXbjRvaVBkamF3RWxDaDVCWnpm?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Defense reporting indicates The upheaval in the military could shape the legacy of Trump's second term, writes the BBC's Tom Bateman.",
+    "publisherUrl": "https://www.bbc.co.uk/news/articles/cd94j8e9n12o",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:07.162575+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=3&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns SB 3 — Commitment Procedure Changes & Definitions. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=3&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.070608+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=270&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 270 — Contributions To Apprentice & Training Pgms. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=270&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:07.007383+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=273&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns SB 273 — Correction Faciliity Loss Of Revenue. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=S&LegNo=273&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:06.798157+00:00"
+  },
+  "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=38&LegType=B&year=26": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns HB 38 — Wheelchair Insurance Coverage. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nmlegis.gov/Legislation/Legislation?Chamber=H&LegNo=38&LegType=B&year=26",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:06.772374+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxQeVA1T1Y4LW5menBoZERLRlFtX05FMTJGWXlVT0JJMWE1cEpUWjNoTThfN1I4SHh3MVFkaXA4Y0ZkZ21iMkd1dTFnVVpRcGxtS0NIcnRPVVVIV3JFZnh5R0ZFaUFFenZ5SFhVY1E5VXVWdmxlTUoya1dGU0lCd3NFT0xDTUs0VnZVc3Vrem0xbDEzSWM2TElHR1Brby12Y1pwQVpJeGh2RkRuaGYtUUpvY2ZSbHpWamJQQ1pPdVNrdXNtdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns Rare charges against ICE agent highlight DOJ’s broader retreat from shooting probes - washingtonpost.com. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.washingtonpost.com/politics/2026/09/08/rare-charges-against-agent-highlight-broader-retreat-ice-shooting-probes/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:06.548329+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/7661": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 7661 — Text - H.R.7661 - 119th Congress (2025-2026): Stop the Sexualization of Children Act. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/7661",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.950745+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/9519": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 9519 — 119th Congress (2025-2026): Social Security 2100 Act. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/9519",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.934539+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/2001": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 2001 — 119th Congress (2025-2026): Action for Dental Health Act. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/2001",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.933732+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/8595": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 8595 — Making appropriations for national security, Department of State, and related programs for the fiscal year ending September 30, 2027, and for other purposes. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/8595",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.915710+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/9380": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 9380 — 119th Congress (2025-2026): Expanding Access to Credit through Consumer-Permissioned Data Act. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/9380",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.910195+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/9372": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 9372 — 119th Congress (2025-2026): Data Infrastructure Energy Measurement and Standards Act. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/9372",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.891372+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMipAFBVV95cUxNcUl6VGgwRzlEc0ZTVjVTZ21pSHZia0tSWUxXellTQksySnR2NUlsRTFLdHBqazUtMF84Tm5pakE0WURsMDJFRWZsM1JwYlJwdWdxSlVWZFdrNU1jaE1BNGdhcTZjNGQ3UjYxNzNmRGU4VXhRaEJUcFo5Ukk3Y0t3Q2prNmFFcEVadU5OUjlScVpxQTliZFgwVjM4ZVBJMzVCSVNmUg?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Gaming reporting indicates Expect an announcement via the Nintendo Store app - Earlier this week, Nintendo outlined a new Zelda-themed Switch 2, Pro Controller and various other items.",
+    "publisherUrl": "https://www.nintendolife.com/news/2026/09/nintendo-confirms-zelda-40th-anniversary-collection-restocks",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:05.890272+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/6509": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 6509 — 119th Congress (2025-2026): SAFE Drugs Act of 2025. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/6509",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.863807+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiogFBVV95cUxQaGQtV0l5MUVtQXVadU1YeFJub0hLOXBwYkpNemZNRFZSVUJ1aVhjb0VRRnhhMXlOZU9LWjFmYmdMekx1WXh5RllJa09qVkd2VlAwdV9XYUlrODZHaEZuNm1iakYybjg4amtIblFHSE5nRk8yalhGQ3BSWEZKY0IyaXRQT3hmZDFYZEFmb2x1LUIxdkpYcW5RSHp5OTQ5d09UVHc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Gaming reporting indicates The big highlights, of course, were the two Nintendo Directs.",
+    "publisherUrl": "https://www.nintendolife.com/features/talking-point-what-are-you-playing-this-weekend-12th-september",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:05.863234+00:00"
+  },
+  "https://www.congress.gov/bill/119th-congress/house-bill/10184": {
+    "cacheVersion": 2,
+    "brief": "Legislative reporting indicates this story concerns H.R. 10184 — Consumer Financial Protection Accountability and Reform Act of 2026. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.congress.gov/bill/119th-congress/house-bill/10184",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.814518+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMitAFBVV95cUxNd0J4dkloaWU3YlBaa2hBTUE3SDVhenVVN2JXSmg3MUtsQ2t1eUFHbFlNMDE3ZmNoeEdwaHE4YlhqUVFna0p1SGhJUzFJczA0NHg3djBEM0s0LVJyekk4QVFzZFo0V2tCVV9xcjJLVjhMVy1WUDNHWXRaOTZxWHE2ZTU4LTN3ZF9lRVBEM1p3SkNtYXBLbVZON09OYVhERllNX21Ma1Q5NlRxM2cyZWhnanRWR3U?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Defense reporting indicates this story concerns Army ‘not walking away’ from UAVs despite reverting drone unit back to infantry. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://breakingdefense.com/2026/09/army-not-walking-away-from-uavs-despite-reverting-drone-unit-back-to-infantry/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.761078+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiXEFVX3lxTE0tSWZ4ZTlqTVZDU2ZGSUFnbTExeC1nY1RZdS1CUTNWSll6WDJCcU5TdmY2WkVxbFZwLXp0RGpkLV9KNno1RnVmeUdTS0UyQXhHMGZaQXJQNGlubTF6?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Gaming reporting indicates From start to finish, 10 NES games reward every second of the time you invest in them, even decades following the fact.",
+    "publisherUrl": "https://www.polygon.com/best-nintendo-nes-games/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:05.721045+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMif0FVX3lxTE5Ycmg1aFBEejdibkZHZF9ZZlI0aU5fd1l1UFZiSm84RDBmNUJQellfSVhoYlRfejFXN0pLRlRESGtEcS1XamJ4a3JTMTM4dFRnMG5LdHo2WlFydHd0TXNBaHZuZlF6UGRuNktEX1NxZEx4ZkFKZy1ibEFIb3g2MXc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Defense reporting indicates this story concerns Dems plot to take on Hegseth if they win in November. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.politico.com/news/2026/09/10/dems-plot-target-hegseth-01069194",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.427460+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMipwFBVV95cUxQd01TbkxBMjZEMVhtYmt1YU85X0JjbE56clp4QnBUQmFTaVVreUh3WmM1STQyRE5HQVRudGY0NlUxQUJqcDZDNGFQZmllTHhVaUpBRWVWcjJzT1R5OWRHZnhZazZGeWV3blBQcEhWNEVvT2hQNXV0MXJaWnhKaUU5aEpPQXJfU0ZXUjRYdzkyMmJOWGg4X2JkenQyM21ocmFiMHBzam14aw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates following Microsoft removed the Copilot buttons from some Windows 11 apps, the latest Insider Release Preview builds add an option for easily changing that dedicated AI key back to a control or Context Menu button, without using…. Additional details: Posts from this author is expected to be added to your daily email digest and your homepage feed.",
+    "publisherUrl": "https://www.theverge.com/tech/994234/microsoft-is-finally-adding-a-setting-for-remapping-the-copilot-key",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-12T14:09:05.157990+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNcmFBV1VGZ3ljaDZPbGpWc2ktTm1uTkI5M0J2WTVpeUltR2lxdVhreGlQZXdhSnQ2bFRUWWp5UVlTQnZud29vb1pTT19NNjluNmlmbndMQVdUZldmbUM4a09Tai1UXzdUYm56QTI2MVdXZ2x1ejlFUWNiazVsUnp1STh0cU9ZZWdTRjhWUA?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates this story concerns Kioxia Exceria Pro G2 2TB SSD Review — Speed built to last. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.tomshardware.com/pc-components/ssds/kioxia-exceria-pro-g2-2tb-ssd-review",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:05.013850+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivgFBVV95cUxPWkZtbTBBYXpXdGVCWUpNTHlRbmowMnAzckJRVzlCdUl5MzNwbXA1dl9VOGttWWRYcmRxak1udGo3UGlOdVNUcXpvdzBUOE40TVRPb216bzFabFJKQlkydk1hRElNcHFXREVhendha25ieWpsaUxyUkVsY0J0X0RiOER3Q2g3NnJINGJyOWg1OFNMbTNXZnFLVVZsVUxCUG03MmhBMHE4cjU0YjJBWnFOLUQ4ZEtTVVQybGRIUmdB?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates Two mathematicians at the heart of recent controversies tell The Verge how AI giants’ ‘childish’ rivalries are upending the field.",
+    "publisherUrl": "https://www.theverge.com/ai-artificial-intelligence/994255/openai-millennium-prize-problem-tristan-buckmaster-competition",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:04.921950+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirwJBVV95cUxPODluLXhVYTRlZ1hGTUtmcXRha2dYXzdtTTE0SGpQWjN3bENYZzloVExMR1l4MjNJZXRHeWppV0g2RTRNUFVURkRjLXhLajRYT3JJczBaZE0talhVNW9HelRpdkNUNnFCRFFndDVESmJwVm1HbDlEWjJpM3o0V2ZYZ1g3SGtiQlRIb05tSTBRQnNmaHdZYmpINWdqNUExUDhlVFRSeF9rTEEzY2pxWkhyb2hsSkhKOHhZcEo2NVA1RC1vUDhCYk9XSDI5eDJrcDZFQ1VoNU9qSGJUZE1iYWVnbi1IZ3A2MlQwREVlQWpFamx6OFZ6U2ZrUE8zUHBXMnlkaVBWbjFBZEVSbG8zbVNQaDNWT1pjUlZZdWxSaVU0US11eG1XSXg4c25kUXIzM2c?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates this story concerns Iran could potentially reverse-engineer captured US underwater drone — several Iranian embassies mock US over capture, Navy claims lost Anduril vehicle was defective and unclassified. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.tomshardware.com/tech-industry/drones/iran-could-potentially-reverse-engineer-captured-u-s-underwater-drone-several-iranian-embassies-mock-us-over-capture-as-u-s-military-downplays-the-situation",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:04.694488+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiekFVX3lxTE9ReFBmWmJGSzhTZ1EtMUt2WmdzQ3hxVVZMYUNaX2dERG56dF9EQVQtc2ZlaTdscTRsRHJEOHFfNnREb2IzVERvOEhhU3pld05rR3hLeWY1QnY4NnoyZkhBWWhHbEIxMm1NMFdsNmJ0QTc4OTRrRmYxTGRn?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates The faster, better iPhones are almost here, and we’ve got all the details for preordering them.",
+    "publisherUrl": "https://www.theverge.com/gadgets/988337/iphone-18-pro-max-preorder-buy",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:04.624559+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxQV2Myczh0VTFNYjM5OHl1SXpYM3Y4LVZna1lEeXNjTGp4V0tBY2FmTHZDTDk3SzlqN3hxSEpuTGNrYjJoM2thWmVVOGV1TlZvNE5NR0xNc01CenUySkZENkozTWJHTHVCeHNlYl8yaVhreVlIandSalBxRkhsRmhCSXlzdF9iZVpXOFhnY0xYWG5od2RsRnZxSEo0RW5TTGFmQ1lBaUJ4X2M2b054?oc=5": {
+    "cacheVersion": 2,
+    "brief": "NFL reporting indicates The Seahawks started the 2026 season as they ended the last one -- by beating the Patriots.",
+    "publisherUrl": "https://www.nfl.com/news/patriots-seahawks-in-2026-nfl-kickoff-game-what-we-learned-from-seattle-s-13-10-win",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:04.563949+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivAJBVV95cUxPTnZzTl9CMGE3WmVMcVVOeVJ2cmdGSE1mQTc2d256VEdLbWthWklQWUgwanQ4WHM4OUNWM0l5QnNxb2tTdy11RG9OQlpMa0gxc0JCcVNIeGZlYWdHbW9GU2FRV2MxTzBjZFllLTMwREpDbXZxRFdWZVBBMUJNWGxmODN4eGpOSlNqdVVKNVoxb3RzRW5UclVJRjQzVXZPYjdudXViQmVWQ1ZseDRibjFWX2ZRS0JQZ29SeUNFNU5uVG9OMTZ6eWZ1dnlXMzY5Zkl3LTk5M08tU045eTFGQnJ5WWROQkctQ2RnbUh6Mms4dGVxNjBwOXdSZzA0VThsazZyNGNnOFpfWURJN0RfWjVwQ1Y4ODVOX29lQ2d4QXJQUVVrWlZVLTFqbnVXVVFudFVXNFBrTHdtMllvNEdj?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Technology reporting indicates But in the long history of bizarre and meme Skyrim mods, this IKEA effort isn’t that strange.",
+    "publisherUrl": "https://www.tomshardware.com/video-games/pc-gaming/ikea-releases-new-skyrim-mod-that-adds-gloriously-mundane-kallax-shelving-unit-as-your-newest-companion-free-collab-provides-a-drab-flatpack-answer-to-your-loot-woes",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:04.462351+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOVXhRb2RGY2tsV3V6NlJRbG11LUw3VFozRTFpSWk5dTBqRlQ2aVFhNWc3ME9XTUlmYnl0elFQa2piNnl0Qi1hLWJfajM1WllEM3FSRWxucTRSQ2hxVVJvVWtwMEhnZklhY1dQUlo1MFBpajlZdENSUS1qajdIbnZRclYyZ0JpdEllbFBWVHdyTm9PdWVhd2lVbDdaajRwTlZvZlFaMzV0ZW9ObVE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "NFL reporting indicates this story concerns Titans, Saleh downplay facing team that fired coach in Jets. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.espn.com/nfl/story/_/id/49904338/tennessee-titans-robert-saleh-facing-former-team-new-york-jets",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:04.240187+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxQMGlSN3pLQ2RLMzZWNzZEQ1MxMFhMUTBZTWtQRERnMmRNXzJiTkhUaVBvX3Q3dEwwTC1oZHdNUHhvM05nR25QX0VxN203eWxFcW45SkZzM2M0ckVqQmFTdURldXNxM2ZmTDlhN0VBdkNDWmJHdnJmeUZvNm5XTDcyak1vOVJSU3RNdmc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Florida Gators host FCS Campbell Camels in Week 2 of the college football season. Additional details: Here's how to watch the game, which is only available on streaming.",
+    "publisherUrl": "https://sports.yahoo.com/articles/channel-florida-vs-campbell-today-100253917.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:04.052772+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxONVFQUVU1LXpwTzRXQXdVU3g0N3RtSFpvcWtWRWFobnJvQkhZVjB2LXRGN3ZPMHdvNWxmVklkZ2NXQ19ab2tzVWk3WEo2QnNNSTRVRVJEY3FjbDNFb2JBOUl4ekYybGtWV1FleFE3QXZZa2g2MXFfLXUyTmxoWDRORmlvMFlIajdDbDNEa2cycw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "NFL reporting indicates this story concerns Three things Bears QB Caleb Williams wants to improve on. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.espn.com/nfl/story/_/id/49897273/chicago-bears-caleb-williams-2026-outlook",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:04.017251+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijgFBVV95cUxOWG9naVRKRUI2SndRZWFuMVc3dXVPanBMU0ZmX01zNmp0UGhNTDlKdzFyTHRlQ2lEQjV0cGJqMUJrSGRaTUJPZjhaeW5zMmVIU01jU2VEN1Zwd1FZTUtUVG9GQkVKQk9tSjZOVnpDZUt4RGhRVHc0Q1dObmNUY0lhQWdWbFktbEsxbDBiSk1n0gGTAUFVX3lxTE9HNjY5NmZJUW9nOUpRNHY2ajBNRmJqdW8wdzJUTW5MYURpTUF0U1FTcG44WnhLQmpTaE1PRXlVajJEYnpKcXYybFA2QnVGMkFzc21KcEpMVWdJRE90R05ITTVBa1ZDd0xmaS1CUzgzZkVjRmNtMFB0T3NZNmJSUUFXcnhwai1jbjZxallkZWlmQVRiaw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates this story concerns DeSantis: ‘Florida will provide asylum’ to holdout juror in Lindsay Clancy case. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://thehill.com/homenews/state-watch/6085748-florida-offers-asylum-holdout-juror/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:03.926293+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxNQ0lQNXVRUWkxZExGTFJQN0ZwT0ItZjl6cTc2WDlMQXNlbEo2QTJGNjBpZXZYLTVrTlZvWlQ0a0F3bnh5WVdES2x4SkJsRjR1MmxEeXBydlduZGVhaUJyS0lXUmROMzNxTjl1TGlkNEYxVHNlN3VUWEJkZUNMeWJRUzh5VQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Most of the rain is shifting away from the morning hours and to the mid-to-late afternoon and into the early evening hours.",
+    "publisherUrl": "https://www.cbsnews.com/miami/news/south-florida-scattered-showers-9-12-2026/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:03.857269+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNaEtNdV9KTnY3QV81dGFPeUpKakdxZVAyN1JlRVhPX1dLYXpubnRUVXIxQVRmMklndjdPWjEtUE5IbnJubDlDLTJwcmRpQUpTV2RUY3NUNEVHQmN3U0w0R0h6ZnFuaEc0b0I1elV1WXhtb1NnbUVhWnlaTU9OVW5XRENqTGt4dmwyZ3pLSQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Teen was rescued from a capsized fishing vessel on 10 September, days following the boat overturned and his older brother and cousin drowned. Additional details: The group had last been seen been leaving Alaska's St Lawrence Island in an 18ft fishing vessel on 4 September, and were expected back early on Sunday but failed to return, the coast guard reported in a statement.",
+    "publisherUrl": "https://www.theguardian.com/us-news/video/2026/sep/11/teen-rescued-alaska-bering-sea",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:03.595837+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihwFBVV95cUxNUFNjSm5jakdiSXhWUmpFczRQZW9JSnFiSlFQczBFTnNZak1kQjlWYi1qdHZHUnNueVVRZUdhb041UVVzVExienhJczgxOUxWdUtVNkpxb0lfR3oweW1oTmhPSWpPZmF3ZVJjbzlIVVlwd2VtYXpyaXFDMmc0Y2ZjUWVRd2NhWGM?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates this story concerns Mets Morning News: Subway Series begins as New York remembers 9/11. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://sports.yahoo.com/articles/mets-morning-news-subway-series-133000082.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:03.437567+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimwFBVV95cUxOQzlDdHJjU01QRVhuR01HWUs5dGNwTDNTTFJ5TVFXZjhUeTNqajkyQzdlR0VrT0x3c1puV3pXVmhNRjZWVzEyV29kR3UxVFBkTDZKRGNwVjlvTXM5WmliR3Nmbl9CaHM3RFhHUkJBbFNDaWRtMUNrbXNnQUJENzl2RlU5UDJzSGl4WnJLY1NLQUhOWUlkVUhNZGRRZw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates this story concerns Buckeye Nation overwhelmingly thinks offensive line is the key to beating Texas. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://sports.yahoo.com/articles/buckeye-nation-overwhelmingly-thinks-offensive-133100119.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:03.352683+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinAFBVV95cUxPcDJyZGRwQmVhM2E2MFNhcDJlb2cwWmRXTXFEUTItX0lmTUxtaDcwMzJJZFZiM0hlUi1rb2IxbXRKRmE3MFI2OVJTZ05ad2ppNF9ybFhmaENPMXRQdkVZUWNlbmY0U0ljUktzX0V4a3h1cjg0MUNHRUYzWklHMzVYSEpXYXZiYnd1SG1zNDZId0dlLUY2SFNEVmZIUi0?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Allen defeated Southlake Carroll 56-35 in the CBS Texas Game of the Week at Dragon Stadium.",
+    "publisherUrl": "https://www.cbsnews.com/texas/video/allen-beats-southlake-carroll-in-cbs-texas-game-of-the-week/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:03.258654+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQRVZ4Zm05TEpEeHY5d0xEbnY1OUVWNlBjOVJrbnpBSWNMRGhWcERiQ0JsQ3FIdEZqQnZpa2Fhek5rVHE3QkhFU2dqb3p2bTdmLVE5b1ZfUEpsa1F6YXZTLXJuTThqODFjNXVBZnY1Q09NQVNuaFdaQ1ZEOG43S2w2bVJ3clZGSUQ2TTFHVzFXYTRURzNhZkJZM1dMelQxWkRyRkx4eS1iU3NDV1NLTWVSckstWnVGcDJy?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Coast Guard reported the 15-year-old was the lone survivor following the boat overturned two days before.",
+    "publisherUrl": "https://www.usatoday.com/story/news/nation/2026/09/12/alaska-fishing-boat-overturned-teen-rescued-2-dead/91729418007/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:03.214448+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNOHQ5a0ZlSlhTSmlPd3JiYXRxOW14N2x0VEtta01zSmdLbGRoT3diTzlaclRiWmZMVkJ0aXBuTk52cUNFaGhWTDgtbWtETk01NUM0XzV4cUpQY3J6dVRnNUFPYmc4MnJNSDB4dW1IR3RpeVZsZEE5dXdnSEhDdkRMcjdOcURDb2ZHSWRZZ3NUajNHSTdEQTFWQVptUGdkM1BhR3AwSWdmQ3E0bGMwX2x4OUYtN2FQRnRleHprRkpwVVhsVjBuTWJVcFZOMUVIQ0R5?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates this story concerns Pete Thamel Announces Major Oklahoma, LSU and Texas Updates Entering Week 2. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.si.com/fannation/college/cfb-hq/news/pete-thamel-announces-major-oklahoma-sooners-lsu-tigers-texas-longhorns-updates-week-2",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:02.717780+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMitgFBVV95cUxNYTRNQWdxNWoxQ1FDQWExaXdTNXMya2VBdVZFUXpNeUNaemlVOG1tejNhQkd2ajNiYlBkTlVVSGFkUVRDQnBLNEJxNV9Sc0d3bDFoMk1LajBFRUR5TVVWemsyN2hqMVVqWWRYdm10cmR2b05aNUhucDJ6Q2M1NGwwZ3JhTTJnVXNudDQwaUhKb2hoOUc2dXhWYkJ1bEZ3dTl3akpWVWMxc2ZIU2hsRVIyT1pieEFYUQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Ted Cruz and Greg Abbott put Islam, Sharia law at the center of the GOP convention in Dallas on Thursday, Sept.",
+    "publisherUrl": "https://www.usatoday.com/story/news/state/texas/2026/09/12/texas-gop-islam-muslim-greg-abbott-ted-cruz/91709843007/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:02.650751+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPZVlyU2ZTTVRKRy1IZlJ2R0ZrSXYyUWI0STFOUUVrV1FBcXJSdkdRYzVRZ1RlSm54dU95VVZUUk9XMi1RR001UDR6bHd0cThWMWVSTXpFaklHSlhqMFdaM0tnMnlJbHhRYlhMOXliQ2psWFdIUFdUVFNQZkxEUjhYZkxTeWltUy16RU9KRXd5MjU0WUtKbzdtNWFEMHQ3dlMxNzZISG1ZcUFPZWFBbklUZEt6NlZhZUFrWVQtZGQ3RWQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Before the 2026 season started Ohio State Buckeyes’ offensive lineman Carson Hinzman was named to the Jason Witten Man of the Year Watch List.",
+    "publisherUrl": "https://www.si.com/college/ohiostate/news/inside-carson-hinzman-ohio-state-community-impact-and-new-foundation-01m29wzv8rzd",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:02.480356+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigAFBVV95cUxQOGFURHprMm9EZEpfYUZ5bUc1czRtNmJCRGtPUXJMTFdxWG1kbHpmVjZZTUlIMkdKaTVIR1NpZ2JHcmVTVU5qQ3JJOEVZX1RrN2NNbTQ2cVp6b3QzcG8yRlZGbzFuNkZ0bDlXU3V5Z1dmLURUZGlNRy1SbjVraXlNSQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Did you miss any of Land-Grant Holy Land’s content from this week leading up to Ohio State’s Week 2 matchup against Texas?. Additional details: Well we’ve got it all in one spot for you right here.",
+    "publisherUrl": "https://sports.yahoo.com/articles/ohio-state-gameday-bad-day-120100853.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:02.453162+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPcFZTQjZxMDVKVUhDdUhqdU1ObVZGTTFlQmZFNjRtNEozTmx3TXJac1l3Tk1za3FnOXJ3TUVibmFEQTBuMFY4bmtOZzFnLXVKVmRLWnF4QzFGLWFpLXI1Tk1xeUdMekR2NTVlcXFpNjRkVm0tZ1BKVDJtbExpdFdhakhNR0JCMWVKR3FWZHlBVGVveG5xVXJ3SWduWjd0Q1FoY280dkV0VE9kQnZqQ1gxdy02VDFjdjFMcmc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates Learn which TV channel or how to live stream the CFB Week 2 Ohio State Buckeyes and Texas Longhorns game.",
+    "publisherUrl": "https://www.foxsports.com/stories/college-football/how-to-watch-ohio-state-vs-texas-tv-channel-live-stream-2026-week-2",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:02.294845+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi4gFBVV95cUxQbUQtcHRQTzVCeEN1ZUdOX0VEQXRhYm9XbU1jNjRfbC1qMVpsV1hwbW9jQXFtWXhGZUVtZ01JSlNRZ0M3UTU5RlJIUUlSNFpRTDRtZm4tTUtXY2M5bW05V2x3ZE54TXdSRlZSb0FWUXlGUFR2cWptZ0o2MlYtbGN4eU1yX1JKaTZncGxDY0R6YTg1eGtmX3luNFNyLWVVeE1pQ2ZIaFg1ZFBnY1ZTRmNsRE9tVGtSR1BUemFEcE1sTHBtTXRQellqUm95WVV0ZGVkTXh2cVZBRHdtMWVOZjdacXFB?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates A federal grand jury in Los Angeles has found Chicago rapper Lil Durk, whose legal name is Durk Banks, not guilty of all charges in a murder-for-hire trial.",
+    "publisherUrl": "https://www.latimes.com/california/story/2026-09-11/los-angeles-federal-jury-reaches-verdict-in-grammy-winning-rapper-lil-durk-murder-for-hire-trial",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:02.134216+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiggFBVV95cUxNWnByNll0eG9nQU5JSmJvSEtTTWJjSWlpRXdPQ0V4ZV9fOXp5UFNuOUNSM2VTX056SWtnRGNzQUNKVlh4aUlZa3BLSjFqX1lsZ29QMjVSQnpwYTJsYm5vTjBZUTZ2N1Y5elB5c3ZJS0FWU0ROSEFPeXRhNXRNZ0Mxcmt3?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates this story concerns A curious college football weekend: Blowouts loom before Ohio State-Texas steals the spotlight. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://apnews.com/article/college-football-c1ad5adbf317ecbee2c0ed668fd918cd",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:01.992656+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiY0FVX3lxTE02QjRrRWtOa0cxeFhRd29jRTJpekxyZXdGSnB4MlZwdEE2azN5ZnB5YjJfSFZ0b094andMY0hvTXdvNjBTeHpZeWJBTHNFSnRVb1hQRUNkdHBndFlKeHVLREVtRQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates California Governor Gavin Newsom on Thursday signed laws aimed at protecting children from risks of social media and AI chatbots.",
+    "publisherUrl": "https://www3.nhk.or.jp/nhkworld/news/20260912de49915/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:01.563442+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivgFBVV95cUxQOVZtUkdxMFVKLXJRcGNfUmw2cVhmMmliY1VkdkNXc0Y5ZzRMTF9YRWU4b2twN0pxWGp4M1ZpREtzZ1FmYUhMcmEzNkpocUNORm9raGxxbVlrcTdwX1BQSE1RSGtWbEhaQmo4VmhzZGx2Wm1abTJvSGxxR1ZSUHpUZlBsQVJ1U25xRU5NUHhaVnlHUUhBZTNNdHVUcHFqbmtWQzIxSVQ1STlNeEhLMWw4Z2wtNGFILW1aaC1VZEhB?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates When it comes to wine, the number of people taking a sip is slipping.Local winemakers came together Friday for an annual event in Downtown Sacramento to help promote their products and boost sales.From Amador and El Dorado to San…. Additional details: They now produce 2 million cases of wine a year.She reports they have removed some older vines, but that's making room for varieties that are more popular.\"We're always looking at trends, obviously.",
+    "publisherUrl": "https://www.cbsnews.com/sacramento/news/california-wine-demand-is-falling-as-growers-pull-up-thousands-of-acres-of-vines/",
+    "sourceKind": "article-body",
+    "updatedAt": "2026-09-12T14:09:01.525180+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiekFVX3lxTE1HaE1KbGxpMXRVNTl1OHJhZTVBVU12b1kxSjBrNVprYmprcXg3REk4NU1IQkhhMEZtRS1kanV1T21FRmg2bWhwVHNncFo5MTZzWUtvOHdqcUJDdl9hb3RLV0xwejJrdkQ3SkR0ZFZFNkoxMXJQWHp2VmJB?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates A castle-style mountain estate in southern Colorado has hit the market for $985,000. Additional details: The nearly 6,000-square-foot home sits on 40 acres in Weston, south of Denver and near Trinidad.",
+    "publisherUrl": "https://www.denverpost.com/2026/09/12/colorado-castle-for-sale-weston/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:01.479413+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSk5YZnYxMjRYd09Gckt3QlFLclRMME5zNmtnVGI2UzNOZEE3bkktVVZsZlZ2YzBKeUJ2dDJ3LXZYUVFlNldubGxDdmFlSXhMQXZYV3J0UUd5UnVKejNpSEw2TE01UktwY3JOT29GM3hrZThkNFV6SnVnR3B5Zkh2WEJSNFl3cng1YkE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates How does dry Colorado air affect indoor air quality and overall health inside the home?. Additional details: HelloNation has published the answer in an article featuring insights from HVAC Expert Darrin Monks of U.S.",
+    "publisherUrl": "https://au.finance.yahoo.com/news/hvac-expert-darrin-monks-explains-134200528.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:01.348430+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimwFBVV95cUxQZmtBSmFHbEM1WVlEZXdQY1lscjc5Q1prMFZYV2IyNGJjdFNZeDdoRGdqeGctYzBvTGE4dzUxU0ZuZ0NiZXZuWnhHNzVhaUhOeXIwSGZzTjl2djRaVUNTcnZOUi1JOVl5aFB0OC01dGNIQzZORmZyOVNxbU9NM2tEVWcyc3BGaDBqNndPUWswQ040RThpT3E0MDNFTQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Regional reporting indicates The Roosevelt Rough Riders faced off against the Windsor Wizards on Friday night, winning 34-7. Additional details: The night also served a special purpose, honoring those who serve in the military.",
+    "publisherUrl": "https://www.cbsnews.com/colorado/video/roosevelt-rough-riders-win-34-7-against-windsor-wizards/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:01.209919+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivAFBVV95cUxOc1Vwa3NPX0NXMUtpZzNCMlU5UmhPTlR3czI5UzRZTVZ5enIxTlB0dUVnZzdnY0lWWXREazRzcGNIdzJaZlczY01EY3gwY1lBUU11alowMExONnFTWmU5MmNvbU9ISV9KYVllZkdZZ1NhejRVcDVGN2F6YThzaWlzMkhsTGEzT0Nnb1o0MmNBMV8zQVpkNGZXbEwwSXFiTER3THp6VjRKSWw2Qkd6eW1LRVVzd292QmlLNXd1aA?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Local reporting indicates Cleveland quarterback Michael Denison looks down the field before passing in the third quarter of a game against Farmington, Friday, Sept 11, 2026 at Hutchison Stadium. (….",
+    "publisherUrl": "https://www.tricityrecordnm.com/articles/high-school-sports/storm-thunder-past-farmington-69-35-in-district-1-6a-opener/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:00.947419+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxOeXlJSGdtTmhBc19BSWl2TTd4WTVJTWVybVdsdlU5MmdYbENENGd6ZEtDVXBEdkRlc2xpYlJhVXN6SWItcDE0NWtHdVhNei1EVHJxMG5oblpuQzZZNDdIUHB6RkhFQlB6TXA1UkYzR1Jjc1BGcWhiWURkeTZJZmIxeGtKRktxSkc4dFE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "New Mexico reporting indicates Read New Mexico State Aggies vs Hawaii Rainbow Warriors predictions, picks and odds in our college football betting preview for Saturday, Sept.",
+    "publisherUrl": "https://sports.yahoo.com/articles/mexico-state-vs-hawaii-prediction-103033286.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:00.751704+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiugFBVV95cUxObFpjOXVpRUNkMzFHLURMdDZSVmhIS2lZNmZLbDBhVk1DWE1VZUpmZ2luUUNBWEh2cWIwXzZWWk05M0ZJRFctWDFMT05rS0R1ZldxdnMwZ1A2MGhrbEp1QW1UUDR6T05fYjd1UTN5M0ZiaFVyanpDb3VlUl9iNjRUdFlaWmRLUms5ZzRCRnItU3RpR1hidC1LV0N5LWdnVWVjanZSejZFUkxoSldsZ0IydXM2MGF3ZFFTVlE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Local reporting indicates Wolves led 20-0 at half before scoring 30 unanswered points in mercy rule win Hozho Academy's Hudson Cash races downfield while being pursued by Shiprock's Koni Clah during the first quarter, Friday, Sept. Additional details: 11, 2026 at Chieftain Stadium. Cyndi Frank SHIPROCK – The Hozho Academy football team ended its season-long losing streak Friday night, routing Shiprock High School 50-0 at Chieftain Stadium.",
+    "publisherUrl": "https://www.tricityrecordnm.com/articles/high-school-sports/hozho-academy-rolls-over-shiprock-for-first-win-of-season/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-12T14:09:00.631531+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMitgFBVV95cUxNaEpYYkpZZGJ1VEo3N2pWYVdaZWZSd2FyLXloMDJqbENESGtGSzU4cHo4N1p6eEM1MzhHd0tQQ1NPSVFCUDRxX1pYLVNxRjNnRW5US2VrZlZwSl8tUml3enpremZ6R09mazNaRUZ2VEZVaFduXzNIOFpRbkhmTTJQWUVvY1FzdVZJbDc5S2t6alVvTVJaWmxaS1RONEM0ZWh5Z2tRYlQ4LXA5SERwM1RNZ2ZzcGNTZw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Local reporting indicates Farmington's Rochelle Tadeo attempts a shot at the goal against Gadsden's Albany Adame and Aytza Ortega during the first half of the 5A first round playoff….",
+    "publisherUrl": "https://www.tricityrecordnm.com/articles/high-school-sports/los-alamos-tops-farmington-in-shootout-in-girls-soccer/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:09:00.563480+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikwFBVV95cUxPclI2ZHpXSWVTME5oVlRzUnR2Q3VMSV84QjZsenRpdlJFRlJwc3ljOWJwZzloN2dVYzkxQTV2cGFRTTVCdHNGbmdUdmtPX2FuNjJmbUhsbHByN2lQdkRTSFg5NkxENXRDdDRjeFVhWDFzVEJOMXJtMVBvNEQ4OFphcFFRVkw3S2ZMckQwem1WdHZJd0HSAZgBQVVfeXFMTURkU1FpZjN0cVgxeGxOLVdHTjh0bnhkXzVYaGZ6anpvckxUZFlJdHQ2Tmo5M1Nja2IzTXRfYmFMaGlwY2ctWGZ5Q1RpY21INW1lbGp6T0FQV0h2ZGk1V3pPLTJ4S01WSGM5Q0pnTDRCc3lkUi01aUpfYllza0VfQkI5S1cyZG1SNEREUzlQbTJNd2ZnanJCS1Y?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates this story concerns Lindsey Graham, longtime senator from South Carolina and Trump ally, dies at 71. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://abcnews.com/Politics/sen-lindsey-graham-south-carolina-dies-71/story?id=134688641",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:00.435001+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirwFBVV95cUxOTE12MTFMUm5mRVF4YkF1MHJDSGJvVU96Y2FwT08ySmUyRnd1Z0lpV0o0SDcxbjJlelcxeVpDRnM5RU02VW9zSUxtc1FFdEtIN2h2SDFfMWZqQ1MyTHBUanhwTmlreVRoYXdfcHRZcE9JVHhaV09lbzRPQ0RZZ19kTHQtRHQ0c3JueG5yNlgxdTNKeDdJVXYtV0xWV1lpT3lwNnFjTTZjV3k2M0lodURR?oc=5": {
+    "cacheVersion": 2,
+    "brief": "New Mexico reporting indicates this story concerns Trump floats new name for New Mexico. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.lcsun-news.com/videos/news/2026/09/12/new-name-for-new-mexico-trump-floats-new-mexico/91710682007/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:00.399397+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiqAFBVV95cUxObTBDWU8wZ01YSnowWGVWbUFZQ0ozZlZaSzRYWFhuaUdxajB6T05JS29iX180anZIUWdKUUE4SjZGdzN1cmc3Tmx2bjMtT0Z4TE55bGQ1NjYxUThlU21OTnZvbVJxeTNXVjZZcXJrdG1pQzRMTnVqeGUzcVY5aGluV1V0YTh0UlN1eVBScUZTajd4S0tCaFNEWGltbE9jRHk5eS1rTFVkRHg?oc=5": {
+    "cacheVersion": 2,
+    "brief": "White House coverage indicates this story concerns Vance seizes MAGA spotlight as Republicans begin looking beyond Trump. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.reuters.com/world/us/trump-touts-5000-payout-if-republicans-win-vance-waits-wings-2026-09-10/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:09:00.113495+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMibkFVX3lxTE1lRnQyYnVLbW5EWG9lbVMtYnNfVkxvYkJrUm1QNC1rUlc2eUlGc1hSTnkxaTJCNFhxYmI0VnBDWVVFT1Jka29VNkdhZ1VWbjBBWVJ5V0t0UGFZSFlSSWZFYVBxYktaMVpPUmRtUHN3?oc=5": {
+    "cacheVersion": 2,
+    "brief": "White House coverage indicates as the new White House counsel, and Zeldin's role as the first Jewish administrator in EPA history, hold influential law and policy roles in the Trump administration, scharf.",
+    "publisherUrl": "https://www.jpost.com/influencers-26/50jews-26/article-907916",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.908459+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMilgFBVV95cUxPeHd0eS11SEotTjhnRUNEbDRjMnlLMmVUWHRKVTZHOWRkeExNUzZITVBoeEtlZG1IbVlkUGVycUdYbXNkMHUxM2htNzVzMHpJVWZDVm9idHV1QlJhWEhUc3hraFlJTGtNV3A0RFhnUTdObHdWajFBcEtLRWhiNmZONHlsU0ZsdS1rRUx3VE5yX1FYQ2huekE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "White House coverage indicates this story concerns Trump criticizes Smithsonian's focus on oppression. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.reuters.com/world/us/trump-criticizes-smithsonians-focus-oppression-2026-09-12/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:59.782197+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxQc0dKTUFyeS1mYkhiWEhhWWc0Tm15ZWk4YTJIcnZSWGY5UnIyeVNLT2MxbGNkZEo1Q0N0UFVaQ0psZEVNa2w4SEJWbWlEQW5kQzR0dDk0UVRyMFdwV3pDcVYtenQyQ21Xbk9LR2dYX3Z3ZklERnRYVWlaMzVFTjhEdFdyc1VDbGFDTkE?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates USA Hockey named 31 players to their training camp. Additional details: All but six is expected to be on their 2026 IIHF women's World Championship roster.",
+    "publisherUrl": "https://sports.yahoo.com/articles/predicting-usas-2026-womens-world-111108838.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.717172+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQQUhPSUFPQnJnU0lWTFpic21yVXdlbkR0MjlKRWt1eHpyQzItRi1BOExrZFNzTXczQ2p4MmRsS29xV1pTRHdBbmlYRGZCTmxRZXVKZ3NVMjdqRDd0azlqNmNxb1pNS1RoVUdsb2JITFhQblVyQ2p6a0VGTjFianlVbDVNdzUwUkRkS1UxdWlXNkVrRy1yVHNZOE9TeUoxeFFleURIeG5oVlhlNFlGQnVPZ0hVeFByY01Kcmx0VHNNaU5oamxpWFBMeWl1N1NMY2QzR0MyT9IB1AFBVV95cUxPTlQ4WFpzd3lHaFJzNW91dXg3cnVGckdMV3k5TXFvc2h5d01EQUNUbm5zenptUFAwdFNKdzJrZkRkU28wR0Q5R1ZkT1FQZEtJYWtxdWpxT3NIczZoU1dFLWxnS3FJY0poTmdmdlhkWTBMR2N1bTBpckRPMDNwVFlqaFpGSXlLTzl0bkMyTVl1M1MyQzJIRjFZekFUVjRSMDdaVnlUdlhzWm5YdVV3SjhVdWxuYkFvNVRORW1NRnBUbTNqN2x1VVllR0JsVXh5NWlqT1dqZg?oc=5": {
+    "cacheVersion": 2,
+    "brief": "U.S. reporting indicates CCTV warning follows comments by de facto US ambassador that the island did not need to show it could win a war outright to deter an attack.",
+    "publisherUrl": "https://www.scmp.com/news/china/politics/article/3367283/us-wants-taiwan-serve-cannon-fodder-against-mainland-china-state-broadcaster-cctv",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.619889+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMingFBVV95cUxPWDVGdEpPUjllenFxamQ5LXRFZWpoOUhwMFFDTVFzdHVoc2hNanhUZnVpaHk3cGk4RzZYOFBYOC1zWnJOVUxzV1FVRVpqQllPRE1uenV6amotR0lZdnExNk5vTENDUXB1bURlWERZSU1vNWk1ZklYeEFmeXZYb0cyV21VaHExMzhBNFdib1RUV3FXY2JmMFQ3QXBjTEZHdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "U.S. reporting indicates this story concerns Trump officials propose sweeping changes to the census that would reshape voting maps. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.npr.org/2026/09/09/nx-s1-5845147/trump-us-census-citizenship-question-race-categories",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:59.580708+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPTkhNMzZqVU5KTk1hMGJ5VFpOTTVsUU1PRjVNaU5DREtTLU9tTzlFUF9zNkRSWVIwOWpMVEhudEVYeUk4bnZtcEFSRVJDbHQ0eUlBVXdka1RWUVNyeXVYVXdGVENObE4zQXJfc2hlaDJUYUx2VkdCczIydndIQ0gxVmVSamxfZkdEWE5idHhrMXRIX2ZodXQ5Y002LXQwTDZHZjBVOVowMmpPa2xuZVJkajY5dFN0LVht?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates An Iraqi military commander was dismissed following investigations confirmed the drone attacks originated from the country, Iraq‘s prime minister’s office reported.",
+    "publisherUrl": "https://www.nbcnews.com/world/middle-east/saudi-arabia-shutdown-key-pipeline-limits-oil-flow-yemen-houthis-rcna597362",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.448452+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikwFBVV95cUxPSHFBZmt6eHVZczFydzRVRXpKUUxmZmNhVzFfS0oxUjNuOUZ1RmtuTzU2TmxQb1REYWRxQURWR084bl9ZSUNZWWhCbzVGM3hIRUM1UFpfbkV5Ym13NUU5RUY5RmZDWU15dFBmRG5WQUpKNW8xXzAyOUtxSFdYT3FlSVZFTjBxcjQyRTNjZWJ0Ul9vT3M?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates Catch up with the most important stories from around Europe and beyond this September 12th, 2026 - latest news, breaking news, World, Business, Entertainment, Politics, Culture, Travel.",
+    "publisherUrl": "https://www.euronews.com/video/2026/09/12/latest-news-bulletin-september-12th-2026-midday",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.263260+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQZkdZbjItanFnNzYzZmZrVEY0Y3ludFZHV3gzMXk5Rm9Ia0M2c2lHNzFJb2syOUo2ZGxaZU1pYlA5ODE3bFZnUENIbmtUbWQ0NXR3V2tadWVWZnJ1eVQ4RnJlZy03ZGFHeVhoTldWcUZkZGdqWFV5eFE2Z2hDcFhsUWF0cHE2VnZo?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates Indiana is set for its week 2 matchup against Howard as the Hosiers look to extend their 17-game winning streak.",
+    "publisherUrl": "https://sports.yahoo.com/articles/indiana-football-vs-howard-watch-120000320.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:59.102214+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirwFBVV95cUxPMGtZdldMOGgyY3hFdEVnWklzR3dhREVBZTdDeEhPQjlmaUw1QUlGVUZDdUZoaDZWZzBUTXhUb09ieU4zTVZvYkplLVJ1Z1RscUp6TXMtX2RpdFIxY1ctbVo5d1dtMTJpSFVleW8waDhfREEzNGZlUmpuYVlVSEtWeUctYVJpWEVxNjdUNVE5WUpTV2xQYk5ENGRpaXZQZEtrc0NySnNDdzViU1MyampB?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates this story concerns Trump says Iran probably responsible for attack on Saudi pipeline. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.reuters.com/business/energy/trump-says-iran-probably-responsible-attack-saudi-pipeline-2026-09-12/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:58.932933+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxOT25hYTZTTFJJQ3JnUkEwMjgyTERoQWFnVHJrMV9YTHR0bmVMUVJNQzBzbmtWYm5aY2RMMV9EQkVxX2ptc3hpTG9Jd3V6MG5MTVVBd1lmcGFwTnVkdm82ZnlaYjN4M1VKdHlJQ09MMldCaHNFendiWDEta20yLWNRbWVUazJMWjlJZS1fdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates over 50 Afrikaners have moved to Brattleboro under the Trump administration's revamped refugee program. Additional details: Some locals question whether they should qualify.",
+    "publisherUrl": "https://www.bostonglobe.com/2026/09/12/metro/brattleboro-vermont-afrikaner-refugees/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:58.810216+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1WYkFDZzd0RXNwRTVPRHhYcTlPRG12WmJXWU9fYVZ6YjBjOUFUMXNoZEhYMjRpcEF4WGNhNmVnQzZ4eDl5Y0d3dDZQTVZnd0xNWExUY2JvSWhxdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates Iraq removes a military commander and opens investigations into the attack that came from an area bordering Iran.",
+    "publisherUrl": "https://www.bbc.com/news/articles/c62m933465eo",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:58.636838+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMilgFBVV95cUxNM1FveGt6M2lFdGNWczRLdTllNlRyVGY5NXVsTVpPS2lhYjRoR3B1SlZqTmtQVFRFMGExRG5tbHlReTJqQjRFa1hJTUhyVThaX2hGTF9MUEZNX2tXYjFPdTdWS2J6TFc5YmgtRFo2YVZnRGR2RmlCRjBndjFMX1VwWmxrS0VhMGNCdmRiZzltRW9VdjA1OWc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "International reporting indicates Anti-war and anti-Trump protests were expected near the Trump International Golf Links ⁠in Doonbeg, Ireland, where the leader is expected to attend the Irish Open golf tournament.",
+    "publisherUrl": "https://www.nbcnews.com/world/ireland/trump-united-ireland-visit-golf-tournament-rcna597366",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:58.289196+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPcXFFdkxjLU5sMzBjNWxjRGl5N1dXTHJSUW5fZ0tpN0JQcndzc2w3UVU1UTZqUGc5NVY2VGhnR0NMM0pzQ0p1TUdKb3gxX2NDQnJNVi02VUVVRndJWEFnYXFta2E0NV9VR3JVeG9rbEFfZWFVM1dnbV9qVzdhdGtfY1BhZDBMcEk1U3ZIUmY2NUttWkZMend0VHV0QmNjeWxYX0ZfYW9MX1ZjU1hNWmJBak5pdnFxUjNQMEhIZFF4Z0NWVEo2UHlld1dPXzdHRXUx?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting on the issue indicates Mark Takano introduced a new bill aiming to shorten the standard workweek from 40 to 32 hours.",
+    "publisherUrl": "https://www.usatoday.com/story/money/economy/jobs-labor/2026/09/11/bill-introduced-congress-seeking-lower-32-hour-workweek/91715056007/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:58.206323+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMingFBVV95cUxNUjVnSllvZ3pFSjBaU0I3Nk9mSFVleVVVQjM5RG9IaUhqUm1XRDd0eWlhMkR5cm1rODZ4R21RTzhwVHBoS3BPT2hNckZRa250TXJ1cFBOS2lPR3oyNllGSi1KR3JmbWlGR0ZKNG5GZFBYR3phWDJYTl9wc2t5cmlqR3ZMNHl5aEh2N0lfWjJQZ2VaazNyWXBQVVJaVF82Zw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting on the issue indicates The people who grow houseplants aren't often thought of as agricultural workers, but they face many of the same hardships — especially in extreme heat.",
+    "publisherUrl": "https://grist.org/extreme-heat/americas-houseplants-come-at-a-steep-price-for-greenhouse-workers/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:58.174764+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPQXl6T19GTU5YclJCcUpwMDJQNF90TEU2Q19rNWlSaU1lSTdiZGxnOWt3OUdycUlxWjNadDkyR0ZMYl9fMWdQUURWQUtmelJNcVlDZWlMaXU4OGVhWnczUFgxcUNrMVRRa1A4ZXhYUUNLOTFuQ2lUYmZSTk1kT1VvcHVYR1hXbFNs?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns Trump administration offers rare muted response on new sanctions against Israel. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.cnn.com/2026/09/10/politics/trump-netanyahu-israel-sanctions-response",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:57.776609+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPaG50aHhISFBBM3ZtcUJ1UHllRy12QVZFQ1VCMVRHYUxiYl9iSUlKd0kzNk1MUlNJazh5NUZYTm13V3RySE1jMjlHNFh6SGQ1SllMV3d3ZlR2NVJaMmh1MGdLOTlxSnZUdlZOUXFDVGRJWjc1UEwwUm9wOW93dEx4NFRqNk4zRUZzeUJMWGhPUHNlY3JlR190a3Myakg5cWdJRWdTdTdLMzdmRTNkQkdyQmZGb3dJT01DWkxVUTNMVFo?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates The Houthi fighters moved closer to gaining a definitive stranglehold over Bab el Mandeb following a rapid reignition of their conflict with U.S. ally Saudi Arabia and the internationally backed Yemeni government.",
+    "publisherUrl": "https://www.nbcnews.com/world/middle-east/houthis-bab-el-mandeb-strait-yemen-saudi-arabia-iran-war-hormuz-energy-rcna596970",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.630791+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMie0FVX3lxTE1mS0dISHk5dTUzYnEzTy1GTmhyVWFVNkhtYXdvVVg4ekpnYWFST1FEOEVmcXIzakROSXVRd2ZvTi14OTQ4T0d4eHpSNkNhSTNmbUprWUFvZXZjd25raWI4SlhYWWFHQ3VHNlZnWG5WY1BodkdpNm9ONEFEdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates Scientists say that August was the hottest month ever recorded globally. Additional details: In the U.S., summer temperatures also shattered heat records.",
+    "publisherUrl": "https://www.npr.org/2026/09/10/nx-s1-5963899/august-heat-summer-hottest",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.600253+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPNHZISHFzWDlSb3E3U1VVeVJ6Y3l1Zzd6Z3M3OGlkQjQtWktpQjRlMmV0bG4zLWRHakt3bVBqVzczMkhIQ0swaS1rMEN5MFQ1MHBLNUgtWFgzaTByYmxFSEppSndDdkVkUElBUFhIMng1SVRnMjJDaTRKeDhwZmJmN2N6ckRsSUtUeGpkamFnc3BSM1ZadUwybXQxVndNOE94MHN2dlByUUdQZFhHdFRuZHhzWjZ5YzRjSXc?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates Brazil’s top court unsealed several documents late Thursday that show Sen.",
+    "publisherUrl": "https://www.nbcnews.com/world/brazil/brazils-flavio-bolsonaro-faces-corruption-investigation-weeks-election-rcna597342",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.576116+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxObWM0R2tRaGs1Z1EtMzBtNmJRMVRibEY3aVM4LWU1bzdTdklJWGhMTWg1V01lc0Jld1RacTYxbXVtdmNDUGg0eFBNemVKODlYRU83VWF1TlNrYURvN2N3V1kycVlrSWk0QzYxVm54bzhCNWhlNG5IUXpzUEU1VUJOOFY4VU4?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns Moscow Claims Ukraine Planned to Start a War Between Russia and the U.K. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nytimes.com/2026/09/10/world/europe/russia-ukraine-uk-embassy.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:57.544322+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihgFBVV95cUxQWDJJNEc3U0dhcG44d0t6eDBVdHY2X0FqdXg4WHVYR0ZUOGNPRFFrN1NlV3FFTkNxUGU1MXF0djJIbVRZT2lLbjItMHJ1VnRRU2xRNUVKdi05d19hWTdGX3E1LXZpXzlOVkZ1R2p6REtONEk2OTFRcnhDNi1VWkpMSDdrSWdhdw?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns U.S. women arrested for allegedly smuggling $1 million worth of drugs to Japan, one claims she was motivated by free trip. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.cbsnews.com/news/us-women-arrested-smuggling-drugs-japan-free-trip/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:57.535750+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPZ1FZRnlyYlVMWEhVOXRxYnVPRFc4MUNQa2hFbEY5M1NtU0Z5czJxX1RDRkxvM25kLU1lRXNJN1RSTUxvNnltTjE4c21QSXRFa0ZJaUdqUlU4cTJsb0F4MnYzNWpWbklUMGVVdkd5cnExbkItV3BpNm9rSnNPdmRHUlhCcm1mOXYzWmxVS2lFczNWU3otclA2azQzV1RfUHlmWjlWNFVXNU1kcDEwb0xfVnV4QXdjNTdGYkhDcnk1NUY2blZGX3dvUQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates In fact, Rush might even be an upgrade for managers of Drake London, Bijan Robinson and company.",
+    "publisherUrl": "https://www.nytimes.com/athletic/7585164/2026/09/11/latest-fantasy-football-news-cooper-rush-replaces-tua-tagovailoa-for-falcons/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.474065+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPRHVJRU9yNTBkR1U1aXRRNzNXeUlfREhNZndqUWhwcVZ2TGctN21RMW1QcmtyREhmRXEtczlEYW5tNGRxWmlUOENqbXlQWlY3MWNPRzhQUk9BbmhUa3IxbHRMdVk4em02SnlJUTFzMUQ4NzdHOENHTXV3M2RKazVzOExUckFVLTFQdWhROHB2a1VJT0pqSWNGY2o2ZnAtbnA5VEdwY2dPYXJpSHpsSGVWWExWT3BxdnRy?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates Former ABC News White House correspondent Ann Compton remembers what it was like to be with President George W.",
+    "publisherUrl": "https://www.cnn.com/2026/09/11/politics/video/9-11-25-years-later-president-george-w-bush-air-force-one-terror-attack",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.220223+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijgFBVV95cUxONGlXS2diSkZTTHd0M25Jdm4tRkE1SUhqa3NWRFhVdzBwQkFyRlo4MDlhUUVTdEE0cXV5Sm9LZWRjWHBLNzJPNlprVkhOWGRaMldlOWlPUG5zTlNuWHkwRWJpeGtXb3ZmTlhFM0pxdGtOOHlMSmg5a3pPZHpSV2FqRFVMeDhNZDk0eXp0ZEVn?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates The family of a 30-year-old man killed in a shooting in the Park Hill neighborhood is demanding answers nearly a week following the gunfire also injured his 12-year-old stepson and a woman.",
+    "publisherUrl": "https://www.cbsnews.com/colorado/news/eleslie-swain-denver-triple-shooting-park-hill/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-12T14:08:57.088942+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxPcjJDQWswdURnNGs2YzlLME5MTEwzaVdERngxcGN1S3g0SkpOMEp2d2k5SmlVbWt4QnZLTXlaZjJsTXdpNy0xWWdzX3EyWjVLWmxhRDR3NXQ2Rkkxc2ZJbWt4UkNlRkVDVVh6bHJIcHczT1VYSHpqRGg5cW9zSy1rUUNDQ1llQ3NVMk9MMmtfWQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns Trump Says Irish Unification Would Be ‘Fantastic,’ Breaking With Precedent. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nytimes.com/2026/09/12/world/europe/trump-ireland-unification-remarks.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:56.861934+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikAFBVV95cUxNRDVOU3dNaTZnLXlUajl4VmFxRkpwRU1UYnJKT0tBSGR0djJjVl9VY2tCYzlmdlJrakFnWTVkOC1LNFA5N2c2aWZ0M2tFWnEtREtzQU1WTUo1OS13X0hLRXZGbUpKUHpRVDhwTHRhVDFaN2NPMm1wVWlWQXdTY1RwWElqSHJUZzFBX1hUQVNTSUQ?oc=5": {
+    "cacheVersion": 2,
+    "brief": "Reporting indicates this story concerns As Oil Prices Rise, BRICS Leaders Have What U.S. Doesn’t: Iran at the Table. The publisher did not expose enough public article text for a fuller brief.",
+    "publisherUrl": "https://www.nytimes.com/2026/09/12/world/asia/brics-summit-china-india-russia-iran.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-12T14:08:56.852930+00:00"
+  },
   "https://news.google.com/rss/articles/CBMif0FVX3lxTE9aMWhDbjJLaVdVREtoWGJveTVyMTJRWGVkazVRMXVZd0hodVAxaXRrM3Fkb0trRnBiQjRSV1VZRzRJeGt4c1N0NXJNV1JSVnY4QzZRYzFqYmRnM28wRWxxdjJFelptenRjai1Pczk5aGg2THNvbXNGR3RIeGUtQ3c?oc=5": {
     "cacheVersion": 2,
     "brief": "U.S. reporting indicates this story concerns Trade 'war' or not, are Canada and the United States now dug in?. The publisher did not expose enough public article text for a fuller brief.",
@@ -11954,649 +12598,5 @@
     "publisherUrl": "https://sports.yahoo.com/articles/josh-pate-picks-winner-ohio-230452020.html",
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-11T00:18:41.716476+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMigwFBVV95cUxNblQybXEzdElJV2VVcnJYLVFBLVpFakVsZUNiRlJBOUtzRVZsVE1McWNNelo3Qm0wc1dtU1AzRVNZQU9hRGt1U2hyc2lJYkZyRlplNGJWT0NjQWxyMk9fbmxuWkxZbGJmVmtrbVRKTVNzZURxZVVXTDNYcEJKMV9qeW9HVQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates College football analyst Joel Klatt broke down the Ohio State and Texas matchup and revealed the keys to the game, and why OSU is expected to win.",
-    "publisherUrl": "https://sports.yahoo.com/articles/joel-klatt-reveals-keys-ohio-182051600.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.674406+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNU1Mxb2JleUZsbFNUV2FKX1UxVGd4bjJUZ0FQR2s1NmxKM2xudHJYQS1uMVpKWU0yMDdVZlcyY05hY0NWYW4wdTNOMmIxdlZNQXRiTFpMZnJGbldpY1ppTmFId1RPeEEzTzA5MFZBSjVXRUV5SXJtZVZGbFl4T3hzNW1Gd2EyQmRlVUFZaU9xRGxjbzB1akYtT3VlRjVGWEd5YlltbEhzMXhpbE5pbk9vaHlVUTMyZkUtV1Rr?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Exploring what the Ohio State Buckeyes' offense looked like in its first game under new offensive coordinator Arthur Smith.",
-    "publisherUrl": "https://www.si.com/college/texas/football/texas-longhorns-film-room-why-ohio-state-offense-is-dangerously-unpredictable",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.626842+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMioAFBVV95cUxQcWo3cDh0emQ0dzVSeWtRbG5HRHo1d25mWFRmdDg4MTY1MW9KOERHYUFpQ0h2RjBiR2ZUZ1F6dWZDQWxRNWhGRWtlbkF3V0hCaTdJcmRQN1A5OFVXT1B1elM5Q3VQbmowYmxkcU5fTXV4NDVCNFJ2V1JBRjFkcGlTdTZ2X19LSFRpMXgzU0ZpQml2Yno4OXJ2WEpndkd6aHZi?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns Michigan colleges spend big on dorms as enrollments sag. Big draw or big waste?. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://apnews.com/article/michigan-universities-modernizing-dorms-e9997f25e77e8baa5bfcc5b612d7b280",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:41.576530+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixgFBVV95cUxQYWhpSFJCYmNBY0VBZ0hGYldKNGRQR3NQcDJET0VGNnBQY3lWa29MbmU3RkFOVlJMeXAxT3UtTTVqd2dMY3U4UW1lTnkyRzZKTjlid2ZFaEY4cTF3NkN2Uk1fZ2JzR19lZzFhM1lPQVZfbjdmOEFyckZOQlA0OGJDMy1uUnN6T0JKRzQ1TzRtWlN1dW5Kb1dUS1E5WFpnZzc3U013WERadUNMRXQ3X0VsczczZTd3aXJoLWxvQUVadWRlUTB5Vnc?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns The Works Museum is one of many places participating in the XCEL Energy Day of Service. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.cbsnews.com/minnesota/video/the-works-museum-is-one-of-many-places-participating-in-the-xcel-energy-day-of-service/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:41.420213+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihwFBVV95cUxOVjhSN3Y4ZDJFMUxPdXZHVFRvMlc2b3F3YzAxQXdkNnBhUVZvWE91QVVYRG5zZXN6YkpvalZEa3JQV0VYXzM4ZENMRzZXX3ZxR2dCemhrWDdzc0g5NF9kRjJrRkQyd1ZSVUxzQWpqamRTQTVtMmNRZEpibWtUd295OTBOOXNtYjA?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Friday marks 25 years since 9/11, and a small Minnesota community has found a special way to honor the victims year-round.",
-    "publisherUrl": "https://www.cbsnews.com/minnesota/news/rockford-911-monument-world-trade-center/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.319792+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPVVBZSWIxck5NTFM2V2Jtc2dvOFI0UTBWLXZYTFlWdVVwcFVud2NLUXY4NWJoR3J6TEF3UGllYmN3WU00YUI5Nkg2WUJpcTVPdXVzSVQ4UHlzaEhieDRuMThidjFNYTlJcEtvME5ubldMd2dqVWpMUDkwTHFBNlNac0VYYl9IeF80OVdUYmpQeEdFSXZja0NuRE92cGlvNXpXT0hsN0hZWmp5bGJTVDJfVkcwLXlVcXRTVlE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Four College Football Playoff Appearances. Additional details: And that is just from the last three years.",
-    "publisherUrl": "https://www.si.com/college/ohiostate/news/3-best-positional-matchups-to-watch-in-ohio-state-against-texas-01m26grx9b7a",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.257894+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijgFBVV95cUxQMFNpZEE3N0hkY0F2REE0ZUVHSFJlY3dyYmh0Uy05eUVtOFhCYjFzaVpZbGFKal9OS3VPUVJFRXB4OGNWTkxuNW45VFR2ZzRqOVVlTmNBeTZLYThlbnd4UGYtcVFmMzdLcTYxLVo5aHBDcFl4WUJ0UmJibWcydUhLOXZLTjQwMmdXQjVIc2d3?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Brittany Ritter, a woman missing for over one week from Ohio, was found dead on top of a train car in Indiana, authorities reported.",
-    "publisherUrl": "https://www.cbsnews.com/pittsburgh/news/brittany-ritter-missing-found-dead-train-car/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.168813+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQVGVTWGdOR29mT3lHdFViTVAzY3ZFa1NTaHdtR09jQ0hncUc0WE5oaWtfQzh2VS1ucUdlcV85MTA0TWZDYWM3dm9fTFFUSHNoXzBEdFRYZl9GQ1V1bzgxX1R1M0JnQkNYZFJ5bXJuam4ybk4yX3d3b1NZb0Z3M1E2dktycWY5SEdoVXU0?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Minnesota Hockey is putting on a youth tournament in honor of sports reporter and hockey lover Jessi Pierce. Additional details: This December, the Jessi Pierce Community Cup​ is expected to be held in St.",
-    "publisherUrl": "https://www.cbsnews.com/minnesota/news/jessi-pierce-community-cup-december-st-paul/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:41.067229+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNOEc2bkxPN0xTSEtQTnRodm5xSUVOVlhYZWJNQVV4bVBqX2lCWTcxemlqZkZLN2VaZE1saFdJN252S1ZkVERtQ2pKWEtZTDgyb3lCLTlrNFg5WWlHTFczRjVuNTVzSmViX19YZVlvYWZTZGs3b3ItZzJQVTM4ZUI0QVlNS1I1cXJsbVhEdg?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Kyler Murray became a superstar athlete as a kid growing up in Texas, won the Heisman Trophy with Oklahoma, was the first overall pick by Arizona in the NFL draft in 2019, and made the Pro Bowl following his second and third seasons in…. Additional details: The storyline gets even better: The Vikings host the division rival Green Bay Packers, and their new defensive coordinator is Jonathan Gannon, who was Murray's head coach in Arizona the last three years.",
-    "publisherUrl": "https://sports.yahoo.com/articles/kyler-murrays-debut-minnesota-comes-230653427.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.994893+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxPUlV4NGpIclA3OVd6ZGxlR09VUzd4WVViZEttcmo3Z3BPOFlXdHpwWFFNMEU1dnREcnhWa3NEc0RCazZrYTQ1X19ESmp2cVk5M096Nk5rbTh4cGZFZlpzQy0xendsOWh1N2JHclFTMENfUzctZGJlWXpHd2U5TXNJLXRKY2RxZGRQRlRYeFFCRldsZ1FNbXc?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates As a first time visitor at the Minnesota State Fair, I tried out the fair's newest food items.",
-    "publisherUrl": "https://www.usatoday.com/story/money/food/2026/09/10/minnesota-state-fair-food/91668140007/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.926686+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMigAFBVV95cUxPaHkxZHUxMVRGUC1pemlNRlJ3RmNPU2g1Y3RWeWRCZGlRRF8tZjdWeVRPNllRQzdzbXZhOGxVQzg5cjlEd0Y0UGlrcmVIazB1VDdfS05WdVJ4VTR2cFh6OF9kTmFZNUpPbU9YaGtmWmZOWWxKdGtIdHl6V1JQbmlYbw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns Oregon Ducks Football News. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://sports.yahoo.com/articles/oregon-ducks-football-news-145411434.html",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:40.823941+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiywFBVV95cUxOWnY1RnFxVm1BV0RONlFJN2hoYnpPTmw5T183TTEzM0pxQ3Y3T2pUcnY4WjFhU3VEd05EQU1zSThLWkJwWS1OTXA2RThHRUwySEVzOVh3ZTQtNUNOelRXbU5YeWt4dzlzcHRGOXU4WnlWMS1uYlVKQXUxU3J1WjFLeFpEbS1Db1ZGZ1JrUHpTdTNqeEd6QmJ3cmdyNkdjYkVYNUlmUXg4VnFGVUQtVE9EZ0ttYTJPTWhuWG1HZUk3bDBMOFl4MHVqNkRRcw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The Supreme Court has rejected an attempt for Missouri to use a congressional map drawn by Republicans that would have likely eliminated the seat of a Democratic incumbent. Additional details: NBC News' Sahil Kapur reports on the decision and the last-ditch attempt Republicans had taken to use the new map.",
-    "publisherUrl": "https://www.nbcnews.com/video/supreme-court-rejects-missouri-s-attempt-to-use-newly-drawn-republican-congressional-map-269621829784",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.774191+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxQS3pMTlZPX2o2Q1A2UkRVb3U5alJ0QmtCcXFuWkVWakxUOVNkMU16N09WbWJSQ2p4NThla2oxRE5ocVR6OXFyU0lUdzFVRHc0d0dmdWVHZkdMaFBPZlR4Wk1fdHhUeE5ibDlfTjE2Tk9vU2ROd1pXTmRVVUFGSVpZZng3cEZsVWNUSEFPTzJ5UWhqYkZvU2Z1RFliaEt0dlVTc1JxQWNVT2ZJQVAwQ2FSX0dTcmxmZmd4bGJ6Uw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The Supreme Court has blocked Missouri's use of a new congressional map that would have favored Republicans ahead of the midterms. Additional details: CBS News legal contributor Jessica Levinson explains what this means.",
-    "publisherUrl": "https://www.cbsnews.com/video/legal-expert-breaks-down-supreme-courts-decision-to-block-missouris-new-congressional-map/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.723455+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirwFBVV95cUxQU0tlbEU5ZUVDaUFqaFVYbW9TaDVpME1zUlpDYkJ4M3FHUmVFcFBPY3d6enRGSTlGQ2pKYTgzREpkcllJUHk1MW5iUUJNdTltLTBuOG9DbVBLYUNoaDNfTWtBQXpwYm54cG15ZWRYUkVscEVjX05PVE4wWjJqcEZqaVZ3N1J2VGRrZmNLcy1kMG1ZN3JmamZydWJtTTc0SzVsVHRRNWxoRWZPS1p5Tk5V?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Week one of college football had no shortage of storylines, from a controversial finish in Ann Arbor that caused Michigan to drop out of the top 25 to blowouts.",
-    "publisherUrl": "https://www.si.com/college/oregon/football/oregon-ducks-oklahoma-state-cowboys-preview-tv-channel-betting-odds",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.719472+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMimwFBVV95cUxNQmhNVVY2M19tU05Qa2NNeTItR2VteU53OGZWdlVidEtwb1dHS01XemUwTTBkcVJVT1dxNXgySnR4TjRtTWQ2aGtWZllhYUVZYkk1eHluZmFKOVJ4QUxzX3IzV1B6YW5yTHNzVzFFYjYyTFZiTEJ0SzJkdU9WS3YwYUJiRlU3TlY2NDhDam1ncE9zVHlLRkZSUkxYMNIBoAFBVV95cUxQZHhqTFlJM3lKY3Z6SUlHSEF3SDV0R0RtWm5TZFBZUWhQajA2eG1vQWlzanRYam1oUE9JcTZfZkJNdTVQTXRsTG9yaFBqYTdaV3NicE5PZkd2Rmc0R3Y1aGxaNmlQdXFwWEJSTkN4dDlrNTJYMzd3MmszaTVhUjBpY2FCd25FaGM0bzJ4d0FaUVJobDRvMDFVcTU5T1NmdUZJ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The Supreme Court has blocked Missouri Republicans from moving forward with a U.S. Additional details: The decision likely ends the legal whiplash over Missouri's map two months before the high-stakes midterm election takes place.",
-    "publisherUrl": "https://abcnews.com/Politics/scotus-blocks-gop-favored-missouri-election-map/story?id=136337423",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:40.666318+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUmR5amlBcjZnR1lNOTVGQ0hxRWItY1l6cDBFUGd6TFM1bk9EVF81SHlXVFVaZDhJQktHMDBCMTFUZ2lQWTFodVR1M0xUNVJxQVpkN1RnWHZoQXQyQ0tucFRBYmJWbXhPZUhNWmEtOXVMQXhEdVppWUQ0WVg2T19vdkN5b3ZUQmtzOWVnbWJLaTU2aTl5TERBekJLWEtLakNOMUdNRkVHQW9xaGtuTlZoTmpFTzBCLS1xbjJyM0Y3VUtsN1hjaG9XOFhIenlRTGVES3c?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns The Works Museum in Bloomington offering volunteer opportunities for Xcel Energy's Day of Service. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.cbsnews.com/minnesota/news/the-works-museum-in-bloomington-offering-volunteer-opportunities-for-xcel-energys-day-of-service/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:40.634157+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOMVZhekd4dDNJX25UQ0tzbGNDWlJNYXFKSkdaUlZXNDN6ZkZQV1ZWOEZyQTBOQlZKQVNvdFlQSTNXSnFGLWpXb3JtWFhaOWFTYllwQkt5cEVDRlprV3RLZkNFN010eWxESjBGM19fUUJpaHBTTUx5alFueWJlU3FoVTBzQ3BHTWRrOFc4ZFFOUDc4YXN4SFJ6Z2VSb1NHNWQ1Ump2RVNxTzlBdkU?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates How much can a Kansas State opponent get from watching overmatched Nicholls try and attack the Wildcats on both sides of the ball?.",
-    "publisherUrl": "https://www.si.com/college/washington-state/football/3-matchups-wsu-must-win-against-kansas-state-in-week-2",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.406612+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiggFBVV95cUxNN2lYQ0ZOMUJwdzZScElmMVRpR0x2V2JTXzd2VlhIeXEwYUZaVzdqZVl0TlJQMXlmNGZScUtTdnZtY1dCTnozMmRXRVphaWhNNFZRQjU2ZzgtbmZHcThrRW1Wd1U3bDl6R3pWRmU2bXNoMjNmQWstVlpibkJOZWc2UW1n?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates following its respectable showing in the Apple Cup on Sunday, the Washington State Cougars' task doesn't get that much easier this weekend heading to Manhattan, Kan.",
-    "publisherUrl": "https://sports.yahoo.com/articles/wsu-vs-kansas-state-betting-003252807.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.373502+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMifkFVX3lxTE5mUkQ4VFAzS2JZelVjNEdrcHhpMVR0ZFladWVJb3NNQmZvQWNLRVdVbkhTSHYwNDJuU1J3T3JSdWtieUd2dnlYR1hMN3c3OVN1R0FXSHhzZmN0ZTVQMUNaUFRRWU8yQkhSeTcxREVnNl90WWJ3RDBOTXh5YmJuUQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates this story concerns Kimmel says interview with Democratic candidate won't air on his network show, cites FCC threats. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.cbc.ca/news/world/kimmel-talarico-interview-fcc-abc-9.7339071",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:40.298963+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQdnI2aWVnMDFHS2ZMVTJZWEdXSENnbERDemtVRzJsWXR5YUwzUW1UU2YwYUxtSWtiZG0tLW9IeUJIeXNpcjlsbjktcHNNekV5MzB0Skpma0h2aGJwdmtNY0RyanFxM09pMDZocUt2UDNucEd2MV9mbHZFRlNDQWM4VE1wWXNWVm5xREhXNUdmQXRSWlZBVTlTMXF0R1FTaGRCZUVPQXZJZGxLZk9rRTN6VEVKc210cFNQdG5yNGhlWEtkQkd3dm1QQjVDTDdVSEFPVVRMVGNxR0w?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Kansas State couldn't have asked for a better start to the Collin Klein era, rolling to a dominant 71-3 victory against an outmatched Nicholls squad.",
-    "publisherUrl": "https://www.si.com/college/kstate/latest-news/an-in-depth-preview-of-k-state-s-matchup-against-washington-state-plus-predictions-01m25ms74b6r",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.297850+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxOUkhST1pMQUtIOFVOcDdDMkNzNzBscjlDTkJrQ2FyQlI3UVZzNWU4WS11TlJmTXY1SEpBZXd5aTcyR25BTy04QXpEbzNXdEU4d3IxNFVDZTlXZE9rcTZEaHQ2eUVWc0JvTFZQekFCVUNFd3hVeWtUd1ZET0FPTklxSGF4SG5QQWRLM2oySVhWQWxqV3JIcXd1XzdiWUJnSnhXaVZ4Y2lJZS03d3NRZXhzMGtLMmswdF93QldyTQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates K-State got things rolling under Collin Klein in Week 1, knocking off Nicholls, 71-3. Additional details: The Week 2 matchup against Washington State is expected to be a much tougher but needed test.",
-    "publisherUrl": "https://www.si.com/college/kstate/latest-news/how-to-watch-k-state-football-host-washington-state-in-week-2-01m250tdej0z",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:40.224063+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikwFBVV95cUxPZ1E1alBFTjNHdmZPOHBOdkpHLXk0SjJzbFk4ZFN4U2F5ZGt0bG03RmlpeW9UZGlWc2RhSEtvU0ZEcFVFNjZoT095Mnk0Y29xTUhWMXNTQUdDbEpCdFpJT3p0Vko4TmpkTVpjeWFvdmxwQlU1bFZhdUhGdkhYNVZteEotbUtmRU1vY3FVVjNfOTN1N0U?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Containing Washington State Cougars quarterback Caden Pinnick is among the concerns for Kansas State Wildcats.",
-    "publisherUrl": "https://sports.yahoo.com/articles/kansas-state-defense-focusing-washington-230034663.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:40.191960+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirwFBVV95cUxQbXZxbXVaeXM5Zy1LaDB0dGptX2tmRDVQQUNWSUtzcUU1X0E5bEhkRjF0RE5yeE9fbUxxYUZ3V1VzUlBIMUZjbTk0RTVkTW9tb3d3bHpqbTI5aEQwUUZlXzA0WHpwNjRJN0RMbnYzZ1R0Vk53M3JReUZRYlE4YUFmalBqZkFDLUpFYUhIY2VEcEtyZzgtWkNIZk84U1l4OHdxSHVUTGctRkRqWXJjMzFJ0gG0AUFVX3lxTE5WWTFMMUhMMGpxc3d2SC1nY3FFeVBGbWRQSGdNOVFiSm9zSWVuUTV2MVFHajBMOGJCMjZXT3h6WlpLb1d6SFlKQ3dZajRqOXJXck1KQ1ZyWmhGX0xEOW1tUmVja1NZQWFtM2VscDlSanFBMzItQ0ZKSlUzcFBIQVkxMjBzQV85dC05MXVxSnhBaFpMUk5TemNTZ044ZWhBR2pYa29DWUIyOEZSNG9aS1FGU0tKUg?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns 10,000-year-old fossilized mastodon found in creek. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://abcnews.com/Technology/10000-year-mastodon-tooth-fossil-discovered-california-creek/story?id=136337416",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:40.145939+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQdUh5WVJyT0lMbFdPYVlGSjl6ZTRuWUpiYVZuWjZCNnZHYlFrT3ZTZzBwS3pGSHpqNFhGSjQ4OEl2ejVZQ01NeXFrR1FTNnRmNHpYX2RQczU4cl9xckNoa25jZG4xdVFYLW1GMFNpanFVeXY0djItYzIyS3g3blhIcC1FV0ZkMkVkc2hsQ3NmMm1xTlRReC1IcjQ4a0gxd1NXM2JrTGs3NkVSX3pNTkcteGJ1M0p6NVA4dnhn?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates An Orange County woman was arrested Thursday following she allegedly stole over $400,000 from a nonprofit created to support a high school football team, based on officials.",
-    "publisherUrl": "https://www.latimes.com/california/story/2026-09-10/orange-county-nonprofit-treasurer-allegedly-stole-more-than-400-000",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.946850+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixAFBVV95cUxNUnJ4SVFSWGhUa2FORERUcVYzOVpfN3JuTlNoRG5WUUp2U3o4SnVJdXRDeXBZcjlJV2NyZnBrOUQzbThqOEtRLTM3R0VPYmpwZVFiMVJNMUY5LW9NbWgyVWFsLWdGaTJDa3VWTTVRdENsV1o1cXlwTF9IZkVPRjlNdlJxTjR0QnRzTm5SbUppMWtDNjQxXzcwY0lWWm1uRG9Yc3pOdWt4VUp0RHBhSlBkYlMxSDBDeFdrcmJHeDZWOTdQbkda?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns Newsom signs online kid safety laws, including rules backed by Sam Altman. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.politico.com/news/2026/09/10/newsom-signs-sweeping-child-safety-restrictions-for-social-media-ai-chatbots-01071275",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:39.758113+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirgFBVV95cUxOc05EajRsY1QwVDJCSXlsS09XangzYXpJOWMtd1J5QzhWMTlpeDRfcm5CSlQ0LUtoemtaWlMzTmV3V1FJU1ppVzdhOVpaWk9WVVJpMVNwOEFTaGNFd21FLWNXeFVPbDRRU251RU92S0tVdDROdGUwV1B1MHctSG1aaVJGUkhqbnF4MkVvc2FVczhmOE5WMmRrZUVPSGdkMWJHbkVFVWlCeE53eTViWUHSAbMBQVVfeXFMTnRET0dEZFpQMGVHR1hVZktJSjBWOUhWYTNnNFVsQWpaa0d0RFJ4UW1BTDdYU25HXzdacllGQ0cxaVhhaExWYWxqeTIzNHRpbUNuQnFuMXpLRzdvaUhMSVBrVjZsN0RoTWxuNzhRdUNPQUd5VnYxMF9vcXVTZGZvVmZibWplMGFkMVVnOTRBMmlUV3JoLWhrYmdQRUZ1aGRzVVc5X2FiZEFWb19XdTROYTFNTkE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Gavin Newsom has signed laws aimed at protecting children from the potential harms of social media and AI chatbots.",
-    "publisherUrl": "https://abcnews.com/Technology/wireStory/california-governor-signs-laws-aimed-protecting-kids-risks-136348489",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.726979+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilwFBVV95cUxObUxKVDR0d1pXTG1ybjB0MUVxV0cyRFduNlJWUnEtdmdjRmtmYkxuX3cwTUp2VWVSQk9RYnBNc0FDYmtDMTlEYmh5YktWdWp3R0tSWl9vZHpfNkk2UkxqYnZBcVZ0WF9YcTJsU200NnpkU04tMUQ0NUpfcUNVcWt4c002SDJqS0ppZExKOHJKUG5kcUt0c2ow?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates 6 Oregon Ducks began their 2026 season with a 34-27 Week 1 win over the Boise State Broncos, thanks in part to a fairly clean injury report.",
-    "publisherUrl": "https://www.si.com/college/oregon/football/oregon-ducks-injury-report-oklahoma-state-cowboys",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.684400+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiigFBVV95cUxPNTJMZ0hwNWxFdllwenlUQk85bGd6NE5iY1poWG9iU1AzTHhDWXFQMUpXaUZLT2ZkMjdZcHlCaXZHSERnTG9fd25EaXliaWxUb3Y3c1RqbG5kYXlxN056WDFqN3BhaTNvNjZyR1VfaXE4Y2xQQzJIc1hpMERGX1dtSTZkOWhNZjlybEE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns Dan Lanning is close to doing something no Oregon football coach has ever done this fast. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://sports.yahoo.com/articles/dan-lanning-close-doing-something-194854169.html",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:39.552309+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMigwFBVV95cUxQVVZ2bzVkSTBtbWx0ZGxXaHdHV2NvLUNIU2p2bHYzMzZ2ejlsdjRNcDB3NjJPNE00ZUNhVzBqUUgtdFJVbkR0cDhfUjZrWlA5Zk5VY1FuVEU2b2pnWGloQXAzY0I5WGNJZGtuTmpVU1JoaEwyQ0ZIeWRqX0JHMXVzTnV6TQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Dante Moore is a name many Jets fans know well. Additional details: At the end of the 2025 season, it seemed likely that he would declare for the NFL Draft.",
-    "publisherUrl": "https://sports.yahoo.com/articles/video-breaking-down-2027-nfl-201617155.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.510961+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipAFBVV95cUxQT3NOcHpTRHRkUHRoOHBaREhLcFV6UmpHa1pNVjBZbzFCLXhiTEFENW55SW92SFBKM25nS09uc3FjbWFKSkRIUHItU0h2S2VwSWZiUk13a1I4XzdYQVltOHhaZU5hVGNyRTNUd0x4S3YzXzc1RmpEbkowR2VxOHhlbU5XY0UtbktFNXoyWW5EeHFjNkpLeGFCSG83cF9pZVhOd3JXbg?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Leah Romero/Source NM Last year, New Mexico became the first state to offer universal childcare, but one year following Gov. Additional details: The program currently has 47,000 enrollees, with Early Childcare Education and Care officials estimating the number is expected to increase to 58,000 children in the coming year.",
-    "publisherUrl": "https://www.tricityrecordnm.com/new-mexico-childcare-providers-struggle-as-demand-wait-lists-increase/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:39.451138+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiywFBVV95cUxQaWRYMjhwenROb0JYRmdtMFE1bzlaaEdYMmFENlozRkVzSG8zT3lSMWFWWUZnVGw0WVNxem9yRXl0Z1FuV3JIZXdINVUzT3p0VFdUcWZ3aE8tc2lSYnQ3dmF3VDU2MFNUN2FadVVJVVhBREhmeEt2c3ZQdUQ4T0ZvdkRBbG9jY3lrM3FoSUVRaDI4azg2Z296WFY1RXBzSER0YnN5VG9GMWstYlNtcTRoVDB1bWJNTmpqNF9MMU0wYXlneWt0SzBMTThCdw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Watching the northeast and east-central parts of the state for a severe thunderstorm threat.",
-    "publisherUrl": "https://www.koat.com/article/near-record-heat-continues-with-any-monsoon-storms-focused-on-southern-and-eastern-new-mexico/73666066",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.430725+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipwFBVV95cUxNam94eXJVc0trMnJZOGpIQmJLaXpaQ05xaVJXMmR0anp6Rk1qbFFhcXpyWU5BdmJTeHdNWldhZTh3OVlVY0YxTldHaUlBOTlSTFZic2pkdzNLeTJnaWFUbkpmSHpHTVBESWN5UGJDSTl0VklocDR2VGduZnhocWtJaTdBa3lyeGx4OFlYY21KQkc3Z2dZR2xpUFRXSm9JQWE3NWw0UVB5aw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates 6 Oregon Ducks wide receiver duo of Dakorien Moore and Jeremiah McClellan showed out in the season opener on Saturday, Sept.",
-    "publisherUrl": "https://www.si.com/college/oregon/football/dakorien-moore-gets-real-iverson-hooks-potential-oregon-ducks",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.402929+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiygFBVV95cUxQY19ZYmk4LWJvUHZOS1JmSkpkMjlWeU15RmlJa3BuajlCSTFVb0RmeHVxWTI5NjcxRWswUG8tNDB5Y1duRUdWUDJiUHF1Uk4tb3dja2RVM1haSE51b1FBSHVCN1ZWSnpkMjVRWEkxc3k4UkM4UWF0WWRkQ1RFM3BpX0FVbUExUWVpSl9wWElFRDNFcDAzY3czdzUwWEpkZ19qNlA3UFRJY0dKYnNFQnhQbGxyMkd5LTdRclZ1dG90ZXNXVFVJTE4xdjZB?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates One year following the killing of right-wing political activist Charlie Kirk, a memorial is expected to be held by Turning Point USA at Utah Valley University.",
-    "publisherUrl": "https://www.nbcnews.com/now/video/charlie-kirk-memorial-to-be-held-one-year-after-his-death-at-utah-valley-university-269636677695",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:39.223329+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipgFBVV95cUxNR2sxUEVNYkVDd2d6TFRscEU5TUdidlh3aDV2Z2wyeWVIQTJ4dXdOeEhhaDBycWpOUTZxWGprcGl4WFRFdXVoOXhWWk9yTHhndWZqcjlpdHdiemEtTFpkMk1IYkFKUF9FRmVCRFpKSWZNTXpuZFdwZk1GYlQ2Wm5aM2FhdXNfNGQ4Zi1WekxKdXVZWXlDTl8tUEF0UkZDYlNpR0hVYVN30gGrAUFVX3lxTFBMcmZYSGZLWmRVb2hCQk5pRGxqMTA4Ri1wTUY0VEhfc2VreEI5U1VCeHYzMDE2RTZ5ak5CZ25UeEFENlVFZFB5c1RFVklpWDZDdVJXRE5jOGRYQm5FUGYzR2J4YVE5WWpXdFYzdVFkMUduck1SM3FWUU9YOW84bFFoZG1CajBxYjlEenFfTWhuRDBrR1VpQkEycDQ5OUNrblZZMXNvakp0ZG1MSQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns New Mexico’s suicide rate dropped between 2024 and 2025, NMDOH says. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.krqe.com/news/new-mexico/new-mexicos-suicide-rate-dropped-between-2024-and-2025-nmdoh-says/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:39.020226+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikwFBVV95cUxPTVh1b0ZyUHNXYTd4Q0liM3pTaXJpT2twQWs1MnpPX1NIbldtaHJsSlZiZnVwMDVqU0lHZ29aUHVTcVdtcXZMYmJfelFmcWR3QjhfcVdETTd4dHRFcmthS1JnVWM5NE9FTlBHeDRjbmpBZ20wcnJBZXAtSThGN0kyVDRPVWdYTVl3a0ZMNWZzeVdaRFk?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The New Mexico State Fair is underway at Expo New Mexico in Albuquerque with unique foods, thrill rides, music and more fun.",
-    "publisherUrl": "https://www.kob.com/news/top-news/new-mexico-state-fair-is-underway-here-is-what-to-know/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.849047+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMioAFBVV95cUxQS19WUlpxUXhTVjIxNVRaQk5mTVlVR0syNWZUcmc5d2F3NnB1YThCSnZqV21JOTZlcnVFTmZ0RlpfYVl4UGNSV0lZWlhyVHZkZWlOVjJoOHJhYUtUeGk4U0RJaUdhZUhQU0FlXzEzWm1lbkQ2OXFEQUhfRi1uVGFDSXRPTHU4U2lsWDhYa09TbjZ3Vmc0b2dVRHlKUm42ckRo0gGmAUFVX3lxTE4xbThEaDFnSXE1bVJ6dzBoMktEdHpWalJ3OEFOSUJlZmRaMVFIMUJEZWhtUlNGV29oQlJhWTNnWS1rNzVnd3FMaXZIX0pjb083WEN4Tjc1S2VPTEhRWjM4MEFBSUFQbkRaQ3dkWkhqVmhzdHkzQlJYZlRSZnBKVUJxeklKc1BmbzU2eVZ1NEVUY0RkS2ZDcUZwNHF2cjZRMDNiYWxHWkE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The group of skiers involved in the deadly avalanche in California's Sierra Nevada Mountains on Tuesday includes parents of students at a local school and ski academy.",
-    "publisherUrl": "https://abcnews.com/US/parents-students-ski-academy-california-avalanche-victims/story?id=130288970",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.806293+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNXJUZnhld0pGZlM3Q2JMUVhhTEN3azNDRm5SRURWSEQ0TnNCaEtEbTNNRmRWVGpnampUN1BIdVRtVTVFQ1lKQVljdV9sczNyVHdUMDBOd2MxV3lPVl9mWTQ4VTVpTmdoY2ZoN2RFQ0gxamI2NTBFMlNIbkY2UEU0dGt1SXVraFVPXzR1cm1GdHVuRjBu?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns Arizona soccer still searching for consistent offense in final week of nonconference. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://sports.yahoo.com/articles/arizona-soccer-still-searching-consistent-183319466.html",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:38.780320+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPUU1iNFlHVkV3Vjd0S3FWdzRjRVIxU2V3M0s0enNCX1l1Y0VUVzhjNzVtTWJwRHNKcUdTaUpIRF9pa3duX3dFdHFpaWlxREo1a25LVHNOd09vU25XWTdBVUdEdnVGUkpZTzVabDJkMHpoQnFTVmtTTjdkRldVVVp2cnlKcFRMZmpTTHllWTFCNllUUllvNXZXeEVPWUQxaGlvVzVyRnMyaTRWVG8?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns NMSP brings 'Tag your Tots' safety program to 2026 New Mexico State Fair. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.krqe.com/video/nmsp-brings-tag-your-tots-safety-program-to-2026-new-mexico-state-fair/12157878/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:38.727746+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxQTlBWMzU1MF9oU0ZkbzRjb0dhX2RzMWlFQ19yZmVfSDdFZkZYWFFLT2NwbERKczctTFMyc3I1dk1Fa0toMDBVeFBMOG8yaDUydEJKcF9CYVZkdDRib2dYbnp5b19ObklqYkRGa3JkbFVFN0cwUDhXNG54NXl3cDZOZFA2ZWt6blFHWWFteA?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates From just another back to the leader of the pack, Dominic Kelley gave Nevada football quite the introduction to the 2026 season. Additional details: Coming off a freshman season where he finished with 54 yards through nine games, Kelley ran for 152 yards on 11 carries and two touchdowns to open his sophomore campaign in a 49-14 […].",
-    "publisherUrl": "https://sports.yahoo.com/articles/dominic-kelley-meet-nevada-mountain-190000825.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.722695+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMifkFVX3lxTE9rTVJ3Tm9rSmI5RmtkU1NsbGdkby1uVGVIZDdDS2hPV01rUEc0Tm9rbnlzZDVNM09wOVE4Yng1UkRFQkpRTGhyNXdNc3A0aUJEU21ma0ViRnFIckZqTExVRlhUb1JXMERydWJmRlRQMmdibFpUUE5Ib1NGdzg3dw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates It's a big moment for Texas A&M and Arizona State teams with College Football Playoff-caliber teams. Additional details: Here's the CFN prediction and game preview.",
-    "publisherUrl": "https://sports.yahoo.com/articles/arizona-state-vs-texas-m-063019211.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.694494+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNaUgxbFpqQ0Rmc1FUMk0wbW5HV1pWS0tFSmk4MUtpTTdMSE1NNi0zSG5ELU5JQXVxdmoxQ1ZMZTYwbnNSc0pDUkNkZHp6Znd0cGZZVnB0VDZRZUhleWhtcTNiVHhzMVIxandKRktkNXZSN1RSa3FIRlRlTW9KVUZOSzB3cGJEZDBCODZfSA?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Even though they have a new head coach, it’s Mike LaFleur’s first year on the job.",
-    "publisherUrl": "https://sports.yahoo.com/articles/arizona-cardinals-key-starter-could-174152046.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.490842+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxORUhCTkhvT0Z3a0pyc0Z2dFd5UXEzWUd1dWlzV2E5VUlkNlhkNFpmMkdGMW5JU3h2UkdOUEJnYmh5d0xCb1Jmc2F4RXVwUjFicEJENnpuaU5FWVYwQU1vWGlUMGpSQTJVU003WE9XRlNhcmJQeS1ibjB6NlhJdUtNS0VOTVJoOFNiSEIzTmFBczY?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates at the same time, if you look at the raw metrics, there’s not much evidence to support either statement.",
-    "publisherUrl": "https://sports.yahoo.com/articles/good-arizona-diamondbacks-2026-bullpen-190000950.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.365770+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiigFBVV95cUxOSXVOdW1ZRDNSeF9VMnp2bkNOdnh5QTVoWWg2WmM3QVg5QkdaT0VSankydGowMG1ha1hBQmZXTEdscDVHUU1WUkJLcUhiR25LM1NUcmlIZVI5MTRMNTU2TmpQTW1md0hqZEtjLVljRFdiQW5faHo4dnVBZ0gwMm5XSVBUckhTcXFoSHc?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates A court of appeals in Georgia ruled yesterday that Arizona basketball player RJ Godfrey is not considered eligible following granting the NCAA a preliminary injunction in a case pitting the group against players seeking a fifth year. Additional details: The ruling came on the same day that a judge in […].",
-    "publisherUrl": "https://sports.yahoo.com/articles/arizona-men-basketball-rj-godfrey-201118628.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.223197+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMingFBVV95cUxQU2MtWk5WM1BhNGZkaHpDVXdycUtjQmd1bEt3bHdjWEx6Z0gwMEF3QTJLamtYaC1FODhPZ1RuOF9sMDdZOG1RSXNsNUVsTTVnZmRtNXVIZTh3aUk1UmNUNWVOOTNOR2N5eFYyb2kyelY1bWx4cGtxMFY5Yk5PUzQyQzYxbEhLYmV4S1ZSR1dGS3lsS3d2Q0ZPSU5RZ1B6dw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates The Utah Jazz are on track to pay their budding star guard Keyonte George to a new contract upon the expiration of his four-year rookie deal, which stretches un.",
-    "publisherUrl": "https://www.si.com/nba/jazz/onsi/keyonte-george-s-jazz-extension-might-not-be-as-big-as-you-think",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.148999+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikgFBVV95cUxNcmFUWUhmLUJNaGFOUU1GMGtEdmk1b25VZHF3a0xfOTVxMEZGS3otS3gxWDJ1ZVBwellBdkhoU1lqNDdkdHNuZ0pHaHdzclU4bThFWG5EcTlxZGVxTmhtMVlURkg3Y2hvN2JxS0JqNnNzZjhNSjZaUGdEWC0tc2xlZWZ2a3pncjZFZ29JWEEzSV95Zw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Arkansas at Utah is the first road game of the Ryan Silverfield era with a win. Additional details: With this, we at Last Word on College Football present the Arkansas and Utah preview.",
-    "publisherUrl": "https://sports.yahoo.com/articles/arkansas-utah-preview-razorbacks-cannot-200036452.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:38.031562+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPSjRZRWF6N3VNdmpRelpRcGNmamp3QVhMOXhuMFNfbS1hY1B3UEhIWV9CMkNBeXdCbUZqWUMyWEYxcElDM3gtMnRSRHlZeXhtLXEwOUZWVS11VWtFS1pjQlJsZGYxMkgzaFBqREFLaTVlUVNqOXB0amVqZ1hGeWdsa3lqWXhSRnFDSWtRanplVjRBZGZObWVtU3NvS0V2Tnl3eUJwd3l2dHQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Weld County commissioners unanimously approved GlobalAI's plans to build a data center in Northern Colorado following an extended public hearing.",
-    "publisherUrl": "https://www.cbsnews.com/colorado/news/northern-colorado-county-unanimously-approves-globalai-data-center/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.864297+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMifkFVX3lxTFBQelBRa1E5UFYyX20yNzhZOUlMenZ6SVAyMy1JMDZGUmpNc2Zua1k4dUR2clYtTU52dmQ5Z3Q4OUN3QjJOTkFqVm5PdENDQVlHUzlkMkxpMjhaQ19Oa2UxSE4yQldxVGlfV1JzbjFka2NlR1NfRF9VU1dtYURhQQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns New program ‘Resolve to Solve’ covers Colorado River crisis. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://azpbs.org/horizon/2026/09/resolve-to-solve-colorado-river-crisis/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:37.800417+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiVkFVX3lxTE5lbWFESG1xMDRraFY2SE5SWUh2MkQzamN0UjVFSF9rdmZIYlMwbnBpNFlBdVp5ZFF0azdFLWRFLTRKQ2dxTk5TNV8tTGNURGVhQWlseUl3?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Turning Point USA hosts a memorial service at Utah Valley University honoring late founder Charlie Kirk. Additional details: Organizers and supporters gather on campus to pay tribute to his life and legacy one year following his tragic death.",
-    "publisherUrl": "https://www.foxnews.com/video/6404906133112",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.745363+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxOODJjaFo0UmQyOGVGblhQSjRtOHVZb3gyVWRYMm1LMXJmb2dlRUV5dlhxZjBrM1NoeTFLSERud3BPc2hmaENkX1V5d3VhdVFQcVlWX19DZmV6NHpNVHZmWnpDWmQ3Rndkdk1uTFlBUzNzdEhTRTMwc0lscXp1N19MRVJPNEZkSWx2LVB2QTdKQUY?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates On Tuesday, rescue crews recovered a deceased climber who was discovered in very difficult terrain on Colorado's Maroon Peak.",
-    "publisherUrl": "https://www.cbsnews.com/colorado/news/deceased-climber-recovered-colorado-maroon-bells/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.503153+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivwFBVV95cUxOZDRDbTNSeDgwTGR1bm1BU2ozMElkM1N0Q3NrTWx0cl9kT1NCMG0wZDgxajdUZjBhT2VVWmFONTlVMVlfNGVKSzBnWjlfSDNlQjFlRzlqLW5yQ1hVemFiQWFYWl92Y3RZME9UYmxoVEZVenFUZ1czVml6WTlwcXc3Rm51Zl9XX3gwdDY4X1EzdEhrV1U5VlpGNzV5eWNnbTVrR2JSbUhIUWhzaUppS0xZdjJjVUMtdTdSNWtrOTJhTQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Reporting indicates this story concerns At least 1,000 ‘forgotten children’ who died in state custody are buried across U.S., study finds. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.washingtonpost.com/nation/2026/09/10/least-1000-boys-girls-who-died-state-custody-are-buried-graves-across-us/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:37.345398+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOX1ZFMHV0bDJtekJFVVVaNVdBSERoQUpzTzRwbVlTWTVTRVFfajRNS1oxWU9TLTk1RWlnZkVzbzYxTlBaNjBIdG9yZUlSU183UVhZNHJwMFBHX1dqYU04Yk9rX2d2bmJxYnZ4M3ktWE40MW5PVmRmOUlkWTI1UTF0RXpKeExaRzNpNmplbi1CNzhxNWxvRU0xXzJhb2RDX1RwSTd5eGNQNHRSZFFWT25pSGYyV1REaEJ1QkJv?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Reporting indicates this story concerns Supreme Court declines Catholic mother’s bid for son’s vaccine exemption in N.Y. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.washingtonpost.com/politics/2026/09/08/supreme-court-rejects-mom-bid-son-school-vaccine-exemption-new-york/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:37.334399+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMifEFVX3lxTE9rc1U5TC0zYnBYTFllRHBEeHBaLV9VbzR1Um9aRGc1ajE3VXNoR3hZekltRHhrdk9xY2ZhTDQ1Nkk3TWFRaTdYakx3RTNWZlhMamZvRHd5emNyWG83SGhLVm1ibXI5V0tFNjZ6Uk8wRlJPMUJxbXdnWlY2d00?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Over the weekend, Trump posted at least seven maps suggesting the state should be renamed ‘New America’.",
-    "publisherUrl": "https://ca.news.yahoo.com/mexico-leaders-beg-apple-google-192604061.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.313321+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxOeWRaQk5tMFAyLUJhMlhCMXNNM195cm9VcmZ0eU1kYXhodUJIbXZ5SUg3Y1dXNld2VWJOVG5VZFJWZ3hQN2VucDFib1VLdHNIamY3SlNDT3dQMG02Ym1teGlHWWsyRlRCSG1SWk1HOFYya0pndm1Db3N3SDNkeTZCVUdGSmZWLUFldzJqME1jN1ZZR21xVzlHTU90dXE4V2M1SmVkd0Z4Q1htbjJM?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Revitalizing downtown Denver has been a major focus for Mayor Mike Johnston over the past few years. Additional details: While announcing the proposed 2027 city budget, he reported that focus has paid off.",
-    "publisherUrl": "https://www.cbsnews.com/colorado/news/denver-businessman-continued-growth-downtown-premium-performance-club/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.280005+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNSHc4WGJ2NlRYTHRYYy1URVoyaWNNQ1p1OW9GLXJkNnBaM1k1bm1qUWgwMUxfWWxyQjhoUEJtZzNSY1B5U2o2QUtCN3hkbDhLN3ZqY0s3WWxZaFk0eEt4dFRPUHNOSjVyN3YxajVHUWlxMUN3azYtYjk5RVlVdHBYZXBSU0RqZlNXampn?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Nebraska opens the renovated Bob Devaney Sports Center by hosting New Mexico. Additional details: The Huskers return home following playing the first four games on the road.",
-    "publisherUrl": "https://sports.yahoo.com/articles/nebraska-volleyball-vs-mexico-live-203029756.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.167925+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixwFBVV95cUxNb0Y3SW1nREVUdXFWbVVXRng1RnJ6QW8yS1Y2SVExTlFENnBPTDhKeVZqX21MS3NwVG1ncWJ4REdhY2NHU2xET0huMGJlLTItUGFFZ2t2V0RvZlAwdWdjN2lLX3VQRkNVUVJYU3BaRDl1NHZXTG1hX09UelUwd0dIS1FqS3lKVndLMkxCX2hMMTFkSHJFUWNsMllnaFg1WTh1R29uRkE1OFZMZlBZYWIxUkxQMGVuV3pzeXVpeWROZDZhSUFSRl9B?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates SANTA FE, N.M. - A group of New Mexico delegates sent a letter to the CEOs of Apple and Google to commit to keeping New Mexico's name on their platforms mapping services. Additional details: Senator Martin Heinrich , Congressman Gabe Vasquez , Congresswoman Teresa Leger Fernande.",
-    "publisherUrl": "https://kvia.com/news/top-stories/2026/09/10/nm-delegates-call-on-apple-google-to-keep-new-mexicos-name-on-all-mapping-services/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:37.112192+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxQeEd0ckx5VWx3LWZHYXVuVjM4ZXpTRmJHdzUyVmhUU1NyMGpHVXRQZ2JpdHdQZUg0YTN3ODVFeUhDLXdoTjhYMDNNM1JfZE1lLWlUOFo3ZGtEcV81YXRkcjlYd0FUMnpIMHI0WHhDYnJCUVpIYlV0UWk3S0FHRjAxV0xYblotWm5B?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates Saturday at the Farmington Civic Center. Additional details: The tour marks the 10th anniversary of the animé and producers TOHO Co., Ltd., GEA Live, and RoadCo Entertainment chose Farmington to kick off the American leg of it.",
-    "publisherUrl": "https://www.tricityrecordnm.com/my-hero-academia-launches-u-s-tour-in-farmington/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:36.875492+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMif0FVX3lxTE1vNFUyUDVTLW5zV0tsMGdITFhTNzAxZUdibnFlNGZuMktMVDBWSHhya21DZVZjSnB5NW5kbzVxWDg3ajlTcjA2Rk8yaEtEU2l6OEc1X0g1Y1kyUjRmMXk1dzZHekRhSGgzUXJlQVJJOXoyOF95Ry1vTWQ5bUptc3M?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates Weekend events recognize 25th anniversary of attacks on the World Trade Center and Pentagon.",
-    "publisherUrl": "https://www.tricityrecordnm.com/san-juan-county-communities-remember-9-11/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:36.858411+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitwFBVV95cUxNcVIyYi0tMDEwUXhmekt0aE5Xa2ZNNktfUF9NU3cwNnZTY3F6VXZ5WWRUdENMSU5TNVE3TXFqY2o1d3BtbXlvUWNBMlVrVnduWjFMZ2IxWUhLUldiRGRoQUlrQXVuYmxteXJCUFNCU0J2UVduc0ttM3JxYzJ6X3NJYWZTQUZjNDFULWtWTHJmWEZRSmc0WW1HZS1xY1NUcDdYMW02UGRFbTI0U0F2WGxQTWlZVnUxR00?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Reporting indicates this story concerns Five takeaways from the New Hampshire primaries and an under-the-radar Senate race. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.washingtonpost.com/politics/2026/09/09/takeaways-new-hampshire-primaries-where-sununu-pappas-won-senate/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:36.776662+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikgFBVV95cUxNbkJhZjFmSlJ1cXVhTG9scEdIN2phaFpUNVZ5dVBUVWxXUnNwd0NLUXU2TnVtWURnRWdHRG56RUdkc3g0ZzZNcDFmYVk3RTZjRWwyLW1MZnpQV0doQjQ1S1ZrUHh2RDZqTGQzWU5VUEpJcllDZGNaVm5LY2hMWVZMd1BmN1V1alRtS2pYQXZHS2F4dw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates Lawmakers in Washington are reacting to the recent warning from an Anthropic researcher who resigned from the company over questions of AI safety.",
-    "publisherUrl": "https://www.kob.com/new-mexico/new-mexico-lawmakers-respond-to-warnings-about-ai-safety/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:36.752763+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirgFBVV95cUxPYmtVX2VZeF8tUEtEbE5kLXJIOEFwWHJDUEdPMnZlNEVNODVLVlJrTWZEeXpPZmZhTUlsYUtlWUljUV9TcUxCNThtREl5S3g0a2h3X2lha3pzMDVjdjU4TlpRbnZHX2dJWEIwQXpsYmg5YlJNdTBNbWtiRzNPUldJdGE0NjJqM2Z0cFBUUjR2c2RMeU1LZ1YyNkl3djlpdkhybktsVVFZYU9wc3RUNUE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Regional reporting indicates this story concerns APD ramps up operations in southeast Albuquerque as state fair kicks off. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.krqe.com/video/apd-ramps-up-operations-in-southeast-albuquerque-as-state-fair-kicks-off/12158327/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:36.601708+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiRkFVX3lxTE5FY012cFVxaU5UdGRUdGtSUmFuYW5KLV9DUFFQd1F4SVY0ZEJ6dl8tbnBXaDc4aklNbTZxQkpZcEhuRHdlVXc?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Reporting indicates this story concerns The Washington Post - Breaking news and latest headlines, U.S. news, world news, and video. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.washingtonpost.com/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:36.482926+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMimgFBVV95cUxNWkprUWxETk00TlBEakpEaWdydVVnemRjWkZMa0x1UjVhZVR2LS1zUFpMbkpsSHg4X2NoVmEzU0xZYi1nOTZ6YTVGd3poaTFScTdzNlJJUGZfVFFmRmdCUmdkYUF0MDZyRnB0cV9OUkRVN05wdkVKVzZPQkUwYkpXS0VQM3ZzdUtCSTJXRUgxNzZnYjlwNGJIdlF3?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates Panthers improve to 6-0; PV girls soccer blanks Aztec, improves to 5-0-1 Piedra Vista's Maggie Rasmussen goes up for a kill attempt during the second set of a volleyball match against Aztec, Tuesday, Sept. Additional details: 8, 2026 at Lillywhite Gym. Cyndi Frank AZTEC — The Piedra Vista High School volleyball team continued its undefeated start to the season Tuesday night, picking up its sixth consecutive victory with a 3-0 sweep over Aztec at Lillywhite….",
-    "publisherUrl": "https://www.tricityrecordnm.com/piedra-vista-volleyball-remains-perfect-with-sweep-over-aztec/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:36.220297+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMizwFBVV95cUxPSUhGbTB0XzBoVmg3RHpMRDFYRXJyanZDTU10VkhTcXJmR01aaW45S0NhRFY4VDYzalkzTlNqVkUxYVQ2X25La0ZJZDJnN3BIVnlNU3MxUEtteWxzcUUxcWQxX2VnYVVkNnItRU1abkc5RVRWaXloRmtDZHRvRE9RMlk1emtZYm5QdEpWaXpLZkhad0lBOGRqZjJqc0N3eHlyc19xQkJZdXlnMWdIMVU2TFhHUnNzRzJZU0hyNkEtX3RYUi1aSm85VHBVVWgyUG8?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates Smiley Building owner asked for injunction to pause former Arts and Science Building demolition.",
-    "publisherUrl": "https://www.durangoherald.com/articles/news/court-rules-in-city-of-durangos-favor-after-demolition-concerns-lodged-by-local-developer/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:36.152166+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxQcFZ1d3pHM0xUV3ZLU2REYk80R0tjQWp6ekJ1ek1zOEZpMldlNktkQWwxX19wbC1sN195YktJZ3Y3aG03UlNxV1lqNzZ2MmhPUjM0aUF0WkpHSm4wRUFBbkRTQmdDYlYzaVlIWTMxTWpkODA5WUliYVRmQ0dEbzFsWHNBcDcxYlNadEVoSUlvM2poWVd3Y2c?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates This was following Lehmer was honored Tuesday by the Farmington City Council for his work with the RiverReach Foundation. The Animas River Trail has been a shining gem used by hikers, bikers and walkers in the Farmington community for…. Additional details: Lehmer presented walking trail ideas to the city and helped found the RiverReach Foundation, so public-private partnerships could be used to develop those trails.",
-    "publisherUrl": "https://www.tricityrecordnm.com/farmington-city-council-honors-man-behind-the-river-trails/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:36.102835+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxOX2k0Qzl2b3hoS2plWTc5QmdvRzJMSHdVSFFIQ1AwODkyUEtCWFEwNHBkU2xsVlBQNm5Rb1QweFBOWldhaG9fQlJYQWpET2VqQ1JTbVM2SlRhVElXQmtDQU5SWEJMckFLVXpBT1dWN29qLTFBY0x3T1ZMU09CSXU4Z0hlczNiSUdndlVmdHoxMWM2UjJ2NUE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates A blue moon rises in San Jose de Maipo outskirts of capital Santiago, Chile, May 30. Additional details: Esteban Felix/AP FileThe San Juan College Planetarium invites the community to its ne….",
-    "publisherUrl": "https://www.tricityrecordnm.com/best-bets-key-events-in-farmington-bloomfield-and-aztec-56/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:35.634097+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihgFBVV95cUxPWG1VbTNiY2daX3BmZ3dzVlJQWmhtZDBEbTFsdnRNN1lKM1RERWFOSExZR0VHMlBEbVhQZTNCWFA0NlhIS185N0hYRWV0R05OX0hvZGFzb1p4YUNSMGJUUHN0SUt1YllTLUJVdGozNElhLVdCakpjN3c4SXVkNnlvaHN3SmNUdw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates 19, 2025 and booked into the San Juan County Detention Center. Additional details: The Farmington Resident Agency of the FBI investigated this case with assistance from the Navajo Nation Police Department and Navajo Department of Criminal Investigations.",
-    "publisherUrl": "https://www.tricityrecordnm.com/shiprock-man-convicted-in-child-sex-crime-case/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:35.471635+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitgFBVV95cUxPeENld2h0LU16a3Bxb2RCZzVKSGhyMC1OanZWejlIRTUyT3RQNmpBakUzQXZxaGFiSnBGc25KOXhSU1UxeVZtZ01DWk9jQ3Z2YXNPNkFSUUdXRHk0SlNOcDNRbDhKSlNNSlduekd0T0VCNS1hanJoemc5UEJEN2JzSFc1eXFWUHhoVkhramJ1Tno0SXZMU1NzRGd4b2tPRk5uejJlczV6NkwzNi1PWDVsbV9WbVUxQQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Local reporting indicates City staff reported concerns about conversations with Kip Koso Kip Koso took his swearing in oath for City Council by City Clerk Faye Harmer, right, in 2025 alongside Shirley Gonzales, left. An independent investigation into Durango…. Additional details: The city of Durango launched an independent investigation into Koso earlier this year following allegations of inappropriate communication with city staff.",
-    "publisherUrl": "https://www.durangoherald.com/articles/news/investigation-into-durango-city-councilor-details-communication-issues/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:35.016744+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilAFBVV95cUxNdEoyM0c5V1ZLdlRQal9wS0FROC1mZlYzSWw1ZFAyN3BNT0I2R1cxdXpINE9IWXVNU1A0SzVISnFJWmxkOHhUZFpJUndtNWM3bHRoNFBTUERnOWVjUk0tTWJTUTZDQksxR3FHMVNYakp0OUFZc00zdDN6Z2xsdkRfYlU3WUxUM3o2dU54bXlaWlJnUzg4?oc=5": {
-    "cacheVersion": 2,
-    "brief": "New Mexico reporting indicates A Delta flight from Los Angeles to New York diverted to the Sunport following a bathroom incident on board the plane.",
-    "publisherUrl": "https://www.kob.com/new-mexico/flight-diverted-to-albuquerque-sunport-after-odor-incident/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:34.304275+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMifEFVX3lxTE43M2RLNXFJd3FaUFhiXy1TZ2tMZmN3bDJqYWRMcnAtOFBGbXFKV2F2MzZ0LVZhTVV4OUlnQzJvZmVETy1neGFraGVPdGFBd0dFX3ROei00ZnpCWTQ2cXpSanRuaWc1Q18wLVhzUWJ6dm5rWXZPeVRKdks1V24?oc=5": {
-    "cacheVersion": 2,
-    "brief": "New Mexico reporting indicates Over the weekend, Trump posted at least seven maps suggesting the state should be renamed ‘New America’.",
-    "publisherUrl": "https://ca.news.yahoo.com/mexico-leaders-beg-apple-google-193021000.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:33.950811+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMickFVX3lxTE5KMGZSZVh6UVUtZDZFcDFneGMwTlJ5WDFSdzRSVlZMWF9Iam1rOGtRRDlDOWs0c1BySjJBYTJnczlJb25PcjJhTWZZUFU1QURXVFZSaC1Ud2RjeDhxdXdSX0Z0Y1BvaW80dlo3ZF80Q3Ewd9IBd0FVX3lxTE1TU0VTcHl1NXMtMjdMdlhmZGQ1VlBIOWxZN0EwS2ZoU0o4em9MMnlaYl94aXgzWWRhblgzMnY2S1NfUHR2eGpyMEdTdi11OHVsRS1NSE5oXzJjMkZPazRzR3pVcUdJNk1uaU5DM2tRZFNON2Q5VTVN?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates While extremely light on details, the proposal quickly drew heat from critics on both sides of the aisle, including some of Trump's own supporters. Additional details: Giving them $5,000 apiece would cost north of $1.2 trillion.",
-    "publisherUrl": "https://www.cnbc.com/2026/09/10/trump-dividend-midterms-gop.html",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-11T00:18:33.474419+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxQalR2S0VuQ3ZLa2FYRjJPWG1iSHc4ek1YNFM0UGNmblJWdFRrLV9MRHVRVnN6cVNjRVlwV29FTVdUU1c5YTRHcklIeG55ZUNXZlltZXhlTXZBaFB1VzUwdVE4RXlhUEJybnpkZUVsRkZzSWZyQkk5RS13dUtuQzJMRUZtNlF6dUpsc1BLMmVrdlZPWV94X2hNWmhEMkpGaEViX3ZORVBKVWRnaFBT0gGsAUFVX3lxTFBqVHZLRW5DdktrYVhGMk9YbWJIdzh6TVg0UzRQY2ZuUlZ0VGstX0xEdVFWc3pxU2NFWXBXb0VNV1RTVzlhNEdySUh4bnllQ1dmWW1leGVNdkFoUHVXNTB1UThFeWFQQnJuemRlRWxGRnNJZnJCSTlFLXd1S25DMkxFRm02UXp1SmxzUEsyZWt2Vk9ZX3hfaE1aaEQySkZoRWJfdk5FUEpVZGdoUFM?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Donald Trump pledged a $5,000 dividend payment to every adult citizen if Republicans win the House and Senate in the 2026 midterm elections.",
-    "publisherUrl": "https://www.foxnews.com/politics/trump-dangles-5000-checks-us-debt-surges-gop-clear-major-midterm-hurdle.amp",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:33.111284+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxQYnF6b1djcGdndTctRktBZ2otLXFhMkdZM2NqUVRnMy1RcmZHT29mUFV4cXluYzNxUkFCQy05LTNXMjN0Zy05N3VvbnU1YWNyd0tFcFlHbDBLb2IwZzZmYkUyUERrdl91TTV1eFQzT3AtMWQ3MVQ4TC0yX1ZRd2xmRnZoYllmenVQVnQ5aQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Federal reporting indicates this story concerns Appeals court rejects ICE detention policy, setting stage for SCOTUS. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.politico.com/news/2026/09/10/trump-ice-detention-appeals-courts-01070427",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:33.004877+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxOb0E3STBWU3NYUmZqT2dsV0pEWEZTVzRsTHdiTmxhdDladFMyelI4SzNia21nWXI4MDJnVXdsLTluY1BvYjB2UVVvTncxazVMSFR1eTdkcnUyTUJyRUJZZlRIaEpzRTltaDE4SG4yT2Fzd1M5R2Z6cEgwTl9pbThvWmxMNjVjUXJQWTdveUx5MktGU1FzS05zcmlJZ1A2U0dYenR5Ti1hU203cmNW?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Legal experts, economists and even Trump’s fellow Republicans say the plan faces a bevy of practical obstacles and long odds in Congress.",
-    "publisherUrl": "https://www.nbcnews.com/politics/donald-trump/trump-dividend-checks-republicans-midterm-elections-rcna597008",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:32.760831+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiowFBVV95cUxOWjRGUXhoSk1nSXZOVEhMUU5pSk53NU1ULURWcUotOXhmMDJwR2hkV2R2MXNoSXg2a0c5QVQ2V01yYnJjUU9HcjcwZlFrSkltS1RVV3VnZjN3NWp1YUZ6cDhNVTlFUV9jbnAyVGRCTG5kdGh4dTFHT3R2eGJ1ZVpjcUZBVjNESGxoX1ZhcUttcmJzNC1sN3ltcXpYakZjcWZKWEM0?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates What's the difference between a campaign promise and a bribe?. Additional details: Experts explain the possible legal issues around the latest idea for a 'Trump Dividend.'.",
-    "publisherUrl": "https://www.usatoday.com/story/news/politics/2026/09/10/trump-dividend-5000-checks-legal/91688688007/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:32.664963+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOdzdzNXY1TXB4Y2dNXzAwTVFGXzRwZ05hc2ZienBVcnlpTHEtcnF2eGNvdEQwZEhBc1gyNU9MWThZMXBsT04tOWtiMFcwUjNXRnBRNDA5T1lERWt1WERMSFVaa2w4bGJFbnhwM29SZ2ZabTY1c0ZUUDZ0c2lzTl9OLWdWdUFGVVhpQkJQaF9sUXBubzhEQnBPZmhjVlJKRm5ja2FNdjJ1ckdidDBKTzRDbHZkMnJHcm5ZZkNLRm5PLWzSAcYBQVVfeXFMUE5LbW11dVA1YlVYQjFaWnY3MUdrZHFidFRpal9RS0xHSC1XSzU0LXRQVldmbC1EYVkwdjV0aXZGUy02MFNTUFNtNUI1QzVycDl2NkVsVmtLcEZzVGNEWkxxNWMtQzZ3bzVELW1VU2gwa2Fnb3lmcW5xRlpJZkp4TXJjRWFzZmJhcTlOdU1lbHV4akR5Y3ZYc1ZhWkNieUVGR251aGROb3ZrWVBHTkxvLTJxU09vdl81ZkpzRmNucWFVdG8tU2Fn?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates The 4th Circuit rejected Trump's mass detention policy, comparing it to Japanese Americans' World War II internment, setting the stage for a Supreme Court showdown.",
-    "publisherUrl": "https://www.foxnews.com/politics/federal-appeals-court-compares-trump-migrant-detention-policy-japanese-american-internment",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:32.519842+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMisgFBVV95cUxOTDFmbU9kUFlkTGo3Qmg3SzFVajhJVVRYdnF4UWdWU3VId1c1TnJCZFpQZ1BTYzlMak94eFZ0WlhnMGxaVGEtWTctRUNmbV85cjhldmpSVDN4Y2hrbEJ1SWdaNzl2ODlZTE1vc0h5MlNDQ2xzbDRrNUc2RHRyMmRrQ1JsenFIUV9DQU1zUUk1TnlLOHh2QVoyajExU1I3ak1JZ2I3R21SeWtackpsYTgweEZR?oc=5": {
-    "cacheVersion": 2,
-    "brief": "White House coverage indicates this story concerns Trump says emergency slide is being checked on Qatar-gifted Air Force One. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/world/trump-says-emergency-slide-is-being-checked-qatar-gifted-air-force-one-2026-09-09/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:32.346885+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitgFBVV95cUxONUt1ZG9kcVg5Q3VMUjZuM0JScHFocjZZOFNvTjRsYWNRZ1lBQUlLUm45XzBJTEh2dnVLLXVqeDh1dlh2aGFObVVqN09PTHFtck02aUZrX3VZRWFLVURzeUt3eFFXc25NcFoxVFNSMHdLSmQ1alBaWGRsOHBpc2RTTy1ULWUyZEk4TXNKc0FxX3NlWXhYS3hVMERTb2R4RVo2UjJPRzRFN2w0a0hhbHE0d0EyZmZHUQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "White House coverage indicates this story concerns Trump says Iran war will end right after U.S. midterm elections. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/trump-says-iran-war-will-end-right-after-us-midterm-elections-2026-09-09/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:32.345709+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE00RXg0dDF3MzRZT1J0V21rUXRkdDdhc1BtWG5pNGN0MU05eVZHNzlPV3hlODY5LWJHVmVsbWYtdlk3QmZwV3c3ZFRTMzYtRGhUeVllb2FvV0dIdnRHbVlHU29jNWdSQlE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "White House coverage indicates this story concerns Trump's base seeks message of unity, affordability at GOP convention. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/video/watch/idRW159209092026RP1/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:32.160011+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMisAFBVV95cUxPdkl5REtZZVVFYWtpY1M5OTRzOElBd3hVc3JXN2pfNUpEWEhOcFFUazNsSmxGaWlIWlNpVGIxZ0VoRENWLTFzUXFlNHV3bkZPVGhwUjFXYXg1ckVjZlhKRXVLQ19jUXZKeldlR0ZwTW5JVTlQSWFDRHo0QXRjRko2OXR0dTNDQngwTVlNb1JiZ1lWbDJ0bUtoeGZUcWw0U0N4bFF4Yzg3S2xvOXJodGJvaw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "White House coverage indicates this story concerns Breakingviews - COMMENTARY: Trump handouts intensify economic Bermuda Triangle. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/commentary/breakingviews/trump-handouts-intensify-economic-bermuda-triangle-2026-09-10/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:32.078892+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitwFBVV95cUxQS2xOWVVveE5PNDJ0aUR5dFl0LXF3cTB5QUt2aWloX1RHVzFsWWdxNktoYnNqNkwtcHY2VUctTTY5RXdWVmN5T0praFhHZWkyUXVPVjJ0N2VKWEdTMHhDZ3ZrdVlBZmRlY1RsMmxWX1ZES25RNldDVHgwYnhaa1FidVNLTUxjUGdBOFFMZ25Wb1VDWEtYX3ZlT3Q1akpVVWNYemJtY2NvMGw5SWdsUXJuT1drTWVxR0E?oc=5": {
-    "cacheVersion": 2,
-    "brief": "White House coverage indicates this story concerns Fact Check: Fake Fox News graphic says Trump ordered death penalty for Lindsay Clancy. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/fact-check/fake-fox-news-graphic-says-trump-ordered-death-penalty-lindsay-clancy-2026-09-10/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:32.045669+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipwFBVV95cUxPSW5vZGdJTU91c3JXSjhkSmU3QmtCQ3otYmVKeXotcWlMTEoxLU84UUdZYno0RmRlVzZsanpkQmx3MWlRdWFJODE3TWxUYlNuQlpyU1FqVnJrenpPUUYyQ1laMXVFQm5NenZkcDZhTlZKa0R1aWFCM3E5Ui1vMGZRM2dWVEdJTTJzaEcxaFFjYmVxZzhoTGdOM2MzaFkwNkhzcDlqWTJ0VdIBrAFBVV95cUxNVEFhZkNEODlmY0ZKU2ZtcjF0ZzFFZW4tSjdnejZWZVpZTVI3dU0xY0F5dEtrX0gtbWhpVDRKVkhqNVJrWVowSzNia2Utb1hJYWxFZnlKb09Jc0dhNk1nbmZFbi10RFNWV1VwbHZQeGctQjRnUDhLZnNHTUE0blRTTFEwcWNIX3NnSTZGOW5uVXlNNFR3UjMtU0EtOTJFRWtGV0NtckRMenFWRjQ3?oc=5": {
-    "cacheVersion": 2,
-    "brief": "U.S. reporting indicates Robert Gilman, a U.S. citizen and former Marine, has been freed from detention in Russia on humanitarian grounds, a State Department spokesperson confirmed Tuesday.",
-    "publisherUrl": "https://abcnews.com/Politics/former-us-marine-robert-gilman-released-detention-russia/story?id=135549706",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:31.870341+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNclBYTXBORlpwT2VTV3NYRXBEUlF1SXJHR3JlSGgyODhXLUlTMmhBSENLczVpeDlzZlZ1cDRLazdRR29hZ2tjZW5BYUZTdFBjVHhXUk5VYjMwZklhVGdNc0VXc1NfTV9IQjZEdHh6OTlWUy1fWXdOdjZGZE9LSnZocHlPeWtEVmFIYXFj?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Indiana’s pair of defensive linemen remain eligible for week 2 following a hearing set for Friday was postponed.",
-    "publisherUrl": "https://sports.yahoo.com/articles/indiana-stephen-daley-kellan-wyatt-184608824.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:31.789342+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxNSXNldzY5RXc3NmR4VFoxMmI3T0VFdkpuaUsySnY0WXVIWF8tZjE1bkhJMTV1OUxjbVU5NWZRUmtueTNBVWtiS3Y4aUJvbFVfNEgyajhMckxNLTVWQ3VibE9tWVhMYlRoRk5pUWYzTkN4U0VXNDJUVmFDTFJ5UHltanVXallER240N21Tc1RUY09pN0F1TkE?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates The growing health crisis linked to 9/11 air exposure has driven experts, lawyers and politicians to push for better compensation for victims and families.",
-    "publisherUrl": "https://www.abc.net.au/news/2026-09-11/9-11-still-claiming-victims-25-years-later/107103812",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:31.758381+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQQmdZa01sZVJZRlpUdkRrc3RpUGl5UXBKTEdIS0ZZWVo2ZVNUamtoRjZMN01KaEpYODFSOUc4TWhNSW1nVUViMTBIOU9SYklySTY3a0tscVFjS0RFUmhnZnJhY1VZRnlKbk1FSEhPSlBGazEwMVlPQVhFZGcydlNCbGY1SFR0ZnFKd3BR?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates 5 Indiana hosts Howard at Memorial Stadium. Additional details: Indiana enters the matchup 1-0 following opening the season with a 52-16 victory over North Texas.",
-    "publisherUrl": "https://sports.yahoo.com/articles/indiana-looks-stay-perfect-against-191651873.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:31.479932+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihAFBVV95cUxOVFB1OEswSHdacFhJLXFnVGxVb2JTR29xV2tDc0VSdHlndjZTTV9sVDU0YW5CVmkyZzNXd3BsQnFRQXhNb2pTZks5ZThCMk1fdFp6ZFdMMC1KLXpfNWMyWWowalQ0ZmtBTlZ5elBFTUxrZllzWkhUTmw0ZU1fazY3LVdzX04?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates as per Alexa Philippou of ESPN, for Seattle Storm fans, their worst fears were confirmed on Thursday when it was outlined that Ezi Magbegor had suffered an ACL injury while playing for Australia during the ongoing FIBA World Cup. Additional details: As a […] The post Storm news: Ezi Magbegor dealt brutal update following FIBA World Cup injury appeared first on ClutchPoints.",
-    "publisherUrl": "https://sports.yahoo.com/articles/storm-news-ezi-magbegor-dealt-195155534.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:31.050461+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPQUc0eUlnRzFSZkJ5NWp4TFc3c3RqY2t5YVV2N1p4c3lFZmJZdHE5NG1KRDF3S0NIc19YdTZsMXB1T0VYTUFCRWx5eDd4aVF4WnpUcVJyUzJpbzB1aUZ3cWtwRExJeGk4c0VGNjVDVzdmZEpYQmMtcWxhWUxXT3BHZDMxSTBxRHV1?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Stocks tumbled and mortgage rates moved higher as economies around the world confront the prospect of long-term inflation.",
-    "publisherUrl": "https://www.nbcnews.com/business/energy/us-crude-oil-iran-trump-hormuz-rcna596997",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:30.989779+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5teW9ac2NSOHBDc0ZwaXNxMnBvbmtNYThZYlVFeF9JOW04MlBCc1JERDNyU190Y2tCX2VGMkFaZ2Q3TDBFOUc3eGZkbTZhWU15LUZHUFc5dG5LQQ?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Americans is expected to soon be able to see their loved ones off at airport gates as part of the changes.",
-    "publisherUrl": "https://www.bbc.com/news/articles/clyk63yg2dxo",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:30.955618+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi5gFBVV95cUxOZDh1Q2xjS2tXbDlmYjZDbk94R3dWMWFVOFFBWlZOUG1EOWptQm4zblUtZnN1S2dVNnVDb25ENnF2aEpBY29kbHczWDF6NEdoaHp1dkhFWjVBTHhDRmhwX3RVOFhHSFNTc05aYzllUG04V1RyS0pLWlZXbEVFemVEMDdFUmxReC1tY3JxdE1ISWV2SXp1TWtRdjVOV19CWG84WnZjaXh4a1NfQU1Hcmt5Wnl6MFNEU2dyVHpuZkdqcncyUGF6bFlLVHVtQkxYb1BScm40bktlWHY0cHdLLVNMbUxXaVRNZw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "Reporting on the issue indicates WASHINGTON — An appeals court on Thursday upheld a block on President Donald Trump’s executive order limiting mail voting, a decision that comes as the.",
-    "publisherUrl": "https://www.durangoherald.com/articles/associated-press/appeals-court-hands-trump-a-loss-on-mail-voting-as-supreme-court-considers-his-executive-order/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:30.885340+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxQMGxPZ2x0TzBSSWhpemtnZ2pzbkR0NkUyZkhic1dnV2xLdVMtenRENmJRQWlmM0puWGs2UGw1OVBsWDExTjdvSEpaSVNKZG5ZWTJKV1FDalJDVFpzNDA2TjBGa3dQRk9oaU44R0RMN25nRmRvVjRQSGtUdTJocjB6c1hsaVVxdHMyc29iaWZKdXBvT3VqcEZTbEt3Q0lMMnYwUU9WT3NXcEdaVlVr?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates 11 storm that saw 100 mph winds in Northwest Indiana and flooding in central Indiana. Additional details: over 300,000 NIPSCO customers lost power in the s….",
-    "publisherUrl": "https://www.chicagotribune.com/2026/09/10/indiana-offering-low-interest-loans-to-storm-battered-communities/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:30.515503+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxNLTdtQ0I4YzFmbHN4RDZvSHRoM3hBUi1vb2V2dndISVo5OGpjME5QdzZzY1VxT0l1R2Z3bjFuUUxTRk9RU183cG1zeXJlNV9rZUZ4NFpyMzZ1aTRUT2ZpY0JWeFpRcEVScnJKSWdNeEhTLVR3Y1c4dWZHQ3FDNkVBQ0ViZ2FNMmpyNEVsaXRuaEo?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates Public schools in Hammond, Indiana, have banned metal water bottles in the classroom.School City of Hammond officials reported water bottles like the ones made by Yeti or Stanley can potentially be used as weapons. Additional details: Out of an abundance of caution and to ensure the safety of our scholars, all metal drink containers are banned from all school properties,",
-    "publisherUrl": "https://www.cbsnews.com/chicago/news/hammond-public-schools-metal-water-bottles-banned/",
-    "sourceKind": "article-body",
-    "updatedAt": "2026-09-11T00:18:30.306386+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixgFBVV95cUxNSUNHSEc4V2xmVVpPcmx6cE1GaF85MVB3Tnl5ZzdyWVBlYy0zcnNzOTQ1R2ZyNFdzbmp6c2xodVlOallDQTAyeUFodEUwa0dkOFFCN3ZIcmg0V3Iyc0NiUGczTklDSzhUOGNkUUd5ZWlRME5LRGhBdHFvSDdVUm9WdjZacC0zcFdkM0xZY09LUHFDR3lua1ZXMW1GN0NxT21CTFRYNkFOVGRNMzFsTjJXS1hnejFfVTdUZHBvMEJoMmJGU2xLQnc?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates this story concerns Yemen's Houthis close in on Bab el-Mandeb Strait in new threat to shipping. The publisher did not expose enough public article text for a fuller brief.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/saudi-says-no-danger-after-khamis-mushait-alert-amid-clashes-with-houthis-2026-09-10/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-11T00:18:30.288940+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijgFBVV95cUxPNVZ2OXlYenYxUEFsTmZKZXAyR1BDTFdwaWNZNl9OSms3c2MteVJmcThfQk11VE0tY2pvdXNIRTRvQUgteFVvTUxrVkNfXzliMWhWRUJQaGtua2RCX3NYSUVnb2ZLOFRDOUhRalg2WEUtU1g0aTRselFLWEpXU0tGQWpHZjJZSVRDOHBLYnBB0gGTAUFVX3lxTE5WZFhUTlp2OVJXWGdLWWNkaUJucW9zYk8tSFo5Z0Y2eVlVNnEwcHdoZi1LU0c0VGYtZ0JNZG9UOXlJQ05SU0JaRFFuUFM0V28taTZrZDJkRjdSQlJUVXFRbHVOWUhPZ0NMSEh1WWFQekhOYXF1QzNJbGFDTmltUms2dnBNSkkxb1NELUJWbkVPU19Idw?oc=5": {
-    "cacheVersion": 2,
-    "brief": "International reporting indicates 11, 2001, attack on the World Trade Center and photos taken in 2026 show how New York City's Lower Manhattan has changed in 25 years.",
-    "publisherUrl": "https://abcnews.com/US/911-now-photos-show-world-trade-center-area/story?id=136340214",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-11T00:18:30.052612+00:00"
   }
 }
