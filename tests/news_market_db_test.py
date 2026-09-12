@@ -26,14 +26,19 @@ for m in markets:
     assert m.get('sources'), f"market has no approved local sources: {m['id']}"
 
 controller = (ROOT / 'assets' / 'location-content-v25.js').read_text(encoding='utf-8')
-assert '__locationContentV34' in controller
+assert '__locationContentV35' in controller
 assert 'data/us_news_markets.json' in controller
-assert 'Nearest active news market' in controller
+assert 'countyPool' in controller and 'mergedPool' in controller
+assert 'location-scope-bar' in controller
+assert "['local','region']" in controller
 assert 'FOUR_CORNERS_CITIES' not in controller
+
+resolver = (ROOT / 'assets' / 'location-v2.js').read_text(encoding='utf-8')
+assert 'countyFromReverse' in resolver and 'underreported-county' in resolver
 
 wrapper = (ROOT / 'scripts' / 'update_news_normalized.py').read_text(encoding='utf-8')
 assert 'LOCAL_STORIES_PER_MARKET' in wrapper
 assert 'marketId' in wrapper and 'marketCity' in wrapper and 'marketState' in wrapper
 assert 'local_story_relevant' in wrapper
 
-print(f'News-market database passed: {len(markets)} markets across all 50 states + DC; routing/collector integration present.')
+print(f'News-market database passed: {len(markets)} markets across all 50 states + DC; state/county/local/region hub integration present.')
