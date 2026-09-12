@@ -8,11 +8,13 @@ Editorial policy:
   less likely to dominate mainstream national coverage
 - Entertainment cards that overlap an Underreported event receive explicit
   cross-links in the generated RSS for the UI to highlight in red
+- source-provided Entertainment images are preserved when safely available
 """
 from __future__ import annotations
 
 import html
 import re
+from urllib.parse import urlparse
 
 import update_news_normalized as normalized
 
@@ -64,7 +66,57 @@ core.TRUSTED_CATEGORY_FALLBACKS["entertainment"] = [
     ("Entertainment Weekly", "site:ew.com actor actress music television film entertainment"),
 ]
 
+_original_parse_items = core.parse_items
 _original_select = core.select_category_stories
+_original_build = core.build
+
+
+def _safe_image_url(value):
+    value = html.unescape((value or "").strip())
+    if not value:
+        return ""
+    try:
+        parsed = urlparse(value)
+    except Exception:
+        return ""
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return ""
+    return value
+
+
+def _rss_image(item):
+    """Return only an image explicitly supplied by the RSS item itself."""
+    for child in item.iter():
+        tag = str(child.tag).lower()
+        if tag.endswith("content") or tag.endswith("thumbnail") or tag.endswith("enclosure"):
+            candidate = _safe_image_url(child.attrib.get("url", ""))
+            media_type = (child.attrib.get("type") or "").lower()
+            medium = (child.attrib.get("medium") or "").lower()
+            if candidate and ("image" in media_type or medium == "image" or tag.endswith("thumbnail") or "media" in tag):
+                return candidate
+    raw_desc = item.findtext("description") or ""
+    match = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', raw_desc, flags=re.I)
+    return _safe_image_url(match.group(1)) if match else ""
+
+
+def v4_parse_items(root, category, source_override=None):
+    parsed = _original_parse_items(root, category, source_override=source_override)
+    if category != "entertainment" or not parsed:
+        return parsed
+    images = {}
+    for raw in root.findall(".//item"):
+        link = (raw.findtext("link") or "").strip()
+        image = _rss_image(raw)
+        if link and image:
+            images[link] = image
+    for item in parsed:
+        image = images.get((item.get("link") or "").strip(), "")
+        if image:
+            item["imageUrl"] = image
+    return parsed
+
+
+core.parse_items = v4_parse_items
 
 
 def _source_key(item):
@@ -83,23 +135,27 @@ def _specialist(item):
     return any(token in source for token in ENTERTAINMENT_SPECIALIST_SOURCES)
 
 
-def _ent_title_terms(item):
+def _headline_terms(item):
     stop = {
-        "the","a","an","and","or","but","for","from","with","into","over","after","before",
-        "about","amid","during","this","that","new","news","latest","says","said","actor",
-        "actress","film","movie","music","artist","singer","series","television","tv",
-        "entertainment","hollywood","project",
+        "the", "and", "for", "with", "from", "into", "after", "before", "about",
+        "new", "says", "said", "news", "actor", "actress", "film", "movie",
+        "music", "artist", "entertainment", "hollywood", "television", "series",
     }
-    return {w for w in re.findall(r"[a-z0-9]+", (item.get("title") or "").lower()) if len(w) >= 3 and w not in stop}
+    return {
+        w for w in re.findall(r"[a-z0-9]+", (item.get("title") or "").lower())
+        if len(w) >= 4 and w not in stop
+    }
 
 
 def _same_entertainment_event(a, b):
-    ta, tb = _ent_title_terms(a), _ent_title_terms(b)
-    if not ta or not tb:
-        return False
+    ta, tb = _headline_terms(a), _headline_terms(b)
     shared = ta & tb
-    smaller = min(len(ta), len(tb))
-    return smaller >= 3 and len(shared) >= 3 and len(shared) / smaller >= 0.70
+    if len(shared) >= 3:
+        return True
+    ea, eb = _entity_phrases(a), _entity_phrases(b)
+    if ea & eb and len(shared) >= 2:
+        return True
+    return False
 
 
 def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
@@ -108,7 +164,6 @@ def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
     selected = []
     seen = set()
 
-    # Rule 1: exactly the newest verified stories lead the section.
     for item in ranked:
         k = core.key(item)
         if not k or k in seen:
@@ -120,7 +175,6 @@ def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
         if len(selected) >= min(ENTERTAINMENT_NEWEST, limit):
             break
 
-    # Rule 2: after the first five, prefer specialist outlets and publisher variety.
     remainder = [x for x in ranked if core.key(x) and core.key(x) not in seen]
     remainder.sort(key=lambda x: (_specialist(x), x["published"]), reverse=True)
     source_counts = {}
@@ -165,13 +219,11 @@ def _article_terms(item):
 
 
 def _related_to_underreported(ent, under):
-    if core.same_event_topic(ent, under):
-        return True
     entities = _entity_phrases(ent) & _entity_phrases(under)
-    if not entities:
-        return False
     shared = _article_terms(ent) & _article_terms(under)
-    return len(shared) >= 2
+    if entities and len(shared) >= 2:
+        return True
+    return core.same_event_topic(ent, under) and bool(entities)
 
 
 def _attach_underreported_links(items):
@@ -199,7 +251,7 @@ def v4_build(items):
     out = ['<?xml version="1.0" encoding="UTF-8"?>', '<rss version="2.0"><channel>', '<title>Underreported News Brief</title>', '<link>https://battleatom.github.io/News/</link>', '<description>High-impact stories outside the usual news cycle</description>', f'<lastBuildDate>{now}</lastBuildDate>']
     for item in items:
         guid = core.hashlib.sha1((item["link"] + "|" + item["category"]).encode("utf-8")).hexdigest()
-        out += ["<item>", f'<title>{esc(item["title"])}</title>', f'<link>{esc(item["link"])}</link>', f'<description>{esc(item.get("description", ""))}</description>', f'<pubDate>{esc(item["pubDate"])}</pubDate>', f'<source>{esc(item["source"])}</source>', f'<category>{esc(item["category"])}</category>', f'<region>{esc(item.get("region", ""))}</region>', f'<state>{esc(item.get("state", ""))}</state>', f'<marketId>{esc(item.get("marketId", ""))}</marketId>', f'<marketCity>{esc(item.get("marketCity", ""))}</marketCity>', f'<marketState>{esc(item.get("marketState", ""))}</marketState>', f'<latitude>{esc(item.get("latitude", ""))}</latitude>', f'<longitude>{esc(item.get("longitude", ""))}</longitude>', f'<entertainmentTier>{esc(item.get("entertainmentTier", ""))}</entertainmentTier>', f'<whyMatters>{esc(item.get("whyMatters", ""))}</whyMatters>']
+        out += ["<item>", f'<title>{esc(item["title"])}</title>', f'<link>{esc(item["link"])}</link>', f'<description>{esc(item.get("description", ""))}</description>', f'<pubDate>{esc(item["pubDate"])}</pubDate>', f'<source>{esc(item["source"])}</source>', f'<category>{esc(item["category"])}</category>', f'<region>{esc(item.get("region", ""))}</region>', f'<state>{esc(item.get("state", ""))}</state>', f'<marketId>{esc(item.get("marketId", ""))}</marketId>', f'<marketCity>{esc(item.get("marketCity", ""))}</marketCity>', f'<marketState>{esc(item.get("marketState", ""))}</marketState>', f'<latitude>{esc(item.get("latitude", ""))}</latitude>', f'<longitude>{esc(item.get("longitude", ""))}</longitude>', f'<imageUrl>{esc(item.get("imageUrl", ""))}</imageUrl>', f'<entertainmentTier>{esc(item.get("entertainmentTier", ""))}</entertainmentTier>', f'<whyMatters>{esc(item.get("whyMatters", ""))}</whyMatters>']
         related = item.get('_relatedArticles', [])
         if related:
             out.append('<relatedArticles>')
@@ -221,7 +273,7 @@ core.build = v4_build
 
 
 def main():
-    print("V4 Entertainment enabled: newest 5 + verified under-the-radar coverage + Underreported cross-links")
+    print("V4 Entertainment enabled: newest 5 + verified under-the-radar coverage + source images + Underreported cross-links")
     normalized.main()
 
 
