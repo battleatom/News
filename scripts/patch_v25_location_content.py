@@ -3,6 +3,7 @@ import re
 
 P=Path('index.html')
 ASSET=Path('assets/location-content-v25.js')
+CITY_ONLY=Path('assets/location-city-only-v1.js')
 
 # Keep the checked-in nationwide region table canonical before wiring the controller.
 asset=ASSET.read_text(encoding='utf-8')
@@ -23,11 +24,14 @@ elif new_state_candidates not in asset:
     raise SystemExit('State pool candidate rule is missing or malformed')
 
 ASSET.write_text(asset,encoding='utf-8')
+if not CITY_ONLY.exists():
+    raise SystemExit('City-only location scope overlay is missing')
 
 s=P.read_text(encoding='utf-8')
 s=re.sub(r'\s*<script[^>]+src="assets/location-content-v25\.js[^>]*></script>','',s)
-script='\n<script src="assets/location-content-v25.js?v=2"></script>\n'
+s=re.sub(r'\s*<script[^>]+src="assets/location-city-only-v1\.js[^>]*></script>','',s)
+script='\n<script src="assets/location-content-v25.js?v=2"></script>\n<script src="assets/location-city-only-v1.js?v=1"></script>\n'
 if '</body>' not in s: raise SystemExit('Missing </body>')
 s=s.replace('</body>',script+'</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Applied V4 nationwide location hub and canonical state-region mapping.')
+print('Applied V4 nationwide location hub with city-only local scope navigation.')
