@@ -11,6 +11,17 @@ if "SC:'southeast'" not in asset:
     raise SystemExit('South Carolina region mapping is missing or malformed')
 if asset.count("MA:'Massachusetts'") != 1:
     raise SystemExit('State table must contain Massachusetts exactly once')
+
+# Statewide pools must be allowed to draw from state-tagged local/region stories.
+# Limiting non-NM states to only US/Top categories made valid Colorado stories
+# invisible to the Colorado Statewide scope even while the Mountain pool was full.
+old_state_candidates = "const candidates=items.filter(item=>{const cat=category(item);if(cat==='nm'&&loc.code==='NM')return true;return ['us','top'].includes(cat)&&matchesState(item,loc)});"
+new_state_candidates = "const candidates=items.filter(item=>{const cat=category(item);if(cat==='nm'&&loc.code==='NM')return true;return ['us','top','region','local'].includes(cat)&&matchesState(item,loc)});"
+if old_state_candidates in asset:
+    asset=asset.replace(old_state_candidates,new_state_candidates,1)
+elif new_state_candidates not in asset:
+    raise SystemExit('State pool candidate rule is missing or malformed')
+
 ASSET.write_text(asset,encoding='utf-8')
 
 s=P.read_text(encoding='utf-8')
