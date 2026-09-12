@@ -1,0 +1,101 @@
+name: Story Context V2 Validation
+
+on:
+  push:
+    branches:
+      - test/story-specific-context-v2
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Run feed quality regressions
+        run: python tests/feed_quality_regression_test.py
+
+      - name: Run complete-brief regressions
+        run: python tests/story_context_regression_test.py
+
+      - name: Run editorial integrity regressions
+        run: python tests/editorial_integrity_test.py
+
+      - name: Run category relevance smoke test
+        run: python tests/category_relevance_smoke.py
+
+      - name: Regenerate factual briefs from public article text
+        run: python scripts/create_content_briefs.py
+
+      - name: Regenerate story-specific Why It Matters
+        run: python scripts/update_why_matters.py
+
+      - name: Audit generated story context
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from collections import defaultdict
+          root=ET.parse('News').getroot()
+          groups=defaultdict(list)
+          bad=[]
+          for item in root.findall('.//item'):
+              cat=(item.findtext('category') or '').strip().lower()
+              if not (cat in {'technology','gaming'} or cat.startswith('entertainment')):
+                  continue
+              title=(item.findtext('title') or '').strip()
+              desc=(item.findtext('description') or '').strip()
+              why=(item.findtext('whyMatters') or '').strip()
+              subject=(item.findtext('whySubject') or '').strip()
+              event=(item.findtext('whyEvent') or '').strip()
+              affected=(item.findtext('whyAffected') or '').strip()
+              consequence=(item.findtext('whyConsequence') or '').strip()
+              confidence=(item.findtext('whyConfidence') or '').strip()
+              groups[cat].append(why)
+              if not all((title,desc,why,subject,event,affected,consequence,confidence)):
+                  bad.append((cat,title,'missing structured context'))
+              elif subject.lower() not in why.lower():
+                  bad.append((cat,title,'subject missing from Why It Matters'))
+              elif desc.endswith(('…','...')):
+                  bad.append((cat,title,'brief ends in truncation marker'))
+              elif not desc.endswith(('.', '!', '?')):
+                  bad.append((cat,title,'brief is not a complete sentence'))
+              if 'available brief identifies' in why.lower() or 'available brief describes' in why.lower():
+                  bad.append((cat,title,'legacy generic fallback survived'))
+          if bad:
+              print('Story-context audit failures:')
+              for row in bad[:30]: print(row)
+              raise SystemExit(1)
+          for cat, values in sorted(groups.items()):
+              unique=len(set(values)); total=len(values); ratio=unique/max(1,total)
+              print(f'{cat}: {total} stories / {unique} unique explanations / {ratio:.0%} unique')
+              if total>=5 and ratio < 0.70:
+                  raise SystemExit(f'{cat} explanations are still too repetitive: {unique}/{total}')
+          print('Generated story-context audit passed.')
+          PY
+
+      - name: Build final site
+        run: python scripts/build_site.py
+
+      - name: Inject Entertainment UI
+        run: python scripts/patch_entertainment_v4_ui.py
+
+      - name: Audit generated site integrity
+        run: python scripts/site_audit.py
+
+      - name: Run V4 release gate
+        run: python scripts/v4_release_gate.py
