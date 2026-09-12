@@ -9,6 +9,7 @@ EXPECTED_X=['Health','Technology & AI','Celebrities & Public Figures','World','P
 
 def wait_for_location_v36(page):
     page.wait_for_function('window.__locationContentV36===true',timeout=10000)
+    page.wait_for_function('window.__locationCityOnlyV1===true',timeout=10000)
     page.wait_for_timeout(900)
 
 
@@ -35,19 +36,19 @@ def farmington_suite(browser):
     labels=location_scope_labels(page)
     joined=' | '.join(labels)
     assert 'All' in joined and 'Statewide' in joined, f'Missing state hub scopes: {joined}'
-    assert 'Farmington' in joined or 'Local' in joined, f'Missing local scope: {joined}'
+    assert 'Farmington' in joined or 'Local' in joined, f'Missing city scope: {joined}'
     assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
-    assert 'San Juan County' in joined or 'County' in joined, f'Missing county scope: {joined}'
+    assert 'County' not in joined and 'San Juan County' not in joined, f'County scope should be hidden: {joined}'
+    assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, 'County scope button is still visible'
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
-      county:window.__locationCountyPoolV36(allItems).length,
       state:window.__locationStatePoolV36(allItems).length,
       region:window.__locationRegionPoolV36(allItems).length,
       merged:window.__mergedLocationPoolV36(allItems).length,
       counts:window.__locationHubCountsV36
     })""")
-    assert pools['state']>0 and pools['region']>0 and pools['merged']>0, f'Farmington V36 location pools are invalid: {pools}'
+    assert pools['local']>0 and pools['state']>0 and pools['region']>0 and pools['merged']>0, f'Farmington V36 location pools are invalid: {pools}'
     assert pools['counts'] and pools['counts']['location']['code']=='NM', f'Farmington V36 location context is invalid: {pools}'
 
     base.infinite_scroll_check(page)
@@ -70,6 +71,8 @@ def denver_suite(browser):
     labels=location_scope_labels(page)
     joined=' | '.join(labels)
     assert 'Statewide' in joined and ('Denver' in joined or 'Local' in joined), f'Denver location scopes invalid: {joined}'
+    assert 'County' not in joined, f'County scope should be hidden in Denver: {joined}'
+    assert page.locator('.location-scope-btn[data-scope="county"]').count()==0
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
@@ -91,6 +94,9 @@ def mobile_suite(browser):
     assert page.locator('#tabs > .tab').count()>=15, 'Merged mobile navigation lost categories'
     assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
+
+    base.click_key(page,'nm')
+    assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, 'County scope button is visible on mobile'
 
     base.click_key(page,'x')
     cards=page.locator('#news-feed .x-issue-item')
@@ -128,7 +134,7 @@ def main():
         denver_suite(browser)
         mobile_suite(browser)
         browser.close()
-    print('V4 SMOKE PASS — feed logic, Presidential routing, X renderer, V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
+    print('V4 SMOKE PASS — feed logic, Presidential routing, X renderer, city-only V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
 
 
 if __name__=='__main__':
