@@ -17,12 +17,14 @@ DIRTY_LIMIT=22
 ADULT_MIN=8
 
 PREVIEW_SOURCES=[
-    ('People','site:people.com celebrity actor actress baby pregnancy birth wedding engagement philanthropy charity entertainment'),
-    ('E! News','site:eonline.com celebrity actor actress entertainment awards family baby pregnancy philanthropy'),
-    ('Variety','site:variety.com actor actress Hollywood television film entertainment'),
-    ('Billboard','site:billboard.com music artist singer rapper tour album'),
-    ('Deadline','site:deadline.com actor actress television film Hollywood'),
-    ('The Hollywood Reporter','site:hollywoodreporter.com actor actress film television entertainment'),
+    ('People','site:people.com actor actress singer musician celebrity baby pregnancy birth wedding engagement philanthropy charity entertainment'),
+    ('E! News','site:eonline.com actor actress singer musician celebrity entertainment awards family baby pregnancy philanthropy'),
+    ('Variety','site:variety.com actor actress director Hollywood television film entertainment'),
+    ('Billboard','site:billboard.com music artist singer rapper musician tour album'),
+    ('Deadline','site:deadline.com actor actress director television film Hollywood'),
+    ('The Hollywood Reporter','site:hollywoodreporter.com actor actress director film television entertainment'),
+    ('Rolling Stone','site:rollingstone.com actor actress singer musician artist entertainment'),
+    ('Entertainment Weekly','site:ew.com actor actress singer musician celebrity entertainment'),
 ]
 
 DIRTY_PREVIEW_SOURCES=[
@@ -32,8 +34,27 @@ DIRTY_PREVIEW_SOURCES=[
     ('TMZ','site:tmz.com celebrity dating breakup feud nude onlyfans porn star adult performer'),
 ]
 
-# 2026 XMA/XMA Creator winners are used only as a prominence boost, never as a whitelist.
-# Major news about any performer can still rank above a trivial story about a winner.
+# Broad A-list / household-name seed. This is only a prominence boost, never a whitelist.
+# Dynamic cross-source coverage below can elevate any currently hot actor, actress,
+# musician or artist even when they are not in this seed set.
+MAJOR_NAMES={
+    'adele','ariana grande','bad bunny','beyonce','billie eilish','bruno mars','cardi b',
+    'chappell roan','doja cat','drake','dua lipa','ed sheeran','harry styles','justin bieber',
+    'katy perry','kendrick lamar','lady gaga','lizzo','miley cyrus','nicki minaj','olivia rodrigo',
+    'rihanna','sabrina carpenter','selena gomez','shakira','sza','taylor swift','the weeknd',
+    'travis scott','usher','post malone','megan thee stallion','jennifer lopez','madonna',
+    'angelina jolie','anne hathaway','austin butler','ben affleck','brad pitt','chris evans',
+    'chris hemsworth','cillian murphy','colin farrell','dwayne johnson','emma stone','florence pugh',
+    'gal gadot','george clooney','glen powell','hugh jackman','jake gyllenhaal','jenna ortega',
+    'jennifer aniston','jennifer lawrence','joaquin phoenix','johnny depp','keanu reeves',
+    'leonardo dicaprio','margot robbie','matt damon','meryl streep','michael b jordan',
+    'millie bobby brown','natalie portman','nicole kidman','pedro pascal','reese witherspoon',
+    'robert downey jr','ryan gosling','ryan reynolds','sandra bullock','scarlett johansson',
+    'sydney sweeney','timothee chalamet','tom cruise','tom holland','viola davis','will smith',
+    'zendaya','zoe saldana','ana de armas','dakota johnson','demi moore','pamela anderson',
+}
+
+# 2026 XMA/XMA Creator winners are used only as a Dirty-feed prominence boost.
 ADULT_PROMINENCE={
     'jennifer white':90,'vince karter':90,'ariel demure':90,'sophia locke':80,
     'octavia red':80,'derek kage':80,'cubbi thompson':75,'emma magnolia':75,
@@ -44,7 +65,11 @@ ADULT_PROMINENCE={
 }
 
 ADULT_SOURCE_TOKENS=('xbiz','avn')
+SPECIALIST_CLEAN_SOURCES=('variety','billboard','deadline','hollywood reporter','rolling stone','entertainment weekly','e! news','people')
 REJECT_TERMS=('horoscope','astrology','fan theory','fan theories','death hoax','fake death','lookalike')
+FILLER_TERMS=('review:',' review','predictions','prediction:','full list','complete list','specialty preview','festival preview','preview:','roundup','ranked list','best movies','best shows','what to watch','explained:')
+GENERIC_NONCELEB_TERMS=('officer','police officer','deputy','mom of','dad of','woman charged','man charged','woman indicted','man indicted','teacher arrested','student arrested')
+ENT_ROLE_TERMS=('actor','actress','singer','rapper','musician','artist','director','filmmaker','comedian','performer','dj','screenwriter','voice actor','songwriter','supermodel','model','movie star','tv star','television star','recording artist')
 EXPLICIT_SKIP=('gangbang','anal scene','first anal','sex toy','stroker','dildo','sex doll','masturbator','hardcore','blowjob','oral scene','double penetration')
 XBIZ_KEEP_HINTS=('performer','star','actress','actor','award','wins','winner','interview','podcast','launch','platform','business','company','studio','industry','legal','lawsuit','court','regulation','compliance','creator','onlyfans','fansly','model','agency','director','producer','executive','joins','hired','signs','deal','event','conference','expands','partnership','acquires')
 
@@ -61,9 +86,21 @@ ADULT_TERMS=('adult film','adult entertainment','porn star','pornstar','porn per
 ADULT_AWARD_TERMS=('xma','xmas','avn award','adult award')
 BUSINESS_LEGAL_TERMS=('lawsuit','sued','court','legal','regulation','law','business','company','platform','studio','contract','deal','acquires','acquisition','ban','payment','compliance')
 
+ENTITY_NOISE={
+    'People','People Com','E News','Variety','Billboard','Deadline','The Hollywood Reporter',
+    'Rolling Stone','Entertainment Weekly','New York','Los Angeles','United States','North Carolina',
+    'South Korean','Prime Video','Netflix','Toronto Film Festival','White House','Associated Press',
+}
+
 
 def _text(item):
     return f"{item.get('title','')} {item.get('description','')} {item.get('source','')}".lower()
+
+def _title(item):
+    return (item.get('title') or '').strip()
+
+def _title_lower(item):
+    return _title(item).lower()
 
 def _key(item):
     try:return core.key(item)
@@ -75,16 +112,104 @@ def _published(item):
     try:return datetime.fromisoformat(str(p))
     except Exception:return datetime.min.replace(tzinfo=timezone.utc)
 
-def _source_is_adult(item):
-    s=(item.get('source') or '').lower()
-    return any(t in s for t in ADULT_SOURCE_TOKENS)
+def _source_key(item):
+    return (item.get('source') or '').strip().lower()
 
-def _prominence(item):
+def _source_is_adult(item):
+    return any(t in _source_key(item) for t in ADULT_SOURCE_TOKENS)
+
+def _adult_prominence(item):
     text=_text(item)
     return max([score for name,score in ADULT_PROMINENCE.items() if name in text] or [0])
 
-def classify(item, forced_dirty=False, adult_source=False):
+def _known_name(item):
     text=_text(item)
+    matches=[name for name in MAJOR_NAMES if name in text]
+    return max(matches,key=len) if matches else ''
+
+def _title_entities(item):
+    title=_title(item)
+    # Conservative proper-name extraction: two to four title-case words. The
+    # dynamic signal only counts an entity when distinct outlets repeat it.
+    matches=re.findall(r"\b(?:[A-Z][A-Za-z'’.-]+)(?:\s+(?:[A-Z][A-Za-z'’.-]+)){1,3}\b",title)
+    out=[]
+    for raw in matches:
+        raw=raw.strip(' -–—:,.')
+        if raw in ENTITY_NOISE or len(raw)<5:
+            continue
+        if any(noise.lower()==raw.lower() for noise in ENTITY_NOISE):
+            continue
+        out.append(raw.lower())
+    return set(out)
+
+def build_clean_signals(candidates):
+    entity_sources={}
+    for item in candidates:
+        if _source_is_adult(item):
+            continue
+        src=_source_key(item)
+        for entity in _title_entities(item):
+            entity_sources.setdefault(entity,set()).add(src)
+    return entity_sources
+
+def _dynamic_prominence(item,entity_sources):
+    best=0
+    for entity in _title_entities(item):
+        n=len(entity_sources.get(entity,set()))
+        if n>=5:best=max(best,220)
+        elif n==4:best=max(best,180)
+        elif n==3:best=max(best,145)
+        elif n==2:best=max(best,95)
+    if _known_name(item):
+        best=max(best,175)
+    return best
+
+def _story_coverage(item,candidates):
+    sources=set()
+    for other in candidates:
+        if _source_is_adult(other):
+            continue
+        if _key(other)==_key(item):
+            sources.add(_source_key(other));continue
+        try:
+            same=v4._same_entertainment_event(item,other)
+        except Exception:
+            same=False
+        if same:sources.add(_source_key(other))
+    n=len(sources)
+    if n>=5:return 150
+    if n==4:return 120
+    if n==3:return 90
+    if n==2:return 55
+    return 0
+
+def _clean_relevant(item,cls,prominence):
+    title=_title_lower(item)
+    source=_source_key(item)
+    if any(term in title for term in FILLER_TERMS):
+        return False
+    has_known=bool(_known_name(item))
+    has_role=any(term in title for term in ENT_ROLE_TERMS)
+    repeated=prominence>=95
+    specialist=any(token in source for token in SPECIALIST_CLEAN_SOURCES)
+    has_person=bool(_title_entities(item))
+
+    # Generic human-interest/crime stories from People-style sources are not
+    # Entertainment unless an actual entertainment figure is identifiable.
+    if any(term in title for term in GENERIC_NONCELEB_TERMS) and not (has_known or has_role or repeated):
+        return False
+
+    # Strong named-person gate. Major/career/family stories from a specialist
+    # outlet can pass with a proper name; generic ENTERTAINMENT filler cannot.
+    if has_known or repeated or has_role:
+        return True
+    if specialist and has_person and cls in {'MAJOR','PEOPLE / FAMILY','CAREER','AWARDS','PHILANTHROPY'}:
+        return True
+    return False
+
+def classify(item,forced_dirty=False,adult_source=False):
+    text=_text(item)
+    title=_title_lower(item)
     if any(t in text for t in REJECT_TERMS):return None
     adult=adult_source or any(t in text for t in ADULT_TERMS)
     if adult:
@@ -93,40 +218,53 @@ def classify(item, forced_dirty=False, adult_source=False):
         elif 'onlyfans' in text or 'fansly' in text or 'creator' in text:cls='CREATOR'
         else:cls='ADULT INDUSTRY'
         return 'dirty',cls
-    if any(t in text for t in NUDE_TERMS):return 'dirty','NUDE / PHOTO SHOOT'
-    if any(t in text for t in MATURE_FASHION_TERMS):return 'dirty','MATURE FASHION'
-    if any(t in text for t in GOSSIP_TERMS):return 'dirty','GOSSIP'
-    if any(t in text for t in RELATIONSHIP_TERMS):return 'dirty','RELATIONSHIPS'
+    if any(t in title for t in NUDE_TERMS):return 'dirty','NUDE / PHOTO SHOOT'
+    if any(t in title for t in MATURE_FASHION_TERMS):return 'dirty','MATURE FASHION'
+    if any(t in title for t in GOSSIP_TERMS):return 'dirty','GOSSIP'
+    if any(t in title for t in RELATIONSHIP_TERMS):return 'dirty','RELATIONSHIPS'
     if forced_dirty:return 'dirty','GOSSIP / LIFESTYLE'
-    if any(t in text for t in MAJOR_TERMS):return 'clean','MAJOR'
-    if any(t in text for t in FAMILY_TERMS):return 'clean','PEOPLE / FAMILY'
-    if any(t in text for t in PHILANTHROPY_TERMS):return 'clean','PHILANTHROPY'
-    if any(t in text for t in MAINSTREAM_AWARD_TERMS):return 'clean','AWARDS'
-    if any(t in text for t in CAREER_TERMS):return 'clean','CAREER'
+    if any(t in title for t in MAJOR_TERMS):return 'clean','MAJOR'
+    if any(t in title for t in FAMILY_TERMS):return 'clean','PEOPLE / FAMILY'
+    if any(t in title for t in PHILANTHROPY_TERMS):return 'clean','PHILANTHROPY'
+    if any(t in title for t in MAINSTREAM_AWARD_TERMS):return 'clean','AWARDS'
+    if any(t in title for t in CAREER_TERMS):return 'clean','CAREER'
     return 'clean','ENTERTAINMENT'
 
-def score_item(item,safety,cls):
-    text=_text(item)
+def score_item(item,safety,cls,prominence=0,coverage=0):
+    title=_title_lower(item)
     if safety=='clean':
-        base={'MAJOR':1000,'PEOPLE / FAMILY':900,'CAREER':830,'AWARDS':800,'PHILANTHROPY':720,'ENTERTAINMENT':650}.get(cls,600)
-        if any(t in text for t in ('gave birth','gives birth','welcomes','baby','pregnant','pregnancy')):base+=55
+        base={'MAJOR':620,'PEOPLE / FAMILY':560,'CAREER':535,'AWARDS':510,'PHILANTHROPY':455,'ENTERTAINMENT':330}.get(cls,300)
+        base+=prominence+coverage
+        if any(t in title for t in ('gave birth','gives birth','welcomes','baby','pregnant','pregnancy')):base+=45
+        if _known_name(item):base+=35
     else:
         base={'ADULT BUSINESS/LEGAL':1000,'ADULT INDUSTRY':920,'CREATOR':880,'ADULT AWARDS':850,'NUDE / PHOTO SHOOT':760,'MATURE FASHION':700,'GOSSIP':650,'RELATIONSHIPS':625,'GOSSIP / LIFESTYLE':600}.get(cls,600)
-        base+=_prominence(item)
-        if any(t in text for t in MAJOR_TERMS):base+=120
+        base+=_adult_prominence(item)
+        if any(t in title for t in MAJOR_TERMS):base+=120
     if _source_is_adult(item):base+=35
     return base
 
-def decorate(item,forced_dirty=False,adult_source=False):
+def decorate(item,entity_sources,candidates,forced_dirty=False,adult_source=False):
     tagged=classify(item,forced_dirty=forced_dirty,adult_source=adult_source)
     if not tagged:return None
     safety,cls=tagged
     copy=dict(item)
+    if safety=='clean':
+        prominence=_dynamic_prominence(copy,entity_sources)
+        if not _clean_relevant(copy,cls,prominence):
+            return None
+        coverage=_story_coverage(copy,candidates)
+        copy['entertainmentProminence']=prominence
+        copy['entertainmentCoverage']=coverage
+    else:
+        prominence=_adult_prominence(copy)
+        coverage=0
+        copy['entertainmentProminence']=prominence
+        copy['entertainmentCoverage']=''
     copy['entertainmentSafety']=safety
     copy['entertainmentLabel']=cls
-    copy['entertainmentScore']=score_item(copy,safety,cls)
+    copy['entertainmentScore']=score_item(copy,safety,cls,prominence,coverage)
     copy['entertainmentTier']='under-the-radar' if safety=='dirty' else 'ranked'
-    copy['entertainmentProminence']=_prominence(copy)
     if safety=='dirty' and (adult_source or cls in {'ADULT INDUSTRY','ADULT BUSINESS/LEGAL','CREATOR','ADULT AWARDS','NUDE / PHOTO SHOOT'}):copy['imageUrl']=''
     return copy
 
@@ -171,7 +309,7 @@ def dedupe_rank(items,limit,mode):
     out=[];seen=set();source_counts={}
     for item in ranked:
         if item.get('entertainmentSafety')!=mode:continue
-        k=_key(item);src=(item.get('source') or '').strip().lower()
+        k=_key(item);src=_source_key(item)
         cap=10 if src in ADULT_SOURCE_TOKENS else 5
         if not k or k in seen or source_counts.get(src,0)>=cap:continue
         if any(v4._same_entertainment_event(prior,item) for prior in out):continue
@@ -203,9 +341,10 @@ def collect():
         except Exception as exc:print(f'Entertainment dirty preview failed for {source}: {exc}')
     direct=fetch_xbiz_direct();candidates.extend(direct)
 
+    entity_sources=build_clean_signals(candidates)
     decorated=[]
     for item in candidates:
-        d=decorate(item,forced_dirty=bool(item.get('_forced_dirty')),adult_source=bool(item.get('_adult_source')) or _source_is_adult(item))
+        d=decorate(item,entity_sources,candidates,forced_dirty=bool(item.get('_forced_dirty')),adult_source=bool(item.get('_adult_source')) or _source_is_adult(item))
         if d:decorated.append(d)
 
     clean=dedupe_rank(decorated,CLEAN_LIMIT,'clean')
@@ -223,14 +362,15 @@ def collect():
     print('  Clean:',len(clean))
     print('  Dirty-only:',len(dirty))
     print('  Adult-industry:',sum(1 for x in dirty if x.get('entertainmentLabel') in {'ADULT INDUSTRY','ADULT BUSINESS/LEGAL','CREATOR','ADULT AWARDS'}))
-    if clean:print('  Clean top:',clean[0].get('entertainmentLabel'),'-',clean[0].get('title'))
+    for idx,item in enumerate(clean[:10],1):
+        print(f"  Clean #{idx}: score={item.get('entertainmentScore')} prominence={item.get('entertainmentProminence')} coverage={item.get('entertainmentCoverage')} {item.get('entertainmentLabel')} - {item.get('title')}")
     if dirty:print('  Dirty top:',dirty[0].get('entertainmentLabel'),'-',dirty[0].get('title'))
     return clean+dirty
 
 def append_node(channel,item):
     n=ET.Element('item')
     def add(tag,val):e=ET.SubElement(n,tag);e.text=str(val or '')
-    add('title',item.get('title'));add('link',item.get('link'));add('description',item.get('description'));add('pubDate',item.get('pubDate'));add('source',item.get('source'));add('category','entertainment');add('region','');add('state','');add('imageUrl',item.get('imageUrl',''));add('entertainmentTier',item.get('entertainmentTier',''));add('entertainmentSafety',item.get('entertainmentSafety','clean'));add('entertainmentLabel',item.get('entertainmentLabel','ENTERTAINMENT'));add('entertainmentScore',item.get('entertainmentScore',''));add('entertainmentProminence',item.get('entertainmentProminence',''));add('whyMatters','Why it matters: It may affect careers, audiences, families, creators, productions, business, or the wider entertainment industry.')
+    add('title',item.get('title'));add('link',item.get('link'));add('description',item.get('description'));add('pubDate',item.get('pubDate'));add('source',item.get('source'));add('category','entertainment');add('region','');add('state','');add('imageUrl',item.get('imageUrl',''));add('entertainmentTier',item.get('entertainmentTier',''));add('entertainmentSafety',item.get('entertainmentSafety','clean'));add('entertainmentLabel',item.get('entertainmentLabel','ENTERTAINMENT'));add('entertainmentScore',item.get('entertainmentScore',''));add('entertainmentProminence',item.get('entertainmentProminence',''));add('entertainmentCoverage',item.get('entertainmentCoverage',''));add('whyMatters','Why it matters: It may affect careers, audiences, families, creators, productions, business, or the wider entertainment industry.')
     channel.append(n)
 
 def main():
