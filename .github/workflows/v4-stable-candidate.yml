@@ -1,0 +1,238 @@
+name: V4 Stable Candidate
+
+on:
+  push:
+    branches: [V4]
+    paths:
+      - 'scripts/**'
+      - 'assets/**'
+      - 'data/**'
+      - 'tests/**'
+      - '.github/workflows/v4-stable-candidate.yml'
+      - '.github/workflows/update-news.yml'
+      - '.github/workflows/test-v4.yml'
+      - '.github/workflows/v4-entertainment-preview.yml'
+      - '.github/workflows/v4-live-preview.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v4-stable-candidate
+  cancel-in-progress: true
+
+jobs:
+  build-test-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout V4 source
+        uses: actions/checkout@v4
+        with:
+          ref: V4
+          fetch-depth: 0
+
+      - name: Record exact source SHA
+        run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Checkout stable V3 baseline
+        uses: actions/checkout@v4
+        with:
+          ref: version-3
+          path: baseline-v3
+          fetch-depth: 1
+
+      - name: Validate Python before collection
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Collector preflight
+        run: python scripts/preflight_feed.py
+
+      - name: Collect full V4 feed
+        run: python scripts/update_news_v4.py
+
+      - name: Replace provisional Entertainment with authoritative Clean and Dirty pools
+        run: python scripts/update_entertainment_only_v4.py
+
+      - name: Refine Technology and Gaming
+        run: python scripts/refine_tech_gaming.py
+
+      - name: Collect strict official legislation
+        run: python scripts/collect_official_legislation_strict.py
+
+      - name: Enrich World
+        run: python scripts/enrich_world_content.py
+
+      - name: Discover, enrich, and rank Underreported
+        run: |
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+
+      - name: Enrich and enforce legislation
+        run: |
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+
+      - name: Enrich X Top Issues
+        run: python scripts/enrich_x_issues.py
+
+      - name: Enrich Box Office
+        run: |
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+
+      - name: Clean and cluster feed
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+
+      - name: Run V4 final verifier
+        run: python scripts/verify_feed_v4.py --apply
+
+      - name: Enforce final federal and legislation routing
+        run: |
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+
+      - name: Verify no strong duplicate pairs remain
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          report=json.loads(Path('verification-report.json').read_text(encoding='utf-8'))
+          pairs=report.get('residualStrongDuplicatePairs',[])
+          if pairs:
+              for pair in pairs[:20]: print(pair)
+              raise SystemExit(f'{len(pairs)} residual strong duplicate pair(s) remain')
+          print('Duplicate guard passed.')
+          PY
+
+      - name: Rebuild and verify fixed X topics
+        run: |
+          python scripts/enrich_x_issues.py
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          items=ET.parse('News').getroot().findall('.//item')
+          topics=[(i.findtext('xTopic') or '').strip() for i in items if (i.findtext('category') or '').strip()=='x']
+          if topics != expected: raise SystemExit(f'X validation failed: {topics}')
+          print('X fixed-topic guard passed.')
+          PY
+
+      - name: Finalize feed pull statistics
+        run: python scripts/record_pull_stats.py --finalize
+
+      - name: Install content brief dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Build content briefs and Why It Matters
+        run: |
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+
+      - name: Build final site
+        run: |
+          python scripts/build_site.py
+          python scripts/patch_entertainment_v4_ui.py
+
+      - name: Audit generated site
+        run: python scripts/site_audit.py
+
+      - name: Run release-candidate feed gate
+        run: python scripts/v4_release_gate.py
+
+      - name: Run deterministic unit regressions
+        run: |
+          python tests/news_market_db_test.py
+          python tests/entertainment_v4_test.py
+          python tests/verify_feed_test.py
+
+      - name: Install Chromium for browser regressions
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Start generated V4 and stable V3 sites
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v4-http.log 2>&1 &
+          echo $! > /tmp/news-v4-http.pid
+          (cd baseline-v3 && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-v3-http.log 2>&1 &)
+          sleep 2
+
+      - name: Run location and scroll browser regression
+        run: python tests/location_routing_v27.py
+
+      - name: Run Entertainment browser regression
+        run: python tests/entertainment_v4_ui_test.py
+
+      - name: Compare generated V4 to stable V3
+        run: python tests/live_ab_compare_v27.py
+
+      - name: Write validated release report
+        run: |
+          python - <<'PY'
+          import json, os, xml.etree.ElementTree as ET
+          from collections import Counter
+          from datetime import datetime, timezone
+          items=ET.parse('News').getroot().findall('.//item')
+          counts=Counter((i.findtext('category') or '').strip() for i in items)
+          ent=[i for i in items if (i.findtext('category') or '').strip()=='entertainment']
+          clean=sum((i.findtext('entertainmentSafety') or '').strip()=='clean' for i in ent)
+          dirty=sum((i.findtext('entertainmentSafety') or '').strip()=='dirty' for i in ent)
+          report={
+              'status':'validated',
+              'sourceSha':os.environ['SOURCE_SHA'],
+              'generatedAt':datetime.now(timezone.utc).isoformat(),
+              'feedItems':len(items),
+              'categoryCounts':dict(sorted(counts.items())),
+              'entertainment':{'clean':clean,'dirty':dirty},
+              'baseline':'version-3',
+              'checks':['python-syntax','market-db','entertainment-unit','feed-verifier-unit','site-audit','release-gate','location-scroll-browser','entertainment-browser','v3-v4-browser-comparison'],
+          }
+          with open('v4-release-report.json','w',encoding='utf-8') as f:
+              json.dump(report,f,indent=2);f.write('\n')
+          print(json.dumps(report,indent=2))
+          PY
+
+      - name: Ensure V4 source did not change during validation
+        run: |
+          git fetch origin V4
+          remote_sha=$(git rev-parse origin/V4)
+          if [ "$remote_sha" != "$SOURCE_SHA" ]; then
+            echo "V4 changed during validation: source=$SOURCE_SHA remote=$remote_sha"
+            echo 'Refusing to publish artifacts generated from an older source. A newer run will validate the latest source.'
+            exit 1
+          fi
+
+      - name: Commit exact validated candidate
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v4-release-report.json assets/location-content-v25.js 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo 'Validated candidate produced no generated changes.'
+            exit 0
+          fi
+          git commit -m 'Freeze validated V4 stable candidate [skip ci]'
+          git push origin HEAD:V4
+
+      - name: Upload validation reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v4-stable-candidate-reports
+          path: |
+            live-ab-report.json
+            verification-report.json
+            v4-release-report.json
+          retention-days: 30
+
+      - name: Show local servers on failure
+        if: failure()
+        run: |
+          cat /tmp/news-v4-http.log 2>/dev/null || true
+          cat /tmp/news-v3-http.log 2>/dev/null || true

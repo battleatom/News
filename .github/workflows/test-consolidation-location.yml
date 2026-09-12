@@ -1,0 +1,80 @@
+name: Test Consolidation Location
+
+on:
+  push:
+    branches: ['test/consolidation-location-dedupe-v1']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+        with:
+          ref: test/consolidation-location-dedupe-v1
+          fetch-depth: 0
+
+      - name: Checkout main baseline
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: baseline-main
+          fetch-depth: 1
+
+      - name: Use the same live feed for both builds
+        run: cp baseline-main/News News
+
+      - name: Confirm baked nationwide location routing
+        run: python scripts/test_patch_progressive_local.py
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Validate nationwide market database
+        run: python tests/news_market_db_test.py
+
+      - name: Run generic feed verification regressions
+        run: python tests/verify_feed_test.py
+
+      - name: Run site integrity audit
+        run: python scripts/site_audit.py
+
+      - name: Install Playwright
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Start branch and main sites
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-test-http.log 2>&1 &
+          echo $! > /tmp/news-test-http.pid
+          (cd baseline-main && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-main-http.log 2>&1 &)
+          sleep 2
+
+      - name: Test generic location routing
+        run: python tests/location_routing_v27.py
+
+      - name: Run live main-vs-branch A/B tab comparison
+        run: python tests/live_ab_compare_v27.py
+
+      - name: Print A/B report
+        if: always()
+        run: cat live-ab-report.json || true
+
+      - name: Upload A/B comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-ab-comparison
+          path: live-ab-report.json
+          retention-days: 14
+
+      - name: Show server logs on failure
+        if: failure()
+        run: |
+          cat /tmp/news-test-http.log || true
+          cat /tmp/news-main-http.log || true

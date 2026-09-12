@@ -1,0 +1,43 @@
+{
+  "status": "validated-production-candidate",
+  "sourceSha": "b8b92be9ae5c712e055990806a85707ec22180f3",
+  "generatedAt": "2026-09-12T14:12:09.106256+00:00",
+  "feedItems": 844,
+  "categoryCounts": {
+    "entertainment": 35,
+    "federal": 9,
+    "gaming": 20,
+    "legislation": 22,
+    "local": 400,
+    "military": 35,
+    "nfl": 29,
+    "nm": 33,
+    "presidential": 27,
+    "region": 66,
+    "technology": 15,
+    "top": 53,
+    "underreported": 27,
+    "us": 23,
+    "world": 40,
+    "x": 10
+  },
+  "entertainment": {
+    "clean": 20,
+    "dirty": 15
+  },
+  "baseline": "archive-v3-stable-2026-09-12",
+  "rollbackMain": "backup-main-pre-v4-2026-09-12",
+  "checks": [
+    "python-syntax",
+    "preflight",
+    "feed-verifier",
+    "dedupe",
+    "x-topics",
+    "site-audit",
+    "release-gate",
+    "unit-regressions",
+    "location-scroll-browser",
+    "entertainment-browser",
+    "v3-v4-browser-comparison"
+  ]
+}
