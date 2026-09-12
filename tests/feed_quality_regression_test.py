@@ -17,7 +17,6 @@ b=item('presidential','$5,000 support payment proposal from Morgan draws questio
 c=item('presidential','Alex Morgan meets technology executives','BBC','The official met technology executives about a separate issue.','c')
 assert cluster.same_event(a,b);assert not cluster.same_event(a,c)
 
-# The same event entering U.S. and Presidential must canonicalize across tabs.
 cu=item('us','President Jordan offers $5,000 payments if budget measure passes','Fox News','President Jordan described a $5,000 payment proposal tied to passage of the measure.','cu')
 cp=item('presidential','$5,000 payment proposal from President Jordan faces questions','Reuters','The same $5,000 payment proposal from President Jordan is being reviewed after the announcement.','cp')
 assert cluster.event_match(cu,cp,allow_cross_tab=True)
@@ -48,32 +47,43 @@ assert not vf.should_reroute('world',{'action':'reroute','category':'us','confid
 w=item('us','Agency issues update','Reuters','The final paraphrased brief says Medicaid benefits and hospital access may change.','w')
 assert 'health' in why.why_for(w).lower() or 'care' in why.why_for(w).lower()
 
-# Contextual Why It Matters: output must track the event, not a generic tab template.
-tech_gpu=item('technology','Nvidia unveils new GPU','The Verge','Nvidia announced a new GPU aimed at PC buyers.','tech-gpu')
-tech_gpu_why=why.why_for(tech_gpu).lower()
-assert 'performance' in tech_gpu_why and 'pricing' in tech_gpu_why
-assert 'privacy, security, access to technology' not in tech_gpu_why
+# Story-specific Why It Matters: named subject/focus must survive into the final text.
+tech_gpu=item('technology','Nvidia unveils RTX 6090 GPU at $999','The Verge','Nvidia outlined a new GPU aimed at PC buyers.','tech-gpu')
+tech_gpu_why=why.why_for(tech_gpu)
+assert 'Nvidia' in tech_gpu_why and 'RTX 6090' in tech_gpu_why
+assert any(term in tech_gpu_why.lower() for term in ('performance','price','hardware'))
 
-tech_unclear=item('technology','Company discusses technology strategy','Reuters','Executives outlined plans without announcing a product, price, security event, or policy change.','tech-unclear')
-tech_unclear_why=why.why_for(tech_unclear).lower()
-assert 'does not establish a concrete downstream effect yet' in tech_unclear_why
+tech_other=item('technology','AMD unveils Radeon X990 GPU at $799','Ars Technica','AMD outlined a different GPU for PC buyers.','tech-amd')
+assert why.why_for(tech_gpu)!=why.why_for(tech_other)
 
-game_delay=item('gaming','Major game delayed into 2027','IGN','The publisher delayed the release after development changes.','game-delay')
-game_delay_why=why.why_for(game_delay).lower()
-assert 'release calendar' in game_delay_why and 'competing games' in game_delay_why
+tech_unclear=item('technology','Acme discusses technology strategy','Reuters','Executives outlined plans without announcing a product, price, security event, or policy change.','tech-unclear')
+tech_unclear_why=why.why_for(tech_unclear)
+assert 'Acme' in tech_unclear_why and 'does not yet establish a measurable downstream effect' in tech_unclear_why
 
-game_price=item('gaming','Game Pass subscription price increases','GameSpot','Microsoft announced a Game Pass subscription price increase for players.','game-price')
-game_price_why=why.why_for(game_price).lower()
-assert 'player cost' in game_price_why and 'value of the service' in game_price_why
+game_delay=item('gaming','Grand Theft Auto VI delayed into 2027','IGN','Rockstar delayed the release after development changes.','game-delay')
+game_delay_why=why.why_for(game_delay)
+assert 'Grand Theft Auto VI' in game_delay_why and '2027' in game_delay_why
+assert 'release calendar' in game_delay_why.lower()
+
+game_price=item('gaming','Xbox Game Pass Ultimate price increases to $24.99','GameSpot','Microsoft announced a Game Pass subscription price increase for players.','game-price')
+game_price_why=why.why_for(game_price)
+assert 'Xbox Game Pass Ultimate' in game_price_why and '$24.99' in game_price_why
+assert 'subscriber' in game_price_why.lower() and ('cost' in game_price_why.lower() or 'value' in game_price_why.lower())
 
 ent_personal=item('entertainment','Actor and partner announce pregnancy','People','The couple announced they are expecting a baby.','ent-personal')
-ent_personal_why=why.why_for(ent_personal).lower()
-assert 'personal celebrity update' in ent_personal_why and 'does not indicate a broader entertainment-industry impact' in ent_personal_why
+ent_personal_why=why.why_for(ent_personal)
+assert 'Actor and partner' in ent_personal_why and 'personal celebrity update' in ent_personal_why.lower()
+assert 'does not establish a broader entertainment-industry consequence' in ent_personal_why
 
-ent_legal=item('entertainment','Actor sued over contract dispute','Variety','The lawsuit concerns a film contract and an active production.','ent-legal')
-ent_legal_why=why.why_for(ent_legal).lower()
-assert 'career' in ent_legal_why and 'contracts' in ent_legal_why
+ent_legal=item('entertainment','Zendaya sued over film contract dispute','Variety','The lawsuit concerns a film contract and an active production.','ent-legal')
+ent_legal_why=why.why_for(ent_legal)
+assert 'Zendaya' in ent_legal_why and 'contract' in ent_legal_why.lower()
+ctx=why.why_context(ent_legal)
+assert ctx['subject']=='Zendaya' and ctx['event']=='legal dispute or investigation'
+assert ctx['affected'] and ctx['consequence'] and ctx['confidence']
 
 loc=(ROOT/'scripts/patch_legislation_location.py').read_text();assert 'coverageItem(' not in loc and 'stateCoverage(' not in loc;assert 'Only official legislative records appear as cards' in loc
 full=(ROOT/'scripts/patch_full_why_matters.py').read_text();assert '-webkit-line-clamp:unset' in full and 'overflow:visible' in full
+brief_css=(ROOT/'styles/content-briefs.css').read_text()
+assert '-webkit-line-clamp' not in brief_css and 'overflow:hidden' not in brief_css and 'overflow:visible' in brief_css
 print('Feed quality regression tests passed.')
