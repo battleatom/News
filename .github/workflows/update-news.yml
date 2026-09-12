@@ -13,6 +13,7 @@ on:
       - 'refresh-health.json'
       - 'verification-report.json'
       - 'content-brief-cache.json'
+      - 'v4-release-report.json'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -78,6 +79,9 @@ jobs:
               json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2)
               f.write('\n')
           PY
+
+      - name: Replace provisional Entertainment with authoritative Clean and Dirty pools
+        run: python scripts/update_entertainment_only_v4.py
 
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
@@ -184,6 +188,9 @@ jobs:
 
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
+
+      - name: Run V4 promotion gate
+        run: python scripts/v4_release_gate.py
 
       - name: Validate final Python syntax
         run: python -m py_compile scripts/*.py
