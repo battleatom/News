@@ -3,11 +3,13 @@ from playwright.sync_api import sync_playwright
 
 BASE='http://127.0.0.1:8765/'
 SOURCE=Path('assets/location-content-v25.js')
+CITY_ONLY=Path('assets/location-city-only-v1.js')
 
 
 def static_checks():
     s=SOURCE.read_text(encoding='utf-8')
     lower=s.lower()
+    overlay=CITY_ONLY.read_text(encoding='utf-8')
     assert 'local_radius_miles=150' in lower, '150-mile local radius is missing'
     assert 'presidential_direct' not in lower, 'Location controller still duplicates Presidential filtering'
     assert 'federal_terms' not in lower, 'Location controller still duplicates Federal filtering'
@@ -20,6 +22,8 @@ def static_checks():
     assert "['region','local'].includes(category(i))" in lower, 'Regional pool must not reuse the statewide NM pool'
     assert "SC:'southeast'" in s, 'South Carolina must route to Southeast, not Northeast'
     assert s.count("MA:'Massachusetts'")==1, 'Massachusetts must appear exactly once in the state table'
+    assert 'data-scope="county"' in overlay, 'City-only overlay must explicitly remove the county control'
+    assert "localStorage.getItem(SCOPE_KEY)==='county'" in overlay, 'Saved county scope must migrate to city/local'
 
 
 def browser_checks():
@@ -36,6 +40,7 @@ def browser_checks():
         page.goto(BASE,wait_until='domcontentloaded',timeout=30000)
         page.wait_for_selector('#tabs',timeout=10000)
         page.wait_for_function('window.__locationContentV36===true',timeout=10000)
+        page.wait_for_function('window.__locationCityOnlyV1===true',timeout=10000)
         page.wait_for_timeout(1600)
 
         assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0, 'Local should not remain a top-level tab'
@@ -49,45 +54,51 @@ def browser_checks():
         scope_labels=page.locator('.location-scope-bar .location-scope-btn').all_text_contents()
         joined=' | '.join(scope_labels)
         assert 'All' in joined and 'Statewide' in joined, f'Missing state hub scopes: {joined}'
-        assert 'Farmington' in joined or 'Local' in joined, f'Missing local scope: {joined}'
+        assert 'Farmington' in joined or 'Local' in joined, f'Missing city scope: {joined}'
         assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
-        assert 'San Juan County' in joined or 'County' in joined, f'Missing county scope: {joined}'
+        assert 'San Juan County' not in joined and 'County' not in joined, f'County scope should be absent: {joined}'
+        assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, 'County scope button still exists'
 
         radius=page.evaluate('window.__locationRadiusMilesV36')
         assert radius==150, f'Expected 150-mile radius, got {radius}'
         approx=page.evaluate('window.__locationDistanceMilesV36({lat:0,lon:0},{lat:1,lon:0})')
         assert 68 < approx < 70, f'Haversine distance is incorrect: {approx}'
 
-        # The four location filters must resolve to different ordered pools instead
-        # of all repainting the same NM articles.
+        # The exposed location filters must resolve to distinct ordered pools.
         pools=page.evaluate("""
         () => {
           const title=i=>i.querySelector('title')?.textContent?.trim()||'';
           const sig=fn=>fn(allItems).slice(0,8).map(title).filter(Boolean);
           return {
             state:sig(window.__locationStatePoolV36),
-            county:sig(window.__locationCountyPoolV36),
             local:sig(window.__locationLocalPoolV36),
             region:sig(window.__locationRegionPoolV36),
           };
         }
         """)
         nonempty={k:v for k,v in pools.items() if v}
-        assert len(nonempty)>=3, f'Too few populated location scopes: {pools}'
+        assert len(nonempty)>=2, f'Too few populated location scopes: {pools}'
         signatures={k:'||'.join(v) for k,v in nonempty.items()}
         assert len(set(signatures.values()))==len(signatures), f'Location scopes returned identical feeds: {signatures}'
 
-        # Verify clicks also repaint the visible cards, not merely the active pill.
         visible={}
-        for scope in ('state','county','local','region'):
+        for scope in ('state','local','region'):
             btn=page.locator(f'.location-scope-btn[data-scope="{scope}"]')
             if not btn.count():
                 continue
             btn.click();page.wait_for_timeout(220)
             titles=page.locator('#news-feed .news-item h3').all_inner_texts()[:6]
             if titles:visible[scope]='||'.join(titles)
-        assert len(visible)>=3, visible
+        assert len(visible)>=2, visible
         assert len(set(visible.values()))==len(visible), f'Location buttons painted identical visible cards: {visible}'
+
+        # A stale saved county preference must normalize to the city/local view.
+        page.evaluate("localStorage.setItem('underreported-location-scope','county')")
+        page.reload(wait_until='domcontentloaded')
+        page.wait_for_function('window.__locationCityOnlyV1===true',timeout=10000)
+        state_tab=page.locator('#tabs > .tab[data-nav-key="nm"]');state_tab.click();page.wait_for_timeout(300)
+        assert page.evaluate("localStorage.getItem('underreported-location-scope')")=='local'
+        assert page.locator('.location-scope-btn[data-scope="county"]').count()==0
 
         before=page.locator('#news-feed').inner_text()
         for _ in range(6):
@@ -100,7 +111,6 @@ def browser_checks():
 
         assert page.evaluate('typeof window.__locationLocalPoolV36==="function"')
         assert page.evaluate('typeof window.__locationRegionPoolV36==="function"')
-        assert page.evaluate('typeof window.__locationCountyPoolV36==="function"')
         assert page.evaluate('window.__presidentialRelevantV26===undefined'), 'Legacy browser Presidential classifier remains active'
 
         context.close();browser.close()
@@ -109,7 +119,7 @@ def browser_checks():
 def main():
     static_checks()
     browser_checks()
-    print('Location routing V36 passed: distinct state/county/local/region pools, canonical regions, 150-mile logic, and scroll stability.')
+    print('Location routing V36 passed: county scope hidden, stale county preference migrated to city/local, remaining scopes distinct, and scroll stability preserved.')
 
 
 if __name__=='__main__':
