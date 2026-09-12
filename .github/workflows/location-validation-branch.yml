@@ -1,0 +1,56 @@
+name: Location Validation Branch Test
+
+on:
+  push:
+    branches:
+      - fix/location-relative-region-validation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile location collector changes
+        run: python -m py_compile scripts/update_news_location_validated.py scripts/update_news_v4.py tests/location_validation_test.py
+      - name: Run location validation regressions
+        run: python tests/location_validation_test.py
+      - name: Run normalized category policy regressions
+        run: python tests/normalized_category_pools_test.py
+      - name: Run market database regressions
+        run: python tests/news_market_db_test.py
+      - name: Run real collector with strict location validation
+        run: python scripts/update_news_v4.py
+      - name: Verify generated Local and Region metadata
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys, xml.etree.ElementTree as ET
+          ROOT=Path('.')
+          sys.path.insert(0,str(ROOT/'scripts'))
+          import update_news_location_validated as loc
+          root=ET.parse('News').getroot()
+          items=root.findall('.//item')
+          bad_local=[];bad_region=[]
+          for node in items:
+              cat=(node.findtext('category') or '').strip().lower()
+              d={child.tag:(child.text or '') for child in list(node)}
+              if cat=='local':
+                  market=loc.MARKET_BY_ID.get(d.get('marketId',''))
+                  if not market or not loc.strict_local_story_relevant(d,market):
+                      bad_local.append(d.get('title',''))
+              elif cat=='region':
+                  state=d.get('state','').strip()
+                  if not state or not loc.strict_region_story_relevant(d,state):
+                      bad_region.append(d.get('title',''))
+          print('Local count:',sum(1 for i in items if (i.findtext('category') or '').strip().lower()=='local'))
+          print('Region count:',sum(1 for i in items if (i.findtext('category') or '').strip().lower()=='region'))
+          print('Bad local:',bad_local[:10])
+          print('Bad region:',bad_region[:10])
+          if bad_local or bad_region:
+              raise SystemExit('Location integrity validation failed')
+          print('GENERATED LOCATION INTEGRITY PASSED')
+          PY
