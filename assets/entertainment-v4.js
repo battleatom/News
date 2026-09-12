@@ -40,24 +40,11 @@
   function modeOrdered(items){
     const mode=currentMode();
     const all=entertainmentItems(items);
-    if(mode==='clean')return all.filter(item=>(text(item,'entertainmentSafety')||'clean')!=='dirty');
-
-    // Preserve the importance-ranked feed, but make broad mode visibly broader on the first page.
-    // Dirty-only cards are surfaced after the highest-priority core stories rather than buried below the fold.
-    const clean=all.filter(item=>(text(item,'entertainmentSafety')||'clean')!=='dirty');
-    const broad=all.filter(item=>(text(item,'entertainmentSafety')||'clean')==='dirty');
-    if(!broad.length)return all;
-
-    const out=[];
-    const used=new Set();
-    const push=item=>{if(item&&!used.has(item)){used.add(item);out.push(item)}};
-
-    clean.slice(0,5).forEach(push);
-    push(broad[0]);
-    clean.slice(5,8).forEach(push);
-    push(broad[1]);
-    all.forEach(push);
-    return out;
+    // CLEAN and DIRTY are separate feeds. No cross-mode cards are retained.
+    return all.filter(item=>{
+      const safety=(text(item,'entertainmentSafety')||'clean').toLowerCase();
+      return mode==='dirty'?safety==='dirty':safety!=='dirty';
+    });
   }
 
   function switchMode(mode){
@@ -86,7 +73,7 @@
     const head=document.createElement('div');
     head.className='section-header ent-section-header';
     const actionLabel=mode==='dirty'?'CLEAN':'DIRTY';
-    const modeTitle=mode==='dirty'?'Broad entertainment is on. Switch to the cleaner professional-news feed.':'Clean entertainment is on. Switch back to broad entertainment, gossip and lifestyle coverage.';
+    const modeTitle=mode==='dirty'?'Dirty-only entertainment is on. Switch to the Clean-only feed.':'Clean-only entertainment is on. Switch to the Dirty-only feed.';
     head.innerHTML=`<h2>${LABEL}</h2><span class="ent-mode-state ${mode}">${mode==='dirty'?'DIRTY MODE':'CLEAN MODE'}</span><button class="ent-mode-toggle ${mode}" type="button" title="${safe(modeTitle)}" aria-label="${safe(modeTitle)}">${actionLabel}</button><span class="count">Showing ${data.count} of ${data.available.length} stories</span>`;
     sec.appendChild(head);
     head.querySelector('.ent-mode-toggle')?.addEventListener('click',()=>switchMode(mode));
@@ -94,8 +81,8 @@
     const intro=document.createElement('div');
     intro.className='x-issues-intro';
     intro.textContent=mode==='clean'
-      ?'CLEAN mode prioritizes consequential professional entertainment news: major developments, careers, productions, releases, contracts and industry changes.'
-      :'DIRTY mode includes the Clean feed plus verified celebrity life, philanthropy, family, dating/gossip, fashion/red-carpet coverage, nudity-related headlines and adult-industry news. Explicit preview images are not shown.';
+      ?'CLEAN mode shows only professional/general-audience entertainment coverage: major developments, careers, productions, releases, contracts, awards and industry changes.'
+      :'DIRTY mode shows only broader mature entertainment coverage: adult-industry news, dating/gossip, celebrity lifestyle, fashion/red-carpet, nudity-related headlines, family and philanthropy. Clean-mode cards are excluded. Explicit preview images are not shown.';
     sec.appendChild(intro);
 
     const body=document.createElement('div');
@@ -114,12 +101,11 @@
       const image=safeImage(text(item,'imageUrl'));
       const label=text(item,'entertainmentLabel')||'ENTERTAINMENT';
       const tier=text(item,'entertainmentTier');
-      const safety=text(item,'entertainmentSafety')||'clean';
       const tierHtml=tier==='under-the-radar'?'<span class="ent-radar-note">UNDER THE RADAR</span>':'';
       const under=[...item.querySelectorAll('underreportedLinks > article')].slice(0,2);
       const underHtml=under.length?`<div class="ent-underreported-links"><strong>UNDERREPORTED CONNECTION</strong>${under.map(r=>{const rt=text(r,'title'),rl=text(r,'link'),rs=text(r,'source');return `<a href="${safe(rl)}" target="_blank" rel="noopener noreferrer">${safe(rt)}${rs?` <span>· ${safe(rs)}</span>`:''}</a>`}).join('')}</div>`:'';
       const imageHtml=image?`<a class="ent-image-link" href="${safe(link)}" target="_blank" rel="noopener noreferrer"><img class="ent-card-image" src="${safe(image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.ent-image-link')?.remove()"></a>`:'';
-      ar.innerHTML=`<div class="ent-card-flags"><span class="ent-tier ${safe(label.toLowerCase().replace(/[^a-z]+/g,'-'))}">${safe(label)}</span>${tierHtml}${mode==='dirty'&&safety==='dirty'?'<span class="ent-broad-note">BROAD</span>':''}</div>${imageHtml}<h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
+      ar.innerHTML=`<div class="ent-card-flags"><span class="ent-tier ${safe(label.toLowerCase().replace(/[^a-z]+/g,'-'))}">${safe(label)}</span>${tierHtml}${mode==='dirty'?'<span class="ent-broad-note">DIRTY</span>':''}</div>${imageHtml}<h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
       body.appendChild(ar);
     });
 
