@@ -16,3 +16,7 @@ jobs:
         run: python -m py_compile scripts/*.py tests/*.py
       - name: Run editorial integrity regression
         run: python tests/editorial_integrity_test.py
+      - name: Apply final editorial integrity to current feed
+        run: python scripts/enforce_editorial_integrity.py
+      - name: Verify no sports leakage remains in United States
+        run: python tests/us_sports_feed_check.py
