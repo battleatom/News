@@ -1,0 +1,42 @@
+name: Repair Location Branch V4
+
+on:
+  push:
+    branches:
+      - fix/location-relative-region-validation
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Restore current main V4 and apply only location import
+        run: |
+          git fetch origin main
+          git show origin/main:scripts/update_news_v4.py > /tmp/update_news_v4.py
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('/tmp/update_news_v4.py')
+          s=p.read_text(encoding='utf-8')
+          old='import update_news_normalized as normalized'
+          new='import update_news_location_validated as normalized'
+          if s.count(old) != 1:
+              raise SystemExit(f'Expected one V4 normalized import, found {s.count(old)}')
+          p.write_text(s.replace(old,new,1),encoding='utf-8')
+          PY
+          cp /tmp/update_news_v4.py scripts/update_news_v4.py
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet -- scripts/update_news_v4.py; then
+            echo 'V4 already matches current main plus location import.'
+            exit 0
+          fi
+          git add scripts/update_news_v4.py
+          git commit -m 'Preserve current V4 while enabling location validation'
+          git push origin HEAD:fix/location-relative-region-validation
