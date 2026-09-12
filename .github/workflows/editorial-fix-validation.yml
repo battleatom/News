@@ -1,0 +1,78 @@
+name: Editorial Fix Validation
+
+on:
+  push:
+    branches: [fix/editorial-verification-2026-09-12]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editorial-fix-validation
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/editorial-verification-2026-09-12
+          fetch-depth: 0
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Run editorial regression fixtures
+        run: |
+          python tests/editorial_integrity_test.py
+          python tests/feed_quality_regression_test.py
+          python tests/category_relevance_smoke.py
+
+      - name: Apply editorial integrity to branch snapshot
+        run: python scripts/enforce_editorial_integrity.py
+
+      - name: Verify duplicate and X integrity after repair
+        run: |
+          python scripts/verify_feed_v4.py
+          python - <<'PY'
+          import importlib.util,xml.etree.ElementTree as ET
+          from pathlib import Path
+          spec=importlib.util.spec_from_file_location('integrity',Path('scripts/enforce_editorial_integrity.py'))
+          m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
+          items=ET.parse('News').getroot().findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          assert topics==list(m.TOPIC_RULES), topics
+          assert all(m.x_relevant(i,t) for i,t in zip(x,topics)), 'irrelevant X lead remains'
+          assert not any((i.findtext('category') or '').strip()=='world' and m.obvious_domestic_world(i) for i in items), 'obvious domestic story remains in World'
+          print('Editorial feed invariants passed.')
+          PY
+
+      - name: Build and audit site
+        run: |
+          python scripts/build_site.py
+          python scripts/patch_entertainment_v4_ui.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+
+      - name: Install Chromium
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Start candidate site
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-editorial-http.log 2>&1 &
+          sleep 2
+
+      - name: Run browser UX regressions
+        run: |
+          python tests/site_smoke_v32.py
+          python tests/mobile_status_smoke.py
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/news-editorial-http.log || true

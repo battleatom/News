@@ -6,11 +6,14 @@ NEWS=Path('News')
 def clean(v):
  v=html.unescape(v or '');v=re.sub(r'<[^>]+>',' ',v);return re.sub(r'\s+',' ',v).strip()
 def has(text,*terms):return any(re.search(r'\b'+re.escape(t)+r'\b',text,re.I) for t in terms)
+def count_terms(text,*terms):return sum(bool(re.search(r'\b'+re.escape(t)+r'\b',text,re.I)) for t in terms)
 def why_for(item):
  brief=clean(item.findtext('description'));title=clean(item.findtext('title'));cat=clean(item.findtext('category')).lower();text=f'{title} {brief}'.lower()
- # Most-specific domains come first so generic words such as "benefits" cannot
- # override the actual subject expressed by the final paraphrased brief.
- if has(text,'war','airstrike','missile','troops','ceasefire','invasion','attack'):impact='It may affect security, military operations, diplomacy, or civilians connected to the conflict.'
+ # Military language is especially prone to metaphors ("war on wildfire", "price war").
+ # Require the Military tab itself or at least two independent conflict anchors before
+ # assigning a defense/geopolitical explanation.
+ military=('war','airstrike','missile','troops','ceasefire','invasion','attack','military','bombing','combat')
+ if cat=='military' or count_terms(text,*military)>=2:impact='It may affect security, military operations, diplomacy, or civilians connected to the conflict.'
  elif has(text,'court','judge','ruling','lawsuit','appeal','injunction','law'):impact='It may affect legal rights, enforcement, government authority, or what happens next in the case or policy.'
  elif has(text,'recall','outbreak','hospital','medicaid','medicare','health','healthcare','safety'):impact='It may affect public health, access to care, consumer safety, or costs for people and institutions involved.'
  elif has(text,'payment','payments','check','checks','rebate','refund','payout','cash'):impact='It may affect eligibility, household finances, government spending, or the timing and rules of any proposed payment.'
