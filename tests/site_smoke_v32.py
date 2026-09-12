@@ -19,7 +19,8 @@ def farmington_suite(browser):
 
     base.click_key(page,'presidential')
     assert page.locator('#news-feed .news-item').count()>0, 'Presidential section is empty'
-    assert page.evaluate('paginatedNewsItems(allItems).available.every(i=>window.__presidentialRelevantV26(i))'), 'Foreign/non-presidential story survived Presidential filter'
+    assert page.evaluate("paginatedNewsItems(allItems).available.every(i=>(i.querySelector('category')?.textContent||'').trim().toLowerCase()==='presidential')"), 'Non-presidential story survived Presidential category routing'
+    assert page.evaluate("window.__presidentialRelevantV26===undefined"), 'Legacy browser Presidential classifier unexpectedly active'
 
     base.click_key(page,'nm')
     counts=page.evaluate('window.__stateMergeCountsV26')
