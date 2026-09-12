@@ -18,6 +18,8 @@ def static_checks():
     assert 'bar.innerhtml!==next' in lower, 'Location scope bar must avoid idempotent DOM rewrites'
     assert 'matchesexactcity' in lower, 'Local pool must distinguish exact city from county-area matches'
     assert "['region','local'].includes(category(i))" in lower, 'Regional pool must not reuse the statewide NM pool'
+    assert "SC:'southeast'" in s, 'South Carolina must route to Southeast, not Northeast'
+    assert s.count("MA:'Massachusetts'")==1, 'Massachusetts must appear exactly once in the state table'
 
 
 def browser_checks():
@@ -107,7 +109,7 @@ def browser_checks():
 def main():
     static_checks()
     browser_checks()
-    print('Location routing V36 passed: distinct state/county/local/region pools, 150-mile logic, and scroll stability.')
+    print('Location routing V36 passed: distinct state/county/local/region pools, canonical regions, 150-mile logic, and scroll stability.')
 
 
 if __name__=='__main__':
