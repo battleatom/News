@@ -1,0 +1,98 @@
+name: Editorial Quality Candidate
+
+on:
+  push:
+    branches: ['fix/editorial-quality-2026-09-12']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: editorial-quality-candidate
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax and focused regression tests
+        run: |
+          python -m py_compile scripts/*.py tests/quality_guard_v4_test.py
+          python tests/quality_guard_v4_test.py
+          python tests/event_cluster_dedupe_test.py
+      - name: Collector preflight
+        run: python scripts/preflight_feed.py
+      - name: Collect V4 candidate with retries
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            if python scripts/update_news_v4.py; then success=1; break; fi
+            [ "$attempt" -lt 3 ] && sleep $((attempt*20))
+          done
+          [ "$success" -eq 1 ] || exit 1
+      - name: Run production enrichment pipeline
+        run: |
+          python scripts/update_entertainment_only_v4.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/quality_guard_v4.py --mode pre
+      - name: Validate fixed-topic and routing invariants
+        run: |
+          python tests/category_relevance_smoke.py
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          items=ET.parse('News').getroot().findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          assert topics==expected, topics
+          print('Candidate routing and X invariants passed')
+          PY
+      - name: Create and validate content briefs
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/record_pull_stats.py --finalize
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/quality_guard_v4.py --mode final
+      - name: Build candidate site
+        run: |
+          python scripts/build_site.py
+          python scripts/patch_entertainment_v4_ui.py
+          python scripts/patch_mobile_countdown_v4.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+      - name: Install browser test dependencies
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Start candidate site
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-http.log 2>&1 &
+          sleep 2
+      - name: Run V4 browser and mobile countdown smoke tests
+        run: |
+          python tests/site_smoke_v32.py
+          python tests/mobile_status_smoke.py
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/news-http.log || true
