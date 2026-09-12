@@ -154,6 +154,9 @@ jobs:
       - name: Rebuild fixed X Top Issues from verified feed
         run: python scripts/enrich_x_issues.py
 
+      - name: Apply deterministic editorial quality guard
+        run: python scripts/quality_guard_v4.py --mode pre
+
       - name: Verify exactly ten fixed X topics
         run: |
           python - <<'PY'
@@ -180,11 +183,17 @@ jobs:
       - name: Regenerate Why It Matters from final paraphrased briefs
         run: python scripts/update_why_matters.py
 
+      - name: Recheck briefs, related coverage and semantic Why It Matters
+        run: python scripts/quality_guard_v4.py --mode final
+
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
 
       - name: Inject V4 Entertainment UI
         run: python scripts/patch_entertainment_v4_ui.py
+
+      - name: Stabilize mobile live refresh countdown
+        run: python scripts/patch_mobile_countdown_v4.py
 
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
