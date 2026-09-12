@@ -28,6 +28,9 @@ jobs:
       - name: Use the same live feed for both builds
         run: cp baseline-main/News News
 
+      - name: Apply progressive Local fallback test patch
+        run: python scripts/test_patch_progressive_local.py
+
       - name: Validate Python syntax
         run: python -m py_compile scripts/*.py tests/*.py
 
