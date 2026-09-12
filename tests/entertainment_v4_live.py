@@ -17,9 +17,14 @@ for query in v4.core.QUERIES['entertainment']:
 selected=v4.select_entertainment(items,limit=15)
 print(f'LIVE ENTERTAINMENT: {len(selected)} selected')
 for i,x in enumerate(selected[:15],1):
-    print(f"{i}. [{x.get('entertainmentTier')}] {x.get('title')} - {x.get('source')}")
+    print(f"{i}. [{x.get('entertainmentLabel')}/{x.get('entertainmentSafety')}] {x.get('title')} - {x.get('source')}")
 if len(selected)<5:
     raise SystemExit(f'Expected at least 5 verified live Entertainment stories, got {len(selected)}')
-if any(x.get('entertainmentTier')!='newest' for x in selected[:5]):
-    raise SystemExit('Top five live Entertainment stories are not marked newest')
-print('Live V4 Entertainment source check passed.')
+if any(x.get('entertainmentSafety') not in {'clean','dirty'} for x in selected):
+    raise SystemExit('Live Entertainment story missing Clean/Dirty classification')
+if any(not x.get('entertainmentLabel') for x in selected):
+    raise SystemExit('Live Entertainment story missing importance label')
+scores=[int(x.get('entertainmentScore') or 0) for x in selected]
+if scores != sorted(scores,reverse=True):
+    raise SystemExit(f'Importance hierarchy is not descending: {scores}')
+print('Live V4 Entertainment source check passed: importance hierarchy and Clean/Dirty metadata verified.')
