@@ -1,0 +1,18 @@
+name: US Sports Leakage Test
+
+on:
+  push:
+    branches: [fix/us-sports-leakage]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Run editorial integrity regression
+        run: python tests/editorial_integrity_test.py
