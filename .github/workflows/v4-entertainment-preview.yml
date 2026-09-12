@@ -46,8 +46,13 @@ jobs:
           import xml.etree.ElementTree as ET
           items=ET.parse('News').getroot().findall('.//item')
           ent=[x for x in items if (x.findtext('category') or '').strip()=='entertainment']
-          print('Entertainment stories:',len(ent))
+          clean=[x for x in ent if (x.findtext('entertainmentSafety') or '').strip()=='clean']
+          dirty=[x for x in ent if (x.findtext('entertainmentSafety') or '').strip()=='dirty']
+          tagged=[x for x in ent if (x.findtext('entertainmentLabel') or '').strip()]
+          print('Entertainment stories:',len(ent),'clean:',len(clean),'dirty-only:',len(dirty),'ranked:',len(tagged))
           if not ent: raise SystemExit('Entertainment feed is empty')
+          if len(tagged)!=len(ent): raise SystemExit('Entertainment importance metadata incomplete')
+          if len(clean)+len(dirty)!=len(ent): raise SystemExit('Entertainment Clean/Dirty metadata incomplete')
           PY
 
       - name: Commit fast preview feed
