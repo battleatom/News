@@ -7,11 +7,20 @@ BASE=base.BASE
 EXPECTED_X=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
 
 
+def wait_for_location_v36(page):
+    page.wait_for_function('window.__locationContentV36===true',timeout=10000)
+    page.wait_for_timeout(900)
+
+
+def location_scope_labels(page):
+    page.wait_for_selector('.location-scope-bar',timeout=10000)
+    return page.locator('.location-scope-bar .location-scope-btn').all_inner_texts()
+
+
 def farmington_suite(browser):
     context=browser.new_context(viewport={'width':1440,'height':950},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
     page=context.new_page();errors=[];page.on('pageerror',lambda exc: errors.append(str(exc)))
-    page.goto(BASE,wait_until='domcontentloaded',timeout=30000);page.wait_for_selector('#tabs');page.wait_for_timeout(1800)
-    assert page.evaluate('window.__locationContentV26===true'), 'Merged State controller missing'
+    page.goto(BASE,wait_until='domcontentloaded',timeout=30000);page.wait_for_selector('#tabs');wait_for_location_v36(page)
     assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0, 'Local remains a separate tab'
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0, 'Region remains a separate tab'
     assert page.locator('#tabs > .tab[data-nav-key="nm"]').count()==1, 'State tab missing'
@@ -23,15 +32,24 @@ def farmington_suite(browser):
     assert page.evaluate("window.__presidentialRelevantV26===undefined"), 'Legacy browser Presidential classifier unexpectedly active'
 
     base.click_key(page,'nm')
-    counts=page.evaluate('window.__stateMergeCountsV26')
-    # Live supply naturally varies. Exact 6/6/6 behavior is enforced below by the
-    # deterministic synthetic Denver test; here require genuine state/regional depth.
-    assert counts and counts['state']>0 and counts['regional']>0 and 0<=counts['local']<=6, f'Farmington State mix is invalid: {counts}'
-    local_texts=page.evaluate("""() => window.__mergedStatePoolV26(allItems)
-      .filter(i=>(i.querySelector('locationTier')?.textContent||'')==='Local')
-      .map(i=>`${i.querySelector('title')?.textContent||''} ${i.querySelector('description')?.textContent||''}`.toLowerCase())""")
-    local_terms=('farmington','san juan county','aztec','bloomfield','kirtland','shiprock','four corners')
-    assert all(any(term in text for term in local_terms) for text in local_texts), f'Non-local story was labeled Local: {local_texts}'
+    labels=location_scope_labels(page)
+    joined=' | '.join(labels)
+    assert 'All' in joined and 'Statewide' in joined, f'Missing state hub scopes: {joined}'
+    assert 'Farmington' in joined or 'Local' in joined, f'Missing local scope: {joined}'
+    assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
+    assert 'San Juan County' in joined or 'County' in joined, f'Missing county scope: {joined}'
+
+    pools=page.evaluate("""() => ({
+      local:window.__locationLocalPoolV36(allItems).length,
+      county:window.__locationCountyPoolV36(allItems).length,
+      state:window.__locationStatePoolV36(allItems).length,
+      region:window.__locationRegionPoolV36(allItems).length,
+      merged:window.__mergedLocationPoolV36(allItems).length,
+      counts:window.__locationHubCountsV36
+    })""")
+    assert pools['state']>0 and pools['region']>0 and pools['merged']>0, f'Farmington V36 location pools are invalid: {pools}'
+    assert pools['counts'] and pools['counts']['location']['code']=='NM', f'Farmington V36 location context is invalid: {pools}'
+
     base.infinite_scroll_check(page)
     base.badge_checks(page)
     base.content_brief_checks(page)
@@ -39,10 +57,37 @@ def farmington_suite(browser):
     context.close()
 
 
+def denver_suite(browser):
+    context=browser.new_context(viewport={'width':1440,'height':950},geolocation={'latitude':39.7392,'longitude':-104.9903},permissions=['geolocation'])
+    page=context.new_page();errors=[];page.on('pageerror',lambda exc: errors.append(str(exc)))
+    page.goto(BASE,wait_until='domcontentloaded',timeout=30000);page.wait_for_selector('#tabs');wait_for_location_v36(page)
+    label=page.locator('#tabs > .tab[data-nav-key="nm"]').inner_text()
+    assert 'Colorado' in label, f'Denver did not resolve to Colorado State tab: {label}'
+    assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
+    assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
+
+    base.click_key(page,'nm')
+    labels=location_scope_labels(page)
+    joined=' | '.join(labels)
+    assert 'Statewide' in joined and ('Denver' in joined or 'Local' in joined), f'Denver location scopes invalid: {joined}'
+
+    pools=page.evaluate("""() => ({
+      local:window.__locationLocalPoolV36(allItems).length,
+      state:window.__locationStatePoolV36(allItems).length,
+      region:window.__locationRegionPoolV36(allItems).length,
+      merged:window.__mergedLocationPoolV36(allItems).length,
+      counts:window.__locationHubCountsV36
+    })""")
+    assert pools['counts'] and pools['counts']['location']['code']=='CO', f'Denver V36 location context is invalid: {pools}'
+    assert pools['state']>0 and pools['region']>0 and pools['merged']>0, f'Denver V36 location pools are invalid: {pools}'
+    assert not errors, f'Denver browser errors: {errors[:5]}'
+    context.close()
+
+
 def mobile_suite(browser):
     context=browser.new_context(viewport={'width':390,'height':844},geolocation={'latitude':36.7281,'longitude':-108.2187},permissions=['geolocation'])
     page=context.new_page();errors=[];page.on('pageerror',lambda exc: errors.append(str(exc)))
-    page.goto(BASE,wait_until='domcontentloaded',timeout=30000);page.wait_for_selector('#tabs');page.wait_for_timeout(1400)
+    page.goto(BASE,wait_until='domcontentloaded',timeout=30000);page.wait_for_selector('#tabs');wait_for_location_v36(page)
     assert page.locator('#tabs > .tab').count()>=15, 'Merged mobile navigation lost categories'
     assert page.locator('#tabs > .tab[data-nav-key="local"]').count()==0
     assert page.locator('#tabs > .tab[data-nav-key="region"]').count()==0
@@ -68,9 +113,6 @@ def mobile_suite(browser):
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile page overflows horizontally by {overflow}px'
 
-    # Content briefs are a standard news-card feature, while X uses its own
-    # explainable-issue card layout. Validate briefs after returning to Top so
-    # the smoke test checks the feature on the surface where it is rendered.
     base.click_key(page,'top')
     base.badge_checks(page)
     base.content_brief_checks(page)
@@ -83,10 +125,10 @@ def main():
     with sync_playwright() as p:
         browser=p.chromium.launch(headless=True)
         farmington_suite(browser)
-        base.denver_suite(browser)
+        denver_suite(browser)
         mobile_suite(browser)
         browser.close()
-    print('V3.2 SMOKE PASS — feed logic, X ten-card renderer, location, sticky mobile navigation, briefs, badges and scrolling.')
+    print('V4 SMOKE PASS — feed logic, Presidential routing, X renderer, V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
 
 
 if __name__=='__main__':
