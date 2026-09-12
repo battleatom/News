@@ -1,0 +1,32 @@
+name: X Health Integrity Branch Test
+
+on:
+  push:
+    branches:
+      - fix/x-health-integrity-2026-09-12
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile changed scripts
+        run: python -m py_compile scripts/enrich_x_issues.py scripts/enforce_editorial_integrity.py
+      - name: Rebuild fixed X topics
+        run: python scripts/enrich_x_issues.py
+      - name: Run final editorial integrity gate
+        run: python scripts/enforce_editorial_integrity.py
+      - name: Verify exactly ten X topics
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          root=ET.parse('News').getroot()
+          topics=[(i.findtext('xTopic') or '').strip() for i in root.findall('.//item') if (i.findtext('category') or '').strip().lower()=='x']
+          assert topics==expected,(topics,expected)
+          print('X HEALTH INTEGRITY BRANCH TEST PASSED')
+          PY
