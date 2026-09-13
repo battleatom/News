@@ -120,7 +120,7 @@ def main():
     if 'New Mexico' not in v5['extra'].get('stateTab',''):
         failures.append(f"Farmington did not resolve to New Mexico: {v5['extra'].get('stateTab')}")
     scopes = ' | '.join(v5['extra'].get('locationScopes', []))
-    if scopes and ('Statewide' not in scopes or ('Farmington' not in scopes and 'Local' not in scopes)):
+    if scopes and ('State & County' not in scopes or 'Farmington' not in scopes or 'Southwest' not in scopes):
         failures.append(f'Farmington location scopes are incomplete: {scopes}')
     if v5['extra'].get('nflCards', 0) > 0 and v5['extra'].get('streamRows', 0) == 0:
         failures.append('NFL games rendered but no streaming availability rows appeared')
