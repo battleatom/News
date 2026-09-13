@@ -14,12 +14,18 @@ NEWS=ROOT/'News'
 OUT=ROOT/'v5-final-audit-report.json'
 EXPECTED_X=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
 REQUIRED={'top','nfl','x','underreported','entertainment','world','us','presidential','federal','legislation','nm','technology','gaming','military'}
+# Keep this aligned with cross_tab_integrity_fast.py. Editorial/curated surfaces are
+# intentionally allowed to mirror an underlying story from an ordinary subject tab.
+ROUTABLE={'world','us','presidential','federal','nm','local','region','technology','gaming','military','nfl'}
+EDITORIAL_SURFACES={'top','underreported','x','boxoffice','legislation','entertainment'}
 GENERIC_PATTERNS=[r'^world news$',r'^latest news$',r'^breaking news$',r'^news$',r'^home$',r'^homepage$',r'^sports$',r'^technology$',r'^entertainment$']
 CANNED_WHY=['This matters because it could affect people','This matters because it affects people','This story matters because']
+
 
 def txt(i,t): return (i.findtext(t) or '').strip()
 def norm(s): return re.sub(r'[^a-z0-9]+',' ',(s or '').lower()).strip()
 def fail(errors,msg): errors.append(msg)
+
 
 def main():
     errors=[]; warnings=[]
@@ -40,15 +46,35 @@ def main():
         nt=norm(title)
         if nt: seen_titles[nt].append((cat,title))
         if any(re.fullmatch(p,nt,re.I) for p in GENERIC_PATTERNS): fail(errors,f'{cat}: generic landing-page title: {title}')
-        why=txt(i,'whyItMatters') or txt(i,'why')
+        why=txt(i,'whyMatters') or txt(i,'whyItMatters') or txt(i,'why')
         if why and any(x.lower() in why.lower() for x in CANNED_WHY): fail(errors,f'{cat}: legacy canned Why It Matters: {title}')
         brief=txt(i,'contentBrief') or txt(i,'summary') or txt(i,'description')
         if brief and brief.rstrip().endswith('...'): fail(errors,f'{cat}: visibly truncated brief: {title}')
 
-    dup_links={k:v for k,v in seen_links.items() if len(v)>1}
-    if dup_links: fail(errors,f'{len(dup_links)} exact duplicate URL(s) remain across feed')
+    # Duplicate URLs are a release defect only when multiple ordinary routable tabs
+    # compete for the same story. Curated/editorial surfaces are intentional mirrors
+    # and are reported separately instead of failing the release.
+    duplicate_url_groups={}
+    editorial_mirror_groups={}
+    for link, rows in seen_links.items():
+        if len(rows)<2:
+            continue
+        routable=[row for row in rows if row[0] in ROUTABLE]
+        if len(routable)>1:
+            duplicate_url_groups[link]=rows
+        else:
+            editorial_mirror_groups[link]=rows
+    if duplicate_url_groups:
+        examples=[]
+        for link,rows in list(duplicate_url_groups.items())[:10]:
+            examples.append(' / '.join(f'{cat}: {title}' for cat,title in rows))
+        fail(errors,f'{len(duplicate_url_groups)} exact duplicate URL group(s) remain among routable tabs: ' + ' | '.join(examples))
+
     duplicate_titles={k:v for k,v in seen_titles.items() if len(v)>1 and len(k.split())>=5}
-    if duplicate_titles: warnings.append(f'{len(duplicate_titles)} normalized title group(s) repeat; browser/event gates must confirm presentation dedupe')
+    if duplicate_titles:
+        warnings.append(f'{len(duplicate_titles)} normalized title group(s) repeat across the full feed; curated mirrors are allowed and browser/event gates confirm presentation dedupe')
+    if editorial_mirror_groups:
+        warnings.append(f'{len(editorial_mirror_groups)} exact URL group(s) are intentional curated/editorial mirrors')
 
     x=[i for i in items if txt(i,'category')=='x']
     topics=[txt(i,'xTopic') for i in x]
@@ -60,12 +86,23 @@ def main():
         if not txt(i,'entertainmentLabel') or not txt(i,'entertainmentScore'): fail(errors,f'Entertainment ranking metadata missing: {txt(i,"title")}')
 
     legislation=[i for i in items if txt(i,'category')=='legislation']
-    official_hosts=('congress.gov','senate.gov','house.gov','govinfo.gov','legiscan.com')
+    official_hosts=('congress.gov','senate.gov','house.gov','govinfo.gov','legiscan.com','nmlegis.gov')
     for i in legislation:
-        host=urlparse(txt(i,'link')).netloc.lower()
+        host=urlparse(txt(i,'link')).netloc.lower().removeprefix('www.')
         if not any(host==h or host.endswith('.'+h) for h in official_hosts): warnings.append(f'Legislation provenance review: {txt(i,"title")} -> {host}')
 
-    report={'status':'pass' if not errors else 'fail','feedItems':len(items),'categoryCounts':dict(sorted(counts.items())),'errors':errors,'warnings':warnings,'duplicateUrlGroups':len(dup_links),'duplicateTitleGroups':len(duplicate_titles),'xTopics':topics}
+    report={
+        'status':'pass' if not errors else 'fail',
+        'feedItems':len(items),
+        'categoryCounts':dict(sorted(counts.items())),
+        'errors':errors,
+        'warnings':warnings,
+        'duplicateRoutableUrlGroups':len(duplicate_url_groups),
+        'editorialMirrorUrlGroups':len(editorial_mirror_groups),
+        'duplicateTitleGroups':len(duplicate_titles),
+        'xTopics':topics,
+        'crossTabPolicy':{'routable':sorted(ROUTABLE),'editorialSurfacesExcluded':sorted(EDITORIAL_SURFACES)},
+    }
     OUT.write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
     if errors:
         print(json.dumps(report,indent=2,ensure_ascii=False)); raise SystemExit(f'V5 FINAL AUDIT FAILED: {len(errors)} error(s)')
