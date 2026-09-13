@@ -1,0 +1,258 @@
+name: Final V5 Live Audit and Freeze
+
+on:
+  push:
+    branches: [Final-V5]
+    paths:
+      - 'scripts/**'
+      - 'assets/**'
+      - 'tests/**'
+      - 'v5-apply.sh'
+      - '.github/workflows/v5-final-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-v5-live-audit
+  cancel-in-progress: true
+
+jobs:
+  audit-and-freeze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout Final V5
+        uses: actions/checkout@v4
+        with:
+          ref: Final-V5
+          fetch-depth: 0
+
+      - name: Record exact source SHA
+        run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+
+      - name: Checkout immutable V4 baseline
+        uses: actions/checkout@v4
+        with:
+          ref: v4-hard-save-2026-09-12
+          path: baseline-v4
+          fetch-depth: 1
+
+      - name: Prove frozen V4 identity
+        run: |
+          test "$(git -C baseline-v4 rev-parse HEAD)" = "9549044575ac8ce8c17eccaa09702e157797b1cd"
+          echo "V4 baseline locked at 9549044"
+
+      - name: Validate Python and install audit dependencies
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7 playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Collector preflight
+        run: python scripts/preflight_feed.py
+
+      - name: Fresh live V5 collection with retry
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            echo "Live collection attempt ${attempt}/3"
+            if python scripts/update_news_v4.py; then success=1; break; fi
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 20)); fi
+          done
+          if [ "$success" -ne 1 ]; then
+            echo "Fresh live collection failed after three attempts."
+            exit 1
+          fi
+
+      - name: Build authoritative specialist pools
+        run: |
+          python scripts/update_entertainment_only_v4.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+
+      - name: Discover and rank Underreported
+        run: |
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+
+      - name: Enrich legislation X and box office
+        run: |
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+
+      - name: Clean cluster and verify fresh feed
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+
+      - name: Rebuild fixed X topics after verification
+        run: |
+          python scripts/enrich_x_issues.py
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          expected=['Health','Technology & AI','Celebrities & Public Figures','World','Politics & Government','Entertainment','Sports','Business & Economy','Gaming','Science']
+          items=ET.parse('News').getroot().findall('.//item')
+          topics=[(i.findtext('xTopic') or '').strip() for i in items if (i.findtext('category') or '').strip()=='x']
+          if topics != expected: raise SystemExit(f'X validation failed: {topics}')
+          print('X fixed-topic guard passed.')
+          PY
+          python scripts/record_pull_stats.py --finalize
+
+      - name: Build content briefs
+        run: python scripts/create_content_briefs.py
+
+      - name: Apply complete Final V5 transform and canonical build
+        run: bash -e v5-apply.sh
+
+      - name: Run final feed and runtime gates
+        run: |
+          python scripts/site_audit.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v4_release_gate.py
+          python tests/v5_final_content_audit.py
+          python scripts/cross_tab_integrity_fast.py --report v5-final-cross-tab-report.json
+          python - <<'PY'
+          import json
+          p='v5-final-cross-tab-report.json'
+          d=json.load(open(p,encoding='utf-8'))
+          residual=d.get('residualStrongCrossTabClusters',0)
+          if residual:
+              raise SystemExit(f'{residual} residual strong cross-tab cluster(s) remain')
+          print('Final cross-tab residual guard passed.')
+          PY
+
+      - name: Run cumulative deterministic regressions
+        run: |
+          python tests/news_market_db_test.py
+          python tests/entertainment_v4_test.py
+          python tests/verify_feed_test.py
+          while IFS= read -r t; do
+            t="${t%%#*}"; t="$(echo "$t" | xargs)"; [ -z "$t" ] && continue
+            echo "=== $t ==="; python "$t"
+          done < v5-enabled-tests.txt
+
+      - name: Verify canonical build is idempotent
+        run: |
+          before=$(sha256sum index.html | awk '{print $1}')
+          python scripts/build_site.py
+          after=$(sha256sum index.html | awk '{print $1}')
+          test "$before" = "$after"
+          echo "Canonical build idempotency passed: $after"
+
+      - name: Start frozen V4 and fresh V5 sites
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v5-http.log 2>&1 &
+          (cd baseline-v4 && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-v4-http.log 2>&1 &)
+          sleep 2
+
+      - name: Run full browser functionality suite
+        run: |
+          python tests/site_smoke_v32.py
+          python tests/entertainment_v4_ui_test.py
+          python tests/mobile_status_smoke.py
+          python tests/location_relative_region_browser_test.py
+          python tests/v5_final_browser_audit.py
+
+      - name: Write final V5 audit report
+        run: |
+          python - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          def load(path):
+              p=Path(path)
+              return json.loads(p.read_text(encoding='utf-8')) if p.exists() else None
+          source=os.environ['SOURCE_SHA']
+          short=source[:7]
+          report={
+              'status':'validated-release-candidate',
+              'sourceSha':source,
+              'v4BaselineSha':'9549044575ac8ce8c17eccaa09702e157797b1cd',
+              'generatedAt':datetime.now(timezone.utc).isoformat(),
+              'releaseCandidateBranch':f'v5-release-candidate-{short}',
+              'releaseCandidateTag':f'v5-rc-{short}',
+              'contentAudit':load('v5-final-content-audit.json'),
+              'browserAudit':load('v5-final-browser-audit.json'),
+              'crossTabAudit':load('v5-final-cross-tab-report.json'),
+              'checks':[
+                  'fresh-live-collection','specialist-enrichment','full-event-clustering',
+                  'final-verifier','editorial-integrity','story-context','x-topic-integrity',
+                  'location-routing','nfl-streaming','clean-entertainment','runtime-ownership',
+                  'release-gate','cross-tab-residuals','canonical-build-idempotency',
+                  'desktop-browser','mobile-browser','farmington-location','v4-v5-tab-comparison'
+              ]
+          }
+          Path('v5-final-audit-report.json').write_text(json.dumps(report,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+          print(json.dumps({'status':report['status'],'sourceSha':source,'branch':report['releaseCandidateBranch'],'tag':report['releaseCandidateTag']},indent=2))
+          PY
+
+      - name: Ensure Final V5 source did not change during audit
+        run: |
+          git fetch origin Final-V5
+          remote_sha=$(git rev-parse origin/Final-V5)
+          test "$remote_sha" = "$SOURCE_SHA"
+          echo "Source remained fixed during audit: $SOURCE_SHA"
+
+      - name: Freeze exact validated V5 release candidate
+        run: |
+          set -e
+          short=${SOURCE_SHA:0:7}
+          branch="v5-release-candidate-${short}"
+          tag="v5-rc-${short}"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            echo "Release candidate branch already exists: $branch"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout -b "$branch"
+          git add News index.html update-stats.json boxoffice.json state-legislation.json markets.json refresh-health.json verification-report.json content-brief-cache.json v4-release-report.json assets/location-content-v25.js assets/entertainment-v4.js v5-final-content-audit.json v5-final-browser-audit.json v5-final-cross-tab-report.json v5-final-audit-report.json 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Freeze validated V5 release candidate ${short} [skip ci]"
+          fi
+          freeze_sha=$(git rev-parse HEAD)
+          git push origin HEAD:"refs/heads/$branch"
+          if ! git ls-remote --exit-code --tags origin "refs/tags/$tag" >/dev/null 2>&1; then
+            git tag -a "$tag" -m "Validated V5 release candidate from source $SOURCE_SHA"
+            git push origin "refs/tags/$tag"
+          fi
+          echo "Frozen V5 branch: $branch"
+          echo "Frozen V5 tag: $tag"
+          echo "Frozen V5 commit: $freeze_sha"
+          echo "### Frozen V5" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Source: $SOURCE_SHA" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Branch: $branch" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Tag: $tag" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Frozen commit: $freeze_sha" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload final audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-v5-audit-reports
+          path: |
+            v5-final-content-audit.json
+            v5-final-browser-audit.json
+            v5-final-cross-tab-report.json
+            v5-final-audit-report.json
+            verification-report.json
+            v4-release-report.json
+          retention-days: 90
+
+      - name: Show local server logs on failure
+        if: failure()
+        run: |
+          cat /tmp/news-v5-http.log 2>/dev/null || true
+          cat /tmp/news-v4-http.log 2>/dev/null || true
