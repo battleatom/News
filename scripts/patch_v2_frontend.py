@@ -19,9 +19,9 @@ if '<meta name="description"' not in s:
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
 # V3/V5 presentation CSS must load after V2 so hierarchy, card borders and dark-mode
-# refinements reliably win the cascade. location-v2.js also contains a defensive
-# loader so older generated pages still recover the presentation layer.
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v3.css?v=7" data-underreported-v3-style="true">\n<script src="assets/location-v2.js?v=5"></script>\n'''
+# refinements reliably win the cascade. Versioned URLs deliberately force browsers
+# and GitHub Pages caches to fetch the current V5 hierarchy/icon assets.
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v3.css?v=8" data-underreported-v3-style="true">\n<script src="assets/location-v2.js?v=6"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
