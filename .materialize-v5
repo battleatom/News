@@ -17,3 +17,4 @@ Hierarchy runtime sync: observe nested story renders, filter self-mutations, and
 Render-bound hierarchy sync: attach hierarchy, raw timestamps, badges, and feed-rendered events directly during card creation.
 Persistent hierarchy sync: inline last-mile rails/icons and preserve Underreported age-band colors.
 Promotion sync.
+Live hierarchy deployment sync: force canonical rebuild after persistent rail package promotion.
