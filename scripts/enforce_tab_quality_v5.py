@@ -18,11 +18,14 @@ from pathlib import Path
 NEWS=Path('News')
 REPORT=Path('tab-quality-report.json')
 
+# Avoid generic nouns such as team/game/season: they create false sports matches in
+# ordinary reporting (for example, "the White House team"). Use strong sport nouns,
+# scorelines, or explicit competition verbs instead.
 SPORTS_TERMS={
     'football','basketball','baseball','hockey','soccer','nfl','nba','mlb','nhl','ncaa',
     'touchdown','touchdowns','quarterback','overtime','triple-overtime','playoff','playoffs',
-    'tournament','championship','standings','roster','kickoff','coach','coaches','season',
-    'league','match','matchup','game','games','team','teams','score','scores','scored','points',
+    'tournament','championship','standings','roster','kickoff','coach','coaches','league',
+    'matchup','score','scores','scored',
 }
 SPORTS_VERBS={'beat','beats','defeat','defeats','defeated','wins','won','routs','routed','edges','edged','upsets','upset','rallies','rally'}
 CIVIC_TERMS={
@@ -151,7 +154,9 @@ def run(feed=NEWS,report=REPORT,apply=True):
     if actions:
         print('V5 tab-quality actions:')
         for a in actions:print(f" - {a['from']} {a['action']}->{a['to'] or '-'} [{a['reason']}]: {a['title']}")
-    excessive={c:{'before':before[c],'after':after[c]} for c in ('world','us','gaming') if before[c]>=10 and after[c]<max(5,int(before[c]*.70))}
+    # A category may legitimately contain substantial contamination after a broad RSS pull.
+    # Abort only if this conservative high-confidence pass would remove/reroute >35%.
+    excessive={c:{'before':before[c],'after':after[c]} for c in ('world','us','gaming') if before[c]>=10 and after[c]<max(5,int(before[c]*.65))}
     if excessive:raise SystemExit('V5 tab-quality guard would over-prune: '+json.dumps(excessive,sort_keys=True))
     if apply:
         for i in list(channel.findall('item')):channel.remove(i)
