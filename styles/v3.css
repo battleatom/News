@@ -1,5 +1,6 @@
 /* Underreported Final V5 UX polish — visual hierarchy, readability, and interaction refinement only.
    No search, no sub-tabs, and no functional routing changes. */
+/* Validation trigger: UX polish canonicalization. */
 
 :root{
   --v5-accent:#4d8dff;
