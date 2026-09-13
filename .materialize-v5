@@ -21,3 +21,4 @@ Live hierarchy deployment sync: force canonical rebuild after persistent rail pa
 Post-materialization validation sync: trigger Fast Validation on exact canonical preview.
 Hard fix sync: materialize authoritative renderer-time card finalizer with inline rail ownership.
 Retirement sync: remove semantic card hierarchy implementation while preserving NFL and Underreported behavior.
+Retirement cleanup sync: materialize after removing the final hierarchy purge references from the build.
