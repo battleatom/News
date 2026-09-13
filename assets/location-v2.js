@@ -119,13 +119,13 @@
     const l=document.createElement('link');
     l.id='v5-hierarchy-style';
     l.rel='stylesheet';
-    l.href='styles/v5-hierarchy.css?v=1';
+    l.href='styles/v5-hierarchy.css?v=2';
     document.head.appendChild(l);
   }
 
   if(!document.querySelector('script[data-underreported-v5-hierarchy]')){
     const h=document.createElement('script');
-    h.src='assets/v5-hierarchy.js?v=1';
+    h.src='assets/v5-hierarchy.js?v=3';
     h.defer=true;
     h.dataset.underreportedV5Hierarchy='true';
     document.head.appendChild(h);
