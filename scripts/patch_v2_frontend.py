@@ -12,13 +12,6 @@ s=re.sub(r'\s*<script[^>]+src="assets/app-v2\.js[^>]*></script>','',s)
 s=re.sub(r'\s*<a class="skip-link-v2"[^>]*>.*?</a>','',s,flags=re.S)
 s=re.sub(r'\s*<style id="desktop-layout-fix-v1">.*?</style>','',s,flags=re.S)
 
-# Purge retired hierarchy assets/inline blocks from already-generated pages.
-s=re.sub(r'\s*<link[^>]+href="styles/v5-hierarchy\.css[^>]*>','',s)
-s=re.sub(r'\s*<script[^>]+src="assets/v5-hierarchy\.js[^>]*></script>','',s)
-s=re.sub(r'\s*<style id="v5-hierarchy-critical-v1">.*?</style>','',s,flags=re.S)
-s=re.sub(r'\s*<script id="v5-hierarchy-bootstrap-v1">.*?</script>','',s,flags=re.S)
-s=re.sub(r'\s*<script id="v5-card-finalizer-v1">.*?</script>','',s,flags=re.S)
-
 if '<meta name="description"' not in s:
     s=s.replace('<title>Underreported — High-Impact News</title>','<title>Underreported — High-Impact News</title>\n<meta name="description" content="Underreported brings high-impact, local and undercovered stories together with source context and live updates.">',1)
 
@@ -40,4 +33,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 visual refinement without semantic card hierarchy.')
+print('Applied Underreported V5 visual refinement.')
