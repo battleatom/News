@@ -13,3 +13,4 @@ tests/normalized_category_pools_test.py
 tests/v5_tab_quality_test.py
 tests/v51_architecture_test.py
 tests/v5_ux_architecture_test.py
+tests/mobile_region_nav_visibility_test.py
