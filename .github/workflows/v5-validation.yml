@@ -160,4 +160,5 @@ jobs:
           exit 1
 
       - name: Publish preview URL
-        run: echo 'Preview: https://battleatom.github.io/News/v5-preview/' >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo 'Preview: https://battleatom.github.io/News/v5-preview/' >> "$GITHUB_STEP_SUMMARY"
