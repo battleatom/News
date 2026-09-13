@@ -46,6 +46,9 @@ PATCHERS = [
     # post-build workflow mutation. The patcher is idempotent for compatibility
     # with the older workflow step if that step is still invoked.
     'scripts/patch_entertainment_v4_ui.py',
+    # Collapse accumulated legacy `sections` declarations only after every feature
+    # patch has run. This makes repeated canonical builds byte-stable.
+    'scripts/finalize_v5_html.py',
 ]
 
 
