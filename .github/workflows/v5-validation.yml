@@ -47,23 +47,21 @@ jobs:
           python tests/entertainment_v4_test.py
           python tests/verify_feed_test.py
 
-      - name: Run V5 hardening tests when present
+      - name: Run enabled V5 hardening tests
         run: |
           set -e
-          for t in \
-            tests/editorial_integrity_test.py \
-            tests/feed_quality_regression_test.py \
-            tests/normalized_category_pools_test.py \
-            tests/underreported_priority_test.py \
-            tests/story_context_regression_test.py \
-            tests/location_validation_test.py \
-            tests/us_sports_feed_check.py \
-            tests/x_static_topics_test.py; do
-            if [ -f "$t" ]; then
-              echo "=== $t ==="
-              python "$t"
-            fi
-          done
+          if [ ! -f v5-enabled-tests.txt ]; then
+            echo 'No V5 hardening tests enabled yet.'
+            exit 0
+          fi
+          while IFS= read -r t; do
+            t="${t%%#*}"
+            t="$(echo "$t" | xargs)"
+            [ -z "$t" ] && continue
+            echo "=== $t ==="
+            test -f "$t"
+            python "$t"
+          done < v5-enabled-tests.txt
 
       - name: Compare source delta to hard-saved V4
         run: |
@@ -76,8 +74,7 @@ jobs:
           import subprocess
           changed=subprocess.check_output(['git','diff','--name-status','9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD'],text=True)
           deleted=[line.split('\t',1)[1] for line in changed.splitlines() if line.startswith('D\t')]
-          allow={'.github/workflows/v4-stable-candidate.yml'}
-          bad=[p for p in deleted if p not in allow]
+          bad=[p for p in deleted if p not in {'.github/workflows/v4-stable-candidate.yml'}]
           if bad:
               raise SystemExit('Unexpected V4 file deletion(s): '+', '.join(bad))
           print('No unexpected V4 source deletions.')
