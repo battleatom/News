@@ -41,6 +41,15 @@ jobs:
       - name: Apply enabled V5 feed transforms and canonical build
         run: bash -e v5-apply.sh
 
+      - name: Prove checked-in preview matches canonical build
+        run: |
+          if ! git diff --quiet -- News index.html assets/location-content-v25.js; then
+            echo 'Final-V5 checked-in preview is stale relative to the canonical V5 build.'
+            git diff --stat -- News index.html assets/location-content-v25.js
+            exit 1
+          fi
+          echo 'Checked-in Final-V5 preview matches the canonical build.'
+
       - name: Run structural runtime content and release gates
         run: |
           python scripts/site_audit.py
