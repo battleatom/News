@@ -28,12 +28,16 @@ Baseline: hard-saved V4 commit `9549044575ac8ce8c17eccaa09702e157797b1cd` (`v4-h
 - Result: PASS.
 
 ## Fix 6 — location-specific Local/Region behavior
-- Local proves market relevance, Statewide can use valid state-tagged local/region stories, Region follows detected state→region metadata.
-- Farmington and false-positive regression cases pass; browser relative-region test staged for final live validation.
+- Local proves market relevance; Region follows detected state→region metadata. Farmington and false-positive regressions pass.
 - Result: PASS.
 
 ## Fix 7 — NFL broadcast + streaming availability
-- Goal: retain broadcast information and add deterministic streaming labels (Peacock, Paramount+, Netflix, Prime Video, ESPN/ESPN+, NFL+, FOX One, Sunday Ticket where applicable).
-- Optimization: streaming is a renderer patch immediately after the canonical NFL renderer, not a second NFL data pipeline.
-- Test: candidate HTML must contain the helper, separate Airing/Stream display, service mapping, and build-stage registration.
+- Streaming is a presentation patch immediately after the canonical NFL renderer; no second sports data pipeline.
+- First test run failed only because the assertion expected escaped quote characters. The candidate implementation had applied successfully; assertion corrected without changing NFL code.
+- Result after corrected regression: PASS.
+
+## Fix 8 — Entertainment clean public surface
+- Goal: retain Clean and Dirty backing pools for data integrity while exposing only the Clean Entertainment surface in the public UI; no Dirty toggle/badge/marker.
+- Optimization: keep one renderer and one backing feed; disable the Dirty UI path instead of creating separate pages or deleting retained Dirty records.
+- Static integration test runs per-fix; full Playwright UI test is staged for final live validation.
 - Status: pending CI.

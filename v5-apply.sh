@@ -6,3 +6,4 @@ python scripts/underreported_priority.py --rank
 python scripts/update_why_matters.py
 python scripts/patch_v25_location_content.py
 python scripts/patch_nfl_streaming.py
+python scripts/patch_entertainment_v4_ui.py

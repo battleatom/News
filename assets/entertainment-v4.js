@@ -3,6 +3,7 @@
   if(window.__entertainmentV4)return;
   const KEY='entertainment', LABEL='🎭 Entertainment', ACCENT='#be185d';
   const MODE_KEY='underreported-entertainment-mode';
+  const DIRTY_UI_ENABLED=false;
 
   const text=(item,tag)=>item.querySelector(tag)?.textContent?.trim()||'';
   const safe=v=>typeof esc==='function'?esc(v):String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -20,6 +21,7 @@
   }
 
   function currentMode(){
+    if(!DIRTY_UI_ENABLED)return 'clean';
     try{
       const m=new URL(location.href).searchParams.get('entmode');
       if(m==='clean'||m==='dirty'){localStorage.setItem(MODE_KEY,m);return m}
@@ -37,6 +39,7 @@
   }
 
   function switchMode(mode){
+    if(!DIRTY_UI_ENABLED)return;
     const next=mode==='dirty'?'clean':'dirty';
     try{localStorage.setItem(MODE_KEY,next)}catch(e){}
     try{if(typeof loadCounts!=='undefined')loadCounts[KEY]=typeof STORIES_PER_PAGE!=='undefined'?STORIES_PER_PAGE:10}catch(e){}
@@ -49,18 +52,15 @@
     const root=document.getElementById('news-feed');if(!root)return;root.innerHTML='';
     const sec=document.createElement('section');sec.className='section entertainment-section';sec.style.setProperty('--accent',ACCENT);
     const head=document.createElement('div');head.className='section-header ent-section-header';
-    const action=mode==='dirty'?'CLEAN':'DIRTY';
-    head.innerHTML=`<h2>${LABEL}</h2><span class="ent-mode-state ${mode}">${mode.toUpperCase()} MODE</span><button class="ent-mode-toggle ${mode}" type="button">${action}</button><span class="count">Showing ${data.count} of ${data.available.length} stories</span>`;
-    sec.appendChild(head);head.querySelector('.ent-mode-toggle')?.addEventListener('click',()=>switchMode(mode));
+    head.innerHTML=`<h2>${LABEL}</h2><span class="count">Showing ${data.count} of ${data.available.length} stories</span>`;
+    sec.appendChild(head);
 
     const intro=document.createElement('div');intro.className='x-issues-intro';
-    intro.textContent=mode==='clean'
-      ?'CLEAN: major entertainment, careers, awards, family/baby news, marriages and philanthropy. Ranked by importance first, then recency.'
-      :'DIRTY: adult-industry performers/business/legal news, creators/OnlyFans, adult awards, nude/photo-shoot headlines, mature fashion, relationships and gossip. Ranked independently; performer prominence is a boost, not a whitelist.';
+    intro.textContent='Major entertainment, careers, awards, family/baby news, marriages and philanthropy. Ranked by importance first, then recency.';
     sec.appendChild(intro);
 
     const body=document.createElement('div');body.className='section-body';
-    if(!data.visible.length)body.innerHTML='<div class="empty">No verified entertainment stories are available in this mode right now.</div>';
+    if(!data.visible.length)body.innerHTML='<div class="empty">No verified entertainment stories are available right now.</div>';
     data.visible.forEach((item,i)=>{
       const ar=document.createElement('article');ar.className='news-item entertainment-item';
       const title=text(item,'title')||'Untitled', link=text(item,'link')||'#', desc=text(item,'description'), why=text(item,'whyMatters');
