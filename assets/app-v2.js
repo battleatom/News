@@ -5,6 +5,47 @@
   function sectionDefs(){return typeof sections!=='undefined'&&Array.isArray(sections)?sections:[];}
   function currentActive(){return typeof active!=='undefined'?active:'top';}
 
+  function syncTabScrollCue(tabs){
+    if(!tabs)return;
+    let cue=document.getElementById('tab-scroll-cue-v2');
+    if(!cue){
+      cue=document.createElement('button');
+      cue.id='tab-scroll-cue-v2';
+      cue.className='tab-scroll-cue-v2';
+      cue.type='button';
+      cue.setAttribute('aria-label','Show Regional news tab');
+      tabs.appendChild(cue);
+    }
+    const region=tabs.querySelector('.tab[data-nav-key="region"]');
+    tabs.dataset.regionReachable=region?'true':'false';
+    const mobile=window.innerWidth<=760;
+    const overflow=tabs.scrollWidth>tabs.clientWidth+8;
+    let regionVisible=false;
+    if(region&&mobile){
+      const tr=tabs.getBoundingClientRect(),rr=region.getBoundingClientRect();
+      regionVisible=rr.left>=tr.left+4&&rr.right<=tr.right-4;
+    }
+    const atEnd=tabs.scrollLeft+tabs.clientWidth>=tabs.scrollWidth-8;
+    const show=mobile&&overflow&&!atEnd;
+    cue.textContent=region&&!regionVisible?'Region ›':'More ›';
+    cue.setAttribute('aria-label',region&&!regionVisible?'Jump to Regional news tab':'Show more news categories');
+    cue.classList.toggle('is-visible',show);
+    cue.tabIndex=show?0:-1;
+    cue.setAttribute('aria-hidden',show?'false':'true');
+    if(!cue.dataset.bound){
+      cue.addEventListener('click',()=>{
+        const target=tabs.querySelector('.tab[data-nav-key="region"]');
+        if(target){target.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+        else tabs.scrollBy({left:Math.max(180,tabs.clientWidth*.72),behavior:'smooth'});
+        requestAnimationFrame(()=>syncTabScrollCue(tabs));
+        setTimeout(()=>syncTabScrollCue(tabs),260);
+      });
+      tabs.addEventListener('scroll',()=>requestAnimationFrame(()=>syncTabScrollCue(tabs)),{passive:true});
+      window.addEventListener('resize',()=>requestAnimationFrame(()=>syncTabScrollCue(tabs)),{passive:true});
+      cue.dataset.bound='true';
+    }
+  }
+
   function enhanceTabs(){
     navQueued=false;
     const tabs=document.getElementById('tabs');if(!tabs)return;
@@ -29,8 +70,11 @@
     }
     const activeTab=tabs.querySelector('.tab.active');
     if(activeTab&&window.innerWidth<=760){
-      requestAnimationFrame(()=>activeTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}));
-    }
+      requestAnimationFrame(()=>{
+        activeTab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+        syncTabScrollCue(tabs);
+      });
+    }else syncTabScrollCue(tabs);
   }
 
   function queueNav(){if(navQueued)return;navQueued=true;queueMicrotask(enhanceTabs);}
