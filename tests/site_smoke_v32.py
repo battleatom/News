@@ -37,11 +37,12 @@ def farmington_suite(browser):
     base.click_key(page,'nm')
     labels=location_scope_labels(page)
     joined=' | '.join(labels)
-    assert 'All' in joined and 'Statewide' in joined, f'Missing state hub scopes: {joined}'
+    assert 'All' in joined and 'State & County' in joined, f'Missing consolidated State & County hub scope: {joined}'
     assert 'Farmington' in joined or 'Local' in joined, f'Missing local scope: {joined}'
     assert 'Southwest' in joined or 'Region' in joined, f'Missing regional scope: {joined}'
-    assert 'San Juan County' not in joined and 'County' not in joined, f'County scope should be hidden: {joined}'
+    assert 'San Juan County' not in joined, f'Separate county scope should be hidden: {joined}'
     assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, 'County scope button is still rendered'
+    assert page.locator('.location-scope-btn[data-scope="state"]').count()==1, 'Consolidated State & County scope is not singular'
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
@@ -73,8 +74,9 @@ def denver_suite(browser):
     base.click_key(page,'nm')
     labels=location_scope_labels(page)
     joined=' | '.join(labels)
-    assert 'Statewide' in joined and ('Denver' in joined or 'Local' in joined), f'Denver location scopes invalid: {joined}'
-    assert 'County' not in joined and page.locator('.location-scope-btn[data-scope="county"]').count()==0, f'County scope should be hidden in Denver: {joined}'
+    assert 'State & County' in joined and ('Denver' in joined or 'Local' in joined), f'Denver consolidated location scopes invalid: {joined}'
+    assert page.locator('.location-scope-btn[data-scope="county"]').count()==0, f'Separate County scope should be hidden in Denver: {joined}'
+    assert page.locator('.location-scope-btn[data-scope="state"]').count()==1, f'Denver State & County scope should be singular: {joined}'
 
     pools=page.evaluate("""() => ({
       local:window.__locationLocalPoolV36(allItems).length,
@@ -133,7 +135,7 @@ def main():
         denver_suite(browser)
         mobile_suite(browser)
         browser.close()
-    print('V5 SMOKE PASS — canonical Presidential routing, X renderer, V36 location hub, sticky mobile navigation, briefs, badges and scrolling.')
+    print('V5 SMOKE PASS — canonical Presidential routing, X renderer, consolidated State & County location hub, sticky mobile navigation, briefs, badges and scrolling.')
 
 
 if __name__=='__main__':
