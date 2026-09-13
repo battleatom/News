@@ -34,9 +34,6 @@ EVENT_WORDS={
 }
 STOP=vf.GENERIC|{'coverage','reporting','story','marks','mark','remember','remembering'}
 
-# Primary-card source order is based on original/straight-news authority, not political
-# viewpoint. Wire services lead; major national networks are peers. Recency and article
-# completeness break ties within a tier.
 PRIMARY_SOURCE_TIERS={
  'reuters':100,'associated press':100,'ap news':100,
  'bbc':92,'npr':92,
@@ -53,6 +50,38 @@ def toks(item):
 
 def title_toks(item):
     return {w for w in re.findall(r'[a-z0-9]+',vf.title(item).lower()) if len(w)>=3 and w not in STOP}
+
+def entertainment_title_toks(item):
+    """Lightly normalize headline words for same-event Entertainment coverage.
+
+    Entertainment outlets often describe one announcement with different grammar
+    (for example reunion/reunions or presenter/presenters).  Singularizing only
+    longer headline tokens improves event identity without using a topic-specific
+    person, show, award, or outlet rule.
+    """
+    out=set()
+    for word in title_toks(item):
+        if len(word)>4 and word.endswith('ies'):
+            word=word[:-3]+'y'
+        elif len(word)>4 and word.endswith('s') and not word.endswith('ss'):
+            word=word[:-1]
+        out.add(word)
+    return out
+
+def entertainment_event_match(a,b):
+    if vf.category(a)!='entertainment' or vf.category(b)!='entertainment': return False
+    if not near_in_time(a,b): return False
+    ta,tb=entertainment_title_toks(a),entertainment_title_toks(b)
+    if not ta or not tb: return False
+    shared=ta&tb;smaller=min(len(ta),len(tb))
+    entities=vf.entity_keys(a)&vf.entity_keys(b)
+    # Four normalized headline anchors with strong proportional overlap identify
+    # the same announcement even when the titles are independently rewritten.
+    if len(shared)>=4 and len(shared)/max(1,smaller)>=0.55: return True
+    # Named-entity agreement allows slightly shorter rewritten headlines, but still
+    # requires three concrete shared headline anchors to avoid broad celebrity merges.
+    if entities and len(shared)>=3 and len(shared)/max(1,smaller)>=0.60: return True
+    return False
 
 def groups(item):
     t=toks(item)|title_toks(item)
@@ -87,6 +116,7 @@ def event_match(a,b,allow_cross_tab=False):
     if allow_cross_tab and not in_same_overlap_family(a,b): return False
     if vf.syndicated_copy(a,b): return True
     if not allow_cross_tab and vf.same_event(a,b): return True
+    if not allow_cross_tab and entertainment_event_match(a,b): return True
 
     ga,gb=groups(a),groups(b);shared_groups=ga&gb
     shared=toks(a)&toks(b);tshared=title_toks(a)&title_toks(b)
@@ -96,23 +126,11 @@ def event_match(a,b,allow_cross_tab=False):
     exact_usd=usd_a&usd_b
     generic_numbers=(vf.amount_keys(a)&vf.amount_keys(b))-exact_usd
     dates=slash_date_keys(a)&slash_date_keys(b)
-
-    # Two different explicit dollar values are a hard negative for the monetary path.
-    # This blocks a story about one cash amount from bridging into another merely because
-    # the same public figure or organization appears in both.
     conflicting_usd=bool(usd_a and usd_b and not exact_usd)
-
-    # Exact currency + same named actor/entity in the same news cycle is strong enough
-    # to identify one proposal/event even when one headline says "promise" and another
-    # says "dividend", "checks", or focuses on reaction to the same announcement.
     if exact_usd and (actors or entities) and near_in_time(a,b): return True
     if exact_usd and shared_groups and len(shared)>=2 and near_in_time(a,b): return True
-
     if conflicting_usd: return False
-
-    # Non-currency numbers are weaker and require substantially more agreement.
     if generic_numbers and shared_groups and (actors or entities) and len(tshared)>=2 and len(shared)>=4 and near_in_time(a,b): return True
-
     if dates and shared_groups and (actors or entities) and len(shared)>=2: return True
     if shared_groups and entities and len(tshared)>=3 and len(shared)>=4: return True
     if shared_groups and actors and len(tshared)>=3 and len(shared)>=4: return True
@@ -150,7 +168,6 @@ def append_related_node(primary,node):
     return 1
 
 def attach(primary,other):
-    # Preserve both the removed card and any coverage already nested beneath it.
     added=append_related_node(primary,other)
     for nested in other.findall('./relatedArticles/article'):
         added+=append_related_node(primary,nested)
@@ -204,14 +221,11 @@ def main():
     for item in items:
         cat=vf.category(item)
         if cat not in EXCLUDED: bycat[cat].append(item)
-
     removed=set();clusters=attached=0
     for rows in bycat.values():
         c,a=consolidate_rows(rows,removed);clusters+=c;attached+=a
-
     cross_c,cross_a=consolidate_cross_tab(items,removed)
     clusters+=cross_c;attached+=cross_a
-
     if removed:
         for item in list(channel.findall('item')):
             if id(item) in removed: channel.remove(item)
