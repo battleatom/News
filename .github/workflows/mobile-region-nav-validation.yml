@@ -1,0 +1,72 @@
+name: Mobile Region Nav Validation
+
+on:
+  push:
+    branches: [fix/mobile-region-nav-visibility]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          ref: fix/mobile-region-nav-visibility
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7 playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Validate syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Build canonical V5
+        run: bash -e v5-apply.sh
+
+      - name: Run structural and release gates
+        run: |
+          python scripts/site_audit.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v5_final_audit.py
+          python scripts/v5_release_gate.py
+
+      - name: Run mobile Region static regression
+        run: python tests/mobile_region_nav_visibility_test.py
+
+      - name: Run mobile Region browser proof
+        run: python tests/mobile_region_nav_browser_test.py
+
+      - name: Run enabled V5 regressions
+        run: |
+          set -e
+          while IFS= read -r t; do
+            t="${t%%#*}"
+            t="$(echo "$t" | xargs)"
+            [ -z "$t" ] && continue
+            echo "=== $t ==="
+            test -f "$t"
+            python "$t"
+          done < v5-enabled-tests.txt
+
+      - name: Prove canonical build idempotence
+        run: |
+          cp index.html /tmp/v5-index-before.html
+          python scripts/build_site.py
+          cmp -s /tmp/v5-index-before.html index.html
+
+      - name: Guard frozen V4 ancestry
+        run: |
+          git merge-base --is-ancestor 9549044575ac8ce8c17eccaa09702e157797b1cd HEAD
+          git diff --check 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
