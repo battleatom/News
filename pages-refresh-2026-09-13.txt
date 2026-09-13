@@ -1,4 +1,4 @@
 Force GitHub Pages rebuild after restoring audited V5 loader.
-Current tested V5.1 source: 21c777a0b124c12d472c5582c56ca9cd1e6ea4bb
-Canonical materialized preview: 42067dbf4371460fad812de1ac1b7bf67e6ccfbb
-Reason: publish the materialized hierarchy/icon build after stale preview 29d88d60e07e5ef14a20820f39411e725efee3c8.
+Current tested hierarchy fix: 32ca3bb1ac0157f0da889fc37a396f7adb2997a8
+Canonical materialized preview: 8e24bd9d4ffd3b0d1ec08f501faf6147d12cca99
+Reason: publish nested-card hierarchy observer repair and cache-busted hierarchy assets (CSS v2, JS v3, loader v6).
