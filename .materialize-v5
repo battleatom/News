@@ -18,3 +18,4 @@ Render-bound hierarchy sync: attach hierarchy, raw timestamps, badges, and feed-
 Persistent hierarchy sync: inline last-mile rails/icons and preserve Underreported age-band colors.
 Promotion sync.
 Live hierarchy deployment sync: force canonical rebuild after persistent rail package promotion.
+Post-materialization validation sync: trigger Fast Validation on exact canonical preview.
