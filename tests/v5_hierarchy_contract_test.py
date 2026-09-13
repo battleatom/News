@@ -52,7 +52,9 @@ assert 'v5-hierarchy-bootstrap-v1' in frontend
 assert 'styles/v5-hierarchy.css?v=4' in frontend
 assert 'assets/v5-hierarchy.js?v=5' in frontend
 assert 'assets/location-v2.js?v=8' in frontend
-assert frontend.index('styles/v5-visual.css') < frontend.index('styles/v5-hierarchy.css') < frontend.index('v5-hierarchy-critical-v1')
+assert "<link rel=\"stylesheet\" href=\"styles/v5-visual.css?v=1\"" in frontend
+assert "<link id=\"v5-hierarchy-style\" rel=\"stylesheet\" href=\"styles/v5-hierarchy.css?v=4\"" in frontend
+assert "{critical}<script src=\"assets/location-v2.js?v=8\"" in frontend
 
 # Fallback loader matches the same cache-busted hierarchy assets.
 assert 'styles/v5-hierarchy.css?v=4' in loader
