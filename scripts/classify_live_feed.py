@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
-"""Shadow-mode category/source classifier for live News feed testing.
+"""Shared semantic category/source classifier for the live News feed.
 
-This intentionally does NOT modify production News. It reads the generated RSS,
-validates source trust using the collector's existing trust function, scores each
-article against supported categories, and writes:
-  - classifier-report.json (decisions + confidence)
-  - News.classified-preview (rerouted/rejected preview feed)
-
-The goal is to measure classifier behavior on real live pulls before integration.
+The standalone command still writes a shadow report/preview, while verify_feed.py
+imports classify() for production routing. Headline evidence is weighted more than
+body/description evidence because the title normally identifies the central event.
 """
 
 from __future__ import annotations
@@ -30,13 +26,21 @@ PREVIEW_PATH = ROOT / "News.classified-preview"
 sys.path.insert(0, str(ROOT / "scripts"))
 try:
     from update_news import source_is_trusted  # reuse production allowlist logic
-except Exception as exc:  # fail closed if trust policy cannot be loaded
+except Exception as exc:
     raise SystemExit(f"Could not load production source trust policy: {exc}")
 
 SUPPORTED = [
     "world", "us", "presidential", "federal", "legislation", "nm", "local",
     "region", "nfl", "technology", "gaming", "military", "underreported",
 ]
+
+US_STATE_NAMES = {
+    'alabama','alaska','arizona','arkansas','california','colorado','connecticut','delaware','florida','georgia','hawaii',
+    'idaho','illinois','indiana','iowa','kansas','kentucky','louisiana','maine','maryland','massachusetts','michigan',
+    'minnesota','mississippi','missouri','montana','nebraska','nevada','new hampshire','new jersey','new mexico','new york',
+    'north carolina','north dakota','ohio','oklahoma','oregon','pennsylvania','rhode island','south carolina','south dakota',
+    'tennessee','texas','utah','vermont','virginia','washington','west virginia','wisconsin','wyoming',
+}
 
 # Weighted semantic vocabulary. Phrase matches count more than single words.
 SIGNALS = {
@@ -92,11 +96,13 @@ SIGNALS = {
         "semiconductor": 6, "chip": 3, "nvidia": 6, "amd": 5, "intel": 5,
         "microsoft": 4, "google": 3, "apple": 3, "cloud computing": 6,
         "robotics": 5, "quantum computing": 7, "tech company": 4,
+        "anthropic": 7, "machine learning": 6, "large language model": 6,
     },
     "gaming": {
         "video game": 7, "gaming": 7, "playstation": 7, "xbox": 7,
         "nintendo": 7, "steam": 5, "game studio": 6, "console": 5,
-        "pc gaming": 7, "esports": 6,
+        "pc gaming": 7, "esports": 6, "gameplay": 5, "open-world": 4,
+        "open world": 4, "shooter": 3, "rpg": 4, "starcraft": 8,
     },
     "military": {
         "pentagon": 7, "military": 5, "troops": 5, "armed forces": 6,
@@ -117,32 +123,39 @@ NEGATIVE = {
     "world": {"local weather": -4},
 }
 
-# More-specific sections win ties against broad sections.
 SPECIFICITY = {
     "local": 9, "nm": 8, "presidential": 8, "legislation": 8, "nfl": 8,
     "gaming": 8, "technology": 7, "military": 7, "federal": 7, "region": 6,
     "world": 4, "us": 4, "underreported": 2,
 }
 
-# Sections that are editorial/ranking surfaces rather than mutually exclusive topics.
 NON_ROUTABLE_INPUT = {"top"}
+TITLE_SIGNAL_BONUS = 1.5  # title hit total = 2.5x the normal semantic weight
+
+
+def normalized_text(value: str) -> str:
+    return " " + re.sub(r"\s+", " ", value or "").lower().strip() + " "
+
+
+def title_text_of(item: ET.Element) -> str:
+    return normalized_text(item.findtext("title", ""))
 
 
 def text_of(item: ET.Element) -> str:
     parts = [item.findtext("title", ""), item.findtext("description", "")]
-    return " " + re.sub(r"\s+", " ", " ".join(parts)).lower().strip() + " "
+    return normalized_text(" ".join(parts))
 
 
 def phrase_present(text: str, phrase: str) -> bool:
     p = phrase.lower()
     if p.startswith(" ") or p.endswith(" "):
         return p in text
-    if " " in p or "." in p:
+    if " " in p or "." in p or "-" in p:
         return p in text
     return re.search(rf"\b{re.escape(p)}\b", text) is not None
 
 
-def score_categories(text: str, current: str) -> dict[str, float]:
+def score_categories(text: str, current: str, title_text: str = "") -> dict[str, float]:
     scores = {cat: 0.0 for cat in SUPPORTED}
     evidence = defaultdict(list)
     for cat, terms in SIGNALS.items():
@@ -150,18 +163,31 @@ def score_categories(text: str, current: str) -> dict[str, float]:
             if phrase_present(text, term):
                 scores[cat] += weight
                 evidence[cat].append(term.strip())
+                if title_text and phrase_present(title_text, term):
+                    scores[cat] += weight * TITLE_SIGNAL_BONUS
+                    evidence[cat].append(f"title:{term.strip()}")
     for cat, terms in NEGATIVE.items():
         for term, weight in terms.items():
             if phrase_present(text, term):
                 scores[cat] += weight
                 evidence[cat].append(f"!{term}")
 
-    # Provider/collector category is a weak prior, not an authority.
+    # A U.S. state in an ordinary World/US article is strong domestic evidence,
+    # but do not steal validated Local/Region/NM inventory from location routing.
+    if current not in {"local", "region", "nm"}:
+        state_hits = [state for state in US_STATE_NAMES if phrase_present(text, state)]
+        if state_hits:
+            scores["us"] += 4.0
+            evidence["us"].append(f"us-state:{state_hits[0]}")
+            if title_text and any(phrase_present(title_text, state) for state in state_hits):
+                scores["us"] += 4.0
+                evidence["us"].append(f"title-us-state:{state_hits[0]}")
+
+    # Provider/collector category is only a weak prior.
     if current in scores:
         scores[current] += 2.0
         evidence[current].append("existing-category-prior")
 
-    # Geographic hierarchy: local should outrank state/region; NM outranks generic region.
     if scores["local"] >= 7:
         scores["nm"] -= 2
         scores["region"] -= 3
@@ -177,7 +203,6 @@ def confidence(scores: dict[str, float], winner: str) -> float:
     second = ordered[1] if len(ordered) > 1 else 0.0
     if top <= 0:
         return 0.0
-    # Confidence rewards absolute evidence and separation from runner-up.
     strength = 1.0 - math.exp(-top / 8.0)
     separation = max(0.0, min(1.0, (top - second) / max(4.0, top)))
     return round(min(0.99, 0.62 * strength + 0.38 * separation), 3)
@@ -203,26 +228,26 @@ def classify(item: ET.Element) -> dict:
         }
 
     text = text_of(item)
-    scores, evidence = score_categories(text, current)
+    title_text = title_text_of(item)
+    scores, evidence = score_categories(text, current, title_text)
     ranked = sorted(scores, key=lambda c: (scores[c], SPECIFICITY.get(c, 0)), reverse=True)
     winner = ranked[0]
     top_score = scores[winner]
     conf = confidence(scores, winner)
 
-    # Fail conservatively: weak semantic evidence does not get auto-rerouted.
     if top_score < 4.0:
         return {
             "title": title, "source": source, "current": current,
             "action": "review", "reason": "insufficient-semantic-evidence",
             "category": current or None, "confidence": conf,
             "scores": {k: round(v, 2) for k, v in scores.items() if v},
-            "evidence": evidence.get(winner, [])[:8],
+            "evidence": evidence.get(winner, [])[:10],
         }
 
     if winner == current:
         action, reason = "keep", "category-confirmed"
     elif conf >= 0.72:
-        action, reason = "reroute", f"semantic-match:{winner}"
+        action, reason = "reroute", f"central-subject-match:{winner}"
     else:
         action, reason = "review", f"ambiguous:{winner}"
 
@@ -231,7 +256,7 @@ def classify(item: ET.Element) -> dict:
         "action": action, "reason": reason, "category": winner,
         "confidence": conf,
         "scores": {k: round(v, 2) for k, v in scores.items() if v},
-        "evidence": evidence.get(winner, [])[:8],
+        "evidence": evidence.get(winner, [])[:10],
     }
 
 
@@ -283,6 +308,7 @@ def main() -> None:
             "sourceValidation": "production update_news.source_is_trusted",
             "rerouteThreshold": 0.72,
             "minimumSemanticScore": 4.0,
+            "titleSignalMultiplier": 1.0 + TITLE_SIGNAL_BONUS,
             "productionFeedModified": False,
         },
         "decisions": decisions,
