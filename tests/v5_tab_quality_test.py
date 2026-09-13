@@ -27,20 +27,21 @@ assert m.apply_rule(nfl)==('reroute','nfl','ordinary-sports-to-nfl')
 policy=item('us','Congress examines NCAA antitrust rules affecting college football','Lawmakers considered federal policy changes.')
 assert m.apply_rule(policy)[0]=='keep'
 
-# High-confidence World leakage examples seen in the live preview.
-gaga=item('world','Lady Gaga Welcomes First Child With Fiancé Michael Polansky','The Grammy and Oscar winner welcomed her first child.')
+# High-confidence World leakage examples seen in the live preview. The generated
+# "International reporting indicates" description prefix must not hide domestic leaks.
+gaga=item('world','Lady Gaga Welcomes First Child With Fiancé Michael Polansky','International reporting indicates The Grammy and Oscar winner welcomed her first child.')
 assert m.apply_rule(gaga)==('drop',None,'domestic-entertainment-in-world')
-cia=item('world','Declassified CIA documents show clear warnings to presidents before 9/11','CIA records describe warnings before September 11.')
+cia=item('world','Declassified CIA documents show clear warnings to presidents before 9/11','International reporting indicates CIA records describe warnings before September 11.')
 assert m.apply_rule(cia)==('reroute','federal','domestic-federal-in-world')
-rap=item('world','US rapper Lil Durk found not guilty of murder-for-hire scheme','U.S. prosecutors accused the rapper in a domestic criminal case.')
+rap=item('world','US rapper Lil Durk found not guilty of murder-for-hire scheme','International reporting indicates U.S. prosecutors accused the rapper in a domestic criminal case.')
 assert m.apply_rule(rap)[0] in {'drop','reroute'}
-baseball=item('world','World Baseball League to host Field of Dreams Festival','The baseball league will host a three-day festival in Iowa.')
+baseball=item('world','World Baseball League to host Field of Dreams Festival','International reporting indicates The baseball league will host a three-day festival in Iowa.')
 assert m.apply_rule(baseball)==('drop',None,'ordinary-sports-in-world')
 
 # Genuine international stories stay in World even when the U.S. is part of the story.
-brics=item('world','BRICS summit weighs Iran war and global economic challenges','India, Russia and China discussed diplomacy and sanctions.')
+brics=item('world','BRICS summit weighs Iran war and global economic challenges','International reporting indicates India, Russia and China discussed diplomacy and sanctions.')
 assert m.apply_rule(brics)[0]=='keep'
-icc=item('world','As Trump squeezes the International Criminal Court, more countries are leaving','The international tribunal faces pressure as foreign member states reconsider participation.')
+icc=item('world','As Trump squeezes the International Criminal Court, more countries are leaving','International reporting indicates the international tribunal faces pressure as member states reconsider participation.')
 assert m.apply_rule(icc)[0]=='keep'
 
 # Gaming reviews/guides are not news; current event/announcement coverage remains.
