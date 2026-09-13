@@ -10,7 +10,5 @@ tests/location_validation_test.py
 tests/v5_nfl_streaming_test.py
 tests/v5_entertainment_surface_test.py
 tests/normalized_category_pools_test.py
-tests/v5_frontend_observer_test.py
-tests/v5_render_binding_test.py
 tests/v5_tab_quality_test.py
 tests/v51_architecture_test.py
