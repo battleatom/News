@@ -242,7 +242,9 @@
     refresh();
     const feed=document.getElementById('news-feed');
     const tabs=document.getElementById('tabs');
-    if(feed)new MutationObserver(()=>processCards(feed)).observe(feed,{childList:true,subtree:true});
+    // Rendering replaces the top-level feed section. Watching the full subtree caused
+    // presentation-only mutations (WHY/source/badges) to queue redundant reprocessing.
+    if(feed)new MutationObserver(()=>processCards(feed)).observe(feed,{childList:true});
     if(tabs)new MutationObserver(processTabs).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
     document.addEventListener('click',e=>{
       if(e.target.closest('.tab'))requestAnimationFrame(()=>{processTabs();processCards();});
