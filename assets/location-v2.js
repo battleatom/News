@@ -110,13 +110,13 @@
   if(!document.querySelector('link[data-underreported-v3-style]')){
     const css=document.createElement('link');
     css.rel='stylesheet';
-    css.href='styles/v3.css?v=7';
+    css.href='styles/v3.css?v=8';
     css.dataset.underreportedV3Style='true';
     document.head.appendChild(css);
   }
   if(document.querySelector('script[data-underreported-v3-ui]'))return;
   const s=document.createElement('script');
-  s.src='assets/v3-ui.js?v=4';
+  s.src='assets/v3-ui.js?v=5';
   s.defer=true;
   s.dataset.underreportedV3Ui='true';
   document.head.appendChild(s);
