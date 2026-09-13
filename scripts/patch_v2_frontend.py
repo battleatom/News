@@ -25,13 +25,20 @@ s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The storie
 # V5 presentation remains isolated from V4-derived feed/routing behavior.
 # Normal card CSS loads first. The hierarchy sheet follows it, then an inline
 # critical subset guarantees the rail/icon contract survives cache/CDN issues.
+# Underreported is deliberately exempt from semantic rail colors because its
+# original blue/green/orange/purple/red age-band rail remains authoritative.
 critical='''
 <style id="v5-hierarchy-critical-v1">
-html body .news-item[data-hierarchy="high"]:not(.nfl-game-card),html body .news-item.v5-hierarchy-high:not(.nfl-game-card){border-left:5px solid #dc2626!important}
-html body .news-item[data-hierarchy="analysis"]:not(.nfl-game-card),html body .news-item.v5-hierarchy-analysis:not(.nfl-game-card){border-left:5px solid #7c3aed!important}
-html body .news-item[data-hierarchy="local"]:not(.nfl-game-card),html body .news-item.v5-hierarchy-local:not(.nfl-game-card){border-left:5px solid #15803d!important}
-html body .news-item[data-hierarchy="trending"]:not(.nfl-game-card),html body .news-item.v5-hierarchy-trending:not(.nfl-game-card){border-left:5px solid #2563eb!important}
-html body .news-item[data-hierarchy="standard"]:not(.nfl-game-card),html body .news-item.v5-hierarchy-standard:not(.nfl-game-card){border-left:3px solid #64748b!important}
+html body .news-item[data-hierarchy="high"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-high:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #dc2626!important}
+html body .news-item[data-hierarchy="analysis"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-analysis:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #7c3aed!important}
+html body .news-item[data-hierarchy="local"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-local:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #15803d!important}
+html body .news-item[data-hierarchy="trending"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-trending:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #2563eb!important}
+html body .news-item[data-hierarchy="standard"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-standard:not(.nfl-game-card):not(.underreported-item){border-left:3px solid #64748b!important}
+html body .news-item.underreported-item[data-age-band="blue"],html body .news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
+html body .news-item.underreported-item[data-age-band="green"],html body .news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
+html body .news-item.underreported-item[data-age-band="orange"],html body .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
+html body .news-item.underreported-item[data-age-band="purple"],html body .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
+html body .news-item.underreported-item[data-age-band="red"],html body .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
 html body .v3-importance{display:inline-flex!important;align-items:center!important;gap:4px!important;position:relative!important;visibility:visible!important;opacity:1!important}
 html body .v3-importance.high::before{content:'⚡'}
 html body .v3-importance.analysis::before{content:'◆'}
@@ -41,7 +48,7 @@ html body .v3-importance.standard::before{content:'•'}
 html body .nfl-game-card .v3-importance{display:none!important}
 </style>
 '''
-head=f'''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link id="v5-hierarchy-style" rel="stylesheet" href="styles/v5-hierarchy.css?v=3" data-v5-hierarchy="true">\n{critical}<script src="assets/location-v2.js?v=7"></script>\n<script src="assets/v5-hierarchy.js?v=4" defer data-v5-hierarchy="true" data-underreported-v5-hierarchy="true"></script>\n'''
+head=f'''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link id="v5-hierarchy-style" rel="stylesheet" href="styles/v5-hierarchy.css?v=4" data-v5-hierarchy="true">\n{critical}<script src="assets/location-v2.js?v=8"></script>\n<script src="assets/v5-hierarchy.js?v=5" defer data-v5-hierarchy="true" data-underreported-v5-hierarchy="true"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
@@ -120,4 +127,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 visual refinement: persistent inline hierarchy rails/icons plus render-bound metadata enabled.')
+print('Applied Underreported V5 visual refinement: persistent hierarchy rails/icons enabled; Underreported age rails preserved.')
