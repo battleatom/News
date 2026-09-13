@@ -20,3 +20,4 @@ Promotion sync.
 Live hierarchy deployment sync: force canonical rebuild after persistent rail package promotion.
 Post-materialization validation sync: trigger Fast Validation on exact canonical preview.
 Hard fix sync: materialize authoritative renderer-time card finalizer with inline rail ownership.
+Retirement sync: remove semantic card hierarchy implementation while preserving NFL and Underreported behavior.
