@@ -14,6 +14,8 @@ on:
       - 'verification-report.json'
       - 'content-brief-cache.json'
       - 'v4-release-report.json'
+      - 'source-health.json'
+      - 'direct-rss-report.json'
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
@@ -82,6 +84,9 @@ jobs:
               json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2)
               f.write('\n')
           PY
+
+      - name: Augment with direct publisher RSS when healthy
+        run: python scripts/collect_direct_rss.py
 
       - name: Replace provisional Entertainment with authoritative Clean and Dirty pools
         run: python scripts/update_entertainment_only_v4.py
@@ -160,6 +165,12 @@ jobs:
       - name: Enforce final editorial integrity
         run: python scripts/enforce_editorial_integrity.py
 
+      - name: Apply V5.1 article-type and residual tab guard
+        run: python scripts/enforce_tab_quality_v5.py
+
+      - name: Apply final canonical cross-tab dedupe
+        run: python scripts/cross_tab_integrity_fast.py --apply --report cross-tab-integrity-report.json
+
       - name: Verify exactly ten relevant fixed X topics
         run: |
           python - <<'PY'
@@ -195,6 +206,9 @@ jobs:
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
 
+      - name: Generate source diversity and fallback health report
+        run: python scripts/source_health.py
+
       - name: Inject V4 Entertainment UI
         run: python scripts/patch_entertainment_v4_ui.py
 
@@ -216,7 +230,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json scripts assets
+          git add -A News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json source-health.json direct-rss-report.json cross-tab-integrity-report.json scripts assets
           if git diff --cached --quiet; then
             echo 'No changes to commit.'
             exit 0
