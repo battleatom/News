@@ -8,3 +8,4 @@ Validate explicit hierarchy bridge after canonical preview commit 1bb1b3d.
 Quality audit: validate materialized performance, tab-leak, and workflow-failure fixes at 9532cbf.
 Final exact-head quality audit after idempotent materialization fa17e69.
 Exact-head validation after render-bound hierarchy materialization dba714c.
+Exact-head validation after authoritative card finalizer materialization 4e18de6.
