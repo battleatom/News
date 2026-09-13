@@ -109,7 +109,7 @@
 (function(){
   if(document.querySelector('script[data-underreported-v3-ui]'))return;
   const s=document.createElement('script');
-  s.src='assets/v3-ui.js?v=3';
+  s.src='assets/v3-ui.js?v=5';
   s.defer=true;
   s.dataset.underreportedV3Ui='true';
   document.head.appendChild(s);
