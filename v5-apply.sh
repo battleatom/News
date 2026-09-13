@@ -4,5 +4,5 @@ python scripts/cross_tab_integrity_fast.py --apply --report /tmp/v5-cross-tab.js
 python scripts/enforce_editorial_integrity.py
 python scripts/underreported_priority.py --rank
 python scripts/update_why_matters.py
-# Rewire the V4 snapshot to the V5 location controller so the audit/test target is the candidate behavior.
 python scripts/patch_v25_location_content.py
+python scripts/patch_nfl_streaming.py
