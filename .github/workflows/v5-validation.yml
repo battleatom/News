@@ -15,7 +15,7 @@ concurrency:
 jobs:
   regression:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - name: Checkout Final V5
         uses: actions/checkout@v4
@@ -41,10 +41,11 @@ jobs:
       - name: Apply enabled V5 feed transforms and canonical build
         run: bash -e v5-apply.sh
 
-      - name: Run structural, runtime and release gates
+      - name: Run structural runtime content and release gates
         run: |
           python scripts/site_audit.py
           python scripts/v5_runtime_audit.py
+          python scripts/v5_final_audit.py
           python scripts/v5_release_gate.py
 
       - name: Run inherited deterministic regressions
@@ -53,8 +54,10 @@ jobs:
           python tests/entertainment_v4_test.py
           python tests/verify_feed_test.py
 
-      - name: Install content-brief test dependencies
-        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+      - name: Install test dependencies
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7 playwright
+          python -m playwright install --with-deps chromium
 
       - name: Run enabled V5 hardening tests
         run: |
@@ -68,6 +71,27 @@ jobs:
             python "$t"
           done < v5-enabled-tests.txt
 
+      - name: Start V5 and frozen V4 servers
+        run: |
+          python -m http.server 8765 --bind 127.0.0.1 > /tmp/news-v5-http.log 2>&1 &
+          (cd baseline-v4 && python -m http.server 8766 --bind 127.0.0.1 > /tmp/news-v4-http.log 2>&1 &)
+          sleep 2
+
+      - name: Run every-tab V4 versus V5 browser comparison
+        run: python tests/live_ab_compare_v27.py
+
+      - name: Run Farmington location and mobile browser smoke
+        run: |
+          python tests/site_smoke_v32.py
+          python tests/mobile_status_smoke.py
+
+      - name: Prove canonical build is idempotent
+        run: |
+          cp index.html /tmp/v5-index-before.html
+          python scripts/build_site.py
+          cmp -s /tmp/v5-index-before.html index.html || { echo 'Canonical build is not idempotent'; diff -u /tmp/v5-index-before.html index.html | head -200; exit 1; }
+          echo 'Canonical V5 build is idempotent.'
+
       - name: Compare source delta to hard-saved V4
         run: |
           git diff --stat 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
@@ -80,7 +104,23 @@ jobs:
           changed=subprocess.check_output(['git','diff','--name-status','9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD'],text=True)
           deleted=[line.split('\t',1)[1] for line in changed.splitlines() if line.startswith('D\t')]
           bad=[p for p in deleted if p not in {'.github/workflows/v4-stable-candidate.yml'}]
-          if bad:
-              raise SystemExit('Unexpected V4 source deletion(s): '+', '.join(bad))
+          if bad: raise SystemExit('Unexpected V4 source deletion(s): '+', '.join(bad))
           print('No unexpected V4 source deletions.')
           PY
+
+      - name: Upload final V5 audit reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-v5-audit-reports
+          path: |
+            v5-final-audit-report.json
+            live-ab-report.json
+            verification-report.json
+          retention-days: 90
+
+      - name: Show local servers on failure
+        if: failure()
+        run: |
+          cat /tmp/news-v5-http.log 2>/dev/null || true
+          cat /tmp/news-v4-http.log 2>/dev/null || true
