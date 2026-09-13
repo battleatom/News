@@ -9,3 +9,4 @@ Quality audit: validate materialized performance, tab-leak, and workflow-failure
 Final exact-head quality audit after idempotent materialization fa17e69.
 Exact-head validation after render-bound hierarchy materialization dba714c.
 Exact-head validation after authoritative card finalizer materialization 4e18de6.
+Exact-head validation after semantic hierarchy retirement and canonical cleanup e98d348.
