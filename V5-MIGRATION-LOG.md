@@ -26,7 +26,12 @@ Baseline: hard-saved V4 commit `9549044575ac8ce8c17eccaa09702e157797b1cd` (`v4-h
 - Result: PASS.
 
 ## Fix 4 — Underreported relevance and priority ranking
-- Goal: rank Underreported by freshness, corroboration, coverage gap, momentum, continuing relevance, and event identity while rejecting low-value shopping/routine gaming items.
 - Optimization: per-fix CI ranks the already collected V4 pool deterministically; network discovery and enrichment are retained for the final production build only.
-- Test: `tests/underreported_priority_test.py` plus all prior V5 tests and V4 guards.
+- Tests: freshness, corroboration, coverage gap, momentum, saturation, continuing relevance, event clustering, live-feed-copy eligibility, all prior V5 tests and V4 guards.
+- Result: PASS.
+
+## Fix 5 — X fixed-topic integrity
+- Goal: preserve exactly ten stable X topic slots and require the retained lead story in each slot to be relevant to that topic after final editorial repair.
+- Optimization: X collection remains network-backed only in the final build; per-fix CI validates the fixed contract and all ten transformed feed slots deterministically.
+- Tests: `tests/x_static_topics_test.py`, `tests/v5_x_feed_integrity_test.py`, all prior V5 tests and V4 guards.
 - Status: pending CI.
