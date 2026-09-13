@@ -6,17 +6,17 @@
     "slow": ["legislation","nm","local","region","gaming","underreported","entertainment","x","boxoffice"]
   },
   "sources": [
-    {"name":"Reuters","scope":["top","world","us","presidential","federal","military"],"priority":100,"directRss":null,"fallback":"google-site-query"},
-    {"name":"Associated Press","scope":["top","world","us","presidential","federal"],"priority":98,"directRss":null,"fallback":"google-site-query"},
-    {"name":"BBC","scope":["top","world"],"priority":92,"directRss":"https://feeds.bbci.co.uk/news/world/rss.xml","fallback":"google-site-query"},
-    {"name":"NPR","scope":["top","us","federal"],"priority":90,"directRss":null,"fallback":"google-site-query"},
-    {"name":"Tri-City Record","scope":["local"],"priority":96,"directRss":null,"fallback":"google-site-query"},
-    {"name":"KSJE","scope":["local"],"priority":90,"directRss":null,"fallback":"google-site-query"},
-    {"name":"Navajo Times","scope":["local","region"],"priority":92,"directRss":null,"fallback":"google-site-query"},
-    {"name":"Durango Herald","scope":["local","region"],"priority":92,"directRss":null,"fallback":"google-site-query"},
-    {"name":"The Verge","scope":["technology"],"priority":90,"directRss":"https://www.theverge.com/rss/index.xml","fallback":"google-site-query"},
-    {"name":"Ars Technica","scope":["technology"],"priority":90,"directRss":"https://feeds.arstechnica.com/arstechnica/index","fallback":"google-site-query"},
-    {"name":"IGN","scope":["gaming"],"priority":85,"directRss":null,"fallback":"google-site-query"},
-    {"name":"GameSpot","scope":["gaming"],"priority":82,"directRss":null,"fallback":"google-site-query"}
+    {"name":"Reuters","scope":["top","world","us","presidential","federal","military"],"priority":100,"directRss":null,"defaultCategory":"top","fallback":"google-site-query"},
+    {"name":"Associated Press","scope":["top","world","us","presidential","federal"],"priority":98,"directRss":null,"defaultCategory":"top","fallback":"google-site-query"},
+    {"name":"BBC","scope":["top","world"],"priority":92,"directRss":"https://feeds.bbci.co.uk/news/world/rss.xml","defaultCategory":"world","fallback":"google-site-query"},
+    {"name":"NPR","scope":["top","us","federal"],"priority":90,"directRss":null,"defaultCategory":"us","fallback":"google-site-query"},
+    {"name":"Tri-City Record","scope":["local"],"priority":96,"directRss":null,"defaultCategory":"local","fallback":"google-site-query"},
+    {"name":"KSJE","scope":["local"],"priority":90,"directRss":null,"defaultCategory":"local","fallback":"google-site-query"},
+    {"name":"Navajo Times","scope":["local","region"],"priority":92,"directRss":null,"defaultCategory":"local","fallback":"google-site-query"},
+    {"name":"Durango Herald","scope":["local","region"],"priority":92,"directRss":null,"defaultCategory":"local","fallback":"google-site-query"},
+    {"name":"The Verge","scope":["technology"],"priority":90,"directRss":"https://www.theverge.com/rss/index.xml","defaultCategory":"technology","fallback":"google-site-query"},
+    {"name":"Ars Technica","scope":["technology"],"priority":90,"directRss":"https://feeds.arstechnica.com/arstechnica/index","defaultCategory":"technology","fallback":"google-site-query"},
+    {"name":"IGN","scope":["gaming"],"priority":85,"directRss":null,"defaultCategory":"gaming","fallback":"google-site-query"},
+    {"name":"GameSpot","scope":["gaming"],"priority":82,"directRss":null,"defaultCategory":"gaming","fallback":"google-site-query"}
   ]
 }
