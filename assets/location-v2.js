@@ -104,14 +104,3 @@
     },
   };
 })();
-
-/* Version 3 presentation layer loader. Kept separate from feed/update logic. */
-(function(){
-  if(!document.querySelector('script[data-underreported-v3-ui]')){
-    const s=document.createElement('script');
-    s.src='assets/v3-ui.js?v=5';
-    s.defer=true;
-    s.dataset.underreportedV3Ui='true';
-    document.head.appendChild(s);
-  }
-})();
