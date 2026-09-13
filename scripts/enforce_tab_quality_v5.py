@@ -42,8 +42,11 @@ NFL_TERMS={
     'new orleans saints','new york giants','new york jets','philadelphia eagles','pittsburgh steelers',
     'san francisco 49ers','seattle seahawks','tampa bay buccaneers','tennessee titans','washington commanders',
 }
+# Do not use generic words like "international" as evidence here. World descriptions
+# are intentionally prefixed with "International reporting indicates", which previously
+# made every World card look internationally scoped and hid domestic leakage.
 WORLD_INTL={
-    'international','foreign','nato','united nations','brics','international criminal court','icc','ukraine',
+    'nato','united nations','brics','international criminal court','icc','ukraine',
     'russia','china','iran','israel','gaza','palestine','west bank','europe','european union','africa','asia',
     'middle east','yemen','houthis','saudi','saudi arabia','iraq','syria','lebanon','taiwan','north korea',
     'south korea','india','pakistan','afghanistan','canada','mexico','brazil','argentina','france','germany',
