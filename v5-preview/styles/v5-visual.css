@@ -26,7 +26,9 @@ html body .section-header h2{font-size:21px!important;line-height:1.15!important
 html body .section-header .count{font-size:10px!important;font-weight:700!important;color:var(--v5-subtle)!important}
 html body .section-body{gap:8px!important}
 
-/* Every story is visibly a card. NFL keeps its team-color treatment. */
+/* Every story is visibly a card. NFL keeps its team-color treatment. Semantic
+   hierarchy rails intentionally live only in v5-hierarchy.css so there is one
+   authoritative cascade owner. */
 html body .news-item:not(.nfl-game-card){
   position:relative;
   margin:6px 0!important;
@@ -43,13 +45,6 @@ html body .news-item:not(.nfl-game-card):hover{
   border-color:rgba(71,85,105,.30)!important;
   box-shadow:var(--v5-shadow-hover)!important;
 }
-
-/* Card hierarchy: neutral fallback plus semantic left rail. */
-html body .news-item:has(.v3-importance.high){border-left-color:var(--v5-high)!important}
-html body .news-item:has(.v3-importance.analysis){border-left-color:var(--v5-analysis)!important}
-html body .news-item:has(.v3-importance.local){border-left-color:var(--v5-local)!important}
-html body .news-item:has(.v3-importance.trending){border-left-color:var(--v5-trending)!important}
-html body .lead-story-v2:not(.nfl-game-card){border-left-width:5px!important;border-color:rgba(220,38,38,.28)!important;border-left-color:var(--v5-high)!important;box-shadow:0 5px 18px rgba(15,23,42,.09)!important}
 html body .underreported-item:not(.nfl-game-card){border-left-width:5px!important}
 
 /* Headlines and body copy */
