@@ -42,15 +42,12 @@ PATCHERS = [
     'scripts/patch_content_brief_ui.py',
     'scripts/patch_full_why_matters.py',
     'scripts/patch_system_health.py',
-    # V5 owns the complete final HTML: Entertainment is no longer a required
-    # post-build workflow mutation. The patcher is idempotent for compatibility
-    # with the older workflow step if that step is still invoked.
     'scripts/patch_entertainment_v4_ui.py',
-    # Bind visual hierarchy and story metadata to the actual card render step.
-    # This runs late so no earlier patch can strip the semantic attributes/classes.
     'scripts/patch_v5_render_bindings.py',
-    # Collapse accumulated legacy `sections` declarations only after every feature
-    # patch has run. This makes repeated canonical builds byte-stable.
+    # One final renderer-independent owner writes the actual rail style, hierarchy
+    # badge and NEW state onto every rendered card. It runs after every special
+    # renderer has been installed, eliminating cascade/observer dependence.
+    'scripts/patch_v5_card_finalizer.py',
     'scripts/finalize_v5_html.py',
 ]
 
