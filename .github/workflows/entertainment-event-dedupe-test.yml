@@ -1,0 +1,38 @@
+name: Entertainment Event Dedupe Test
+on:
+  push:
+    branches: [fix/entertainment-event-dedupe-emmys]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Exact rewritten-event regression
+        run: |
+          python - <<'PY'
+          import sys, xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import cluster_related_coverage as c
+          def item(title, source):
+              x=ET.Element('item')
+              for tag,val in [('title',title),('description',title),('category','entertainment'),('source',source),('link','https://example.com/'+source),('pubDate','Wed, 09 Sep 2026 14:00:00 GMT')]: ET.SubElement(x,tag).text=val
+              return x
+          deadline=item("Emmys 2026 Presenters: 'Charlie's Angels', 'Buffy' Reunions; Zendaya",'Deadline')
+          variety=item("'Charlie's Angels' Reunion, Zendaya Among Confirmed Emmys Presenters",'Variety')
+          assert c.entertainment_event_match(deadline,variety), 'reported Deadline/Variety duplicate was missed'
+          other=item("Netflix Developing 'Diablo' Animated Series",'Deadline2')
+          assert not c.entertainment_event_match(deadline,other), 'unrelated Entertainment stories over-clustered'
+          root=ET.Element('rss'); channel=ET.SubElement(root,'channel'); channel.extend([deadline,variety,other])
+          removed=set(); clusters,attached=c.consolidate_rows(list(channel.findall('item')),removed)
+          assert clusters==1 and len(removed)==1 and attached==1, (clusters,len(removed),attached)
+          primary=deadline if id(deadline) not in removed else variety
+          rel=primary.findall('./relatedArticles/article')
+          assert len(rel)==1, len(rel)
+          print('ENTERTAINMENT EVENT DEDUPE PASS')
+          PY
+      - name: Existing editorial regressions
+        run: python tests/editorial_integrity_test.py
