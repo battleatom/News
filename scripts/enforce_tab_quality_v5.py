@@ -136,10 +136,11 @@ def run(feed=NEWS,report=REPORT,apply=True):
     items=list(channel.findall('item')); before=Counter(category(i) for i in items)
     actions=[]; removed=set()
     for idx,item in enumerate(items):
+        original=category(item)
         action,dest,reason=apply_rule(item)
         if action=='reroute':set_category(item,dest)
         elif action=='drop':removed.add(idx)
-        if action!='keep':actions.append({'title':text(item,'title'),'from':before_category if False else category(item),'action':action,'to':dest,'reason':reason})
+        if action!='keep':actions.append({'title':text(item,'title'),'from':original,'action':action,'to':dest,'reason':reason})
     final=[i for idx,i in enumerate(items) if idx not in removed]
     after=Counter(category(i) for i in final)
     excessive={c:{'before':before[c],'after':after[c]} for c in ('world','us','gaming') if before[c]>=10 and after[c]<max(5,int(before[c]*.70))}
