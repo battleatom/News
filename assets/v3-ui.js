@@ -1,4 +1,4 @@
-/* Underreported 3.1 — non-destructive presentation enhancements. */
+/* Underreported presentation enhancements. Behavior only; visual rules live in CSS. */
 (function(){
   'use strict';
 
@@ -20,29 +20,6 @@
       if(typeof active!=='undefined'&&active)return String(active);
     }catch(e){}
     return document.body?.dataset?.activeTab||'';
-  }
-
-  function removeRetiredHierarchyLegend(root=document){
-    root.querySelectorAll?.('.v3-card-key').forEach(el=>el.remove());
-  }
-
-  function installAgeStyles(){
-    if(document.getElementById('underreported-age-styles-v31'))return;
-    const style=document.createElement('style');
-    style.id='underreported-age-styles-v31';
-    style.textContent=`
-      .news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
-      .news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
-      .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
-      .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
-      .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-      .underreported-age-key{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 12px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
-      .underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
-      .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px;flex:0 0 auto}
-      .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
-      @media(max-width:600px){.underreported-age-key{font-size:10px;gap:6px 9px;margin-bottom:9px}}
-    `;
-    document.head.appendChild(style);
   }
 
   function decorateUnderreportedAge(card){
@@ -111,7 +88,6 @@
   }
 
   function processCards(root=document){
-    removeRetiredHierarchyLegend(root);
     root.querySelectorAll?.('.news-item').forEach(card=>{
       decorateWhy(card);
       decorateSource(card);
@@ -194,7 +170,7 @@
     sync();
     applyMobileLayout();
     if(local)toolbar.insertBefore(compact,local);else toolbar.appendChild(compact);
-    new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true,attributes:true});
+    new MutationObserver(sync).observe(pull,{subtree:true,childList:true,characterData:true});
     window.addEventListener('resize',applyMobileLayout,{passive:true});
 
     if(window.__v3UtilityStatusTimer)clearInterval(window.__v3UtilityStatusTimer);
@@ -203,9 +179,7 @@
   }
 
   function refresh(){
-    if(document.body)document.body.dataset.underreportedVersion='3.1';
-    removeRetiredHierarchyLegend();
-    installAgeStyles();
+    if(document.body)document.body.dataset.underreportedVersion='5';
     installUtilityStatus();
     processTabs();
     processCards();
