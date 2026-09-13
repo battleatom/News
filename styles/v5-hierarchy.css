@@ -1,0 +1,16 @@
+/* V5 hierarchy conflict fix. Uses explicit card classes instead of :has() or lead-story-v2. */
+html body .news-item.v5-hierarchy-high:not(.nfl-game-card){border-left-color:var(--v5-high,#dc2626)!important;border-left-width:5px!important}
+html body .news-item.v5-hierarchy-analysis:not(.nfl-game-card){border-left-color:var(--v5-analysis,#7c3aed)!important;border-left-width:5px!important}
+html body .news-item.v5-hierarchy-local:not(.nfl-game-card){border-left-color:var(--v5-local,#15803d)!important;border-left-width:5px!important}
+html body .news-item.v5-hierarchy-trending:not(.nfl-game-card){border-left-color:var(--v5-trending,#2563eb)!important;border-left-width:5px!important}
+html body .news-item.v5-hierarchy-standard:not(.nfl-game-card){border-left-color:var(--v5-standard,#64748b)!important;border-left-width:3px!important}
+
+html body .v3-importance.standard{color:#526075!important;background:rgba(100,116,139,.07)!important;border-color:rgba(100,116,139,.19)!important}
+html body .v3-importance.standard::before{content:'•';font-size:13px!important;line-height:.7!important}
+
+/* Keep special V4 card systems intact. */
+html body .nfl-game-card .v3-importance{display:none!important}
+
+@media(prefers-color-scheme:dark){
+  html body .v3-importance.standard{color:#d1d7e0!important;background:rgba(203,213,225,.07)!important;border-color:rgba(203,213,225,.16)!important}
+}
