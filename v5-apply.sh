@@ -10,3 +10,5 @@ python scripts/update_why_matters.py
 # One canonical build now owns every UI mutation, including location, NFL streaming,
 # system health and Entertainment wiring.
 python scripts/build_site.py
+# Report source concentration and fallback quality without mutating the rendered feed.
+python scripts/source_health.py
