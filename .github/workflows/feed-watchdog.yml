@@ -1,0 +1,84 @@
+name: News Feed Watchdog
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: news-feed-watchdog
+  cancel-in-progress: true
+
+jobs:
+  stale-feed-recovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check production feed freshness
+        id: freshness
+        env:
+          RAW_BASE: https://raw.githubusercontent.com/battleatom/News/main
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          from datetime import datetime, timezone
+          def load(name):
+              url=f"{os.environ['RAW_BASE']}/{name}?t={datetime.now(timezone.utc).timestamp()}"
+              with urllib.request.urlopen(url, timeout=20) as r:
+                  return json.load(r)
+          stats=load('update-stats.json')
+          health=load('refresh-health.json')
+          stamp=stats.get('updatedAt') or health.get('generatedAt')
+          if not stamp:
+              age=9999
+          else:
+              dt=datetime.fromisoformat(stamp.replace('Z','+00:00'))
+              age=(datetime.now(timezone.utc)-dt).total_seconds()/60
+          degraded=str(health.get('status','')).lower() not in {'healthy','ok'}
+          stale=age>45 or degraded
+          print(f'Feed age: {age:.1f} minutes; health={health.get("status")}; stale={stale}')
+          with open(os.environ['GITHUB_OUTPUT'],'a',encoding='utf-8') as f:
+              f.write(f'stale={str(stale).lower()}\n')
+              f.write(f'age={age:.1f}\n')
+          PY
+
+      - name: Dispatch recovery update
+        if: steps.freshness.outputs.stale == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run update-news.yml --repo battleatom/News --ref main
+
+      - name: Verify recovery
+        if: steps.freshness.outputs.stale == 'true'
+        env:
+          RAW_BASE: https://raw.githubusercontent.com/battleatom/News/main
+        run: |
+          python - <<'PY'
+          import json, os, time, urllib.request
+          from datetime import datetime, timezone
+          for attempt in range(12):
+              time.sleep(60)
+              url=f"{os.environ['RAW_BASE']}/update-stats.json?t={time.time()}"
+              try:
+                  with urllib.request.urlopen(url, timeout=20) as r:
+                      d=json.load(r)
+                  stamp=d.get('updatedAt')
+                  if stamp:
+                      dt=datetime.fromisoformat(stamp.replace('Z','+00:00'))
+                      age=(datetime.now(timezone.utc)-dt).total_seconds()/60
+                      print(f'Recovery check {attempt+1}: feed age {age:.1f} minutes')
+                      if age <= 20:
+                          print('Feed recovery verified.')
+                          raise SystemExit(0)
+              except Exception as e:
+                  print('Recovery check error:',e)
+          raise SystemExit('Feed remained stale after automatic recovery dispatch.')
+          PY
+
+      - name: Healthy feed summary
+        if: steps.freshness.outputs.stale != 'true'
+        run: echo "Feed is healthy; age ${{ steps.freshness.outputs.age }} minutes."
