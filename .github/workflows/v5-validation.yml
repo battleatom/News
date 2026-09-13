@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: final-v5-fast-validation
@@ -102,3 +102,62 @@ jobs:
           if bad: raise SystemExit('Unexpected V4 source deletion(s): '+', '.join(bad))
           print('No unexpected V4 source deletions.')
           PY
+
+  publish-preview:
+    needs: fast-regression
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    concurrency:
+      group: final-v5-live-preview
+      cancel-in-progress: true
+    steps:
+      - name: Checkout validated V5 source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          path: candidate
+          fetch-depth: 1
+
+      - name: Checkout current production branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: production
+          fetch-depth: 0
+
+      - name: Materialize isolated V5 live preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf production/v5-preview
+          mkdir -p production/v5-preview
+          cp candidate/index.html candidate/News production/v5-preview/
+          cp -R candidate/assets candidate/styles production/v5-preview/
+          for f in markets.json update-stats.json boxoffice.json state-legislation.json refresh-health.json content-brief-cache.json verification-report.json v4-release-report.json; do
+            [ -f "candidate/$f" ] && cp "candidate/$f" production/v5-preview/
+          done
+          printf '{"sourceSha":"%s","branch":"Final-V5"}\n' "${GITHUB_SHA}" > production/v5-preview/preview-meta.json
+
+      - name: Publish preview without touching production root
+        working-directory: production
+        run: |
+          set -e
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add v5-preview
+          if git diff --cached --quiet; then
+            echo 'V5 preview already current.'
+            exit 0
+          fi
+          git commit -m 'Update isolated Final V5 preview [skip ci]'
+          for attempt in 1 2 3; do
+            if git push origin HEAD:main; then exit 0; fi
+            git fetch origin main
+            git rebase origin/main
+            [ "$attempt" -lt 3 ] && sleep 2
+          done
+          exit 1
+
+      - name: Publish preview URL
+        run: echo 'Preview: https://battleatom.github.io/News/v5-preview/' >> "$GITHUB_STEP_SUMMARY"
