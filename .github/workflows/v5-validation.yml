@@ -45,7 +45,7 @@ jobs:
         run: |
           python scripts/site_audit.py
           python scripts/v5_runtime_audit.py
-          python scripts/v4_release_gate.py
+          python scripts/v5_release_gate.py
 
       - name: Run inherited deterministic regressions
         run: |
