@@ -4,8 +4,9 @@ import re
 P=Path('index.html')
 s=P.read_text(encoding='utf-8')
 
-# Remove prior V2 injections so this remains safe to run on every build.
+# Remove prior frontend injections so this remains safe to run on every build.
 s=re.sub(r'\s*<link[^>]+href="styles/v2\.css[^>]*>','',s)
+s=re.sub(r'\s*<link[^>]+href="styles/v3\.css[^>]*>','',s)
 s=re.sub(r'\s*<script[^>]+src="assets/location-v2\.js[^>]*></script>','',s)
 s=re.sub(r'\s*<script[^>]+src="assets/app-v2\.js[^>]*></script>','',s)
 s=re.sub(r'\s*<a class="skip-link-v2"[^>]*>.*?</a>','',s,flags=re.S)
@@ -17,7 +18,10 @@ if '<meta name="description"' not in s:
 # Keep the brand but make the masthead read like a publication instead of a dashboard.
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<script src="assets/location-v2.js?v=4"></script>\n'''
+# V3/V5 presentation CSS must load after V2 so hierarchy, card borders and dark-mode
+# refinements reliably win the cascade. location-v2.js also contains a defensive
+# loader so older generated pages still recover the presentation layer.
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v3.css?v=7" data-underreported-v3-style="true">\n<script src="assets/location-v2.js?v=5"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
@@ -34,4 +38,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported 2.5 frontend: full-width desktop, newspaper masthead, location-aware categories, compact mobile UI and shared health/location services.')
+print('Applied Underreported frontend with V5 presentation layer: hierarchy, borders, icon decorations, dark mode and shared health/location services.')
