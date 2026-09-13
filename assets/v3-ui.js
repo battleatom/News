@@ -32,10 +32,16 @@
       .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
       .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
       .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-      .underreported-age-key{display:flex;flex-wrap:wrap;gap:8px 12px;margin:6px 0 12px;font-size:11px;opacity:.82}
-      .underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
-      .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px}
+      .underreported-age-key,.v3-card-key{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 12px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
+      .underreported-age-key span,.v3-card-key span{display:inline-flex;align-items:center;gap:5px}
+      .underreported-age-key i,.v3-card-key i{display:inline-block;width:9px;height:9px;border-radius:2px;flex:0 0 auto}
       .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
+      .v3-card-key{padding:7px 9px;border:1px solid var(--ui-line,rgba(71,85,105,.16));border-radius:9px;background:rgba(100,116,139,.035)}
+      .v3-card-key .key-title{font-weight:850;letter-spacing:.04em;text-transform:uppercase;color:var(--ui-subtle,#7f8b9d)}
+      .v3-card-key .high i{background:#dc2626}.v3-card-key .analysis i{background:#7c3aed}.v3-card-key .local i{background:#15803d}.v3-card-key .trending i{background:#2563eb}.v3-card-key .standard i{background:#94a3b8}
+      .v3-card-key .new-red i{background:#dc2626}.v3-card-key .new-blue i{background:#2563eb}.v3-card-key .new-yellow i{background:#facc15}
+      .v3-card-key .key-sep{width:1px;height:13px;background:var(--ui-line,rgba(71,85,105,.16));margin:0 1px}
+      @media(max-width:600px){.underreported-age-key,.v3-card-key{font-size:10px;gap:6px 9px;margin-bottom:9px}.v3-card-key{padding:6px 7px}.v3-card-key .key-sep{display:none}}
     `;
     document.head.appendChild(style);
   }
@@ -67,7 +73,19 @@
     if(!section||section.querySelector('.underreported-age-key'))return;
     const key=document.createElement('div');
     key.className='underreported-age-key';
+    key.setAttribute('aria-label','Underreported story age color key');
     key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
+    const body=section.querySelector('.section-body');
+    if(body)section.insertBefore(key,body);
+  }
+
+  function installCardLegend(){
+    const section=document.querySelector('#news-feed .section');
+    if(!section||section.querySelector('.v3-card-key'))return;
+    const key=document.createElement('div');
+    key.className='v3-card-key';
+    key.setAttribute('aria-label','Card hierarchy and new-story color key');
+    key.innerHTML='<span class="key-title">Card hierarchy</span><span class="high"><i></i>High impact</span><span class="analysis"><i></i>Analysis</span><span class="local"><i></i>Local</span><span class="trending"><i></i>Trending</span><span class="standard"><i></i>Standard</span><span class="key-sep" aria-hidden="true"></span><span class="key-title">NEW</span><span class="new-red"><i></i>Added &lt;1h</span><span class="new-blue"><i></i>Published &lt;3h</span><span class="new-yellow"><i></i>Older story added &lt;3h</span>';
     const body=section.querySelector('.section-body');
     if(body)section.insertBefore(key,body);
   }
@@ -126,6 +144,7 @@
       addImportance(card);
       decorateUnderreportedAge(card);
     });
+    installCardLegend();
     installUnderreportedLegend();
   }
 
