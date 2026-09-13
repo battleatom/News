@@ -22,6 +22,10 @@
     return document.body?.dataset?.activeTab||'';
   }
 
+  function removeRetiredHierarchyLegend(root=document){
+    root.querySelectorAll?.('.v3-card-key').forEach(el=>el.remove());
+  }
+
   function installAgeStyles(){
     if(document.getElementById('underreported-age-styles-v31'))return;
     const style=document.createElement('style');
@@ -107,6 +111,7 @@
   }
 
   function processCards(root=document){
+    removeRetiredHierarchyLegend(root);
     root.querySelectorAll?.('.news-item').forEach(card=>{
       decorateWhy(card);
       decorateSource(card);
@@ -199,6 +204,7 @@
 
   function refresh(){
     if(document.body)document.body.dataset.underreportedVersion='3.1';
+    removeRetiredHierarchyLegend();
     installAgeStyles();
     installUtilityStatus();
     processTabs();

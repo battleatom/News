@@ -20,6 +20,10 @@ html body .section-header h2{font-size:21px!important;line-height:1.15!important
 html body .section-header .count{font-size:10px!important;font-weight:700!important;color:var(--v5-subtle)!important}
 html body .section-body{gap:8px!important}
 
+/* Retired semantic hierarchy legend must never display. Underreported's separate
+   age legend uses .underreported-age-key and is intentionally unaffected. */
+html body .v3-card-key{display:none!important}
+
 /* Every story remains a neutral card. NFL keeps its own team-color treatment.
    Underreported retains its independent age-band rail rules. */
 html body .news-item:not(.nfl-game-card){
