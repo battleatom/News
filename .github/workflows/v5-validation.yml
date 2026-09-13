@@ -38,7 +38,15 @@ jobs:
       - name: Validate Python syntax
         run: python -m py_compile scripts/*.py tests/*.py
 
-      - name: Run V4 inherited structural audit
+      - name: Apply enabled V5 feed transforms
+        run: |
+          if [ -f v5-apply.sh ]; then
+            bash -e v5-apply.sh
+          else
+            echo 'No V5 feed transforms enabled yet.'
+          fi
+
+      - name: Run inherited structural audit on V5-transformed snapshot
         run: python scripts/site_audit.py
 
       - name: Run inherited deterministic regressions
