@@ -11,7 +11,8 @@ assert len(mod.CATEGORIES)==10
 assert len(set(mod.EXPECTED_TOPICS))==10
 workflow=(ROOT/'.github/workflows/update-news.yml').read_text(encoding='utf-8')
 assert 'Rebuild fixed X Top Issues from verified feed' in workflow
-assert 'Verify exactly ten fixed X topics' in workflow
+assert ('Verify exactly ten fixed X topics' in workflow or
+        'Verify exactly ten relevant fixed X topics' in workflow)
 ui=(ROOT/'scripts/patch_x_ui.py').read_text(encoding='utf-8')
 assert "==='x'" in ui
 print('X static topic contract test passed.')
