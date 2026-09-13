@@ -1,0 +1,36 @@
+name: US Sports Score Headline Test
+
+on:
+  push:
+    branches: [fix/us-sports-score-headlines]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Python
+        run: python -m py_compile scripts/*.py tests/*.py
+      - name: Run editorial integrity regression
+        run: python tests/editorial_integrity_test.py
+      - name: Apply final editorial integrity to current feed
+        run: python scripts/enforce_editorial_integrity.py
+      - name: Verify exact leaked headline is gone
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          root=ET.parse('News').getroot()
+          bad=[]
+          for item in root.findall('./channel/item'):
+              if (item.findtext('category') or '').strip().lower()!='us':
+                  continue
+              title=(item.findtext('title') or '').strip()
+              low=title.lower()
+              if 'josh hoover throws 4 tds' in low or ('55-0' in low and 'indiana' in low and 'howard' in low):
+                  bad.append(title)
+          assert not bad, bad
+          print('US SCORE-HEADLINE LEAK CHECK PASS')
+          PY
