@@ -7,3 +7,4 @@ Final exact-head audit after canonical preview materialization.
 Validate explicit hierarchy bridge after canonical preview commit 1bb1b3d.
 Quality audit: validate materialized performance, tab-leak, and workflow-failure fixes at 9532cbf.
 Final exact-head quality audit after idempotent materialization fa17e69.
+Render-bound hierarchy candidate validation after updating observer/cache regression contract.
