@@ -3,3 +3,4 @@ tests/us_sports_feed_check.py
 tests/story_context_regression_test.py
 tests/event_cluster_dedupe_test.py
 tests/feed_quality_regression_test.py
+tests/underreported_priority_test.py

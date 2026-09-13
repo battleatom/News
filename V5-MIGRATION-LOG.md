@@ -20,8 +20,13 @@ Baseline: hard-saved V4 commit `9549044575ac8ce8c17eccaa09702e157797b1cd` (`v4-h
 - Result: PASS.
 
 ## Fix 3 — event clustering and cross-tab canonicalization
-- Goal: collapse same-event coverage into one primary card while retaining removed copies as supporting coverage, including conservative cross-tab duplicate removal.
 - Optimization: one event-identity layer handles exact/syndicated/semantic overlap instead of tab-specific duplicate scripts; cross-tab pruning has a 25% category-reduction safety ceiling.
-- Performance finding: applying the full event-clustering pass to the complete V4 feed in every per-fix CI run is unnecessarily expensive. Full clustering remains covered by `tests/event_cluster_dedupe_test.py` and remains a final-build stage; per-fix CI applies only the fast conservative cross-tab pass to the real feed.
+- Performance optimization: full event clustering remains covered by its focused regression and final-build stage, while per-fix CI runs the fast conservative cross-tab pass on the full feed.
 - Tests: event-cluster regression, feed-quality regression, fast cross-tab full-feed transform, all prior V5 tests and V4 guards.
-- Status: pending optimized CI rerun.
+- Result: PASS.
+
+## Fix 4 — Underreported relevance and priority ranking
+- Goal: rank Underreported by freshness, corroboration, coverage gap, momentum, continuing relevance, and event identity while rejecting low-value shopping/routine gaming items.
+- Optimization: per-fix CI ranks the already collected V4 pool deterministically; network discovery and enrichment are retained for the final production build only.
+- Test: `tests/underreported_priority_test.py` plus all prior V5 tests and V4 guards.
+- Status: pending CI.
