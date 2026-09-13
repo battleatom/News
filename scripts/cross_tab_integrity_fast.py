@@ -4,11 +4,11 @@ import argparse, json, re, xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from urllib.parse import urlsplit, urlunsplit
+from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+from v51_policy import ROUTABLE, PRIORITY, overlap_allowed
 
-ROUTABLE={'world','us','presidential','federal','nm','local','region','technology','gaming','military','nfl'}
-PRIORITY={'local':90,'nm':85,'presidential':82,'federal':80,'nfl':80,'gaming':76,'technology':74,'military':72,'region':68,'us':55,'world':50}
 STOP={'the','and','for','from','with','that','this','after','before','into','over','about','new','says','said','news','live','are','was','were','has','have','had','its'}
+TRACKING_PREFIXES=('utm_','fbclid','gclid','mc_','ref','ref_','source')
 def clean(v): return re.sub(r'\s+',' ',v or '').strip()
 def cat(i): return clean(i.findtext('category')).lower()
 def title(i):
@@ -18,13 +18,23 @@ def curl(raw):
     raw=clean(raw)
     if not raw:return ''
     try:
-        p=urlsplit(raw); return urlunsplit(((p.scheme or 'https').lower(),p.netloc.lower().removeprefix('www.'),re.sub(r'/+$','',p.path) or '/','',''))
+        p=urlsplit(raw)
+        host=p.netloc.lower().removeprefix('www.')
+        path=re.sub(r'/+$','',p.path) or '/'
+        keep=[]
+        for k,v in parse_qsl(p.query,keep_blank_values=False):
+            lk=k.lower()
+            if any(lk==x or lk.startswith(x) for x in TRACKING_PREFIXES): continue
+            keep.append((k,v))
+        return urlunsplit(((p.scheme or 'https').lower(),host,path,urlencode(sorted(keep)) if keep else '',''))
     except Exception:return raw.lower()
+def item_url(i):
+    return curl(i.findtext('resolvedPublisherUrl')) or curl(i.findtext('link'))
 def related(primary,other):
     rel=primary.find('relatedArticles')
     if rel is None: rel=ET.SubElement(primary,'relatedArticles')
-    key=curl(other.findtext('link')) or title(other).lower()
-    existing={curl(x.findtext('link')) or title(x).lower() for x in rel.findall('article')}
+    key=item_url(other) or title(other).lower()
+    existing={item_url(x) or title(x).lower() for x in rel.findall('article')}
     if not key or key in existing:return False
     ar=ET.SubElement(rel,'article')
     for tag in ('title','link','source','pubDate'):
@@ -35,7 +45,7 @@ def related(primary,other):
 def scan(items):
     sig=[]
     for i in items:
-        sig.append((cat(i),curl(i.findtext('link')),toks(title(i)),toks(clean(i.findtext('description')))))
+        sig.append((cat(i),item_url(i),toks(title(i)),toks(clean(i.findtext('description')))))
     parent=list(range(len(items))); reasons={}
     def find(x):
         while parent[x]!=x: parent[x]=parent[parent[x]]; x=parent[x]
@@ -48,9 +58,9 @@ def scan(items):
         ca,ua,ta,da=sig[a]
         for b in active[pos+1:]:
             cb,ub,tb,db=sig[b]
-            if ca==cb: continue
+            if ca==cb or overlap_allowed(ca,cb): continue
             reason=''
-            if ua and ua==ub: reason='same-url'
+            if ua and ua==ub: reason='same-canonical-url'
             elif ta and tb:
                 shared=len(ta&tb); ratio=shared/max(1,min(len(ta),len(tb)))
                 if min(len(ta),len(tb))>=5 and shared>=5 and ratio>=.88: reason='near-identical-title'
@@ -82,7 +92,7 @@ def run(feed,report,apply):
         for i in final: channel.append(i)
         tree.write(feed,encoding='utf-8',xml_declaration=True)
     residual,_=scan(final)
-    out={'mode':'apply' if apply else 'dry-run','generatedAt':datetime.now(timezone.utc).isoformat(),'inputArticles':len(items),'outputArticles':len(final),'crossTabPairsDetected':len(reasons),'crossTabDuplicatesRemoved':len(removed),'supportingLinksAttached':attached,'categoryDrops':{c:before[c]-after[c] for c in sorted(ROUTABLE) if before[c]!=after[c]},'clusters':rows,'residualStrongCrossTabClusters':len(residual),'policy':{'editorialSurfacesExcluded':['top','underreported','x','boxoffice','legislation','entertainment'],'maxCategoryReduction':'25%'}}
+    out={'mode':'apply' if apply else 'dry-run','generatedAt':datetime.now(timezone.utc).isoformat(),'inputArticles':len(items),'outputArticles':len(final),'crossTabPairsDetected':len(reasons),'crossTabDuplicatesRemoved':len(removed),'supportingLinksAttached':attached,'categoryDrops':{c:before[c]-after[c] for c in sorted(ROUTABLE) if before[c]!=after[c]},'clusters':rows,'residualStrongCrossTabClusters':len(residual),'policy':{'allowedOverlapPairs':sorted([sorted(x) for x in __import__('v51_policy').ALLOWED_OVERLAP]),'editorialSurfacesExcluded':['top','underreported','x','boxoffice','legislation','entertainment'],'maxCategoryReduction':'25%'}}
     Path(report).write_text(json.dumps(out,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
     print(json.dumps({k:out[k] for k in ('inputArticles','outputArticles','crossTabPairsDetected','crossTabDuplicatesRemoved','categoryDrops','residualStrongCrossTabClusters')},indent=2))
     if residual: raise SystemExit(f'{len(residual)} residual strong cross-tab clusters remain')
