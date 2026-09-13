@@ -53,8 +53,8 @@ NFL_CONTEXT = {
     'nfl','national football league','super bowl','quarterback','touchdown','wide receiver','running back','tight end',
     'training camp','free agency'
 }
-# Team names and unambiguous team nicknames are strong NFL evidence even when a
-# headline never spells out "NFL" or "football" (common in score/game headlines).
+# Team names and a deliberately conservative set of distinctive team nicknames are
+# strong NFL evidence even when a headline never spells out "NFL" or "football".
 NFL_TEAM_TERMS = {
     'arizona cardinals','atlanta falcons','baltimore ravens','buffalo bills','carolina panthers','chicago bears',
     'cincinnati bengals','cleveland browns','dallas cowboys','denver broncos','detroit lions','green bay packers',
@@ -64,8 +64,8 @@ NFL_TEAM_TERMS = {
     'san francisco 49ers','seattle seahawks','tampa bay buccaneers','tennessee titans','washington commanders'
 }
 NFL_TEAM_ALIASES = {
-    '49ers','bengals','broncos','buccaneers','chargers','chiefs','colts','commanders','cowboys','dolphins','eagles',
-    'falcons','jaguars','packers','panthers','patriots','raiders','ravens','seahawks','steelers','texans','titans','vikings'
+    '49ers','bengals','broncos','buccaneers','chargers','chiefs','colts','commanders','dolphins','packers',
+    'patriots','ravens','seahawks','steelers','texans','titans'
 }
 CIVIC_CONTEXT = {
     'congress','senate','house of representatives','supreme court','court','judge','lawsuit','law','legislation','bill',
