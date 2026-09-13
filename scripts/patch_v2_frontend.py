@@ -21,9 +21,9 @@ if '<meta name="description"' not in s:
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
 # V5 presentation remains isolated from V4-derived feed/routing behavior.
-# The hierarchy bridge uses explicit semantic card classes instead of the removed
-# lead-story-v2 class or browser-dependent :has() selectors.
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link rel="stylesheet" href="styles/v5-hierarchy.css?v=2" data-v5-hierarchy="true">\n<script src="assets/location-v2.js?v=6"></script>\n<script src="assets/v5-hierarchy.js?v=3" defer data-v5-hierarchy="true"></script>\n'''
+# Normal card CSS loads first; the canonical hierarchy sheet loads after it so its
+# semantic rail rules are persistent and win the cascade.
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link id="v5-hierarchy-style" rel="stylesheet" href="styles/v5-hierarchy.css?v=3" data-v5-hierarchy="true">\n<script src="assets/location-v2.js?v=7"></script>\n<script src="assets/v5-hierarchy.js?v=4" defer data-v5-hierarchy="true" data-underreported-v5-hierarchy="true"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
@@ -40,4 +40,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 visual refinement: V4 behavior preserved; explicit hierarchy rails and icon badges enabled.')
+print('Applied Underreported V5 visual refinement: render-bound hierarchy rails and icon badges are canonical and cache-busted.')
