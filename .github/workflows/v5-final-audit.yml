@@ -165,10 +165,17 @@ jobs:
           git diff --check 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
           test "$(git -C baseline-v4 rev-parse HEAD)" = "9549044575ac8ce8c17eccaa09702e157797b1cd"
           git fetch origin Final-V5
-          test "$(git rev-parse origin/Final-V5)" = "$SOURCE_SHA"
-          echo "V4 remained frozen and Final-V5 source remained fixed: $SOURCE_SHA"
+          current=$(git rev-parse origin/Final-V5)
+          if [ "$current" = "$SOURCE_SHA" ]; then
+            echo "HEAD_STILL_CURRENT=true" >> "$GITHUB_ENV"
+            echo "V4 remained frozen and Final-V5 source remained fixed: $SOURCE_SHA"
+          else
+            echo "HEAD_STILL_CURRENT=false" >> "$GITHUB_ENV"
+            echo "::notice::Audit source $SOURCE_SHA passed its checks, but Final-V5 advanced to $current during the run. This audit is stale, not failed; no release candidate will be frozen."
+          fi
 
       - name: Freeze exact validated V5 release candidate
+        if: env.HEAD_STILL_CURRENT == 'true'
         run: |
           set -e
           short=${SOURCE_SHA:0:7}
