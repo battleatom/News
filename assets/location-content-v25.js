@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  if(window.__locationContentV36)return;
+  if(window.__locationContentV37)return;
 
   const LOCAL_RADIUS_MILES=150;
   const LOCAL_MIN_STORIES=8;
@@ -8,7 +8,7 @@
   const SCOPE_KEY='underreported-location-scope';
   const STATES={AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
   const STATE_REGION={AL:'southeast',AK:'pacific-northwest',AZ:'southwest',AR:'south',CA:'west',CO:'mountain',CT:'northeast',DE:'northeast',FL:'southeast',GA:'southeast',HI:'west',ID:'mountain',IL:'midwest',IN:'midwest',IA:'midwest',KS:'midwest',KY:'south',LA:'south',ME:'northeast',MD:'northeast',MA:'northeast',MI:'midwest',MN:'midwest',MS:'southeast',MO:'midwest',MT:'mountain',NE:'midwest',NV:'southwest',NH:'northeast',NJ:'northeast',NM:'southwest',NY:'northeast',NC:'southeast',ND:'midwest',OH:'midwest',OK:'south',OR:'pacific-northwest',PA:'northeast',RI:'northeast',SC:'southeast',SD:'midwest',TN:'southeast',TX:'south',UT:'mountain',VT:'northeast',VA:'south',WA:'pacific-northwest',WV:'south',WI:'midwest',WY:'mountain',DC:'northeast'};
-  const REGION_LABELS={'southwest':'Southwest','west':'West','mountain':'Mountain','midwest':'Midwest','south':'South','northeast':'Northeast','pacific-northwest':'Pacific Northwest','southeast':'Southeast'};
+  const REGION_LABELS={'southwest':'Southwest','west':'West','mountain':'Mountain West','midwest':'Midwest','south':'South','northeast':'Northeast','pacific-northwest':'Pacific Northwest','southeast':'Southeast'};
   const IMPACT=[['emergency',24],['wildfire',22],['shooting',22],['killed',18],['death',14],['evacuation',18],['earthquake',20],['tornado',20],['flood',18],['drought',15],['water',10],['supreme court',18],['court',10],['law',12],['legislation',12],['election',16],['governor',10],['school',9],['hospital',10],['health',8],['layoff',12],['economy',9],['inflation',10],['crime',10],['police',9],['cyber',12],['outage',12],['breaking',12]];
   const FARMINGTON_AREA=['farmington','aztec','bloomfield','kirtland','shiprock','four corners','san juan county'];
 
@@ -81,22 +81,43 @@
     return unique(ordered).map(i=>cloneAs(i,REGION_LABELS[loc.region]||'Region')).slice(0,90);
   }
   function take(pool,n,used){const out=[];for(const item of pool){const k=itemKey(item);if(!k||used.has(k))continue;used.add(k);out.push(item);if(out.length>=n)break}return out}
-  function mergedPool(items){const loc=location(),used=new Set();const local=localPool(items),county=countyPool(items),state=statePool(items),region=regionPool(items);const top=[...take(local,5,used),...take(county,5,used),...take(state,6,used),...take(region,4,used)];const remainder=rank([...local,...county,...state,...region].filter(i=>!used.has(itemKey(i))),loc);window.__locationHubCountsV36={local:local.length,county:county.length,state:state.length,region:region.length,location:loc};window.__locationHubCountsV35=window.__locationHubCountsV36;return unique([...top,...remainder]).slice(0,90)}
+  function mergedPool(items){const loc=location(),used=new Set();const local=localPool(items),county=countyPool(items),state=statePool(items),region=regionPool(items);const top=[...take(local,5,used),...take(county,5,used),...take(state,6,used),...take(region,4,used)];const remainder=rank([...local,...county,...state,...region].filter(i=>!used.has(itemKey(i))),loc);window.__locationHubCountsV37={local:local.length,county:county.length,state:state.length,region:region.length,location:loc};window.__locationHubCountsV36=window.__locationHubCountsV37;window.__locationHubCountsV35=window.__locationHubCountsV37;return unique([...top,...remainder]).slice(0,90)}
   function scope(){const v=localStorage.getItem(SCOPE_KEY)||'all';return ['all','state','county','local','region'].includes(v)?v:'all'}
   function scopedPool(items){const s=scope();if(s==='state')return statePool(items);if(s==='county')return countyPool(items);if(s==='local')return localPool(items);if(s==='region')return regionPool(items);return mergedPool(items)}
 
-  function removeStandaloneLocationTabs(){if(typeof CANONICAL_SECTIONS==='undefined'||!Array.isArray(CANONICAL_SECTIONS))return;for(let i=CANONICAL_SECTIONS.length-1;i>=0;i--){if(['local','region'].includes(CANONICAL_SECTIONS[i]?.[0]))CANONICAL_SECTIONS.splice(i,1)}if(typeof sections!=='undefined')sections=CANONICAL_SECTIONS;try{if(typeof active!=='undefined'&&['local','region'].includes(active)){active='nm';localStorage.setItem('underreported-active-tab','nm')}}catch(e){}}
-  function updateLabel(){if(typeof CANONICAL_SECTIONS==='undefined'||!Array.isArray(CANONICAL_SECTIONS))return;const loc=location();const state=CANONICAL_SECTIONS.find(x=>x[0]==='nm');if(state)state[1]=loc.name?`🗺️ ${loc.name}`:'🗺️ State';if(typeof sections!=='undefined')sections=CANONICAL_SECTIONS}
+  function ensureStandaloneLocationTabs(){
+    if(typeof CANONICAL_SECTIONS==='undefined'||!Array.isArray(CANONICAL_SECTIONS))return;
+    const ensure=(key,label,accent,afterKey)=>{
+      if(CANONICAL_SECTIONS.some(x=>x?.[0]===key))return;
+      const after=CANONICAL_SECTIONS.findIndex(x=>x?.[0]===afterKey);
+      CANONICAL_SECTIONS.splice(after>=0?after+1:CANONICAL_SECTIONS.length,0,[key,label,accent]);
+    };
+    ensure('local','📍 Local / Four Corners','#15803d','nm');
+    ensure('region','🌎 Region','#2563eb','local');
+    if(typeof sections!=='undefined')sections=CANONICAL_SECTIONS;
+  }
+  function updateLabel(){
+    if(typeof CANONICAL_SECTIONS==='undefined'||!Array.isArray(CANONICAL_SECTIONS))return;
+    const loc=location();
+    const state=CANONICAL_SECTIONS.find(x=>x[0]==='nm');
+    const local=CANONICAL_SECTIONS.find(x=>x[0]==='local');
+    const region=CANONICAL_SECTIONS.find(x=>x[0]==='region');
+    if(state)state[1]=loc.name?`🗺️ ${loc.name}`:'🗺️ State';
+    if(local)local[1]=loc.code==='NM'&&FARMINGTON_AREA.some(x=>String(loc.city||'').toLowerCase().includes(x))?'📍 Local / Four Corners':(loc.city?`📍 ${loc.city} Local`:'📍 Local');
+    if(region)region[1]=loc.region?`🌎 ${REGION_LABELS[loc.region]||'Region'} Region`:'🌎 Region';
+    if(typeof sections!=='undefined')sections=CANONICAL_SECTIONS;
+  }
   function bindScopeButtons(bar){if(bar.dataset.scopeBound==='1')return;bar.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{localStorage.setItem(SCOPE_KEY,btn.dataset.scope||'all');try{if(typeof loadCounts!=='undefined')loadCounts.nm=typeof STORIES_PER_PAGE!=='undefined'?STORIES_PER_PAGE:10}catch(e){}if(typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems)}));bar.dataset.scopeBound='1'}
   function ensureScopeBar(){if(typeof active==='undefined'||active!=='nm')return;const root=document.getElementById('news-feed');if(!root)return;const section=root.querySelector('.section');if(!section)return;let bar=section.querySelector('.location-scope-bar');if(!bar){bar=document.createElement('div');bar.className='location-scope-bar';const header=section.querySelector('.section-header');if(header&&header.nextSibling)section.insertBefore(bar,header.nextSibling);else section.prepend(bar)}const loc=location(),current=scope();const defs=[['all','All'],['state','Statewide'],['county',loc.county||'County'],['local',loc.city||'Local'],['region',REGION_LABELS[loc.region]||'Region']].filter(([k])=>k!=='county'||Boolean(loc.county));const next=defs.map(([k,label])=>`<button type="button" class="location-scope-btn${current===k?' active':''}" data-scope="${k}">${label}</button>`).join('');if(bar.innerHTML!==next){bar.innerHTML=next;bar.dataset.scopeBound=''}bindScopeButtons(bar)}
 
-  const style=document.createElement('style');style.id='location-hub-v36-style';style.textContent='.location-scope-bar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0 10px;margin:0 0 8px;border-bottom:1px solid var(--ui-line,#e5e7eb)}.location-scope-btn{border:1px solid rgba(37,99,235,.16);background:rgba(37,99,235,.05);color:#475569;border-radius:999px;padding:5px 9px;font-size:9px;font-weight:850;cursor:pointer}.location-scope-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}@media(max-width:600px){.location-scope-bar{gap:5px}.location-scope-btn{font-size:8px;padding:4px 8px}}';document.head.appendChild(style);
+  const style=document.createElement('style');style.id='location-hub-v37-style';style.textContent='.location-scope-bar{display:flex;gap:6px;flex-wrap:wrap;padding:8px 0 10px;margin:0 0 8px;border-bottom:1px solid var(--ui-line,#e5e7eb)}.location-scope-btn{border:1px solid rgba(37,99,235,.16);background:rgba(37,99,235,.05);color:#475569;border-radius:999px;padding:5px 9px;font-size:9px;font-weight:850;cursor:pointer}.location-scope-btn.active{background:#2563eb;color:#fff;border-color:#2563eb}@media(max-width:600px){.location-scope-bar{gap:5px}.location-scope-btn{font-size:8px;padding:4px 8px}}';document.head.appendChild(style);
 
-  const basePaginated=typeof paginatedNewsItems==='function'?paginatedNewsItems:null;if(basePaginated){const v36=function(items){if(active==='nm')return basePaginated(scopedPool(items));return basePaginated(items)};paginatedNewsItems=v36;window.paginatedNewsItems=v36}
+  const basePaginated=typeof paginatedNewsItems==='function'?paginatedNewsItems:null;if(basePaginated){const v37=function(items){if(active==='nm')return basePaginated(scopedPool(items));return basePaginated(items)};paginatedNewsItems=v37;window.paginatedNewsItems=v37}
   const observer=new MutationObserver(()=>ensureScopeBar());const startObserver=()=>{const root=document.getElementById('news-feed');if(root)observer.observe(root,{childList:true})};
-  function refreshLocationView(){removeStandaloneLocationTabs();updateLabel();if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();if(typeof active!=='undefined'&&active==='nm'&&typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems);setTimeout(ensureScopeBar,0)}
+  function refreshLocationView(){ensureStandaloneLocationTabs();updateLabel();if(typeof canonicalBuildTabs==='function')canonicalBuildTabs();if(typeof active!=='undefined'&&active==='nm'&&typeof canonicalRender==='function'&&typeof allItems!=='undefined')canonicalRender(allItems);setTimeout(ensureScopeBar,0)}
 
+  window.__locationStatePoolV37=statePool;window.__locationCountyPoolV37=countyPool;window.__locationLocalPoolV37=localPool;window.__locationRegionPoolV37=regionPool;window.__mergedLocationPoolV37=mergedPool;window.__locationDistanceMilesV37=distanceMiles;window.__locationRadiusMilesV37=LOCAL_RADIUS_MILES;
   window.__locationStatePoolV36=statePool;window.__locationCountyPoolV36=countyPool;window.__locationLocalPoolV36=localPool;window.__locationRegionPoolV36=regionPool;window.__mergedLocationPoolV36=mergedPool;window.__locationDistanceMilesV36=distanceMiles;window.__locationRadiusMilesV36=LOCAL_RADIUS_MILES;
   window.__locationStatePoolV35=statePool;window.__locationCountyPoolV35=countyPool;window.__locationLocalPoolV35=localPool;window.__locationRegionPoolV35=regionPool;window.__mergedLocationPoolV35=mergedPool;window.__locationDistanceMilesV35=distanceMiles;window.__locationRadiusMilesV35=LOCAL_RADIUS_MILES;window.__locationMarketPolicyV35={minLocalStories:LOCAL_MIN_STORIES,maxLocalMarkets:LOCAL_MAX_MARKETS,database:'data/us_news_markets.json',localTier:'Nearest active news market'};
-  window.addEventListener('underreported:location',refreshLocationView);removeStandaloneLocationTabs();updateLabel();startObserver();loadMarketDatabase();if(window.UnderreportedLocation?.get)window.UnderreportedLocation.get().then(refreshLocationView).catch(()=>refreshLocationView());window.__locationContentV25=true;window.__locationContentV26=true;window.__locationContentV27=true;window.__locationContentV28=true;window.__locationContentV29=true;window.__locationContentV30=true;window.__locationContentV31=true;window.__locationContentV32=true;window.__locationContentV33=true;window.__locationContentV34=true;window.__locationContentV35=true;window.__locationContentV36=true;
+  window.addEventListener('underreported:location',refreshLocationView);ensureStandaloneLocationTabs();updateLabel();startObserver();loadMarketDatabase();if(window.UnderreportedLocation?.get)window.UnderreportedLocation.get().then(refreshLocationView).catch(()=>refreshLocationView());window.__locationContentV25=true;window.__locationContentV26=true;window.__locationContentV27=true;window.__locationContentV28=true;window.__locationContentV29=true;window.__locationContentV30=true;window.__locationContentV31=true;window.__locationContentV32=true;window.__locationContentV33=true;window.__locationContentV34=true;window.__locationContentV35=true;window.__locationContentV36=true;window.__locationContentV37=true;
 })();
