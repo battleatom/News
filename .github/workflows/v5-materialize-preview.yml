@@ -1,0 +1,52 @@
+name: Final V5 Preview Materializer
+
+on:
+  push:
+    branches: [Final-V5]
+    paths: [.materialize-v5]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: final-v5-preview-materializer
+  cancel-in-progress: true
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout Final V5
+        uses: actions/checkout@v4
+        with:
+          ref: Final-V5
+          fetch-depth: 0
+
+      - name: Validate source syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Build canonical preview
+        run: bash -e v5-apply.sh
+
+      - name: Run preview-critical gates
+        run: |
+          python tests/editorial_integrity_test.py
+          python tests/us_sports_feed_check.py
+          python tests/location_validation_test.py
+          python tests/v5_nfl_streaming_test.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v5_final_audit.py
+          python scripts/v5_release_gate.py
+
+      - name: Commit exact canonical preview artifacts
+        run: |
+          git add News index.html assets/location-content-v25.js
+          if git diff --cached --quiet; then
+            echo 'Canonical preview already materialized.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Materialize canonical Final V5 preview'
+          git push origin HEAD:Final-V5
