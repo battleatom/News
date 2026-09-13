@@ -25,9 +25,13 @@ assert "underreported:feed-rendered" in hierarchy
 assert "observe(feed,{childList:true});" in v3
 assert "observe(feed,{childList:true,subtree:true})" not in v3
 
-# Cache-bust the render-bound hierarchy assets for mobile browsers.
-assert 'styles/v5-hierarchy.css?v=3' in patch
-assert 'assets/v5-hierarchy.js?v=4' in patch
-assert 'assets/location-v2.js?v=7' in patch
+# Cache-bust the persistent hierarchy assets for mobile browsers, while the inline
+# critical CSS/bootstrap provide a no-network fallback inside the generated page.
+assert 'styles/v5-hierarchy.css?v=4' in patch
+assert 'assets/v5-hierarchy.js?v=5' in patch
+assert 'assets/location-v2.js?v=8' in patch
+assert 'v5-hierarchy-critical-v1' in patch
+assert 'v5-hierarchy-bootstrap-v1' in patch
+assert ':not(.underreported-item)' in patch
 
 print('V5 frontend observer/runtime test passed.')
