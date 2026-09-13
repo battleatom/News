@@ -1,0 +1,102 @@
+name: V5 UX Architecture Cleanup Validation
+
+on:
+  push:
+    branches: [v5-ux-architecture-cleanup]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v5-ux-architecture-cleanup
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout cleanup candidate
+        uses: actions/checkout@v4
+        with:
+          ref: v5-ux-architecture-cleanup
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Validate syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Prove immutable V4 ancestry
+        run: |
+          git merge-base --is-ancestor 9549044575ac8ce8c17eccaa09702e157797b1cd HEAD
+          git diff --check 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
+
+      - name: Run UX ownership regression first
+        run: python tests/v5_ux_architecture_test.py
+
+      - name: Build exact canonical V5
+        run: bash -e v5-apply.sh
+
+      - name: Run structural and release gates
+        run: |
+          python scripts/site_audit.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v5_final_audit.py
+          python scripts/v5_release_gate.py
+
+      - name: Run enabled V5 regressions
+        run: |
+          set -e
+          while IFS= read -r t; do
+            t="${t%%#*}"
+            t="$(echo "$t" | xargs)"
+            [ -z "$t" ] && continue
+            echo "=== $t ==="
+            test -f "$t"
+            python "$t"
+          done < v5-enabled-tests.txt
+
+      - name: Prove canonical build idempotence
+        run: |
+          cp index.html /tmp/v5-index-before.html
+          cp News /tmp/v5-news-before.xml
+          python scripts/build_site.py
+          cmp -s /tmp/v5-index-before.html index.html || { echo 'index.html is not idempotent'; exit 1; }
+          cmp -s /tmp/v5-news-before.xml News || { echo 'News changed during presentation-only rebuild'; exit 1; }
+
+      - name: Verify single frontend ownership in built HTML
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          s=Path('index.html').read_text(encoding='utf-8')
+          assets=['styles/v2.css','styles/v5-visual.css','assets/location-v2.js','assets/v3-ui.js','assets/app-v2.js']
+          for a in assets:
+              n=s.count(a)
+              if n != 1: raise SystemExit(f'{a}: expected 1 reference, found {n}')
+          for token in ['v5-hierarchy.js','v5-hierarchy.css','v3-card-key','v3-importance','lead-story-v2']:
+              if token in s: raise SystemExit(f'retired hierarchy artifact in built HTML: {token}')
+          hashed=re.findall(r'(?:styles|assets)/[^"\']+\?v=([0-9a-f]{12})',s)
+          if len(hashed) < 5: raise SystemExit('content-hashed asset versions missing')
+          print('Built HTML ownership and cache hashing verified.')
+          PY
+
+      - name: Materialize exact tested preview artifacts
+        run: |
+          git add News index.html assets/location-content-v25.js
+          if git diff --cached --quiet; then
+            echo 'Candidate is already materialized.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Materialize tested V5 UX cleanup candidate'
+          git push origin HEAD:v5-ux-architecture-cleanup
