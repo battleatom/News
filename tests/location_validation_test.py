@@ -63,4 +63,14 @@ assert "matchesRegion(item,loc)" in controller
 assert "itemRegion(item)===loc.region" in controller
 assert "['region','local'].includes(category(i))&&matchesRegion(i,loc)" in controller
 
+# V4's requested County + Statewide consolidation is a release contract in V5.
+# County is no longer its own selectable layer; old County preferences migrate to
+# the state pool, which already includes the county-tagged/local stories.
+city_scope = (ROOT / 'assets' / 'location-city-only.js').read_text(encoding='utf-8')
+assert "localStorage.setItem(SCOPE_KEY,'state')" in city_scope
+assert "localStorage.setItem(SCOPE_KEY,'local')" not in city_scope
+assert 'State & County' in city_scope
+assert 'data-scope="county"' in city_scope  # selector used only to remove the legacy button
+assert 'State and county news' in city_scope
+
 print('LOCATION VALIDATION TEST PASSED')
