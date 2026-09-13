@@ -56,7 +56,8 @@ NFL_CONTEXT = {
 CIVIC_CONTEXT = {
     'congress','senate','house of representatives','supreme court','court','judge','lawsuit','law','legislation','bill',
     'antitrust','title ix','government','governor','federal','department of justice','doj','investigation','regulation',
-    'policy','civil rights','tax','taxpayer','public funding','stadium funding','ballot','election'
+    'policy','civil rights','tax','taxpayer','public funding','stadium funding','ballot','election',
+    'lobbyist','lobbyists','city council','county commission','public money','relocation agreement'
 }
 INTERNATIONAL_CONTEXT = {
     'war','military','troops','missile','airstrike','invasion','ceasefire','sanctions','diplomacy','diplomatic','summit',
@@ -154,7 +155,9 @@ def us_sports_disposition(item):
     """
     title=text(item,'title').lower(); desc=text(item,'description').lower(); full=f'{title} {desc}'
     sports=phrases(full,STRONG_SPORTS)
-    if not sports:
+    scoreline=bool(re.search(r'\b\d{1,3}\s*[-–]\s*\d{1,3}\b',title))
+    scoring_abbrev=bool(re.search(r'\b(?:td|tds|fg|fgs|pts)\b',title,re.I))
+    if not sports and not scoreline and not scoring_abbrev:
         return None
     civic=phrases(full,CIVIC_CONTEXT)
     if civic:
