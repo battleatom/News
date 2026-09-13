@@ -29,11 +29,16 @@ jobs:
       - name: Record exact source SHA
         run: echo "SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
-      - name: Set up cached Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: pip
+
+      - name: Cache pip downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-v5-full-audit-v1
 
       - name: Cache Playwright Chromium
         uses: actions/cache@v4
