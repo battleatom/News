@@ -22,3 +22,4 @@ Post-materialization validation sync: trigger Fast Validation on exact canonical
 Hard fix sync: materialize authoritative renderer-time card finalizer with inline rail ownership.
 Retirement sync: remove semantic card hierarchy implementation while preserving NFL and Underreported behavior.
 Retirement cleanup sync: materialize after removing the final hierarchy purge references from the build.
+Legend cleanup sync: purge retired card hierarchy legend from every tab while preserving Underreported age key and NFL UI.
