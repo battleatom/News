@@ -23,7 +23,7 @@ s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The storie
 # V5 presentation remains isolated from V4-derived feed/routing behavior.
 # The hierarchy bridge uses explicit semantic card classes instead of the removed
 # lead-story-v2 class or browser-dependent :has() selectors.
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link rel="stylesheet" href="styles/v5-hierarchy.css?v=1" data-v5-hierarchy="true">\n<script src="assets/location-v2.js?v=5"></script>\n<script src="assets/v5-hierarchy.js?v=2" defer data-v5-hierarchy="true"></script>\n'''
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link rel="stylesheet" href="styles/v5-hierarchy.css?v=2" data-v5-hierarchy="true">\n<script src="assets/location-v2.js?v=6"></script>\n<script src="assets/v5-hierarchy.js?v=3" defer data-v5-hierarchy="true"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
