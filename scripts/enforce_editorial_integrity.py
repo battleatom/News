@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Final editorial-integrity pass for V4.
+"""Final editorial-integrity pass for V5.
 
 Runs after generic routing/deduplication and after X is rebuilt. It is intentionally
-conservative: obvious U.S. domestic leakage is removed from World, ordinary sports
-leakage is kept out of the U.S. tab, generic/non-story pages are dropped, weak Related
-Coverage links are pruned, low-value Technology shopping/gaming leakage is corrected,
-and fixed X slots are repaired from already verified feed stories when their lead is
-not relevant to the slot.
+conservative: obvious U.S. domestic leakage is removed from World, NFL coverage is
+routed to the dedicated NFL tab, ordinary sports leakage is kept out of the U.S. tab,
+generic/non-story pages are dropped, weak Related Coverage links are pruned,
+low-value Technology shopping/gaming leakage is corrected, and fixed X slots are
+repaired from already verified feed stories when their lead is not relevant to the slot.
 """
 from __future__ import annotations
 
@@ -52,6 +52,20 @@ STRONG_SPORTS = {
 NFL_CONTEXT = {
     'nfl','national football league','super bowl','quarterback','touchdown','wide receiver','running back','tight end',
     'training camp','free agency'
+}
+# Team names and unambiguous team nicknames are strong NFL evidence even when a
+# headline never spells out "NFL" or "football" (common in score/game headlines).
+NFL_TEAM_TERMS = {
+    'arizona cardinals','atlanta falcons','baltimore ravens','buffalo bills','carolina panthers','chicago bears',
+    'cincinnati bengals','cleveland browns','dallas cowboys','denver broncos','detroit lions','green bay packers',
+    'houston texans','indianapolis colts','jacksonville jaguars','kansas city chiefs','las vegas raiders',
+    'los angeles chargers','los angeles rams','miami dolphins','minnesota vikings','new england patriots',
+    'new orleans saints','new york giants','new york jets','philadelphia eagles','pittsburgh steelers',
+    'san francisco 49ers','seattle seahawks','tampa bay buccaneers','tennessee titans','washington commanders'
+}
+NFL_TEAM_ALIASES = {
+    '49ers','bengals','broncos','buccaneers','chargers','chiefs','colts','commanders','cowboys','dolphins','eagles',
+    'falcons','jaguars','packers','panthers','patriots','raiders','ravens','seahawks','steelers','texans','titans','vikings'
 }
 CIVIC_CONTEXT = {
     'congress','senate','house of representatives','supreme court','court','judge','lawsuit','law','legislation','bill',
@@ -146,26 +160,32 @@ def obvious_domestic_world(item):
 
 
 def us_sports_disposition(item):
-    """Return 'nfl', 'drop', or None for U.S.-tab sports leakage.
+    """Return 'nfl', 'drop', or None for domestic sports leakage.
 
-    Ordinary game/team/score coverage does not belong in the national U.S. news tab.
-    NFL-specific stories can use the dedicated NFL tab. Sports stories whose central
+    Ordinary game/team/score coverage does not belong in national/general news tabs.
+    NFL-specific stories use the dedicated NFL tab. Sports stories whose central
     subject is government, law, courts, regulation, elections, public funding, etc.
     remain eligible for U.S./Federal coverage.
     """
     title=text(item,'title').lower(); desc=text(item,'description').lower(); full=f'{title} {desc}'
     sports=phrases(full,STRONG_SPORTS)
+    nfl_teams=phrases(full,NFL_TEAM_TERMS | NFL_TEAM_ALIASES)
     scoreline=bool(re.search(r'\b\d{1,3}\s*[-–]\s*\d{1,3}\b',title))
     scoring_abbrev=bool(re.search(r'\b(?:td|tds|fg|fgs|pts)\b',title,re.I))
-    if not sports and not scoreline and not scoring_abbrev:
+    if not sports and not nfl_teams and not scoreline and not scoring_abbrev:
         return None
     civic=phrases(full,CIVIC_CONTEXT)
     if civic:
         return None
-    nfl=phrases(full,NFL_CONTEXT)
+    nfl=phrases(full,NFL_CONTEXT) | nfl_teams
     if nfl:
         return 'nfl'
     return 'drop'
+
+
+def world_nfl_disposition(item):
+    """Route only high-confidence NFL coverage out of World; do not drop foreign sports here."""
+    return 'nfl' if us_sports_disposition(item)=='nfl' else None
 
 
 def x_relevant(item, topic):
@@ -232,14 +252,16 @@ def repair_x(channel):
 def main():
     tree=ET.parse(NEWS); channel=tree.getroot().find('channel')
     if channel is None: raise SystemExit('RSS channel not found')
-    world_to_us=tech_to_gaming=us_to_nfl=us_sports_dropped=dropped=related_removed=0
+    world_to_us=world_to_nfl=tech_to_gaming=us_to_nfl=us_sports_dropped=dropped=related_removed=0
     for item in list(channel.findall('item')):
         title=text(item,'title'); cat=text(item,'category').lower()
         if is_landing_page(item) or any(p.search(title) for p in GENERIC_LANDING):
             channel.remove(item); dropped+=1; continue
-        if cat=='world' and obvious_domestic_world(item):
-            set_text(item,'category','us'); world_to_us+=1
-            cat='us'
+        if cat=='world':
+            if world_nfl_disposition(item)=='nfl':
+                set_text(item,'category','nfl'); world_to_nfl+=1; cat='nfl'
+            elif obvious_domestic_world(item):
+                set_text(item,'category','us'); world_to_us+=1; cat='us'
         if cat=='us':
             sports_action=us_sports_disposition(item)
             if sports_action=='nfl':
@@ -255,6 +277,6 @@ def main():
         related_removed+=prune_related(item)
     repaired_x=repair_x(channel)
     tree.write(NEWS,encoding='utf-8',xml_declaration=True)
-    print(f'Editorial integrity: World→US {world_to_us}; US→NFL {us_to_nfl}; US sports dropped {us_sports_dropped}; Technology→Gaming {tech_to_gaming}; dropped {dropped}; unrelated supporting links pruned {related_removed}; X slots repaired {repaired_x}.')
+    print(f'Editorial integrity: World→NFL {world_to_nfl}; World→US {world_to_us}; US→NFL {us_to_nfl}; US sports dropped {us_sports_dropped}; Technology→Gaming {tech_to_gaming}; dropped {dropped}; unrelated supporting links pruned {related_removed}; X slots repaired {repaired_x}.')
 
 if __name__=='__main__': main()
