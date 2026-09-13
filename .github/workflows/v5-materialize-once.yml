@@ -1,0 +1,36 @@
+name: Final V5 Materialize Once
+
+on:
+  push:
+    branches: [Final-V5]
+    paths:
+      - '.github/workflows/v5-materialize-once.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Final-V5
+        uses: actions/checkout@v4
+        with:
+          ref: Final-V5
+          fetch-depth: 0
+
+      - name: Build canonical Final V5 preview
+        run: bash -e v5-apply.sh
+
+      - name: Commit canonical generated preview
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html assets/location-content-v25.js
+          if git diff --cached --quiet; then
+            echo 'Canonical Final V5 preview is already current.'
+            exit 0
+          fi
+          git commit -m 'Materialize canonical Final V5 preview [skip ci]'
+          git push origin HEAD:Final-V5
