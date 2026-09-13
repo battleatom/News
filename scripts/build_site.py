@@ -43,11 +43,6 @@ PATCHERS = [
     'scripts/patch_full_why_matters.py',
     'scripts/patch_system_health.py',
     'scripts/patch_entertainment_v4_ui.py',
-    'scripts/patch_v5_render_bindings.py',
-    # One final renderer-independent owner writes the actual rail style, hierarchy
-    # badge and NEW state onto every rendered card. It runs after every special
-    # renderer has been installed, eliminating cascade/observer dependence.
-    'scripts/patch_v5_card_finalizer.py',
     'scripts/finalize_v5_html.py',
 ]
 
