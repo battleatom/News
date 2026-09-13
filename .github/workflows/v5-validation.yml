@@ -55,6 +55,9 @@ jobs:
           python tests/entertainment_v4_test.py
           python tests/verify_feed_test.py
 
+      - name: Install content-brief test dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
       - name: Run enabled V5 hardening tests
         run: |
           set -e
