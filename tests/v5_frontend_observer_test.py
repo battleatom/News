@@ -10,22 +10,24 @@ patch=(ROOT/'scripts/patch_v2_frontend.py').read_text(encoding='utf-8')
 assert 'v5-hierarchy-high' in hierarchy
 assert "card.classList.contains('lead-story-v2')" not in hierarchy
 assert "dataset.v5Hierarchy" in hierarchy
+assert "dataset.hierarchy" in hierarchy
 assert "if(badge.textContent!==expectedLabel)" in hierarchy
 
-# Hierarchy cards are rendered inside nested section containers. Watch the feed subtree,
-# but filter mutations to story insertions so our own badge insertion cannot loop.
+# Canonical cards are render-bound. The bridge still watches nested special renderers,
+# but filters mutations to story insertions so its own badge insertion cannot loop.
 assert "observe(feed,{childList:true,subtree:true});" in hierarchy
 assert "feedChanged(mutations)" in hierarchy
 assert "containsStoryNode(node)" in hierarchy
 assert "node.matches?.('.news-item')" in hierarchy
+assert "underreported:feed-rendered" in hierarchy
 
-# The legacy V3 observer remains top-level only; hierarchy owns nested card decoration.
+# The legacy V3 observer remains top-level only.
 assert "observe(feed,{childList:true});" in v3
 assert "observe(feed,{childList:true,subtree:true})" not in v3
 
-# Cache-bust the repaired hierarchy assets for mobile browsers.
-assert 'styles/v5-hierarchy.css?v=2' in patch
-assert 'assets/v5-hierarchy.js?v=3' in patch
-assert 'assets/location-v2.js?v=6' in patch
+# Cache-bust the render-bound hierarchy assets for mobile browsers.
+assert 'styles/v5-hierarchy.css?v=3' in patch
+assert 'assets/v5-hierarchy.js?v=4' in patch
+assert 'assets/location-v2.js?v=7' in patch
 
 print('V5 frontend observer/runtime test passed.')
