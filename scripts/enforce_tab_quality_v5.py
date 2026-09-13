@@ -146,14 +146,17 @@ def run(feed=NEWS,report=REPORT,apply=True):
         if action!='keep':actions.append({'title':text(item,'title'),'from':original,'action':action,'to':dest,'reason':reason})
     final=[i for idx,i in enumerate(items) if idx not in removed]
     after=Counter(category(i) for i in final)
+    out={'generatedAt':datetime.now(timezone.utc).isoformat(),'inputArticles':len(items),'outputArticles':len(final),'removed':len(removed),'actions':actions,'categoryCountsBefore':dict(before),'categoryCountsAfter':dict(after),'policy':'high-confidence residual tab leak guard; V4 behavior otherwise preserved'}
+    Path(report).write_text(json.dumps(out,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+    if actions:
+        print('V5 tab-quality actions:')
+        for a in actions:print(f" - {a['from']} {a['action']}->{a['to'] or '-'} [{a['reason']}]: {a['title']}")
     excessive={c:{'before':before[c],'after':after[c]} for c in ('world','us','gaming') if before[c]>=10 and after[c]<max(5,int(before[c]*.70))}
     if excessive:raise SystemExit('V5 tab-quality guard would over-prune: '+json.dumps(excessive,sort_keys=True))
     if apply:
         for i in list(channel.findall('item')):channel.remove(i)
         for i in final:channel.append(i)
         tree.write(feed,encoding='utf-8',xml_declaration=True)
-    out={'generatedAt':datetime.now(timezone.utc).isoformat(),'inputArticles':len(items),'outputArticles':len(final),'removed':len(removed),'actions':actions,'categoryCountsBefore':dict(before),'categoryCountsAfter':dict(after),'policy':'high-confidence residual tab leak guard; V4 behavior otherwise preserved'}
-    Path(report).write_text(json.dumps(out,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
     print(f"V5 tab quality: {len(items)} -> {len(final)}; {len(actions)} corrective action(s); {len(removed)} dropped")
     return out
 
