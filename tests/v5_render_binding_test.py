@@ -20,15 +20,22 @@ assert "data-v5-hierarchy-badge" in patch
 assert "underreported:feed-rendered" in patch
 assert "window.decorateNewBadges" in patch
 
-# The persistent CSS binds directly to semantic card data and loads after normal V5 CSS.
+# Persistent CSS binds directly to semantic card data and loads after normal V5 CSS.
 for kind in ('high','analysis','local','trending','standard'):
     assert f'data-hierarchy=\\"{kind}\\"' in css or f'data-hierarchy="{kind}"' in css
 assert frontend.index('styles/v5-visual.css') < frontend.index('styles/v5-hierarchy.css')
-assert 'styles/v5-hierarchy.css?v=3' in frontend
-assert 'assets/v5-hierarchy.js?v=4' in frontend
+assert 'styles/v5-hierarchy.css?v=4' in frontend
+assert 'assets/v5-hierarchy.js?v=5' in frontend
+assert 'v5-hierarchy-critical-v1' in frontend
+assert 'v5-hierarchy-bootstrap-v1' in frontend
+
+# Underreported's pre-existing age hierarchy is authoritative for its left rail.
+assert ':not(.underreported-item)' in css
+for band in ('blue','green','orange','purple','red'):
+    assert f'data-age-band=\\"{band}\\"' in css or f'data-age-band="{band}"' in css
 
 # Canonical build must always apply the binding patch near the end of the pipeline.
 assert "'scripts/patch_v5_render_bindings.py'" in build
 assert build.index("'scripts/patch_entertainment_v4_ui.py'") < build.index("'scripts/patch_v5_render_bindings.py'") < build.index("'scripts/finalize_v5_html.py'")
 
-print('V5 render-bound hierarchy contract passed.')
+print('V5 render-bound hierarchy contract passed, including persistent bootstrap and Underreported age rails.')
