@@ -27,29 +27,41 @@
 
   function decorateCard(card,index,section){
     const kind=classify(card,index,section);
-    HIERARCHY_CLASSES.forEach(cls=>card.classList.remove(cls));
-    delete card.dataset.v5Hierarchy;
-    if(!kind)return;
+    const expectedClass=kind?'v5-hierarchy-'+kind:'';
+    const currentKind=card.dataset.v5Hierarchy||'';
 
-    card.classList.add('v5-hierarchy-'+kind);
-    card.dataset.v5Hierarchy=kind;
+    if(!kind){
+      if(currentKind||HIERARCHY_CLASSES.some(cls=>card.classList.contains(cls))){
+        HIERARCHY_CLASSES.forEach(cls=>card.classList.remove(cls));
+        delete card.dataset.v5Hierarchy;
+      }
+      return;
+    }
+
+    if(currentKind!==kind||!card.classList.contains(expectedClass)){
+      HIERARCHY_CLASSES.forEach(cls=>{if(cls!==expectedClass)card.classList.remove(cls);});
+      card.classList.add(expectedClass);
+      card.dataset.v5Hierarchy=kind;
+    }
 
     let badge=card.querySelector(':scope > .v3-importance');
     if(!badge){
       badge=document.createElement('span');
-      badge.className='v3-importance';
       card.prepend(badge);
     }
-    badge.className='v3-importance '+kind;
-    badge.textContent=labelFor(kind);
-    badge.setAttribute('data-v5-hierarchy-badge',kind);
+    const expectedBadgeClass='v3-importance '+kind;
+    const expectedLabel=labelFor(kind);
+    if(badge.className!==expectedBadgeClass)badge.className=expectedBadgeClass;
+    if(badge.textContent!==expectedLabel)badge.textContent=expectedLabel;
+    if(badge.getAttribute('data-v5-hierarchy-badge')!==kind)badge.setAttribute('data-v5-hierarchy-badge',kind);
   }
 
   function apply(root=document){
     const section=currentSection();
-    const cards=[...root.querySelectorAll?.('#news-feed .news-item')||[]];
+    const scope=root===document?document:root;
+    const cards=[...scope.querySelectorAll?.('#news-feed .news-item')||[]];
     cards.forEach((card,index)=>decorateCard(card,index,section));
-    if(document.body)document.body.dataset.v5Hierarchy='active';
+    if(document.body&&document.body.dataset.v5Hierarchy!=='active')document.body.dataset.v5Hierarchy='active';
   }
 
   let queued=false;
@@ -63,7 +75,9 @@
     apply();
     const feed=document.getElementById('news-feed');
     const tabs=document.getElementById('tabs');
-    if(feed)new MutationObserver(queue).observe(feed,{childList:true,subtree:true});
+    // Feed renders replace top-level section content. Observing the entire subtree caused
+    // our own badge text updates to schedule redundant animation-frame passes.
+    if(feed)new MutationObserver(queue).observe(feed,{childList:true});
     if(tabs)new MutationObserver(queue).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
     document.addEventListener('click',e=>{if(e.target.closest('.tab'))requestAnimationFrame(queue);});
     window.addEventListener('underreported:location',queue,{passive:true});
