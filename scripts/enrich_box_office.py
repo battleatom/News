@@ -107,12 +107,29 @@ def google_news(title: str) -> list[dict]:
     return out
 
 
+def summary_is_movie(title: str, data: dict, extract: str) -> bool:
+    if not extract or data.get("type","").endswith("disambiguation"):
+        return False
+    description=clean(data.get("description","")).lower()
+    combined=f" {description} {extract[:280].lower()} "
+    film_signal=any(term in combined for term in (" film "," movie "," motion picture "," directed by "," screenplay "," starring "," documentary "," animated "))
+    if not film_signal:
+        return False
+    # For ambiguous one-word titles such as Runner, never accept a dictionary,
+    # sport, occupation, place, or other non-film entity just because the page title matches.
+    meaningful=[w for w in re.findall(r"[a-z0-9]+",title.lower()) if len(w)>2]
+    return not meaningful or any(w in combined for w in meaningful)
+
+
 def wikipedia_summary(title: str) -> str:
-    url="https://en.wikipedia.org/api/rest_v1/page/summary/"+urllib.parse.quote(title.replace(" ","_"))
-    try:
-        data=json.loads(fetch(url)); extract=clean(data.get("extract",""))
-        if extract and not data.get("type","").endswith("disambiguation"): return extract
-    except Exception: pass
+    candidates=[f"{title} (film)", f"{title} (2026 film)", title]
+    for candidate in candidates:
+        url="https://en.wikipedia.org/api/rest_v1/page/summary/"+urllib.parse.quote(candidate.replace(" ","_"))
+        try:
+            data=json.loads(fetch(url)); extract=clean(data.get("extract",""))
+            if summary_is_movie(title,data,extract): return extract
+        except Exception:
+            continue
     return ""
 
 
