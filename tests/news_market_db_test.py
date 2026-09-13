@@ -26,11 +26,14 @@ for m in markets:
     assert m.get('sources'), f"market has no approved local sources: {m['id']}"
 
 controller = (ROOT / 'assets' / 'location-content-v25.js').read_text(encoding='utf-8')
-assert '__locationContentV35' in controller
+assert '__locationContentV37' in controller
 assert 'data/us_news_markets.json' in controller
 assert 'countyPool' in controller and 'mergedPool' in controller
 assert 'location-scope-bar' in controller
-assert "['local','region']" in controller
+assert 'ensureStandaloneLocationTabs' in controller
+assert "ensure('local','📍 Local / Four Corners'" in controller
+assert "ensure('region','🌎 Region'" in controller
+assert "['local','region'].includes(CANONICAL_SECTIONS" not in controller, 'Location hub must not remove standalone Local/Region tabs'
 assert 'FOUR_CORNERS_CITIES' not in controller
 
 resolver = (ROOT / 'assets' / 'location-v2.js').read_text(encoding='utf-8')
@@ -41,4 +44,4 @@ assert 'LOCAL_STORIES_PER_MARKET' in wrapper
 assert 'marketId' in wrapper and 'marketCity' in wrapper and 'marketState' in wrapper
 assert 'local_story_relevant' in wrapper
 
-print(f'News-market database passed: {len(markets)} markets across all 50 states + DC; state/county/local/region hub integration present.')
+print(f'News-market database passed: {len(markets)} markets across all 50 states + DC; state/county/local/region hub integration and standalone Local/Region navigation present.')
