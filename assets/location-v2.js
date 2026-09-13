@@ -107,10 +107,27 @@
 
 /* Version 3 presentation layer loader. Kept separate from feed/update logic. */
 (function(){
-  if(document.querySelector('script[data-underreported-v3-ui]'))return;
-  const s=document.createElement('script');
-  s.src='assets/v3-ui.js?v=3';
-  s.defer=true;
-  s.dataset.underreportedV3Ui='true';
-  document.head.appendChild(s);
+  if(!document.querySelector('script[data-underreported-v3-ui]')){
+    const s=document.createElement('script');
+    s.src='assets/v3-ui.js?v=4';
+    s.defer=true;
+    s.dataset.underreportedV3Ui='true';
+    document.head.appendChild(s);
+  }
+
+  if(!document.getElementById('v5-hierarchy-style')){
+    const l=document.createElement('link');
+    l.id='v5-hierarchy-style';
+    l.rel='stylesheet';
+    l.href='styles/v5-hierarchy.css?v=1';
+    document.head.appendChild(l);
+  }
+
+  if(!document.querySelector('script[data-underreported-v5-hierarchy]')){
+    const h=document.createElement('script');
+    h.src='assets/v5-hierarchy.js?v=1';
+    h.defer=true;
+    h.dataset.underreportedV5Hierarchy='true';
+    document.head.appendChild(h);
+  }
 })();
