@@ -7,7 +7,9 @@ s=P.read_text(encoding='utf-8')
 # Remove prior frontend injections so this remains safe to run on every build.
 s=re.sub(r'\s*<link[^>]+href="styles/v2\.css[^>]*>','',s)
 s=re.sub(r'\s*<link[^>]+href="styles/v5-visual\.css[^>]*>','',s)
+s=re.sub(r'\s*<link[^>]+href="styles/v5-hierarchy\.css[^>]*>','',s)
 s=re.sub(r'\s*<script[^>]+src="assets/location-v2\.js[^>]*></script>','',s)
+s=re.sub(r'\s*<script[^>]+src="assets/v5-hierarchy\.js[^>]*></script>','',s)
 s=re.sub(r'\s*<script[^>]+src="assets/app-v2\.js[^>]*></script>','',s)
 s=re.sub(r'\s*<a class="skip-link-v2"[^>]*>.*?</a>','',s,flags=re.S)
 s=re.sub(r'\s*<style id="desktop-layout-fix-v1">.*?</style>','',s,flags=re.S)
@@ -18,9 +20,10 @@ if '<meta name="description"' not in s:
 # Keep the brand but make the masthead read like a publication instead of a dashboard.
 s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The stories that matter. In one place.\2',s,count=1,flags=re.S)
 
-# The V5 visual layer is CSS-only and loads after V2 so it can refine presentation
-# without changing feed loading, tab rendering, filtering, routing, or location logic.
-head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<script src="assets/location-v2.js?v=4"></script>\n'''
+# V5 presentation remains isolated from V4-derived feed/routing behavior.
+# The hierarchy bridge uses explicit semantic card classes instead of the removed
+# lead-story-v2 class or browser-dependent :has() selectors.
+head='''\n<link rel="stylesheet" href="styles/v2.css?v=5">\n<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">\n<link rel="stylesheet" href="styles/v5-hierarchy.css?v=1" data-v5-hierarchy="true">\n<script src="assets/location-v2.js?v=5"></script>\n<script src="assets/v5-hierarchy.js?v=1" defer data-v5-hierarchy="true"></script>\n'''
 if '</head>' not in s:raise SystemExit('Missing </head>')
 s=s.replace('</head>',head+'</head>',1)
 
@@ -37,4 +40,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 visual refinement: visible card borders, semantic hierarchy, icon badges, typography, spacing, and dark-mode polish with renderer logic unchanged.')
+print('Applied Underreported V5 visual refinement: V4 behavior preserved; explicit hierarchy rails and icon badges enabled.')
