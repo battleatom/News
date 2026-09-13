@@ -1,0 +1,84 @@
+name: Final V5 Validation
+
+on:
+  push:
+    branches: [Final-V5]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: final-v5-validation
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout Final V5
+        uses: actions/checkout@v4
+        with:
+          ref: Final-V5
+          fetch-depth: 0
+
+      - name: Checkout immutable V4 baseline
+        uses: actions/checkout@v4
+        with:
+          ref: v4-hard-save-2026-09-12
+          path: baseline-v4
+          fetch-depth: 1
+
+      - name: Prove V4 baseline identity
+        run: |
+          test "$(git -C baseline-v4 rev-parse HEAD)" = "9549044575ac8ce8c17eccaa09702e157797b1cd"
+          echo "V4 baseline locked at 9549044"
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Run V4 inherited structural audit
+        run: python scripts/site_audit.py
+
+      - name: Run inherited deterministic regressions
+        run: |
+          python tests/news_market_db_test.py
+          python tests/entertainment_v4_test.py
+          python tests/verify_feed_test.py
+
+      - name: Run V5 hardening tests when present
+        run: |
+          set -e
+          for t in \
+            tests/editorial_integrity_test.py \
+            tests/feed_quality_regression_test.py \
+            tests/normalized_category_pools_test.py \
+            tests/underreported_priority_test.py \
+            tests/story_context_regression_test.py \
+            tests/location_validation_test.py \
+            tests/us_sports_feed_check.py \
+            tests/x_static_topics_test.py; do
+            if [ -f "$t" ]; then
+              echo "=== $t ==="
+              python "$t"
+            fi
+          done
+
+      - name: Compare source delta to hard-saved V4
+        run: |
+          git diff --stat 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
+          git diff --check 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
+
+      - name: Guard V4 files from accidental deletion
+        run: |
+          python - <<'PY'
+          import subprocess
+          changed=subprocess.check_output(['git','diff','--name-status','9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD'],text=True)
+          deleted=[line.split('\t',1)[1] for line in changed.splitlines() if line.startswith('D\t')]
+          allow={'.github/workflows/v4-stable-candidate.yml'}
+          bad=[p for p in deleted if p not in allow]
+          if bad:
+              raise SystemExit('Unexpected V4 file deletion(s): '+', '.join(bad))
+          print('No unexpected V4 source deletions.')
+          PY
