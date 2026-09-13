@@ -25,9 +25,9 @@ for name in ('high','analysis','local','trending','standard'):
 # Visible badge/icon contract includes Standard too.
 assert ".v3-importance.standard::before" in css
 
-# Loader must cache-bust and load both bridge assets exactly once.
+# Loader must cache-bust and load both repaired bridge assets.
 assert "assets/v3-ui.js?v=4" in loader
-assert "styles/v5-hierarchy.css?v=1" in loader
-assert "assets/v5-hierarchy.js?v=1" in loader
+assert "styles/v5-hierarchy.css?v=2" in loader
+assert "assets/v5-hierarchy.js?v=3" in loader
 
 print('V5 hierarchy contract passed: V4 behavior preserved, semantic rails and icon badges enabled.')
