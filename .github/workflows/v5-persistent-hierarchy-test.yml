@@ -1,0 +1,83 @@
+name: V5 Persistent Hierarchy Test
+
+on:
+  push:
+    branches: [v5-persistent-hierarchy-fix]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v5-persistent-hierarchy-test
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/*.py tests/*.py
+
+      - name: Install lightweight dependencies
+        run: python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+
+      - name: Hierarchy contract tests
+        run: |
+          python tests/v5_hierarchy_contract_test.py
+          python tests/v5_render_binding_test.py
+          python tests/v5_frontend_observer_test.py
+
+      - name: Canonical V5 build
+        run: bash -e v5-apply.sh
+
+      - name: Verify generated hierarchy assets and Underreported rails
+        run: |
+          grep -q 'v5-hierarchy-critical-v1' index.html
+          grep -q 'v5-hierarchy-bootstrap-v1' index.html
+          grep -q 'styles/v5-hierarchy.css?v=4' index.html
+          grep -q 'assets/v5-hierarchy.js?v=5' index.html
+          grep -q 'data-age-band="blue"' styles/v5-hierarchy.css
+          grep -q 'data-age-band="red"' styles/v5-hierarchy.css
+          grep -q ':not(.underreported-item)' styles/v5-hierarchy.css
+
+      - name: Structural and release gates
+        run: |
+          python scripts/site_audit.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v5_final_audit.py
+          python scripts/v5_release_gate.py
+
+      - name: Enabled V5 regressions
+        run: |
+          set -e
+          while IFS= read -r t; do
+            t="${t%%#*}"
+            t="$(echo "$t" | xargs)"
+            [ -z "$t" ] && continue
+            echo "=== $t ==="
+            test -f "$t"
+            python "$t"
+          done < v5-enabled-tests.txt
+
+      - name: Build idempotence
+        run: |
+          cp index.html /tmp/v5-index-before.html
+          python scripts/build_site.py
+          cmp -s /tmp/v5-index-before.html index.html || { echo 'Canonical build is not idempotent'; diff -u /tmp/v5-index-before.html index.html | head -200; exit 1; }
+
+      - name: V4 ancestry safety
+        run: |
+          git merge-base --is-ancestor 9549044575ac8ce8c17eccaa09702e157797b1cd HEAD
+          git diff --check 9549044575ac8ce8c17eccaa09702e157797b1cd..HEAD
