@@ -6,3 +6,4 @@ UX sync: materialize hierarchy/NEW legend preview after bd88afc.
 Automation sync: materialize after fast/full validation optimization and watchdog additions.
 Sync after Entertainment UI readiness wait fix.
 Hierarchy bridge sync: materialize canonical preview after explicit V5 semantic hierarchy fix.
+Performance audit sync: materialize idempotent hierarchy/UI observers and cache-bust hierarchy asset.
