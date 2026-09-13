@@ -71,13 +71,29 @@
     requestAnimationFrame(()=>{queued=false;apply();});
   }
 
+  function containsStoryNode(node){
+    if(!node||node.nodeType!==1)return false;
+    if(node.matches?.('.news-item'))return true;
+    return Boolean(node.querySelector?.('.news-item'));
+  }
+
+  function feedChanged(mutations){
+    for(const mutation of mutations){
+      for(const node of mutation.addedNodes){
+        if(containsStoryNode(node))return true;
+      }
+    }
+    return false;
+  }
+
   function start(){
     apply();
     const feed=document.getElementById('news-feed');
     const tabs=document.getElementById('tabs');
-    // Feed renders replace top-level section content. Observing the entire subtree caused
-    // our own badge text updates to schedule redundant animation-frame passes.
-    if(feed)new MutationObserver(queue).observe(feed,{childList:true});
+    // Cards are rendered inside nested section containers, so the feed observer must
+    // include the subtree. Filter mutations to story insertions so our own badge
+    // insertion does not create a render loop.
+    if(feed)new MutationObserver(mutations=>{if(feedChanged(mutations))queue();}).observe(feed,{childList:true,subtree:true});
     if(tabs)new MutationObserver(queue).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
     document.addEventListener('click',e=>{if(e.target.closest('.tab'))requestAnimationFrame(queue);});
     window.addEventListener('underreported:location',queue,{passive:true});
