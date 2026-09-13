@@ -11,3 +11,4 @@ Content quality sync: materialize residual tab leak filters for US, World, and G
 World scope sync: ignore generated International-reporting prefix when validating World stories.
 Diagnostic sync: log high-confidence tab corrections before safety threshold.
 Filter calibration sync: refine strong sports evidence and conservative World cleanup threshold.
+Idempotence sync: route/filter before final cross-tab dedupe.
