@@ -26,6 +26,13 @@ assert m.obvious_domestic_world(a)
 b=item('world','At BRICS summit, China, Russia and India urge restraint','Leaders discussed international diplomacy.')
 assert not m.obvious_domestic_world(b)
 
+# NFL headlines must route directly out of World, including team-name headlines that
+# do not explicitly contain the words NFL or football.
+world_nfl=item('world','Green Bay Packers edge Minnesota Vikings 27-24','The Packers won on a late field goal.','Wisconsin','CBS Sports')
+assert m.world_nfl_disposition(world_nfl)=='nfl', 'NFL team headline survived in World'
+world_nfl_alias=item('world','Chiefs rally late to beat Chargers','Kansas City completed the comeback.','Missouri','ESPN')
+assert m.world_nfl_disposition(world_nfl_alias)=='nfl', 'NFL alias headline survived in World'
+
 # A foreign cultural reference must not make a clearly domestic event a World story.
 mn=item('world','A little bit of Germany here in Minnesota','A German-American institute is holding an Oktoberfest celebration in St. Paul.')
 assert m.obvious_domestic_world(mn), 'Minnesota cultural event incorrectly survives as World'
