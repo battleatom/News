@@ -2,3 +2,4 @@ Materialize Final-V5 canonical preview after V4 regression repairs.
 Trigger: 2026-09-12 county/state + NFL streaming/world routing repair.
 Retry: narrowed NFL aliases to avoid college-team false positives.
 Retry 2: make State & County observer DOM-idempotent and bump cache to v3.
+UX sync: materialize hierarchy/NEW legend preview after bd88afc.
