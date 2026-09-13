@@ -38,16 +38,14 @@ jobs:
       - name: Validate Python syntax
         run: python -m py_compile scripts/*.py tests/*.py
 
-      - name: Apply enabled V5 feed transforms
-        run: |
-          if [ -f v5-apply.sh ]; then
-            bash -e v5-apply.sh
-          else
-            echo 'No V5 feed transforms enabled yet.'
-          fi
+      - name: Apply enabled V5 feed transforms and canonical build
+        run: bash -e v5-apply.sh
 
-      - name: Run inherited structural audit on V5-transformed snapshot
-        run: python scripts/site_audit.py
+      - name: Run structural, runtime and release gates
+        run: |
+          python scripts/site_audit.py
+          python scripts/v5_runtime_audit.py
+          python scripts/v4_release_gate.py
 
       - name: Run inherited deterministic regressions
         run: |
@@ -61,10 +59,6 @@ jobs:
       - name: Run enabled V5 hardening tests
         run: |
           set -e
-          if [ ! -f v5-enabled-tests.txt ]; then
-            echo 'No V5 hardening tests enabled yet.'
-            exit 0
-          fi
           while IFS= read -r t; do
             t="${t%%#*}"
             t="$(echo "$t" | xargs)"
@@ -87,6 +81,6 @@ jobs:
           deleted=[line.split('\t',1)[1] for line in changed.splitlines() if line.startswith('D\t')]
           bad=[p for p in deleted if p not in {'.github/workflows/v4-stable-candidate.yml'}]
           if bad:
-              raise SystemExit('Unexpected V4 file deletion(s): '+', '.join(bad))
+              raise SystemExit('Unexpected V4 source deletion(s): '+', '.join(bad))
           print('No unexpected V4 source deletions.')
           PY

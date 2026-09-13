@@ -20,8 +20,6 @@ PATCHERS = [
     'scripts/patch_underreported_ui.py',
     'scripts/patch_x_ui.py',
     'scripts/patch_site_features.py',
-    # Keep refresh hardening explicit in the build graph instead of invoking it
-    # indirectly from patch_shared_page_state.py.
     'scripts/patch_refresh_success.py',
     'scripts/patch_shared_page_state.py',
     'scripts/patch_auto_refresh_timer.py',
@@ -37,22 +35,17 @@ PATCHERS = [
     'scripts/patch_v2_frontend.py',
     'scripts/dedupe_generated_ui.py',
     'scripts/normalize_generated_html.py',
-    # V2.2 owns the visible refresh-status panel and browser audio unlock.
     'scripts/patch_v22_alerts_status.py',
-    # V2.3 is the final event gate: server-backed NEW badges and sound only when
-    # a refresh actually introduces one or more new story links.
     'scripts/patch_v23_new_alerts.py',
-    # V2.5 owns detected-state/local content pools and runs after legacy render wrappers.
     'scripts/patch_v25_location_content.py',
-    # Final interaction-only compatibility fix. Keep this late so later patchers
-    # cannot restore the older audio or absolute-scroll behavior.
     'scripts/patch_interaction_hotfix.py',
-    # V3 content-brief experiment: reveal compact multi-line story summaries.
     'scripts/patch_content_brief_ui.py',
-    # Keep Why It Matters fully visible after the compact V3 styling is applied.
     'scripts/patch_full_why_matters.py',
-    # System Health runs last so earlier patchers cannot remove its indicator/panel.
     'scripts/patch_system_health.py',
+    # V5 owns the complete final HTML: Entertainment is no longer a required
+    # post-build workflow mutation. The patcher is idempotent for compatibility
+    # with the older workflow step if that step is still invoked.
+    'scripts/patch_entertainment_v4_ui.py',
 ]
 
 
@@ -67,7 +60,7 @@ def run(path: str) -> None:
 def main() -> None:
     for patcher in PATCHERS:
         run(patcher)
-    print('\nUnderreported site build complete.')
+    print('\nUnderreported V5 site build complete.')
 
 
 if __name__ == '__main__':

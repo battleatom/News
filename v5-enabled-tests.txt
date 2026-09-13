@@ -9,3 +9,4 @@ tests/v5_x_feed_integrity_test.py
 tests/location_validation_test.py
 tests/v5_nfl_streaming_test.py
 tests/v5_entertainment_surface_test.py
+tests/normalized_category_pools_test.py

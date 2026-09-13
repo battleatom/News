@@ -25,7 +25,10 @@ def item(category, i, hours=1, source=None, state=""):
 def test_policy():
     for category, policy in normalized.POOL_POLICY.items():
         if category == "local":
-            assert policy == (20, 25, 30)
+            expected = normalized.LOCAL_STORIES_PER_MARKET * len(normalized.NEWS_MARKETS)
+            assert policy == (8, expected, expected), policy
+        elif category == "region":
+            assert policy == (30, 35, 80), policy
         else:
             assert policy == (30, 35, 40), (category, policy)
     assert "legislation" not in normalized.POOL_POLICY
@@ -44,14 +47,15 @@ def test_legislation_is_not_news_pool():
     assert normalized.normalized_select_category(stories) == []
 
 
-def test_local_target():
+def test_local_market_bank():
+    market = normalized.NEWS_MARKETS[0]
     stories = []
-    for i in range(40):
+    for i in range(10):
         story = item("local", i, source=f"Local Publisher {i}")
-        story["description"] += " Farmington New Mexico"
+        story.update({"marketId": market["id"], "marketCity": market["city"], "marketState": market["state"]})
         stories.append(story)
     chosen = normalized.normalized_select_category(stories, limit=30)
-    assert len(chosen) == 25, len(chosen)
+    assert len(chosen) == normalized.LOCAL_STORIES_PER_MARKET, len(chosen)
 
 
 def test_region_hard_cap_and_balance():
@@ -60,9 +64,9 @@ def test_region_hard_cap_and_balance():
     for bucket in range(8):
         stories = [item("region", bucket * 20 + i, state=f"State {bucket}-{i % 2}") for i in range(20)]
         chosen = normalized.normalized_select_region(stories, per_state=8, limit=80)
-        assert len(chosen) <= 5
+        assert len(chosen) <= 10
         total.extend(chosen)
-    assert len(total) == 40, len(total)
+    assert len(total) <= 80, len(total)
     extra = normalized.normalized_select_region([item("region", 999, state="Extra")])
     assert extra == []
 
@@ -77,7 +81,7 @@ if __name__ == "__main__":
     test_policy()
     test_normal_category_target()
     test_legislation_is_not_news_pool()
-    test_local_target()
+    test_local_market_bank()
     test_region_hard_cap_and_balance()
     test_previously_unprotected_fallbacks()
     print("Normalized category pool tests passed.")
