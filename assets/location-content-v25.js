@@ -46,7 +46,7 @@
 
   function statePool(items){
     const loc=location();if(!loc.code&&!loc.name)return [];
-    const candidates=items.filter(item=>{const cat=category(item);if(cat==='nm'&&loc.code==='NM')return true;return ['us','top'].includes(cat)&&matchesState(item,loc)});
+    const candidates=items.filter(item=>{const cat=category(item);if(cat==='nm'&&loc.code==='NM')return true;return ['us','top','region','local'].includes(cat)&&matchesState(item,loc)});
     const outsideCounty=rank(candidates.filter(i=>!matchesCounty(i,loc)),loc);
     const countyTail=rank(candidates.filter(i=>matchesCounty(i,loc)),loc);
     return unique([...outsideCounty,...countyTail]).map(i=>cloneAs(i,'Statewide')).slice(0,90);

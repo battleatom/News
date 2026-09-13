@@ -5,33 +5,33 @@ Baseline: hard-saved V4 commit `9549044575ac8ce8c17eccaa09702e157797b1cd` (`v4-h
 ## Baseline validation
 - V4 structural audit: PASS.
 - V4 inherited market / Entertainment / verifier regressions: PASS.
-- Region normalization mismatch investigated: current policy intentionally uses `(30,35,80)` for Region and the current regression expects 80. The earlier `(30,35,40)` failure was a stale test expectation, so no runtime code change is justified.
+- Region normalization mismatch investigated: current policy intentionally uses `(30,35,80)` for Region; the earlier `(30,35,40)` assertion was stale. No runtime change justified.
 
 ## Fix 1 — editorial/category integrity and U.S. sports leakage
-- Optimization: consolidated routing/filtering around one final editorial-integrity pass and shared classifier/federal/landing-page rules instead of adding another one-off filter.
-- Initial failure: stronger landing-page detection found one V4 generic item before cleanup ran; test flow was corrected to audit the transformed V5 candidate without weakening detection.
-- Tests: inherited V4 audit/regressions, editorial integrity, U.S.-sports feed check, diff/deletion guards.
+- Consolidated routing/filtering around one final editorial-integrity pass and shared rules.
+- Stronger landing-page detection initially exposed one V4 generic item; harness was corrected to audit the transformed candidate rather than weakening detection.
 - Result: PASS.
 
 ## Fix 2 — complete content briefs and story-specific Why It Matters
-- Optimization: structured subject/event/affected-party/consequence logic replaces tab-wide canned impact text; briefs are complete rather than visually or textually clipped.
-- CI avoids repeated network article fetching; it regenerates Why It Matters from the frozen feed and unit-tests brief generation deterministically.
-- Tests: story-context/complete-brief regression plus all prior V5 tests and V4 guards.
+- Structured subject/event/affected-party/consequence logic replaces tab-wide canned impact text; briefs are complete rather than clipped.
 - Result: PASS.
 
 ## Fix 3 — event clustering and cross-tab canonicalization
-- Optimization: one event-identity layer handles exact/syndicated/semantic overlap instead of tab-specific duplicate scripts; cross-tab pruning has a 25% category-reduction safety ceiling.
-- Performance optimization: full event clustering remains covered by its focused regression and final-build stage, while per-fix CI runs the fast conservative cross-tab pass on the full feed.
-- Tests: event-cluster regression, feed-quality regression, fast cross-tab full-feed transform, all prior V5 tests and V4 guards.
+- One event-identity layer handles repeated/syndicated coverage; cross-tab pruning has a 25% category-reduction safety ceiling and keeps removed copies as related coverage.
+- Optimization: full clustering remains a focused/final-build test; per-fix CI uses the fast conservative cross-tab pass.
 - Result: PASS.
 
 ## Fix 4 — Underreported relevance and priority ranking
-- Optimization: per-fix CI ranks the already collected V4 pool deterministically; network discovery and enrichment are retained for the final production build only.
-- Tests: freshness, corroboration, coverage gap, momentum, saturation, continuing relevance, event clustering, live-feed-copy eligibility, all prior V5 tests and V4 guards.
+- Per-fix CI deterministically ranks the existing pool; network discovery/enrichment stays final-build only.
 - Result: PASS.
 
 ## Fix 5 — X fixed-topic integrity
-- Goal: preserve exactly ten stable X topic slots and require the retained lead story in each slot to be relevant to that topic after final editorial repair.
-- Optimization: X collection remains network-backed only in the final build; per-fix CI validates the fixed contract and all ten transformed feed slots deterministically.
-- Tests: `tests/x_static_topics_test.py`, `tests/v5_x_feed_integrity_test.py`, all prior V5 tests and V4 guards.
+- Exactly ten fixed topic slots; transformed feed must retain a semantically relevant lead in every slot.
+- Result: PASS.
+
+## Fix 6 — location-specific Local/Region behavior
+- Goal: Local must prove city/market relevance, Statewide must include valid state-tagged local/region stories, and Region must follow the detected user's geographic region rather than a fixed region.
+- Optimization: keep one nationwide inventory plus browser-side location scoping instead of maintaining per-city pages/feeds. Local uses city/market evidence; Region uses canonical state→region metadata.
+- Per-fix test target: Farmington local relevance, false New Mexico/sports rejection, local-source/other-state rejection, Texas-region true/false cases, and controller wiring.
+- Browser relative-region test is staged for final Playwright validation.
 - Status: pending CI.

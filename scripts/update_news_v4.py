@@ -16,7 +16,7 @@ import html
 import re
 from urllib.parse import urlparse
 
-import update_news_normalized as normalized
+import update_news_location_validated as normalized
 
 core = normalized.core
 
