@@ -120,7 +120,7 @@ jobs:
         run: |
           python scripts/site_audit.py
           python scripts/v5_runtime_audit.py
-          python scripts/v4_release_gate.py
+          python scripts/v5_release_gate.py
           python tests/v5_final_content_audit.py
           python scripts/cross_tab_integrity_fast.py --report v5-final-cross-tab-report.json
           python - <<'PY'
