@@ -3,11 +3,6 @@
 
 :root{
   --v5-accent:#3b82f6;
-  --v5-high:#dc2626;
-  --v5-analysis:#7c3aed;
-  --v5-local:#15803d;
-  --v5-trending:#2563eb;
-  --v5-standard:#64748b;
   --v5-border:rgba(71,85,105,.22);
   --v5-surface:#ffffff;
   --v5-surface-soft:#f8fafc;
@@ -19,22 +14,20 @@
   --v5-shadow-hover:0 8px 22px rgba(15,23,42,.10);
 }
 
-/* Publication hierarchy */
 html body .content{padding-top:15px!important}
 html body .section-header{margin-bottom:9px!important;padding-bottom:9px!important;border-bottom:1px solid rgba(71,85,105,.14)!important}
 html body .section-header h2{font-size:21px!important;line-height:1.15!important;letter-spacing:-.4px!important;font-weight:820!important}
 html body .section-header .count{font-size:10px!important;font-weight:700!important;color:var(--v5-subtle)!important}
 html body .section-body{gap:8px!important}
 
-/* Every story is visibly a card. NFL keeps its team-color treatment. Semantic
-   hierarchy rails intentionally live only in v5-hierarchy.css so there is one
-   authoritative cascade owner. */
+/* Every story remains a neutral card. NFL keeps its own team-color treatment.
+   Underreported retains its independent age-band rail rules. */
 html body .news-item:not(.nfl-game-card){
   position:relative;
   margin:6px 0!important;
   padding:12px 13px!important;
   border:1px solid var(--v5-border)!important;
-  border-left:3px solid var(--v5-standard)!important;
+  border-left:3px solid #94a3b8!important;
   border-radius:var(--v5-radius)!important;
   background:var(--v5-surface)!important;
   box-shadow:var(--v5-shadow)!important;
@@ -47,7 +40,6 @@ html body .news-item:not(.nfl-game-card):hover{
 }
 html body .underreported-item:not(.nfl-game-card){border-left-width:5px!important}
 
-/* Headlines and body copy */
 html body .news-item h3,
 html body .news-item:first-child h3{margin:0 0 5px!important;font-size:16px!important;line-height:1.28!important;letter-spacing:-.18px!important;font-weight:760!important;color:var(--v5-text)!important}
 html body .lead-story-v2 h3,
@@ -57,35 +49,6 @@ html body .news-item h3 a:hover{color:#245fc2!important}
 html body .description{margin:6px 0!important;font-size:12.5px!important;line-height:1.48!important;color:var(--v5-muted)!important}
 html body .meta{margin-top:6px!important;gap:4px 9px!important;font-size:10.5px!important;line-height:1.3!important;color:var(--v5-subtle)!important}
 
-/* Importance badges become compact icon labels. */
-html body .v3-importance{
-  display:inline-flex!important;
-  align-items:center!important;
-  gap:5px!important;
-  width:max-content!important;
-  margin:0 0 7px!important;
-  padding:4px 7px!important;
-  border:1px solid rgba(100,116,139,.19)!important;
-  border-radius:999px!important;
-  background:rgba(100,116,139,.07)!important;
-  color:#526075!important;
-  font-size:9px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:.065em!important;
-  text-transform:uppercase!important;
-}
-html body .v3-importance::before{font-size:10px!important;line-height:1!important;letter-spacing:0!important}
-html body .v3-importance.high{color:#b91c1c!important;background:rgba(220,38,38,.075)!important;border-color:rgba(220,38,38,.20)!important}
-html body .v3-importance.high::before{content:'⚡'}
-html body .v3-importance.analysis{color:#6d28d9!important;background:rgba(124,58,237,.075)!important;border-color:rgba(124,58,237,.20)!important}
-html body .v3-importance.analysis::before{content:'◇'}
-html body .v3-importance.local{color:#166534!important;background:rgba(21,128,61,.075)!important;border-color:rgba(21,128,61,.20)!important}
-html body .v3-importance.local::before{content:'●'}
-html body .v3-importance.trending{color:#1d4ed8!important;background:rgba(37,99,235,.075)!important;border-color:rgba(37,99,235,.20)!important}
-html body .v3-importance.trending::before{content:'↗'}
-
-/* Source marks are small editorial icons rather than loose text. */
 html body .source{display:inline-flex!important;align-items:center!important;gap:5px!important}
 html body .v3-source-icon{
   display:inline-grid!important;
@@ -111,7 +74,6 @@ html body .source:not(:has(.v3-source-icon))::before{
   line-height:1;
 }
 
-/* Why it matters is clearly contextual, not another paragraph. */
 html body .news-item .why{
   display:flex!important;
   align-items:flex-start!important;
@@ -132,24 +94,13 @@ html body .v3-why-label::before{content:'◆ ';font-size:7px!important;vertical-
 html body .v3-why-label::after{content:' —'}
 html body .v3-why-text{display:block!important;min-width:0!important;overflow:visible!important}
 
-/* Bookmark control should read as an action without competing with the headline. */
 html body .bookmark-row{gap:7px!important;align-items:flex-start!important}
 html body .bookmark-btn{min-width:29px!important;min-height:29px!important;display:inline-grid!important;place-items:center!important;border:1px solid transparent!important;border-radius:8px!important;font-size:15px!important;padding:0!important;opacity:.55!important;transition:opacity .15s ease,background-color .15s ease,border-color .15s ease,transform .15s ease!important}
 html body .bookmark-btn:hover,html body .bookmark-btn.saved{opacity:1!important;background:rgba(59,130,246,.08)!important;border-color:rgba(59,130,246,.15)!important}
 html body .bookmark-btn:hover{transform:scale(1.04)!important}
 
-/* NEW remains noticeable but small. */
 html body .new-badge{padding:3px 6px!important;border-radius:999px!important;font-size:9px!important;line-height:1!important;font-weight:900!important;letter-spacing:.04em!important;box-shadow:none!important}
 
-/* Legend matches the actual hierarchy. */
-html body .v3-card-key{margin:4px 0 11px!important;padding:7px 9px!important;border:1px solid rgba(71,85,105,.16)!important;border-radius:9px!important;background:rgba(100,116,139,.035)!important;color:var(--v5-muted)!important}
-html body .v3-card-key .high i{background:var(--v5-high)!important}
-html body .v3-card-key .analysis i{background:var(--v5-analysis)!important}
-html body .v3-card-key .local i{background:var(--v5-local)!important}
-html body .v3-card-key .trending i{background:var(--v5-trending)!important}
-html body .v3-card-key .standard i{background:var(--v5-standard)!important}
-
-/* Tabs: active state is stronger, inactive state quieter. */
 html body .tab{font-weight:720!important;color:#5b687a!important}
 html body .tab.active{color:#1d4ed8!important;background:rgba(59,130,246,.10)!important;border-color:rgba(59,130,246,.22)!important;box-shadow:inset 0 -2px 0 rgba(59,130,246,.55)!important}
 
@@ -173,12 +124,6 @@ html body .tab.active{color:#1d4ed8!important;background:rgba(59,130,246,.10)!im
   html body .v3-why-label{color:#c4a8ff!important}
   html body .v3-source-icon{background:rgba(148,163,184,.09)!important;border-color:rgba(235,235,245,.16)!important;color:#d8dee8!important;box-shadow:none!important}
   html body .source:not(:has(.v3-source-icon))::before{color:#929fb0!important}
-  html body .v3-importance{color:#d1d7e0!important;border-color:rgba(203,213,225,.16)!important;background:rgba(203,213,225,.07)!important}
-  html body .v3-importance.high{color:#fca5a5!important}
-  html body .v3-importance.analysis{color:#c4a8ff!important}
-  html body .v3-importance.local{color:#86efac!important}
-  html body .v3-importance.trending{color:#93c5fd!important}
-  html body .v3-card-key{background:rgba(148,163,184,.045)!important;border-color:rgba(203,213,225,.13)!important}
   html body .tab{color:#abb5c2!important}
   html body .tab.active{color:#b8d2ff!important;background:rgba(59,130,246,.15)!important;border-color:rgba(96,165,250,.27)!important}
 }
@@ -192,8 +137,6 @@ html body .tab.active{color:#1d4ed8!important;background:rgba(59,130,246,.10)!im
   html body .lead-story-v2 h3,html body .lead-story-v2 h3 a{font-size:18px!important}
   html body .description{font-size:12px!important;line-height:1.46!important}
   html body .news-item .why{margin:7px -11px 4px!important;padding:7px 11px!important;font-size:11px!important}
-  html body .v3-importance{margin-bottom:6px!important;padding:3px 6px!important;font-size:8.5px!important}
-  html body .v3-card-key{font-size:9.5px!important;gap:6px 8px!important;padding:6px 7px!important}
 }
 
 @media(prefers-reduced-motion:reduce){

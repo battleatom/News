@@ -47,30 +47,8 @@
 <style id="related-coverage-v1-style">.related-coverage{margin:11px 0 0;padding:10px 0 0;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{display:inline-block;color:#475569;margin-bottom:3px}.related-coverage a{display:block;margin-top:5px;color:#475569;text-decoration:none;font-weight:650}.related-coverage a:hover{text-decoration:underline}.related-coverage .source{color:#94a3b8;font-weight:500}</style>
 
 <link rel="stylesheet" href="styles/v2.css?v=5">
-<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">
-<link id="v5-hierarchy-style" rel="stylesheet" href="styles/v5-hierarchy.css?v=4" data-v5-hierarchy="true">
-
-<style id="v5-hierarchy-critical-v1">
-html body .news-item[data-hierarchy="high"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-high:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #dc2626!important}
-html body .news-item[data-hierarchy="analysis"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-analysis:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #7c3aed!important}
-html body .news-item[data-hierarchy="local"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-local:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #15803d!important}
-html body .news-item[data-hierarchy="trending"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-trending:not(.nfl-game-card):not(.underreported-item){border-left:5px solid #2563eb!important}
-html body .news-item[data-hierarchy="standard"]:not(.nfl-game-card):not(.underreported-item),html body .news-item.v5-hierarchy-standard:not(.nfl-game-card):not(.underreported-item){border-left:3px solid #64748b!important}
-html body .news-item.underreported-item[data-age-band="blue"],html body .news-item.underreported-item.age-blue{border-left:5px solid #2563eb!important}
-html body .news-item.underreported-item[data-age-band="green"],html body .news-item.underreported-item.age-green{border-left:5px solid #16a34a!important}
-html body .news-item.underreported-item[data-age-band="orange"],html body .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
-html body .news-item.underreported-item[data-age-band="purple"],html body .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
-html body .news-item.underreported-item[data-age-band="red"],html body .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-html body .v3-importance{display:inline-flex!important;align-items:center!important;gap:4px!important;position:relative!important;visibility:visible!important;opacity:1!important}
-html body .v3-importance.high::before{content:'⚡'}
-html body .v3-importance.analysis::before{content:'◆'}
-html body .v3-importance.local::before{content:'●'}
-html body .v3-importance.trending::before{content:'↗'}
-html body .v3-importance.standard::before{content:'•'}
-html body .nfl-game-card .v3-importance{display:none!important}
-</style>
-<script src="assets/location-v2.js?v=8"></script>
-<script src="assets/v5-hierarchy.js?v=5" defer data-v5-hierarchy="true" data-underreported-v5-hierarchy="true"></script>
+<link rel="stylesheet" href="styles/v5-visual.css?v=2" data-v5-visual="true">
+<script src="assets/location-v2.js?v=9"></script>
 <style id="alerts-status-v22-style">
 #status{display:none!important}
 #pull-stats-ui{display:block!important;margin:0!important;padding:6px 11px!important;border-bottom:1px solid var(--ui-line)!important;background:#f8fafc!important;color:#475569!important;font-size:10px!important;line-height:1.28!important;font-weight:650!important;white-space:normal!important;overflow:visible!important}
@@ -630,41 +608,7 @@ async function refreshNewsFromPage(manual=false){
     if(btn)btn.disabled=false;
   }
 }
-function v5HierarchyKind(section,index){
-  if(section==='underreported')return 'analysis';
-  if(section==='x')return 'trending';
-  if(section==='nm'||section==='local'||section==='region')return 'local';
-  if(index===0&&['top','world','us','presidential','federal','military'].includes(section))return 'high';
-  return 'standard';
-}
-function v5HierarchyLabel(kind){return ({high:'HIGH IMPACT',analysis:'ANALYSIS',local:'LOCAL',trending:'TRENDING',standard:'STANDARD'})[kind]||'STANDARD';}
-function renderStandardCanonical(items){
- const def=CANONICAL_SECTIONS.find(x=>x[0]===active)||CANONICAL_SECTIONS[0];
- let list=items.filter(item=>(item.querySelector('category')?.textContent?.trim()||'world')===active);
- if(active==='region'&&typeof detectedRegion!=='undefined')list=list.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);
- const root=document.getElementById('news-feed');root.innerHTML='';
- const sec=document.createElement('section');sec.className='section';sec.dataset.section=active;sec.style.setProperty('--accent',def[2]);
- const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>${esc(def[1])}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);
- const body=document.createElement('div');body.className='section-body';
- if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';
- list.forEach((item,i)=>{
-   const ar=document.createElement('article');
-   const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';
-   const kind=v5HierarchyKind(active,i);
-   ar.className=`news-item v5-hierarchy-${kind}`;
-   ar.dataset.hierarchy=kind;
-   ar.dataset.v5Hierarchy=kind;
-   ar.dataset.section=active;
-   ar.dataset.rank=String(i+1);
-   ar.dataset.storyUrl=link;
-   ar.dataset.publishedAt=date;
-   ar.innerHTML=`<span class="v3-importance ${kind}" data-v5-hierarchy-badge="${kind}">${esc(v5HierarchyLabel(kind))}</span><h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;
-   body.appendChild(ar);
- });
- sec.appendChild(body);root.appendChild(sec);
- document.dispatchEvent(new CustomEvent('underreported:feed-rendered',{detail:{section:active,count:list.length}}));
- if(typeof window.decorateNewBadges==='function')window.decorateNewBadges();
-}
+function renderStandardCanonical(items){const def=CANONICAL_SECTIONS.find(x=>x[0]===active)||CANONICAL_SECTIONS[0];let list=items.filter(item=>(item.querySelector('category')?.textContent?.trim()||'world')===active);if(active==='region'&&typeof detectedRegion!=='undefined')list=list.filter(item=>(item.querySelector('region')?.textContent?.trim()||'')===detectedRegion);const root=document.getElementById('news-feed');root.innerHTML='';const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent',def[2]);const head=document.createElement('div');head.className='section-header';head.innerHTML=`<h2>${esc(def[1])}</h2><span class="count">${list.length} stories</span>`;sec.appendChild(head);const body=document.createElement('div');body.className='section-body';if(!list.length)body.innerHTML='<div class="empty">No stories available right now.</div>';list.forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',why=item.querySelector('whyMatters')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'',source=item.querySelector('source')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}${why?`<div class="why">${esc(why)}</div>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;body.appendChild(ar)});sec.appendChild(body);root.appendChild(sec);decorateNewBadges();}
 function renderBoxOffice(){const root=document.getElementById('news-feed');root.innerHTML='<section class="section"><div class="section-header"><h2>🎬 Box Office</h2><span class="count">Movies, releases & Farmington showtimes</span></div><div class="section-body"><div class="loading">Loading movie information…</div></div></section>';fetch('boxoffice.json?ts='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(data=>{const movies=data.movies||[];const body=root.querySelector('.section-body');body.innerHTML='';const intro=document.createElement('div');intro.className='boxoffice-intro';intro.innerHTML='Local theater information is for <strong>Farmington, NM</strong>. Showtimes can change during the day; use the source link to confirm before heading out.';body.appendChild(intro);const local=movies.filter(m=>m.status==='In theaters');const upcoming=movies.filter(m=>m.status==='Upcoming');function addHeading(t){const h=document.createElement('div');h.className='boxoffice-section-title';h.textContent=t;body.appendChild(h)}function addMovie(m,status){const ar=document.createElement('article');ar.className='news-item movie-card';const details=[m.rating,m.runtime,m.genres,m.releaseDate?'Release '+new Date(m.releaseDate+'T12:00:00').toLocaleDateString([], {month:'short',day:'numeric',year:'numeric'}):''].filter(Boolean);let shows='';if(m.theaters?.length){shows='<div class="movie-showtimes"><strong>📍 Farmington showtimes</strong>'+m.theaters.map(t=>`<small><b>${esc(t.name)}</b>: ${esc((t.showtimes||[]).join(' · '))}</small>`).join('')+'<small><a href="https://www.showtimes.com/movie-times/farmington-nm/" target="_blank" rel="noopener noreferrer">Verify showtimes</a></small></div>';}let news='';if(m.news?.length){news='<div class="movie-news"><div class="underreported-label">Movie news</div>'+m.news.map(n=>`<a href="${esc(n.link)}" target="_blank" rel="noopener noreferrer">${esc(n.title)}</a>`).join('')+'</div>';}ar.innerHTML=`<div><span class="movie-status">${esc(status)}</span></div><h3>${esc(m.title)}</h3><div class="movie-details">${details.map(x=>`<span class="movie-pill">${esc(x)}</span>`).join('')}</div>${m.description?`<p class="description">${esc(m.description)}</p>`:''}${shows}${news}`;body.appendChild(ar);}if(local.length){addHeading('🍿 New & still in theaters');local.forEach(m=>addMovie(m,'IN THEATERS'));}if(upcoming.length){addHeading('🗓 Upcoming releases');upcoming.slice(0,25).forEach(m=>addMovie(m,'UPCOMING'));}if(!local.length&&!upcoming.length)body.innerHTML+='<div class="empty">Movie data is temporarily unavailable.</div>';const foot=document.createElement('div');foot.className='meta';foot.innerHTML=`<span>Updated ${esc(formatDate(data.updatedAt||new Date().toISOString()))}</span><span class="source"><a href="https://www.showtimes.com/movie-times/farmington-nm/" target="_blank" rel="noopener noreferrer">Showtimes.com</a> · <a href="https://www.the-numbers.com/movies/release-schedule/2026" target="_blank" rel="noopener noreferrer">The Numbers</a></span>`;body.appendChild(foot);}).catch(()=>{root.querySelector('.section-body').innerHTML='<div class="empty">Movie data is temporarily unavailable. Try Refresh.</div>';});}
 function canonicalRender(items){if(active==='boxoffice'){renderBoxOffice();return}if(active==='nfl'&&typeof renderNfl==='function'){renderNfl();setTimeout(decorateNewBadges,100);return}if(active==='x'&&typeof renderXIssues==='function'){renderXIssues(items);setTimeout(decorateNewBadges,100);return}if(active==='underreported'&&typeof renderUnderreported==='function'){renderUnderreported(items);setTimeout(decorateNewBadges,100);return}renderStandardCanonical(items);}
 window.buildTabs=canonicalBuildTabs;window.render=canonicalRender;window.loadNews=refreshNewsFromPage;
@@ -1181,64 +1125,6 @@ syncDiscoveryButton();
 </script>
 
 <script src="assets/app-v2.js?v=3"></script>
-
-<script id="v5-hierarchy-bootstrap-v1">
-(function(){
- 'use strict';
- if(window.__v5HierarchyBootstrapV1)return;
- window.__v5HierarchyBootstrapV1=true;
- const classes=['v5-hierarchy-high','v5-hierarchy-analysis','v5-hierarchy-local','v5-hierarchy-trending','v5-hierarchy-standard'];
- const local=new Set(['nm','local','region']);
- const highFirst=new Set(['top','world','us','presidential','federal','military']);
- const labels={high:'HIGH IMPACT',analysis:'ANALYSIS',local:'LOCAL',trending:'TRENDING',standard:'STANDARD'};
- function sectionFor(card){
-   const bound=card?.dataset?.section||card?.closest?.('.section')?.dataset?.section||'';
-   if(bound)return bound;
-   try{if(typeof active!=='undefined'&&active)return String(active)}catch(e){}
-   const selected=document.querySelector('#tabs .tab.active')?.textContent||'';
-   const text=selected.toLowerCase();
-   if(text.includes('world'))return 'world';if(text.includes('united states'))return 'us';if(text.includes('presidential'))return 'presidential';if(text.includes('federal'))return 'federal';if(text.includes('new mexico'))return 'nm';if(text.includes('local'))return 'local';if(text.includes('region'))return 'region';if(text.includes('technology'))return 'technology';if(text.includes('gaming'))return 'gaming';if(text.includes('military'))return 'military';if(text.includes('entertainment'))return 'entertainment';if(text.includes('underreported'))return 'underreported';if(text.includes('top issues'))return 'x';if(text.includes('top stories'))return 'top';
-   return '';
- }
- function kindFor(card,index,section){
-   if(card.classList.contains('nfl-game-card'))return '';
-   const bound=card.dataset.hierarchy||card.dataset.v5Hierarchy||'';
-   if(bound)return bound;
-   if(card.classList.contains('underreported-item')||section==='underreported')return 'analysis';
-   if(card.classList.contains('x-issue-item')||section==='x')return 'trending';
-   if(local.has(section))return 'local';
-   if(index===0&&highFirst.has(section))return 'high';
-   return 'standard';
- }
- function apply(){
-   const cards=[...document.querySelectorAll('#news-feed .news-item')];
-   cards.forEach((card,index)=>{
-     const section=sectionFor(card),kind=kindFor(card,index,section);
-     if(!kind)return;
-     const wanted='v5-hierarchy-'+kind;
-     classes.forEach(c=>{if(c!==wanted)card.classList.remove(c)});
-     card.classList.add(wanted);card.dataset.hierarchy=kind;card.dataset.v5Hierarchy=kind;if(section)card.dataset.section=section;
-     let badge=card.querySelector(':scope > .v3-importance');
-     if(!badge){badge=document.createElement('span');card.prepend(badge)}
-     badge.className='v3-importance '+kind;badge.dataset.v5HierarchyBadge=kind;
-     if(badge.textContent!==labels[kind])badge.textContent=labels[kind];
-   });
-   document.body?.setAttribute('data-v5-hierarchy-bootstrap','active');
- }
- let queued=false;
- function queue(){if(queued)return;queued=true;requestAnimationFrame(()=>{queued=false;apply()})}
- function start(){
-   apply();
-   const feed=document.getElementById('news-feed');
-   if(feed)new MutationObserver(ms=>{if(ms.some(m=>[...m.addedNodes].some(n=>n.nodeType===1&&(n.matches?.('.news-item')||n.querySelector?.('.news-item')))))queue()}).observe(feed,{childList:true,subtree:true});
-   document.addEventListener('underreported:feed-rendered',queue);
-   document.getElementById('tabs')?.addEventListener('click',()=>requestAnimationFrame(queue),true);
-   window.addEventListener('underreported:location',queue,{passive:true});
-   setTimeout(apply,250);setTimeout(apply,1000);
- }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
-})();
-</script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
