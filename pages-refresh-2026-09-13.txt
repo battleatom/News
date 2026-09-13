@@ -1,2 +1,3 @@
 Force GitHub Pages rebuild after restoring audited V5 loader.
-Commit target: 19b0e3a586f48a847e3f067814906fa57320cae9
+Current tested V5.1 source: 21c777a0b124c12d472c5582c56ca9cd1e6ea4bb
+Reason: live v5-preview was still serving stale source 29d88d60e07e5ef14a20820f39411e725efee3c8.
