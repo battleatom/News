@@ -23,6 +23,14 @@ def visible_links(page):
     ))
 
 
+def load_app(page, url=URL):
+    # The app intentionally keeps background refresh/status requests alive, so
+    # waiting for networkidle can hang even when the UI is fully ready.
+    page.goto(url, wait_until='domcontentloaded', timeout=30000)
+    page.wait_for_selector('#tabs', timeout=10000)
+    page.wait_for_function("typeof allItems !== 'undefined' && allItems.length > 0", timeout=15000)
+
+
 def open_entertainment(page):
     tab=page.locator('#tabs button',has_text='Entertainment')
     assert tab.count()==1, 'Entertainment tab missing'
@@ -38,9 +46,9 @@ with sync_playwright() as p:
     errors=[]
     page.on('pageerror',lambda e: errors.append(str(e)))
 
-    page.goto(URL,wait_until='networkidle')
+    load_app(page)
     page.evaluate(f"localStorage.removeItem('{MODE_KEY}')")
-    page.goto(URL,wait_until='networkidle')
+    load_app(page)
     open_entertainment(page)
 
     clean_pool=backing_links(page,'clean')
@@ -64,7 +72,7 @@ with sync_playwright() as p:
 
     # Dirty data and future preference plumbing remain preserved, but cannot expose the feed today.
     page.evaluate(f"localStorage.setItem('{MODE_KEY}','dirty')")
-    page.goto(URL+'?entmode=dirty',wait_until='networkidle')
+    load_app(page, URL+'?entmode=dirty')
     open_entertainment(page)
     forced_visible=visible_links(page)
     assert forced_visible and forced_visible <= backing_links(page,'clean'), 'Dirty URL/preference exposed hidden Dirty feed'
