@@ -28,12 +28,25 @@ try:
     with sync_playwright() as p:
         browser = p.chromium.launch()
         page = browser.new_page(viewport={'width': 390, 'height': 844})
+        errors = []
+        page.on('pageerror', lambda exc: errors.append(f'pageerror: {exc}'))
+        page.on('console', lambda msg: errors.append(f'console {msg.type}: {msg.text}') if msg.type == 'error' else None)
         page.goto(URL, wait_until='domcontentloaded')
-        page.wait_for_selector('#tabs .tab[data-nav-key="region"]', timeout=10000)
+        page.wait_for_selector('#tabs .tab', timeout=10000)
+        page.wait_for_timeout(500)
 
-        region = page.locator('#tabs .tab[data-nav-key="region"]')
+        tabs = page.locator('#tabs .tab')
+        labels = [tabs.nth(i).inner_text() for i in range(tabs.count())]
+        print('Tab labels:', labels)
+        print('App V2 loaded:', page.evaluate('Boolean(window.__underreportedV2)'))
+        print('Script sources:', page.evaluate("[...document.scripts].map(s=>s.src).filter(Boolean)"))
+        if errors:
+            print('Browser errors:', errors)
+
+        region = page.locator('#tabs .tab').filter(has_text='Region')
         cue = page.locator('#tab-scroll-cue-v2')
-        assert region.count() == 1, 'Exactly one Regional tab must exist'
+        assert region.count() == 1, f'Exactly one Regional tab must exist; labels={labels!r}'
+        assert cue.count() == 1, f'Mobile Regional navigation cue was not created; browser_errors={errors!r}'
         assert cue.is_visible(), 'Mobile Regional navigation cue must be visible when Region is off-screen'
         assert 'Region' in cue.inner_text(), 'Cue must explicitly identify the Regional tab while it is off-screen'
 
@@ -41,14 +54,15 @@ try:
         page.wait_for_timeout(450)
         visible = page.evaluate('''() => {
           const tabs=document.getElementById('tabs');
-          const region=tabs.querySelector('.tab[data-nav-key="region"]');
+          const region=[...tabs.querySelectorAll('.tab')].find(b=>/Region/i.test(b.textContent));
+          if(!region)return false;
           const tr=tabs.getBoundingClientRect(), rr=region.getBoundingClientRect();
           return rr.left >= tr.left - 2 && rr.right <= tr.right + 2;
         }''')
         assert visible, 'Regional tab did not become visible after using the mobile cue'
 
         region.click()
-        page.wait_for_timeout(200)
+        page.wait_for_timeout(250)
         assert region.get_attribute('aria-current') == 'page', 'Regional tab did not become active after click'
         assert page.locator('body').get_attribute('data-active-tab') == 'region', 'Regional feed did not become the active view'
         browser.close()
