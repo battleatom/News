@@ -12,13 +12,18 @@ m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 root=ET.parse(ROOT/'News').getroot()
 channel=root.find('channel')
 assert channel is not None
-bad=[]
+bad_us=[]
+bad_world=[]
 for item in channel.findall('item'):
     cat=(item.findtext('category') or '').strip().lower()
-    if cat!='us':
-        continue
-    action=m.us_sports_disposition(item)
-    if action is not None:
-        bad.append(((item.findtext('title') or '').strip(),action))
-assert not bad, f'US sports leakage remains: {bad[:10]}'
-print('US SPORTS FEED CHECK PASS')
+    if cat=='us':
+        action=m.us_sports_disposition(item)
+        if action is not None:
+            bad_us.append(((item.findtext('title') or '').strip(),action))
+    elif cat=='world':
+        action=m.world_nfl_disposition(item)
+        if action=='nfl':
+            bad_world.append((item.findtext('title') or '').strip())
+assert not bad_us, f'US sports leakage remains: {bad_us[:10]}'
+assert not bad_world, f'NFL headlines remain in World: {bad_world[:10]}'
+print('US/WORLD SPORTS FEED CHECK PASS')
