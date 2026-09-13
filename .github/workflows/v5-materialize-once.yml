@@ -10,6 +10,7 @@ on:
 permissions:
   contents: write
 
+# One-shot helper used to synchronize the checked-in canonical V5 preview.
 jobs:
   materialize:
     runs-on: ubuntu-latest
