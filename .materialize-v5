@@ -15,3 +15,4 @@ Idempotence sync: route/filter before final cross-tab dedupe.
 V5.1 deployment sync: materialize tested 21c777a source so live preview receives current hierarchy and icon assets.
 Hierarchy runtime sync: observe nested story renders, filter self-mutations, and cache-bust repaired hierarchy assets.
 Render-bound hierarchy sync: attach hierarchy, raw timestamps, badges, and feed-rendered events directly during card creation.
+Persistent hierarchy sync: inline last-mile rails/icons and preserve Underreported age-band colors.
