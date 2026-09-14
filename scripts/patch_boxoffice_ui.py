@@ -58,9 +58,13 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
 </script>'''
 
 s = P.read_text(encoding='utf-8')
-if MARKER in s:
-    print('Box Office location patch already present; nothing to change.')
+while MARKER in s:
+    a=s.find(MARKER);b=s.find('</script>',a)
+    if b<0: raise SystemExit('Malformed Box Office patch block')
+    s=s[:a]+s[b+9:]
+if '</body>' in s:
+    s=s.replace('</body>',SCRIPT+'\n</body>',1)
 else:
     s += '\n' + SCRIPT + '\n'
-    P.write_text(s, encoding='utf-8')
-    print('Added location-aware Box Office renderer with direct category markers.')
+P.write_text(s, encoding='utf-8')
+print('Installed location-aware Box Office renderer with direct category markers.')
