@@ -165,6 +165,11 @@ jobs:
       - name: Enforce final NFL relevance
         run: python scripts/enforce_nfl_final.py
 
+      - name: Apply fresh authoritative tab filters
+        run: |
+          python scripts/v5_global_filter.py --apply --report /tmp/v5-filter-production-report.json
+          python tests/v5_filter_shadow_test.py
+
       - name: Verify exactly ten relevant fixed X topics
         run: |
           python - <<'PY'
