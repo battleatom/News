@@ -85,9 +85,6 @@ jobs:
               f.write('\n')
           PY
 
-      - name: Replace provisional Entertainment with authoritative Clean and Dirty pools
-        run: python scripts/update_entertainment_only_v4.py
-
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
 
@@ -205,13 +202,10 @@ jobs:
       - name: Build final site in one deterministic pass
         run: python scripts/build_site.py
 
-      - name: Inject V4 Entertainment UI
-        run: python scripts/patch_entertainment_v4_ui.py
-
       - name: Audit generated site integrity
         run: python scripts/site_audit.py
 
-      - name: Run V4 promotion gate
+      - name: Run V5 promotion gate
         run: python scripts/v4_release_gate.py
 
       - name: Validate final Python syntax
