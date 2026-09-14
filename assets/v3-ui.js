@@ -42,60 +42,57 @@
       .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
       .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
       .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-      .underreported-age-key,.feedback-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 14px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
-      .underreported-age-key span,.feedback-legend span{display:inline-flex;align-items:center;gap:5px}
+      .underreported-age-key{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 14px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
+      .underreported-age-key span{display:inline-flex;align-items:center;gap:5px}
       .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px;flex:0 0 auto}
       .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
-      .underreported-age-key .feedback-code,.feedback-legend .feedback-code{display:inline-grid;place-items:center;min-width:22px;height:18px;padding:0 5px;border:1px solid var(--ui-line,#dbe2ea);border-radius:999px;background:rgba(127,127,127,.07);color:var(--ui-text,#334155);font-size:9px;font-weight:900;line-height:1}
+      .underreported-age-key .feedback-code{display:inline-grid;place-items:center;min-width:22px;height:18px;padding:0 5px;border:1px solid var(--ui-line,#dbe2ea);border-radius:999px;background:rgba(127,127,127,.07);color:var(--ui-text,#334155);font-size:9px;font-weight:900;line-height:1}
       .underreported-age-key .feedback-divider{width:1px;height:16px;background:var(--ui-line,#dbe2ea);margin:0 1px}
-      @media(max-width:600px){.underreported-age-key,.feedback-legend{font-size:10px;gap:6px 9px;margin:6px 0 12px}.underreported-age-key .feedback-divider{display:none}}
+      @media(max-width:600px){.underreported-age-key{font-size:10px;gap:6px 9px;margin:6px 0 12px}.underreported-age-key .feedback-divider{display:none}}
     `;
     document.head.appendChild(style);
+  }
+
+  function ageBandFromCard(card){
+    const valid=new Set(['blue','green','orange','purple','red']);
+    const feedBand=String(card.dataset.ageBand||'').trim().toLowerCase();
+    if(valid.has(feedBand))return feedBand;
+    const raw=card.dataset.pubDate||card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
+    const dt=new Date(raw);
+    if(Number.isNaN(dt.getTime()))return '';
+    const age=Math.max(0,(Date.now()-dt.getTime())/86400000);
+    if(age<=2)return 'blue';
+    if(age<=4)return 'green';
+    if(age<=7)return 'orange';
+    if(age<=10)return 'purple';
+    return 'red';
   }
 
   function decorateUnderreportedAge(card){
     if(!card.classList.contains('underreported-item'))return;
     card.classList.remove('age-blue','age-green','age-orange','age-purple','age-red');
-    const valid=new Set(['blue','green','orange','purple','red']);
-    const feedBand=String(card.dataset.ageBand||'').trim().toLowerCase();
-    if(valid.has(feedBand)){
-      card.classList.add('age-'+feedBand);
-      return;
-    }
-    const raw=card.dataset.pubDate||card.querySelector('.meta span:first-child')?.textContent?.trim()||'';
-    const dt=new Date(raw);
-    if(Number.isNaN(dt.getTime()))return;
-    const age=Math.max(0,(Date.now()-dt.getTime())/86400000);
-    let cls='age-red';
-    if(age<=2)cls='age-blue';
-    else if(age<=4)cls='age-green';
-    else if(age<=7)cls='age-orange';
-    else if(age<=10)cls='age-purple';
-    card.classList.add(cls);
+    const band=ageBandFromCard(card);
+    if(band)card.classList.add('age-'+band);
   }
 
   function decorateImportanceRail(card){
     if(card.classList.contains('underreported-item')||card.classList.contains('nfl-game-card'))return;
+    if(bookmarksVisible()||legendExcluded.has(currentSection()))return;
     railClasses.forEach(cls=>card.classList.remove(cls));
-    const title=card.querySelector('h3,h2,.title,.headline')?.textContent||'';
-    const desc=card.querySelector('.description,.summary,.dek')?.textContent||'';
-    const text=` ${title} ${desc} `.toLowerCase();
-    let cls='rail-blue';
-    if(/\b(breaking|deadly|killed|mass shooting|earthquake|hurricane|wildfire|evacuat(?:e|ion)|airstrike|missile strike|invasion|ceasefire|state of emergency|major outage|data breach|cyberattack)\b/.test(text)){
-      cls='rail-red';
-    }else if(/\b(developing|investigation|indict(?:ed|ment)|arrest(?:ed)?|lawsuit|court rules?|strike|shutdown|recall|outbreak|tariffs?|layoffs?|bankruptcy|fraud|charges?)\b/.test(text)){
-      cls='rail-orange';
-    }else if(/\b(congress|senate|house of representatives|white house|president|federal|supreme court|legislation|\bbill\b|executive order|election|voters?|governor|policy|regulation|rulemaking)\b/.test(text)){
-      cls='rail-purple';
-    }else if(/\b(science|research|study finds?|breakthrough|discovery|health|medical|renewable|education|achievement|award|solution|conservation|recovery)\b/.test(text)){
-      cls='rail-green';
-    }
+    const band=ageBandFromCard(card);
+    if(!band)return;
+    const cls='rail-'+band;
     card.classList.add(cls);
-    card.dataset.railHierarchy=cls.replace('rail-','');
+    card.dataset.railHierarchy=band;
+    card.dataset.railMeaning='age';
   }
 
   function feedbackLegendMarkup(){
     return '<span><b class="feedback-code">D</b>Duplicate</span><span><b class="feedback-code">NR</b>Not Relevant</span><span><b class="feedback-code">NW</b>Not Wanted</span>';
+  }
+
+  function ageLegendMarkup(){
+    return '<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span>';
   }
 
   function installLegend(){
@@ -105,15 +102,9 @@
     const current=currentSection();
     if(!current||legendExcluded.has(current))return;
     const key=document.createElement('div');
-    if(current==='underreported'){
-      key.className='underreported-age-key';
-      key.setAttribute('aria-label','Underreported story age colors and feedback controls');
-      key.innerHTML='<span><i class="b"></i>0–2 days</span><span><i class="g"></i>2–4 days</span><span><i class="o"></i>4–7 days</span><span><i class="p"></i>7–10 days</span><span><i class="r"></i>10–14 days</span><span class="feedback-divider" aria-hidden="true"></span>'+feedbackLegendMarkup();
-    }else{
-      key.className='feedback-legend';
-      key.setAttribute('aria-label','Article feedback controls');
-      key.innerHTML=feedbackLegendMarkup();
-    }
+    key.className='underreported-age-key';
+    key.setAttribute('aria-label','Story age colors and article feedback controls');
+    key.innerHTML=ageLegendMarkup()+'<span class="feedback-divider" aria-hidden="true"></span>'+feedbackLegendMarkup();
     const head=section.querySelector('.section-header');
     if(head)head.after(key);
     else section.prepend(key);
