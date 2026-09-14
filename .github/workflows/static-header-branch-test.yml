@@ -27,6 +27,7 @@ jobs:
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           s=Path('index.html').read_text(encoding='utf-8')
           start='<!--V51_STICKY_SHELL_START--><div class="v51-sticky-shell">'
           end='</div><!--V51_STICKY_SHELL_END-->'
@@ -48,8 +49,8 @@ jobs:
               assert pos>=0, f'missing {token} from sticky shell'
               positions.append(pos)
           assert positions==sorted(positions), f'header controls out of order: {positions}'
-          feed=s.find('<div id="news-feed"',b)
-          assert feed>b, '#news-feed must remain below sticky shell'
+          feed=re.search(r'<(?:main|div|section)\b[^>]*\bid=["\']news-feed["\'][^>]*>',s[b:],flags=re.I)
+          assert feed, '#news-feed must remain below sticky shell'
           assert 'v51-fixed-stack' not in s, 'retired runtime fixed stack remains in generated HTML'
           print('Structural sticky shell regression passed:', positions)
           PY
