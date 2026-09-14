@@ -34,9 +34,7 @@ def best_unprotected_from_scores(scores:dict,excluded:set[str]|None=None)->str|N
 
 def target_is_contextually_valid(item:ET.Element,current:str,target:str)->bool:
     title=clean_headline(item)
-    # A nearby-state name inside a sports matchup is not enough to make the event regional news.
     if target=="region" and SPORT_WORDS.search(title) and current!="region":return False
-    # Physical/travel references to the White House are not automatically presidential policy/news.
     if target=="presidential" and not PRESIDENTIAL_CONTEXT.search(title):return False
     return True
 
@@ -44,16 +42,10 @@ def resolve_target(item:ET.Element,current:str,target:str|None,scores:dict)->str
     excluded=set()
     if target in PROTECTED_CATEGORIES:excluded.add(target)
     if target and not target_is_contextually_valid(item,current,target):excluded.add(target)
-    # Geographic specificity wins over broad country/world vocabulary (notably "New Mexico" vs "Mexico").
     if current in GEO_TABS and qualifies(item,current) and target in BROAD_TABS:return current
-    # The Military title gate intentionally requires specific evidence. If it misses by only the
-    # title-gate fraction, do not demote an existing Military story merely because a foreign place matched World.
-    if current=="military" and target=="world" and scores.get("military",0)>=RULES["military"].threshold-0.11:return current
-    # Presidential stories headed by Trump should not be demoted to a broad World/US bucket simply
-    # because a foreign country or "United States" also appears.
-    if current=="presidential" and target in BROAD_TABS and PRESIDENTIAL_CONTEXT.search(clean_headline(item)):return current
-    # Same principle for clearly gaming-origin headlines when broad geography is incidental.
-    if current=="gaming" and target in BROAD_TABS and re.search(r"\b(game|gaming|playstation|xbox|nintendo|steam|pc gamer|console|dlc|esports)\b",field(item,"title"),re.I):return current
+    if current=="military" and target=="world" and qualifies(item,"military"):return current
+    if current=="presidential" and target in BROAD_TABS and qualifies(item,"presidential") and PRESIDENTIAL_CONTEXT.search(clean_headline(item)):return current
+    if current=="gaming" and target in BROAD_TABS and qualifies(item,"gaming") and re.search(r"\b(game|gaming|playstation|xbox|nintendo|steam|pc gamer|console|dlc|esports)\b",field(item,"title"),re.I):return current
     if target and target not in excluded:return target
     return best_unprotected_from_scores(scores,excluded)
 
@@ -79,13 +71,15 @@ def apply_pipeline(input_path:str,output_path:str|None=None,report_path:str|None
         current=LEGACY_CATEGORY_MAP.get(raw,raw)
         if current!=raw:set_category(item,current)
         d=tab_filter_decision(item)
-        target=resolve_target(item,current,d.get("target"),d["scores"])
-        if target is None:
-            d={**d,"action":"reject","target":None,"reason":"no-valid-qualified-target"}
-        elif target!=d.get("target"):
-            d={**d,"action":"keep" if target==current else "reroute","target":target,"reason":"contextual-target:"+target}
+        # A tab filter rejection is authoritative. Never resurrect noise/out-of-area content
+        # merely because a weaker fallback category happens to score.
         if d["action"]=="reject":
             rejected.append({"title":field(item,"title"),"from":current,"reason":d["reason"]});continue
+        target=resolve_target(item,current,d.get("target"),d["scores"])
+        if target is None:
+            rejected.append({"title":field(item,"title"),"from":current,"reason":"no-valid-qualified-target"});continue
+        if target!=d.get("target"):
+            d={**d,"action":"keep" if target==current else "reroute","target":target,"reason":"contextual-target:"+target}
         if d["action"]=="reroute" and d["target"]!=current:
             set_category(item,d["target"]);changes.append({"title":field(item,"title"),"from":current,"to":d["target"],"reason":d["reason"]})
         routed.append(item)
