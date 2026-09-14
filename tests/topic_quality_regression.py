@@ -1,5 +1,11 @@
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0,str(ROOT))
+
 from scripts.refine_tech_gaming import (
     gaming_allowed, tech_relevance_decision, tech_cluster_score, text, us_route
 )
