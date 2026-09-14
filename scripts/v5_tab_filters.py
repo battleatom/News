@@ -18,7 +18,7 @@ RULES={
 "nfl":TabRule({**D(nfl=12,national_football_league=14,super_bowl=12,nfl_draft=10,nfl_playoffs=10,nfl_season=9),**NFL_FRANCHISE},D(college_football=-20,high_school_football=-20,ncaaf=-20),9,10),
 "gaming":TabRule(D(video_game=11,gaming=10,playstation=11,xbox=11,nintendo=11,steam=8,game_studio=9,console=7,pc_gaming=10,esports=9,gameplay=7,dlc=6),D(casino=-16,gambling=-16,sportsbook=-16,lottery=-14),8,10),
 "technology":TabRule(D(artificial_intelligence=12,machine_learning=10,openai=12,chatgpt=12,anthropic=12,cybersecurity=11,cyberattack=11,data_breach=11,semiconductor=9,nvidia=9,amd=8,intel=8,cloud_computing=9,quantum_computing=10,robotics=8,smartphone=7,android=7,iphone=7,software=5,technology=5),D(virginia_tech=-20,louisiana_tech=-20,texas_tech=-20,georgia_tech=-20),8,9),
-"military":TabRule(D(pentagon=12,armed_forces=11,troops=9,air_force=9,u_s_army=10,u_s_navy=10,marines=9,missile=8,airstrike=10,air_strike=10,drone_strike=10,warship=10,combat=8,battlefield=9,invasion=9,ceasefire=7,defense_department=12,centcom=12,military_operation=11,military_strike=11,armed_forces=11,weapon=5,weapons=5),D(border_war=-20,war_on_drugs=-18,price_war=-18,trade_war=-16,culture_war=-16,war_against=-14,veterans_museum=-12),9,9),
+"military":TabRule(D(pentagon=12,armed_forces=11,troops=9,air_force=9,u_s_army=10,u_s_navy=10,marines=9,missile=8,airstrike=10,air_strike=10,drone_strike=10,warship=10,combat=8,battlefield=9,invasion=9,ceasefire=7,defense_department=12,centcom=12,military_operation=11,military_strike=11,weapon=5,weapons=5),D(border_war=-20,war_on_drugs=-18,price_war=-18,trade_war=-16,culture_war=-16,war_against=-14,veterans_museum=-12),9,9),
 "presidential":TabRule(D(president_trump=13,donald_trump=12,white_house=11,executive_order=11,oval_office=11,press_secretary=8,presidential=8,commander_in_chief=9),D(former_president=-5,company_president=-16,university_president=-16,team_president=-16),9,9),
 "legislation":TabRule(D(legislation=11,signed_into_law=13,lawmakers=6,statute=9,ordinance=10,final_rule=9,rulemaking=9,house_passed=9,senate_passed=9,veto=8,enacted=9,law_takes_effect=10,bill=6),D(lawsuit=-8,law_firm=-12,law_enforcement=-8),9,10),
 "federal":TabRule(D(u_s_congress=11,congress=8,u_s_senate=10,house_of_representatives=10,u_s_supreme_court=12,scotus=12,department_of_justice=11,doj=9,fbi=9,dhs=9,u_s_treasury=9,treasury_department=9,epa=8,irs=8,federal_court=10,federal_judge=10,federal_agency=9),D(federal_credit_union=-20,state_supreme_court=-14),9,8),
@@ -33,20 +33,16 @@ RULES={
 
 def field(i:ET.Element,n:str)->str:return (i.findtext(n) or "").strip()
 def clean_title(i:ET.Element)->str:
-    t=field(i,"title")
-    # Feed titles commonly append publisher after the final ' - '. Do not classify from publisher names.
-    parts=t.rsplit(" - ",1)
+    t=field(i,"title");parts=t.rsplit(" - ",1)
     if len(parts)==2 and 2<=len(parts[1].split())<=10:t=parts[0]
     return t
 def norm(s:str)->str:return " "+re.sub(r"\s+"," ",(s or "").lower()).strip()+" "
 def parts(i):return norm(clean_title(i)),norm(field(i,"description")),norm(field(i,"whyMatters"))
 def has(text,phrase):
-    p=phrase.lower()
-    return p in text if (" " in p or "." in p or "-" in p) else re.search(rf"\b{re.escape(p)}\b",text) is not None
+    p=phrase.lower();return p in text if (" " in p or "." in p or "-" in p) else re.search(rf"\b{re.escape(p)}\b",text) is not None
 
 def legislation_id(i):
-    m=re.search(r"\b(H\.R\.|HR|S\.|HB|SB)\s*-?\s*(\d+)\b",clean_title(i).upper())
-    return (m.group(1).replace(".","")+m.group(2)) if m else ""
+    m=re.search(r"\b(H\.R\.|HR|S\.|HB|SB)\s*-?\s*(\d+)\b",clean_title(i).upper());return (m.group(1).replace(".","")+m.group(2)) if m else ""
 def is_legislation(i):return bool(legislation_id(i) or re.search(r"\b\d{3}(?:st|nd|rd|th) Congress\b",clean_title(i),re.I))
 def obvious_noise(i):
     t=norm(clean_title(i));return any(x in t for x in [" obituary "," winning numbers "," lottery "," things to do "," classifieds "," job postings "," horoscope "," recipe "," prep roundup "])
@@ -58,7 +54,6 @@ def raw(i,tab):
         if has(title,term):s+=w*2;ev.append("+title:"+term)
     for term,w in r.negatives.items():
         if has(full,term):s+=w;ev.append("!"+term)
-    # Strong subject tabs cannot qualify solely because their keywords appeared deep in a description.
     if tab in {"nfl","presidential","military","technology","gaming"}:
         title_strength=sum(w for term,w in r.positives.items() if has(title,term))
         if title_strength==0 and s<r.threshold+7:s=min(s,r.threshold-0.1)
@@ -84,7 +79,6 @@ def tab_filter_decision(i):
     if obvious_noise(i):return {"action":"reject","current":cur,"target":None,"reason":"global-noise","scores":all_scores(i)}
     w,_,scores=best_tab(i,include_underreported=(cur=="underreported"))
     if not w:return {"action":"reject","current":cur,"target":None,"reason":"no-qualified-tab","scores":scores}
-    # Do not turn unrelated local sweeps into generic US/World merely because descriptions contain national terms.
     if cur in {"local","region"} and w in {"us","world"} and scores[w]<RULES[w].threshold+6:return {"action":"reject","current":cur,"target":None,"reason":"out-of-area-local-sweep","scores":scores}
     if cur==w and qualifies(i,cur):return {"action":"keep","current":cur,"target":w,"reason":"tab-qualified","scores":scores}
     return {"action":"reroute","current":cur,"target":w,"reason":"stronger-tab:"+w,"scores":scores}
