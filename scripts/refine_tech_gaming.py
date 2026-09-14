@@ -44,7 +44,7 @@ TECH_TRUSTED = (
 )
 GAMING_TRUSTED = (
     'ign','gamespot','pc gamer','polygon','nintendo life','eurogamer','kotaku','game informer',
-    'the verge','ars technica','windows central','tom\'s hardware','cnet','engadget',
+    'the verge','ars technica','windows central',"tom's hardware",'cnet','engadget',
 )
 US_TRUSTED = (
     'reuters','associated press','ap news','nbc news','cbs news','abc news','cnn','usa today',
@@ -109,7 +109,7 @@ FEDERAL_ROUTE = re.compile(
     r'supreme court|scotus|department of justice|doj|fbi|dhs|irs|epa|treasury department|federal court|'
     r'federal judge|federal agency|census bureau|federal government)\b', re.I)
 PRESIDENTIAL_ROUTE = re.compile(
-    r'\b(president trump|donald trump|trump administration|white house|executive order|oval office|press secretary)\b', re.I)
+    r"\b(president trump|donald trump|trump(?:'s|’s)?|trump administration|white house|executive order|oval office|press secretary)\b", re.I)
 FOREIGN_US_FALSE_POSITIVE = re.compile(
     r'\b(london|paris|berlin|rome|madrid|moscow|kyiv|beijing|tokyo|seoul|gaza|israel|ukraine|russia|china|'
     r'united kingdom|britain|france|germany|italy|spain|india|pakistan|australia|canada|mexico)\b', re.I)
@@ -210,7 +210,6 @@ def tech_relevance_decision(item):
     if not article_like_title(title) or any(p.search(title) for p in TECH_SUPPORT_TITLE_PATTERNS):
         return 'drop'
     raw = f' {title} {desc} '.lower()
-    # Specific federal/world/entertainment routing still outranks a technology publisher.
     if re.search(r'\b(fcc|federal communications commission|ftc|federal trade commission|congress|senate|house committee|supreme court|federal court|white house|justice department|department of justice|doj|federal government|federal regulator)\b', raw):
         return 'federal'
     if any(term in raw for term in ('climate change','global warming','global temperature','hottest month','temperature record','el niño','el nino','un climate','climate summit','world meteorological organization')):
@@ -233,8 +232,6 @@ def gaming_allowed(item):
     strong = any(term in raw for term in GAMING_STRONG)
     hardware = any(term in raw for term in GAMING_HARDWARE)
     trusted = source_is(text(item, 'source'), GAMING_TRUSTED)
-    # Generic use of the word "gaming" is not enough; require a digital-game anchor,
-    # gaming hardware anchor, or a specialist gaming publisher.
     return strong or hardware or trusted
 
 
@@ -248,7 +245,6 @@ def us_route(item):
         return 'presidential'
     if FEDERAL_ROUTE.search(title):
         return 'federal'
-    # Embassy stories abroad are World unless the headline is clearly about a domestic US action.
     if re.search(r'\b(?:u\.?s\.?|american) embassy\b', title, re.I) and FOREIGN_US_FALSE_POSITIVE.search(raw):
         return 'world'
     if FOREIGN_US_FALSE_POSITIVE.search(title) and not US_NATIONAL.search(title):
@@ -330,7 +326,7 @@ def tech_cluster_score(cluster):
     if any(term in raw for term in TECH_MARKET_ONLY):
         score -= 70
     if re.search(r'\b(local|city|county|incubator|accelerator)\b', raw) and coverage < 2:
-        score -= 120
+        score -= 180
     return score, coverage, lead
 
 
@@ -446,7 +442,6 @@ def main():
     us, us_routes = refine_us(us_existing)
     routed = tech_routes + us_routes
 
-    # Replace the three refined categories together, then retain rerouted records exactly once.
     replace_categories(channel, {'technology','gaming','us'}, tech + gaming + us + routed)
     tree.write(NEWS, encoding='utf-8', xml_declaration=True)
 
