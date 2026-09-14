@@ -3,11 +3,29 @@
   const CACHE_KEY='underreported-location-v2';
   const MAX_AGE=6*60*60*1000;
   let pending=null;
+  let current=null;
+
+  function purgeLegacyIpPersistence(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
+      if(raw&&raw.source==='ip'){
+        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem('underreported-location');
+        localStorage.removeItem('underreported-state');
+        localStorage.removeItem('underreported-county');
+      }
+    }catch(e){}
+  }
+  purgeLegacyIpPersistence();
 
   function readCache(){
+    if(current)return current;
     try{
       const v=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
-      if(v&&v.lat!=null&&v.lon!=null&&Date.now()-Number(v.savedAt||0)<MAX_AGE)return v;
+      if(v&&v.source!=='ip'&&v.lat!=null&&v.lon!=null&&Date.now()-Number(v.savedAt||0)<MAX_AGE){
+        current=v;
+        return v;
+      }
     }catch(e){}
     return null;
   }
@@ -22,11 +40,16 @@
     const county=String(v.county||'').trim();
     const label=v.label||[v.city,state].filter(Boolean).join(', ');
     const out={...v,state,county,label,savedAt:Date.now()};
+    current=out;
     try{
-      localStorage.setItem(CACHE_KEY,JSON.stringify(out));
-      if(state)localStorage.setItem('underreported-state',state);
-      if(county)localStorage.setItem('underreported-county',county);
-      if(label)localStorage.setItem('underreported-location',label);
+      if(out.source==='ip'){
+        localStorage.removeItem(CACHE_KEY);
+      }else{
+        localStorage.setItem(CACHE_KEY,JSON.stringify(out));
+        if(state)localStorage.setItem('underreported-state',state);
+        if(county)localStorage.setItem('underreported-county',county);
+        if(label)localStorage.setItem('underreported-location',label);
+      }
     }catch(e){}
     window.dispatchEvent(new CustomEvent('underreported:location',{detail:out}));
     return out;
@@ -37,7 +60,7 @@
       navigator.geolocation.getCurrentPosition(
         p=>resolve({lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy,source:'device'}),
         reject,
-        {enableHighAccuracy:false,maximumAge:15*60*1000,timeout:6000}
+        {enableHighAccuracy:true,maximumAge:0,timeout:10000}
       );
     });
   }
@@ -95,6 +118,7 @@
     },
     cached:readCache,
     clear(){
+      current=null;
       try{
         localStorage.removeItem(CACHE_KEY);
         localStorage.removeItem('underreported-location');
@@ -103,4 +127,9 @@
       }catch(e){}
     },
   };
+
+  function forceFreshLocation(){
+    window.UnderreportedLocation.get({force:true}).catch(err=>console.warn('Fresh location lookup failed:',err));
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',forceFreshLocation,{once:true});else forceFreshLocation();
 })();
