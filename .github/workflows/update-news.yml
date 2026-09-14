@@ -44,7 +44,9 @@ jobs:
         run: python -m py_compile scripts/*.py tests/*.py
 
       - name: Run editorial integrity regressions before collection
-        run: python tests/editorial_integrity_test.py
+        run: |
+          python tests/editorial_integrity_test.py
+          python tests/nfl_final_guard_test.py
 
       - name: Collector preflight
         run: python scripts/preflight_feed.py
@@ -159,6 +161,9 @@ jobs:
 
       - name: Enforce final editorial integrity
         run: python scripts/enforce_editorial_integrity.py
+
+      - name: Enforce final NFL relevance
+        run: python scripts/enforce_nfl_final.py
 
       - name: Verify exactly ten relevant fixed X topics
         run: |
