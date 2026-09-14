@@ -1,0 +1,28 @@
+name: Test V5 Gaming Floor
+
+on:
+  push:
+    branches:
+      - fix/v5-gaming-release-floor-2026-09-13
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate release gate syntax and current V5 counts
+        run: |
+          python -m py_compile scripts/v4_release_gate.py
+          python - <<'PY'
+          import importlib.util
+          spec=importlib.util.spec_from_file_location('gate','scripts/v4_release_gate.py')
+          gate=importlib.util.module_from_spec(spec); spec.loader.exec_module(gate)
+          counts={'top':52,'nfl':15,'underreported':30,'world':41,'us':9,'presidential':23,'federal':12,'legislation':22,'nm':35,'local':4,'region':11,'technology':7,'gaming':9,'military':18}
+          failures={k:(counts.get(k,0),v) for k,v in gate.MIN_COUNTS.items() if counts.get(k,0)<v}
+          assert not failures, failures
+          assert gate.MIN_COUNTS['gaming']==5
+          print('V5 GAMING FLOOR TEST PASS')
+          PY
