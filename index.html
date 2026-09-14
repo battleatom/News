@@ -48,7 +48,7 @@
 
 <link rel="stylesheet" href="styles/v2.css?v=92f952648f33">
 <link rel="stylesheet" href="styles/v5-visual.css?v=2107a2de0fb9" data-v5-visual="true">
-<script src="assets/location-v2.js?v=313de0516ac1" defer></script>
+<script src="assets/location-v2.js?v=9f5a0a4e0c55" defer></script>
 <script src="assets/v3-ui.js?v=cc5559e05b61" defer></script>
 <style id="alerts-status-v22-style">
 #status{display:none!important}
@@ -647,6 +647,17 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
     return window.nextScheduledPull;
   }
 
+  async function refreshApproximateLocation(){
+    try{
+      const svc=window.UnderreportedLocation;
+      if(!svc?.get)return;
+      const loc=svc.cached?.()||null;
+      if(!loc || loc.source==='ip')await svc.get({force:true});
+    }catch(err){
+      console.warn('Automatic approximate-location refresh failed:',err);
+    }
+  }
+
   async function run(){
     try{
       const due=ensureNextPull();
@@ -654,6 +665,7 @@ setInterval(()=>{if(allItems.length)decorateNewBadges();},60*1000);
       if(Date.now()<due){schedule(due-Date.now());return;}
       if(typeof window.refreshNewsFromPage!=='function'){schedule(RETRY);return;}
       const before=Number(window.lastSuccessfulPull)||0;
+      await refreshApproximateLocation();
       try{await window.refreshNewsFromPage(false);}catch(err){console.error('Automatic news refresh failed:',err);}
       const last=Number(window.lastSuccessfulPull)||0;
       window.nextScheduledPull=last>before?last+INTERVAL:Date.now()+RETRY;
