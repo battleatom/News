@@ -20,12 +20,23 @@ if STYLE_MARK not in s[a:b]:
 '''
     s=s[:b]+css+s[b:]
 
-old=" const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);\n const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);"
-new=" const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);\n const liveCenter=document.createElement('div');liveCenter.className='nfl-live-center';liveCenter.hidden=true;liveCenter.setAttribute('aria-live','polite');body.appendChild(liveCenter);\n const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);"
-if old in s:
-    s=s.replace(old,new,1)
-elif "liveCenter.className='nfl-live-center'" not in s:
-    raise SystemExit('NFL live center patch failed: scoreboard layout anchor not found')
+# The upcoming-window patch runs before this patch and may extend the note text.
+# Match either form so these two patches remain order-compatible.
+old_notes=(
+    "Live:</strong> ESPN · current + upcoming 7 days · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local",
+    "Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local",
+)
+if "liveCenter.className='nfl-live-center'" not in s:
+    matched=None
+    for note_text in old_notes:
+        candidate=f" const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>{note_text}';body.appendChild(note);\n const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);"
+        if candidate in s:
+            matched=candidate
+            replacement=f" const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>{note_text}';body.appendChild(note);\n const liveCenter=document.createElement('div');liveCenter.className='nfl-live-center';liveCenter.hidden=true;liveCenter.setAttribute('aria-live','polite');body.appendChild(liveCenter);\n const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);"
+            s=s.replace(candidate,replacement,1)
+            break
+    if matched is None:
+        raise SystemExit('NFL live center patch failed: scoreboard layout anchor not found')
 
 helper_anchor=" function logoMarkup(team,label){const src=team?.logo||team?.logos?.[0]?.href||'';return src?`<img src=\"${esc(src)}\" alt=\"${esc(label)} logo\" loading=\"lazy\">`:`<span class=\"nfl-logo-fallback\">${esc(team?.abbreviation||'NFL')}</span>`;}\n"
 if 'function renderLivePlayCenter(' not in s:
