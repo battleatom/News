@@ -4,7 +4,7 @@ from __future__ import annotations
 import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
-from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES
+from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES,direct_presidential_story,military_headline_anchor
 from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision,obvious_noise
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
@@ -29,6 +29,8 @@ assert not same_event(c,d), 'templated obituaries collapsed'
 assert best_tab(fake('Ukraine hit by Russian missile strike as military operation expands','nfl'))[0]=='military', 'military operation did not prefer Military'
 assert best_tab(fake('A long summer: how trade war and wildfires hit household prices','underreported'))[0] != 'military', 'metaphorical/economic war falsely became Military'
 assert best_tab(fake('Trump administration proposes new immigration rule','presidential'))[0]=='presidential', 'Trump administration story lost Presidential ownership'
+assert direct_presidential_story(fake('Trump says he would consider a pardon','presidential')), 'direct Trump headline contract failed'
+assert not military_headline_anchor(fake("The inside story of 9/11, told by an advisor on Air Force One",'world')), 'Air Force One falsely counted as Military evidence'
 assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'US Senate story lost Federal ownership'
 assert best_tab(fake('California Supreme Court hears state bail challenge','us'))[0] != 'federal', 'state supreme court falsely became Federal'
 assert best_tab(fake('Farmington City Council approves water project','local'))[0]=='local', 'Farmington story lost Local ownership'
@@ -55,6 +57,9 @@ with tempfile.TemporaryDirectory() as td:
         if cat in EDITORIAL_OVERLAYS:
             if obvious_noise(item):failures.append((cat,field(item,'title')))
             continue
+        # Presidential has an explicit contextual contract: a direct Trump headline can be valid
+        # even when the generic phrase scorer intentionally stays below threshold to avoid incidental mentions.
+        if cat=='presidential' and direct_presidential_story(item):continue
         if cat not in RULES or not qualifies(item,cat):failures.append((cat,field(item,'title')))
     residual=cross_tab_clusters(items);base=report['baselineCounts'];final=report['finalCounts']
     protected=set(RANKING_SURFACES)|set(EDITORIAL_OVERLAYS)|set(PROTECTED_CATEGORIES)
