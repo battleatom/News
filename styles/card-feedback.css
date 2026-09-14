@@ -1,0 +1,74 @@
+/* Underreported card feedback controls — D / NR / NW.
+   Final UI layer: intentionally high-specificity so later card decorators do not hide it. */
+html body .news-item.has-card-feedback{position:relative!important}
+html body .card-feedback-controls{
+  position:absolute!important;
+  top:8px!important;
+  right:9px!important;
+  z-index:40!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  opacity:.72!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+html body .card-feedback-btn{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  display:inline-grid!important;
+  place-items:center!important;
+  min-width:30px!important;
+  height:24px!important;
+  margin:0!important;
+  padding:0 6px!important;
+  border:1px solid rgba(100,116,139,.28)!important;
+  border-radius:7px!important;
+  background:rgba(248,250,252,.92)!important;
+  color:#475569!important;
+  box-shadow:0 1px 3px rgba(15,23,42,.06)!important;
+  font:800 9px/1 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+  letter-spacing:.025em!important;
+  cursor:pointer!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+html body .card-feedback-btn:hover,
+html body .card-feedback-btn:focus-visible{
+  background:#fff!important;
+  color:#0f172a!important;
+  border-color:rgba(59,130,246,.42)!important;
+  box-shadow:0 2px 7px rgba(15,23,42,.10)!important;
+  outline:none!important;
+}
+html body .card-feedback-btn[data-feedback="D"]:hover{border-color:rgba(245,158,11,.55)!important;color:#92400e!important}
+html body .card-feedback-btn[data-feedback="NR"]:hover{border-color:rgba(59,130,246,.55)!important;color:#1d4ed8!important}
+html body .card-feedback-btn[data-feedback="NW"]:hover{border-color:rgba(239,68,68,.55)!important;color:#b91c1c!important}
+html body .news-item.has-card-feedback>.bookmark-row,
+html body .news-item.has-card-feedback>.news-item-v2-head,
+html body .news-item.has-card-feedback>h3{padding-right:112px!important}
+html body .news-item.feedback-removing{opacity:0!important;transform:translateY(-3px) scale(.995)!important;transition:opacity .14s ease,transform .14s ease!important}
+
+@media(prefers-color-scheme:dark){
+  html body .card-feedback-btn{
+    background:rgba(15,23,42,.90)!important;
+    border-color:rgba(203,213,225,.22)!important;
+    color:#cbd5e1!important;
+    box-shadow:0 1px 4px rgba(0,0,0,.20)!important;
+  }
+  html body .card-feedback-btn:hover,
+  html body .card-feedback-btn:focus-visible{background:#1e293b!important;color:#f8fafc!important;border-color:rgba(147,197,253,.42)!important}
+  html body .card-feedback-btn[data-feedback="D"]:hover{color:#fbbf24!important}
+  html body .card-feedback-btn[data-feedback="NR"]:hover{color:#93c5fd!important}
+  html body .card-feedback-btn[data-feedback="NW"]:hover{color:#fca5a5!important}
+}
+
+@media(max-width:700px){
+  html body .card-feedback-controls{top:7px!important;right:7px!important;gap:3px!important}
+  html body .card-feedback-btn{min-width:29px!important;height:23px!important;padding:0 5px!important;font-size:8.5px!important}
+  html body .news-item.has-card-feedback>.bookmark-row,
+  html body .news-item.has-card-feedback>.news-item-v2-head,
+  html body .news-item.has-card-feedback>h3{padding-right:106px!important}
+}
+
+@media(prefers-reduced-motion:reduce){html body .news-item.feedback-removing{transition:none!important}}
