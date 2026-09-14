@@ -80,8 +80,9 @@ container_token='<div class="container">'
 container_at=s.find(container_token)
 if container_at < 0:raise SystemExit('Missing .container')
 shell_start=container_at+len(container_token)
-feed_at=s.find('<div id="news-feed"',shell_start)
-if feed_at < 0:raise SystemExit('Missing #news-feed')
+feed_match=re.search(r'<(?:main|div|section)\b[^>]*\bid=["\']news-feed["\'][^>]*>',s[shell_start:],flags=re.I)
+if not feed_match:raise SystemExit('Missing #news-feed')
+feed_at=shell_start+feed_match.start()
 pre_feed=s[shell_start:feed_at]
 required=('UNDERREPORTED','class="toolbar"','id="pull-stats-ui"','class="markets"','id="tabs"')
 missing=[token for token in required if token not in pre_feed]
