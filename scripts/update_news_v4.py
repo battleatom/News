@@ -2,11 +2,11 @@
 """V4 collector entrypoint.
 
 Entertainment policy:
+- Entertainment is a normal standalone news category, separate from Box Office.
 - stories are ranked by editorial importance first, then recency/source quality
-- every Entertainment item is tagged clean or dirty for the persistent UI filter
-- Clean = professional/consequential entertainment news
-- Dirty = Clean plus gossip, relationships, lifestyle/fashion, nudity headlines,
-  adult-industry reporting, philanthropy/family/celebrity-life coverage
+- relationship, family, fashion and celebrity-life coverage remains eligible when it is a real news story
+- explicit adult-industry/nudity material, horoscopes and obvious junk are rejected
+- fallback discovery is source-diverse so one successful publisher cannot starve the tab
 - source-provided images are preserved when safely available
 - Entertainment cards may cross-link to matching Underreported coverage
 """
@@ -21,6 +21,7 @@ import update_news_location_validated as normalized
 core = normalized.core
 
 ENTERTAINMENT_LIMIT = 35
+ENTERTAINMENT_SOURCE_CAP = 4
 ENTERTAINMENT_SPECIALIST_SOURCES = (
     "variety", "billboard", "rolling stone", "deadline", "hollywood reporter",
     "entertainment weekly", "people", "pitchfork", "vulture", "tmz",
@@ -29,6 +30,8 @@ ENTERTAINMENT_SPECIALIST_SOURCES = (
 ENTERTAINMENT_REJECT_TERMS = (
     "horoscope", "astrology", "fan theory", "fan theories", "celebrity lookalike",
     "death hoax", "fake death",
+    "adult film", "adult entertainment", "porn star", "pornstar", "onlyfans",
+    "nude", "naked", "topless", "sex tape",
 )
 ENTERTAINMENT_TERMS = (
     "actor", "actress", "singer", "rapper", "musician", "artist", "band",
@@ -39,19 +42,17 @@ ENTERTAINMENT_TERMS = (
     "dating", "relationship", "boyfriend", "girlfriend", "engaged", "engagement",
     "married", "wedding", "pregnant", "pregnancy", "baby", "children", "kids",
     "charity", "philanthropy", "foundation", "gala", "red carpet", "fashion",
-    "bikini", "swimsuit", "sheer", "see-through", "nude", "naked",
-    "adult film", "adult entertainment", "porn star", "onlyfans",
+    "bikini", "swimsuit", "dress", "outfit",
 )
 
+# Kept for ranking labels only. These no longer drive a Clean/Dirty visibility mode.
 DIRTY_TERMS = (
     "dating", "relationship", "boyfriend", "girlfriend", "romance", "romantic",
     "breakup", "break-up", "split", "cheating", "affair", "feud", "gossip",
     "rumor", "rumour", "spotted with", "engaged", "engagement", "married", "wedding",
     "pregnant", "pregnancy", "baby", "gave birth", "children", "kids", "family",
     "charity", "philanthropy", "foundation", "donation", "gala", "red carpet",
-    "fashion", "dress", "outfit", "bikini", "swimsuit", "sheer", "see-through",
-    "see through", "nude", "naked", "topless", "adult film", "adult entertainment",
-    "porn star", "pornstar", "onlyfans", "playboy",
+    "fashion", "dress", "outfit",
 )
 ADULT_OR_NUDITY_TERMS = (
     "adult film", "adult entertainment", "porn star", "pornstar", "onlyfans",
@@ -76,9 +77,8 @@ HUMAN_INTEREST_TERMS = (
     "married", "wedding", "dating", "relationship", "interview", "gala",
 )
 LIFESTYLE_TERMS = (
-    "fashion", "dress", "outfit", "red carpet", "bikini", "swimsuit", "sheer",
-    "see-through", "see through", "nude", "naked", "topless", "feud", "gossip",
-    "rumor", "rumour", "breakup", "break-up", "spotted with",
+    "fashion", "dress", "outfit", "red carpet", "bikini", "swimsuit",
+    "feud", "gossip", "rumor", "rumour", "breakup", "break-up", "spotted with",
 )
 
 if "entertainment" not in core.SECTIONS:
@@ -92,8 +92,7 @@ core.QUERIES["entertainment"] = [
     "music artist lawsuit award contract tour entertainment industry",
     "Hollywood actor actress director producer entertainment industry news",
     "celebrity dating relationship marriage baby pregnancy philanthropy charity",
-    "celebrity fashion red carpet gala bikini swimsuit sheer nude headline",
-    "adult film star adult entertainment actor actress industry news",
+    "celebrity fashion red carpet gala entertainment news",
 ]
 
 _entertainment_sources = (
@@ -108,7 +107,7 @@ core.TRUSTED_CATEGORY_FALLBACKS["entertainment"] = [
     ("Variety", "site:variety.com actor actress Hollywood television film entertainment"),
     ("Billboard", "site:billboard.com music artist singer rapper tour album"),
     ("People", "site:people.com celebrity actor actress dating relationship baby wedding fashion charity"),
-    ("TMZ", "site:tmz.com celebrity actor actress dating fashion adult film star"),
+    ("TMZ", "site:tmz.com celebrity actor actress dating relationship entertainment"),
     ("E! News", "site:eonline.com celebrity actor actress dating relationship fashion red carpet"),
     ("Rolling Stone", "site:rollingstone.com music artist actor entertainment"),
     ("Deadline", "site:deadline.com actor actress television film Hollywood"),
@@ -162,6 +161,14 @@ def v4_parse_items(root, category, source_override=None):
         image = images.get((item.get("link") or "").strip(), "")
         if image:
             item["imageUrl"] = image
+
+    # The core fallback loop measures raw category count, while Entertainment later
+    # enforces a per-source cap. Limit each source-overridden fallback batch to that
+    # same cap so the loop must continue across multiple specialist publishers.
+    if source_override:
+        parsed = [item for item in parsed if _entertainment_relevant(item)]
+        parsed.sort(key=_rank_key, reverse=True)
+        parsed = parsed[:ENTERTAINMENT_SOURCE_CAP]
     return parsed
 
 
@@ -185,8 +192,9 @@ def _specialist(item):
 
 
 def entertainment_safety(item):
-    text = f"{item.get('title','')} {item.get('description','')}".lower()
-    return "dirty" if any(term in text for term in DIRTY_TERMS) else "clean"
+    # Legacy field retained for UI compatibility. All accepted stories are normal
+    # Entertainment stories now; explicit adult/junk material is rejected upstream.
+    return "clean"
 
 
 def entertainment_importance(item):
@@ -233,7 +241,7 @@ def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
     for item in ranked:
         k = core.key(item)
         src = _source_key(item)
-        if not k or k in seen or source_counts.get(src, 0) >= 4:
+        if not k or k in seen or source_counts.get(src, 0) >= ENTERTAINMENT_SOURCE_CAP:
             continue
         if any(_same_entertainment_event(prior, item) for prior in selected):
             continue
@@ -243,10 +251,6 @@ def select_entertainment(items, limit=ENTERTAINMENT_LIMIT):
         copy["entertainmentLabel"] = label
         copy["entertainmentScore"] = score
         copy["entertainmentTier"] = "under-the-radar" if _specialist(copy) and len(selected) >= 5 else "ranked"
-        # Avoid rendering potentially explicit source thumbnails on adult/nudity stories.
-        full = f"{copy.get('title','')} {copy.get('description','')}".lower()
-        if any(term in full for term in ADULT_OR_NUDITY_TERMS):
-            copy["imageUrl"] = ""
         selected.append(copy)
         seen.add(k)
         source_counts[src] = source_counts.get(src, 0) + 1
@@ -328,7 +332,7 @@ core.build = v4_build
 
 
 def main():
-    print("V4 Entertainment enabled: persistent Clean/Dirty modes + importance hierarchy + verified broad coverage")
+    print("V4 Entertainment enabled: source-diverse normal-news coverage + importance hierarchy")
     normalized.main()
 
 
