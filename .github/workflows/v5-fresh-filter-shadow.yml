@@ -15,8 +15,39 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Syntax check fresh filter stack
-        run: python -m py_compile scripts/v5_tab_filters.py scripts/v5_tab_dedupe.py scripts/v5_global_filter.py tests/v5_filter_shadow_test.py
+      - name: Syntax check fresh filter stack and Entertainment ranking
+        run: python -m py_compile scripts/v5_tab_filters.py scripts/v5_tab_dedupe.py scripts/v5_global_filter.py scripts/refine_entertainment.py scripts/guard_entertainment_rank.py tests/v5_filter_shadow_test.py tests/entertainment_v4_test.py tests/entertainment_ranking_test.py
+      - name: Run Entertainment ranking regressions
+        run: |
+          python tests/entertainment_v4_test.py
+          python tests/entertainment_ranking_test.py
+          test ! -e scripts/update_entertainment_only_v4.py
+      - name: Build live current Entertainment candidate
+        run: |
+          python scripts/update_news_v4.py
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          items=ET.parse('News').getroot().findall('.//item')
+          ent=[x for x in items if (x.findtext('category') or '').strip()=='entertainment']
+          if len(ent)<15: raise SystemExit(f'Entertainment pool too small: {len(ent)}')
+          scores=[int((x.findtext('entertainmentScore') or '0').strip() or 0) for x in ent]
+          if scores != sorted(scores, reverse=True): raise SystemExit('Entertainment output is not ranked by score')
+          if any((x.findtext('entertainmentSafety') or '').strip()!='clean' for x in ent): raise SystemExit('Non-clean Entertainment record found')
+          bad=('adult film','adult entertainment','porn star','pornstar','onlyfans','fansly')
+          for x in ent:
+              text=((x.findtext('title') or '')+' '+(x.findtext('description') or '')).lower()
+              if any(t in text for t in bad): raise SystemExit('Adult-industry story leaked into Entertainment')
+          titles=[(x.findtext('title') or '').lower() for x in ent]
+          if any('reviews compilation' in t or 'celebrity photos' in t for t in titles):
+              raise SystemExit('Low-value Entertainment roundup leaked into final ranking')
+          alan=[t for t in titles if 'alan ritchson' in t]
+          if len(alan)>1: raise SystemExit(f'Alan Ritchson duplicate event cards remain: {alan}')
+          print('LIVE ENTERTAINMENT TOP 15')
+          for i,x in enumerate(ent[:15],1):
+              print(i,'score='+str(x.findtext('entertainmentScore')),'coverage='+str(x.findtext('entertainmentCoverage')),'source='+str(x.findtext('source')),'|',x.findtext('title'))
+          PY
       - name: Compare fresh filters against current V5 feed
         run: python tests/v5_filter_shadow_test.py
       - name: Print detailed shadow report

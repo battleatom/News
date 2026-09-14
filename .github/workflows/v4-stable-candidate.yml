@@ -11,7 +11,6 @@ on:
       - '.github/workflows/v4-stable-candidate.yml'
       - '.github/workflows/update-news.yml'
       - '.github/workflows/test-v4.yml'
-      - '.github/workflows/v4-entertainment-preview.yml'
       - '.github/workflows/v4-live-preview.yml'
   workflow_dispatch:
 
@@ -47,13 +46,15 @@ jobs:
         run: python -m py_compile scripts/*.py tests/*.py
 
       - name: Collector preflight
-        run: python scripts/preflight_feed.py
+        run: |
+          python scripts/preflight_feed.py
+          python tests/entertainment_ranking_test.py
 
       - name: Collect full V4 feed
         run: python scripts/update_news_v4.py
 
-      - name: Replace provisional Entertainment with authoritative Clean and Dirty pools
-        run: python scripts/update_entertainment_only_v4.py
+      - name: Rank current Entertainment coverage
+        run: python scripts/refine_entertainment.py
 
       - name: Refine Technology and Gaming
         run: python scripts/refine_tech_gaming.py
@@ -149,6 +150,7 @@ jobs:
         run: |
           python tests/news_market_db_test.py
           python tests/entertainment_v4_test.py
+          python tests/entertainment_ranking_test.py
           python tests/verify_feed_test.py
 
       - name: Install Chromium for browser regressions
@@ -182,16 +184,15 @@ jobs:
           counts=Counter((i.findtext('category') or '').strip() for i in items)
           ent=[i for i in items if (i.findtext('category') or '').strip()=='entertainment']
           clean=sum((i.findtext('entertainmentSafety') or '').strip()=='clean' for i in ent)
-          dirty=sum((i.findtext('entertainmentSafety') or '').strip()=='dirty' for i in ent)
           report={
               'status':'validated',
               'sourceSha':os.environ['SOURCE_SHA'],
               'generatedAt':datetime.now(timezone.utc).isoformat(),
               'feedItems':len(items),
               'categoryCounts':dict(sorted(counts.items())),
-              'entertainment':{'clean':clean,'dirty':dirty},
+              'entertainment':{'clean':clean},
               'baseline':'version-3',
-              'checks':['python-syntax','market-db','entertainment-unit','feed-verifier-unit','site-audit','release-gate','location-scroll-browser','entertainment-browser','v3-v4-browser-comparison'],
+              'checks':['python-syntax','market-db','entertainment-unit','entertainment-ranking','feed-verifier-unit','site-audit','release-gate','location-scroll-browser','entertainment-browser','v3-v4-browser-comparison'],
           }
           with open('v4-release-report.json','w',encoding='utf-8') as f:
               json.dump(report,f,indent=2);f.write('\n')

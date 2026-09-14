@@ -68,6 +68,7 @@ jobs:
         run: |
           python -m py_compile scripts/*.py tests/*.py
           python scripts/preflight_feed.py
+          python tests/entertainment_ranking_test.py
 
       - name: Fresh live V5 collection with retry
         run: |
@@ -81,7 +82,7 @@ jobs:
 
       - name: Build authoritative content pools
         run: |
-          python scripts/update_entertainment_only_v4.py
+          python scripts/refine_entertainment.py
           python scripts/refine_tech_gaming.py
           python scripts/collect_official_legislation_strict.py
           python scripts/enrich_world_content.py
@@ -132,6 +133,7 @@ jobs:
         run: |
           python tests/news_market_db_test.py
           python tests/entertainment_v4_test.py
+          python tests/entertainment_ranking_test.py
           python tests/verify_feed_test.py
           while IFS= read -r t; do
             t="${t%%#*}"; t="$(echo "$t" | xargs)"; [ -z "$t" ] && continue
