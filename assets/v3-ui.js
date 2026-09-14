@@ -42,13 +42,13 @@
       .news-item.underreported-item.age-orange{border-left:5px solid #f97316!important}
       .news-item.underreported-item.age-purple{border-left:5px solid #9333ea!important}
       .news-item.underreported-item.age-red{border-left:5px solid #dc2626!important}
-      .underreported-age-key,.feedback-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 12px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
+      .underreported-age-key,.feedback-legend{display:flex;flex-wrap:wrap;align-items:center;gap:7px 12px;margin:6px 0 14px;font-size:11px;line-height:1.35;color:var(--ui-muted,#64748b);opacity:.9}
       .underreported-age-key span,.feedback-legend span{display:inline-flex;align-items:center;gap:5px}
       .underreported-age-key i{display:inline-block;width:9px;height:9px;border-radius:2px;flex:0 0 auto}
       .underreported-age-key .b{background:#2563eb}.underreported-age-key .g{background:#16a34a}.underreported-age-key .o{background:#f97316}.underreported-age-key .p{background:#9333ea}.underreported-age-key .r{background:#dc2626}
       .underreported-age-key .feedback-code,.feedback-legend .feedback-code{display:inline-grid;place-items:center;min-width:22px;height:18px;padding:0 5px;border:1px solid var(--ui-line,#dbe2ea);border-radius:999px;background:rgba(127,127,127,.07);color:var(--ui-text,#334155);font-size:9px;font-weight:900;line-height:1}
       .underreported-age-key .feedback-divider{width:1px;height:16px;background:var(--ui-line,#dbe2ea);margin:0 1px}
-      @media(max-width:600px){.underreported-age-key,.feedback-legend{font-size:10px;gap:6px 9px;margin-bottom:9px}.underreported-age-key .feedback-divider{display:none}}
+      @media(max-width:600px){.underreported-age-key,.feedback-legend{font-size:10px;gap:6px 9px;margin:6px 0 12px}.underreported-age-key .feedback-divider{display:none}}
     `;
     document.head.appendChild(style);
   }
@@ -114,8 +114,9 @@
       key.setAttribute('aria-label','Article feedback controls');
       key.innerHTML=feedbackLegendMarkup();
     }
-    const body=section.querySelector('.section-body');
-    if(body)section.insertBefore(key,body);
+    const head=section.querySelector('.section-header');
+    if(head)head.after(key);
+    else section.prepend(key);
   }
 
   function decorateWhy(card){
