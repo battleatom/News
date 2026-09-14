@@ -10,6 +10,7 @@
     [/\bnpr\b/i,'NPR'],
     [/denver post/i,'DP']
   ];
+  const railClasses=['rail-blue','rail-green','rail-orange','rail-purple','rail-red'];
 
   function cleanWhy(text){
     return String(text||'').replace(/^\s*why\s+it\s+matters\s*[:—-]?\s*/i,'').trim();
@@ -66,6 +67,26 @@
     card.classList.add(cls);
   }
 
+  function decorateImportanceRail(card){
+    if(card.classList.contains('underreported-item')||card.classList.contains('nfl-game-card'))return;
+    railClasses.forEach(cls=>card.classList.remove(cls));
+    const title=card.querySelector('h3,h2,.title,.headline')?.textContent||'';
+    const desc=card.querySelector('.description,.summary,.dek')?.textContent||'';
+    const text=` ${title} ${desc} `.toLowerCase();
+    let cls='rail-blue';
+    if(/\b(breaking|deadly|killed|mass shooting|earthquake|hurricane|wildfire|evacuat(?:e|ion)|airstrike|missile strike|invasion|ceasefire|state of emergency|major outage|data breach|cyberattack)\b/.test(text)){
+      cls='rail-red';
+    }else if(/\b(developing|investigation|indict(?:ed|ment)|arrest(?:ed)?|lawsuit|court rules?|strike|shutdown|recall|outbreak|tariffs?|layoffs?|bankruptcy|fraud|charges?)\b/.test(text)){
+      cls='rail-orange';
+    }else if(/\b(congress|senate|house of representatives|white house|president|federal|supreme court|legislation|\bbill\b|executive order|election|voters?|governor|policy|regulation|rulemaking)\b/.test(text)){
+      cls='rail-purple';
+    }else if(/\b(science|research|study finds?|breakthrough|discovery|health|medical|renewable|education|achievement|award|solution|conservation|recovery)\b/.test(text)){
+      cls='rail-green';
+    }
+    card.classList.add(cls);
+    card.dataset.railHierarchy=cls.replace('rail-','');
+  }
+
   function installUnderreportedLegend(){
     if(currentSection()!=='underreported')return;
     const section=document.querySelector('#news-feed .section');
@@ -116,6 +137,7 @@
       decorateWhy(card);
       decorateSource(card);
       decorateUnderreportedAge(card);
+      decorateImportanceRail(card);
     });
     installUnderreportedLegend();
   }
