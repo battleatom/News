@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Underreported — Card Feedback Preview</title>
+<link rel="stylesheet" href="styles/theme.css">
+<link rel="stylesheet" href="styles/v5-visual.css">
+<link rel="stylesheet" href="styles/card-feedback.css">
+<style>
+body{margin:0;background:#0b1120}.preview-shell{max-width:980px;margin:0 auto;padding:18px}.preview-note{margin:0 0 14px;padding:10px 12px;border:1px solid rgba(148,163,184,.22);border-radius:10px;background:rgba(15,23,42,.65);color:#cbd5e1;font:600 12px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}.preview-note strong{color:#fff}.section-header{display:flex;align-items:center;justify-content:space-between}.section-body{display:grid;gap:8px}.news-item{position:relative}.feedback-demo-tag{display:inline-flex;margin-bottom:5px;padding:2px 6px;border-radius:999px;background:rgba(59,130,246,.12);color:#93c5fd;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase}
+</style>
+</head>
+<body data-underreported-version="5" data-active-tab="nfl">
+<main class="preview-shell content">
+  <div class="preview-note"><strong>TEST BRANCH PREVIEW</strong> — These cards use the real V5 visual stylesheet and real D / NR / NW feedback script. Click a button, then refresh this page: the clicked card should stay gone.</div>
+  <section class="section">
+    <div class="section-header"><h2>NFL — Feedback UX Test</h2><span class="count">3 cards</span></div>
+    <div class="section-body" id="news-feed">
+      <article class="news-item" data-pub-date="Sun, 13 Sep 2026 22:00:00 -0600">
+        <span class="feedback-demo-tag">Relevant example</span>
+        <h3><a href="https://example.com/nfl-story" target="_blank" rel="noopener">Bills prepare for divisional matchup after injury update</a></h3>
+        <p class="description">A representative NFL card with a complete headline and enough context to judge whether it belongs in this tab.</p>
+        <div class="why"><strong class="v3-why-label">WHY IT MATTERS</strong><span class="v3-why-text">The availability of key starters could affect the division race and this week’s matchup.</span></div>
+        <div class="meta"><span class="source"><span class="v3-source-icon">AP</span> Associated Press</span><span>Today</span></div>
+      </article>
+
+      <article class="news-item" data-pub-date="Sun, 13 Sep 2026 21:30:00 -0600">
+        <span class="feedback-demo-tag">NR example</span>
+        <h3><a href="https://example.com/ukraine-story" target="_blank" rel="noopener">Ukraine reports overnight missile attacks across several regions</a></h3>
+        <p class="description">This is deliberately the kind of leak you described: valid news, but clearly not relevant to an NFL tab.</p>
+        <div class="why"><strong class="v3-why-label">WHY IT MATTERS</strong><span class="v3-why-text">This card exists here only to test the Not Relevant control and persistence behavior.</span></div>
+        <div class="meta"><span class="source"><span class="v3-source-icon">R</span> Reuters</span><span>Today</span></div>
+      </article>
+
+      <article class="news-item" data-pub-date="Sun, 13 Sep 2026 21:00:00 -0600">
+        <span class="feedback-demo-tag">D / NW example</span>
+        <h3><a href="https://example.com/thin-card" target="_blank" rel="noopener">Game update</a></h3>
+        <p class="description">A deliberately thin card so you can test Not Wanted, or mark it Duplicate if you decide another card already covers the same event.</p>
+        <div class="meta"><span class="source">Example Wire</span><span>Today</span></div>
+      </article>
+    </div>
+  </section>
+</main>
+<script src="assets/card-feedback.js"></script>
+</body>
+</html>
