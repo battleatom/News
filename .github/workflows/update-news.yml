@@ -87,7 +87,9 @@ jobs:
           PY
 
       - name: Rank current Entertainment coverage
-        run: python scripts/refine_entertainment.py
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
 
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
