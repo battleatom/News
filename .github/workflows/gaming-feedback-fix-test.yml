@@ -1,0 +1,58 @@
+name: Gaming Pool and Feedback Backfill Test
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/preflight_feed.py'
+      - 'assets/card-feedback.js'
+      - '.github/workflows/gaming-feedback-fix-test.yml'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax checks
+        run: |
+          python -m py_compile scripts/preflight_feed.py scripts/v5_tab_filters.py scripts/refine_tech_gaming.py
+          node --check assets/card-feedback.js
+      - name: Apply production preflight contracts
+        run: python scripts/preflight_feed.py
+      - name: Verify Gaming gate expansion
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('scripts/v5_tab_filters.py').read_text(encoding='utf-8')
+          required=['ps5=11','switch_2=12','steam_deck=11','game_pass=10','unreal_engine=9','tabletop=-25','warhammer=-25']
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('Missing Gaming anchors: '+repr(missing))
+          print('Gaming strict-anchor expansion verified.')
+          PY
+      - name: Verify feedback replacement wiring
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('assets/card-feedback.js').read_text(encoding='utf-8')
+          required=['function backfill(tab)','counts[key]=Number.isFinite(current)?current+1:11','renderFn(items)','removeCard(card,data.tab)','UnderreportedFeedback={']
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('Missing feedback backfill wiring: '+repr(missing))
+          print('D/NR/NW replacement-card wiring verified.')
+          PY
+      - name: Live Gaming refinement and final V5 gate
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/v5_global_filter.py --apply --report /tmp/gaming-feedback-v5.json
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          items=ET.parse('News').getroot().findall('.//item')
+          gaming=[i for i in items if (i.findtext('category') or '').strip()=='gaming']
+          bad=[]
+          banned=('casino','gambling','sportsbook','lottery','tabletop','board game','miniatures','warhammer','trading card','hobby store')
+          for i in gaming:
+              text=' '.join([(i.findtext('title') or ''),(i.findtext('description') or '')]).lower()
+              if any(x in text for x in banned): bad.append(i.findtext('title') or '')
+          print('Final Gaming stories:',len(gaming))
+          if len(gaming)<10: raise SystemExit(f'Gaming pool still too thin: {len(gaming)}')
+          if bad: raise SystemExit('Gaming contamination: '+repr(bad[:10]))
+          PY
