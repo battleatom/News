@@ -15,7 +15,8 @@ SPORT_WORDS=re.compile(r"\b(football|basketball|baseball|hockey|soccer|volleybal
 PRESIDENTIAL_CONTEXT=re.compile(r"\b(president trump|donald trump|trump administration|white house (says|announces|orders|proposes|officials|weighs)|executive order|press secretary)\b",re.I)
 PRESIDENTIAL_HEADLINE=re.compile(r"^(?:(?:the latest|fact check):\s*)?(?:president\s+)?trump\b|^(?:five big takeaways from|what to know about)\s+trump(?:'s)?\b",re.I)
 MILITARY_TITLE_ANCHOR=re.compile(r"\b(pentagon|military|army|navy|air force|marines?|troops?|missiles?|airstrikes?|drone(?: strike| warfare)?|warships?|combat|battlefield|invasion|ceasefire|defense department|centcom|fighter jets?|f-?35|apache|saildrone|usv|munitions?|weapon systems?|hegseth|anduril|warfighters?|houthis?)\b",re.I)
-FEDERAL_HEADLINE=re.compile(r"\b(congress|u\.?s\.? senate|senate|house speaker|house committee|house of representatives|supreme court|federal appeals court|federal court|federal judge|federal debt|senate hearing|department of justice|\bdoj\b|\bfbi\b|\bdhs\b|treasury department|\bepa\b|\birs\b|federal agency|federal government)\b",re.I)
+FEDERAL_HEADLINE=re.compile(r"\b(congress|u\.?s\.? senate|senate|house speaker|house committee|house of representatives|supreme court|federal appeals court|federal court|federal judge|federal debt|senate hearing|department of justice|doj|fbi|dhs|treasury department|epa|irs|federal agency|federal government)\b",re.I)
+STATE_INSTITUTION_HEADLINE=re.compile(r"\b(state supreme court|state senate|state house|state legislature|(?:alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming)\s+(?:supreme court|senate|house|legislature))\b",re.I)
 GAMING_HEADLINE=re.compile(r"\b(playstation|xbox|nintendo|steam|pc gamer|video game|gaming|game studio|esports|dlc|game pass|epic games)\b",re.I)
 TECH_HEADLINE=re.compile(r"\b(ai|artificial intelligence|chatgpt|openai|anthropic|cybersecurity|cyberattack|data breach|semiconductor|semiconductors|chips?|nvidia|amd|intel|apple|google|microsoft|meta|amazon web services|aws|cloud computing|data centers?|quantum computing|robotics?|android|iphone|smartphones?|software)\b",re.I)
 FOREIGN_CIVIC_HEADLINE=re.compile(r"\b(prime minister|foreign minister|parliament|government|president|election|sanctions?|diplomat|diplomacy|embassy|refugees?|border|imf|westminster|coalition|cabinet|constitutional court)\b",re.I)
@@ -47,7 +48,9 @@ def direct_presidential_story(item:ET.Element)->bool:
     return bool(PRESIDENTIAL_HEADLINE.search(clean_headline(item)))
 
 def direct_federal_story(item:ET.Element)->bool:
-    return bool(FEDERAL_HEADLINE.search(clean_headline(item)))
+    title=clean_headline(item)
+    if STATE_INSTITUTION_HEADLINE.search(title):return False
+    return bool(FEDERAL_HEADLINE.search(title))
 
 def military_headline_anchor(item:ET.Element)->bool:
     title=re.sub(r"\bair force one\b","",clean_headline(item),flags=re.I)
