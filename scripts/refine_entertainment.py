@@ -5,7 +5,10 @@ Pipeline:
 collect broadly -> validate relevance -> cluster same-event coverage ->
 score coverage/recency/impact/source -> retain one lead + supporting links -> rank.
 
-This module intentionally does not collect adult-industry content. Box Office is untouched.
+Entertainment may look back up to four days for an event's strongest lead, but an
+older lead is publishable only when the same event also has fresh coverage inside
+the normal 48-hour window. Adult-industry content is never collected. Box Office
+is untouched.
 """
 from __future__ import annotations
 
@@ -23,39 +26,37 @@ NEWS = Path("News")
 TARGET = 30
 MIN_HEALTHY = 15
 FINAL_SOURCE_CAP = 6
+FRESH_HOURS = 48
+LOOKBACK_HOURS = 96
 
-# Broad searches catch the current Google News conversation, while source searches
-# keep the pool diverse when a broad query happens to favor one publisher.
 BROAD_QUERIES = (
     "entertainment breaking news celebrity Hollywood television film music awards",
-    "celebrity actor singer controversy backlash arrest lawsuit divorce relationship entertainment",
+    "celebrity breaking news controversy backlash arrest court divorce relationship",
+    "actor singer celebrity ad backlash controversy entertainment",
     "television streaming Emmy awards TV shows Hollywood entertainment",
     "movies film festival premiere casting Hollywood entertainment news",
     "music artists singers albums tours concerts awards entertainment news",
     "celebrity family marriage divorce baby relationship court entertainment news",
 )
 SOURCE_QUERIES = (
-    ("The Hollywood Reporter", "site:hollywoodreporter.com entertainment celebrity television film music awards"),
-    ("Variety", "site:variety.com entertainment celebrity television film music awards"),
+    ("The Hollywood Reporter", "site:hollywoodreporter.com entertainment celebrity television film music awards backlash controversy"),
+    ("Variety", "site:variety.com entertainment celebrity television film music awards controversy"),
     ("Deadline", "site:deadline.com entertainment Hollywood television film celebrity"),
     ("Billboard", "site:billboard.com entertainment music artist singer awards tour"),
-    ("People", "site:people.com entertainment celebrity actor singer family relationship"),
+    ("People", "site:people.com entertainment celebrity actor singer family relationship divorce"),
     ("E! News", "site:eonline.com entertainment celebrity actor singer television relationship"),
     ("Rolling Stone", "site:rollingstone.com entertainment music celebrity television film"),
-    ("Entertainment Weekly", "site:ew.com entertainment television film celebrity music"),
-    ("BBC", "site:bbc.com entertainment culture television film music celebrity"),
-    ("NBC News", "site:nbcnews.com entertainment celebrity television film music"),
-    ("USA Today", "site:usatoday.com entertainment celebrity movies television music"),
-    ("CBS News", "site:cbsnews.com entertainment celebrity television film music"),
+    ("Entertainment Weekly", "site:ew.com entertainment television film celebrity music controversy"),
+    ("BBC", "site:bbc.com entertainment culture television film music celebrity awards"),
+    ("NBC News", "site:nbcnews.com entertainment celebrity television film music backlash"),
+    ("USA Today", "site:usatoday.com entertainment celebrity movies television music arrest divorce"),
+    ("CBS News", "site:cbsnews.com entertainment celebrity television film music awards"),
     ("ABC News", "site:abcnews.go.com entertainment celebrity television film music"),
     ("The Guardian", "site:theguardian.com culture entertainment film television music celebrity"),
     ("Yahoo News", "site:yahoo.com entertainment celebrity television film music"),
     ("InStyle", "site:instyle.com celebrity entertainment television film family"),
 )
 
-# These are accepted as Entertainment signals. Event-specific words are included so
-# headlines such as a backlash, divorce, detention, or family update do not need to
-# literally contain the word "celebrity" to qualify.
 ENTERTAINMENT_SIGNALS = (
     "actor", "actress", "singer", "rapper", "musician", "artist", "band", "director",
     "filmmaker", "producer", "comedian", "celebrity", "hollywood", "film", "movie",
@@ -65,6 +66,7 @@ ENTERTAINMENT_SIGNALS = (
     "dating", "relationship", "boyfriend", "girlfriend", "wife", "husband", "divorce",
     "married", "wedding", "pregnant", "pregnancy", "baby", "children", "family",
     "backlash", "controversy", "scandal", "red carpet", "fashion", "court documents",
+    "detained", "arrested", "lawsuit", "sued",
 )
 REJECT_TERMS = (
     "adult film", "adult entertainment", "porn star", "pornstar", "onlyfans", "fansly",
@@ -73,8 +75,11 @@ REJECT_TERMS = (
 )
 LOW_VALUE_TERMS = (
     "best movies", "best shows", "what to watch", "ranked list", "full list", "complete list",
-    "review:", "trailer breakdown", "fan theory", "quiz", "shopping guide",
+    "review:", "trailer breakdown", "fan theory", "quiz", "shopping guide", "best dressed",
+    "seen and heard at every", "photo gallery", "photos:", "all the looks", "every look",
+    "most shocking moments", "things you missed",
 )
+LISTICLE_RE = re.compile(r"\b\d{1,2}\s+(?:stars|moments|things|looks|outfits|ways|times|facts|photos)\b", re.I)
 
 SPECIALIST = (
     "hollywood reporter", "variety", "deadline", "billboard", "people", "e news",
@@ -95,6 +100,12 @@ EVENT_GROUPS = {
     "awards": {"emmy", "emmys", "grammy", "grammys", "oscar", "oscars", "awards", "ceremony"},
     "career": {"premiere", "premieres", "cast", "casting", "joins", "starring", "film", "movie", "series", "album", "tour", "concert", "release", "festival"},
     "relationship-family": {"divorce", "dating", "boyfriend", "girlfriend", "wife", "husband", "married", "wedding", "baby", "pregnant", "pregnancy", "son", "daughter", "child", "children"},
+}
+AWARD_FAMILIES = {
+    "emmy": ("emmy", "emmys"),
+    "grammy": ("grammy", "grammys"),
+    "oscar": ("oscar", "oscars", "academy awards"),
+    "golden-globe": ("golden globe", "golden globes"),
 }
 
 STOP = {
@@ -121,6 +132,13 @@ def parse_date(value: str) -> datetime:
         return dt.astimezone(timezone.utc)
     except Exception:
         return datetime.min.replace(tzinfo=timezone.utc)
+
+
+def age_hours(item: dict, now: datetime) -> float:
+    published = item.get("published")
+    if not isinstance(published, datetime):
+        return 1e9
+    return max(0.0, (now - published).total_seconds() / 3600.0)
 
 
 def node_to_item(node: ET.Element) -> dict:
@@ -157,24 +175,37 @@ def groups(item: dict) -> set[str]:
     return {name for name, anchors in EVENT_GROUPS.items() if words & anchors or any(a in low for a in anchors if " " in a)}
 
 
+def award_family(item: dict) -> str:
+    low = (item.get("title") or "").lower()
+    for family, aliases in AWARD_FAMILIES.items():
+        if any(alias in low for alias in aliases):
+            return family
+    return ""
+
+
 def relevant(item: dict) -> bool:
     full = text(item)
     title = (item.get("title") or "").lower()
     if any(term in full for term in REJECT_TERMS):
         return False
-    if any(term in title for term in LOW_VALUE_TERMS):
+    if any(term in title for term in LOW_VALUE_TERMS) or LISTICLE_RE.search(title):
         return False
     if any(term in full for term in ENTERTAINMENT_SIGNALS):
         return True
     source = (item.get("source") or "").lower()
-    # Specialist Entertainment outlets may use headlines where the person's name is
-    # the only category clue; a named entity plus a news/event verb is sufficient.
     if any(token in source for token in SPECIALIST) and entities(item):
         return bool(groups(item) or re.search(r"\b(says|shares|faces|announces|returns|leaves|splits|speaks|responds)\b", title))
     return False
 
 
 def same_event(a: dict, b: dict) -> bool:
+    # A major awards ceremony is one news event. Different outlets' watch guides,
+    # previews, party roundups, predictions and general ceremony coverage belong as
+    # supporting links under one lead rather than occupying several top cards.
+    af, bf = award_family(a), award_family(b)
+    if af and af == bf:
+        return True
+
     ta, tb = title_terms(a), title_terms(b)
     if not ta or not tb:
         return False
@@ -226,11 +257,7 @@ def coverage_bonus(n: int) -> int:
 
 
 def recency_bonus(item: dict, now: datetime) -> int:
-    published = item.get("published")
-    if not isinstance(published, datetime):
-        return 0
-    hours = max(0.0, (now - published).total_seconds() / 3600.0)
-    return max(0, int(190 - hours * 5))
+    return max(0, int(190 - age_hours(item, now) * 5))
 
 
 def cluster_candidates(candidates: list[dict]) -> list[list[dict]]:
@@ -262,7 +289,7 @@ def rank_events(candidates: list[dict], limit: int = TARGET, now: datetime | Non
     now = now or datetime.now(timezone.utc)
     unique = {}
     for item in candidates:
-        if not relevant(item):
+        if not relevant(item) or age_hours(item, now) > LOOKBACK_HOURS:
             continue
         key = core.key(item) or (item.get("link") or item.get("title") or "")
         if not key:
@@ -273,6 +300,10 @@ def rank_events(candidates: list[dict], limit: int = TARGET, now: datetime | Non
 
     event_rows = []
     for cluster in cluster_candidates(list(unique.values())):
+        # The extended 96-hour window is only an event-lead backfill. Every published
+        # event must still have at least one fresh item inside the normal 48-hour window.
+        if not any(age_hours(x, now) <= FRESH_HOURS for x in cluster):
+            continue
         sources = {source_key(x.get("source", "")) for x in cluster if x.get("source")}
         best_importance = max((importance(x)[0] for x in cluster), default=0)
         freshest = max((recency_bonus(x, now) for x in cluster), default=0)
@@ -312,24 +343,33 @@ def rank_events(candidates: list[dict], limit: int = TARGET, now: datetime | Non
 
 
 def fetch_candidates() -> list[dict]:
-    # Extend trusted names only for this clean Entertainment collector.
     extra = {"instyle", "yahoo entertainment", "yahoo news"}
     core.TRUSTED_SOURCE_TOKENS = tuple(sorted(set(core.TRUSTED_SOURCE_TOKENS) | extra))
     out = []
-    for query in BROAD_QUERIES:
-        try:
-            batch = core.parse_items(core.fetch(query), "entertainment")
-            out.extend(batch)
-            print(f"entertainment broad/{query[:32]}: {len(batch)} accepted")
-        except Exception as exc:
-            print(f"Entertainment broad query failed: {query}: {exc}")
-    for source, query in SOURCE_QUERIES:
-        try:
-            batch = core.parse_items(core.fetch(query), "entertainment", source_override=source)
-            out.extend(batch)
-            print(f"entertainment source/{source}: {len(batch)} accepted")
-        except Exception as exc:
-            print(f"Entertainment source query failed: {source}: {exc}")
+
+    # The normal site stays 48 hours. Only this supplemental Entertainment discovery
+    # temporarily looks back 96 hours so an older authoritative lead can join a fresh
+    # multi-source event. Use the pre-V4 parser to avoid the provisional 4/source cap.
+    original_age = core.MAX_AGE_HOURS
+    core.MAX_AGE_HOURS = LOOKBACK_HOURS
+    try:
+        parser = getattr(v4, "_original_parse_items", core.parse_items)
+        for query in BROAD_QUERIES:
+            try:
+                batch = parser(core.fetch(query), "entertainment")
+                out.extend(batch)
+                print(f"entertainment broad/{query[:36]}: {len(batch)} accepted")
+            except Exception as exc:
+                print(f"Entertainment broad query failed: {query}: {exc}")
+        for source, query in SOURCE_QUERIES:
+            try:
+                batch = parser(core.fetch(query), "entertainment", source_override=source)
+                out.extend(batch)
+                print(f"entertainment source/{source}: {len(batch)} accepted")
+            except Exception as exc:
+                print(f"Entertainment source query failed: {source}: {exc}")
+    finally:
+        core.MAX_AGE_HOURS = original_age
     return out
 
 
@@ -382,7 +422,7 @@ def main() -> None:
     ET.indent(tree, space="  ")
     tree.write(NEWS, encoding="utf-8", xml_declaration=True)
     print(f"Entertainment relevance ranking: {len(existing)} existing + {len(fetched)} discovered -> {len(selected)} ranked event leads")
-    for i, item in enumerate(selected[:12], 1):
+    for i, item in enumerate(selected[:15], 1):
         print(f"  {i:02d}. score={item.get('entertainmentScore')} coverage={item.get('entertainmentCoverage')} source={item.get('source')} | {item.get('title')}")
 
 
