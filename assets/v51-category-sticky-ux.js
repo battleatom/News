@@ -1,7 +1,12 @@
 (function(){
   'use strict';
   const VALID=new Set(['top','nfl','x','underreported','world','us','presidential','federal','legislation','nm','local','region','technology','gaming','military','entertainment','boxoffice']);
-  const LABELS={'Top Stories':'top','NFL':'nfl','Top Issues':'x','Underreported':'underreported','World':'world','United States':'us','Presidential':'presidential','Federal Government':'federal','Laws & Legislation':'legislation','New Mexico':'nm','Local / Four Corners':'local','Region':'region','Technology':'technology','Gaming & Computing':'gaming','Military & War':'military','Entertainment':'entertainment','Box Office':'boxoffice'};
+  const LABELS={
+    'Top Stories':'top','NFL':'nfl','Top Issues':'x','Underreported':'underreported','World':'world','United States':'us',
+    'Presidential':'presidential','Federal Government':'federal','Laws & Legislation':'legislation','New Mexico':'nm',
+    'Local / Four Corners':'local','Region':'region','Technology':'technology','Gaming & Computing':'gaming','Military & War':'military',
+    'Entertainment':'entertainment','Box Office':'boxoffice'
+  };
 
   function activeCategory(){
     try{if(typeof active!=='undefined'&&VALID.has(active))return active;}catch(e){}
@@ -17,6 +22,18 @@
     if(card.classList.contains('movie-card'))return 'boxoffice';
     if(card.classList.contains('underreported-item'))return 'underreported';
     if(card.classList.contains('nfl-game-card'))return 'nfl';
+    if(card.closest('.bookmark-section')){
+      const a=card.querySelector('h3 a[href]');
+      const title=(a?.textContent||'').replace(/^\d+\.\s*/,'').trim().toLowerCase();
+      try{
+        if(typeof allItems!=='undefined'){
+          const item=allItems.find(x=>(x.querySelector('title')?.textContent||'').trim().toLowerCase()===title);
+          const cat=(item?.querySelector('category')?.textContent||'').trim();
+          if(VALID.has(cat))return cat;
+        }
+      }catch(e){}
+      return '';
+    }
     const section=card.closest('section[data-category]');
     if(section&&VALID.has(section.dataset.category))return section.dataset.category;
     return activeCategory();
@@ -24,37 +41,27 @@
 
   function tagRenderedCards(){
     const current=activeCategory();
-    document.querySelectorAll('#news-feed section.section').forEach(sec=>{if(!VALID.has(sec.dataset.category)&&current)sec.dataset.category=current;});
-    document.querySelectorAll('#news-feed .news-item').forEach(card=>{const cat=itemCategoryForCard(card);if(cat)card.dataset.category=cat;});
+    document.querySelectorAll('#news-feed section.section').forEach(sec=>{
+      if(!VALID.has(sec.dataset.category)&&current)sec.dataset.category=current;
+    });
+    document.querySelectorAll('#news-feed .news-item').forEach(card=>{
+      const cat=itemCategoryForCard(card);
+      if(cat)card.dataset.category=cat;
+    });
   }
   window.__tagRenderedCardsV51=tagRenderedCards;
 
   let tagQueued=false;
   function queueTag(){if(tagQueued)return;tagQueued=true;queueMicrotask(()=>{tagQueued=false;tagRenderedCards();});}
 
-  function ensureFixedStack(){
-    const container=document.querySelector('.container');
-    if(!container)return null;
-    let stack=container.querySelector(':scope > .v51-fixed-stack');
-    if(!stack){
-      stack=document.createElement('div');
-      stack.className='v51-fixed-stack';
-      container.insertBefore(stack,container.firstChild);
-    }
-    const status=document.getElementById('pull-stats-ui')||document.getElementById('pull-status');
-    const parts=[container.querySelector(':scope > header'),container.querySelector(':scope > .toolbar'),status,container.querySelector(':scope > .markets'),container.querySelector(':scope > .tabs')].filter(Boolean);
-    parts.forEach(el=>{if(el.parentElement!==stack)stack.appendChild(el);});
-    let spacer=container.querySelector(':scope > .v51-fixed-spacer');
-    if(!spacer){spacer=document.createElement('div');spacer.className='v51-fixed-spacer';stack.insertAdjacentElement('afterend',spacer);}
-    return {stack,spacer};
-  }
-
-  function syncFixedMetrics(){
-    const fixed=ensureFixedStack();
-    if(!fixed)return;
-    const h=Math.ceil(fixed.stack.getBoundingClientRect().height);
-    document.documentElement.style.setProperty('--v51-fixed-stack-h',h+'px');
-    fixed.spacer.style.height=h+'px';
+  function syncStickyMetrics(){
+    const root=document.documentElement;
+    const header=document.querySelector('body>header, header');
+    const toolbar=document.querySelector('.toolbar');
+    const status=document.getElementById('pull-status');
+    root.style.setProperty('--v51-header-h',(header?.offsetHeight||0)+'px');
+    root.style.setProperty('--v51-toolbar-h',(toolbar?.offsetHeight||0)+'px');
+    root.style.setProperty('--v51-status-h',(status?.offsetHeight||0)+'px');
   }
 
   function scrollActiveTab(behavior='auto'){
@@ -67,26 +74,18 @@
     if(Math.abs(tabs.scrollLeft-target)>8)tabs.scrollTo({left:target,behavior});
   }
 
-  function resyncSoon(){requestAnimationFrame(()=>{syncFixedMetrics();requestAnimationFrame(syncFixedMetrics);});}
-
   function start(){
-    ensureFixedStack();tagRenderedCards();syncFixedMetrics();scrollActiveTab('auto');
+    tagRenderedCards();syncStickyMetrics();scrollActiveTab('auto');
     const feed=document.getElementById('news-feed');
     if(feed)new MutationObserver(queueTag).observe(feed,{childList:true,subtree:true});
     const tabs=document.getElementById('tabs');
     if(tabs){
-      new MutationObserver(()=>{scrollActiveTab('auto');syncFixedMetrics();}).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+      new MutationObserver(()=>{scrollActiveTab('auto');syncStickyMetrics();}).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
       tabs.addEventListener('click',()=>requestAnimationFrame(()=>scrollActiveTab('smooth')),true);
     }
-    const fixed=ensureFixedStack();
-    if(fixed&&window.ResizeObserver)new ResizeObserver(()=>syncFixedMetrics()).observe(fixed.stack);
-    const container=document.querySelector('.container');
-    if(container)new MutationObserver(()=>{ensureFixedStack();resyncSoon();}).observe(container,{childList:true,subtree:false});
-    window.addEventListener('resize',()=>{syncFixedMetrics();scrollActiveTab('auto')},{passive:true});
-    window.addEventListener('load',resyncSoon,{once:true});
-    setTimeout(resyncSoon,300);
-    setTimeout(resyncSoon,1200);
-    resyncSoon();
+    const ro=new ResizeObserver(()=>syncStickyMetrics());
+    [document.querySelector('body>header, header'),document.querySelector('.toolbar'),document.getElementById('pull-status'),tabs].filter(Boolean).forEach(el=>ro.observe(el));
+    window.addEventListener('resize',()=>{syncStickyMetrics();scrollActiveTab('auto')},{passive:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
