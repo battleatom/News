@@ -4,13 +4,15 @@ from __future__ import annotations
 import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
-from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES,direct_presidential_story,military_headline_anchor
+from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES,direct_presidential_story,direct_federal_story,military_headline_anchor,current_tab_contextual_keep,LOW_VALUE_GEO_HEADLINE
 from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision,obvious_noise
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
 
-def fake(title,category='legislation',link='',description=None):
-    i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=description or title;return i
+def fake(title,category='legislation',link='',description=None,**fields):
+    i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=description or title
+    for k,v in fields.items():ET.SubElement(i,k).text=str(v)
+    return i
 
 def protected_signature(path):
     items=ET.parse(path).getroot().findall('.//item')
@@ -32,7 +34,9 @@ assert best_tab(fake('Trump administration proposes new immigration rule','presi
 assert direct_presidential_story(fake('Trump says he would consider a pardon','presidential')), 'direct Trump headline contract failed'
 assert not military_headline_anchor(fake("The inside story of 9/11, told by an advisor on Air Force One",'world')), 'Air Force One falsely counted as Military evidence'
 assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'US Senate story lost Federal ownership'
+assert direct_federal_story(fake("House Speaker says Congress will vote next week",'us')), 'House/Speaker federal headline contract failed'
 assert best_tab(fake('California Supreme Court hears state bail challenge','us'))[0] != 'federal', 'state supreme court falsely became Federal'
+assert not direct_federal_story(fake('California Supreme Court hears state bail challenge','us')), 'state supreme court falsely triggered contextual Federal routing'
 assert best_tab(fake('Farmington City Council approves water project','local'))[0]=='local', 'Farmington story lost Local ownership'
 assert best_tab(fake('Albuquerque officials announce statewide New Mexico initiative','nm'))[0]=='nm', 'New Mexico story lost NM ownership'
 assert best_tab(fake('Virginia Tech opens football season against rival','us'))[0] != 'technology', 'Virginia Tech false-positive Technology match'
@@ -40,6 +44,20 @@ assert best_tab(fake('Georgia football prepares for Western Kentucky','region'))
 assert best_tab(fake('49ers announce injury update before Seahawks game','nfl'))[0]=='nfl', '49ers alias failed NFL ownership'
 assert best_tab(fake('Chicago mayor discusses keeping the Bears in the city','us'))[0] != 'nfl', 'ambiguous Bears mention falsely became NFL'
 assert best_tab(fake('Casino operator expands sportsbook and slot floor','gaming'))[0] != 'gaming', 'gambling falsely became Gaming'
+
+# Dynamic Local / Region inventory is already geography-validated upstream and must survive the final filter.
+local_tagged=fake('City council approves downtown safety changes','local',marketId='seattle-wa',marketCity='Seattle',marketState='WA')
+region_tagged=fake('Wildfire restrictions lifted after rainfall','region',state='Colorado',region='mountain')
+assert current_tab_contextual_keep(local_tagged,'local'), 'validated Local market metadata was not preserved'
+assert current_tab_contextual_keep(region_tagged,'region'), 'validated Region metadata was not preserved'
+
+# Broad-tab contextual preservation catches valid civic stories that do not use the narrow scorer vocabulary.
+assert current_tab_contextual_keep(fake("Senegal's President to meet IMF chief in Washington",'world'),'world'), 'foreign civic World story was not preserved'
+assert current_tab_contextual_keep(fake('How proposed census changes could affect states and voters','us'),'us'), 'national U.S. civic story was not preserved'
+assert current_tab_contextual_keep(fake('Microsoft rolls out new AI security tools','technology'),'technology'), 'strong Technology headline was not preserved'
+assert current_tab_contextual_keep(fake('Nintendo announces new Switch game release','gaming'),'gaming'), 'strong Gaming headline was not preserved'
+assert LOW_VALUE_GEO_HEADLINE.search('Santa Fe-area food service inspections, July 27-Aug. 2'), 'low-value geography guard missed inspection roundup'
+assert LOW_VALUE_GEO_HEADLINE.search('Vote: New Mexico high school football star of Week 4'), 'low-value geography guard missed school-sports poll'
 
 # Underreported is an editorial overlay, not a mutually-exclusive subject owner.
 u=fake('Watchdog investigation finds rural hospital Medicaid failures','underreported')
@@ -57,8 +75,9 @@ with tempfile.TemporaryDirectory() as td:
         if cat in EDITORIAL_OVERLAYS:
             if obvious_noise(item):failures.append((cat,field(item,'title')))
             continue
-        # Presidential has an explicit contextual contract: a direct Trump headline can be valid
-        # even when the generic phrase scorer intentionally stays below threshold to avoid incidental mentions.
+        # Strong current-tab context can be valid even when the generic phrase scorer intentionally stays
+        # below threshold. This covers validated dynamic geography and conservative broad/specialist fallbacks.
+        if current_tab_contextual_keep(item,cat):continue
         if cat=='presidential' and direct_presidential_story(item):continue
         if cat not in RULES or not qualifies(item,cat):failures.append((cat,field(item,'title')))
     residual=cross_tab_clusters(items);base=report['baselineCounts'];final=report['finalCounts']
