@@ -1,0 +1,28 @@
+name: Test Dirty Entertainment Removal
+on:
+  push:
+    branches: [remove-dirty-entertainment]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate removal
+        run: |
+          python -m py_compile scripts/v4_release_gate.py scripts/build_site.py
+          python - <<'PY'
+          from pathlib import Path
+          wf=Path('.github/workflows/update-news.yml').read_text()
+          js=Path('assets/entertainment-v4.js').read_text()
+          gate=Path('scripts/v4_release_gate.py').read_text()
+          assert 'update_entertainment_only_v4.py' not in wf
+          assert 'Clean and Dirty pools' not in wf
+          assert 'DIRTY_UI_ENABLED' not in js
+          assert 'ent-mode-toggle' not in js
+          assert "mode==='dirty'" not in js
+          assert 'Dirty Entertainment is disabled' in gate
+          assert 'adult-industry Dirty pool' not in gate
+          print('DIRTY ENTERTAINMENT REMOVAL TEST PASS')
+          PY
