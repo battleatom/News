@@ -9,6 +9,8 @@ from difflib import SequenceMatcher
 from typing import Dict,List,Tuple
 from v5_tab_filters import field,content_tokens,RULES,best_tab,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id
 
+PROTECTED_CATEGORIES={"boxoffice","entertainment"}
+
 def norm_title(item:ET.Element)->str:
     t=field(item,"title").lower();t=re.sub(r"\s+-\s+[^-]{2,45}$","",t);return re.sub(r"[^a-z0-9]+"," ",t).strip()
 def article_url(item:ET.Element)->str:
@@ -66,6 +68,8 @@ def dedupe_within_tabs(items:List[ET.Element])->Tuple[List[ET.Element],List[dict
     kept=[];removed=[];by=defaultdict(list)
     for x in items:by[field(x,"category").lower()].append(x)
     for tab,group in by.items():
+        if tab in PROTECTED_CATEGORIES:
+            kept.extend(group);continue
         feats,pairs=_candidate_pairs(group);dup={}
         for i,j in pairs:
             if j in dup:continue
@@ -78,8 +82,8 @@ def dedupe_within_tabs(items:List[ET.Element])->Tuple[List[ET.Element],List[dict
                 r=dup[i];removed.append({"scope":"within-tab","tab":tab,"removed":field(x,"title"),"kept":field(group[r],"title"),"similarity":event_similarity(x,group[r],feats[i],feats[r])})
     return kept,removed
 def cross_tab_clusters(items:List[ET.Element])->List[List[ET.Element]]:
-    # Ranking/editorial surfaces may intentionally mirror a canonical subject story.
-    excluded=RANKING_SURFACES|EDITORIAL_OVERLAYS
+    # Ranking/editorial/protected surfaces may intentionally mirror a canonical subject story.
+    excluded=RANKING_SURFACES|EDITORIAL_OVERLAYS|PROTECTED_CATEGORIES
     normal=[x for x in items if field(x,"category").lower() not in excluded]
     feats,pairs=_candidate_pairs(normal,True);parent=list(range(len(normal)))
     def find(x):
