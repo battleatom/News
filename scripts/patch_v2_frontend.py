@@ -9,9 +9,11 @@ s=P.read_text(encoding='utf-8')
 ASSETS={
     'styles/v2.css':'style',
     'styles/v5-visual.css':'style',
+    'styles/card-feedback.css':'style',
     'assets/location-v2.js':'script',
     'assets/v3-ui.js':'script',
     'assets/app-v2.js':'script',
+    'assets/card-feedback.js':'script',
 }
 
 def version(path: str) -> str:
@@ -36,11 +38,13 @@ s=re.sub(r'(<header><h1>UNDERREPORTED</h1><p>).*?(</p></header>)',r'\1The storie
 head='''
 <link rel="stylesheet" href="styles/v2.css?v={v2}">
 <link rel="stylesheet" href="styles/v5-visual.css?v={visual}" data-v5-visual="true">
+<link rel="stylesheet" href="styles/card-feedback.css?v={feedback_style}" data-card-feedback-style="true">
 <script src="assets/location-v2.js?v={location}" defer></script>
 <script src="assets/v3-ui.js?v={presentation}" defer></script>
 '''.format(
     v2=version('styles/v2.css'),
     visual=version('styles/v5-visual.css'),
+    feedback_style=version('styles/card-feedback.css'),
     location=version('assets/location-v2.js'),
     presentation=version('assets/v3-ui.js'),
 )
@@ -56,9 +60,13 @@ s=s[:body_match.start()]+replacement+s[body_match.end():]
 
 app='''
 <script src="assets/app-v2.js?v={app}"></script>
-'''.format(app=version('assets/app-v2.js'))
+<script src="assets/card-feedback.js?v={feedback}" data-card-feedback-script="true"></script>
+'''.format(
+    app=version('assets/app-v2.js'),
+    feedback=version('assets/card-feedback.js'),
+)
 if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 frontend with content-hashed assets and explicit ownership.')
+print('Applied Underreported V5 frontend with content-hashed assets, feedback controls, and explicit ownership.')
