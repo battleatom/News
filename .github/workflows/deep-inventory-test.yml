@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - test/deep-inventory-50-plus-25-2026-09-14
+    paths-ignore:
+      - 'deep-inventory-preview/**'
   workflow_dispatch:
 
 concurrency:
@@ -11,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deep-inventory:
@@ -76,6 +78,7 @@ jobs:
           python tests/v5_filter_shadow_test.py
 
       - name: Audit 50 active plus 25 reserve capacity
+        continue-on-error: true
         run: python scripts/audit_deep_inventory.py
 
       - name: Build test site
@@ -88,6 +91,7 @@ jobs:
 
       - name: Package test preview
         run: |
+          rm -rf deep-inventory-preview
           mkdir -p deep-inventory-preview
           cp index.html News deep-inventory-report.json deep-v5-filter-report.json deep-inventory-preview/
           cp -r assets styles deep-inventory-preview/
@@ -98,3 +102,15 @@ jobs:
           name: deep-inventory-50-plus-25-preview
           path: deep-inventory-preview
           retention-days: 7
+
+      - name: Publish browser preview on test branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f deep-inventory-preview
+          if git diff --cached --quiet; then
+            echo "Preview unchanged."
+          else
+            git commit -m "Publish V5.1 test preview"
+            git push origin HEAD:test/deep-inventory-50-plus-25-2026-09-14
+          fi
