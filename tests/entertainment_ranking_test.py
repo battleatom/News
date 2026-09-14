@@ -52,11 +52,13 @@ assert len(emmy_rows)==1, [x['title'] for x in emmy_rows]
 assert emmy_rows[0]['entertainmentLabel']=='AWARDS', emmy_rows[0]
 assert emmy_rows[0]['entertainmentCoverage']>=3, emmy_rows[0]
 
-# Listicle/gallery clutter is not a top-news card.
+# Listicle/gallery/section clutter is not a top-news card.
 listicle=item(12,'15 Stars Who Brought Their Parents as Awards Show Dates','People',15)
 assert not r.relevant(listicle)
 shocking=item(13,'The 10 Most Shocking Moments in Emmys History','InStyle',15)
 assert not r.relevant(shocking)
+landing=item(14,'Film + Reviews - The Guardian','The Guardian',10)
+assert not r.relevant(landing)
 
 # People/family/relationship coverage is valid normal Entertainment, not a hidden Dirty pool.
 divorce=item(7,"Reacher star Alan Ritchson divorce revealed in court documents",'People',120)
@@ -67,4 +69,4 @@ assert r.importance(divorce)[1] in {'MAJOR','PEOPLE'}
 adult=item(8,'Adult film star announces OnlyFans project','Example Source',10)
 assert not r.relevant(adult)
 
-print('Entertainment ranking regression passed: fresh multi-source events can carry older supporting coverage, stale singles are blocked, award megastories collapse, listicles are rejected, and adult content is rejected.')
+print('Entertainment ranking regression passed: fresh multi-source events can carry older supporting coverage, stale singles are blocked, award megastories collapse, listicles/landing pages are rejected, and adult content is rejected.')
