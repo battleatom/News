@@ -6,10 +6,13 @@ on:
       - 'scripts/verify_feed_v4.py'
       - 'scripts/refine_tech_gaming.py'
       - 'scripts/patch_v2_frontend.py'
+      - 'scripts/patch_boxoffice_ui.py'
       - 'assets/card-feedback.js'
       - 'assets/v3-ui.js'
       - 'assets/ux-hotfix-v51.js'
+      - 'assets/v51-category-sticky-ux.js'
       - 'styles/v5-visual.css'
+      - 'styles/v51-sticky-nav.css'
       - '.github/workflows/counts-ux-regression.yml'
 
 jobs:
@@ -19,10 +22,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/verify_feed_v4.py scripts/refine_tech_gaming.py scripts/v5_global_filter.py scripts/patch_v2_frontend.py
+          python -m py_compile scripts/verify_feed_v4.py scripts/refine_tech_gaming.py scripts/v5_global_filter.py scripts/patch_v2_frontend.py scripts/patch_boxoffice_ui.py
           node --check assets/card-feedback.js
           node --check assets/v3-ui.js
           node --check assets/ux-hotfix-v51.js
+          node --check assets/v51-category-sticky-ux.js
       - name: Verify UX contracts
         run: |
           python - <<'PY'
@@ -30,25 +34,37 @@ jobs:
           fb=Path('assets/card-feedback.js').read_text(encoding='utf-8')
           ui=Path('assets/v3-ui.js').read_text(encoding='utf-8')
           hot=Path('assets/ux-hotfix-v51.js').read_text(encoding='utf-8')
+          cat=Path('assets/v51-category-sticky-ux.js').read_text(encoding='utf-8')
           css=Path('styles/v5-visual.css').read_text(encoding='utf-8')
+          sticky=Path('styles/v51-sticky-nav.css').read_text(encoding='utf-8')
           patch=Path('scripts/patch_v2_frontend.py').read_text(encoding='utf-8')
+          box=Path('scripts/patch_boxoffice_ui.py').read_text(encoding='utf-8')
           vf=Path('scripts/verify_feed_v4.py').read_text(encoding='utf-8')
           required_fb=["tabFor(card)==='boxoffice'","activeTab()==='boxoffice'","key==='boxoffice'"]
           required_ui=['decorateImportanceRail(card)',"'rail-blue'","'rail-green'","'rail-orange'","'rail-purple'","'rail-red'","if(card.classList.contains('underreported-item')"]
           required_hot=["canonicalTabKey(value)","activeTabKey()==='boxoffice'","card.style.setProperty('border-left'","uxHotfixV51='ready'"]
+          required_cat=['const VALID=new Set(',"card.dataset.category=cat",'window.__tagRenderedCardsV51=tagRenderedCards','scrollActiveTab','ResizeObserver']
           required_css=['.rail-blue','.rail-green','.rail-orange','.rail-purple','.rail-red','.news-item.underreported-item.age-blue','.news-item.underreported-item.age-red']
-          required_patch=["'assets/ux-hotfix-v51.js':'script'",'data-ux-hotfix-v51="true"']
+          required_sticky=['position:sticky!important','--v51-header-h','--v51-toolbar-h','--v51-status-h','overflow-x:auto!important','flex-wrap:nowrap!important']
+          required_patch=["'assets/v51-category-sticky-ux.js':'script'","'styles/v51-sticky-nav.css':'style'",'data-v51-category-sticky="true"','data-v51-sticky-nav="true"']
+          required_box=["sec.dataset.category='boxoffice'","ar.dataset.category='boxoffice'","card.dataset.category='boxoffice'"]
           required_vf=['"technology", "gaming", "us"','final V5 authoritative filter still owns the last routing decision']
-          missing=[x for x in required_fb if x not in fb]+[x for x in required_ui if x not in ui]+[x for x in required_hot if x not in hot]+[x for x in required_css if x not in css]+[x for x in required_patch if x not in patch]+[x for x in required_vf if x not in vf]
+          missing=[x for x in required_fb if x not in fb]+[x for x in required_ui if x not in ui]+[x for x in required_hot if x not in hot]+[x for x in required_cat if x not in cat]+[x for x in required_css if x not in css]+[x for x in required_sticky if x not in sticky]+[x for x in required_patch if x not in patch]+[x for x in required_box if x not in box]+[x for x in required_vf if x not in vf]
           if missing: raise SystemExit('Missing UX/count contract markers: '+repr(missing))
           if "card.classList.contains('underreported-item')" not in hot: raise SystemExit('Hotfix must leave Underreported rail untouched')
-          print('UX and specialist-pool contracts verified.')
+          print('UX, category tagging, sticky navigation, Box Office, and specialist-pool contracts verified.')
           PY
-      - name: Build site and verify hotfix injection
+      - name: Build site and verify UX injection
         run: |
           python scripts/build_site.py
           grep -q 'assets/ux-hotfix-v51.js?v=' index.html
-          grep -q 'data-ux-hotfix-v51="true"' index.html
+          grep -q 'assets/v51-category-sticky-ux.js?v=' index.html
+          grep -q 'styles/v51-sticky-nav.css?v=' index.html
+          grep -q 'data-v51-category-sticky="true"' index.html
+          grep -q 'data-v51-sticky-nav="true"' index.html
+          grep -q "sec.dataset.category='boxoffice'" index.html
+          grep -q "ar.dataset.category='boxoffice'" index.html
+          grep -q "card.dataset.category='boxoffice'" index.html
       - name: Production-order count test
         run: |
           python scripts/refine_tech_gaming.py
