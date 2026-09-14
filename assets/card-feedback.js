@@ -86,7 +86,7 @@
 
   function backfill(tab){
     const key=normalizeText(tab);
-    if(!key||activeTab()!==key)return;
+    if(!key||activeTab()!==key||key==='boxoffice')return;
     const counts=window.loadCounts;
     if(counts&&typeof counts==='object'){
       const current=Number(counts[key]||10);
@@ -129,11 +129,16 @@
   function eligible(card){
     if(!(card instanceof Element))return false;
     if(card.matches('.nfl-game-card,.nfl-live-center,.bookmark-section .news-item[data-bookmark-clone="1"]'))return false;
+    if(tabFor(card)==='boxoffice'||activeTab()==='boxoffice')return false;
     return !!card.querySelector('h3 a[href],h2 a[href],.title a[href],a.story-link[href],a[href]');
   }
 
   function decorateCard(card,pools){
-    if(!eligible(card))return;
+    if(!eligible(card)){
+      card.querySelector(':scope > .card-feedback-controls')?.remove();
+      card.classList.remove('has-card-feedback');
+      return;
+    }
     const data=snapshot(card);
     if(suppressed(data,pools)){card.remove();return;}
     if(card.querySelector(':scope > .card-feedback-controls'))return;
