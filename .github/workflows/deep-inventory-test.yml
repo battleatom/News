@@ -1,0 +1,100 @@
+name: Deep Inventory 50 Plus 25 Test
+
+on:
+  push:
+    branches:
+      - test/deep-inventory-50-plus-25-2026-09-14
+  workflow_dispatch:
+
+concurrency:
+  group: deep-inventory-50-plus-25-test
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deep-inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Baseline syntax and preflight
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python scripts/preflight_feed.py
+
+      - name: Enable test-only deep inventory policy
+        run: |
+          python scripts/enable_deep_inventory_test.py
+          python -m py_compile scripts/*.py
+          grep -q 'const STORIES_PER_PAGE = 50;' scripts/patch_load_more.py
+          grep -q 'const RESERVE_PAGE = 25;' scripts/patch_load_more.py
+          grep -q 'NFL offseason news trades contracts roster' scripts/update_news.py
+
+      - name: Collect deeper qualified feed
+        run: |
+          success=0
+          for attempt in 1 2; do
+            echo "Deep collection attempt ${attempt}/2"
+            if python scripts/update_news_v4.py; then success=1; break; fi
+            sleep 15
+          done
+          test "$success" -eq 1
+
+      - name: Rank deep specialist pools
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+
+      - name: Build narrow official and editorial pools
+        run: |
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+
+      - name: Run production quality stack
+        run: |
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          python scripts/v5_global_filter.py --apply --report deep-v5-filter-report.json
+          python tests/v5_filter_shadow_test.py
+
+      - name: Audit 50 active plus 25 reserve capacity
+        run: python scripts/audit_deep_inventory.py
+
+      - name: Build test site
+        run: |
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          grep -q 'const STORIES_PER_PAGE = 50;' index.html
+          grep -q 'const RESERVE_PAGE = 25;' index.html
+          grep -q "key==='boxoffice'" assets/card-feedback.js
+
+      - name: Package test preview
+        run: |
+          mkdir -p deep-inventory-preview
+          cp index.html News deep-inventory-report.json deep-v5-filter-report.json deep-inventory-preview/
+          cp -r assets styles deep-inventory-preview/
+
+      - name: Upload test preview artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deep-inventory-50-plus-25-preview
+          path: deep-inventory-preview
+          retention-days: 7
