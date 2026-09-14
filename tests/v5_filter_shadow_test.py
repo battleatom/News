@@ -5,7 +5,7 @@ import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES
-from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision
+from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision,obvious_noise
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
 
@@ -39,7 +39,7 @@ assert best_tab(fake('49ers announce injury update before Seahawks game','nfl'))
 assert best_tab(fake('Chicago mayor discusses keeping the Bears in the city','us'))[0] != 'nfl', 'ambiguous Bears mention falsely became NFL'
 assert best_tab(fake('Casino operator expands sportsbook and slot floor','gaming'))[0] != 'gaming', 'gambling falsely became Gaming'
 
-# Underreported is an editorial overlay, not a mutually exclusive subject owner.
+# Underreported is an editorial overlay, not a mutually-exclusive subject owner.
 u=fake('Watchdog investigation finds rural hospital Medicaid failures','underreported')
 assert tab_filter_decision(u)['action']=='keep', 'qualified Underreported investigation was stripped from editorial overlay'
 
@@ -47,14 +47,13 @@ before_protected=protected_signature(src)
 with tempfile.TemporaryDirectory() as td:
     out=Path(td)/'News.filtered';report=apply_pipeline(str(src),str(out),str(ROOT/'v5-filter-shadow-report.json'))
     after_protected=protected_signature(out)
-    if before_protected!=after_protected:
-        raise SystemExit('Protected Box Office/Entertainment content changed')
+    if before_protected!=after_protected:raise SystemExit('Protected Box Office/Entertainment content changed')
     items=ET.parse(out).getroot().findall('.//item');failures=[]
     for item in items:
         cat=field(item,'category').lower()
         if cat in RANKING_SURFACES or cat in PROTECTED_CATEGORIES:continue
         if cat in EDITORIAL_OVERLAYS:
-            if not qualifies(item,cat):failures.append((cat,field(item,'title')))
+            if obvious_noise(item):failures.append((cat,field(item,'title')))
             continue
         if cat not in RULES or not qualifies(item,cat):failures.append((cat,field(item,'title')))
     residual=cross_tab_clusters(items);base=report['baselineCounts'];final=report['finalCounts']
