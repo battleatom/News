@@ -23,6 +23,15 @@
   };
   const save=pools=>localStorage.setItem(STORAGE_KEY,JSON.stringify(pools));
 
+  function activeTab(){
+    const active=document.querySelector('.tab.active[data-category],.tab.active[data-tab],.tab.active');
+    if(active){
+      const value=active.dataset.category||active.dataset.tab||active.getAttribute('data-key')||active.textContent;
+      if(value)return normalizeText(value);
+    }
+    return normalizeText(document.body.dataset.activeTab||window.active||'unknown');
+  }
+
   function tabFor(card){
     const explicit=card.dataset.category||card.dataset.tab;
     if(explicit)return normalizeText(explicit);
@@ -31,12 +40,7 @@
       const value=section.dataset.category||section.dataset.tab||String(section.id||'').replace(/^(section-|tab-)/i,'');
       if(value)return normalizeText(value);
     }
-    const active=document.querySelector('.tab.active[data-category],.tab.active[data-tab],.tab.active');
-    if(active){
-      const value=active.dataset.category||active.dataset.tab||active.getAttribute('data-key')||active.textContent;
-      if(value)return normalizeText(value);
-    }
-    return normalizeText(document.body.dataset.activeTab||'unknown');
+    return activeTab();
   }
 
   function snapshot(card){
@@ -70,9 +74,45 @@
     return REASONS.some(reason=>pools[reason].some(record=>sameRecord(record,data)));
   }
 
-  function removeCard(card){
+  function syncVisibleCount(){
+    const root=document.getElementById('news-feed');
+    if(!root)return;
+    const visible=root.querySelectorAll('.news-item:not(.feedback-removing)').length;
+    const countEl=root.querySelector('.section .section-header .count');
+    if(countEl&&/^Showing\s+\d+/i.test(countEl.textContent||'')){
+      countEl.textContent=(countEl.textContent||'').replace(/^Showing\s+\d+/i,`Showing ${visible}`);
+    }
+  }
+
+  function backfill(tab){
+    const key=normalizeText(tab);
+    if(!key||activeTab()!==key)return;
+    const counts=window.loadCounts;
+    if(counts&&typeof counts==='object'){
+      const current=Number(counts[key]||10);
+      counts[key]=Number.isFinite(current)?current+1:11;
+    }
+    const renderFn=window.canonicalRender||window.render;
+    const items=window.allItems||(typeof allItems!=='undefined'?allItems:null);
+    if(typeof renderFn!=='function'||!items){
+      document.dispatchEvent(new CustomEvent('underreported:feedback-backfill',{detail:{tab:key}}));
+      return;
+    }
+    window.requestAnimationFrame(()=>{
+      renderFn(items);
+      window.requestAnimationFrame(()=>{
+        decorate(document);
+        syncVisibleCount();
+      });
+    });
+  }
+
+  function removeCard(card,tab){
     card.classList.add('feedback-removing');
-    window.setTimeout(()=>card.remove(),150);
+    window.setTimeout(()=>{
+      card.remove();
+      backfill(tab);
+    },150);
   }
 
   function record(reason,card){
@@ -82,7 +122,7 @@
     const entry={...data,reason};
     if(!pools[reason].some(existing=>sameRecord(existing,data)))pools[reason].push(entry);
     save(pools);
-    removeCard(card);
+    removeCard(card,data.tab);
     document.dispatchEvent(new CustomEvent('underreported:card-feedback',{detail:entry}));
   }
 
@@ -145,7 +185,8 @@
       getPools:()=>JSON.parse(JSON.stringify(load())),
       counts:()=>{const p=load();return {D:p.D.length,NR:p.NR.length,NW:p.NW.length};},
       toJSON:()=>JSON.stringify(load(),null,2),
-      clear:()=>{localStorage.removeItem(STORAGE_KEY);decorate(document);}
+      clear:()=>{localStorage.removeItem(STORAGE_KEY);decorate(document);},
+      backfill
     };
     document.documentElement.dataset.cardFeedback='ready';
   }
