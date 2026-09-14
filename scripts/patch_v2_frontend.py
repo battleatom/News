@@ -14,6 +14,7 @@ ASSETS={
     'assets/v3-ui.js':'script',
     'assets/app-v2.js':'script',
     'assets/card-feedback.js':'script',
+    'assets/ux-hotfix-v51.js':'script',
 }
 
 def version(path: str) -> str:
@@ -61,12 +62,14 @@ s=s[:body_match.start()]+replacement+s[body_match.end():]
 app='''
 <script src="assets/app-v2.js?v={app}"></script>
 <script src="assets/card-feedback.js?v={feedback}" data-card-feedback-script="true"></script>
+<script src="assets/ux-hotfix-v51.js?v={ux_hotfix}" data-ux-hotfix-v51="true"></script>
 '''.format(
     app=version('assets/app-v2.js'),
     feedback=version('assets/card-feedback.js'),
+    ux_hotfix=version('assets/ux-hotfix-v51.js'),
 )
 if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 frontend with content-hashed assets, feedback controls, and explicit ownership.')
+print('Applied Underreported V5 frontend with content-hashed assets, feedback controls, UX hotfix, and explicit ownership.')
