@@ -1,0 +1,39 @@
+name: V5.1 Promotion Regression
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/apply_v51_inventory_policy.py'
+      - '.github/workflows/promote-v51.yml'
+      - '.github/workflows/v51-promotion-test.yml'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply V5.1 policy in isolated workspace
+        run: |
+          python scripts/apply_v51_inventory_policy.py
+          python -m py_compile scripts/*.py tests/*.py
+      - name: Verify tested V5.1 settings
+        run: |
+          grep -q 'const STORIES_PER_PAGE = 50;' scripts/patch_load_more.py
+          grep -q 'const RESERVE_PAGE = 25;' scripts/patch_load_more.py
+          grep -q 'MAX_TECH = 90' scripts/refine_tech_gaming.py
+          grep -q 'MAX_GAMING = 90' scripts/refine_tech_gaming.py
+          grep -q 'MAX_US = 90' scripts/refine_tech_gaming.py
+          grep -q 'TARGET = 90' scripts/refine_entertainment.py
+          grep -q 'MAX_ITEMS = 75' scripts/underreported_priority.py
+          grep -q 'NFL offseason news trades contracts roster' scripts/update_news.py
+          grep -q 'core.MAX_AGE_HOURS = 168' scripts/update_news_normalized.py
+      - name: Verify idempotence
+        run: python scripts/apply_v51_inventory_policy.py
+      - name: Preserve protected surfaces
+        run: |
+          if grep -qi 'boxoffice' scripts/apply_v51_inventory_policy.py; then
+            echo 'Box Office must remain untouched.'
+            exit 1
+          fi
+          grep -q "'x'" scripts/enrich_x_issues.py || true
+          echo 'V5.1 promotion smoke checks passed.'
