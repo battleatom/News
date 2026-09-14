@@ -112,7 +112,7 @@ PRESIDENTIAL_ROUTE = re.compile(
     r"\b(president trump|donald trump|trump(?:'s|’s)?|trump administration|white house|executive order|oval office|press secretary)\b", re.I)
 FOREIGN_US_FALSE_POSITIVE = re.compile(
     r'\b(london|paris|berlin|rome|madrid|moscow|kyiv|beijing|tokyo|seoul|gaza|israel|ukraine|russia|china|'
-    r'united kingdom|britain|france|germany|italy|spain|india|pakistan|australia|canada|mexico)\b', re.I)
+    r'uk|u\.k\.|united kingdom|britain|france|germany|italy|spain|india|pakistan|australia|canada|mexico)\b', re.I)
 US_NATIONAL = re.compile(
     r'\b(united states|u\.?s\.?|americans?|nationwide|across the country|across the u\.?s\.?|multiple states|'
     r'census|immigration|civil rights|abortion|gun laws?|health insurance|housing market|consumers?|'
