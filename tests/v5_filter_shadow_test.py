@@ -5,13 +5,14 @@ import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from v5_global_filter import apply_pipeline
-from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,legislation_id,best_tab
+from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
 
 def fake(title,category='legislation',link='',description=None):
     i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=description or title;return i
-# Safety fixtures: similar official bills and templated stories must not collapse.
+
+# Duplicate safety: similar official bills and templated stories must not collapse.
 a=fake('H.R. 6509 — 119th Congress: SAFE Drugs Act of 2025','legislation','https://example.gov/bill/6509')
 b=fake('H.R. 9183 — 119th Congress: Artificial Intelligence Environmental Impacts Act of 2026','legislation','https://example.gov/bill/9183')
 assert legislation_id(a)!=legislation_id(b) and not same_event(a,b), 'distinct bill IDs collapsed'
@@ -19,26 +20,43 @@ assert best_tab(b)[0]=='legislation', 'structured bill lost canonical legislatio
 c=fake('Jane Doe Obituary (1930 - 2026)','us','https://paper.test/jane')
 d=fake('John Roe Obituary (1940 - 2026)','us','https://paper.test/john')
 assert not same_event(c,d), 'templated obituaries collapsed'
-# Routing regressions observed in live V5.
-assert best_tab(fake('Ukraine hit by Russian missile strike as military operation expands','nfl'))[0]=='military', 'war story did not prefer Military over World/NFL'
+
+# Topic/ownership regressions observed in live V5.
+assert best_tab(fake('Ukraine hit by Russian missile strike as military operation expands','nfl'))[0]=='military', 'military operation did not prefer Military'
+assert best_tab(fake('A long summer: how trade war and wildfires hit household prices','underreported'))[0] != 'military', 'metaphorical/economic war falsely became Military'
 assert best_tab(fake('Trump administration proposes new immigration rule','presidential'))[0]=='presidential', 'Trump administration story lost Presidential ownership'
-assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'Senate story lost Federal ownership'
+assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'US Senate story lost Federal ownership'
+assert best_tab(fake('California Supreme Court hears state bail challenge','us'))[0] != 'federal', 'state supreme court falsely became Federal'
 assert best_tab(fake('Farmington City Council approves water project','local'))[0]=='local', 'Farmington story lost Local ownership'
 assert best_tab(fake('Albuquerque officials announce statewide New Mexico initiative','nm'))[0]=='nm', 'New Mexico story lost NM ownership'
 assert best_tab(fake('Virginia Tech opens football season against rival','us'))[0] != 'technology', 'Virginia Tech false-positive Technology match'
+assert best_tab(fake('Georgia football prepares for Western Kentucky','region'))[0] != 'nfl', 'college football falsely became NFL'
+assert best_tab(fake('49ers announce injury update before Seahawks game','nfl'))[0]=='nfl', '49ers alias failed NFL ownership'
+assert best_tab(fake('Chicago mayor discusses keeping the Bears in the city','us'))[0] != 'nfl', 'ambiguous Bears mention falsely became NFL'
+assert best_tab(fake('Casino operator expands sportsbook and slot floor','gaming'))[0] != 'gaming', 'gambling falsely became Gaming'
+assert best_tab(fake('Movie opens to $85 million domestic box office weekend','boxoffice'))[0]=='boxoffice', 'box office story lost Box Office ownership'
+
+# Underreported is an editorial overlay, not a mutually exclusive subject owner.
+u=fake('Watchdog investigation finds rural hospital Medicaid failures','underreported')
+assert tab_filter_decision(u)['action']=='keep', 'qualified Underreported investigation was stripped from editorial overlay'
+
 with tempfile.TemporaryDirectory() as td:
     out=Path(td)/'News.filtered';report=apply_pipeline(str(src),str(out),str(ROOT/'v5-filter-shadow-report.json'))
     items=ET.parse(out).getroot().findall('.//item');failures=[]
     for item in items:
         cat=field(item,'category').lower()
         if cat in RANKING_SURFACES:continue
+        if cat in EDITORIAL_OVERLAYS:
+            if not qualifies(item,cat):failures.append((cat,field(item,'title')))
+            continue
         if cat not in RULES or not qualifies(item,cat):failures.append((cat,field(item,'title')))
     residual=cross_tab_clusters(items);base=report['baselineCounts'];final=report['finalCounts']
-    emptied=[c for c,n in base.items() if c not in RANKING_SURFACES and n>3 and final.get(c,0)==0]
+    protected=RANKING_SURFACES|EDITORIAL_OVERLAYS
+    emptied=[c for c,n in base.items() if c not in protected and n>3 and final.get(c,0)==0]
     summary={'inputArticles':report['inputArticles'],'outputArticles':report['outputArticles'],'rerouted':report['rerouted'],'rejectedNoQualifiedTab':report['rejectedNoQualifiedTab'],'withinTabDuplicatesRemoved':report['withinTabDuplicatesRemoved'],'crossTabDuplicateEventsBeforeOwnership':report['crossTabDuplicateEvents'],'crossTabDuplicatesRemoved':report['crossTabDuplicatesRemoved'],'residualCrossTabDuplicateClusters':len(residual),'postFilterQualificationFailures':len(failures),'emptiedCategories':emptied,'baselineCounts':base,'finalCounts':final}
     print('=== V5 FRESH AUTHORITATIVE FILTER REPORT ===');print(json.dumps(summary,indent=2))
-    print('\nTOP REROUTES:');[print(x) for x in report['routeChanges'][:25]]
-    print('\nTOP REJECTIONS:');[print(x) for x in report['rejectedExamples'][:25]]
+    print('\nTOP REROUTES:');[print(x) for x in report['routeChanges'][:30]]
+    print('\nTOP REJECTIONS:');[print(x) for x in report['rejectedExamples'][:30]]
     print('\nTOP DUPLICATES:');[print(x) for x in report['withinTabDuplicateExamples'][:20]]
     print('\nTOP OWNERSHIP CHANGES:');[print(x) for x in report['ownershipChanges'][:20]]
     if failures:print('\nQUALIFICATION FAILURES:',failures[:15])
