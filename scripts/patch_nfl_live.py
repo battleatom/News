@@ -13,6 +13,7 @@ STYLE='''<style id="nfl-live-style">
 .nfl-live-note{padding:8px 11px;margin-bottom:10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(255,255,255,.68);font-size:11px;line-height:1.35;color:#64748b}.nfl-live-note strong{color:#166534}
 .nfl-games-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:8px}
 .nfl-game-card{position:relative;padding:10px 11px!important;min-height:132px!important;margin:0!important;display:flex;flex-direction:column;justify-content:space-between;gap:7px;border:2px solid var(--nfl-home-accent,#cbd5e1)!important;box-shadow:0 2px 8px rgba(15,23,42,.05)}
+.nfl-game-card.rail-blue{border-left:5px solid #2563eb!important}.nfl-game-card.rail-green{border-left:5px solid #16a34a!important}.nfl-game-card.rail-orange{border-left:5px solid #f97316!important}.nfl-game-card.rail-purple{border-left:5px solid #9333ea!important}.nfl-game-card.rail-red{border-left:5px solid #dc2626!important}
 .nfl-game-card.nfl-next{box-shadow:0 0 0 2px color-mix(in srgb,var(--nfl-home-accent,#166534) 18%,transparent),0 2px 8px rgba(15,23,42,.05)}
 .nfl-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;min-height:24px}.nfl-badge{font-size:9px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#166534;background:rgba(22,163,74,.10);border-radius:999px;padding:3px 6px;white-space:nowrap}.nfl-badge.live{color:#b91c1c;background:rgba(239,68,68,.10)}.nfl-badge.final{color:#64748b;background:rgba(100,116,139,.10)}
 .nfl-logo-pair{margin-left:auto;display:flex;align-items:center;gap:3px;flex:0 0 auto}.nfl-logo-pair img{width:24px;height:24px;object-fit:contain;display:block}.nfl-logo-fallback{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:900;background:#f1f5f9;color:#475569;border:1px solid #cbd5e1}
@@ -33,6 +34,7 @@ function renderNfl(){
  const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);
  const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);
  function eventTime(ev){const t=Date.parse(ev.date||'');return Number.isFinite(t)?t:0;}
+ function ageRailClass(raw){const t=Date.parse(raw||'');if(!Number.isFinite(t))return '';const age=Math.max(0,(Date.now()-t)/86400000);if(age<=2)return 'rail-blue';if(age<=4)return 'rail-green';if(age<=7)return 'rail-orange';if(age<=10)return 'rail-purple';return 'rail-red';}
  function eventRank(ev){const state=ev.status?.type?.state;return state==='in'?0:state==='pre'?1:2;}
  function keepCompletedGame(ev,now=Date.now()){
   if(ev.status?.type?.state!=='post')return true;
@@ -68,7 +70,7 @@ function renderNfl(){
     const awayName=esc(a?.team?.displayName||a?.team?.shortDisplayName||a?.team?.name||'Away'),homeName=esc(h?.team?.displayName||h?.team?.shortDisplayName||h?.team?.name||'Home');
     const awayScore=esc(a?.score??(state==='pre'?'0':'-')),homeScore=esc(h?.score??(state==='pre'?'0':'-'));
     const tv=broadcasts.length?esc(broadcasts.join(' · ')):'',watchHtml=watch?.href?` <a href="${esc(watch.href)}" target="_blank" rel="noopener noreferrer">Watch</a>`:'';
-    const card=document.createElement('article');card.className='news-item nfl-game-card';card.style.setProperty('--nfl-home-accent',pickTeamAccent(h?.team));
+    const card=document.createElement('article');card.className='news-item nfl-game-card';card.style.setProperty('--nfl-home-accent',pickTeamAccent(h?.team));const gameAgeClass=ageRailClass(ev.date);if(gameAgeClass)card.classList.add(gameAgeClass);card.dataset.railMeaning='age';
     const isNext=index===nextIndex;if(isNext)card.classList.add('nfl-next');
     const badge=state==='in'?'<span class="nfl-badge live">LIVE</span>':isNext?'<span class="nfl-badge">NEXT</span>':state==='post'?'<span class="nfl-badge final">FINAL</span>':'<span></span>';
     const logos=`<span class="nfl-logo-pair">${logoMarkup(a?.team,awayName)}${logoMarkup(h?.team,homeName)}</span>`;
@@ -81,7 +83,7 @@ function renderNfl(){
  }
  load();if(nflRefreshTimer)clearInterval(nflRefreshTimer);nflRefreshTimer=setInterval(()=>{if(active==='nfl')load();},30000);
  const allNfl=allItems.filter(x=>(x.querySelector('category')?.textContent?.trim()||'')==='nfl');
- if(allNfl.length){const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='20px';nh.innerHTML=`<h2>NFL News</h2><span class="count">${allNfl.length} stories</span>`;root.appendChild(nh);const nb=document.createElement('div');nb.className='section-body';allNfl.slice(0,10).forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar);});root.appendChild(nb);}
+ if(allNfl.length){const nh=document.createElement('div');nh.className='section-header';nh.style.marginTop='20px';nh.innerHTML=`<h2>NFL News</h2><span class="count">${allNfl.length} stories</span>`;root.appendChild(nh);const nb=document.createElement('div');nb.className='section-body';allNfl.slice(0,10).forEach((item,i)=>{const ar=document.createElement('article');ar.className='news-item';const title=item.querySelector('title')?.textContent||'Untitled',link=item.querySelector('link')?.textContent||'#',desc=item.querySelector('description')?.textContent||'',source=item.querySelector('source')?.textContent||'',date=item.querySelector('pubDate')?.textContent||'';const newsAgeClass=ageRailClass(date);if(newsAgeClass)ar.classList.add(newsAgeClass);ar.dataset.railMeaning='age';ar.innerHTML=`<h3><a href="${esc(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(title)}</a></h3>${desc?`<p class="description">${esc(desc)}</p>`:''}<div class="meta"><span>${esc(formatDate(date))}</span>${source?`<span class="source">${esc(source)}</span>`:''}</div>`;nb.appendChild(ar);});root.appendChild(nb);}
 }
 window.renderNfl=renderNfl;
 function restoreNflAfterBrowserReload(attempt=0){if(typeof active==='undefined'||active!=='nfl')return;const itemsReady=typeof allItems!=='undefined'&&Array.isArray(allItems)&&allItems.length>0;if(!itemsReady){if(attempt<40)setTimeout(()=>restoreNflAfterBrowserReload(attempt+1),250);return;}const root=document.getElementById('news-feed');if(root?.querySelector('.nfl-game-card'))return;if(typeof window.render==='function')window.render(allItems);else renderNfl();}
@@ -90,4 +92,4 @@ if(document.readyState==='complete')scheduleSavedNflRestore();else window.addEve
 </script>'''
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 p.write_text(s,encoding='utf-8')
-print('Added automatic local kickoff times and predictable NFL final-game rotation.')
+print('Added automatic local kickoff times, predictable NFL final-game rotation, and age-based card rails.')

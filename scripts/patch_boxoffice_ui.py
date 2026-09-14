@@ -13,6 +13,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     return m ? m[1] : '';
   }
   function safeUrl(u){try{const x=new URL(u,location.href);return /^https?:$/.test(x.protocol)?x.href:'#';}catch(e){return '#';}}
+  function ageRailClass(raw){const t=Date.parse(raw||'');if(!Number.isFinite(t))return '';const age=Math.max(0,(Date.now()-t)/86400000);if(age<=2)return 'rail-blue';if(age<=4)return 'rail-green';if(age<=7)return 'rail-orange';if(age<=10)return 'rail-purple';return 'rail-red';}
   function renderLocalBoxOffice(data){
     const root=document.getElementById('news-feed');
     const state=localState();
@@ -31,7 +32,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
       const localTitle=document.createElement('div');localTitle.className='boxoffice-section-title';localTitle.textContent=`📍 ${stateName} Box Office & Theater News`;
       body.appendChild(localTitle);
       loc.news.forEach((n,i)=>{
-        const ar=document.createElement('article');ar.className='news-item';ar.dataset.category='boxoffice';
+        const ar=document.createElement('article');ar.className='news-item';ar.dataset.category='boxoffice';const newsAgeClass=ageRailClass(n.pubDate);if(newsAgeClass)ar.classList.add(newsAgeClass);ar.dataset.railMeaning='age';
         ar.innerHTML=`<h3><a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(n.title||'Untitled')}</a></h3>${n.description?`<p class="description">${esc(n.description)}</p>`:''}<div class="meta">${n.source?`<span class="source">${esc(n.source)}</span>`:''}${n.pubDate?`<span>${esc(formatDate(n.pubDate))}</span>`:''}</div>`;
         body.appendChild(ar);
       });
@@ -39,7 +40,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const nationalTitle=document.createElement('div');nationalTitle.className='boxoffice-section-title';nationalTitle.textContent='🎥 Movies & Releases';body.appendChild(nationalTitle);
     if(!movies.length){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');}
     movies.forEach(movie=>{
-      const card=document.createElement('article');card.className='news-item movie-card';card.dataset.category='boxoffice';
+      const card=document.createElement('article');card.className='news-item movie-card';card.dataset.category='boxoffice';const movieAgeClass=ageRailClass(movie.releaseDate);if(movieAgeClass)card.classList.add(movieAgeClass);card.dataset.railMeaning='age';
       const status=movie.status||'Upcoming';
       const localTheaters=movie.theaters||[];
       const showtimeHtml=localTheaters.length?`<div class="movie-showtimes"><strong>Local showtimes</strong>${localTheaters.map(t=>`<small>${esc(t.name||'Theater')}: ${esc((t.showtimes||[]).join(', '))}</small>`).join('')}</div>`:'';
@@ -67,4 +68,4 @@ if '</body>' in s:
 else:
     s += '\n' + SCRIPT + '\n'
 P.write_text(s, encoding='utf-8')
-print('Installed location-aware Box Office renderer with direct category markers.')
+print('Installed location-aware Box Office renderer with age-based card rails and direct category markers.')
