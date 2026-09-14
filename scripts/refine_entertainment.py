@@ -14,6 +14,8 @@ from __future__ import annotations
 
 import hashlib
 import re
+import urllib.parse
+import urllib.request
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
@@ -29,32 +31,39 @@ FINAL_SOURCE_CAP = 6
 FRESH_HOURS = 48
 LOOKBACK_HOURS = 96
 
+# Keep discovery queries broad. Relevance, event clustering, source diversity, and
+# ranking happen after collection; over-specific Google queries were starving major
+# stories that did not contain every requested keyword.
 BROAD_QUERIES = (
-    "entertainment breaking news celebrity Hollywood television film music awards",
-    "celebrity breaking news controversy backlash arrest court divorce relationship",
-    "actor singer celebrity ad backlash controversy entertainment",
-    "television streaming Emmy awards TV shows Hollywood entertainment",
-    "movies film festival premiere casting Hollywood entertainment news",
-    "music artists singers albums tours concerts awards entertainment news",
-    "celebrity family marriage divorce baby relationship court entertainment news",
+    "entertainment news",
+    "celebrity news",
+    "Hollywood news",
+    "television entertainment",
+    "movie entertainment",
+    "music entertainment",
+    "celebrity controversy",
+    "celebrity backlash",
+    "celebrity arrest court",
+    "celebrity divorce relationship",
+    "entertainment awards",
 )
 SOURCE_QUERIES = (
-    ("The Hollywood Reporter", "site:hollywoodreporter.com entertainment celebrity television film music awards backlash controversy"),
-    ("Variety", "site:variety.com entertainment celebrity television film music awards controversy"),
-    ("Deadline", "site:deadline.com entertainment Hollywood television film celebrity"),
-    ("Billboard", "site:billboard.com entertainment music artist singer awards tour"),
-    ("People", "site:people.com entertainment celebrity actor singer family relationship divorce"),
-    ("E! News", "site:eonline.com entertainment celebrity actor singer television relationship"),
-    ("Rolling Stone", "site:rollingstone.com entertainment music celebrity television film"),
-    ("Entertainment Weekly", "site:ew.com entertainment television film celebrity music controversy"),
-    ("BBC", "site:bbc.com entertainment culture television film music celebrity awards"),
-    ("NBC News", "site:nbcnews.com entertainment celebrity television film music backlash"),
-    ("USA Today", "site:usatoday.com entertainment celebrity movies television music arrest divorce"),
-    ("CBS News", "site:cbsnews.com entertainment celebrity television film music awards"),
-    ("ABC News", "site:abcnews.go.com entertainment celebrity television film music"),
-    ("The Guardian", "site:theguardian.com culture entertainment film television music celebrity"),
-    ("Yahoo News", "site:yahoo.com entertainment celebrity television film music"),
-    ("InStyle", "site:instyle.com celebrity entertainment television film family"),
+    ("The Hollywood Reporter", "site:hollywoodreporter.com entertainment celebrity"),
+    ("Variety", "site:variety.com entertainment celebrity"),
+    ("Deadline", "site:deadline.com entertainment Hollywood"),
+    ("Billboard", "site:billboard.com entertainment music"),
+    ("People", "site:people.com celebrity entertainment"),
+    ("E! News", "site:eonline.com celebrity entertainment"),
+    ("Rolling Stone", "site:rollingstone.com entertainment celebrity"),
+    ("Entertainment Weekly", "site:ew.com entertainment celebrity"),
+    ("BBC", "site:bbc.com entertainment celebrity"),
+    ("NBC News", "site:nbcnews.com entertainment celebrity"),
+    ("USA Today", "site:usatoday.com entertainment celebrity"),
+    ("CBS News", "site:cbsnews.com entertainment celebrity"),
+    ("ABC News", "site:abcnews.go.com entertainment celebrity"),
+    ("The Guardian", "site:theguardian.com culture entertainment"),
+    ("Yahoo News", "site:yahoo.com entertainment celebrity"),
+    ("InStyle", "site:instyle.com celebrity entertainment"),
 )
 
 ENTERTAINMENT_SIGNALS = (
@@ -77,7 +86,7 @@ LOW_VALUE_TERMS = (
     "best movies", "best shows", "what to watch", "ranked list", "full list", "complete list",
     "review:", "trailer breakdown", "fan theory", "quiz", "shopping guide", "best dressed",
     "seen and heard at every", "photo gallery", "photos:", "all the looks", "every look",
-    "most shocking moments", "things you missed",
+    "most shocking moments", "things you missed", "film + reviews",
 )
 LISTICLE_RE = re.compile(r"\b\d{1,2}\s+(?:stars|moments|things|looks|outfits|ways|times|facts|photos)\b", re.I)
 
@@ -121,7 +130,10 @@ ENTITY_NOISE = {
 
 
 def source_key(source: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "", (source or "").lower())
+    key = re.sub(r"[^a-z0-9]+", "", (source or "").lower())
+    if key.startswith("the") and key[3:] in SOURCE_QUALITY:
+        return key[3:]
+    return key
 
 
 def parse_date(value: str) -> datetime:
@@ -199,9 +211,6 @@ def relevant(item: dict) -> bool:
 
 
 def same_event(a: dict, b: dict) -> bool:
-    # A major awards ceremony is one news event. Different outlets' watch guides,
-    # previews, party roundups, predictions and general ceremony coverage belong as
-    # supporting links under one lead rather than occupying several top cards.
     af, bf = award_family(a), award_family(b)
     if af and af == bf:
         return True
@@ -300,8 +309,6 @@ def rank_events(candidates: list[dict], limit: int = TARGET, now: datetime | Non
 
     event_rows = []
     for cluster in cluster_candidates(list(unique.values())):
-        # The extended 96-hour window is only an event-lead backfill. Every published
-        # event must still have at least one fresh item inside the normal 48-hour window.
         if not any(age_hours(x, now) <= FRESH_HOURS for x in cluster):
             continue
         sources = {source_key(x.get("source", "")) for x in cluster if x.get("source")}
@@ -342,28 +349,36 @@ def rank_events(candidates: list[dict], limit: int = TARGET, now: datetime | Non
     return selected
 
 
+def fetch_lookback(query: str) -> ET.Element:
+    q = urllib.parse.quote(f"{query} when:4d")
+    url = f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 NewsBrief/2.0"})
+    with urllib.request.urlopen(req, timeout=20) as response:
+        return ET.fromstring(response.read())
+
+
 def fetch_candidates() -> list[dict]:
     extra = {"instyle", "yahoo entertainment", "yahoo news"}
     core.TRUSTED_SOURCE_TOKENS = tuple(sorted(set(core.TRUSTED_SOURCE_TOKENS) | extra))
     out = []
 
-    # The normal site stays 48 hours. Only this supplemental Entertainment discovery
-    # temporarily looks back 96 hours so an older authoritative lead can join a fresh
-    # multi-source event. Use the pre-V4 parser to avoid the provisional 4/source cap.
+    # Unlike core.fetch(), this stage genuinely requests when:4d from Google News.
+    # The normal app remains 48h; rank_events only permits an older lead when the same
+    # event has fresh <=48h follow-up coverage.
     original_age = core.MAX_AGE_HOURS
     core.MAX_AGE_HOURS = LOOKBACK_HOURS
     try:
         parser = getattr(v4, "_original_parse_items", core.parse_items)
         for query in BROAD_QUERIES:
             try:
-                batch = parser(core.fetch(query), "entertainment")
+                batch = parser(fetch_lookback(query), "entertainment")
                 out.extend(batch)
-                print(f"entertainment broad/{query[:36]}: {len(batch)} accepted")
+                print(f"entertainment broad/{query}: {len(batch)} accepted")
             except Exception as exc:
                 print(f"Entertainment broad query failed: {query}: {exc}")
         for source, query in SOURCE_QUERIES:
             try:
-                batch = parser(core.fetch(query), "entertainment", source_override=source)
+                batch = parser(fetch_lookback(query), "entertainment", source_override=source)
                 out.extend(batch)
                 print(f"entertainment source/{source}: {len(batch)} accepted")
             except Exception as exc:
