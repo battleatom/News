@@ -59,9 +59,11 @@
     const header=document.querySelector('body>header, header');
     const toolbar=document.querySelector('.toolbar');
     const status=document.getElementById('pull-status');
+    const markets=document.querySelector('.markets');
     root.style.setProperty('--v51-header-h',(header?.offsetHeight||0)+'px');
     root.style.setProperty('--v51-toolbar-h',(toolbar?.offsetHeight||0)+'px');
     root.style.setProperty('--v51-status-h',(status?.offsetHeight||0)+'px');
+    root.style.setProperty('--v51-markets-h',(markets?.offsetHeight||0)+'px');
   }
 
   function scrollActiveTab(behavior='auto'){
@@ -84,7 +86,7 @@
       tabs.addEventListener('click',()=>requestAnimationFrame(()=>scrollActiveTab('smooth')),true);
     }
     const ro=new ResizeObserver(()=>syncStickyMetrics());
-    [document.querySelector('body>header, header'),document.querySelector('.toolbar'),document.getElementById('pull-status'),tabs].filter(Boolean).forEach(el=>ro.observe(el));
+    [document.querySelector('body>header, header'),document.querySelector('.toolbar'),document.getElementById('pull-status'),document.querySelector('.markets'),tabs].filter(Boolean).forEach(el=>ro.observe(el));
     window.addEventListener('resize',()=>{syncStickyMetrics();scrollActiveTab('auto')},{passive:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
