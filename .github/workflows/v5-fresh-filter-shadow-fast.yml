@@ -1,0 +1,23 @@
+name: V5 Fresh Filter Shadow Fast
+
+on:
+  push:
+    branches: [v5-tab-filter-rebuild]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shadow-test-fast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check
+        run: python -m py_compile scripts/v5_tab_filters.py scripts/v5_tab_dedupe.py scripts/v5_global_filter.py tests/v5_filter_shadow_test.py
+      - name: Shadow compare against V5 feed
+        run: python tests/v5_filter_shadow_test.py
+      - name: Detailed report
+        if: always()
+        run: test ! -f v5-filter-shadow-report.json || cat v5-filter-shadow-report.json
