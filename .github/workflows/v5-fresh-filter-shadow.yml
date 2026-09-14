@@ -1,0 +1,27 @@
+name: V5 Fresh Filter Shadow
+
+on:
+  push:
+    branches: [v5-tab-filter-rebuild]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  shadow-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check fresh filter stack
+        run: python -m py_compile scripts/v5_tab_filters.py scripts/v5_tab_dedupe.py scripts/v5_global_filter.py tests/v5_filter_shadow_test.py
+      - name: Compare fresh filters against current V5 feed
+        run: python tests/v5_filter_shadow_test.py
+      - name: Print detailed shadow report
+        if: always()
+        run: |
+          if [ -f v5-filter-shadow-report.json ]; then
+            cat v5-filter-shadow-report.json
+          fi
