@@ -36,6 +36,7 @@ assert not military_headline_anchor(fake("The inside story of 9/11, told by an a
 assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'US Senate story lost Federal ownership'
 assert direct_federal_story(fake("House Speaker says Congress will vote next week",'us')), 'House/Speaker federal headline contract failed'
 assert best_tab(fake('California Supreme Court hears state bail challenge','us'))[0] != 'federal', 'state supreme court falsely became Federal'
+assert not direct_federal_story(fake('California Supreme Court hears state bail challenge','us')), 'state supreme court falsely triggered contextual Federal routing'
 assert best_tab(fake('Farmington City Council approves water project','local'))[0]=='local', 'Farmington story lost Local ownership'
 assert best_tab(fake('Albuquerque officials announce statewide New Mexico initiative','nm'))[0]=='nm', 'New Mexico story lost NM ownership'
 assert best_tab(fake('Virginia Tech opens football season against rival','us'))[0] != 'technology', 'Virginia Tech false-positive Technology match'
