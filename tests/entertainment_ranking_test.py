@@ -21,7 +21,8 @@ def item(i,title,source='Variety',minutes=30,description='Entertainment coverage
     }
 
 # Multi-source current event should beat a routine single-source story and collapse to one lead.
-# A 72-hour THR lead can still participate when fresh NBC/USA Today follow-up keeps the event current.
+# A 72-hour THR lead can still participate because V5.1 treats <=72h as fresh; NBC/USA Today
+# follow-up also keeps this event current and source-diverse.
 sydney=[
     item(1,'Sydney Sweeney faces backlash over controversial sports ad','The Hollywood Reporter',72*60),
     item(2,"Female athletes hit back at Sydney Sweeney's controversial sports ad",'NBC News',16*60),
@@ -35,9 +36,14 @@ assert len([x for x in ranked if 'Sydney Sweeney' in x['title']])==1
 related_titles=' '.join(x.get('title','') for x in ranked[0].get('_relatedArticles',[]))
 assert 'Sydney Sweeney' in related_titles, ranked[0]
 
-# A 3-day-old item without fresh corroborating/follow-up coverage must not be published.
-stale=item(9,'Actor Stale Example announces surprise project','Variety',72*60)
+# A story inside the 7-day lookback but outside the 72-hour freshness window must not publish
+# by itself. It needs fresh same-event coverage to qualify as an older lead.
+stale=item(9,'Actor Stale Example announces surprise project','Variety',73*60)
 assert not r.rank_events([stale],limit=3,now=now)
+
+# A story beyond the V5.1 168-hour lookback is always excluded.
+too_old=item(15,'Actor Very Old Example announces archival project','Variety',169*60)
+assert not r.rank_events([too_old],limit=3,now=now)
 
 # Generic coverage of one awards ceremony collapses into one event lead + supporting coverage.
 emmys=[
@@ -69,4 +75,4 @@ assert r.importance(divorce)[1] in {'MAJOR','PEOPLE'}
 adult=item(8,'Adult film star announces OnlyFans project','Example Source',10)
 assert not r.relevant(adult)
 
-print('Entertainment ranking regression passed: fresh multi-source events can carry older supporting coverage, stale singles are blocked, award megastories collapse, listicles/landing pages are rejected, and adult content is rejected.')
+print('Entertainment ranking regression passed: V5.1 72h freshness and 168h lookback are enforced, fresh multi-source events can carry older supporting coverage, award megastories collapse, listicles/landing pages are rejected, and adult content is rejected.')
