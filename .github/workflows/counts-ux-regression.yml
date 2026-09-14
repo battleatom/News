@@ -1,0 +1,62 @@
+name: Counts and UX Regression
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/verify_feed_v4.py'
+      - 'scripts/refine_tech_gaming.py'
+      - 'assets/card-feedback.js'
+      - 'assets/v3-ui.js'
+      - 'styles/v5-visual.css'
+      - '.github/workflows/counts-ux-regression.yml'
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax checks
+        run: |
+          python -m py_compile scripts/verify_feed_v4.py scripts/refine_tech_gaming.py scripts/v5_global_filter.py
+          node --check assets/card-feedback.js
+          node --check assets/v3-ui.js
+      - name: Verify UX contracts
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          fb=Path('assets/card-feedback.js').read_text(encoding='utf-8')
+          ui=Path('assets/v3-ui.js').read_text(encoding='utf-8')
+          css=Path('styles/v5-visual.css').read_text(encoding='utf-8')
+          vf=Path('scripts/verify_feed_v4.py').read_text(encoding='utf-8')
+          required_fb=["tabFor(card)==='boxoffice'","activeTab()==='boxoffice'","key==='boxoffice'"]
+          required_ui=['decorateImportanceRail(card)',"'rail-blue'","'rail-green'","'rail-orange'","'rail-purple'","'rail-red'","if(card.classList.contains('underreported-item')"]
+          required_css=['.rail-blue','.rail-green','.rail-orange','.rail-purple','.rail-red','.news-item.underreported-item.age-blue','.news-item.underreported-item.age-red']
+          required_vf=['"technology", "gaming", "us"','final V5 authoritative filter still owns the last routing decision']
+          missing=[x for x in required_fb if x not in fb]+[x for x in required_ui if x not in ui]+[x for x in required_css if x not in css]+[x for x in required_vf if x not in vf]
+          if missing: raise SystemExit('Missing UX/count contract markers: '+repr(missing))
+          print('UX and specialist-pool contracts verified.')
+          PY
+      - name: Production-order count test
+        run: |
+          python scripts/refine_tech_gaming.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/v5_global_filter.py --apply --report /tmp/counts-v5.json
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          from collections import Counter
+          items=ET.parse('News').getroot().findall('.//item')
+          counts=Counter((i.findtext('category') or '').strip() for i in items)
+          print('Final targeted counts:', {k:counts[k] for k in ('technology','gaming','us')})
+          floors={'technology':15,'gaming':15,'us':12}
+          bad={k:(counts[k],v) for k,v in floors.items() if counts[k]<v}
+          if bad: raise SystemExit('Targeted counts still too low: '+repr(bad))
+          banned=('casino','gambling','sportsbook','lottery','tabletop','board game','miniatures','warhammer','trading card','hobby store')
+          contaminated=[]
+          for i in items:
+            if (i.findtext('category') or '').strip()!='gaming': continue
+            text=' '.join([(i.findtext('title') or ''),(i.findtext('description') or '')]).lower()
+            if any(x in text for x in banned): contaminated.append(i.findtext('title') or '')
+          if contaminated: raise SystemExit('Gaming contamination: '+repr(contaminated[:10]))
+          print('Count floors and Gaming contamination guard passed.')
+          PY
