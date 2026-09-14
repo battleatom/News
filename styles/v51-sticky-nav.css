@@ -1,8 +1,11 @@
-:root{--v51-header-h:0px;--v51-toolbar-h:0px;--v51-status-h:0px}
-body>header,body header{position:sticky!important;top:0!important;z-index:420!important}
-html body .toolbar{position:sticky!important;top:var(--v51-header-h)!important;z-index:419!important}
-html body #pull-status{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h))!important;z-index:418!important}
-html body .tabs{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h) + var(--v51-status-h))!important;z-index:417!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:none}
+:root{--v51-header-h:0px;--v51-toolbar-h:0px;--v51-status-h:0px;--v51-markets-h:0px}
+html body .container{overflow:visible!important}
+body>header,body header{position:sticky!important;top:0!important;z-index:420!important;transform:translateZ(0)}
+html body .toolbar{position:sticky!important;top:var(--v51-header-h)!important;z-index:419!important;transform:translateZ(0)}
+html body #pull-status{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h))!important;z-index:418!important;transform:translateZ(0)}
+html body .markets{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h) + var(--v51-status-h))!important;z-index:417!important;background:var(--ui-card,#fff)!important;transform:translateZ(0)}
+html body .tabs{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h) + var(--v51-status-h) + var(--v51-markets-h))!important;z-index:416!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:none;transform:translateZ(0)}
 html body .tabs::-webkit-scrollbar{display:none}
 html body .tabs .tab{flex:0 0 auto!important;scroll-snap-align:center;white-space:nowrap}
+@media(prefers-color-scheme:dark){html body .markets{background:var(--ui-card,#111720)!important}}
 @media(max-width:760px){html body .tabs{padding-inline:10px!important}.tabs .tab:first-child{margin-left:0}.tabs .tab:last-child{margin-right:10px}}
