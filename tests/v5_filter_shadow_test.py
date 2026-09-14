@@ -5,19 +5,27 @@ import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from v5_global_filter import apply_pipeline
-from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,legislation_id
+from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,legislation_id,best_tab
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
 
-def fake(title,category='legislation',link=''):
-    i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=title;return i
+def fake(title,category='legislation',link='',description=None):
+    i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=description or title;return i
 # Safety fixtures: similar official bills and templated stories must not collapse.
 a=fake('H.R. 6509 — 119th Congress: SAFE Drugs Act of 2025','legislation','https://example.gov/bill/6509')
 b=fake('H.R. 9183 — 119th Congress: Artificial Intelligence Environmental Impacts Act of 2026','legislation','https://example.gov/bill/9183')
 assert legislation_id(a)!=legislation_id(b) and not same_event(a,b), 'distinct bill IDs collapsed'
+assert best_tab(b)[0]=='legislation', 'structured bill lost canonical legislation ownership'
 c=fake('Jane Doe Obituary (1930 - 2026)','us','https://paper.test/jane')
 d=fake('John Roe Obituary (1940 - 2026)','us','https://paper.test/john')
 assert not same_event(c,d), 'templated obituaries collapsed'
+# Routing regressions observed in live V5.
+assert best_tab(fake('Ukraine hit by Russian missile strike as military operation expands','nfl'))[0]=='military', 'war story did not prefer Military over World/NFL'
+assert best_tab(fake('Trump administration proposes new immigration rule','presidential'))[0]=='presidential', 'Trump administration story lost Presidential ownership'
+assert best_tab(fake('US Senate negotiators advance federal funding package','federal'))[0]=='federal', 'Senate story lost Federal ownership'
+assert best_tab(fake('Farmington City Council approves water project','local'))[0]=='local', 'Farmington story lost Local ownership'
+assert best_tab(fake('Albuquerque officials announce statewide New Mexico initiative','nm'))[0]=='nm', 'New Mexico story lost NM ownership'
+assert best_tab(fake('Virginia Tech opens football season against rival','us'))[0] != 'technology', 'Virginia Tech false-positive Technology match'
 with tempfile.TemporaryDirectory() as td:
     out=Path(td)/'News.filtered';report=apply_pipeline(str(src),str(out),str(ROOT/'v5-filter-shadow-report.json'))
     items=ET.parse(out).getroot().findall('.//item');failures=[]
