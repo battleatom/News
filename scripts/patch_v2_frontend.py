@@ -33,6 +33,16 @@ for path,kind in ASSETS.items():
 s=re.sub(r'\s*<a class="skip-link-v2"[^>]*>.*?</a>','',s,flags=re.S)
 s=re.sub(r'\s*<style id="desktop-layout-fix-v1">.*?</style>','',s,flags=re.S)
 
+# Unwrap an earlier structural shell before rebuilding it. The explicit comments
+# make this deterministic even though the shell contains nested div elements.
+s=re.sub(
+    r'<!--V51_STICKY_SHELL_START--><div class="v51-sticky-shell">(.*?)</div><!--V51_STICKY_SHELL_END-->',
+    r'\1',
+    s,
+    count=1,
+    flags=re.S,
+)
+
 if '<meta name="description"' not in s:
     s=s.replace('<title>Underreported — High-Impact News</title>','<title>Underreported — High-Impact News</title>\n<meta name="description" content="Underreported brings high-impact, local and undercovered stories together with source context and live updates.">',1)
 
@@ -63,6 +73,23 @@ attrs=re.sub(r'\s+data-underreported-version=("[^"]*"|\'[^\']*\')','',attrs,flag
 replacement='<body'+attrs+' data-underreported-version="5"><a class="skip-link-v2" href="#news-feed">Skip to stories</a>'
 s=s[:body_match.start()]+replacement+s[body_match.end():]
 
+# The masthead, toolbar, visible refresh status, market strip and tabs are all
+# emitted before #news-feed. Wrap them once at build time so browsers treat the
+# whole control area as one sticky element. No runtime DOM moving is required.
+container_token='<div class="container">'
+container_at=s.find(container_token)
+if container_at < 0:raise SystemExit('Missing .container')
+shell_start=container_at+len(container_token)
+feed_match=re.search(r'<(?:main|div|section)\b[^>]*\bid=["\']news-feed["\'][^>]*>',s[shell_start:],flags=re.I)
+if not feed_match:raise SystemExit('Missing #news-feed')
+feed_at=shell_start+feed_match.start()
+pre_feed=s[shell_start:feed_at]
+required=('UNDERREPORTED','class="toolbar"','id="pull-stats-ui"','class="markets"','id="tabs"')
+missing=[token for token in required if token not in pre_feed]
+if missing:raise SystemExit('Sticky shell missing expected controls: '+', '.join(missing))
+shell='<!--V51_STICKY_SHELL_START--><div class="v51-sticky-shell">'+pre_feed+'</div><!--V51_STICKY_SHELL_END-->'
+s=s[:shell_start]+shell+s[feed_at:]
+
 app='''
 <script src="assets/app-v2.js?v={app}"></script>
 <script src="assets/v51-category-sticky-ux.js?v={category_sticky}" data-v51-category-sticky="true"></script>
@@ -78,4 +105,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 frontend with content-hashed assets, deterministic card categories, sticky navigation, feedback controls, UX hotfix, and explicit ownership.')
+print('Applied Underreported V5 frontend with content-hashed assets, structural sticky shell, deterministic card categories, feedback controls, UX hotfix, and explicit ownership.')
