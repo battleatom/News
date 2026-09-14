@@ -910,7 +910,8 @@ function scheduleSavedNflRestore(){setTimeout(()=>restoreNflAfterBrowserReload(0
 if(document.readyState==='complete')scheduleSavedNflRestore();else window.addEventListener('load',scheduleSavedNflRestore,{once:true});
 </script>
 <script id="load-more-v1">
-const STORIES_PER_PAGE = 10;
+const STORIES_PER_PAGE = 50;
+const RESERVE_PAGE = 25;
 const TOP_DISCOVERY_MARKER = 'top-story-cycle-v1';
 const TOP_SEEN_STORAGE = 'news-top-seen-v1';
 window.loadCounts = window.loadCounts || {};
@@ -1011,7 +1012,7 @@ function appendLoadMoreControl(data){
     const anchor=cards[cards.length-1]||null;
     const anchorHref=anchor?.querySelector('h3 a[href]')?.href||'';
     const anchorTop=anchor?.getBoundingClientRect().top??null;
-    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+STORIES_PER_PAGE,data.available.length);
+    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+RESERVE_PAGE,data.available.length);
     loadCounts[active]=next;
     canonicalRender(allItems);
 
@@ -1181,7 +1182,8 @@ syncDiscoveryButton();
 </script>
 
 <script src="assets/app-v2.js?v=f7a2c4977986"></script>
-<script src="assets/card-feedback.js?v=c2364c95cf98" data-card-feedback-script="true"></script>
+<script src="assets/card-feedback.js?v=25527c33f4da" data-card-feedback-script="true"></script>
+<script src="assets/ux-hotfix-v51.js?v=6f250247c497" data-ux-hotfix-v51="true"></script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
