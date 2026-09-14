@@ -24,6 +24,17 @@ SCRIPT = r'''<script id="auto-refresh-timer-v1">
     return window.nextScheduledPull;
   }
 
+  async function refreshApproximateLocation(){
+    try{
+      const svc=window.UnderreportedLocation;
+      if(!svc?.get)return;
+      const loc=svc.cached?.()||null;
+      if(!loc || loc.source==='ip')await svc.get({force:true});
+    }catch(err){
+      console.warn('Automatic approximate-location refresh failed:',err);
+    }
+  }
+
   async function run(){
     try{
       const due=ensureNextPull();
@@ -31,6 +42,7 @@ SCRIPT = r'''<script id="auto-refresh-timer-v1">
       if(Date.now()<due){schedule(due-Date.now());return;}
       if(typeof window.refreshNewsFromPage!=='function'){schedule(RETRY);return;}
       const before=Number(window.lastSuccessfulPull)||0;
+      await refreshApproximateLocation();
       try{await window.refreshNewsFromPage(false);}catch(err){console.error('Automatic news refresh failed:',err);}
       const last=Number(window.lastSuccessfulPull)||0;
       window.nextScheduledPull=last>before?last+INTERVAL:Date.now()+RETRY;
@@ -64,8 +76,8 @@ for marker in ('auto-refresh-timer-v1','auto-refresh-timer-v2'):
 
 # Remove legacy competing schedulers before installing the single timeout-based scheduler.
 s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*loadNews\(false\)\s*,\s*15\s*\*\s*60\s*\*\s*1000\s*\);','',s)
-s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)\s*\{\s*refreshNewsFromPage\(false\);\s*\}\s*\}\s*,\s*(?:1000|5000)\s*\);','',s)
+s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)\s*\{\s*refreshNewsFromPage\(false\);\s*\}\s*\*,\s*(?:1000|5000)\s*\);','',s)
 if '</body>' not in s: raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
-print('Installed one timeout-based 15-minute automatic refresh scheduler and removed competing polling schedulers.')
+print('Installed one timeout-based 15-minute automatic refresh scheduler with approximate-location refresh and removed competing polling schedulers.')
