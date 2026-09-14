@@ -1,0 +1,36 @@
+name: Build Card Feedback Preview
+
+on:
+  push:
+    branches: [feature/card-feedback-controls]
+    paths:
+      - '.preview-trigger-card-feedback'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout preview branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/card-feedback-controls
+          fetch-depth: 0
+      - name: Build complete V5 site
+        run: python scripts/build_site.py
+      - name: Verify feedback assets in built page
+        run: python tests/card_feedback_ux_test.py
+      - name: Commit built preview page
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html
+          if git diff --cached --quiet; then
+            echo 'Preview index already current.'
+            exit 0
+          fi
+          git commit -m 'Build card feedback live preview'
+          git push origin HEAD:feature/card-feedback-controls
