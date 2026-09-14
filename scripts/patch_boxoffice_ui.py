@@ -20,7 +20,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const stateName=loc?.stateName||stateNames[state]||'your area';
     const movies=data.movies||[];
     root.innerHTML='';
-    const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent','#9a3412');
+    const sec=document.createElement('section');sec.className='section';sec.dataset.category='boxoffice';sec.style.setProperty('--accent','#9a3412');
     const head=document.createElement('div');head.className='section-header';
     head.innerHTML=`<h2>🎬 Box Office — ${esc(stateName)}</h2><span class="count">Movies, releases & local box-office news</span>`;sec.appendChild(head);
     const intro=document.createElement('div');intro.className='boxoffice-intro';
@@ -31,7 +31,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
       const localTitle=document.createElement('div');localTitle.className='boxoffice-section-title';localTitle.textContent=`📍 ${stateName} Box Office & Theater News`;
       body.appendChild(localTitle);
       loc.news.forEach((n,i)=>{
-        const ar=document.createElement('article');ar.className='news-item';
+        const ar=document.createElement('article');ar.className='news-item';ar.dataset.category='boxoffice';
         ar.innerHTML=`<h3><a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(n.title||'Untitled')}</a></h3>${n.description?`<p class="description">${esc(n.description)}</p>`:''}<div class="meta">${n.source?`<span class="source">${esc(n.source)}</span>`:''}${n.pubDate?`<span>${esc(formatDate(n.pubDate))}</span>`:''}</div>`;
         body.appendChild(ar);
       });
@@ -39,7 +39,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const nationalTitle=document.createElement('div');nationalTitle.className='boxoffice-section-title';nationalTitle.textContent='🎥 Movies & Releases';body.appendChild(nationalTitle);
     if(!movies.length){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');}
     movies.forEach(movie=>{
-      const card=document.createElement('article');card.className='news-item movie-card';
+      const card=document.createElement('article');card.className='news-item movie-card';card.dataset.category='boxoffice';
       const status=movie.status||'Upcoming';
       const localTheaters=movie.theaters||[];
       const showtimeHtml=localTheaters.length?`<div class="movie-showtimes"><strong>Local showtimes</strong>${localTheaters.map(t=>`<small>${esc(t.name||'Theater')}: ${esc((t.showtimes||[]).join(', '))}</small>`).join('')}</div>`:'';
@@ -58,9 +58,13 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
 </script>'''
 
 s = P.read_text(encoding='utf-8')
-if MARKER in s:
-    print('Box Office location patch already present; nothing to change.')
+while MARKER in s:
+    a=s.find(MARKER);b=s.find('</script>',a)
+    if b<0: raise SystemExit('Malformed Box Office patch block')
+    s=s[:a]+s[b+9:]
+if '</body>' in s:
+    s=s.replace('</body>',SCRIPT+'\n</body>',1)
 else:
     s += '\n' + SCRIPT + '\n'
-    P.write_text(s, encoding='utf-8')
-    print('Added location-aware Box Office renderer.')
+P.write_text(s, encoding='utf-8')
+print('Installed location-aware Box Office renderer with direct category markers.')

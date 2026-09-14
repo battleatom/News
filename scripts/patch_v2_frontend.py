@@ -10,9 +10,11 @@ ASSETS={
     'styles/v2.css':'style',
     'styles/v5-visual.css':'style',
     'styles/card-feedback.css':'style',
+    'styles/v51-sticky-nav.css':'style',
     'assets/location-v2.js':'script',
     'assets/v3-ui.js':'script',
     'assets/app-v2.js':'script',
+    'assets/v51-category-sticky-ux.js':'script',
     'assets/card-feedback.js':'script',
     'assets/ux-hotfix-v51.js':'script',
 }
@@ -40,12 +42,14 @@ head='''
 <link rel="stylesheet" href="styles/v2.css?v={v2}">
 <link rel="stylesheet" href="styles/v5-visual.css?v={visual}" data-v5-visual="true">
 <link rel="stylesheet" href="styles/card-feedback.css?v={feedback_style}" data-card-feedback-style="true">
+<link rel="stylesheet" href="styles/v51-sticky-nav.css?v={sticky}" data-v51-sticky-nav="true">
 <script src="assets/location-v2.js?v={location}" defer></script>
 <script src="assets/v3-ui.js?v={presentation}" defer></script>
 '''.format(
     v2=version('styles/v2.css'),
     visual=version('styles/v5-visual.css'),
     feedback_style=version('styles/card-feedback.css'),
+    sticky=version('styles/v51-sticky-nav.css'),
     location=version('assets/location-v2.js'),
     presentation=version('assets/v3-ui.js'),
 )
@@ -61,10 +65,12 @@ s=s[:body_match.start()]+replacement+s[body_match.end():]
 
 app='''
 <script src="assets/app-v2.js?v={app}"></script>
+<script src="assets/v51-category-sticky-ux.js?v={category_sticky}" data-v51-category-sticky="true"></script>
 <script src="assets/card-feedback.js?v={feedback}" data-card-feedback-script="true"></script>
 <script src="assets/ux-hotfix-v51.js?v={ux_hotfix}" data-ux-hotfix-v51="true"></script>
 '''.format(
     app=version('assets/app-v2.js'),
+    category_sticky=version('assets/v51-category-sticky-ux.js'),
     feedback=version('assets/card-feedback.js'),
     ux_hotfix=version('assets/ux-hotfix-v51.js'),
 )
@@ -72,4 +78,4 @@ if '</body>' not in s:raise SystemExit('Missing </body>')
 s=s.replace('</body>',app+'</body>',1)
 
 P.write_text(s,encoding='utf-8')
-print('Applied Underreported V5 frontend with content-hashed assets, feedback controls, UX hotfix, and explicit ownership.')
+print('Applied Underreported V5 frontend with content-hashed assets, deterministic card categories, sticky navigation, feedback controls, UX hotfix, and explicit ownership.')
