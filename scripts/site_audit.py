@@ -103,8 +103,10 @@ def main():
         errors.append('automatic refresh scheduler is not unique')
     if '15*60*1000' not in html and '15 * 60 * 1000' not in html:
         warnings.append('could not confirm 15-minute refresh interval textually')
-    if 'STORIES_PER_PAGE = 10' not in html:
-        errors.append('10-story pagination constant is missing')
+    if 'STORIES_PER_PAGE = 50' not in html:
+        errors.append('V5.1 50-story active pagination constant is missing')
+    if 'RESERVE_PAGE = 25' not in html:
+        errors.append('V5.1 25-story reserve pagination constant is missing')
 
     tree = ET.parse(NEWS)
     items = tree.getroot().findall('./channel/item')
@@ -179,7 +181,7 @@ def main():
         for e in errors:
             print('ERROR:', e)
         raise SystemExit(f'Site audit failed with {len(errors)} error(s).')
-    print('Site audit passed: canonical routing, V3 content briefs, NEW timing, tabs, infinite scroll, official legislation, and within-category dedupe verified.')
+    print('Site audit passed: canonical routing, V3 content briefs, NEW timing, tabs, V5.1 50+25 pagination, official legislation, and within-category dedupe verified.')
 
 
 if __name__ == '__main__':
