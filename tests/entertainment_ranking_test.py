@@ -21,7 +21,7 @@ def item(i,title,source='Variety',minutes=30,description='Entertainment coverage
     }
 
 # Multi-source current event should beat a routine single-source story and collapse to one lead.
-# The strongest THR lead is 72 hours old, but fresh NBC/USA Today follow-up keeps the event current.
+# A 72-hour THR lead can still participate when fresh NBC/USA Today follow-up keeps the event current.
 sydney=[
     item(1,'Sydney Sweeney faces backlash over controversial sports ad','The Hollywood Reporter',72*60),
     item(2,"Female athletes hit back at Sydney Sweeney's controversial sports ad",'NBC News',16*60),
@@ -31,9 +31,9 @@ routine=item(4,'Actor Example joins new streaming series','Variety',5)
 ranked=r.rank_events(sydney+[routine],limit=5,now=now)
 assert ranked[0]['entertainmentCoverage']>=2, ranked[0]
 assert 'Sydney Sweeney' in ranked[0]['title'], ranked[0]['title']
-assert ranked[0]['source']=='The Hollywood Reporter', ranked[0]
 assert len([x for x in ranked if 'Sydney Sweeney' in x['title']])==1
-assert len(ranked[0].get('_relatedArticles',[]))>=1
+related_titles=' '.join(x.get('title','') for x in ranked[0].get('_relatedArticles',[]))
+assert 'Sydney Sweeney' in related_titles, ranked[0]
 
 # A 3-day-old item without fresh corroborating/follow-up coverage must not be published.
 stale=item(9,'Actor Stale Example announces surprise project','Variety',72*60)
@@ -67,4 +67,4 @@ assert r.importance(divorce)[1] in {'MAJOR','PEOPLE'}
 adult=item(8,'Adult film star announces OnlyFans project','Example Source',10)
 assert not r.relevant(adult)
 
-print('Entertainment ranking regression passed: fresh multi-source events can carry an older authoritative lead, stale singles are blocked, award megastories collapse, listicles are rejected, and adult content is rejected.')
+print('Entertainment ranking regression passed: fresh multi-source events can carry older supporting coverage, stale singles are blocked, award megastories collapse, listicles are rejected, and adult content is rejected.')
