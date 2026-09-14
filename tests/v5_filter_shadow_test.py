@@ -4,13 +4,17 @@ from __future__ import annotations
 import json,sys,tempfile,xml.etree.ElementTree as ET
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
-from v5_global_filter import apply_pipeline
+from v5_global_filter import apply_pipeline,PROTECTED_CATEGORIES
 from v5_tab_filters import field,qualifies,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,legislation_id,best_tab,tab_filter_decision
 from v5_tab_dedupe import cross_tab_clusters,same_event
 src=ROOT/'News'
 
 def fake(title,category='legislation',link='',description=None):
     i=ET.Element('item');ET.SubElement(i,'title').text=title;ET.SubElement(i,'category').text=category;ET.SubElement(i,'link').text=link;ET.SubElement(i,'description').text=description or title;return i
+
+def protected_signature(path):
+    items=ET.parse(path).getroot().findall('.//item')
+    return [(field(i,'category').lower(),field(i,'title'),field(i,'link')) for i in items if field(i,'category').lower() in PROTECTED_CATEGORIES]
 
 # Duplicate safety: similar official bills and templated stories must not collapse.
 a=fake('H.R. 6509 — 119th Congress: SAFE Drugs Act of 2025','legislation','https://example.gov/bill/6509')
@@ -34,26 +38,29 @@ assert best_tab(fake('Georgia football prepares for Western Kentucky','region'))
 assert best_tab(fake('49ers announce injury update before Seahawks game','nfl'))[0]=='nfl', '49ers alias failed NFL ownership'
 assert best_tab(fake('Chicago mayor discusses keeping the Bears in the city','us'))[0] != 'nfl', 'ambiguous Bears mention falsely became NFL'
 assert best_tab(fake('Casino operator expands sportsbook and slot floor','gaming'))[0] != 'gaming', 'gambling falsely became Gaming'
-assert best_tab(fake('Movie opens to $85 million domestic box office weekend','boxoffice'))[0]=='boxoffice', 'box office story lost Box Office ownership'
 
 # Underreported is an editorial overlay, not a mutually exclusive subject owner.
 u=fake('Watchdog investigation finds rural hospital Medicaid failures','underreported')
 assert tab_filter_decision(u)['action']=='keep', 'qualified Underreported investigation was stripped from editorial overlay'
 
+before_protected=protected_signature(src)
 with tempfile.TemporaryDirectory() as td:
     out=Path(td)/'News.filtered';report=apply_pipeline(str(src),str(out),str(ROOT/'v5-filter-shadow-report.json'))
+    after_protected=protected_signature(out)
+    if before_protected!=after_protected:
+        raise SystemExit('Protected Box Office/Entertainment content changed')
     items=ET.parse(out).getroot().findall('.//item');failures=[]
     for item in items:
         cat=field(item,'category').lower()
-        if cat in RANKING_SURFACES:continue
+        if cat in RANKING_SURFACES or cat in PROTECTED_CATEGORIES:continue
         if cat in EDITORIAL_OVERLAYS:
             if not qualifies(item,cat):failures.append((cat,field(item,'title')))
             continue
         if cat not in RULES or not qualifies(item,cat):failures.append((cat,field(item,'title')))
     residual=cross_tab_clusters(items);base=report['baselineCounts'];final=report['finalCounts']
-    protected=RANKING_SURFACES|EDITORIAL_OVERLAYS
+    protected=set(RANKING_SURFACES)|set(EDITORIAL_OVERLAYS)|set(PROTECTED_CATEGORIES)
     emptied=[c for c,n in base.items() if c not in protected and n>3 and final.get(c,0)==0]
-    summary={'inputArticles':report['inputArticles'],'outputArticles':report['outputArticles'],'rerouted':report['rerouted'],'rejectedNoQualifiedTab':report['rejectedNoQualifiedTab'],'withinTabDuplicatesRemoved':report['withinTabDuplicatesRemoved'],'crossTabDuplicateEventsBeforeOwnership':report['crossTabDuplicateEvents'],'crossTabDuplicatesRemoved':report['crossTabDuplicatesRemoved'],'residualCrossTabDuplicateClusters':len(residual),'postFilterQualificationFailures':len(failures),'emptiedCategories':emptied,'baselineCounts':base,'finalCounts':final}
+    summary={'inputArticles':report['inputArticles'],'outputArticles':report['outputArticles'],'rerouted':report['rerouted'],'rejectedNoQualifiedTab':report['rejectedNoQualifiedTab'],'withinTabDuplicatesRemoved':report['withinTabDuplicatesRemoved'],'crossTabDuplicateEventsBeforeOwnership':report['crossTabDuplicateEvents'],'crossTabDuplicatesRemoved':report['crossTabDuplicatesRemoved'],'residualCrossTabDuplicateClusters':len(residual),'postFilterQualificationFailures':len(failures),'protectedBoxOfficeItems':len(before_protected),'boxOfficePreservedExactly':before_protected==after_protected,'emptiedCategories':emptied,'baselineCounts':base,'finalCounts':final}
     print('=== V5 FRESH AUTHORITATIVE FILTER REPORT ===');print(json.dumps(summary,indent=2))
     print('\nTOP REROUTES:');[print(x) for x in report['routeChanges'][:30]]
     print('\nTOP REJECTIONS:');[print(x) for x in report['rejectedExamples'][:30]]
