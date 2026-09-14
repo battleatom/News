@@ -1,6 +1,6 @@
 /* Underreported card feedback controls — D / NR / NW.
    Final UI layer: intentionally high-specificity so later card decorators do not hide it. */
-html body .news-item.has-card-feedback{position:relative!important}
+html body .news-item.has-card-feedback{position:relative!important;--feedback-safe-gutter:112px}
 html body .card-feedback-controls{
   position:absolute!important;
   top:8px!important;
@@ -44,9 +44,19 @@ html body .card-feedback-btn:focus-visible{
 html body .card-feedback-btn[data-feedback="D"]:hover{border-color:rgba(245,158,11,.55)!important;color:#92400e!important}
 html body .card-feedback-btn[data-feedback="NR"]:hover{border-color:rgba(59,130,246,.55)!important;color:#1d4ed8!important}
 html body .card-feedback-btn[data-feedback="NW"]:hover{border-color:rgba(239,68,68,.55)!important;color:#b91c1c!important}
+
+/* Reserve the button lane without moving the controls themselves. */
 html body .news-item.has-card-feedback>.bookmark-row,
 html body .news-item.has-card-feedback>.news-item-v2-head,
-html body .news-item.has-card-feedback>h3{padding-right:112px!important}
+html body .news-item.has-card-feedback>h3,
+html body .news-item.has-card-feedback>.x-issue-meta,
+html body .news-item.has-card-feedback>.underreported-topline,
+html body .news-item.has-card-feedback>.leg-top,
+html body .news-item.has-card-feedback>.ent-card-flags{
+  box-sizing:border-box!important;
+  padding-right:var(--feedback-safe-gutter)!important;
+}
+
 html body .news-item.feedback-removing{opacity:0!important;transform:translateY(-3px) scale(.995)!important;transition:opacity .14s ease,transform .14s ease!important}
 
 @media(prefers-color-scheme:dark){
@@ -64,11 +74,9 @@ html body .news-item.feedback-removing{opacity:0!important;transform:translateY(
 }
 
 @media(max-width:700px){
+  html body .news-item.has-card-feedback{--feedback-safe-gutter:106px}
   html body .card-feedback-controls{top:7px!important;right:7px!important;gap:3px!important}
   html body .card-feedback-btn{min-width:29px!important;height:23px!important;padding:0 5px!important;font-size:8.5px!important}
-  html body .news-item.has-card-feedback>.bookmark-row,
-  html body .news-item.has-card-feedback>.news-item-v2-head,
-  html body .news-item.has-card-feedback>h3{padding-right:106px!important}
 }
 
 @media(prefers-reduced-motion:reduce){html body .news-item.feedback-removing{transition:none!important}}
