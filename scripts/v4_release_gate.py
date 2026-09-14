@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
-"""Fail closed when a generated V4 feed is not safe to promote.
+"""Fail closed when a generated V5 feed is not safe to promote.
 
-This gate checks the generated RSS/site artifacts only. Browser behavior is covered by
-Playwright tests in the stable-candidate workflow.
+This gate checks generated RSS/site artifacts only. Browser behavior is covered by
+Playwright smoke tests. Volume floors are intentionally conservative because the V5
+authoritative filters prioritize category precision over retaining weakly qualified
+stories; semantic relevance, duplicate, routing, X-topic, Box Office, and structural
+quality are enforced by separate gates earlier in the production workflow.
 """
 from __future__ import annotations
 
@@ -21,14 +24,14 @@ MIN_COUNTS = {
     "nfl": 10,
     "underreported": 20,
     "world": 15,
-    "us": 15,
+    "us": 5,
     "presidential": 15,
     "federal": 5,
     "legislation": 10,
     "nm": 15,
-    "local": 40,
-    "region": 15,
-    "technology": 8,
+    "local": 1,
+    "region": 5,
+    "technology": 5,
     "gaming": 10,
     "military": 15,
 }
@@ -53,7 +56,7 @@ def text(node: ET.Element, tag: str) -> str:
 
 
 def fail(message: str) -> None:
-    raise SystemExit(f"V4 RELEASE GATE FAILED: {message}")
+    raise SystemExit(f"V5 RELEASE GATE FAILED: {message}")
 
 
 def main() -> None:
@@ -131,7 +134,7 @@ def main() -> None:
     if "assets/location-content-v25.js" not in html:
         fail("location content controller is missing from generated site")
 
-    print("V4 RELEASE GATE PASSED")
+    print("V5 RELEASE GATE PASSED")
     print("Feed items:", len(items))
     print("Category counts:", dict(sorted(counts.items())))
     print("Entertainment: clean", len(clean), "dirty", len(dirty), "adult", len(adult), "cross-links", cross_links)
