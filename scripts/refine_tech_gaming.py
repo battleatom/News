@@ -10,9 +10,9 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 NEWS = Path('News')
-MAX_TECH = 25
-MAX_GAMING = 20
-MAX_US = 20
+MAX_TECH = 90
+MAX_GAMING = 90
+MAX_US = 90
 
 TECH_QUERIES = [
     'technology AI cybersecurity chips devices',
@@ -355,7 +355,7 @@ def rank_technology(existing):
         elif decision in ('federal','world'):
             set_text(item, 'category', decision)
             rerouted.append(item)
-    for item in fetch_google(TECH_QUERIES, 'technology', 2):
+    for item in fetch_google(TECH_QUERIES, 'technology', 7):
         if tech_relevance_decision(item) == 'technology':
             pool.append(item)
     ranked = []
@@ -371,7 +371,7 @@ def rank_technology(existing):
 
 def rank_gaming(existing):
     pool = [item for item in existing if gaming_allowed(item)]
-    for item in fetch_google(GAMING_QUERIES, 'gaming', 2):
+    for item in fetch_google(GAMING_QUERIES, 'gaming', 7):
         if gaming_allowed(item):
             pool.append(item)
     ranked = []
@@ -395,7 +395,7 @@ def refine_us(existing):
         elif route in ('world','federal','presidential'):
             set_text(item, 'category', route)
             rerouted.append(item)
-    supplemental = fetch_google(US_QUERIES, 'us', 2)
+    supplemental = fetch_google(US_QUERIES, 'us', 7)
     for item in supplemental:
         if source_is(text(item,'source'), US_TRUSTED) and us_route(item) == 'us':
             kept.append(item)

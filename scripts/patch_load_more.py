@@ -51,7 +51,8 @@ text = text.replace(
 # Later feature modules register category-specific renderers instead of wrapping
 # canonicalRender again, keeping the render chain deterministic.
 script = r'''<script id="load-more-v1">
-const STORIES_PER_PAGE = 10;
+const STORIES_PER_PAGE = 50;
+const RESERVE_PAGE = 25;
 const TOP_DISCOVERY_MARKER = 'top-story-cycle-v1';
 const TOP_SEEN_STORAGE = 'news-top-seen-v1';
 window.loadCounts = window.loadCounts || {};
@@ -152,7 +153,7 @@ function appendLoadMoreControl(data){
     const anchor=cards[cards.length-1]||null;
     const anchorHref=anchor?.querySelector('h3 a[href]')?.href||'';
     const anchorTop=anchor?.getBoundingClientRect().top??null;
-    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+STORIES_PER_PAGE,data.available.length);
+    const next=Math.min((loadCounts[active]||STORIES_PER_PAGE)+RESERVE_PAGE,data.available.length);
     loadCounts[active]=next;
     canonicalRender(allItems);
 

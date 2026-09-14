@@ -25,11 +25,11 @@ import update_news_v4 as v4
 
 core = v4.core
 NEWS = Path("News")
-TARGET = 30
-MIN_HEALTHY = 15
+TARGET = 90
+MIN_HEALTHY = 50
 FINAL_SOURCE_CAP = 6
-FRESH_HOURS = 48
-LOOKBACK_HOURS = 96
+FRESH_HOURS = 72
+LOOKBACK_HOURS = 168
 
 # Keep discovery queries broad. Relevance, event clustering, source diversity, and
 # ranking happen after collection; over-specific Google queries were starving major

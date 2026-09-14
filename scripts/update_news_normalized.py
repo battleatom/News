@@ -37,13 +37,13 @@ MARKET_BY_QUERY = {m["query"]: m for m in NEWS_MARKETS}
 MARKET_BY_ID = {m["id"]: m for m in NEWS_MARKETS}
 
 POOL_POLICY = {
-    "world": (30, 35, 40), "us": (30, 35, 40), "presidential": (30, 35, 40),
-    "federal": (30, 35, 40), "nm": (30, 35, 40), "region": (30, 35, 80),
-    "nfl": (30, 35, 40), "technology": (30, 35, 40), "gaming": (30, 35, 40),
-    "military": (30, 35, 40), "local": (8, LOCAL_STORIES_PER_MARKET * len(NEWS_MARKETS), LOCAL_STORIES_PER_MARKET * len(NEWS_MARKETS)),
+    "world": (75, 100, 120), "us": (75, 100, 120), "presidential": (75, 100, 120),
+    "federal": (75, 100, 120), "nm": (50, 75, 90), "region": (30, 35, 80),
+    "nfl": (75, 100, 120), "technology": (75, 100, 120), "gaming": (75, 100, 120),
+    "military": (50, 75, 90), "local": (8, LOCAL_STORIES_PER_MARKET * len(NEWS_MARKETS), LOCAL_STORIES_PER_MARKET * len(NEWS_MARKETS)),
 }
 
-core.MAX_AGE_HOURS = 96
+core.MAX_AGE_HOURS = 168
 core.CATEGORY_POOL_MINIMUMS = {cat: policy[0] for cat, policy in POOL_POLICY.items()}
 core.LOCAL_QUERIES = [m["query"] for m in NEWS_MARKETS]
 core.QUERIES["local"] = list(core.LOCAL_QUERIES)
@@ -59,7 +59,7 @@ core.TRUSTED_SOURCE_TOKENS = tuple(sorted(set(core.TRUSTED_SOURCE_TOKENS) | mark
 
 
 def expanded_feed_url(query):
-    q = urllib.parse.quote(f"{query} when:4d")
+    q = urllib.parse.quote(f"{query} when:7d")
     return f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 

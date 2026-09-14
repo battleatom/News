@@ -15,7 +15,7 @@ from update_news import UNDERREPORTED_DISCOVERY_QUERIES, source_is_trusted, unde
 
 NEWS = Path("News")
 MAX_DAYS = 14
-MAX_ITEMS = 30
+MAX_ITEMS = 75
 MAX_RELATED_DISPLAY = 4
 
 PUBLIC_INTEREST_TERMS = {

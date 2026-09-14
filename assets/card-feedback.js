@@ -89,8 +89,8 @@
     if(!key||activeTab()!==key||key==='boxoffice')return;
     const counts=window.loadCounts;
     if(counts&&typeof counts==='object'){
-      const current=Number(counts[key]||10);
-      counts[key]=Number.isFinite(current)?current+1:11;
+      const current=Number(counts[key]||50);
+      counts[key]=Number.isFinite(current)?current+1:51;
     }
     const renderFn=window.canonicalRender||window.render;
     const items=window.allItems||(typeof allItems!=='undefined'?allItems:null);
