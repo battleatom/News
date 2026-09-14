@@ -1,0 +1,44 @@
+name: NFL Box Office Age Rail Test
+
+on:
+  push:
+    branches: [v5.1-age-hierarchy-nfl-boxoffice]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate patch scripts
+        run: |
+          python -m py_compile scripts/patch_nfl_live.py scripts/patch_boxoffice_ui.py
+      - name: Verify age rail contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          nfl=Path('scripts/patch_nfl_live.py').read_text(encoding='utf-8')
+          box=Path('scripts/patch_boxoffice_ui.py').read_text(encoding='utf-8')
+          ui=Path('assets/v3-ui.js').read_text(encoding='utf-8')
+          for token in ["rail-blue","rail-green","rail-orange","rail-purple","rail-red","ageRailClass(ev.date)","ageRailClass(date)"]:
+              assert token in nfl, f'missing NFL token: {token}'
+          for token in ["ageRailClass(n.pubDate)","ageRailClass(movie.releaseDate)","railMeaning='age'"]:
+              assert token in box, f'missing Box Office token: {token}'
+          assert "legendExcluded=new Set(['nfl','boxoffice'])" in ui
+          print('NFL / Box Office age rail contract passed.')
+          PY
+      - name: Run patches against generated page
+        run: |
+          python scripts/patch_nfl_live.py
+          python scripts/patch_boxoffice_ui.py
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('index.html').read_text(encoding='utf-8')
+          assert '.nfl-game-card.rail-blue' in s
+          assert 'ageRailClass(ev.date)' in s
+          assert 'ageRailClass(movie.releaseDate)' in s
+          print('Generated page age rail checks passed.')
+          PY
