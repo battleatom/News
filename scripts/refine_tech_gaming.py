@@ -10,46 +10,47 @@ from email.utils import parsedate_to_datetime
 from pathlib import Path
 
 NEWS = Path('News')
-MAX_TECH = 30
-MAX_GAMING = 30
+MAX_TECH = 25
+MAX_GAMING = 20
+MAX_US = 20
 
-TECH_DISCOVERY_QUERIES = [
-    'upcoming technology launch new device next generation roadmap',
-    'AI model launch robotics quantum computing battery technology',
-    'Apple Google Microsoft Nvidia AMD Intel upcoming product launch',
-    'AR glasses VR headset smartphone laptop chip launch roadmap',
+TECH_QUERIES = [
+    'technology AI cybersecurity chips devices',
+    'Apple Google Microsoft Nvidia AMD Intel technology',
+    'OpenAI Anthropic AI model technology',
+    'cybersecurity data breach ransomware technology',
+    'semiconductor chip Nvidia AMD Intel technology',
+    'smartphone laptop Android iPhone technology',
+    'robotics quantum computing technology',
+]
+GAMING_QUERIES = [
+    'video games PlayStation Xbox Nintendo',
+    'PC gaming Steam game release',
+    'video game studio developer publisher release',
+    'Nintendo Switch PlayStation Xbox gaming news',
+    'esports video game gaming',
+]
+US_QUERIES = [
+    'United States national news Americans nationwide',
+    'US public health education national news',
+    'US consumers housing jobs national news',
+    'US immigration civil rights national news',
 ]
 
 TECH_TRUSTED = (
-    'the verge','ars technica','techcrunch','wired','tom\'s hardware','engadget','pcmag','pc magazine',
-    'mit technology review','reuters','associated press','ap news','cnbc','axios','forbes','cnet','zdnet',
+    'reuters','associated press','ap news','the verge','ars technica','techcrunch','wired',
+    "tom's hardware",'engadget','pcmag','mit technology review','cnbc','axios','cnet','zdnet',
+    'bbc','the guardian','new york times','washington post','bloomberg','fortune',
+)
+GAMING_TRUSTED = (
+    'ign','gamespot','pc gamer','polygon','nintendo life','eurogamer','kotaku','game informer',
+    'the verge','ars technica','windows central','tom\'s hardware','cnet','engadget',
+)
+US_TRUSTED = (
+    'reuters','associated press','ap news','nbc news','cbs news','abc news','cnn','usa today',
+    'new york times','washington post','time','bbc','npr','axios','the hill','politico',
 )
 
-GAMING_ANCHORS = (
-    'game','gaming','playstation','xbox','nintendo','switch','steam','pc gaming','console','game pass',
-    'developer','studio','publisher','release date','dlc','esports','controller','handheld','gpu',
-    'kojima','metal gear','physint','zelda','mario','pokemon','unreal engine','epic games',
-)
-
-GAMING_JUNK = (
-    'giveaway','sweepstakes','contest','win a ','free giveaway','deal of the day','coupon','promo code',
-    'best deals','sale ends','buy now','gift guide',
-)
-
-TECH_UPCOMING = (
-    'upcoming','launch','launches','launching','release date','coming soon','coming in','next-gen',
-    'next generation','roadmap','unveil','unveiled','prototype','preview','beta','debut','announced',
-    'announces','new chip','new gpu','new cpu','new device','new model','2027',
-)
-
-TECH_EMERGING = (
-    'quantum','robotics','robot','humanoid','solid-state battery','battery breakthrough','fusion',
-    'ar glasses','smart glasses','mixed reality','spatial computing','neural','photonic','ai model',
-    'gpu','cpu','semiconductor','chip','wearable','foldable','satellite internet',
-)
-
-# Existing Technology items must now prove that the story itself is about
-# technology. A technology-focused publisher is not enough by itself.
 TECH_STRONG_TERMS = (
     'artificial intelligence',' ai ','ai model','machine learning','large language model','llm',
     'openai','anthropic','cybersecurity','cyberattack','ransomware','data breach','malware',
@@ -68,25 +69,58 @@ TECH_CONTEXT_TERMS = (
     'privacy','security','data','cloud','compute','computer','phone','smartphone','laptop','display',
     'network','internet','digital','algorithm','developer','coding','programming','startup technology',
 )
+TECH_IMPACT = (
+    'launch','unveil','release','announces','announced','breakthrough','breach','hack','ransomware',
+    'outage','ban','lawsuit','acquisition','merger','layoffs','regulation','security flaw','vulnerability',
+    'new model','new chip','new gpu','new cpu','antitrust','recall','shutdown','partnership with openai',
+)
+TECH_LOW_VALUE = (
+    'review:',' review','how to','best ','deal','sale','guide','roundup','explainer','hands-on',
+    'incubator','chamber of commerce','opens office','local startup','joins accelerator','hiring event',
+)
+TECH_MARKET_ONLY = (
+    'shares rise','shares fall','shares plunge','stocks rise','stocks fall','stocks plunge','market rally',
+    'market selloff','wall street','dow ','s&p 500','nasdaq',
+)
 TECH_SUPPORT_TITLE_PATTERNS = (
     re.compile(r'^\s*(?:question|help|support|troubleshooting)\s*[-–—:]', re.I),
     re.compile(r'^\s*(?:how do i|how to fix|why does my|is my)\b', re.I),
 )
-FEDERAL_ROUTE_TERMS = (
-    'fcc','federal communications commission','ftc','federal trade commission','department of homeland security',
-    'dhs','congress','senate','house committee','supreme court','federal court','white house',
-    'justice department','department of justice','doj','federal government','federal regulator',
+
+GAMING_STRONG = (
+    'video game','playstation','xbox','nintendo','switch 2','nintendo switch','steam','pc gaming',
+    'game pass','esports','dlc','game studio','game developer','game publisher','epic games',
+    'unreal engine','release date','gameplay','gaming console','handheld gaming','ps5','xbox series',
 )
-WORLD_ROUTE_TERMS = (
-    'climate change','global warming','global temperature','hottest month','temperature record',
-    'el niño','el nino','un climate','climate summit','world meteorological organization',
+GAMING_HARDWARE = (
+    'gaming monitor','gaming laptop','gaming pc','graphics card','gpu','controller','gaming handheld',
+    'rog ally','steam deck','gaming headset','gaming keyboard','gaming mouse',
 )
-ENTERTAINMENT_ONLY_TERMS = (
-    'broadway','hbo max','hbo','netflix','disney+','tv show','television show','movie','film',
-    'actor','actress','concert','album','streaming premiere','season premiere','theater','theatre',
+GAMING_EXCLUDE = (
+    'casino','gambling','sportsbook','lottery','slot machine','tabletop','board game','miniatures',
+    'warhammer','card packs','trading card','hobby store','gaming store','poker','bingo',
+)
+GAMING_LOW_VALUE = (
+    'review:',' review','deal','sale','best ','guide','roundup','coupon','promo code','giveaway','sweepstakes',
 )
 
-LOW_VALUE = ('opinion','review','how to','best ','deal','sale','guide','roundup','explainer')
+FEDERAL_ROUTE = re.compile(
+    r'\b(congress|u\.?s\.? senate|senate committee|house committee|house of representatives|house speaker|'
+    r'supreme court|scotus|department of justice|doj|fbi|dhs|irs|epa|treasury department|federal court|'
+    r'federal judge|federal agency|census bureau|federal government)\b', re.I)
+PRESIDENTIAL_ROUTE = re.compile(
+    r'\b(president trump|donald trump|trump administration|white house|executive order|oval office|press secretary)\b', re.I)
+FOREIGN_US_FALSE_POSITIVE = re.compile(
+    r'\b(london|paris|berlin|rome|madrid|moscow|kyiv|beijing|tokyo|seoul|gaza|israel|ukraine|russia|china|'
+    r'united kingdom|britain|france|germany|italy|spain|india|pakistan|australia|canada|mexico)\b', re.I)
+US_NATIONAL = re.compile(
+    r'\b(united states|u\.?s\.?|americans?|nationwide|across the country|across the u\.?s\.?|multiple states|'
+    r'census|immigration|civil rights|abortion|gun laws?|health insurance|housing market|consumers?|'
+    r'social security|medicare|medicaid|public schools?|nationally|states? face|states? are)\b', re.I)
+LOW_VALUE_GENERAL = re.compile(
+    r'\b(horoscope|winning numbers|lottery results?|things to do|letter to the editor|letters to the editor|'
+    r'food service inspections?|restaurant inspections?|high school football|prep football)\b', re.I)
+
 NON_ARTICLE_PREFIXES = (
     'tag:', 'topic:', 'category:', 'author:', 'authors:', 'archive:', 'archives:', 'page:',
     'search results', 'search:', 'podcasts:', 'videos:', 'gallery:', 'galleries:'
@@ -117,19 +151,15 @@ def parse_date(value):
         return datetime.min.replace(tzinfo=timezone.utc)
 
 
+def age_hours(item):
+    dt = parse_date(text(item, 'pubDate'))
+    if dt.year < 1900:
+        return 9999
+    return max(0.0, (datetime.now(timezone.utc) - dt).total_seconds() / 3600)
+
+
 def source_family(source):
-    s = re.sub(r'[^a-z0-9]+', ' ', (source or '').lower()).strip()
-    if 'ign' in s:
-        return 'ign'
-    if 'gamespot' in s:
-        return 'gamespot'
-    if 'pc gamer' in s:
-        return 'pc gamer'
-    if 'nintendo life' in s:
-        return 'nintendo life'
-    if 'polygon' in s:
-        return 'polygon'
-    return s
+    return re.sub(r'[^a-z0-9]+', ' ', (source or '').lower()).strip()
 
 
 def canonical_title(item):
@@ -137,8 +167,6 @@ def canonical_title(item):
     source = text(item, 'source')
     if source:
         title = re.sub(rf'\s*[-–—|:]\s*{re.escape(source)}\s*$', '', title, flags=re.I)
-    title = re.sub(r'\s*[-–—|:]\s*IGN(?:\s+Nordic)?\s*$', '', title, flags=re.I)
-    title = re.sub(r'\s*[-–—|:]\s*(?:GameSpot|PC Gamer|Polygon|Nintendo Life)\s*$', '', title, flags=re.I)
     return re.sub(r'[^a-z0-9]+', ' ', title.lower()).strip()
 
 
@@ -149,8 +177,12 @@ def article_like_title(title):
         return False
     if re.match(r'^(?:tag|topic|category|author|archive|search)\s*[-–—:|]', lower):
         return False
-    words = re.findall(r'[A-Za-z0-9][A-Za-z0-9+.-]*', value)
-    return len(words) >= 4
+    return len(re.findall(r'[A-Za-z0-9][A-Za-z0-9+.-]*', value)) >= 4
+
+
+def token_set(item):
+    stop = {'the','a','an','and','or','to','of','in','on','for','with','at','by','from','is','are','was','were','new','news','says'}
+    return {w for w in canonical_title(item).split() if len(w) > 2 and w not in stop}
 
 
 def near_same(a, b):
@@ -159,12 +191,35 @@ def near_same(a, b):
         return False
     if ca == cb:
         return True
-    ta, tb = set(ca.split()), set(cb.split())
+    ta, tb = token_set(a), token_set(b)
     if ta and tb:
         smaller = min(len(ta), len(tb))
-        if smaller >= 4 and len(ta & tb) / smaller >= 0.82:
+        if smaller >= 4 and len(ta & tb) / smaller >= 0.70:
             return True
-    return min(len(ca), len(cb)) >= 35 and difflib.SequenceMatcher(None, ca, cb).ratio() >= 0.90
+    return min(len(ca), len(cb)) >= 35 and difflib.SequenceMatcher(None, ca, cb).ratio() >= 0.86
+
+
+def source_is(source, trusted):
+    s = source_family(source)
+    return any(token in s for token in trusted)
+
+
+def tech_relevance_decision(item):
+    title = text(item, 'title')
+    desc = text(item, 'description')
+    if not article_like_title(title) or any(p.search(title) for p in TECH_SUPPORT_TITLE_PATTERNS):
+        return 'drop'
+    raw = f' {title} {desc} '.lower()
+    # Specific federal/world/entertainment routing still outranks a technology publisher.
+    if re.search(r'\b(fcc|federal communications commission|ftc|federal trade commission|congress|senate|house committee|supreme court|federal court|white house|justice department|department of justice|doj|federal government|federal regulator)\b', raw):
+        return 'federal'
+    if any(term in raw for term in ('climate change','global warming','global temperature','hottest month','temperature record','el niño','el nino','un climate','climate summit','world meteorological organization')):
+        return 'world'
+    if any(term in raw for term in ('broadway','hbo max','tv show','television show','box office','season premiere')) and not any(term in raw for term in TECH_STRONG_TERMS):
+        return 'drop'
+    strong = any(term in raw for term in TECH_STRONG_TERMS)
+    company_context = any(company in raw for company in TECH_COMPANIES) and any(term in raw for term in TECH_CONTEXT_TERMS)
+    return 'technology' if strong or company_context else 'drop'
 
 
 def gaming_allowed(item):
@@ -172,167 +227,206 @@ def gaming_allowed(item):
     desc = text(item, 'description')
     if not article_like_title(title):
         return False
-    raw = f'{title} {desc}'.lower()
-    if any(term in raw for term in GAMING_JUNK):
+    raw = f' {title} {desc} '.lower()
+    if any(term in raw for term in GAMING_EXCLUDE):
         return False
-    base = canonical_title(item)
-    meaningful = [w for w in base.split() if len(w) > 2]
-    if len(meaningful) <= 2:
-        return False
-    movie_tv = any(term in raw for term in (' movie','film ',' tv ','television','box office','season premiere','actor '))
-    anchored = any(term in raw for term in GAMING_ANCHORS)
-    if movie_tv and not anchored:
-        return False
-    trusted_gaming_source = source_family(text(item, 'source')) in ('ign','gamespot','pc gamer','nintendo life','polygon')
-    return anchored or trusted_gaming_source
+    strong = any(term in raw for term in GAMING_STRONG)
+    hardware = any(term in raw for term in GAMING_HARDWARE)
+    trusted = source_is(text(item, 'source'), GAMING_TRUSTED)
+    # Generic use of the word "gaming" is not enough; require a digital-game anchor,
+    # gaming hardware anchor, or a specialist gaming publisher.
+    return strong or hardware or trusted
 
 
-def refine_gaming(items):
-    candidates = [i for i in items if gaming_allowed(i)]
-    candidates.sort(key=lambda i: parse_date(text(i, 'pubDate')), reverse=True)
-    kept = []
-    source_counts = {}
-    for item in candidates:
-        family = source_family(text(item, 'source'))
-        if source_counts.get(family, 0) >= 5:
-            continue
-        if any(near_same(item, prior) for prior in kept):
-            continue
-        kept.append(item)
-        source_counts[family] = source_counts.get(family, 0) + 1
-        if len(kept) >= MAX_GAMING:
-            break
-    return kept
-
-
-def tech_relevance_decision(item):
+def us_route(item):
     title = text(item, 'title')
     desc = text(item, 'description')
-    if not article_like_title(title):
+    raw = f'{title} {desc}'
+    if LOW_VALUE_GENERAL.search(raw):
         return 'drop'
-    if any(pattern.search(title) for pattern in TECH_SUPPORT_TITLE_PATTERNS):
-        return 'drop'
-
-    # Padding spaces makes short tokens such as " ai " safer than raw substring matching.
-    raw = f' {title} {desc} '.lower()
-    strong = any(term in raw for term in TECH_STRONG_TERMS)
-    company_context = any(company in raw for company in TECH_COMPANIES) and any(term in raw for term in TECH_CONTEXT_TERMS)
-    if strong or company_context:
-        return 'technology'
-
-    if any(term in raw for term in FEDERAL_ROUTE_TERMS):
+    if PRESIDENTIAL_ROUTE.search(title):
+        return 'presidential'
+    if FEDERAL_ROUTE.search(title):
         return 'federal'
-    if any(term in raw for term in WORLD_ROUTE_TERMS):
+    # Embassy stories abroad are World unless the headline is clearly about a domestic US action.
+    if re.search(r'\b(?:u\.?s\.?|american) embassy\b', title, re.I) and FOREIGN_US_FALSE_POSITIVE.search(raw):
         return 'world'
-    if any(term in raw for term in ENTERTAINMENT_ONLY_TERMS):
-        return 'drop'
-    return 'drop'
+    if FOREIGN_US_FALSE_POSITIVE.search(title) and not US_NATIONAL.search(title):
+        return 'world'
+    return 'us' if US_NATIONAL.search(raw) else 'drop'
 
 
-def tech_score(item):
-    raw = f"{text(item,'title')} {text(item,'description')}".lower()
-    score = 0
-    score += 55 * sum(1 for term in TECH_UPCOMING if term in raw)
-    score += 30 * sum(1 for term in TECH_EMERGING if term in raw)
-    score -= 30 * sum(1 for term in LOW_VALUE if term in raw)
-    dt = parse_date(text(item, 'pubDate'))
-    if dt.year > 1900:
-        hours = max(0, (datetime.now(timezone.utc) - dt).total_seconds() / 3600)
-        score += max(0, 48 - hours)
-    return score
-
-
-def feed_url(query):
-    q = urllib.parse.quote(f'{query} when:2d')
+def feed_url(query, days=2):
+    q = urllib.parse.quote(f'{query} when:{days}d')
     return f'https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en'
 
 
-def source_trusted(source):
-    s = (source or '').lower()
-    return any(token in s for token in TECH_TRUSTED)
-
-
-def fetch_upcoming_tech():
+def fetch_google(queries, category, days=2):
     found = []
     seen = set()
-    for query in TECH_DISCOVERY_QUERIES:
+    for query in queries:
         try:
-            req = urllib.request.Request(feed_url(query), headers={'User-Agent':'Mozilla/5.0 TechDiscovery/1.0'})
+            req = urllib.request.Request(feed_url(query, days), headers={'User-Agent':'Mozilla/5.0 UnderreportedNews/1.0'})
             with urllib.request.urlopen(req, timeout=15) as response:
                 root = ET.fromstring(response.read())
-        except Exception:
+        except Exception as exc:
+            print(f'Google News discovery skipped for {query!r}: {exc}')
             continue
-        for src_item in root.findall('.//item'):
-            title = clean(src_item.findtext('title'))
-            link = clean(src_item.findtext('link'))
-            desc = clean(src_item.findtext('description'))
-            pub = clean(src_item.findtext('pubDate'))
-            source_el = src_item.find('source')
+        for src in root.findall('.//item'):
+            title = clean(src.findtext('title'))
+            link = clean(src.findtext('link'))
+            desc = clean(src.findtext('description'))
+            pub = clean(src.findtext('pubDate'))
+            source_el = src.find('source')
             source = clean(source_el.text if source_el is not None else '')
-            if not title or not link or not source_trusted(source) or not article_like_title(title):
+            if not title or not link or not article_like_title(title):
                 continue
-            key = re.sub(r'[^a-z0-9]+',' ',title.lower()).strip()
+            key = re.sub(r'[^a-z0-9]+', ' ', title.lower()).strip()
             if key in seen:
-                continue
-            raw = f'{title} {desc}'.lower()
-            if not any(term in raw for term in TECH_UPCOMING + TECH_EMERGING):
                 continue
             seen.add(key)
             item = ET.Element('item')
-            ET.SubElement(item,'title').text = title
-            ET.SubElement(item,'link').text = link
-            ET.SubElement(item,'description').text = desc
-            ET.SubElement(item,'pubDate').text = pub
-            ET.SubElement(item,'source').text = source
-            ET.SubElement(item,'category').text = 'technology'
-            ET.SubElement(item,'region').text = ''
-            ET.SubElement(item,'whyMatters').text = 'Why it matters: This could shape upcoming devices, platforms, chips, AI systems, or the direction of consumer and enterprise technology.'
-            ET.SubElement(item,'guid', {'isPermaLink':'false'}).text = hashlib.sha1(link.encode()).hexdigest()
-            if tech_relevance_decision(item) == 'technology':
-                found.append(item)
+            ET.SubElement(item, 'title').text = title
+            ET.SubElement(item, 'link').text = link
+            ET.SubElement(item, 'description').text = desc
+            ET.SubElement(item, 'pubDate').text = pub
+            ET.SubElement(item, 'source').text = source
+            ET.SubElement(item, 'category').text = category
+            ET.SubElement(item, 'guid', {'isPermaLink':'false'}).text = hashlib.sha1(link.encode()).hexdigest()
+            found.append(item)
     return found
 
 
-def refine_technology(existing):
-    technology = []
+def cluster_items(items):
+    clusters = []
+    for item in sorted(items, key=lambda i: parse_date(text(i, 'pubDate')), reverse=True):
+        placed = False
+        for cluster in clusters:
+            if near_same(item, cluster[0]):
+                cluster.append(item)
+                placed = True
+                break
+        if not placed:
+            clusters.append([item])
+    return clusters
+
+
+def add_rank_fields(item, prefix, score, coverage):
+    set_text(item, prefix + 'Score', str(int(score)))
+    set_text(item, prefix + 'Coverage', str(int(coverage)))
+
+
+def tech_cluster_score(cluster):
+    lead = max(cluster, key=lambda i: parse_date(text(i, 'pubDate')))
+    raw = f" {text(lead,'title')} {text(lead,'description')} ".lower()
+    coverage = len({source_family(text(i,'source')) for i in cluster if text(i,'source')}) or 1
+    score = coverage * 110
+    score += max(0, 72 - age_hours(lead))
+    score += 45 * sum(1 for term in TECH_IMPACT if term in raw)
+    if source_is(text(lead,'source'), TECH_TRUSTED):
+        score += 35
+    if any(term in raw for term in TECH_LOW_VALUE):
+        score -= 110
+    if any(term in raw for term in TECH_MARKET_ONLY):
+        score -= 70
+    if re.search(r'\b(local|city|county|incubator|accelerator)\b', raw) and coverage < 2:
+        score -= 120
+    return score, coverage, lead
+
+
+def gaming_cluster_score(cluster):
+    lead = max(cluster, key=lambda i: parse_date(text(i, 'pubDate')))
+    raw = f" {text(lead,'title')} {text(lead,'description')} ".lower()
+    coverage = len({source_family(text(i,'source')) for i in cluster if text(i,'source')}) or 1
+    score = coverage * 110 + max(0, 72 - age_hours(lead))
+    score += 40 * sum(1 for term in GAMING_STRONG if term in raw)
+    if source_is(text(lead,'source'), GAMING_TRUSTED):
+        score += 35
+    if any(term in raw for term in GAMING_LOW_VALUE):
+        score -= 80
+    if any(term in raw for term in GAMING_HARDWARE) and not any(term in raw for term in ('playstation','xbox','nintendo','steam','game pass','video game')):
+        score -= 25
+    return score, coverage, lead
+
+
+def rank_technology(existing):
+    pool = []
     rerouted = []
     for item in existing:
         decision = tech_relevance_decision(item)
         if decision == 'technology':
-            technology.append(item)
+            pool.append(item)
         elif decision in ('federal','world'):
             set_text(item, 'category', decision)
             rerouted.append(item)
-
-    combined = technology + fetch_upcoming_tech()
-    unique = []
-    seen_links = set()
-    seen_titles = set()
-    for item in combined:
-        link = text(item,'link')
-        title = text(item,'title')
-        title_key = canonical_title(item)
-        if not link or link in seen_links or not title_key or title_key in seen_titles:
+    for item in fetch_google(TECH_QUERIES, 'technology', 2):
+        if tech_relevance_decision(item) == 'technology':
+            pool.append(item)
+    ranked = []
+    for cluster in cluster_items(pool):
+        score, coverage, lead = tech_cluster_score(cluster)
+        if score < 40:
             continue
-        if any(near_same(item, prior) for prior in unique):
+        add_rank_fields(lead, 'technology', score, coverage)
+        ranked.append((score, parse_date(text(lead,'pubDate')), lead))
+    ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    return [row[2] for row in ranked[:MAX_TECH]], rerouted
+
+
+def rank_gaming(existing):
+    pool = [item for item in existing if gaming_allowed(item)]
+    for item in fetch_google(GAMING_QUERIES, 'gaming', 2):
+        if gaming_allowed(item):
+            pool.append(item)
+    ranked = []
+    for cluster in cluster_items(pool):
+        score, coverage, lead = gaming_cluster_score(cluster)
+        if score < 45:
             continue
-        seen_links.add(link)
-        seen_titles.add(title_key)
-        unique.append(item)
-    unique.sort(key=lambda i: (tech_score(i), parse_date(text(i,'pubDate'))), reverse=True)
-    return unique[:MAX_TECH], rerouted
+        add_rank_fields(lead, 'gaming', score, coverage)
+        ranked.append((score, parse_date(text(lead,'pubDate')), lead))
+    ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    return [row[2] for row in ranked[:MAX_GAMING]]
 
 
-def replace_category(channel, category, replacement):
-    items = channel.findall('item')
-    first_index = next((idx for idx,item in enumerate(items) if text(item,'category') == category), len(items))
-    for item in list(items):
-        if text(item,'category') == category:
+def refine_us(existing):
+    kept = []
+    rerouted = []
+    for item in existing:
+        route = us_route(item)
+        if route == 'us':
+            kept.append(item)
+        elif route in ('world','federal','presidential'):
+            set_text(item, 'category', route)
+            rerouted.append(item)
+    supplemental = fetch_google(US_QUERIES, 'us', 2)
+    for item in supplemental:
+        if source_is(text(item,'source'), US_TRUSTED) and us_route(item) == 'us':
+            kept.append(item)
+    clusters = cluster_items(kept)
+    ranked = []
+    for cluster in clusters:
+        lead = max(cluster, key=lambda i: parse_date(text(i,'pubDate')))
+        coverage = len({source_family(text(i,'source')) for i in cluster if text(i,'source')}) or 1
+        score = coverage * 90 + max(0, 60 - age_hours(lead))
+        if source_is(text(lead,'source'), US_TRUSTED):
+            score += 25
+        add_rank_fields(lead, 'us', score, coverage)
+        ranked.append((score, parse_date(text(lead,'pubDate')), lead))
+    ranked.sort(key=lambda row: (row[0], row[1]), reverse=True)
+    return [row[2] for row in ranked[:MAX_US]], rerouted
+
+
+def replace_categories(channel, categories, replacement):
+    items = list(channel.findall('item'))
+    first = min([idx for idx,item in enumerate(items) if text(item,'category') in categories] or [len(items)])
+    for item in items:
+        if text(item,'category') in categories:
             channel.remove(item)
     current = list(channel.findall('item'))
-    insert_at = min(first_index, len(current))
+    first = min(first, len(current))
     for offset, item in enumerate(replacement):
-        channel.insert(insert_at + offset, item)
+        channel.insert(first + offset, item)
 
 
 def main():
@@ -342,19 +436,34 @@ def main():
     channel = tree.getroot().find('channel')
     if channel is None:
         raise SystemExit('RSS channel not found')
-    items = channel.findall('item')
-    gaming = [i for i in items if text(i,'category') == 'gaming']
-    tech = [i for i in items if text(i,'category') == 'technology']
-    new_gaming = refine_gaming(gaming)
-    new_tech, rerouted = refine_technology(tech)
-    replace_category(channel, 'technology', new_tech + rerouted)
-    replace_category(channel, 'gaming', new_gaming)
+    items = list(channel.findall('item'))
+    tech_existing = [i for i in items if text(i,'category') == 'technology']
+    gaming_existing = [i for i in items if text(i,'category') == 'gaming']
+    us_existing = [i for i in items if text(i,'category') == 'us']
+
+    tech, tech_routes = rank_technology(tech_existing)
+    gaming = rank_gaming(gaming_existing)
+    us, us_routes = refine_us(us_existing)
+    routed = tech_routes + us_routes
+
+    # Replace the three refined categories together, then retain rerouted records exactly once.
+    replace_categories(channel, {'technology','gaming','us'}, tech + gaming + us + routed)
     tree.write(NEWS, encoding='utf-8', xml_declaration=True)
-    routed_federal = sum(1 for item in rerouted if text(item,'category') == 'federal')
-    routed_world = sum(1 for item in rerouted if text(item,'category') == 'world')
-    removed = len(tech) - len([item for item in tech if tech_relevance_decision(item) != 'drop'])
-    print(f'Gaming quality: {len(gaming)} -> {len(new_gaming)} relevant, deduplicated stories.')
-    print(f'Technology quality: {len(tech)} existing -> {len(new_tech)} relevant stories; {routed_federal} rerouted Federal, {routed_world} rerouted World, {removed} rejected.')
+
+    counts = {}
+    for item in channel.findall('item'):
+        cat = text(item,'category')
+        counts[cat] = counts.get(cat, 0) + 1
+    print(
+        'Topic refinement:',
+        f"technology {len(tech_existing)}->{len(tech)};",
+        f"gaming {len(gaming_existing)}->{len(gaming)};",
+        f"us {len(us_existing)}->{len(us)};",
+        f"rerouted={len(routed)};",
+        'final category counts',
+        {k: counts.get(k,0) for k in ('technology','gaming','us','world','federal','presidential')},
+    )
+
 
 if __name__ == '__main__':
     main()
