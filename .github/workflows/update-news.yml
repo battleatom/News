@@ -47,6 +47,7 @@ jobs:
         run: |
           python tests/editorial_integrity_test.py
           python tests/nfl_final_guard_test.py
+          python tests/entertainment_ranking_test.py
 
       - name: Collector preflight
         run: python scripts/preflight_feed.py
@@ -84,6 +85,9 @@ jobs:
               json.dump({'status':'healthy','generatedAt':datetime.now(timezone.utc).isoformat(),'message':'Latest automated news collection completed successfully.'},f,indent=2)
               f.write('\n')
           PY
+
+      - name: Rank current Entertainment coverage
+        run: python scripts/refine_entertainment.py
 
       - name: Refine Gaming and upcoming Technology
         run: python scripts/refine_tech_gaming.py
