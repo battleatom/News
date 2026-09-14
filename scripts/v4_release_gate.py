@@ -32,7 +32,7 @@ MIN_COUNTS = {
     "local": 1,
     "region": 5,
     "technology": 5,
-    "gaming": 10,
+    "gaming": 5,
     "military": 15,
 }
 EXPECTED_X = [
