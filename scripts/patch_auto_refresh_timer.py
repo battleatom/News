@@ -76,7 +76,7 @@ for marker in ('auto-refresh-timer-v1','auto-refresh-timer-v2'):
 
 # Remove legacy competing schedulers before installing the single timeout-based scheduler.
 s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*loadNews\(false\)\s*,\s*15\s*\*\s*60\s*\*\s*1000\s*\);','',s)
-s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)\s*\{\s*refreshNewsFromPage\(false\);\s*\}\s*\*,\s*(?:1000|5000)\s*\);','',s)
+s=re.sub(r'\s*setInterval\(\(\)\s*=>\s*\{\s*if\(lastSuccessfulPull\s*&&\s*Date\.now\(\)\s*>=\s*nextScheduledPull\s*&&\s*!pullInProgress\)\s*\{\s*refreshNewsFromPage\(false\);\s*\}\s*\}\s*,\s*(?:1000|5000)\s*\);','',s)
 if '</body>' not in s: raise SystemExit('body not found')
 s=s.replace('</body>',SCRIPT+'\n</body>',1)
 P.write_text(s,encoding='utf-8')
