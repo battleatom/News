@@ -45,6 +45,22 @@ import verify_feed
 # source/category decision uses the V4 trust and non-reroute policy.
 verify_feed.EDITORIAL_SURFACES = set(verify_feed.EDITORIAL_SURFACES) | {"entertainment"}
 
+# Technology, Gaming and U.S. already run their own event clustering in the
+# specialist refinement stage. Running the generic verifier's broader event
+# clustering again was collapsing distinct specialist stories. Preserve its
+# clustering for every other category; the final V5 dedupe still runs afterward.
+_base_same_event = verify_feed.same_event
+_SPECIALIST_DEDUPE_CATEGORIES = {"technology", "gaming", "us"}
+
+def v4_same_event(a, b):
+    ca = verify_feed.category(a)
+    cb = verify_feed.category(b)
+    if ca == cb and ca in _SPECIALIST_DEDUPE_CATEGORIES:
+        return False
+    return _base_same_event(a, b)
+
+verify_feed.same_event = v4_same_event
+
 if __name__ == "__main__":
     verify_feed.main()
 
