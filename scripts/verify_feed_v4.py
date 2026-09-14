@@ -2,8 +2,9 @@
 """V4 final verification wrapper.
 
 Loads the V4 collector policy so Entertainment specialist sources are trusted, keeps
-Entertainment on its editorial surface, finalizes verified Entertainment GUIDs and
-Underreported cross-links, and applies the conservative cross-tab duplicate guard.
+specialist-refined surfaces from being second-guessed by the legacy generic classifier,
+finalizes verified Entertainment GUIDs and Underreported cross-links, and applies the
+conservative cross-tab duplicate guard.
 """
 import re
 import sys
@@ -15,9 +16,7 @@ _base_source_is_trusted = v4.core.source_is_trusted
 
 
 def v4_source_is_trusted(source):
-    """Use the production trust policy plus the adult-industry trade sources
-    intentionally collected by the authoritative Dirty Entertainment pass.
-    """
+    """Use the production trust policy plus legacy specialist-source compatibility."""
     tokens = set(re.findall(r"[a-z0-9]+", (source or "").lower()))
     if tokens & {"xbiz", "avn"}:
         return True
@@ -25,7 +24,13 @@ def v4_source_is_trusted(source):
 
 
 classifier.source_is_trusted = v4_source_is_trusted
-classifier.NON_ROUTABLE_INPUT = set(classifier.NON_ROUTABLE_INPUT) | {"entertainment"}
+# Entertainment, Technology, Gaming and U.S. are already cleaned by dedicated
+# specialist passes before verification. Keep source-trust checks and dedupe here,
+# but do not run a second generic category reroute over those curated pools. The
+# final V5 authoritative filter still owns the last routing decision.
+classifier.NON_ROUTABLE_INPUT = set(classifier.NON_ROUTABLE_INPUT) | {
+    "entertainment", "technology", "gaming", "us"
+}
 
 import verify_feed
 
