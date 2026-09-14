@@ -1,0 +1,41 @@
+name: Card Feedback UX Test
+
+on:
+  push:
+    branches: [feature/card-feedback-controls]
+    paths:
+      - 'assets/card-feedback.js'
+      - 'styles/card-feedback.css'
+      - 'scripts/patch_v2_frontend.py'
+      - 'scripts/build_site.py'
+      - 'tests/card_feedback_ux_test.py'
+      - '.github/workflows/card-feedback-ux-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+
+      - name: Validate Python syntax
+        run: python -m py_compile scripts/patch_v2_frontend.py tests/card_feedback_ux_test.py
+
+      - name: Validate feedback JavaScript syntax
+        run: node --check assets/card-feedback.js
+
+      - name: Build complete V5 site
+        run: python scripts/build_site.py
+
+      - name: Verify feedback UX and visual assets
+        run: python tests/card_feedback_ux_test.py
+
+      - name: Verify no duplicate feedback asset injection
+        run: |
+          test "$(grep -o 'styles/card-feedback.css?v=' index.html | wc -l)" -eq 1
+          test "$(grep -o 'assets/card-feedback.js?v=' index.html | wc -l)" -eq 1
+          test "$(grep -o 'styles/v5-visual.css?v=' index.html | wc -l)" -eq 1
