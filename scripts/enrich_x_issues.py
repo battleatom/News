@@ -160,9 +160,9 @@ def trend_candidates(query, trend_names):
     return candidates
 
 
-def broad_candidates(query):
+def broad_candidates(query, days=MAX_AGE_DAYS):
     try:
-        rss=fetch(query)
+        rss=fetch(query, days=days)
     except Exception:
         return []
     out=[]
@@ -196,6 +196,14 @@ def best_issue(category, query, trend_names, items, used_leads):
     # Prefer the already-collected national/global feed. Local/state/regional cards
     # are excluded here and must independently qualify through U.S.-wide trend search.
     pools=[existing_candidates(items,query),trend_candidates(query,trend_names),broad_candidates(query)]
+    # Celebrity coverage can briefly exhaust its normal three-day pool when a lead is
+    # already consumed by another fixed slot. Use a targeted seven-day search as a
+    # last resort, while preserving the same topic relevance and unique-lead gates.
+    if category == "Celebrities & Public Figures":
+        pools.extend([
+            broad_candidates("actor actress singer rapper musician celebrity athlete director artist", days=7),
+            broad_candidates("film television music celebrity interview awards", days=7),
+        ])
     def score(row):
         overlap,d,name=row
         concrete=len(words(d["title"]))
@@ -264,12 +272,11 @@ def main():
         rel=ET.SubElement(issue,"xRelated"); seen={lead["link"]}
         for r in reports:
             if r["link"] in seen: continue
-            seen.add(r["link"])
-            child=ET.SubElement(rel,"article")
-            ET.SubElement(child,"title").text=r["title"]
-            ET.SubElement(child,"link").text=r["link"]
-            ET.SubElement(child,"source").text=r["source"]
-            ET.SubElement(child,"pubDate").text=r["pub"]
+            seen.add(r["link"]); result=ET.SubElement(rel,"article")
+            ET.SubElement(result,"title").text=r["title"]
+            ET.SubElement(result,"link").text=r["link"]
+            ET.SubElement(result,"source").text=r["source"]
+            ET.SubElement(result,"pubDate").text=r["pub"]
         channel.append(issue); created.append(category)
 
     if len(created)!=10 or created!=EXPECTED_TOPICS:
