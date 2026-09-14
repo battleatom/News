@@ -27,6 +27,7 @@ PATCHERS = [
     'scripts/patch_pull_stats_ui.py',
     'scripts/patch_bookmarks.py',
     'scripts/patch_nfl_live.py',
+    'scripts/patch_nfl_upcoming_window.py',
     'scripts/patch_nfl_live_center.py',
     'scripts/patch_nfl_streaming.py',
     'scripts/patch_load_more.py',
