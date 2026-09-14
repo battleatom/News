@@ -34,10 +34,10 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           s=Path('assets/card-feedback.js').read_text(encoding='utf-8')
-          required=['function backfill(tab)','counts[key]=Number.isFinite(current)?current+1:11','renderFn(items)','removeCard(card,data.tab)','UnderreportedFeedback={']
+          required=['function backfill(tab)','countsObj[key]=Number.isFinite(current)?current+1:51','renderFn(items)','removeCard(card,data.tab)','UnderreportedFeedback={']
           missing=[x for x in required if x not in s]
           if missing: raise SystemExit('Missing feedback backfill wiring: '+repr(missing))
-          print('D/NR/NW replacement-card wiring verified.')
+          print('D/NR/NW replacement-card wiring verified for the V5.1 50-story window.')
           PY
       - name: Live Gaming refinement and final V5 gate
         run: |

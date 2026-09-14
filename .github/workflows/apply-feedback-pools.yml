@@ -1,0 +1,80 @@
+name: Apply Feedback Pools
+
+on:
+  workflow_run:
+    workflows: ["Update News Feed"]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: apply-feedback-pools
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Validate feedback filter
+        run: python -m py_compile scripts/apply_feedback_pools.py
+
+      - name: Apply persistent D NR NW pools
+        id: feedback
+        run: |
+          python scripts/apply_feedback_pools.py --require-remote --report /tmp/feedback-pool-report.json
+          cat /tmp/feedback-pool-report.json
+          if git diff --quiet -- News; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No live feed items matched the feedback pools."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild site after feedback suppression
+        if: steps.feedback.outputs.changed == 'true'
+        run: |
+          python scripts/build_site.py
+          python scripts/site_audit.py
+
+      - name: Commit validated feedback suppression
+        if: steps.feedback.outputs.changed == 'true'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html
+          if git diff --cached --quiet; then
+            echo 'No generated feedback changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Apply persistent D NR NW feedback pools'
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "Push succeeded on attempt ${attempt}."
+              exit 0
+            fi
+            echo "Push rejected; rebasing onto latest main before retry ${attempt}."
+            git fetch origin main
+            if ! git rebase origin/main; then
+              echo 'Concurrent generated update conflicts with feedback suppression; refusing silent resolution.'
+              git rebase --abort || true
+              exit 1
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          echo 'Feedback push failed after 3 attempts.'
+          exit 1
