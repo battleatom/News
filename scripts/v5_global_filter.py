@@ -15,6 +15,9 @@ SPORT_WORDS=re.compile(r"\b(football|basketball|baseball|hockey|soccer|volleybal
 PRESIDENTIAL_CONTEXT=re.compile(r"\b(president trump|donald trump|trump administration|white house (says|announces|orders|proposes|officials|weighs)|executive order|press secretary)\b",re.I)
 PRESIDENTIAL_HEADLINE=re.compile(r"^(?:(?:the latest|fact check):\s*)?(?:president\s+)?trump\b|^(?:five big takeaways from|what to know about)\s+trump(?:'s)?\b",re.I)
 MILITARY_TITLE_ANCHOR=re.compile(r"\b(pentagon|military|army|navy|air force|marines?|troops?|missiles?|airstrikes?|drone(?: strike| warfare)?|warships?|combat|battlefield|invasion|ceasefire|defense department|centcom|fighter jets?|f-?35|apache|saildrone|usv|munitions?|weapon systems?|hegseth|anduril|warfighters?|houthis?)\b",re.I)
+FEDERAL_HEADLINE=re.compile(r"\b(federal appeals court|federal debt|senate hearing)\b",re.I)
+GAMING_HEADLINE=re.compile(r"\b(playstation|xbox|nintendo|steam|pc gamer|video game|gaming|game studio|esports|dlc)\b",re.I)
+GENERIC_NOISE_HEADLINE=re.compile(r"^(coming sunday and monday|coming this week|latest headlines|news roundup)\b",re.I)
 GEO_TITLE={
     "local":re.compile(r"\b(farmington|san juan county|aztec|bloomfield|kirtland|shiprock|four corners|durango|la plata county|cortez|montezuma county|navajo nation)\b",re.I),
     "nm":re.compile(r"\b(new mexico|new mexicans?|santa fe|albuquerque|las cruces|rio rancho|nmdot)\b",re.I),
@@ -47,13 +50,14 @@ def target_is_contextually_valid(item:ET.Element,current:str,target:str)->bool:
     title=clean_headline(item)
     if target=="military" and current!="military" and not military_headline_anchor(item):return False
     if target=="region" and SPORT_WORDS.search(title) and current!="region":return False
-    # Moving into a geographic tab requires that geography to be central enough to appear in the headline,
-    # unless the story already came from another geography surface.
     if target in GEO_TABS and current not in GEO_TABS and not GEO_TITLE[target].search(title):return False
     if target=="presidential" and current!="presidential" and not (PRESIDENTIAL_CONTEXT.search(title) or direct_presidential_story(item)):return False
     return True
 
 def resolve_target(item:ET.Element,current:str,target:str|None,scores:dict)->str|None:
+    title=clean_headline(item)
+    # Explicit federal institutional language outranks broad U.S./World routing.
+    if FEDERAL_HEADLINE.search(title) and current in {"federal","us","world","presidential"}:return "federal"
     # Direct Trump headline stories are Presidential unless an explicitly structured Legislation/Federal
     # event is the stronger subject. This does not apply to incidental Trump mentions later in a headline.
     if direct_presidential_story(item) and current in {"presidential","world","us","federal"}:
@@ -65,7 +69,9 @@ def resolve_target(item:ET.Element,current:str,target:str|None,scores:dict)->str
     if target and not target_is_contextually_valid(item,current,target):excluded.add(target)
     if current in GEO_TABS and qualifies(item,current) and target in BROAD_TABS:return current
     if current=="military" and target=="world" and qualifies(item,"military"):return current
-    if current=="gaming" and target in BROAD_TABS and qualifies(item,"gaming") and re.search(r"\b(game|gaming|playstation|xbox|nintendo|steam|pc gamer|console|dlc|esports)\b",field(item,"title"),re.I):return current
+    # A story already collected as Gaming with an explicit gaming headline/source signal should not
+    # be lost to a generic U.S./World geography mention.
+    if current=="gaming" and target in BROAD_TABS and GAMING_HEADLINE.search(field(item,"title")):return current
     if target and target not in excluded:return target
     for fallback in candidate_tabs(scores,excluded):
         if target_is_contextually_valid(item,current,fallback):return fallback
@@ -88,6 +94,10 @@ def apply_pipeline(input_path:str,output_path:str|None=None,report_path:str|None
         if raw in PROTECTED_CATEGORIES:routed.append(item);continue
         current=LEGACY_CATEGORY_MAP.get(raw,raw)
         if current!=raw:set_category(item,current)
+        # Catch publisher promos/generic pages before category scoring can turn their source name
+        # into a false geography match.
+        if GENERIC_NOISE_HEADLINE.search(clean_headline(item)):
+            rejected.append({"title":field(item,"title"),"from":current,"reason":"global-generic-page"});continue
         d=tab_filter_decision(item)
         if d["action"]=="reject" and d["reason"]=="no-qualified-tab" and current=="presidential" and direct_presidential_story(item):
             d={**d,"action":"keep","target":"presidential","reason":"presidential-headline-preserved"}
