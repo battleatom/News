@@ -1,8 +1,11 @@
-:root{--v51-header-h:0px;--v51-toolbar-h:0px;--v51-status-h:0px}
-body>header,body header{position:sticky!important;top:0!important;z-index:420!important}
-html body .toolbar{position:sticky!important;top:var(--v51-header-h)!important;z-index:419!important}
-html body #pull-status{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h))!important;z-index:418!important}
-html body .tabs{position:sticky!important;top:calc(var(--v51-header-h) + var(--v51-toolbar-h) + var(--v51-status-h))!important;z-index:417!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:none}
-html body .tabs::-webkit-scrollbar{display:none}
-html body .tabs .tab{flex:0 0 auto!important;scroll-snap-align:center;white-space:nowrap}
-@media(max-width:760px){html body .tabs{padding-inline:10px!important}.tabs .tab:first-child{margin-left:0}.tabs .tab:last-child{margin-right:10px}}
+html body .container{overflow:visible!important}
+html body .v51-sticky-shell{position:sticky!important;top:0!important;z-index:420!important;width:100%!important;background:inherit!important;isolation:isolate}
+html body .v51-sticky-shell>header,
+html body .v51-sticky-shell>.toolbar,
+html body .v51-sticky-shell>#pull-stats-ui,
+html body .v51-sticky-shell>.markets,
+html body .v51-sticky-shell>.tabs{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;transform:none!important}
+html body .v51-sticky-shell>.tabs{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scroll-snap-type:x proximity;overscroll-behavior-inline:contain;scrollbar-width:none}
+html body .v51-sticky-shell>.tabs::-webkit-scrollbar{display:none}
+html body .v51-sticky-shell>.tabs .tab{flex:0 0 auto!important;scroll-snap-align:center;white-space:nowrap}
+@media(max-width:760px){html body .v51-sticky-shell>.tabs{padding-inline:10px!important}.v51-sticky-shell>.tabs .tab:first-child{margin-left:0}.v51-sticky-shell>.tabs .tab:last-child{margin-right:10px}}
