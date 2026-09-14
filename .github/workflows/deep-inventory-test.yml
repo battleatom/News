@@ -84,9 +84,19 @@ jobs:
       - name: Build test site
         run: |
           python scripts/build_site.py
-          python scripts/site_audit.py
-          grep -q 'const STORIES_PER_PAGE = 50;' index.html
-          grep -q 'const RESERVE_PAGE = 25;' index.html
+          python - <<'PY'
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+          html=Path('index.html').read_text(encoding='utf-8')
+          assert 'const STORIES_PER_PAGE = 50;' in html, '50-story active page missing from preview build'
+          assert 'const RESERVE_PAGE = 25;' in html, '25-story reserve page missing from preview build'
+          assert 'assets/card-feedback.js' in html, 'feedback asset missing from preview build'
+          assert 'styles/v5-visual.css' in html, 'V5 visual asset missing from preview build'
+          root=ET.parse('News').getroot()
+          items=root.findall('.//item')
+          assert items, 'preview feed is empty'
+          print(f'Preview smoke audit passed with {len(items)} feed items.')
+          PY
           grep -q "key==='boxoffice'" assets/card-feedback.js
 
       - name: Package test preview
