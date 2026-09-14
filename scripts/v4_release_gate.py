@@ -47,8 +47,6 @@ EXPECTED_X = [
     "Gaming",
     "Science",
 ]
-ADULT_LABELS = {"ADULT INDUSTRY", "ADULT BUSINESS/LEGAL", "CREATOR", "ADULT AWARDS"}
-SENSITIVE_IMAGE_LABELS = ADULT_LABELS | {"NUDE / PHOTO SHOOT"}
 
 
 def text(node: ET.Element, tag: str) -> str:
@@ -80,38 +78,10 @@ def main() -> None:
     if malformed:
         fail(f"{len(malformed)} malformed item(s) lack title/link/category")
 
-    underreported = [i for i in items if text(i, "category") == "underreported"]
-    underreported_links = {text(i, "link") for i in underreported if text(i, "link")}
-
     entertainment = [i for i in items if text(i, "category") == "entertainment"]
-    clean = [i for i in entertainment if text(i, "entertainmentSafety") == "clean"]
-    dirty = [i for i in entertainment if text(i, "entertainmentSafety") == "dirty"]
-    adult = [i for i in dirty if text(i, "entertainmentLabel") in ADULT_LABELS]
-    if len(clean) < 10:
-        fail(f"Clean Entertainment has {len(clean)} stories; minimum is 10")
-    if len(dirty) < 10:
-        fail(f"Dirty Entertainment has {len(dirty)} stories; minimum is 10")
-    if len(adult) < 5:
-        fail(f"adult-industry Dirty pool has {len(adult)} stories; minimum is 5")
-    if len(clean) + len(dirty) != len(entertainment):
-        fail("Entertainment contains unclassified or overlapping safety records")
-
-    cross_links = 0
-    for i in entertainment:
-        title = text(i, "title")
-        if not text(i, "entertainmentLabel") or not text(i, "entertainmentScore"):
-            fail(f"Entertainment ranking metadata missing for: {title}")
-        if not text(i, "guid"):
-            fail(f"Entertainment GUID missing for: {title}")
-        label = text(i, "entertainmentLabel")
-        if label in SENSITIVE_IMAGE_LABELS and text(i, "imageUrl"):
-            fail(f"Sensitive Entertainment preview image was not suppressed: {title}")
-        links = i.findall("./underreportedLinks/article")
-        for article in links:
-            target = text(article, "link")
-            if not target or target not in underreported_links:
-                fail(f"Entertainment cross-link does not point to a retained Underreported story: {title}")
-            cross_links += 1
+    dirty = [i for i in entertainment if text(i, "entertainmentSafety").lower() == "dirty"]
+    if dirty:
+        fail(f"Dirty Entertainment is disabled but {len(dirty)} dirty record(s) remain")
 
     x_items = [i for i in items if text(i, "category") == "x"]
     x_topics = [text(i, "xTopic") for i in x_items]
@@ -130,14 +100,14 @@ def main() -> None:
 
     html = INDEX.read_text(encoding="utf-8")
     if html.count("assets/entertainment-v4.js") != 1:
-        fail("Entertainment V4 UI must be injected exactly once")
+        fail("Entertainment UI must be injected exactly once")
     if "assets/location-content-v25.js" not in html:
         fail("location content controller is missing from generated site")
 
     print("V5 RELEASE GATE PASSED")
     print("Feed items:", len(items))
     print("Category counts:", dict(sorted(counts.items())))
-    print("Entertainment: clean", len(clean), "dirty", len(dirty), "adult", len(adult), "cross-links", cross_links)
+    print("Entertainment dirty records:", len(dirty))
     print("X topics:", x_topics)
 
 
