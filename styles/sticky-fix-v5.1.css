@@ -1,0 +1,4 @@
+/* V5.1 sticky navigation containment fix.
+   position: sticky fails when an ancestor establishes a non-scrolling overflow container.
+   Keep the page container visually intact while allowing the viewport to own vertical scrolling. */
+.container{overflow:visible!important;}
