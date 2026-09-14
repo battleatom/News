@@ -5,7 +5,7 @@ import argparse,json,shutil
 import xml.etree.ElementTree as ET
 from collections import Counter
 from pathlib import Path
-from v5_tab_filters import field,tab_filter_decision,best_tab,RULES,RANKING_SURFACES,LEGACY_CATEGORY_MAP,qualifies
+from v5_tab_filters import field,tab_filter_decision,best_tab,RULES,RANKING_SURFACES,EDITORIAL_OVERLAYS,LEGACY_CATEGORY_MAP,qualifies
 from v5_tab_dedupe import dedupe_within_tabs,cross_tab_clusters,event_similarity
 
 PROTECTED_CATEGORIES={"boxoffice","entertainment"}
@@ -15,8 +15,20 @@ def set_category(item:ET.Element,cat:str)->None:
     if e is None:e=ET.SubElement(item,"category")
     e.text=cat
 
+def best_unprotected_from_scores(scores:dict)->str|None:
+    candidates=[t for t,s in scores.items() if t in RULES and t not in PROTECTED_CATEGORIES|RANKING_SURFACES|EDITORIAL_OVERLAYS and s>=RULES[t].threshold]
+    if not candidates:return None
+    candidates.sort(key=lambda t:(RULES[t].specificity,scores[t]-RULES[t].threshold,scores[t]),reverse=True)
+    return candidates[0]
+
+def safe_best_tab(item:ET.Element)->tuple:
+    target,score,scores=best_tab(item,include_underreported=(field(item,"category").lower()=="underreported"))
+    if target not in PROTECTED_CATEGORIES:return target,score,scores
+    fallback=best_unprotected_from_scores(scores)
+    return (fallback,scores.get(fallback,0) if fallback else 0,scores)
+
 def ownership_score(item:ET.Element,target:str)->tuple:
-    _,_,scores=best_tab(item,include_underreported=(field(item,"category").lower()=="underreported"))
+    _,_,scores=safe_best_tab(item)
     return (scores.get(target,0)-RULES[target].threshold,RULES[target].specificity,scores.get(target,0),len(field(item,"description")))
 
 def apply_pipeline(input_path:str,output_path:str|None=None,report_path:str|None=None)->dict:
@@ -33,6 +45,14 @@ def apply_pipeline(input_path:str,output_path:str|None=None,report_path:str|None
         current=LEGACY_CATEGORY_MAP.get(raw,raw)
         if current!=raw:set_category(item,current)
         d=tab_filter_decision(item)
+        # Box Office/Entertainment is known-good V5 behavior. The fresh stack may neither
+        # modify existing protected items nor route new stories into those categories.
+        if d.get("target") in PROTECTED_CATEGORIES:
+            fallback=best_unprotected_from_scores(d["scores"])
+            if fallback:
+                d={**d,"action":"keep" if fallback==current else "reroute","target":fallback,"reason":"protected-target-fallback:"+fallback}
+            else:
+                d={**d,"action":"reject","target":None,"reason":"protected-target-blocked"}
         if d["action"]=="reject":
             rejected.append({"title":field(item,"title"),"from":current,"reason":d["reason"]});continue
         if d["action"]=="reroute" and d["target"]!=current:
@@ -45,7 +65,7 @@ def apply_pipeline(input_path:str,output_path:str|None=None,report_path:str|None
         for item in cluster:
             current=field(item,"category").lower()
             if current in PROTECTED_CATEGORIES:continue
-            target,_,_=best_tab(item,include_underreported=(current=="underreported"))
+            target,_,_=safe_best_tab(item)
             if target is None:continue
             candidates.append((item,target,ownership_score(item,target)))
         if len(candidates)<2:continue
