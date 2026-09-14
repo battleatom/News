@@ -3,7 +3,7 @@ Trigger: 2026-09-12 county/state + NFL streaming/world routing repair.
 Retry: narrowed NFL aliases to avoid college-team false positives.
 Retry 2: make State & County observer DOM-idempotent and bump cache to v3.
 UX sync: materialize hierarchy/NEW legend preview after bd88afc.
-Automation sync: materialize after fast/full validation optimization and watchdog additions.
+Automation sync: materialize after fast/full validation optimization, dependency caching, live preview, and feed watchdog.
 Sync after Entertainment UI readiness wait fix.
 Hierarchy bridge sync: materialize canonical preview after explicit V5 semantic hierarchy fix.
 Performance audit sync: materialize idempotent hierarchy/UI observers and cache-bust hierarchy asset.
@@ -24,3 +24,4 @@ Retirement sync: remove semantic card hierarchy implementation while preserving 
 Retirement cleanup sync: materialize after removing the final hierarchy purge references from the build.
 Legend cleanup sync: purge retired card hierarchy legend from every tab while preserving Underreported age key and NFL UI.
 Regional navigation sync: restore standalone Local and Regional tabs and mobile Region reachability cue.
+Location force sync: purge stale IP-derived state and force fresh high-accuracy location on load.
