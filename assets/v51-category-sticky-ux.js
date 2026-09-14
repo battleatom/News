@@ -54,16 +54,6 @@
   let tagQueued=false;
   function queueTag(){if(tagQueued)return;tagQueued=true;queueMicrotask(()=>{tagQueued=false;tagRenderedCards();});}
 
-  function syncStickyMetrics(){
-    const root=document.documentElement;
-    const header=document.querySelector('body>header, header');
-    const toolbar=document.querySelector('.toolbar');
-    const status=document.getElementById('pull-status');
-    root.style.setProperty('--v51-header-h',(header?.offsetHeight||0)+'px');
-    root.style.setProperty('--v51-toolbar-h',(toolbar?.offsetHeight||0)+'px');
-    root.style.setProperty('--v51-status-h',(status?.offsetHeight||0)+'px');
-  }
-
   function scrollActiveTab(behavior='auto'){
     const tabs=document.getElementById('tabs');
     const tab=tabs?.querySelector('.tab.active');
@@ -75,17 +65,15 @@
   }
 
   function start(){
-    tagRenderedCards();syncStickyMetrics();scrollActiveTab('auto');
+    tagRenderedCards();scrollActiveTab('auto');
     const feed=document.getElementById('news-feed');
     if(feed)new MutationObserver(queueTag).observe(feed,{childList:true,subtree:true});
     const tabs=document.getElementById('tabs');
     if(tabs){
-      new MutationObserver(()=>{scrollActiveTab('auto');syncStickyMetrics();}).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+      new MutationObserver(()=>scrollActiveTab('auto')).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
       tabs.addEventListener('click',()=>requestAnimationFrame(()=>scrollActiveTab('smooth')),true);
     }
-    const ro=new ResizeObserver(()=>syncStickyMetrics());
-    [document.querySelector('body>header, header'),document.querySelector('.toolbar'),document.getElementById('pull-status'),tabs].filter(Boolean).forEach(el=>ro.observe(el));
-    window.addEventListener('resize',()=>{syncStickyMetrics();scrollActiveTab('auto')},{passive:true});
+    window.addEventListener('resize',()=>scrollActiveTab('auto'),{passive:true});
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
