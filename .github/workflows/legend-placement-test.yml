@@ -1,0 +1,29 @@
+name: Legend Placement Test
+
+on:
+  push:
+    branches: [v5.1-legend-placement]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript
+        run: node --check assets/v3-ui.js
+      - name: Verify placement contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('assets/v3-ui.js').read_text(encoding='utf-8')
+          assert "const head=section.querySelector('.section-header')" in s
+          assert 'if(head)head.after(key)' in s
+          assert "const body=section.querySelector('.section-body')" not in s
+          assert "legendExcluded=new Set(['nfl','boxoffice'])" in s
+          assert 'bookmarksVisible()' in s
+          print('Legend placement contract passed.')
+          PY
