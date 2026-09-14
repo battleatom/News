@@ -12,7 +12,6 @@ OWNERSHIP_TABS=[x for x in CANONICAL_TABS if x not in RANKING_SURFACES|EDITORIAL
 LEGACY_CATEGORY_MAP={"entertainment":"boxoffice"}
 STOPWORDS=set("the a an and or but to of in on for with at by from as is are was were be been that this it its they them will would could may after before over under into about new news says report reports latest breaking".split())
 
-# Human-readable contract used to tune the classifier. These are not legacy rules.
 TAB_TOPICS={
 "top":"Highest-impact current stories across all qualified subject tabs; ranking surface, not exclusive ownership.",
 "nfl":"NFL teams, players, games, league business, draft, injuries, standings and postseason. Excludes college/high-school football.",
@@ -39,7 +38,9 @@ class TabRule:
     threshold:float
     specificity:int
 
-def D(**kw):return {k.replace("_"," "):v for k,v in kw.items()}
+def D(**kw):
+    return {k.replace("u_s_","us_").replace("_"," "):v for k,v in kw.items()}
+
 NFL_FRANCHISE={x:8 for x in ["arizona cardinals","atlanta falcons","baltimore ravens","buffalo bills","carolina panthers","chicago bears","cincinnati bengals","cleveland browns","dallas cowboys","denver broncos","detroit lions","green bay packers","houston texans","indianapolis colts","jacksonville jaguars","kansas city chiefs","las vegas raiders","los angeles chargers","los angeles rams","miami dolphins","minnesota vikings","new england patriots","new orleans saints","new york giants","new york jets","philadelphia eagles","pittsburgh steelers","san francisco 49ers","seattle seahawks","tampa bay buccaneers","tennessee titans","washington commanders"]}
 NFL_ALIASES={x:7 for x in ["49ers","niners"]}
 
@@ -126,8 +127,6 @@ def tab_filter_decision(i):
     rawcat=field(i,"category").lower();cur=LEGACY_CATEGORY_MAP.get(rawcat,rawcat)
     if cur in RANKING_SURFACES:return {"action":"keep","current":cur,"target":cur,"reason":"ranking-surface","scores":all_scores(i)}
     if obvious_noise(i):return {"action":"reject","current":cur,"target":None,"reason":"global-noise","scores":all_scores(i)}
-    # Underreported is an editorial overlay. Keep qualified investigative/public-interest work there
-    # instead of forcing it into a mutually-exclusive subject tab.
     if cur in EDITORIAL_OVERLAYS and qualifies(i,"underreported"):
         return {"action":"keep","current":cur,"target":cur,"reason":"editorial-overlay-qualified","scores":all_scores(i)}
     w,_,scores=best_tab(i)
