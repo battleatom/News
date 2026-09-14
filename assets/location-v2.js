@@ -5,6 +5,19 @@
   let pending=null;
   let current=null;
 
+  function purgeLegacyIpPersistence(){
+    try{
+      const raw=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
+      if(raw&&raw.source==='ip'){
+        localStorage.removeItem(CACHE_KEY);
+        localStorage.removeItem('underreported-location');
+        localStorage.removeItem('underreported-state');
+        localStorage.removeItem('underreported-county');
+      }
+    }catch(e){}
+  }
+  purgeLegacyIpPersistence();
+
   function readCache(){
     if(current)return current;
     try{
@@ -47,7 +60,7 @@
       navigator.geolocation.getCurrentPosition(
         p=>resolve({lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy,source:'device'}),
         reject,
-        {enableHighAccuracy:false,maximumAge:15*60*1000,timeout:6000}
+        {enableHighAccuracy:true,maximumAge:0,timeout:10000}
       );
     });
   }
@@ -114,4 +127,9 @@
       }catch(e){}
     },
   };
+
+  function forceFreshLocation(){
+    window.UnderreportedLocation.get({force:true}).catch(err=>console.warn('Fresh location lookup failed:',err));
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',forceFreshLocation,{once:true});else forceFreshLocation();
 })();
