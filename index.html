@@ -788,7 +788,7 @@ function renderNfl(){
  const sec=document.createElement('section');sec.className='section';sec.style.setProperty('--accent','#166534');
  const h=document.createElement('div');h.className='section-header';h.innerHTML='<h2>🏈 NFL</h2><span class="count"><span class="nfl-live-dot"></span>Live scoreboard</span>';sec.appendChild(h);
  const body=document.createElement('div');body.className='section-body';body.innerHTML='<div class="loading">Loading live NFL scores…</div>';sec.appendChild(body);root.appendChild(sec);
- const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);
+ const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · current + upcoming 7 days · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);
  const liveCenter=document.createElement('div');liveCenter.className='nfl-live-center';liveCenter.hidden=true;liveCenter.setAttribute('aria-live','polite');body.appendChild(liveCenter);
  const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);
  function eventTime(ev){const t=Date.parse(ev.date||'');return Number.isFinite(t)?t:0;}
@@ -875,7 +875,7 @@ function renderNfl(){
  }
  async function load(){
   try{
-   const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
+   const r=await fetch((()=>{const now=new Date(),a=new Date(now),b=new Date(now);a.setDate(a.getDate()-1);b.setDate(b.getDate()+7);const f=d=>`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;return `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=64&dates=${f(a)}-${f(b)}&ts=${Date.now()}`})(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
    [...body.querySelectorAll('.nfl-empty,.loading,.nfl-error')].forEach(x=>x.remove());grid.innerHTML='';
    if(!d.events?.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No NFL games currently scheduled.';body.appendChild(e);return;}
    const events=sortedEvents(d.events);if(!events.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No current or upcoming NFL games in the scoreboard window.';body.appendChild(e);return;}
@@ -1181,7 +1181,7 @@ syncDiscoveryButton();
 </script>
 
 <script src="assets/app-v2.js?v=f7a2c4977986"></script>
-<script src="assets/card-feedback.js?v=a9dfb61d5b97" data-card-feedback-script="true"></script>
+<script src="assets/card-feedback.js?v=9f02767dd0cf" data-card-feedback-script="true"></script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
