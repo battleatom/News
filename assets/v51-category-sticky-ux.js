@@ -41,7 +41,8 @@
       stack.className='v51-fixed-stack';
       container.insertBefore(stack,container.firstChild);
     }
-    const parts=[container.querySelector(':scope > header'),container.querySelector(':scope > .toolbar'),container.querySelector(':scope > #pull-status'),container.querySelector(':scope > .markets'),container.querySelector(':scope > .tabs')].filter(Boolean);
+    const status=document.getElementById('pull-stats-ui')||document.getElementById('pull-status');
+    const parts=[container.querySelector(':scope > header'),container.querySelector(':scope > .toolbar'),status,container.querySelector(':scope > .markets'),container.querySelector(':scope > .tabs')].filter(Boolean);
     parts.forEach(el=>{if(el.parentElement!==stack)stack.appendChild(el);});
     let spacer=container.querySelector(':scope > .v51-fixed-spacer');
     if(!spacer){spacer=document.createElement('div');spacer.className='v51-fixed-spacer';stack.insertAdjacentElement('afterend',spacer);}
@@ -66,6 +67,8 @@
     if(Math.abs(tabs.scrollLeft-target)>8)tabs.scrollTo({left:target,behavior});
   }
 
+  function resyncSoon(){requestAnimationFrame(()=>{syncFixedMetrics();requestAnimationFrame(syncFixedMetrics);});}
+
   function start(){
     ensureFixedStack();tagRenderedCards();syncFixedMetrics();scrollActiveTab('auto');
     const feed=document.getElementById('news-feed');
@@ -77,8 +80,13 @@
     }
     const fixed=ensureFixedStack();
     if(fixed&&window.ResizeObserver)new ResizeObserver(()=>syncFixedMetrics()).observe(fixed.stack);
+    const container=document.querySelector('.container');
+    if(container)new MutationObserver(()=>{ensureFixedStack();resyncSoon();}).observe(container,{childList:true,subtree:false});
     window.addEventListener('resize',()=>{syncFixedMetrics();scrollActiveTab('auto')},{passive:true});
-    requestAnimationFrame(()=>{syncFixedMetrics();requestAnimationFrame(syncFixedMetrics);});
+    window.addEventListener('load',resyncSoon,{once:true});
+    setTimeout(resyncSoon,300);
+    setTimeout(resyncSoon,1200);
+    resyncSoon();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();
