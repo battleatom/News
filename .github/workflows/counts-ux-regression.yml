@@ -6,6 +6,7 @@ on:
       - 'scripts/verify_feed_v4.py'
       - 'scripts/refine_tech_gaming.py'
       - 'scripts/patch_v2_frontend.py'
+      - 'scripts/patch_boxoffice_ui.py'
       - 'assets/card-feedback.js'
       - 'assets/v3-ui.js'
       - 'assets/ux-hotfix-v51.js'
@@ -19,7 +20,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/verify_feed_v4.py scripts/refine_tech_gaming.py scripts/v5_global_filter.py scripts/patch_v2_frontend.py
+          python -m py_compile scripts/verify_feed_v4.py scripts/refine_tech_gaming.py scripts/v5_global_filter.py scripts/patch_v2_frontend.py scripts/patch_boxoffice_ui.py
           node --check assets/card-feedback.js
           node --check assets/v3-ui.js
           node --check assets/ux-hotfix-v51.js
@@ -32,14 +33,16 @@ jobs:
           hot=Path('assets/ux-hotfix-v51.js').read_text(encoding='utf-8')
           css=Path('styles/v5-visual.css').read_text(encoding='utf-8')
           patch=Path('scripts/patch_v2_frontend.py').read_text(encoding='utf-8')
+          box=Path('scripts/patch_boxoffice_ui.py').read_text(encoding='utf-8')
           vf=Path('scripts/verify_feed_v4.py').read_text(encoding='utf-8')
           required_fb=["tabFor(card)==='boxoffice'","activeTab()==='boxoffice'","key==='boxoffice'"]
           required_ui=['decorateImportanceRail(card)',"'rail-blue'","'rail-green'","'rail-orange'","'rail-purple'","'rail-red'","if(card.classList.contains('underreported-item')"]
           required_hot=["canonicalTabKey(value)","activeTabKey()==='boxoffice'","card.style.setProperty('border-left'","uxHotfixV51='ready'"]
           required_css=['.rail-blue','.rail-green','.rail-orange','.rail-purple','.rail-red','.news-item.underreported-item.age-blue','.news-item.underreported-item.age-red']
           required_patch=["'assets/ux-hotfix-v51.js':'script'",'data-ux-hotfix-v51="true"']
+          required_box=["sec.dataset.category='boxoffice'","ar.dataset.category='boxoffice'","card.dataset.category='boxoffice'"]
           required_vf=['"technology", "gaming", "us"','final V5 authoritative filter still owns the last routing decision']
-          missing=[x for x in required_fb if x not in fb]+[x for x in required_ui if x not in ui]+[x for x in required_hot if x not in hot]+[x for x in required_css if x not in css]+[x for x in required_patch if x not in patch]+[x for x in required_vf if x not in vf]
+          missing=[x for x in required_fb if x not in fb]+[x for x in required_ui if x not in ui]+[x for x in required_hot if x not in hot]+[x for x in required_css if x not in css]+[x for x in required_patch if x not in patch]+[x for x in required_box if x not in box]+[x for x in required_vf if x not in vf]
           if missing: raise SystemExit('Missing UX/count contract markers: '+repr(missing))
           if "card.classList.contains('underreported-item')" not in hot: raise SystemExit('Hotfix must leave Underreported rail untouched')
           print('UX and specialist-pool contracts verified.')
@@ -49,6 +52,8 @@ jobs:
           python scripts/build_site.py
           grep -q 'assets/ux-hotfix-v51.js?v=' index.html
           grep -q 'data-ux-hotfix-v51="true"' index.html
+          grep -q "sec.dataset.category='boxoffice'" index.html
+          grep -q "ar.dataset.category='boxoffice'" index.html
       - name: Production-order count test
         run: |
           python scripts/refine_tech_gaming.py
