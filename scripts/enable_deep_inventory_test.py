@@ -5,7 +5,6 @@ This intentionally patches the checked-out workflow workspace at test time inste
 changing production collector behavior on main. Box Office and fixed X are excluded.
 """
 from pathlib import Path
-import re
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -60,10 +59,10 @@ patch("scripts/underreported_priority.py", [
     ('MAX_ITEMS = 30', 'MAX_ITEMS = 75', True),
 ])
 
-# NFL is year-round: news discovery includes offseason, draft, roster and camp activity.
+# NFL is year-round: preserve the current queries and add offseason/draft/camp discovery.
 patch("scripts/update_news.py", [
-    ('    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results"],',
-     '    "nfl": ["NFL news", "NFL injuries trades free agency", "NFL scores results", "NFL offseason news trades contracts roster", "NFL draft combine pro day", "NFL OTAs minicamp training camp roster cuts", "NFL coaching front office rule changes suspensions"],', True),
+    ('    "nfl": [\n        "NFL news",\n        "NFL injuries trades free agency",\n        "NFL scores results",\n    ],',
+     '    "nfl": [\n        "NFL news",\n        "NFL injuries trades free agency",\n        "NFL scores results",\n        "NFL offseason news trades contracts roster",\n        "NFL draft combine pro day",\n        "NFL OTAs minicamp training camp roster cuts",\n        "NFL coaching front office rule changes suspensions",\n    ],', True),
 ])
 
 # UI: show 50 immediately; keep the next 25 as the natural reserve/load-more tranche.
