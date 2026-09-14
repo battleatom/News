@@ -80,12 +80,15 @@ def obvious_noise(i):
 
 def raw(i,tab):
     r=RULES[tab];title,desc,why=parts(i);full=title+desc+why;s=30. if tab=="legislation" and is_legislation(i) else 0.;ev=[]
+    source_title=norm(field(i,"title"))
+    source_bonus=10 if tab=="gaming" and has(source_title,"pc gamer") else 0
+    if source_bonus:s+=source_bonus;ev.append("+source:pc gamer")
     for term,w in r.positives.items():
         if has(full,term):s+=w;ev.append("+"+term)
         if has(title,term):s+=w*2;ev.append("+title:"+term)
     for term,w in r.negatives.items():
         if has(full,term):s+=w;ev.append("!"+term)
-    title_strength=sum(w for term,w in r.positives.items() if has(title,term))
+    title_strength=sum(w for term,w in r.positives.items() if has(title,term))+source_bonus
     if tab in {"nfl","presidential","technology","gaming"} and title_strength==0:s=min(s,r.threshold-0.1)
     return round(s,2),ev
 
