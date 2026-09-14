@@ -24,7 +24,7 @@ def item(n, source='Variety', title=None, category='entertainment', description=
 sample=[item(i, source=f'Entertainment Source {i}') for i in range(12)]
 selected=v4.select_entertainment(sample,limit=10)
 assert len(selected)==10, len(selected)
-assert all(x.get('entertainmentSafety') in {'clean','dirty'} for x in selected)
+assert all(x.get('entertainmentSafety')=='clean' for x in selected)
 assert all(x.get('entertainmentLabel') for x in selected)
 assert all(str(x.get('entertainmentScore','')).isdigit() for x in selected)
 
@@ -35,9 +35,11 @@ assert ranked[0]['link']==major['link'], 'Major consequence must outrank a newer
 assert ranked[0]['entertainmentLabel']=='MAJOR'
 
 gossip=item(2,title='Actor Gossip Example dating musician after gala appearance')
-assert v4.entertainment_safety(gossip)=='dirty'
+assert v4.entertainment_safety(gossip)=='clean'
 professional=item(3,title='Actor Professional Example signs film contract')
 assert v4.entertainment_safety(professional)=='clean'
+adult=item(4,title='Adult film star launches OnlyFans project')
+assert not v4._entertainment_relevant(adult)
 
 ent=item(50,title='Jane Example speaks out after studio labor investigation')
 under=item(60,source='ProPublica',title='Jane Example named in studio labor investigation',category='underreported')
@@ -53,4 +55,4 @@ assert v4.core.source_is_trusted('Variety')
 assert v4.core.source_is_trusted('Billboard')
 assert v4.core.source_is_trusted('People')
 assert v4.core.source_is_trusted('TMZ')
-print('V4 Entertainment tests passed: importance hierarchy, Clean/Dirty tagging, publisher diversity, expanded specialist trust, and red-footnote feed linkage.')
+print('V4 Entertainment tests passed: importance hierarchy, normal-news tagging, publisher diversity, adult rejection, and red-footnote feed linkage.')
