@@ -25,3 +25,4 @@ Retirement cleanup sync: materialize after removing the final hierarchy purge re
 Legend cleanup sync: purge retired card hierarchy legend from every tab while preserving Underreported age key and NFL UI.
 Regional navigation sync: restore standalone Local and Regional tabs and mobile Region reachability cue.
 Location force sync: purge stale IP-derived state and force fresh high-accuracy location on load.
+NFL live center sync: materialize Apple-style non-scrolling live play-by-play above score cards.
