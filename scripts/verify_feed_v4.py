@@ -17,6 +17,7 @@ import refine_tech_gaming as specialist
 import update_news_v4 as v4
 
 _base_source_is_trusted = v4.core.source_is_trusted
+_base_classify = classifier.classify
 _SPECIALIST_SOURCES = tuple(dict.fromkeys(
     specialist.TECH_TRUSTED + specialist.GAMING_TRUSTED + specialist.US_TRUSTED
 ))
@@ -28,14 +29,17 @@ _US_BACKFILL_QUERIES = [
     'United States infrastructure transportation airlines national news',
     'United States public safety crime national news',
     'United States wildfire hurricane flooding national news',
+    'United States consumer prices retail household costs national news',
+    'United States workers wages employment national news',
 ]
 _US_SCOPE = re.compile(
     r'\b(united states|u\.?s\.?|americans?|american households?|american workers?|nationwide|nationally|'
     r'across the country|across the u\.?s\.?|multiple states|states across|countrywide)\b', re.I)
 _US_DOMESTIC_TOPIC = re.compile(
-    r'\b(economy|economic|inflation|jobs?|labor|unemployment|wages?|housing|mortgages?|rent|health care|'
-    r'healthcare|public health|education|schools?|student debt|crime|public safety|transportation|airlines?|'
-    r'air travel|infrastructure|wildfires?|hurricanes?|flood(?:ing)?|consumers?|insurance|energy prices?)\b', re.I)
+    r'\b(economy|economic|inflation|jobs?|labor|employment|unemployment|wages?|housing|mortgages?|rent|'
+    r'health care|healthcare|public health|education|schools?|student debt|crime|public safety|transportation|'
+    r'airlines?|air travel|infrastructure|wildfires?|hurricanes?|flood(?:ing)?|consumers?|consumer prices?|'
+    r'household costs?|retail|insurance|energy prices?)\b', re.I)
 
 
 def v4_source_is_trusted(source):
@@ -69,6 +73,35 @@ def _us_backfill_allowed(item):
     return bool(_US_SCOPE.search(raw) and _US_DOMESTIC_TOPIC.search(raw))
 
 
+def _specialist_keep(item):
+    """Honor a prior specialist qualification without weakening unrelated source rules."""
+    current = specialist.text(item, 'category').lower()
+    source = specialist.text(item, 'source')
+    if not source:
+        return None
+    valid = False
+    if current == 'technology':
+        valid = specialist.tech_relevance_decision(item) == 'technology'
+    elif current == 'gaming':
+        valid = specialist.gaming_allowed(item)
+    elif current == 'us':
+        valid = specialist.us_route(item) == 'us' or _us_backfill_allowed(item)
+    if not valid:
+        return None
+    return {
+        'title': specialist.text(item, 'title'), 'source': source, 'current': current,
+        'action': 'keep', 'reason': 'specialist-refinement-confirmed', 'category': current,
+        'confidence': 1.0, 'scores': {}, 'evidence': ['specialist-refinement'],
+    }
+
+
+def v4_classify(item):
+    specialist_decision = _specialist_keep(item)
+    if specialist_decision is not None:
+        return specialist_decision
+    return _base_classify(item)
+
+
 def augment_us_pool(path='News'):
     """Top up the already-refined U.S. tab without weakening its routing rules."""
     feed = Path(path)
@@ -80,7 +113,7 @@ def augment_us_pool(path='News'):
         return
     current = [i for i in channel.findall('item') if specialist.text(i, 'category') == 'us']
     candidates = list(current)
-    for item in specialist.fetch_google(_US_BACKFILL_QUERIES, 'us', 3):
+    for item in specialist.fetch_google(_US_BACKFILL_QUERIES, 'us', 4):
         if not specialist.source_is(specialist.text(item, 'source'), specialist.US_TRUSTED):
             continue
         route = specialist.us_route(item)
@@ -91,7 +124,7 @@ def augment_us_pool(path='News'):
     for cluster in specialist.cluster_items(candidates):
         lead = max(cluster, key=lambda i: specialist.parse_date(specialist.text(i, 'pubDate')))
         coverage = len({specialist.source_family(specialist.text(i, 'source')) for i in cluster if specialist.text(i, 'source')}) or 1
-        score = coverage * 90 + max(0, 72 - specialist.age_hours(lead))
+        score = coverage * 90 + max(0, 96 - specialist.age_hours(lead))
         if specialist.source_is(specialist.text(lead, 'source'), specialist.US_TRUSTED):
             score += 25
         specialist.add_rank_fields(lead, 'us', score, coverage)
@@ -107,6 +140,7 @@ def augment_us_pool(path='News'):
 
 
 classifier.source_is_trusted = v4_source_is_trusted
+classifier.classify = v4_classify
 # Entertainment, Technology, Gaming and U.S. are already cleaned by dedicated
 # specialist passes before verification. Keep source-trust checks and dedupe here,
 # but do not run a second generic category reroute over those curated pools. The
@@ -117,8 +151,8 @@ classifier.NON_ROUTABLE_INPUT = set(classifier.NON_ROUTABLE_INPUT) | {
 
 import verify_feed
 
-# verify_feed calls classify() from the same module object above, so its final
-# source/category decision uses the V4 trust and non-reroute policy.
+# verify_feed imported classify by name, so point it at the specialist-aware wrapper.
+verify_feed.classify = v4_classify
 verify_feed.EDITORIAL_SURFACES = set(verify_feed.EDITORIAL_SURFACES) | {"entertainment"}
 
 # Technology, Gaming and U.S. already run their own event clustering in the
