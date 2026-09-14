@@ -40,15 +40,23 @@
 .nfl-matchup-line{font-size:13px;font-weight:850;line-height:1.25;color:#0f172a;padding-right:2px}.nfl-score-inline{font-weight:900;white-space:nowrap}.nfl-kickoff{font-size:10.5px;font-weight:850;color:#334155;line-height:1.25}.nfl-kickoff-ref{display:block;font-size:9.5px;font-weight:700;color:#94a3b8;margin-top:1px}.nfl-game-subline{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:auto}.nfl-status{font-size:10px!important;font-weight:800;color:#64748b;line-height:1.25}.nfl-tv{font-size:10px;color:#475569;text-align:right;line-height:1.2}.nfl-tv a{font-size:10px}.nfl-live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#16a34a;margin-right:5px;box-shadow:0 0 0 2px rgba(22,163,74,.12)}
 @media(max-width:900px){.nfl-games-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.nfl-live-note{font-size:11px;padding:7px 9px;margin-bottom:8px}.nfl-games-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nfl-game-card{padding:9px 9px!important;min-height:138px!important}.nfl-logo-pair img,.nfl-logo-fallback{width:22px;height:22px}.nfl-matchup-line{font-size:12px}.nfl-kickoff{font-size:10px}.nfl-kickoff-ref{font-size:9px}.nfl-status,.nfl-tv,.nfl-tv a{font-size:9.5px}}
+/* nfl-live-center-v1 */
+.nfl-live-center{display:block;overflow:visible!important;max-height:none!important;margin:0 0 12px;padding:12px 13px;border:1px solid rgba(15,23,42,.10);border-radius:16px;background:rgba(255,255,255,.78);box-shadow:0 8px 28px rgba(15,23,42,.07);backdrop-filter:saturate(140%) blur(18px);-webkit-backdrop-filter:saturate(140%) blur(18px)}
+.nfl-live-center[hidden]{display:none!important}.nfl-live-center-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.nfl-live-center-title{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:850;color:#0f172a;letter-spacing:-.01em}.nfl-live-center-meta{font-size:9px;font-weight:750;color:#94a3b8;white-space:nowrap}.nfl-live-selector{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.nfl-live-selector button{appearance:none;border:1px solid rgba(100,116,139,.18);border-radius:999px;background:rgba(248,250,252,.82);padding:5px 8px;font:inherit;font-size:9.5px;font-weight:800;color:#64748b;cursor:pointer}.nfl-live-selector button.active{color:#111827;background:#fff;border-color:rgba(59,130,246,.25);box-shadow:0 2px 8px rgba(15,23,42,.07)}
+.nfl-live-gamebar{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:9px 10px;margin-bottom:8px;border-radius:12px;background:rgba(15,23,42,.035)}.nfl-live-gamebar-main{min-width:0}.nfl-live-gamebar-matchup{font-size:12.5px;font-weight:850;color:#111827;line-height:1.25}.nfl-live-gamebar-state{margin-top:2px;font-size:9.5px;font-weight:750;color:#64748b}.nfl-live-gamebar-score{font-size:18px;font-weight:900;letter-spacing:-.04em;color:#111827;white-space:nowrap}
+.nfl-live-pulse{margin:0 0 8px;padding:7px 9px;border-radius:10px;background:rgba(37,99,235,.055);color:#475569;font-size:10px;line-height:1.4}.nfl-live-pulse strong{color:#2563eb}.nfl-live-plays{display:grid;gap:0;overflow:visible!important;max-height:none!important}.nfl-live-play{display:grid;grid-template-columns:56px minmax(0,1fr);gap:9px;padding:8px 2px;border-top:1px solid rgba(100,116,139,.11)}.nfl-live-play:first-child{border-top:0}.nfl-live-play-time{font-size:9px;font-weight:850;color:#94a3b8;line-height:1.35}.nfl-live-play-text{font-size:10.5px;font-weight:650;color:#334155;line-height:1.42}.nfl-live-center-msg{padding:7px 2px;color:#64748b;font-size:10.5px;line-height:1.4}
+@media(prefers-color-scheme:dark){.nfl-live-center{background:rgba(18,24,34,.82);border-color:rgba(203,213,225,.12);box-shadow:0 10px 30px rgba(0,0,0,.24)}.nfl-live-center-title,.nfl-live-gamebar-matchup,.nfl-live-gamebar-score{color:#f1f5f9}.nfl-live-center-meta,.nfl-live-gamebar-state,.nfl-live-play-time{color:#8f9bad}.nfl-live-selector button{background:rgba(148,163,184,.07);border-color:rgba(203,213,225,.12);color:#aeb8c7}.nfl-live-selector button.active{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(96,165,250,.28)}.nfl-live-gamebar{background:rgba(148,163,184,.06)}.nfl-live-pulse{background:rgba(59,130,246,.11);color:#c4ccd7}.nfl-live-pulse strong{color:#93c5fd}.nfl-live-play{border-color:rgba(203,213,225,.10)}.nfl-live-play-text,.nfl-live-center-msg{color:#cbd5e1}}
+@media(max-width:600px){.nfl-live-center{padding:10px 10px;border-radius:14px;margin-bottom:10px}.nfl-live-center-head{margin-bottom:8px}.nfl-live-center-title{font-size:12px}.nfl-live-center-meta{font-size:8.5px}.nfl-live-selector{gap:5px;margin-bottom:8px}.nfl-live-selector button{font-size:9px;padding:5px 7px}.nfl-live-gamebar{padding:8px 9px}.nfl-live-gamebar-matchup{font-size:11.5px}.nfl-live-gamebar-score{font-size:16px}.nfl-live-play{grid-template-columns:50px minmax(0,1fr);gap:7px;padding:7px 1px}.nfl-live-play-text{font-size:10px}}
 </style>
 <style id="legislation-style-v1">
 .legislation-card .leg-top{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px}.leg-pill{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;background:rgba(202,138,4,.09);border:1px solid rgba(202,138,4,.18);font-size:9px;font-weight:800;letter-spacing:.02em;color:#92400e}.leg-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}.leg-field{padding:9px 10px;border:1px solid var(--ui-line);border-radius:10px;background:rgba(118,118,128,.035)}.leg-field strong{display:block;margin-bottom:3px;font-size:8px;letter-spacing:.08em;text-transform:uppercase;color:var(--ui-subtle)}.leg-field span{font-size:11.5px;line-height:1.45;color:var(--ui-muted)}.leg-support{margin-top:13px;padding-top:11px;border-top:1px solid var(--ui-line)}.leg-support-title{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ui-subtle);margin-bottom:6px}.leg-support a{display:block;padding:6px 0;text-decoration:none;font-size:11.5px;font-weight:650;border-top:1px solid rgba(60,60,67,.07)}.leg-support a:first-of-type{border-top:0}.leg-support small{display:block;margin-top:2px;color:var(--ui-subtle);font-size:9px}.leg-official{margin-top:10px}.leg-official a{display:inline-flex;padding:7px 10px;border-radius:9px;background:rgba(37,99,235,.07);border:1px solid rgba(37,99,235,.15);font-size:10px;font-weight:750;text-decoration:none}@media(max-width:600px){.leg-grid{grid-template-columns:1fr}.legislation-card .leg-top{gap:5px}}
 </style>
 <style id="related-coverage-v1-style">.related-coverage{margin:11px 0 0;padding:10px 0 0;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{display:inline-block;color:#475569;margin-bottom:3px}.related-coverage a{display:block;margin-top:5px;color:#475569;text-decoration:none;font-weight:650}.related-coverage a:hover{text-decoration:underline}.related-coverage .source{color:#94a3b8;font-weight:500}</style>
 
-<link rel="stylesheet" href="styles/v2.css?v=5">
-<link rel="stylesheet" href="styles/v5-visual.css?v=1" data-v5-visual="true">
-<script src="assets/location-v2.js?v=4"></script>
+<link rel="stylesheet" href="styles/v2.css?v=a07e364a5925">
+<link rel="stylesheet" href="styles/v5-visual.css?v=2107a2de0fb9" data-v5-visual="true">
+<script src="assets/location-v2.js?v=75b5f135ab7e" defer></script>
+<script src="assets/v3-ui.js?v=8915cb9aeec4" defer></script>
 <style id="alerts-status-v22-style">
 #status{display:none!important}
 #pull-stats-ui{display:block!important;margin:0!important;padding:6px 11px!important;border-bottom:1px solid var(--ui-line)!important;background:#f8fafc!important;color:#475569!important;font-size:10px!important;line-height:1.28!important;font-weight:650!important;white-space:normal!important;overflow:visible!important}
@@ -82,7 +90,7 @@
 .sh-wrap{position:relative;display:inline-flex;align-items:center}.sh-button{display:inline-flex;align-items:center;gap:6px;border:0;background:transparent;color:inherit;font:inherit;font-weight:800;cursor:pointer;padding:5px 7px;border-radius:9px}.sh-button:hover{background:rgba(127,127,127,.09)}.sh-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8;box-shadow:0 0 0 2px rgba(148,163,184,.14)}.sh-wrap.healthy .sh-dot,.sh-system.healthy i{background:#16a34a}.sh-wrap.degraded .sh-dot,.sh-system.degraded i{background:#eab308}.sh-wrap.partial .sh-dot,.sh-system.partial i{background:#f97316}.sh-wrap.critical .sh-dot,.sh-system.critical i{background:#dc2626}.sh-panel{position:absolute;z-index:50;top:calc(100% + 8px);left:0;width:min(360px,calc(100vw - 24px));padding:12px;border:1px solid var(--ui-line);border-radius:14px;background:#fff;color:#334155;box-shadow:0 14px 38px rgba(15,23,42,.18);font-size:11px}.sh-panel[hidden]{display:none}.sh-head{display:flex;justify-content:space-between;gap:10px;margin-bottom:8px}.sh-title{font-weight:900}.sh-code{font-family:monospace;font-weight:800}.sh-system{display:flex;align-items:center;gap:7px;padding:5px 0;border-top:1px solid rgba(127,127,127,.1)}.sh-system i{width:8px;height:8px;border-radius:50%;background:#94a3b8;flex:none}.sh-system span{flex:1}.sh-meta{margin-top:9px;padding-top:8px;border-top:1px solid var(--ui-line);color:#64748b;line-height:1.55}@media(prefers-color-scheme:dark){.sh-panel{background:#1c1c1e;color:#e5e7eb}.sh-meta{color:#a1a1aa}}@media(max-width:700px){.sh-label{font-size:9px}.sh-panel{position:fixed;top:74px;left:12px;right:12px;width:auto}}
 </style>
 </head>
-<body data-underreported-version="2"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
+<body data-underreported-version="5"><a class="skip-link-v2" href="#news-feed">Skip to stories</a><div class="container"><header><h1>UNDERREPORTED</h1><p>The stories that matter. In one place.</p></header><div class="toolbar"><button id="refresh" type="button">↻ Next Top Stories</button><span id="status">Loading…</span><div id="local-status" class="local-status" aria-label="Local date, time and weather"><span class="local-date" id="local-date">—</span><span class="local-sep">·</span><span class="local-time" id="local-time">—</span><span class="local-sep">·</span><span class="local-weather"><span id="weather-icon">☀️</span><span class="weather-temp" id="weather-temp">—°</span><span class="weather-condition" id="weather-condition">Loading weather…</span><span class="weather-location" id="weather-location"></span></span></div></div><div id="pull-stats-ui" role="status" aria-live="polite" class="ready"><strong>✓ Auto update active</strong><span>•</span><span>Loading pull statistics…</span></div><div class="markets" aria-label="Market data"><div class="markets-track" id="markets-track"><span class="market-label">MARKETS</span><span class="market"><span class="market-name">Loading market data…</span></span></div></div><nav class="tabs" id="tabs" aria-label="News categories"></nav><main class="content" id="news-feed"><div class="loading">Loading news…</div></main><footer>Automated news intelligence · <span id="last-update">Last update: —</span></footer></div>
 <script>
 var sections=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL','#166534'],['x','𝕏 Top Issues','#111827'],['underreported','🟣 Underreported','#7c3aed'],['world','🌎 World','#2563eb'],['us','🇺🇸 United States','#1e3a8a'],['presidential','🏛️ Presidential','#b45309'],['federal','🏛️ Federal Government','#ca8a04'],['legislation','📜 Laws & Legislation','#a16207'],['nm','🏜️ New Mexico','#0f766e'],['local','📍 Local / Four Corners','#15803d'],['region','🌎 Region','#2563eb'],['technology','💻 Technology','#0891b2'],['gaming','🎮 Gaming & Computing','#7c3aed'],['military','⚔️ Military & War','#991b1b'],['boxoffice','🎬 Box Office','#9a3412']];
 
@@ -780,6 +788,7 @@ function renderNfl(){
  const h=document.createElement('div');h.className='section-header';h.innerHTML='<h2>🏈 NFL</h2><span class="count"><span class="nfl-live-dot"></span>Live scoreboard</span>';sec.appendChild(h);
  const body=document.createElement('div');body.className='section-body';body.innerHTML='<div class="loading">Loading live NFL scores…</div>';sec.appendChild(body);root.appendChild(sec);
  const note=document.createElement('div');note.className='nfl-live-note';note.innerHTML='<strong>Live:</strong> ESPN · refreshes every 30 sec · kickoff times use your device timezone · finals roll off at 6:00 AM local';body.appendChild(note);
+ const liveCenter=document.createElement('div');liveCenter.className='nfl-live-center';liveCenter.hidden=true;liveCenter.setAttribute('aria-live','polite');body.appendChild(liveCenter);
  const grid=document.createElement('div');grid.className='nfl-games-grid';body.appendChild(grid);
  function eventTime(ev){const t=Date.parse(ev.date||'');return Number.isFinite(t)?t:0;}
  function eventRank(ev){const state=ev.status?.type?.state;return state==='in'?0:state==='pre'?1:2;}
@@ -818,6 +827,51 @@ function renderNfl(){
   if(d&&d.getDay()===0&&(hay.includes('CBS')||hay.includes('FOX')))add('YouTube Sunday Ticket (out-of-market)');
   return out;
  }
+ let nflLiveFocusId='';
+ function playClock(play){
+  const period=Number(play?.period?.number||play?.period||0),clock=play?.clock?.displayValue||play?.clock||'';
+  return [period?`Q${period}`:'',clock].filter(Boolean).join(' · ');
+ }
+ function collectLivePlays(summary){
+  let plays=Array.isArray(summary?.plays)?summary.plays:[];
+  if(!plays.length&&Array.isArray(summary?.drives?.current?.plays))plays=summary.drives.current.plays;
+  if(!plays.length&&Array.isArray(summary?.drives?.previous))plays=summary.drives.previous.flatMap(d=>Array.isArray(d?.plays)?d.plays:[]);
+  if(!plays.length&&Array.isArray(summary?.scoringPlays))plays=summary.scoringPlays;
+  return plays.filter(p=>p&&(p.text||p.shortText)).slice(-4).reverse();
+ }
+ function pulseFromPlay(play){
+  const t=String(play?.text||play?.shortText||'').trim();
+  if(!t)return '';
+  if(/touchdown/i.test(t))return 'Scoring swing: the latest sequence ended in a touchdown.';
+  if(/intercept|fumble|turnover/i.test(t))return 'Momentum swing: the latest sequence produced a turnover.';
+  if(/field goal/i.test(t))return 'Scoring update: the latest sequence ended with a field goal.';
+  if(/punt/i.test(t))return 'Possession changed after the latest punt.';
+  if(/two-point|2-point/i.test(t))return 'Conversion update: the latest sequence included a two-point attempt.';
+  return 'Latest drive update from the live play feed.';
+ }
+ async function renderLivePlayCenter(events){
+  const live=events.filter(ev=>ev.status?.type?.state==='in');
+  if(!live.length){liveCenter.hidden=true;liveCenter.innerHTML='';nflLiveFocusId='';return;}
+  if(!live.some(ev=>String(ev.id)===String(nflLiveFocusId)))nflLiveFocusId=String(live[0].id||'');
+  const ev=live.find(x=>String(x.id)===String(nflLiveFocusId))||live[0],c=ev.competitions?.[0],teams=c?.competitors||[],away=teams.find(t=>t.homeAway==='away'),home=teams.find(t=>t.homeAway==='home');
+  const awayLabel=away?.team?.abbreviation||away?.team?.shortDisplayName||'Away',homeLabel=home?.team?.abbreviation||home?.team?.shortDisplayName||'Home';
+  const buttons=live.length>1?`<div class="nfl-live-selector">${live.map(x=>{const cc=x.competitions?.[0],tt=cc?.competitors||[],aa=tt.find(t=>t.homeAway==='away'),hh=tt.find(t=>t.homeAway==='home'),label=`${aa?.team?.abbreviation||'AWY'} @ ${hh?.team?.abbreviation||'HOME'}`;return `<button type="button" data-live-game="${esc(x.id||'')}" class="${String(x.id)===String(nflLiveFocusId)?'active':''}">${esc(label)}</button>`;}).join('')}</div>`:'';
+  const detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Live';
+  liveCenter.hidden=false;
+  liveCenter.innerHTML=`<div class="nfl-live-center-head"><div class="nfl-live-center-title"><span class="nfl-live-dot"></span>Live Play-by-Play</div><div class="nfl-live-center-meta">Updates every 30 sec</div></div>${buttons}<div class="nfl-live-gamebar"><div class="nfl-live-gamebar-main"><div class="nfl-live-gamebar-matchup">${esc(awayLabel)} at ${esc(homeLabel)}</div><div class="nfl-live-gamebar-state">${esc(detail)}</div></div><div class="nfl-live-gamebar-score">${esc(away?.score??'-')}–${esc(home?.score??'-')}</div></div><div class="nfl-live-center-msg">Loading latest plays…</div>`;
+  liveCenter.querySelectorAll('[data-live-game]').forEach(btn=>btn.addEventListener('click',()=>{nflLiveFocusId=btn.dataset.liveGame||'';renderLivePlayCenter(events);}));
+  try{
+   const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event='+encodeURIComponent(ev.id)+'&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('summary HTTP '+r.status);const summary=await r.json();
+   if(String(ev.id)!==String(nflLiveFocusId))return;
+   const plays=collectLivePlays(summary),pulse=plays[0]?pulseFromPlay(plays[0]):'';
+   const oldMsg=liveCenter.querySelector('.nfl-live-center-msg');if(oldMsg)oldMsg.remove();
+   if(pulse){const p=document.createElement('div');p.className='nfl-live-pulse';p.innerHTML=`<strong>Game pulse</strong> · ${esc(pulse)}`;liveCenter.appendChild(p);}
+   const list=document.createElement('div');list.className='nfl-live-plays';
+   if(!plays.length){list.innerHTML='<div class="nfl-live-center-msg">Live game detected. Play-by-play is not available yet.</div>';}
+   else plays.forEach(play=>{const row=document.createElement('div');row.className='nfl-live-play';row.innerHTML=`<div class="nfl-live-play-time">${esc(playClock(play))}</div><div class="nfl-live-play-text">${esc(play.text||play.shortText||'')}</div>`;list.appendChild(row);});
+   liveCenter.appendChild(list);
+  }catch(err){const msg=liveCenter.querySelector('.nfl-live-center-msg');if(msg)msg.textContent='Live score is available; play-by-play is temporarily unavailable.';}
+ }
  async function load(){
   try{
    const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
@@ -825,6 +879,7 @@ function renderNfl(){
    if(!d.events?.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No NFL games currently scheduled.';body.appendChild(e);return;}
    const events=sortedEvents(d.events);if(!events.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No current or upcoming NFL games in the scoreboard window.';body.appendChild(e);return;}
    const hasLive=events.some(ev=>ev.status?.type?.state==='in'),nextIndex=hasLive?-1:events.findIndex(ev=>ev.status?.type?.state==='pre');
+   await renderLivePlayCenter(events);
    events.forEach((ev,index)=>{
     const c=ev.competitions?.[0],ts=c?.competitors||[],a=ts.find(t=>t.homeAway==='away'),h=ts.find(t=>t.homeAway==='home');
     const state=ev.status?.type?.state,detail=ev.status?.type?.shortDetail||ev.status?.type?.detail||'Scheduled';
@@ -1124,7 +1179,7 @@ syncDiscoveryButton();
 })();
 </script>
 
-<script src="assets/app-v2.js?v=3"></script>
+<script src="assets/app-v2.js?v=f7a2c4977986"></script>
 <script id="top-cycle-reliability-v1">
 (function(){
   'use strict';
