@@ -3,11 +3,16 @@
   const CACHE_KEY='underreported-location-v2';
   const MAX_AGE=6*60*60*1000;
   let pending=null;
+  let current=null;
 
   function readCache(){
+    if(current)return current;
     try{
       const v=JSON.parse(localStorage.getItem(CACHE_KEY)||'null');
-      if(v&&v.lat!=null&&v.lon!=null&&Date.now()-Number(v.savedAt||0)<MAX_AGE)return v;
+      if(v&&v.source!=='ip'&&v.lat!=null&&v.lon!=null&&Date.now()-Number(v.savedAt||0)<MAX_AGE){
+        current=v;
+        return v;
+      }
     }catch(e){}
     return null;
   }
@@ -22,11 +27,16 @@
     const county=String(v.county||'').trim();
     const label=v.label||[v.city,state].filter(Boolean).join(', ');
     const out={...v,state,county,label,savedAt:Date.now()};
+    current=out;
     try{
-      localStorage.setItem(CACHE_KEY,JSON.stringify(out));
-      if(state)localStorage.setItem('underreported-state',state);
-      if(county)localStorage.setItem('underreported-county',county);
-      if(label)localStorage.setItem('underreported-location',label);
+      if(out.source==='ip'){
+        localStorage.removeItem(CACHE_KEY);
+      }else{
+        localStorage.setItem(CACHE_KEY,JSON.stringify(out));
+        if(state)localStorage.setItem('underreported-state',state);
+        if(county)localStorage.setItem('underreported-county',county);
+        if(label)localStorage.setItem('underreported-location',label);
+      }
     }catch(e){}
     window.dispatchEvent(new CustomEvent('underreported:location',{detail:out}));
     return out;
@@ -95,6 +105,7 @@
     },
     cached:readCache,
     clear(){
+      current=null;
       try{
         localStorage.removeItem(CACHE_KEY);
         localStorage.removeItem('underreported-location');
