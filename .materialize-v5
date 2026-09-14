@@ -13,7 +13,7 @@ Diagnostic sync: log high-confidence tab corrections before safety threshold.
 Filter calibration sync: refine strong sports evidence and conservative World cleanup threshold.
 Idempotence sync: route/filter before final cross-tab dedupe.
 V5.1 deployment sync: materialize tested 21c777a source so live preview receives current hierarchy and icon assets.
-Hierarchy runtime sync: observe nested story renders, filter self-mutations, and cache-bust repaired hierarchy assets.
+Hierarchy runtime sync: observe nested story renders, filter self-mutations, and cache-bust hierarchy asset.
 Render-bound hierarchy sync: attach hierarchy, raw timestamps, badges, and feed-rendered events directly during card creation.
 Persistent hierarchy sync: inline last-mile rails/icons and preserve Underreported age-band colors.
 Promotion sync.
@@ -26,3 +26,4 @@ Legend cleanup sync: purge retired card hierarchy legend from every tab while pr
 Regional navigation sync: restore standalone Local and Regional tabs and mobile Region reachability cue.
 Location force sync: purge stale IP-derived state and force fresh high-accuracy location on load.
 NFL live center sync: materialize Apple-style non-scrolling live play-by-play above score cards.
+NFL live center validation sync: validate the exact materialized preview after canonical rebuild.
