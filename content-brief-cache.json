@@ -1,4 +1,858 @@
 {
+  "https://news.google.com/rss/articles/CBMickFVX3lxTE1iU1dwWG5hM3Zsd1N1M3VFTElnOGxvQUgyMVB6YzJYVE5pVjlnZHBwdXV2TWdvWU9DUzJNMHFpOVVuVmtDR1pUaERuTlFYZTR0WXpDajJ5eDlKSkNrVDFncHlqd1hBYUhXdmI5NzlsMld3Z9IBckFVX3lxTFBNMzE2OXBEbEItVFFhYW5YaUkxOVVYSlBSN254RWFKbDlTMTZXc2R6WWloZnJjdUpNYjA1SF9BYk84dnhVSnlTNkV1X3J4Si1JVDZIbzlTRnlWQVREWmJaRHpjMUJNWkhDRVRIeU5MVGhUdw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Harvest moon to join planets in a triangle over Kentucky skies. When to see it. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.kentucky.com/news/weather-news/article317237217.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:12.105432+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTXVZY2xLUjhnSGtVaDIwa2g4SGUzMFZKZnhRUlgyUmE5UU5GWkRqREdVazFGZG5aX01weENuOTliSG50ZUlyNHd3THFHaHg5WlNWQk9IVnUxVDNzQjhEZXZRb2FLYnlRWTFCYkZ4ODA2Smk5bzdRZzltTUpMck9CWEY0Q1_SAYQBQVVfeXFMTXl0Um9zUjk3V3NaMW1HQldqNXdDaGlhY0tpRGZHMDJuN3NlVWxxNW1MbEdaME5ma0djZTkwcVY0ZEZrWS1kZUhfZTdtS0tqUW1wbzlSNW5JMG5YQVk4WFF0VWlNcnNaMVpDcERONTh3cFp1b2RTd2lvWXh4ZE9HaHF1c1BD?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on South Florida Coast Guard crews look for missing paddleboarder off Jupiter Beach. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.miamiherald.com/news/local/community/broward/article317255988.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:10.191797+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMib0FVX3lxTFBfdC1nQ1VCcnQwaFN3eVJRQkFRVVdYT3hOLTI0SmhCbktmNXlmdWNGRXg3QmQ0NXVIS3JRWlhnTHNTQlBrUkJCcU9MQm5qdUNMbTFUT3RkQWg4SldiR1poQTdMNGpaTHVWbENKdWMyZw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on U.S. Attorney's Office indicts seven noncitizens in Texas on illegal voting charges (Video). The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.star-telegram.com/news/local/article317256891.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:08.970807+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMifEFVX3lxTFAzakZkWUJ5d2lxR0FaTWcyaUU5eFA3Rlc3T2JlcjZxZVdieUo3alBaQkczZlQ5aWdab3lEMUtIcUdHZ1dmWUkwcFdpUVRZbHdOeFFqTUpaX3M3MnRoeUJtOTJLNGpsTVAwR1d1czZIRHl4Mkp1blpXWGw3dTU?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Watch as the NJ Spotlight News team breaks down today’s top stories Problems playing video. NJ Spotlight News is a local public television program presented by THIRTEEN PBS NJ Spotlight News is available to stream on pbs.org and the PBS app. ♪.",
+    "publisherUrl": "https://www.pbs.org/video/nj-spotlight-news-september-9-2026-1788964332/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:53:06.569455+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimwFBVV95cUxPWF9wdV9mejFudXJVYjVPSVZlWjNhSDBUQjBjUEpYUF9Yd2xGQ19jMEotblA3bnBwV3RTYThJbjFnWWVWYmxKV1NCVWxiZHdNYmVxWmpZWVh1enBVNHJaRE9nM1VUT3R4VTY4MGFVRWJnUF9BT0c2bElnNk1uZVh2MW4xUGxYLS1VM1IwOXhNMm96TUFYMzA3SGJicw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Three openers and live band for Sheeran’s tour depart after removal of Macklemore over ‘free Palestine’ comments.",
+    "publisherUrl": "https://www.theguardian.com/us-news/2026/sep/15/ed-sheeran-macklemore-palestine-openers-finneas",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.679403+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMifkFVX3lxTE9Ha1N3V0RPTjVMelVDOWhRWDUycG9EcW9BOFdURnpJVTBGU0M0SlFUSkR5V0l0U0ZyY2ZkYXZ0VDFkR0ZkaEM4bVhiOUs5Rl82aXZELU5RdVZOMmthNVRpbXFhY2xxdGsxdEtvdmFCQ0RaSnc4Wm9EN2h2X1BPQQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Tom Cruise, 64, flashes abs for rare magazine cover and explains why he’s avoided long-form interviews. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://ew.com/tom-cruise-64-flashes-abs-for-rare-magazine-cover-12123170",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:05.623874+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMixwFBVV95cUxQc296M0FwQXpjNXhFRTFabWdOZU5vMWFLdEZ0ZGFuX0Z5cXJESENRYWdROUh0X3VJWlhScmtub0tXclU5aHhZYVZxSDIyY1duQUF5YnBxdXFCNzFnYUZMNXUxRnRwUEV1bDBMd0N6Umwxei0wbjkwVDZuNmJfVmh1MGlHd3RNeHBEXzVHUm9RWkg1NjFBQlFfRFM2cXNIanBrNDZNRl82RzVhQlRBUl9CeFlnU1R0THNqakdMZEdNS0dWYVN1UDhr?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The world’s biggest AI companies are working to create a new industry standards body, OpenAI reported on Tuesday, as rising concerns over the risks of artificial intelligence fuel pressure for greater oversight….",
+    "publisherUrl": "https://www.france24.com/en/technology/20260915-openai-anthropic-and-google-in-talks-to-create-a-standards-body-as-ai-fears-rise",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.619002+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiogFBVV95cUxQZ3hZWHdpSFpodVpyTEJBeVJGZlh3dFZOMlBVc2M3N3VhS0tZb1Y2dVdVV3lVT1RtLXhlTnZMekZuMmcxZW5vb19HcUUtVS03VWdjdkFtLXlESUozOVdzNnAtY2ZBeTV5c0owZ2F1SlN4OGdwc3lrQXFyTWF4QU9ma0Z2ODBIR0lCekVjM0pWem1ZMlE2VzZOTGNGNUkwdHFuWkE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Holiday faith drama The One, starring screen legend Martin Sheen and actress-singer Jana Kramer , has been picked up for U.S. distribution by Hawk Hill Pictures, which is expected to release the movie in theaters nationwide on November 5. The release date coincides with National Homeless Youth Awareness Month, bringing attention […].",
+    "publisherUrl": "https://deadline.com/2026/09/martin-sheen-jana-kramer-faith-film-the-one-us-release-date-1237104019/",
+    "sourceKind": "article-body",
+    "updatedAt": "2026-09-15T22:53:05.458008+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiakFVX3lxTFByeHZGM1p2Z20yU1hzVzl3Q2ppT0JtbUpEeTBCOENRek1teTNfZzVwMFY4MVRnaWVEU2hUNm84MlYxcVc0Nml5MndVMi1MRUFDZDgzdzVwNkFRM0xaYm1wUHoyQkZKcWY2Qmc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The Quebec math rock aliens are nominated for both the Polaris Album Prize and the SOCAN Polaris Song Prize at this year's ceremony, which takes place at Toronto's Massey Hall on Sept.",
+    "publisherUrl": "https://ca.billboard.com/music/awards/angine-polaris-prize",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.340548+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinwFBVV95cUxPenZGZ05fYzE5eUdzSkZzOVJjeHp0YkJyRXNUaXdBUU5VY2h6SzYzOTR1d0gxTHlMT1hRMlQ5WGhTNHRvQkk1LWZCcGZFcURxcm45WDVVUVd2UkJGLXNRZ0FGNk1PMW1oSkpEUUtQc2xBSWRRZ0MwNEJ1cTJnUXZ6UmNqQmxKamNYclVoU05NRVVEQXRnYkRZa2d1TC1xb0U?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Kim Kardashian was awarded $1.15 by a Paris court for her 2016 armed robbery, matching the symbolic amount of compensation she requested.",
+    "publisherUrl": "https://pagesix.com/2026/09/15/entertainment/kim-kardashian-awarded-1-15-after-2016-paris-robbery/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.294707+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOZ1U3VUppY2FrLXJWd2VOOXRINC1aRUpvSkVTSEUzQjBHdHNjWUdxOVlTVGI4YmNWXzktMldBZDN3cWphYUxpaVUtNUR4MGZFZ2ZHQXVXV3RybWdhVzRhQXFFam1rQU1yWE4wRVhaTUJDYkxlSzEyUHR0RWY2Y3J3aTBzQlg0WWdXaUhQd0FXT0NVY2V6Yl8xNExmaU13UGJHVXZyT2VSYWtvS3RZdkZ0bGdTOXVrVDJTcDRaNFVhcnA0OXRLRWVXVXltcVpVX3FUQnc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "New York Fashion Week is continuing to Day 3 with runway looks from 7 For All Mankind, Khaite, Prabal Gurung, Anna Sui, Conner Ives and more.",
+    "publisherUrl": "https://www.usatoday.com/picture-gallery/entertainment/style/2026/09/12/new-york-fashion-week-nyfw-spring-2027-day-3-photos/91719100007/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.054761+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivwFBVV95cUxNS1VGOWotTDJzZXpHeTkxTW5GdndVTjVqcXk1ZW02U05VSmNqOXZ5Z3V6U3huS0JVbWdydWhoalJUX21JdDZpc24wTHljZi1VOC1iRHRsUkc4dEMzU19mUE80blVmVVlKamVzbGN0RDk2RnFNSlJJYUhER2Q1eVpySlVZcG1weEhhUFZ2N0ltcGt0T2VtMHZ5TklQNkxYM0dhcmhnaGFTTmtNcV9IN1VQSTdiZmZYRmlpSmtmV0xlRQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "MacKay was joined by co-stars Daisy Edgar-Jones, Esme Creed-Miles, Herbert Nordrum, Frank Dillane and Fiona Shaw at the world premiere of Georgia Oakley's haunting, tender Austen adaptation.",
+    "publisherUrl": "https://www.hollywoodreporter.com/movies/movie-news/sense-and-sensibility-film-premiere-daisy-edgar-jones-esme-1236702018/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:05.027084+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOdkY5TzZDRnFPaVBacVd0Z3pISTRQNmMzcWZRSS03YWp4bUJyY016NjRfaHh6YnVJSTFDRVZ6WngzM3VXbXFpY0pqWkxLV2xpdkJsT2NJS3l6LXRIc29DeVJwWWZLMFJKZzFuVWs4QWNvSnJVR0p4OW1QelQtNlQ5Sk1aOW1UN2JJYTRNbXQ5TllqNFlqQjZMWFNhaUFyNDRNLXRqOXZ4WGhpVkY5UFpUX3lxeVhzVi16eVdyZXFtWmQ0Ukk?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Ed Sheeran Openers Finneas, Lukas Graham and Aaron Rowe Depart Tour in Solidarity With Macklemore. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.hollywoodreporter.com/music/music-news/ed-sheeran-opener-aaron-rowe-departs-tour-macklemore-palestine-1236702494/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:04.985130+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMitgFBVV95cUxPTThfelpmb2tnNldIVzlLXzc3MzVhcXFET1hONWNibVZ0dk1lVDRvT25DUFU5ZVkyYjUzR1p5NENObDZFcUlJNkRwMzlQc3FWYzFoN2xNZXpxVTNfVkVlM3d4ZUx0Y0JRX1FKcVdzVWtTZFJmWGVoTk0wYWlrSnJwQTg0dFVUZ3h5U0R4Z25qZmNtMFNGWG8wNjJXeG5sYURncFZSUFRzcDk5TXJVbkhqNDNVdlc2Z9IBuwFBVV95cUxQeS13dnBtdWdoRS1BdGZkWGoxVTZVWEVudU9KR1FRRm13Vy0tcktqejFoX3Q4dGtJTTFXbHBxRHRRTkpkQTZLazQwb1hWdlpybGdwdmJOQ2NpLUxBaDNGTEVYYUNFRFY2M2MyZ3V3czJhMWtoLXJQUEJjQ2ZwRmItcjBwZlFXZEJqejZPTjI4NTRwZ196anpTei1vbTRxLUVuQURwcDEzOHdkYnlfenQ1Q2R1T085V0xTTjlr?oc=5": {
+    "cacheVersion": 3,
+    "brief": "An illegal immigrant from Guatemala allegedly kidnapped a 6-year-old girl from her New Jersey home and sexually assaulted her, investigators say.",
+    "publisherUrl": "https://www.foxnews.com/us/illegal-immigrant-charged-nightmare-kidnapping-sexual-assault-6-year-old-girl-new-jersey",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:04.788773+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMipgFBVV95cUxOM3VWd2ZGNHZpZktJd1pxdFNRTGIzNC1HeVdNbm5nTXVDcXVBZUM0NlhpQXczQWNwZ1VfVkNneGNvOGQ0aXFRc1RzeUczWG9nV1JHSTBDREY0UFFsaHJya21BaGpubFNEN3pxWkIyb2E4MzdJaDBYWFdRTmNLOFRvS2p1dFNaTjFCeEVZeFg3RmJJY2VPV003T0Vjenp3b0YzNXJWazBB0gGrAUFVX3lxTE5oYmp0TlNEM2ZTT293LUhzZVBZUlU4M1ZCY0xIUkZvWnlCVlBhVm1jRUxWc2tPdnp1TWdSWV95UHRoMzBGVFlWNno0Q3l2NVNSRjNRN0lobVBWMzR4RDdsdUhFUW96NU9pUHFrZ19MS2VpakFOaDJ1Z3dVc2gtN2JaN2laS2NqUmJ0dVRUcmd2NTJwZDZZcGV0X1JVV3pZeVBLU3Utb2pmU21iMA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Alaska prosecutors are dropping voter misconduct cases against a group of residents born in American Samoa after a state appeals court threw out felony charges against a woman who wrongly checked a box saying she was a U.S. citizen.",
+    "publisherUrl": "https://abcnews.com/US/wireStory/alaska-drops-voter-misconduct-cases-american-samoans-wrongly-136395965",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:04.699992+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPYWRwdmgxbEJISEt4RlBqOGdmZHZWN1JoR3VXeDVwNHU2VmRkaUF0UGNfWFdzMnNfNDcxU2VSX0dGQWhqU3EzZzA4VU0yVWF3cTMwWldUWU5hLUh4dWlCemF2STFNMl9sQUJnS3JBWkxqbEs5c0huQnYxblZxU1poX3pVMkxKcEhCdUZzZURUVExDNTVYd1FobHZuTFJYQU1qWi1UYVlBaFVnZFJnemtsaVZqTlUtVU9QSXc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on 49ers find needed balance in run game with McCaffrey, Black. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.espn.com/nfl/story/_/id/49935565/san-francisco-49ers-christian-mccaffrey-kaelon-black-running-back-balance",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:04.645642+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMixwFBVV95cUxPWER2bnpLRmVKc3lqck1KMk03YVRCM0NqUHF4YzJ0MU5VWndkN0oxa1daV0ZxWjNoc2ROQmRsVGpiVDhrLTl5YXVybThtXzlwQWNiT2pyQTdCWXozTnhLaGNWVkpnMENNRUdiY1hWNmlaSnRad2h5eXRPYTNISE9qWWhBTW83aXpIT3RmMEZpRXNia3FPTGZBRHBIaU1uekJvQjAyV05lSkJiRHBEWG9senFrUjFjdzRHZGVfMHA1bVFZcW9HbHlv?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on N.J. weather: Flash flood warnings issued as heavy rain hits state. Latest alerts. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.nj.com/weather/2026/09/nj-weather-flood-watch-in-effect-as-heavy-rain-brings-flash-flooding-risk-sunday-morning.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:04.584625+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMizAFBVV95cUxOeGtQYlVKb1NJLXV0a3RnRnA1MkRma1JFaDlsTDl3Rl90bWFhZFVLSnRpYjhQaGpmdVd4c3VKeE9UMkotRTdyajk1d3pIaTdzSzRGUFpBUlRYOFZ5endwWTFFY2h2Wm93SDhRWHZ5NzIybFZlTlI0Tk5oMW1YYTFfaXlHc0RzVGFUUmJmOFpPdlpCMVh2aWxQSUx5ZGhxMHdRbW5xcVR5TFZybTJEVVhrb0tWcE5mTHBfdUxWM2M0Nm9zSHRpQmxJb0RTTzk?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on 'Disregard for our safety' | New Jersey half-marathon runners race half-underwater during flooding. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.wkyc.com/article/news/nation-world/new-jersey-runners-racefaster-flash-flooding/507-5742ab2f-b779-4485-9f59-29b58d82a799",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:04.305619+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNOURlbnV3SGMtN1BwejBYZnVBNmEzMjVDSDF0M1l2SlZaTy1hVEpyeU9TTXhQWmpfVnY5TmxmQ3ZHbVpLbkJ6d1BDMFI5YkxNN1dCZFl6VkhfTTBtMDRvX2dJYUlSNi10NTdNYVl1aUxJeXo1Qy1PNjVDcTBNV29hcE04WTdqV09s?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Police reported a car slammed into the basement of a New Jersey home, causing significant damage.",
+    "publisherUrl": "https://www.cbsnews.com/newyork/video/car-slams-into-east-orange-new-jersey-home/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:04.304130+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihgFBVV95cUxPMnZUQ0V5a2RJa2RncXIxZmVmNktuY2RzeUJycXFCWHVTTVlDRTVLSjVCa1ZYcGczc2tvSFFEOE1ZUWwxQmlhZWRZRXR4Z3FZbnY4MEk2SUJIMlRtU0ZvM1dJNkdCcmpCYlRvbWU4bEk1VDJ3VDFKaEdNSnh6UTJmdHV2RWhHZw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on New Jersey Devils Rookie Camp: Odds and Ends. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://sports.yahoo.com/articles/jersey-devils-rookie-camp-odds-011209680.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:04.276990+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNZHlqNldxRlFSTXA2ZkppZVJsMWE5TjZ0NlZyanN2ektaNXNSejVHMmRzZ1lYTEQxQnFhWHU4S3RuTnBSTURhVTdfUEMtRTFoRDR0Q0NwX1E4V1Zscm9TWjNSbjdWY3FZblU0VTlDTEtMam5PQkVrVEl3VTA2UV9JelBkNXJMbUxlRGpwRy1WM0FXQ2ExNGhGc3ZCZ1hvaTZvWmd3SUduWk4?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Rainy summer challenges Kentucky pumpkin farmers ahead of fall season. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.wkyt.com/video/2026/09/14/rainy-summer-challenges-kentucky-pumpkin-farmers-ahead-fall-season/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:03.992457+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMif0FVX3lxTE5XS2FlWElxUV8zRWd0TDY4Q0RDcHhXLWNHUDJka2ZpemFOSmk2dnh3Y1czWFBGUTdHb1k0UFlYZWxWTmdLY1lFellYQ1dMUGMtRmFHbHpoZUZUZ1JqVTFyZngxd3RSZFpyRmExTDJKcmJ5SmtlaFpRanhsaDNld2c?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on NJ Spotlight News: September 15, 2026. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.njspotlightnews.org/video/nj-spotlight-news-september-15-2026/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:03.827380+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimgFBVV95cUxOMXRidTFteF9oVk4yaUpZb1RhdGRTSllQX2h0LWMyampOUHZLUVNPcnRzNG9IVUJ6Q05OX0JTYWhBbHROWGpzNnk2TWpPZWJIRkk3R2tRX0xiclVOVUlTeWRnaV83YXZ2YnJXRUpid2dyVTJ1WjNGMXZmckszVEJnM1N4Z1NfREs2UG8wa2o0VTNScDktREZxbzln?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The spill affected a tributary of the Hackensack River.",
+    "publisherUrl": "https://gothamist.com/news/data-center-spills-5k-gallons-of-diesel-into-new-jersey-meadowlands",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.811479+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMixgFBVV95cUxNbE5Vak8zdURWWElCUXdHaFFOX3Mwd05RbUYyb1RYbHZDYzdJeEZHSjF6RUhTMzh0OHR0SHRBSktfTzU0UTBKRGd3SHBKUW1CbHZuc3NTcXUtb2VMakxxTVk4Q1E1RV9iQXc0NWtPWmlRb3RtbE94QlBrUkxOcWo1cnI0WWhkZVhVNVJSRmlRbnZIXzNoZ3VPVDdvVk9xWG1ReDJZTDdUZWN5SURZOXhsRkJtUEhGdkNhM3FFbHVRY0wxak8wTXc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "A 21-year-old Tennessee man wanted for the murder of his father is now in custody in Georgia after he was caught during a police chase, officials say.",
+    "publisherUrl": "https://www.cbsnews.com/atlanta/news/tennessee-man-accused-of-murdering-father-arrested-after-police-chase-through-cobb-county/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.617379+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikAFBVV95cUxOLU1fNGNrNTlwVHdsUlY0VzU0SWxuY0paYmdLRWlpR0dsWGF0Zlh3em13SUwzZFlIZ3U3OS1kclh6LXd2N0ctU0NJTk5Qc0tiZUNlYkI3ajFvMkdSazhEcDdiMUgyRXlhZmplSUc4aTIzR3dfMG5nc2ZYa1BfQjczeTRXNWh1MEd6SkJsd2p1Nk_SAaQBQVVfeXFMTUduUldyWERrLXhxdVRGcndjM3I3Mm92MElETEk3Q1JScDNicl9HSlFUUnhpaVNpN19pOEpfTXljLU9fV2FYd05DRWc4UEpXbllENlNyRlduQ2NoQ2hjWTdlbHVuRW14Wk5NeTA0SkdYWU1rQ1h3T0ZlbDFqU2lsRlF5ZEVFNnJtcGNfTFRRTkFHMGFqVU9kRl9YdFl1cGpNckpzQmE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "LEXINGTON, Ky. - A Kentucky nonprofit is launching a fund to support Lexington journalists. Queer Kentucky reports it raised $23,000 through Give Good for Louisville.",
+    "publisherUrl": "https://www.wkyt.com/2026/09/15/kentucky-nonprofit-launches-fund-lexington-journalists/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:53:03.527403+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimgFBVV95cUxPZXFYUWlFZEpEZktRRDRBR0pjeC1EaVgyQWRFMm41OVdiMEM0bjdYbXc1SS1rYXpZdUpqMkdoQkVqOC1INXRKUVpaTkpIZXd1OEJHWDNaWG0yM2Y1YmFjQjFmM0FnY0V5ZGlHdDdHYkJCcnVaWlY3c0hVLWpwVUhRbWtiUnJUV0p1aUc5cGhRbWgzVU5TYjNQaFBn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "In recent years there have been concerns about whether the monarch butterfly was a threatened species. Thanks to good weather, and an increase in their food, the pollinator’s numbers increased in 2026.",
+    "publisherUrl": "https://www.mprnews.org/story/2026/09/15/monarch-butterfly-population-on-the-rise-in-minnesota",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.435627+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiowFBVV95cUxPUDF5WnF1S1FNbXNxR3ZsNDk5dWlxdW5LXzV5TGxEWHF5TFRNeS13ZnpBZ1lJdi1vQ1VScDhFUXFENWtSekNBUDRndC1EcE1tMmNIMnI2OWdVNmhFQ25Rc0xTN2NjdmoyNDhZakZ3LTFJZWtrNFpiZHI0US1icEpjNFdFeWRSZGxLbEdWaWJYY0dROWNfTzZ5U1VIb2tHTDQ2QktV0gGoAUFVX3lxTE81WUduZm00TS1wX04ySDdFNTZwYS1OQm1rWG14bWJ1anNlazZvakhYUXI0TkhoVG81bWxDSVozNDZKZmZRTHlrempkLTVQem5GMmlEb0hqNHJ2TjI4SFlmc3BCWE1NV1pKSVFQQmdGaEV6UExQbEZXNlIzTDZ2WUpEdTFSR2xOemd1allxUk9qRDFyaXNDVURVMTRwM0RKOGJ1Wk9pd2xQcQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Keelon Russell threw for 188 yards and a touchdown to help No. 12 Alabama beat Kentucky 45-17 on Saturday in the Southeastern Conference opener for both teams.",
+    "publisherUrl": "https://abcnews.com/Sports/wireStory/12-alabama-overcomes-halftime-deficit-beat-kentucky-45-136397012",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.262036+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMisgFBVV95cUxNUHZ6TWhrSzhWbXI0TklJZVBCbDdCWHZCOURjZ1VJT0dyV2drZEsxMTB2R0ZtSnZPazlSNVFPbUtPTHRWN01WTjlYX25xZGlZSFh4MnNCSzVTMUh0T3RqSkpiTWUyc2RUMW00b01sTmpSTDBBX2l6MHM4WjIxSE5fZlJXb1hjcGNkNlFEOVg3TDFhel9ERFN4VUNJWEdoejlhdVdONktwRTk0bEFmdHpPN2Vn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Anderson County High School’s parade, previously scheduled for Thursday, is expected to not take place this year.",
+    "publisherUrl": "https://www.wkyt.com/2026/09/15/central-kentucky-high-school-cancels-homecoming-parade-due-forecast-temperature/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.247875+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQUExYWFhkVE1WRExNRVFiYkxOMFFSaFh1amdZZnNjUUZ2X3dUU1l2bTNZWVdZTXlXUFpoZ3ZQVWRPX2JQQUNhQ2lKN3BCcW1tLUpQM1lZN3VKYXZvMy1ROGhuaXNnbTBkcE1RcVpfd21fU2NVellrMEpIenJCWjB3cEhyT3RWNmR1d1Y2OU40QWxBZ1JTRlBRZ05rLUYybGJnZmFKak1sSzRNYnJBTjVPanZvLU5KeW9t?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Landscape designer Frederick Law Olmsted envisioned parks as a space for everyone, not just the elite.",
+    "publisherUrl": "https://www.wxxinews.org/local-news/2026-09-14/tour-highlights-the-role-of-rochesters-public-park-system-in-democracy",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.180611+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinAFBVV95cUxOdUZMX3RMa3dINm1Gem5xenRoelc5Wm1SZFhqYjUxX1ZCZ1M3X1lmUFVHLUthcGgwY0FBOGJ2cjZmSzJKUzVFZ2tuZ295SGdKTjE4Z3dQWmN5cEk3NWgxZHFRSmFPUVo0SFc2dGFveWYzeXFOZmp3YzFLcEw2TGdNTkpwYmR4VzM2bmxqUVhjV3VPTEEzeDVkQ3Yyb0k?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Sunshine returns to the Twin Cities Tuesday with breezy northwest winds early, then a quieter afternoon, reports meteorologist Joseph Dames.",
+    "publisherUrl": "https://www.cbsnews.com/minnesota/video/next-weather-6-a-m-report-for-minnesota-on-sept-15-2026/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:03.134380+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimAFBVV95cUxQdU5yX3p2bVRSWTl5MTZ2RjFadVEtRjUwZ2lvR3dIWjNaeWdUeDFjN2tWejh5M1BMckNIN21pdm1TbThyMklpVnoyM2ZCS1hOVTJxVV94NmVmcFQ1ZjhGVTVBUkwySTlsM0hlVUxoRDVOS1dYdkh5cFFmZ2pkWjNGaG1idE9aWThwZnc2TDBZQzJMREstNUpfSQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Bill Everett Williams passed away peacefully on September 8, 2026 in his hometown Memphis, TN.",
+    "publisherUrl": "http://obits.pennlive.com/us/obituaries/dailymemphian/name/bill-williams-obituary?id=62416783",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:02.794990+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwgJBVV95cUxPUlJZSUxzcDFfc1BQSDUwTUwza1EtUTVsUGlIc09xUlRFODIxLVNXRlRQZXRnRFRNeU1PSkVXWEhUc010eC03VUYwaXc3cWFzcWJWRzlNUTVRaUFfQnFaRkZ2Q1h2eU1fLXBab2pOVXBhVUdCN1FDYTR2R2FJS2NIdmVKekR3cVl4REtRc2dQLVQxaHlpVEd6dHJLWEJMOFpCQ0VoQ1B3bThIczRkcnhmeDFkREpfb1BqZjhrX3VUU29udHRrTHhRTGNLZlFkdDlRWVJtZmRfaUd2ZjVjVFR0UVVsMHA1Wmo3YjVDTzdkN1Q4YWJPOXFRMjVvUUVWTU5JU2FDX1c1NXFhc2tuLUZHVEs0bFlFNjllQnRFSFFLU21hUS1iS0pMUE1LSmFDWE9RSnVWWDhFVVowLUZpNGNKQkVR?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Unredacted crime scene photos from University of Idaho murders likely leaked, prosecutors and police say. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.krem.com/article/news/crime/university-of-idaho-students-killed/unredacted-crime-scene-photos-from-university-of-idaho-murders-likely-leaked-prosecutors-and-police-say/293-129e3a86-4a70-46cb-88b0-28e3fe8197b0",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:02.698006+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPcW93Y1lTVXQ3eFNqZUpXUUpxbTFON2NfNkhNQ1RDRHFwZW5sWmt4bGUxOFE4UU5RRDBRczItazRqSVpxaUpiU3NtNHJQTTVkQXB4bzJUR29zU256cmZfWnRfMFNSZExWa1BUd3l5UTRtWTBxeXpIMEoyT29FeDlWbFQ3WGU4dTQteU9LeEVyXzFqcWlSUS1qbG4xTGN5WUJ2ckJKRjBKR3lhTUJWQW9RVzhhWTN5a3RUVVlXNlB0YmNWUkd2M3ZFOVF3QmVhUG9qUkwteTRn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Spokane author wins Washington State Book Award. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.krem.com/article/news/local/washington/spokane-author-wins-washington-state-book-award/293-1c3a1ba6-565b-4089-a969-c09821103159",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:02.695399+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikAFBVV95cUxPSkNIYjdCWFhSMlRxQmVCd3Q1QzI1U01uVFpXMTVJbUtLN0JZUU53WW5MOHE2YmRyMmh5dk9fajlReFdTMWlxd0lxZGZSLTc0YUJWMXNBZjd5YkdIU3U5Q3RMUU80ZzVuTmRnTkhxS0xrQmJrREh5QWRZV1NCNmJMNTFoM3BSV2tkckxMUk4xN1U?oc=5": {
+    "cacheVersion": 3,
+    "brief": "First-year Rams coach praises BYU quarterback Bear Bachmeier and head coach Kalani Sitake.",
+    "publisherUrl": "https://www.deseret.com/sports/2026/09/15/jim-mora-previews-byu-colorado-state-matchup/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:02.468524+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxQcVE3Uzdmb25DQTNBNDVZdmZqc3JlakxOZUJLeGtXWk9WNkZJd1ViWlJLcE9nOWZMTkJiNzhSSHVBN1FkYzNOSGJQQ3BlSDNONjFUakNWcm0wSUI5VTY1NElZYWQwOGtHOW1TS21wOGd0YjNVb0pnb0o2dlp1bXRLY2xHaXBVMnlucFppa1VBTdIBlAFBVV95cUxQMWk1ZW1BWmlqeDJ4ZWZQTlBMaExzMEhiQ0NZZEhLajZOeWxZY3ZwbmtNYjZzbXA0aE00eUt1eUNvbDNVU0k5SjBBcEJWa2ZaeVBvVzVGMFZBV3Z4MElBYmJqSFFpOFZPem1halNrVHRWZkVtVW5MMVgwaDFpQi1fVUg5am9ORjA0T3BSZ2E4ODB1MUhC?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Two new bear attacks are under investigation in Colorado after a bear went into a 17-year-old girl's room while she slept, and in a separate incident a bear attacked a woman in a tent, officials reported. A 17-year-old girl in Durango was asleep when a bear approached her bedroom window, which had been cracked open, CPW reported.",
+    "publisherUrl": "https://abcnews.com/US/17-year-girl-asleep-room-woman-tent-attacked/story?id=136472172",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:53:02.445251+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMilgFBVV95cUxNcmQya2JuVTdma3RKTzh5ZXFwTlc2eUtJWTdmWmZ5c3RaUjB1Z1ZSdVlaSkFQX0dCaVRTTTdpTWpaZnB2YnNTNEoxTjlYTFVIc0tKX3RlNmZkaURJRG5MU1N0UUYwSWFVRXU4dHhaRTd6OXdYZi1mX3plcHowRTBnNlFOTlU0YTZoek50Nnc5VFd5NXFwQ0E?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Man wounded in Hartford shooting early Monday, police say. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.greenwichtime.com/news/article/hartford-shooting-ledyard-meadow-ct-22430706.php",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:02.243713+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiowFBVV95cUxPNjBxanM2RE1pZ1VadTJzOExlR01CaEhCdkpNSlNRNlZQZXR1aGVmMUVPNGl3MEs1LXZobDFxYzQ3bTNXNy1zWERDYUdrdEdvMXpVTzhCNkdLSXVheU9GLWZRUU9FVlA1OWJzTFp1c3A2aWtUNC03amIyVG1HSC1xLWQ0V0xwVGsxbzVwck1NamFqZWc0RTdNOHdFbmY0emRIVm44?oc=5": {
+    "cacheVersion": 3,
+    "brief": "2 standing in the Varsity Maine volleyball poll. The Varsity Maine volleyball poll is based on games played before Tuesday, Sept.",
+    "publisherUrl": "https://www.pressherald.com/2026/09/15/scarborough-all-alone-in-2nd-in-varsity-maine-volleyball-poll/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:53:02.241646+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxNOHYwNE9maGlKUG5pSkpIMTZpV2N3cXRkaHhTUGo1OEM1SDhzaWVVclpnRFVHTnpTd2ZOamVlZ1NIb2M1ejloZ0cwZ2k1MFBFX2ZtMUtBaU1DS0dSSWZKbHprakJhYWQ2azZMc2JyMzA4dDRkWExZUzBnSEtWLWJIWWdfTmdnV1h3cUt5UEF6X2Vfb1U1NlpaNDhrLU5OR3VFa3FGUmxHT1BoS0ZX?oc=5": {
+    "cacheVersion": 3,
+    "brief": "If you don’t think your vote matters to you, it may matter to someone else.",
+    "publisherUrl": "https://www.trentonian.com/2026/09/15/trenton-educators-urge-students-to-vote-for-registration-day-assembly/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.954645+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxPbzd6SlRoeGhONEdnaEhXUWU1X0x3cGpxRFJxV29tc1UxdFREOVFXdFVaWTVLMTk5aWx2MVd5Z0tDclFiQUtORWYwc1ZKQlBNMTEzbnI3RmhjTUhtaEc0VGZwcHJiUjl2blZzeVdsYkNUVVJOcWpZc3dpN25GZVhScDU4bw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "7 Miami Hurricanes showed some mercy to the FAMU Rattlers after overwhelming them throughout the course of the 77-7 blowout win on Thursday night. They got to the national championship game before losing to Indiana, setting a winning […] The post Miami news: Hurricanes' win vs Florida A&M got so bad it had mercy rule measures appeared first on ClutchPoints.",
+    "publisherUrl": "https://sports.yahoo.com/articles/miami-fl-news-hurricanes-win-044426455.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.916930+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiggFBVV95cUxQWUVobDZPT01zN29vY2Z6SGlyZnBZaWJjZXB2VHpnbmc1bDBDVFBabENFZmRSQjVpSXBoU2lCNFY0Q2R4anJVTWJodlBJVTlPdW4zYnFFdEJwRTB2NDlwSzc5b3Q0Mmc0R01rOUtHRHhWRHNvMVp6dnM2cXdqSzFKQnZn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "There were 29 nonfatal shootings recorded in the county between Jan. 1 and Monday, based on Baltimore County Police data.",
+    "publisherUrl": "https://www.baltimoresun.com/2026/09/15/baltimore-county-nonfatal-shootings/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.854556+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiogFBVV95cUxQbEczLS1UdXIta0NWazNNOTlSTlA2bUc4ajV3T1U1cGF1VjFtSFZfUS03clQtbm1QWEFrWVgzYmFTN0p0eDZINDU4X2xTX2dGLTFfbEVEVE9ueVhXanQ2NTdMN1dMUTNRb1JBY1BwOUlRWE10TTZlczNRaHVxQ3pVc20zd0l3cGFWaW94OVFqMlludUh1R19KWUZxUlpvV0ZWY3c?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The New York State Board of Regents authorized a plan on Monday for current high school seniors to be last who must pass the test in order to earn a diploma.",
+    "publisherUrl": "https://www.nydailynews.com/2026/09/14/ny-ends-regents-exams-as-high-school-graduation-requirements/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.656510+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxQbnZzLUJsSzNfME9sSkJfTGRRcXdCR3hObzhVOWtKOUkyOEZRbmVLNHlWZlViMWtHT3BLR3lXRmI3MGFVbmlfVlZvWmRVTGxhaklwZ3RXUnJkWWt4QkN0eW9CcGMtN1ptWkpzUEZ6dUdZcTZ1dUt6YXp4aVBsTEZrYWttd1k4UHF6a1FMaHpQMA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Two injured relievers for the Milwaukee Brewers are headed to Triple-A Nashville to begin rehab assignments this week. Hunter Baumgardt of Fox Sports Radio Wisconsin reported Tuesday that right-hander Bryse Wilson is scheduled to pitch for Nashville that night and throw about 40 pitches.",
+    "publisherUrl": "https://sports.yahoo.com/articles/milwaukee-brewers-2-injured-relievers-162526697.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.392155+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNeDJNWnI4SUFkaFR1cEZVRjNTNlkwMUpfd3hsNmpTVmpvVDAxSHJQOEJTSlNYSC1nWm9rVjZUYUlnTGVxSnI0b0RlUlZMQVg5WmpTeTVJNmxnTFRDRWdTTTI1ejRfRFdKU3hnSGNDZUoxRHgzb25OUDB6UXdPX1ZRdmk5eWVybnp5c3lEc24zeDZOcXE2eDVhUW5henZKcnRZeURMbjBnQlNPak80eXczam5vcmpld3pjS0pWcGR0N2RIeHhPYUpKUA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Police work string of Labor Day weekend murders, shootings in Jackson. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.clarionledger.com/story/news/local/2026/09/10/labor-day-weekend-of-shootings-crime-in-jackson-ms-in-2026/91676459007/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:01.165508+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi4wFBVV95cUxNYTk2dHFxbHJPTlJiOTJDUWZpbE5kclRaZUNyMml6ZlltWjVxdEp1U1pndy0tQl8tVGhpM1lEX0VLX2dXd2Q5M1JBN3NHNGxMWW9EbHYzdWRBdTdyWWdBdjAwTkZ2WVFGSzRYZDBGelV4RHNSd2tsYnBtOEthUzcxOEdsYzR6ZXpLblBYclBoX1hWdEk0Mm50YW5fTTlmQjlVX0pVUlRRdENyWkJTWkpldFRKbDhzU3gzYk53RmpEYmgxb2Rja04xaWo3SVJGUGtYWmVDTnBpd0dNNTNEVFBnZDBPbw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on EnPowered Business in Rapid City South Dakota Expands Local SEO Services for Businesses. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.desmoinesregister.com/press-release/story/125078/enpowered-business-in-rapid-city-south-dakota-expands-local-seo-services-for-businesses/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:01.115936+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikwFBVV95cUxOZE9nUGlQX0ROVDM5TVpVb2ozWEZKeUstZC13bDlESU9FeDBuVS1OdHBTQ3dUWnZmbW8zbFdxRV9DcTJOdHc1eWNiZnZxbmV0ckNVTmhOcG1jSk5RY0IxSU16dXJSSy01bUZrSy1wdFJKZFJIWEM5QzZxSk90clBJQU9xS1FINTFKUHNmNlVCcXh3dzA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Gardner is expected to coordinate shooting sports training for volunteers and instructors, develop 4-H outdoor education programs and lead 4-H summer camps.",
+    "publisherUrl": "https://rapidcityjournal.com/news/local/article_f15d4387-3445-4e1c-81b7-529f0ea9c49a.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:01.091862+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimAJBVV95cUxPLUhwV3p4amo4Smw1MXhSclZTMXFtVXZQczA3WnZ0UkVwdWozamNNd0c1anl2UllKaW0tUmdRd0R3b201Ukg5T2dqX2pSZ0xySExtWlctM01iNE5fZlJUY0VFUHR4aEQtYmdRZVVpZU12dFJ2OUp0VGhpUFFIN3RYQTB1cERSNkowdnIwcnlXNjl3Y3ktNURSZHJFd3daclptR0lqdWl3MHdESnJhSEZzNTMxbkRyTnFOck9jeXVGVVRjRjNfVFFIRkM3YnNlQ3JvQ2FZNDJWaVg3RkVxNnhVLUIyVVZUWWFLR05jcDFTOHJyeHNpS21PZEZtNE5sbksxYkV6c2xhSkhYdTNpR2xhQmZCeEgwWFdM?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Although West Virginia officials laid out goals for easing access to funding for the state’s many struggling public water system upgrades at a meeting of state lawmakers on Sept. Ward reported that the state is in its final year of support from the Infrastructure Investment and Jobs Act, landmark legislation signed into law in 2021 by then-President Joe Biden that provided $1.2 trillion for water, road, broadband, electric grid and other infrastructure.",
+    "publisherUrl": "https://www.wvgazettemail.com/news/legislative_session/wv-lawmakers-hear-about-dropping-federal-support-other-aid-limits-for-water-upgrades/article_6f5a7374-ac3c-4d0f-b50a-77e71f79cadc.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:00.773884+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMingFBVV95cUxNeDZCZ0ZfZmJlcjhrdGowVFgzM21mUUM1YU84R2ZxcnlQb3BqLTlLWHRmUXNiNUh4NVVPLUZ5Z3FHWjJibGlhazdXWVRtQWRPMmcxTE1Ha3ZoN3RkUk11RHhMWUo2NnVDTkJUWGxVUEUtN203dXJ5dDVURTlBR0tTQkhXbnN5WFRQM21uTXdGQ3Y1Ti1YZHpyVTdTclNWUQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Businesspeople - Sept. 12, 2026. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://bismarcktribune.com/news/local/business/article_5b81144f-c6fe-420a-a890-2b4f136b4942.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:00.757655+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinAFBVV95cUxOajJMYzFUa0RmMFVNWG5CSE5JRFdWbXVkVmlYd1c0S2twSGx6b0dDS3NXc1hheV9YWkNVM2J0aDhXV2RhYWpIQkhlMGd0cDJWUWFIMUpPVjA3UjhsRGpGNDlLWkhiWS1xMHNTTTNaS0kwcEsyYjVCUDVZRGtERV9MajBwSUpJQjREUVFwVWQwdnJYeDF0bUdsZDlrei0?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The deputy chief city attorney in Little Rock is challenging an Arkansas ethics law, saying the statute is expected to prevent her from running for a judgeship in 2028 because of a sealed criminal case in Nevada.",
+    "publisherUrl": "https://www.arkansasonline.com/news/2026/sep/15/little-rock-attorney-challenges-law-banning-her/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:00.636007+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikwJBVV95cUxNYi11Y1RNV24yNUFCOXNMOEMweTF3YlRKbVNmb0gzN1dsa1VZTWtFNjdQUjBYZlMzMDRreWtTQnh1VTdxaW56Nkp5aFBDTjF4LWctVl9qeHpybHdyakZoUzN5U19iTGZMMlhHeGFRTlBpaUhvSjRjdlpkWGxYeEdlWFN2NlJONUxmM3U2OGF1S3ZLTFJ6V1U4V0kwXzRyMVgxZ2N3RXBtQ3dzQjFja0JaNU1xbVlldGpIQ0JDeUowZ0dTTHpzWW54LTdDVjhrOEd1ZnE5ZlZUR2ZxaHJseVltX3A5eFRvZ1JpNHRlb013TmtXMVc5Y0IwZ1JneElpa1lCVUpzRWZaR1dzdnhzdlJWVjhCaw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Neighbors evacuated as police respond to barricaded subject firing weapon from south St. Louis County home. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.ksdk.com/article/news/crime/neighbors-evacuated-as-police-respond-to-barricaded-subject-firing-weapon-from-south-st-louis-county-home/63-d4dec067-da9b-4c57-b5f2-6b5072164bb6",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:00.628157+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivwFBVV95cUxOTGhUN2pIcEdaYndUOVNneHJNYlR3aVV5NzFGSENTYzhReEJGOHNkWm9JQmhKbVQwMEIwR3otMVBoejFRMmV2Y2VYUkhCSFlRdy1PT2x5ZWpONWVnbGJldVNYWEtaYThTZGgtaW1nUDRxUmFERk9VdXFBTUNybTBKRlRBc285UUVub3FPVF9LNjhfcVpyTm1NeXZEaE5uVHhUVlhNZFNMYkRXQkEyNHN5VGVKeUNmWmdEdFZMaVMtVdIBvwFBVV95cUxOTGhUN2pIcEdaYndUOVNneHJNYlR3aVV5NzFGSENTYzhReEJGOHNkWm9JQmhKbVQwMEIwR3otMVBoejFRMmV2Y2VYUkhCSFlRdy1PT2x5ZWpONWVnbGJldVNYWEtaYThTZGgtaW1nUDRxUmFERk9VdXFBTUNybTBKRlRBc285UUVub3FPVF9LNjhfcVpyTm1NeXZEaE5uVHhUVlhNZFNMYkRXQkEyNHN5VGVKeUNmWmdEdFZMaVMtVQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on United Way of Amarillo & Canyon kicks off 2026 campaign this Wednesday. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.newschannel10.com/2026/09/15/united-way-amarillo-canyon-kicks-off-2026-campaign-this-wednesday/?outputType=amp",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:00.596904+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNQnl0TmpKcjd4Nmt3dVZyUVBMOVNvNlUtb1RNSDJNam9TVUEwMXZSVUx2NHlZNkRkS3pUS1NaZnFpSWVPemxZaVdtZFhiUUpkZ3I1V2FxNkd0eDZCaWtDcWNrX0dINGM3RmFobGZTOHU1dm5pT2lUSVMwSUdPbUhNakZ1SllVMmlRUFo5Nw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Richmond neighbors: Obituaries for September 14. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://richmond.com/news/local/collection_b11266e7-341a-569b-9891-7775e0b44a5e.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:00.584269+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMie0FVX3lxTE1xMW1TdnYtbk9nbFoweDVfLVJSTHZlUVJ6WUQ5bHFIeG9CQVhtaG9DaElPanBpVFdjdVhXbHBpZGt4enJZY1dra0M3bFNEeklxaXRZNGxSQXZSVU1ybUtvU292cGU5Y0M4dWVpdk5ZRW5JREJ6MndlcXVXQQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The city reports permit reviews that once took five to six weeks are now being completed within a targeted one- to two-week timeline.",
+    "publisherUrl": "https://www.wsls.com/news/local/2026/09/15/roanoke-city-permit-backlog/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:00.579657+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMilwFBVV95cUxPbmpsUjZEa1JpYnlFRm1pMm9PNWx4OWpIeV9RenFESVE3RzN5NG1JeW1ZMWgxVWhRa3NMR2NSYkR3aXNHb2ZZUm41MWNpNVpTanQ1c19GWFdYZDFDeGw4VnVxTlU1a3VNVjFFY3JYSXdzXzJwSG82WEFVclBtRU1DeVc5OUpTWmM1bUlhZExiemhOajlETk1F0gGrAUFVX3lxTFBLN1RKTlZmNE1iY19mUGNtdy1VQVA5QVBldDNzbVA0VlVSS3c5V2tVS1dDNkVVZnpDR2V3Y3dBc0ZpdUVvS1lXU2hGV1hvcmYzQVJIc2ZoSzR4WWZISS1VbDBrZmZwMXFfNU9oUmVrSE1VN1dveUFCMlhDaUZOa2VrczRGYXFKVDlVRkpmX2ZYTjY2dGk5T29yX0dWTkJaQjFhSjFGcjNCQXlzZw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Unique sculptures made of thousands of canned goods are taking over a new downtown location for AIA Honolulu’s 21st annual CANstruction competition.",
+    "publisherUrl": "https://www.hawaiinewsnow.com/2026/09/14/21st-annual-canstruction-returns-downtown-honolulu/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:53:00.159113+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigAFBVV95cUxQeDRFYjJmcjRjcEVTdU1Jd284REp5UENObVEwZmRiS2VOTTVidTBvb291SXpEQ0tJNjFtLXZqbDRzazR5ZkNIdllSeFZMaW05X2oycTQySnRmdXFreF8zNk14eDdvaXpRQ1hsQWRaYVluSEFOWDRoSGVLLXZ0R0FQadIBhgFBVV95cUxNQnpyRE95Wl9XQkZwZy13Nkg3YUdvVWlORWZNWDQ0SU0xSVU0cTJENV9xWWRJYlV1eE9XTGU2eUpyUXNDTVBFRmdVZUVWMTg0Slo3cXM2SU5uUlZLMlZmWXh3d2Fpc0lWU0hlSlJ2TldsVWtZSUxDWHJKVmdrMEZ5a0lHcE5Idw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on One dead, one arrested in N. FM 620 crash. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.kxan.com/news/local/austin/pedestrian-killed-in-n-fm-620-crash/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:53:00.121168+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMimgFBVV95cUxNczMzZ1RTQ3o2cjRqN0hLcTVKaDFxWEV3TlVZWi1PczVwNWFmUTdlNTk5SXZZVDJyMjhHdXh0TmNVdjJWN196S1BKanRBdWpfU25ONFJ3eDMxd1oxbnJKUFdMRUhfU215a19TUmxVVHZFNWItWlRZbDZsTWxrMDA3ZTNtb250MjdpVF8xNk84TUM3UUtMUDdWMFV3?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Jeta: Searing Indictment Of Tourism Soon To Screen In Hawaiʻi. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.civilbeat.org/2026/09/jeta-searing-indictment-of-tourism-soon-to-screen-in-hawaii/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:59.867763+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRnY1ZnU4VTVIVGg4bVhVckMyVmwtS3ZSaTlHWFMyS1VVeVN4N0pOUG1YbDRIQkRuX25pTGc0WmpCMHdIQ2FleEo1QVY5UExhNGdDeFJhUGp6My0zZ1l6TVRGMzVveXNfcm9mTjkyNjZBUzBGUDJXY1d0NkNaREdKUlRvT2UteXNrZFRWMXc2X3VYSUJMWjlCZ0syNGdkbHNxOXgzTjhpeWIzM3c?oc=5": {
+    "cacheVersion": 3,
+    "brief": "You can submit your best photo online at newsminer.com.",
+    "publisherUrl": "https://www.newsminer.com/gallery/photo_of_the_day/drink-up/image_a61d4603-7345-48a3-b00f-da99510c6bf1.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.823673+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiowJBVV95cUxOcFRoTDhkSFV1S3ZDc3VzTzE3a1g1VG9FeFFPV2xxUy0xWGVDVjRSbVMtcnVrT1p2NC1VRTU0SXhndjFmU1pXQzM3bVQyMjJPSl9EUWI0ZzNtUDg5Z25UbjNNN2dhS2RidnJaWFFTRVFiSmxYNGRIYXZKUDZKamE0N2FUYy1FclI4eFVfMTY2MEZnZzBpakkwRUE1OElHM0x1WXJ1WU1CcUIwNXQtX3JScnJRMnh3R005QzlIcWNSbWN3WGJ4dm5CQU9qWVJsdUxUZXFMSE16THpMV3h1WDZsYjMxNmJSUnV6cXFfZjJTeDY3a21QSnh4eTh1UFY0cnlCeFcxUXpra3dwUEM5Y3V4ZUNTS2lJVC1nYjhXQmkzYmdtT2PSAagCQVVfeXFMT0hCNnhYRXFUVmpsbFk3OUpMd21DdUFKcWNWVTZhUUU5UjBBcUVTWjc2b0FwaW9sVkw1WDNSd3lVZnB5VFN4Y0JaQURxd2RiYjd0T0Zza25HanpVaXUtUTRWTDJRMElhcVV6bmRnS3k0U2RhSEFIWlY3MXFMcnpENmxFM1pIakJ0aWtTTkJUUzh2dHZmbkFQNzFnNlNqZjVfX2hPMEg1MFpCN1BrY0w0anVyMFNYVU1WRXR3TVh1YWZPbzVtVDkwVDlsY01Rb2d1RFJjX2JzazRlNHByUWRSZTJPSTQyUkJKUk1oT2h2ODg5Qm1sSkNodnBkakJUNG5fTXU4ZDNuZkwxbXhyLW1KeDJqai14NElqcjVrMWUtUE1CVl9mWjlPR00?oc=5": {
+    "cacheVersion": 3,
+    "brief": "President Donald Trump's efforts to assert federal control over elections are marching on despite a recent loss in the Supreme Court. Monday's rejection of his bid to restrict mail voting.",
+    "publisherUrl": "https://www.yakimaherald.com/news/nation_and_world/nation/trumps-push-to-restrict-mail-ballots-has-failed-other-efforts-to-reshape-the-midterms-are/article_17a4d1b4-f61b-595e-888f-2b1bd980c63a.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.794296+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPZEljNjd1VEt0dEFIaHk0RjE3dzBJZFMwZVJGQThRZE54ckN2VllEc3Z0U29OQnFSQzBlOE5BR1BmT3V0UVdYU0VpeHZYbnA2UmhMUWRoeDAxV2xiWlZaT2tUN2NMVlVhTE1fMV91ZS1hcmlEbjRLZ1lnay1FYkJoYm9XZnozX1hiRmtYM1NBSXUyeU1HVXk4c21jQy1RbF8zaFE3NDFUWWVOMlZiMldwNGlSYmZGQThhamc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The Klondike Express, a small cruise ship stored at the dock, was significantly damaged by Monday’s blaze, based on Phillips Cruises & Tours.",
+    "publisherUrl": "https://www.adn.com/alaska-news/2026/09/15/afd-new-80m-whittier-cruise-dock-had-no-working-hydrants-when-fire-started/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.790644+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi7wFBVV95cUxOTXBjUzVONlFRcHNOTEl0UHp6VDRnWlA2V0lERFNrVUhfQzZEMlAwV2RiOVJjUzlRa0NwajRlbWRzVXpRUWgxY1NUZktRN3lHTVctQzZPMUNvTFFvbWFxYzF2dE96YWRkUFdwLTVXWDdKWXlyTWNBQ1FIQ2JnMnVZMHZGLUpfUXJ0ejdZNmNVaWhfS0ZHdnh5WXZSUTZzNENrNWxETFJZVWNzNkVWVXpNTHFSR3ZKQ01GTXVFZnRqQ2JhOFpyeFdrQ1JBVzFzM3d3ejNiSU9uVVdUTlpQeDdwTk5PM0RTRG8tVUZZelhNUdIB9AFBVV95cUxQYzQ4ZEJNVlc3b0F4X0NydzJ3dXNjUjZwYlBHS05LeHlsRUVHaV9Dd2NTS0lxMjczZkpDYkdERVpPUFp0RUdzek1RX1hSYjhZdVEyT1NHRjlPb3lEOHN2OFhmMk1zZ3JHNDN4eGcybVJHQnMyTERfZnhYYktrYmJsLXdSLXNIMTVRNVRDdnlDMWp6eHlZdUljSkt5UjZLT05STUx0U1hOdFJwQU82WmtBbGc0dUhLV1BKQldwRkNBZGsybzJsb0FyWGRWYTlGU2NvZG9ZYXphOWYxdUN3SnNzdmxhVUR3UXJ1aG9BTjJVbk5jSHFy?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Washington needs to spend another $1.3 billion over the next two years to address skyrocketing lawsuit payouts due to state government misconduct, based on a recently filed budget request from.",
+    "publisherUrl": "https://www.yakimaherald.com/news/northwest/washington-lawmakers-face-another-1b-decision-on-lawsuit-payouts/article_63123da2-aa4c-4b96-b262-05e8d76f0c82.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.727540+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQOGxhUUFTU29aMlAxcDVCNzV6cTEyaG9weUlLSW9LWjJHT2pUTjhUaU5jOExzRUhfR28tR0RnM0VLSUFkVkZzSjY0dWlRdW1uV1NVR1ViTkxYdEQ5UVZVQ0NJUHpIRGI4dDdiSHZlYUx1bU9kdEdzNFd4ZGtMeW9vcEZWUGdFa3BPQ0Rrc0dwNkdBX2hWQUczSzZkcjVDSHdDRExTZjViYmtrNWtnYWRKcTRkMDZNRHZSRjV1R3pQeXhHdHlHN1oxOTRTSWlyTHlS?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The missing person flyer that Anthony Swan's family made. Keep it Clean. Please avoid obscene, vulgar, lewd, racist or sexually-oriented language.",
+    "publisherUrl": "https://www.yakimaherald.com/news/local/anthony-tony-swan-missing-on-yakama-reservation/image_18547ab8-00ed-42cb-a7f3-d55ecdd24786.html",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:52:59.677010+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMizgFBVV95cUxPVG85Q3hWeWx1cTYwNXB6clZ4aV9rbWlXUHdOUlNqWnJONG1iWmNhczJOU1dHSV82WDZXMlNoY0pJVl9oc0JPTFNobk4zVFNvcVBNczRpRXctY0JaTC1NVkFkY3NTUEEycGN0X1Rka3ZCODRDN0VWVS1RZ00zTzFTX1dIbk4zT3BROHhoeFRCcmYxNjNTeHF3Ti1DMlVIY3d4VUZSdC1JdmRqX3BKczBtcmdIeGJIQmJkSXRkeVpzcXdVWDJJZkt1eXgyRF9FZw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Police arrested a driver for driving under the influence after he rear-ended another car at West 18th Avenue and Bailey Hill Road, based on the Eugene Police Department.",
+    "publisherUrl": "https://www.kezi.com/news/local/drunk-driving-arrest-in-eugene-after-rear-end-crash/article_0e339795-12b4-4b44-8135-1f99cd4a07b8.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.510307+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMizAFBVV95cUxPaUN2ME5JcS1iRkJLdU1qOFljbFdwa1FNdjduSlJlMmlKcVlXaUp6RkVad2JOel9IRXZpT29Gbl9JdFhONGdCX3dSc3N6SGJzUkNEc0JqRkdhQ19pRWpEdV91UWJhRWswQWVnSXN5QU9vVjVaV044eUlpM2tBaGphMzRzQkJvdlZBWmxjOVYxWlRQcGVHRXZDZ1F3MGNVS1JheDAwdGp6djFpQlNiMjdUMmpNV1NkUWZEYThubXFXS3FlVGgyOVQxSFloWkM?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Idaho State Police welcomes new explosive detection K-9 Annie. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.ktvb.com/article/news/local/idaho-state-police-welcomes-explosive-detection-k-9/277-5506424e-30f0-460a-8784-5626d66ec7a7",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:59.149613+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiekFVX3lxTFA2bnV2SmQ3NU5yMEFFVmlDdVlXREw0RW1Qd04wNGtERW8zQWQtbi12M3hac25QNXdwRFBtOWE3TUxpVXk1UnVWU2V2N3VnY0xMaGhrc25iZHRESUk4LXFKT3JVd1VCNzlHZWhoYlJveTg4cVJ6ajFJdXJR?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Dennis John Conway, age 70, passed away at his home in San Jose, California, on July 25, 2026.Dennis was preceded in death by his parents, Mary Ann and John Conway.He was the fifth of seven children and is survived by his siblings, James….",
+    "publisherUrl": "https://www.mercurynews.com/obituaries/dennis-john-conway-san-jose-ca/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.138891+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMidkFVX3lxTE1ORnI1Rzh5Zml5Z3haUElWT2RNYmI5T2pCYjhoTDY5X25fX2Z3cDRMRWQ5WDRTUmU3MUM1eDJzaDFmbnprbHJPMWtpeDBrNE1jWEJDSGJZWjdWX0hvNEd2azZvRWc3RjNNc3BmeHVXR2xsdXVmZ0E?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Lilyann Wingrove Sosbee Brannon left this life peacefully on May 14, 2021 at age 99 in her home of 59 years in San Jose. She lived her life bravely, energetically, and with purpose, always keeping her faith, and advocating for her family….",
+    "publisherUrl": "https://www.mercurynews.com/obituaries/lilyann-brannon-san-jose-ca/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:59.120981+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi_wFBVV95cUxOa05wUnI5YXBST1RUTUwzTUVHU0hOak9PSjB6VzVmbm1WeG9TUDBVRmNSVUhGZ09xZUtRdG1VTUN1VnJxYnQxOGpreVo4ZERINU9oX3M0R0hna2lkZWJUZDI2bDhRR1Q0MEswYWcyUHdudmExcWhCdU9oUHJJcndVOHg5dnJNQndFa2FkY3lxQXFoQlhVbm9kS3d5LVl0NWZQTkEzVV9mNnc4WWo5ZGNPbkM4dHQ1Qmh5bWFNaUNhQ3ozam1fYXhoaXZKcDM3d2pMakVFUEJrNzVfT1c3Yy14RUE5YWdacjdTVklxRDIyS2VmdE1QWVZ6T1c2UFo5WTQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Dozens of Southern Utah University students, faculty and staff traveled to Beaver on Saturday, Sept. 12, to lend a hand in flood recovery efforts as part of 9/11 National Day.",
+    "publisherUrl": "https://www.stgeorgeutah.com/news/suu-group-puts-values-into-action-in-rendering-aid-in-beaver-following-severe-flooding/article_6ae44ef6-e30a-49d1-8821-2331ca6150e7.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.931766+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxPV1hJQmNUUmRJZUVUOVBVdnJpRGdzRFV5TVdqMXZaR1VvSmJBLXV3cXcwSjJUYV8tdFhnMzhIWGtFXy0yTnBvcVNHVjV4OTlwekgwT2Y4WFhYR3JNYmx0Y1R1T3Z0b0RXY1pwSEdkSU1QdkhXQVozTTEtYW0yeEhNblZHWE54RHZfS3VIcA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "FARMINGTON, N.M. — The nation’s longest continuously running mountain bike race is back in Farmington early next month. 2 with a downtown bike party at the Farmington […].",
+    "publisherUrl": "https://sports.yahoo.com/articles/road-apple-rally-returns-farmington-170924655.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.830697+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiaEFVX3lxTE54OF83b0owYU5vWkpCTmlXUVQzVTA0VDdZUEVZTDNKaDZtNzE3enR6OGQ4ME1Jb3lFVFh0LVBaejZoVWN1cDBrQUZYVzdoYThyczBSbk9LOS1BR3ZOaHk0YlV6Zkd6eEc5?oc=5": {
+    "cacheVersion": 3,
+    "brief": "In this week’s Eye on New Mexico, we are talking about the controversy surrounding state Rep.",
+    "publisherUrl": "https://www.kob.com/new-mexico/eye-on-new-mexico-sept-11/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.785071+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTGVORVZ6VlBNcUlOb3VPTUFwaDkzSTlXMFpzNzExTVpYenhOMjFPZHJ1cnEtNUd4aDdRTHQwTGc5T0o1a01wcmNfcDNvOXVia1FEai1MVXk3OWJoMTltNjhXWGNxTGFoOGlmZFRJTHdWQ2V0Q00wS2l3d2s5RUFxY3ZlRVdPNGFTNlhfaTh4S0lrQQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Country Club Crush, with Miguel Fuentes, Jr. in the irons, wins the $150,000 New Mexico Classic Lassie Stakes, Monday, Nov. 24, 2025 at Zia Park. Coady Media….",
+    "publisherUrl": "https://www.tricityrecordnm.com/petticoat-stakes-headlines-weekend-at-albuquerque-downs/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.706771+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMingFBVV95cUxPWXBTUkppbjBpbG4wTExYTHBLMklvRkZzNnE2VmFoM00ycjV6aGNZd1lNUlN3TF82ZWpuSWZ3VXhGUnNISFBXQWtkcmVEemVZMjdCcGZvWHM5NS0tWDhHSVd5NWNMby1RRGV0TV9KeEV1THVYdG51OVNJalE5VDF4V0tzbUlNVk93LXRVUUFyZjZuMWJpdm12a1JmSE4zUQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The Supreme Court reported late Monday that a U.S. In September, a federal judge in Massachusetts stopped the USPS from taking further steps to regulate mail ballots, which led to Trump’s appeal to the U.S Supreme Court.",
+    "publisherUrl": "https://www.durangoherald.com/articles/news/supreme-court-blocks-trumps-mail-ballot-restrictions/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:52:58.661216+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOa0xkcDJ3M3N3d09ZVDdvYWtnTTdrcVpqcjdlbElVb3o5MXdKTTgzbHR1RTZOaUhGSEhuYmR1SUZMV08wblNyaDBkd3pmay1MdGVhbGpQeE1sVmV1bzloZWl2M2QtNEdrZmZYMjVFNU9Rbkh5NGVDaExTM25fazRoTWwzNnhsVW8wUmY0?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The wild West was alive an well when a runaway horse led police on a chase through the streets of Santa Fe, New Mexico.",
+    "publisherUrl": "https://www.cbsnews.com/chicago/video/horse-leads-police-on-chase-through-santa-fe/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.592762+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPRUZha0xaN0NmR2ZXeUNQX3RzRHdNaUM4RkJzWWV2MHJkai1iNTZsSHdtRVYtSHlEYlRnVm5vTzFkT1FjSXdjS1hMT3MzX0h6dm5jVUNNcHEyQWpyR2JyYUNlbERjZGZiSThITUFXTEF2NTVWT0FsbU9mZmNJN1l5b0cwVDlfc2lVTGNwVk03S0NaT0dYcXJfaTFZdnVwWVpXaG9VNDU5VmdlSTVt?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Aidan Thomas, playing for NMSU at the time, watches his ball after teeing off during the NB3 Matchplay at Twin Warriors Golf Club on the Pueblo of Santa Ana in 2024. (Jes….",
+    "publisherUrl": "https://www.tricityrecordnm.com/articles/news/record-purse-attracts-large-field-for-54-hole-new-mexico-open/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.559756+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxOYWp5TFk4V2pXSlU0bVB5cE0xYTFJd3FrVWlETUtqVEpiS2xuVjQ0UFVCU2JnN1ZhSWpELXNqdHYwQXNQQ2JxbHFtZ1NHYkpzVTMyd1pQa29FaEVSZWFBc0Nnb3JCUUpqX25PR0c0aHdKRV9mYkh6cFVtYWxKSzd6Q2REOVVwOWhkUlItSk5nR0VxT0Z6anpKbWJLVE85UHplb1lYSFVsdTZaQUxX?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Las Cruces is seeking applicants to fill two vacancies on its Oversight Committee, a volunteer group created to help the city strengthen transparency and accountability.The Las Cruces City Council approved the creation.",
+    "publisherUrl": "https://kfoxtv.com/news/local/las-cruces-seeks-applicants-for-oversight-committee-to-strengthen-transparency",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.528225+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi6AFBVV95cUxNOFhwbUlRb3lOdW0tUmRvcV9WX01uLURnbU9mWk42WE1TTkNOdXFPYWNaZXBqc0pFLWJSS0wxdDNxaXhoTURyaHhsdFhIQW0wSFdhaXZ0THpEZ3RWcC1uRWF1ek02R2lRMnJYUVRkQ29wUVFjam01cmJYNVM1ajNpOHZoMmp6Q2RMTTFwcHJndHhFYXVVVU5JNnY0V3JZVm1QNVdQTndmdmNrVDlYMHQxa0wyUEZDOXhsVUJfNEZHRnI0QUpMcTV4cnFVdFFJcldkWTBGcTZldnVyQkttUENBcWU3WklQMzdQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The average price of a gallon of regular unleaded gasoline in New Mexico on Thursday was $4.31, up from $4.05 on Sept.",
+    "publisherUrl": "https://www.santafenewmexican.com/news/briefs/new-mexico-gas-prices-surge-again-amid-u-s--iran-conflict/article_0741fe34-199f-44bb-9c6f-01068ab89b6b.html",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.412181+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijwFBVV95cUxQQUdRc0FvRlpCRXRCQzhNbXpBY2xXNkxlZEt6S1dIcjRKWDI1eVZPOHJ2OFFUMHFqQUtwd294OTRKZnJIQmFVWFpSX2hRSjg5UndPZnVicTlmNGpqNXd4R2lkODktektoWllfaTl3V1J5ci14ZG9QcEl5aGNtZHV5MDdHb3ZPRTNlSUd0bjBqWQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Pluribus won six Emmy Awards bringing a high-profile boost to New Mexico's TV and film industry.",
+    "publisherUrl": "https://www.kob.com/new-mexico/emmys-prove-big-night-for-pluribus-and-new-mexico-film/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.118919+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQdXVYOWdFMkllY1JRa1FENlRWekhuMXh4RWswdGc3cHhrZ2RkMGJ3dGN3cjJMa0o3bG91ekJYMmRBUHFUc182OHRsMDg2YVhWbFo5bm5rcU1QUC1JRWM5cFdCZ2VzYjVzaU5NSFFPY3ZhbVBXOVVxY3BMYktOMUtmd1kzSGhDTWJnRzBZ0gGQAUFVX3lxTFBpbGpCWnVHdjA1WGpCODZTZVMtajFnamNDMzB0S0h4eHJyTndwWEZ6Y3lCc3dPajliaHc5OG45QU1jeTloYy1YR290YmxwWjRMbmVqTGlMVWVyR2xvb3lnQm1kR1o3bXdwRkJrbHpDeU13V3ZCcEFxakRvUW83bllPY1o3eDhlQjlIV2VrZDhyTQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on New Mexico Lions Clubs host annual food drive. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.krqe.com/news/new-mexico/new-mexico-lions-clubs-host-annual-food-drive/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:58.041651+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMixAFBVV95cUxNV2RrUWdid2kxT2F2U3lrSTFYMFZVY1NfTTNkb0VFUkZZZHY4WWcyWHRrMWI4U2VhaEJLQ0M3TEM4V3doR0ZLejZFSFhYOVlYXzdfZ2c3blFqcklEbmo5Y3FLMmVlNm5KaW1wNC12RzhHMmhXNlVNbWM1LXFMYmFLeUZKUVdjYnlRQ056VEVvY29vOTFpdHh2VDBYdU5EUXI1a3lNS09NdVVsWnVYbVNJTWFDZ0hJcUw3b0NFUENzckhXSktu0gHKAUFVX3lxTE80RjdYb2s2aFlncEhWT0RwQlVwc2NvTTYxTVVpYWxYcEZQMU8xMDhkSHRkOGpNU0dJZldFbXItTnJDTTZiWGpRSHZXX1FDU2RhT0ZvY1dEZ3VSaExzdFJhdkVMX3RJRkxxel9HLU1aalg2ZEVJMmZrZmVVdElNNmlTM2xHWlVrU09LS29haWtZNGRJLXhWMW5jMTU5ZHRGYjNYTzQzTm1xMllIZkRSMDdCaGtTS1dzN0p1MTJQTzFyN1lvUjZ6Nkc5aXc?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Eddie Valentin is making New Mexico shine online and beyond; The Influencer. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.krqe.com/digital-shows/the-influencers/eddie-valentin-is-making-new-mexico-shine-online-and-beyond-the-influencer/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:58.040690+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOMUROTFNkbURHdjEtakotUlBBXzlpNUFWXzhzckxFekhlQkNwSHg5UGw5VlFaUm1sb0x5OWpVOFZEQU5DcmRNd0JVdkphVVNzWnZhbU5OYXROWHZaWUJNbWtvcWZNR0w1bTlscmZKRmVxR09PQVIwUEhXT285SFdSOTNzYTBHVnFtSENOLXBjeTI5MFdKZEd5aDdkbk1qUW1WdFBYYnY5NFJsV2NibkVBWFczZndrR3FUcFpB?oc=5": {
+    "cacheVersion": 3,
+    "brief": "New Mexico's largest electric provider and the private equity firm seeking to acquire it proposed revised merger terms on Tuesday.",
+    "publisherUrl": "https://sourcenm.com/2026/09/15/new-mexicos-largest-electric-provider-private-equity-firm-propose-revised-merger-terms/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:58.039438+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPaFdGaS1aNUVuUmhJMWNjcjAtQU1ESEE3bGQ2YVVJdEE0V1lUQ0VUaFp1Q0VVVGRxS1VfMFFOaVlhUGhya21hYnEzQVpnbm0yTHp4UWR1RFQ1MUFRaWV3My11bTNBQlhZM3hpMDI2Vk5KcWRoUmlzeFpBZWl6Q1A4Z200OEUwM0dXdkNVdzY4OXhpLXpUbmdWZ2JpcmptTFY5Y3RwNHFRYjRtQk5wajJGdHVtLTViQlEwVTZ3cmU4SnBDQmdUQUhQVDc1R0E0RXpNR0FxQm9ndUlZRGw2UmgxNA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "You can join the waiting list on the Steam Frame store page. Half-Life: Alyx , Valve ’s 2020 VR game, is also included with the Steam Frame headset.",
+    "publisherUrl": "https://www.videogameschronicle.com/news/you-can-now-sign-up-to-order-valves-steam-frame-vr-headset-it-costs-over-1000-but-includes-half-life-alyx/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:52:57.963104+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiywFBVV95cUxQMnlIY1BwOTUyU1lrQlZmdFF5VGd0TkxjYkt6TTV0QmJscnZUU2hoaHVVeUw3TEQxcUpBcUYyU1dtVzdCSUdncXJpaFFyeGVnQmZBQjJLdXFKcW9xSTZTYldYMXZ6d0duU04xeGVRTGpJVnhxSjVCMElNQi1QS0ZzN0lneV9uV0tIbWIwNjdENGFSU0NWZmh3Z2VHem4zX3BQYnJzdXdIYmx1ZDd0WkhCRFEzOVJPN3ZOeHpIdzFVYV9MTERRN24wUm9DOA?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The state auditor's report is the second in recent weeks evaluating how state agencies and local governments have spent opioid funds.",
+    "publisherUrl": "https://sourcenm.com/2026/09/15/some-new-mexico-agencies-improved-on-opioid-fund-spending-after-early-struggles-state-auditor-says/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.772340+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirgFBVV95cUxORDZVY09NVjFJRHNQN2JYbDNDaGFRWWF1UnBUMlB1V2JKd3JmcmVDUHFuRko2QW0zMldFbWtHWDZuMTU0a3R5NWg0Ql9JUXpQMUQyYWFEWVJ6N1dWVDZXdEZ5clFSSU5TY3VpUU96ZkY4TnpvOHJoRjFMY3hRQUpXbEdSRnFCMFlyMTdfVzBFTFctZXlCZ0tkOHh5cHczbEEzeE9rMGFDZGEyTDdzY2c?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Over 40% of US players cancelling Xbox Game Pass, PlayStation Plus Essential, and Nintendo Switch Online now cite rising costs as the main reason. Circana reports price pressure is a stronger cance….",
+    "publisherUrl": "https://gamedev.net/news/5699-more-than-40-of-people-cancelling-xbox-game-pass-playstation-plus-and-nintendo/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.751487+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMihwFBVV95cUxQT2k0V2ZlblZLaFFMdWJjNXc1RkNXTjZjTGZSVE9FZnpYeEVWR3pZQ0dFQ3pHTjEwRkY2eXRieTdpN0V5ckZqRW9pa3prcm1WWjlPT2EycWxhSVdpYXcybmFvRGJfY19mUENwVXRjTEs5TDJ3MVhiX3ZtZ0tNaHlkQ1VkSWlIYTg?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Crystal Crisis is free to keep on Steam for a limited time, with falling crystals, fighting-game mechanics, and a colorful character roster.",
+    "publisherUrl": "https://www.polygon.com/crystal-crisis-puzzle-fighter-free-steam-september-2026/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.651756+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi8wFBVV95cUxPTUpqUVFYN29hekVBOVdUSnR2N3ZZLVhKdHV1dzNEZ3lyUTZWWERzOUNsaVk2M0lTcmFjYmc1VmpxZGRFNXY2Sjl4TWVJV1pzbGs1YTdNNkpvMmc1bUFZTHdxUmprN3hVVENOZFJvaHE1b3c1Wl9ZdjhUNW5hUU40LUFobU54bmVITFdMVndRRWZIaHF5R2ZTcDBReEFzUk9DM2c1VTRQeVNNWTA0TDhZdjFSSThONUZpSnVZdTdKTTUzYkRGaDRQUGRYWUY2MG1jRHBNT2t1VnpCa2xaQ0dkZU5LRFRUNXBPQ1RfV24wLWlPeUU?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Microsoft's new AI code of practice actually gives me hope. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.pcgamer.com/software/ai/no-ai-you-are-not-human-microsofts-code-of-practice-for-artificial-intelligence-actually-gives-me-some-hope-for-the-industry/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:57.550763+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwAJBVV95cUxQYVZpMEh6cURVSktHMjdJQ3JKcUdsbzFOT2dzUFFDV0d3VFBRV0xmd1N4WHBWNkF5LTJfc1hFRUlKajRzWHdEWVpVWDdKelpYU2ZOX1BvLXFySHNPdWpJbEplQWp2a0I4TXp4NHJ2Y2I2TGF1RnFkTkJJeThnSy13bjR4X3IxSTQ5TURERTdnMGFjME40UmdBU1Q1Y0R4djI2YXYtRmlUX28zX1BpeWlvbWpPc1NRY2FETnNWOTZvakd4bXVucmNhM2dHZmphc0lJTmtSM3VZMGlidEVtRDQzWjRYcWl1X1ZJMWY1SE9XUGtRSEFLMGhPbWVvNkZfeVc0b0tEQ0ZsWmRrNlhCZ05tdjEwRzVXbTVBLWFER1R0aUtkSlB5NWpKZHhJTF91Y0NYVl9UeXV1Z2EtM0ZTYUNvSg?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Valve says the RAMpocalypse has 'not really' impacted its plans for the Steam Deck 2. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.pcgamer.com/hardware/handheld-gaming-pcs/the-steam-deck-2-has-not-really-been-impacted-by-the-memory-supply-crisis-with-valve-still-focused-on-a-very-delineated-performance-improvement-for-its-next-handheld/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:57.540989+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiggJBVV95cUxObnVScFZCMk8xVG1BZlNBWjBIMFlxTWwxSHRnY3ZHb2ZuSk1IVlczd1Jja0NhQzZ4UkFMcENMVkhZWHNqOEo3M2VKWG03d3hWT25SZERKQWlINWxvNUxuUHZwTkN2VzB1YXdnWF9nVVZFTmpES3pWVmJSemxXQlk1cXVmWWNGVXRXaXluTndDdUdSSnZRa1pxS0lmZEwwaWdTYlR6Z3VVN3JtTWZiV0hWVGh2b2hTLVFYSlNibV9Vc2RpdUphTlk2cjIwLTJaR0xlcWljWmdhaDFjNHpLUXMwd2ExeUg2OUM3UUEzU3I1NDBVMUVIcWdoXzlHNDFMWGZfR3c?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Valve hopes to 'rekindle the excitement' for PCVR with the Steam Frame. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.pcgamer.com/hardware/vr-hardware/the-steam-frame-launches-during-one-of-the-slowest-periods-for-vr-on-steam-but-valve-hopes-to-rekindle-the-excitement-for-pcvr/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:57.531094+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi6AFBVV95cUxOblhHejJoU1ZBQVQ0RXFZMkRjZFRfUDNnZkpNay1DY2REbG1rLUg3dTNNNElicHVJdUFwZ1pjb2ZINW5mSFRucG1VRzZ2ZDFpby1KMUJtYk15Y05FWkoxZTdYNG5nbk56OEJNeDNiYXJXMnEwTU5CYkJFX0hmd0lKUFl2MFBIaGJoeFZVbFRXQm85MUJpRU9ZRXdmSDlSQXJfaERlcDNKQUFGckFkZldaaGdoYnd2NFo5dWtpZU9ZS1prZWphNm93Y0RvanlBT2czTkpfZDdhN3pQQjJBekI5U2lFSXowRldC?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The leak could also include previously unannounced and cancelled games A huge Steam leak has revealed the achievement lists of hundreds of games in development. The newly added games include numerous anticipated titles, including : While some of these achievements lists still appear to be work in progress and either have placeholder text or haven’t been localised properly yet, a lot of them contain major spoilers for these upcoming games.",
+    "publisherUrl": "https://www.videogameschronicle.com/news/huge-steam-leak-shows-achievement-lists-for-hundreds-of-upcoming-games-including-kingdom-hearts-4-and-persona-6/",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:52:57.382636+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNQl8wYlhaT1FGQ3F1Z01ubG9HZnJHYW05WHVzd0tSaGZVLTMtR090M2hsTHhQeHAtREk1S3loNktqUXNPaWRnei1KT0xwSEFJcW1vbGNpc1hRWG9ES2I0VEJCWHZ0VW1CRkxBVFVIcXU2NnBjcG5sNFc4UVRWeW9YYmExdnk2bzJQYjh3Sw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Today’s Nintendo Direct saw the announcement of It Takes Two coming to Switch 2. The award-winning modern classic and co-op gaming gem is finally making its way to Nintendo’s latest console on October….",
+    "publisherUrl": "https://www.cinelinx.com/games/game-news/it-takes-two-launches-on-nintendo-switch-2/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.309989+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMixwFBVV95cUxPd3Z1M1Zod1FRR2ZwVjhFZDRCenFVa2gzZmVpcXYtdlFfTU1HMjFLVHZja210YnFyclpfNnlTckloMDBSRTVuUTFGY3dTMVdLY3ZEZ014MThlaWE5UkN3aFRZR0VvX3dscGdVTjVpN3NRY3BqRHVPeFRnSUkzMmdydEN4dkxzTTJQWElRMmtFS0VyTUloa2JaZkk1OW5rdEZWTUNtck1Va3ZINWlqVUdnUjQ1S0JXdDJscmdyamh0bDFlWW5hM0ZN?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Mayor Wu and city council members urged President Trump to shield Wichita aerospace workers from U.S.-Canada trade fallout.",
+    "publisherUrl": "https://www.kwch.com/2026/09/15/wichita-leaders-urge-president-trump-protect-local-bombardier-jobs-amid-us-canada-trade-dispute/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.184612+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiygFBVV95cUxOazMxUmpkcUhUdnhzV2tfczZ0Q1Q0LUU4T0NabU54bmowY3pLOXJzQmhOSWM0UENWZkh6dm5yTzBQcDhnQ3JhNDB0MXhuQXFXZDk1VnFHb0hJR0RDLUhaM2NuNllmYldtWlVDRzk3VmZSdkROWjdFcENWa2dTQmZVZ0tqRXB4TEZ0NUJBRzJ2dGF5MGpUWV92NE5FRV95bjBkZFhXWjJFOFRfSEFxNjJfTjFPZEJEOEpNeTZKcC1zaUFrMHRMRGdpVjlB0gHKAUFVX3lxTE5rMzFSamRxSFR2eHNXa19zNnRDVDQtRThPQ1ptTnhuajBjeks5cnNCaE5JYzRQQ1ZmSHp2bnJPMFBwOGdDcmE0MHQxeG5BcVdkOTVWcUdvSElHREMtSFozY242WWZiV21aVUNHOTdWZlJ2RE5aN0VwQ1ZrZ1NCZlVnS2pFcHhMRnQ1QkFHMnZ0YXkwalRZX3Y0TkVFX3luMGRkWFdaMkU4VF9IQXE2Ml9OMU9kQkQ4Sk15NkpwLXNpQWswdExEZ2lWOUE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Carly Rush is, literally, an expert on the letter of the law. While working through a dual degree in public policy and law at Harvard University in 2013, Rush spent a summer as a law clerk fo….",
+    "publisherUrl": "https://thehill.com/the-hill-notable-staffers-2026/6077903-carly-rush-chief-counsel-senate-appropriations-committee-democrats/amp/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.084348+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQRWFIQWpQdEhPSlJ0ZW80TEkwTlZabVd2OGwyeGtLd2h6TzBRcTQwTGhSTGdBclhWMHE3YWx1ZGVsY3dGOHl0M1o4VlJwSnU1SWVram03OVFJYlV2VG1hQjZtbzg3aTh5a2h5dURXQThZVTFfN2ZSZ1o5Q1VMUldURUM4VXBNMkRjNFZvU0lNU0tObGNxTVA1cDhFTWR2NUNzSkRJVnRLYUpoVXM4RENacURGbG1GYTFU?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The ruling bars the United States Postal Service from implementing restrictions that experts and election officials say would upend voting in November.",
+    "publisherUrl": "https://www.wired.com/story/the-supreme-court-just-blocked-trumps-efforts-to-control-mail-in-voting-for-the-midterms/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.058183+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNbHc1YVlNaWpXWVRfS0RqenB3VWs2Sjl3aldJY29ma25OUFFaVmthWWE1UjZJeTNzelY2a2xxRjVnUU00SnJEWlNSTGhya09QMzdzNS0zcmM3UUwxZ1V5eklQVlMxaTcwTWZhVEE0NzNNSkhlclB6Q2hBSG1EY0pkUFpYY21KamVjazd6QnhYc0l4YjRhMXltQ3ZQdUpvTVI0d1VrUG5hdDJqd2Etd1RhblVZSGVKWVE0UjBxYTY3dk94QnM1Z2cxcHc2M2RRMjE3eURPcg?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Harada and SNK’s Ozan Kocoglu discuss VS Studio’s vision, new IP plans, and lessons from Fatal Fury’s launch….",
+    "publisherUrl": "https://www.videogameschronicle.com/features/interviews/katsuhiro-harada-and-snk-discuss-their-bold-ambitions-to-revive-japans-golden-era/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:57.021789+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPNE53Z1VGWE1JM1ZCSUxwd1ZxWUQ4bkFsQ0lIQlp6bTNJb3pDSFpqeTZQZENVcXpXUVRZWW10bHFzQXZJV1hGd1BLV01kMzBLYldyWjQyZEVxSGZac2JfdWZMWF9aWUwxejg3eldEbEppUDNxX3p3cmNtQXQ4VGltWVBmb1JfMTVIZG52TGNySGhtR3FVMGVxWXEwZVdfcXV1TmtFb3QxUm0zVzViRW5SUExMeGQ2SlRtcUcySTBpSHJ2Ymh2ZkktMGNvSjRIcXFfNjRDTTRLa2kzYk0?oc=5": {
+    "cacheVersion": 3,
+    "brief": "A motorboat travels past commercial vessels anchored during haze in the Strait of Hormuz off Bandar Abbas, Iran, Monday, Sept. 7, 2026. (AP Photo/Vah….",
+    "publisherUrl": "https://www.the-journal.com/articles/associated-press/an-iranian-commercial-ship-is-struck-near-strait-of-hormuz-with-1-dead-iranian-media-say/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:56.989610+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivgFBVV95cUxPR2Vhb3Q4LW9nTG5Xd09ldGoxVWZLdG9NVWp2dnNjNTRBb1ZtRUtoNEY3VUE1X3NidURTbkV0WUduenZ4V0xTTmNQMjZpV2t5UkRPM3ZmblhYdkpMcDhWSnZyelcxNUt1anl3VDdEeFFLZENrU0E3NzZTMmZZb0FaY2FiT21LaTFHOGpNUE9BMGZzNnZrWDE2dlVvUmxWUjRubmljRUZHN2JVcGVjVGN2Zzg2MnRoaTNoOUtuNTlR?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Trump keeps up attacks on mail voting, but election officials more confident. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/legal/government/trump-keeps-up-attacks-mail-voting-election-officials-more-confident-2026-09-15/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.796913+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQmg1ZWZveVZUdjBlNWIxZXZ3Ylo2Tm45cVlBelNVQUpwQjhsUDFHQmYyYUhVZFU2c3hIYWxmNjZ0NzZpdHRzcThZOGkwU1lmSFZfZHc5TlNlcms4NUhPRWRKbXpUbjBrSVRHX2dab3ozQTlWUF9Ka0FLSGlnUzZMOXFjR3Z1akRVQ1NUNEZkTVZCbG9lMUtVNXhDMFlmLUo4aWlKTGhtaW1lTUlo?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on WTO says global trade system at critical juncture, urges reform. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/world/africa/wto-says-global-trade-system-critical-juncture-urges-reform-2026-09-15/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.680515+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQNF82STlxaHhSdXNSOE9GbjlTLTR2RFJPelVUblRjOEp5YURhWTZuNE5YMmRlT1MtcWhuNzU2eVhNY3BtSjdXcUo4VDBSb0VpQXNIQVkxZHZSY3V6VTNQd3lGc0tfeHI4MVZZRDRpbUN6bXgzSzdQUlNVaHA1TzJtYUlzZm82MDVfSHZrQzJLdXBTaWhUVXBDR292Y3pPUENiVWk0dFhwTEJzbjZlTTJNaFNIaUVBSU1jNzh2S3V4SW9VWUE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Sweden's centre-left ahead as far-right stumbles in tight election. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/world/europe/swedish-centre-left-opposition-pole-position-take-power-after-tight-election-2026-09-14/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.622718+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMingNBVV95cUxONDhWQlhPSjZvZFoxbjY5VEU4cTN1Zzd2Vkh5VGhrdDNldzV2VGtnTmZSdHpVdGQ5UjREMmhHN2FsY21xQUY3NDhUQ2JWeHVpNUtUektFZGFJU25taWN4bXBpWlhwbm1oV3dzOHY5dmF6amNwWEhadjZRMzF5S0RhUVljRUJEYUNtY3JKLUN4cHZWeF96RzlkY0Y2NU5JZVY3Vzl6ak9UcDMyd3hLa1FDemNsOTdqLURydXZKZ1VvX1pOZGxfVnFrLTNIcU05S2R1VHRmUTFiMXAzVWRyaFVkS01mMjhDYUVpTnludmFwTXlFOFpXV01tMERQM3RJUXp5dnI5X2dLMXo5dEN4c0NEZ0xlelBDRVE2MEtuVUZJME1hQW5pZ2VFdTl6TGhSN0F1WXY3SHFOdUt1aFN5SzhIbk1rNTdTam9RMWsxYnRYMFVtSWllSVFlVVpZVUJLUHFjbXRVVzk0V2tYWFpDMjRBZ0RTTW9XMDlQb2dZY29tUTJYZWtxcUxjVU82bUI0YUV6dFRKYXFNNVF4YXFxc1E?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on President Trump said US forces “totally obliterated\" every military target on Iran's oil hub, Kharg Island. - Defense News. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.defensenews.com/tags/iran/?contentfeatureid=%27nvOpzp%253B%252BAND%252B1%253D1%252BOR%252B%28%3C%27%22%3EiKO%29%29%252C&contentFeatureId=f0fTAiDF4Sb93rp&contentQuery=%7B%22query%22%3A%22type%3Astory%2BAND%2Btaxonomy.tags.text%3Airan%22%2C%22size%22%3A10%2C%22offset%22%3A176%7D",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.622028+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQX1FQVWFTNWY5THFid1QxcE1RQ1h0YnAwUDRnREozdmdxWG1TSGtzN29QMU1xdzFVTm93UmtlVndnQzJTVUlUbHZnOUtHM2ZKTmNNYnd0VHVZVHJTbVY3a2Fnc09PUkxxbmFOb2hQUkhnd3NNZUZwUXhHZzYzVEtQS3dXZ1REMjJ4Yjk3eU5YMjE2SlZUU3cwVWE3NnFyMEsxUG1Wem1oNUVUTGNtZEFZTTZaZ3AwT0E0ekZDbnd5aGl5bTJfUWFURQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Mustafa Farhat, 8, who was injured in an Israeli airstrike that hit his home and killed his parents, is comforted by his grandmother at a hospital in the town of Nabatiye….",
+    "publisherUrl": "https://www.the-journal.com/articles/associated-press/israeli-airstrikes-on-a-village-in-southern-lebanon-kill-9-people-wound-13/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:56.549720+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPcnVMQlRnV2VVTWlzTHJQQ0xuOG5EZC1USkZvRGx0Z294ZzhWS0xxZ0YxZ1ZMSkFhMnBzTTRJNGlQRTFDdVVXWE1JYUl1OFVvLWp0dGVockpXaHZISlNjT1FrbnJGNWsybW5kRUQzQkljdmhGcEpzczVMOXpnZ3BKTkp0Vm9WVUtTUWRJemw4QkFZbngtdEdPaEFEU3lWeUtJNWF6MVcyMWxobjNwTWRIRU1yVlo3MXktMGF3cmlJTmRyMUE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on India's food inflation unlikely to persist through year-end, economic adviser says. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/world/india/indias-food-inflation-unlikely-persist-through-year-end-economic-adviser-says-2026-09-15/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.403670+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQUExUVDd6U2lyRlJWZXdJRm5UVXFIdFhWdzR1Y09XZFdiMU42NXhxMjZNWUhrZjQzQlNOZzBYZGFUekVQUUptZzJHOHpRVG5vUl96cG1kd291dGdGbHJDTGk1UGVRYTNmTElfWFVXZHpCMTJWOFNENHl0ODhTMm9EMHY0ZTRwT2E3WDBGNHFhZVRobVlsZkFyRDZMaDVScFQwUFAtMGlYeHNmYlVDQncxQ19YZTlidTd2TDJhUXNKZ2Vyc2FvclIwWXBWN1Fxa0RBYlNZctIB2gFBVV95cUxQZEJUcUdyUjNtMl9TTlNCMFFJd2JtWVM4Z3dWUW1Fb0FRU1pValZnRnhVdXZ4b1NDazZUWEp5ZklHN3M1d1ZOcWV5SjJaTHJaWVlJVzd2TTlMd1RrVVlsLWEydFI5MXFkdzd6LTJUWW5PbTBhSVVfVENvOFVIVDk2bDkzMndrOVVQOFl3V2hsekpkdi1xNENWdHBCS0lmOTdJekNRVjVqaXFUNGFhUzdxc1hLbE5jeHVQT3d4eFBneTQwbG9KMXhJbVBXanlGZ2ROXy1FbHNPMk9xUQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The Trump administration is stripping tens of millions of dollars in U.S. military assistance to countries in Europe and the Middle East to support conservative-leaning governments in Central and South America.",
+    "publisherUrl": "https://www.pbs.org/newshour/world/u-s-pulls-millions-in-military-aid-from-europe-and-mideast-to-support-trump-aligned-nations-in-americas",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:56.402528+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivAFBVV95cUxPaVY1OTFyUXdiTURnQTJlcF9vU3plQ2J6M0VfbUZkdnloMUwzODlEZjNJcFAwTkN2ME1yX2RPRUxtNUhUUF84NUZpZTV6UWR2aUNHYllZMmNJSEZKUXhhYThzZUhGcVlRbFdWcUstZFNKSGZBMzlLenVyNnRXeE9WMEMzNGdDRWZ6TThvX0ZYb3lnYndGWFJUM1hUXzZWdlhxSEZuZUpGeHcwbVVfbU1qRm94YnRoMmJWZXdjTw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Kim Kardashian, center, arrives to testify regarding a robbery of millions of dollars in jewels from her Paris hotel room in 2016, in Paris on May 13, 2025. (AP Ph….",
+    "publisherUrl": "https://www.the-journal.com/articles/associated-press/a-paris-court-awards-kim-kardashian-1-euro-after-her-2016-robbery/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:56.358936+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi5gJBVV95cUxOZC1JRzd5U2k2NmxHSldlTVF4V1l1Vko2djVfTm5JVzVQX1lSdVZGa0UzRWVNRzRjTlQtSHpCaXBVa1dmRmtzWUVJdE9Ea21vdUVQSlhmMmxVWGR6WW9BbkNvN1lVTWtiUVgxZXkwQlY2ZUlSTlpPMFg2d3laOWQ1N2pBd28xMzNZdENIX3JoaEdfT0hPZ0FuMEl6TFk1TnJWdm5VdkNSS0thOGxFOUhaUVhsSDBtTkcxSS1GWXZUQ1owOC1ndVZ5MDYyVTQyNFdCX3pTNmtNc2p6eVR2ZUVJM2lzNHNBRmdGeEZjZXB0THhtZV9HOS1qTnF5ay0tVHM4cE8tUUJ3N251NlJ6RU5jQUJCakRyNU5FYVpRbDBWck9EOGRqUUx0dmZlMDFtS1VxQ1NEcG1sc1ZUTmRNYldrc0FPRGdPamV4WXNMci1oSWl4a0d2UGZ3ay1ESXRaQVhQTHlCRnRn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Defense News offers premier news and analysis of Pentagon policy affecting defense programs to keep military and industry decision-makers informed.",
+    "publisherUrl": "https://www.defensenews.com/pentagon/?contentQuery=%7B%22includeSections%22%3A%22%2Fpentagon%22%2C%22excludeSections%22%3A%22%2Fvideo%2C%2Fvideos%22%2C%22feedSize%22%3A10%2C%22feedOffset%22%3A439%7D&contentFeatureId=f0finyqZXdsP54A&_=1784425837261",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:56.286569+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQMXBOYTUxR0JnQmpkQnAzWVFfcjNxMDJOTnI1MWI3X25RN3RtejhuaDFheUx2dVpfa0NFM3pyWWo2U24xc3NSOW13RTFOTUEyckxvX211YnRRaVB6YWNmQktKMWM2UmFxa1Z2WkZBZTFpTjhYTEljejJnSjJmRS01MklqNVBERXphbGxoWkhUSm1kSHJObEV1aUlKbG9COGkzNUIzWFlocXRqbG96VVhQZzJnWXBlb3hvYWlYcGE5MFRpdGM?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Agnico Eagle says it is not interested in participating in Barrick’s North American IPO. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/business/agnico-eagle-says-it-is-not-interested-participating-barricks-north-american-ipo-2026-09-15/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:56.234233+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOMmpRbnhYV3JKSk1ickdjVks3SEYtLXY1VWFRZEJSYS1oNEJiLTQxMjltbE1BTTNaWnB5QlY0SmpKNnJiQS00UGFGci1CeGt6SVRXTTA2YmZVLWJyYnJnUC1HZWl1d3NrQmRtT055eFdRWUFOVEZ5aTEtSVpqaGNnalcwV3hSMHZf?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Jacob Coxon’s resignation put AI safety in the spotlight.",
+    "publisherUrl": "https://time.com/article/2026/09/15/ai-anthropic-researcher-quits-coxon-slowdown/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.974304+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirwFBVV95cUxQVkRVMWJNd01wRWI5LW9yLTZrQ0d6MUNJZzhvZzkwYVluUU5OYWtnT0dLMUlGOXZZNnhnRXVYM2tQd09LNEx6UjM3eDVWNUFGMm1HQ1JLSDhkWEJjTGE2clFkcEJ5RUptRGVHanQwSnI0YmxBMU9LdVdiZEJKSVVXOG54NzZjN05JZTZVcXMxUkFicWI4c09MME5jY0dPNGc1WVQ4ekJCQjdreWpTMGVz?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on PODCAST: Kennedy Center, Trump's mail-in voting loss, Bernie and Bannon on AI (Updated). The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.reuters.com/podcasts/trumps-mail-in-voting-defeat-self-improving-ai-possible-rate-hike-2026-09-15/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:55.934861+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMitAFBVV95cUxPUElCd3ZTQVBTaURlSGpTVS1rSXkyWTVxZFJDU2ZPajUweDEwbWRoT21KMVJ6R01zTUg0NDk5d3E0UVE0Y19idEN6bVBoWnVhRnVkYXBsSXNnTVIzQUFGdTVVN1J6eVkwRXVyQUxMZmxTZEpqalZ6dy1QajZDTTdrU0QxTTkyZnBqVEdvTmdKaVVNZVdYQmZTV2JHT01LUHJZU1pCX2RMTVNvOWRjVjd6RVExQ2bSAboBQVVfeXFMTWlxWUZSc2dNVHE5dW4zSHk5OTdWX1RYYmFBZk5xLXBwQVQ0U3hCN2pzOW9lRlkxOHBvOXR0R0NsNlJDelplRFJDNDhXN05zQ3ByNUNEcERGbDJBVGNqanMzQl81cFFNV1VRZV9YOXBDMjhfRUxTTXR0UmExdE5vMEFnN0hPbXZtTllhb09lUEdPUmpDelFiYWpiTU5ybW9KYzgya0VwNENKaGs2ZVVxQUZjT041YUROZTRn?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Judge William Sullivan sealed juror names in the Lindsay Clancy mistrial case, citing safety concerns and unauthorized identification of jurors.",
+    "publisherUrl": "https://www.foxnews.com/us/lindsay-clancy-judge-indefinitely-impounds-juror-names-citing-safety-divisive-attention",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.903690+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPckRpeHdQd2c4Z2V3RHVrdTN5Tnd5XzhEZGZNaDdGZDdzZXYta2FwYnplc2t5N2pYeUw2YS1Fa2x1V3B4dDdDazQzNnYwd3p2bmJ6Ulo5Q3FycUJ4eHlCaWxkaC0xdE5IeGdtSUt6SlJTdE1xeUlmaE1xSlFIbWloSkhqUXNIME9CbnJwXy1tdW43Y3NEYlJZU3Bocld1QjVERVE4ZW1KSmF1TlVtbkRXekhycml6N0psRTlOMzNIZ1piX0k?oc=5": {
+    "cacheVersion": 3,
+    "brief": "AI leaders and politicians like Donald Trump are weighing in on AI safety following Dario Amodei’s long essay about slowing down AI development.",
+    "publisherUrl": "https://www.theverge.com/ai-artificial-intelligence/995141/ai-executives-politicians-safety-regulation-anthropic-dario-amodei",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.739189+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPRFhma2x2NFZxQmh1aDNzNnpMcU1UeWFqYkJTZWw4UUtFdUg1NF8xRnExSURycWZMTURhMDUzaDZFRGV4Ni1scXBwVDdrbmVyVmEwa01KS1lQNHFDc25Ral81SEFiWWpjYVUtNklVTWFaQWdRZ3YyaVVtVzdJamMwRnZGSHcxZDR4QndVaWFnTktSbzJ1U1hHcWg0OC1JelJXQjd1b3k1VF9nNkV5aWxBZ3piVjgxQm1rSUl6bW1tSnU4aUNjMVA0Q2JWUXVEaV9nR2xIZDBB?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Cracks are beginning to show in France’s strong base of support for nuclear energy. Jospin has reported that France should reduce its dependence on nuclear from 80 percent to 60 percent of the nation’s energy supply, and […] The Clinton administration is likely to nominate as a federal judge a Utah conservative whom environmentalists have compared to James Watt.",
+    "publisherUrl": "https://grist.org/articles/page/6247/?gad_source=1&gad_campaignid=23093807749&gclid=EAIaIQobChMItMTvk_q5lgMV-SNECB2_NhQFEAAYASABEgLBuvD_BwE",
+    "sourceKind": "article-paragraphs",
+    "updatedAt": "2026-09-15T22:52:55.684140+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMieEFVX3lxTFBUb0N1RFNjanNjN3NrNjdxeXRvalpNWjMxR2dibjROaHU3R2daSFBOekRGcWFjQVk4b2JhQ01aYWtSSHNVOEN6MHhlV3lZazBHODR2cy1FLTktWTlxdnBxUjdqZURkdjNDUnlySnc0cXpNTzNLYTZjLQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on World Trade Center Health Program. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://insideclimatenews.org/tags/world-trade-center-health-program/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:55.643903+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigAFBVV95cUxNbDA0aE1CRFdVREptN2piVTJaY1hMWmZoNnFUTDNQZlhNeEVkcTM3WlkzMEJnRW1tazhYcDFUUTdIWGpxYnRVa1VTNEJXMFNuLVJwRkhQdkRhRUxxNi1iSU14VmFVNnBydDBSX2R6Sm9wU3hsWTFIWlhfN3dtS1VKMQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The CEOs of Anthropic and OpenAI say the two countries must pace technological development to protect the human race, but both leader seems uninterested, and maybe even antagonistic to the idea.",
+    "publisherUrl": "https://fortune.com/2026/09/15/ai-slowdown-agenda-trump-xi-jinping-meeting/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.632569+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiowFBVV95cUxQQ3NOalFaYW5vak5TQVRmT3Fra00tLUN0cmVqWFBDSlN2eWZfQlc5V3BOa2JDT2VlLVhWN0kzakJiSm8xV09sTThEVkRzZmpKX1c4aXR6WWlTZlQ0SG1Wa1VldmZxaml2aDBOOTJZZnN3amNJMi1HRFJqRnNhazBVVS1sM3V5aEtrYXZtU1lVeGpvc1pJM09fZFdMSEVDT050RjJv?oc=5": {
+    "cacheVersion": 3,
+    "brief": "One year after New Mexico's universal childcare program was outlined, providers struggle to meet increasing demands.",
+    "publisherUrl": "https://sourcenm.com/2026/09/10/new-mexico-childcare-providers-struggle-as-demand-waitlists-increase/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.522046+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSkI4dmhGM3FTQjdGVVowM3ZTYW80M0s2aDZWRkptODVkOUFiU2Z3el9IVUxnWjR0UW9tT25JZjFkQm9zR1BYOFdYN25HVDZxdExwbjlNSnJjM1VBWVFwWkdsYzdydVp3WmFZekhTdks3MmVKWmFNcG1fNWZZdTZmZC1vZktVS29xVkE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "As more frequent bouts of severe heat stress plague the world’s oceans, coral reefs don’t have enough time to recuperate, a new report shows.",
+    "publisherUrl": "https://insideclimatenews.org/news/11092026/marine-heat-waves-drive-coral-decline/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.467597+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPVUlmcFhET01ucHpiVGNGa2xtQXBZWFQ5Uzk4RG5iSTNIMHJ3NW1LTGoyb2dmX01ac0JzcHloQUx6ZEhEME04eDdnSHlWbnl0OUtaWUJUejhQcnFQQ0xBRVlFYjRZbVNINHJrdF95dHl3YzBkejJUMVNRM2gwQTdoQnRBaGl2T3ZobU9IQWxxbHlYUkJodUhTOTNYSUNPYkctd2U3WmNOVEZQZw?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Several lawsuits and a bipartisan letter from former agency directors condemn the Trump administration’s gutting of habitat protections for imperiled animals and plants.",
+    "publisherUrl": "https://insideclimatenews.org/news/15092026/todays-climate-trump-endangered-species-act-pushback-lawsuits/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.314029+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMilAFBVV95cUxQbnI4Q05TTTRQbkxmMktXckcwZC1qNDJtNFJKUkZ0Y0F1T0ExOURGS0VLemN0bmx5eERrNFMyNnMxaWZ5d1dXeGNnc0ctMHQ2a21vVWo4VWVmT3VYZGJVbEpEWW9EcFIySWVsSWFLLWpOLUU5NUo5dDROVjA1cmxJeHpaRUthdUpMLVRqOG9lRjY5QVVo?oc=5": {
+    "cacheVersion": 3,
+    "brief": "A fast-moving legal battle over Missouri’s effort to eke an additional Republican seat out of its congressional map for this year’s midterm election returned to the US Supreme Court on Wednesday, a day after Justice Brett Kavanaugh had effectively rejected the same proposed map.",
+    "publisherUrl": "https://www.cnn.com/2026/09/09/politics/missouri-redistricting-supreme-court-second-appeal",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.246177+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiwAFBVV95cUxQbmFkLTYwMWlfR0pSTTNDblZLaGlkZlg0Q1BfOHlJaVA1eUVDbzNfMkNuZzlDWmI0U1lWekpHT2tobkE0aExUMTNvcmIxTGpmNGpaS0wxblBNRlUxSUxkR180ZmVTV3lDZk95NW9wT3JialV4VFhXcFBRM3M4U3RXVTVvaV9HTnYwRVlsWEZHQUt5cVdtWEhUSDZFc2lBcUQ5dUNHOXEtb3R6U2o4emdMLUljcW5JejhwdF9fQndiaW4?oc=5": {
+    "cacheVersion": 3,
+    "brief": "After spending almost the entire season on the wrong side of .500, the Toronto Blue Jays are just one game out of a playoff berth.",
+    "publisherUrl": "https://www.usatoday.com/story/sports/mlb/2026/09/14/mlb-power-rankings-blue-jays-american-league-playoff-race/91748090007/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:55.180059+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinwFBVV95cUxOaElLTzZISkhGRzh3ZFZYbGcxZ21jTHozWXpwM3U1X0N4cXlYRFBpZFczX2E2ZENwdmQ4ZF9abEJfdHc2QmNvOHdUQVJkS1hIOVZhM2Fza0NjQ053TU0xNmdSOWFMUmxBOVA4dHAxZzdZUXZjTEVUSVU4WW9UZ0N6ai1pZHlwRUFnUk5JZDdLcWtrakNaS29xM2xOY2dIeG8?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on China says it hopes to agree with the US on tariff reductions at ‘an early date’ - apnews.com. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://apnews.com/article/china-us-tariffs-trade-trump-xi-summit-f2066bf9ae668afd3a5a2a0658748b4f",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:55.002882+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPcW5GempBNXFRaGxGQ0d3YTZnRk43ejdUTDFFbXZSUHZFdmF4YTFSemFWN2NteTNYS0xITG0xanRVT1Vncm5Lc1hTNExEc2xSUmpaYTkxSlRaWWZLdUw2eDI5YktnTEUtTVRjLWdMMjhtSHYyZldNdGxtS0ljdUx6NWhjbjZ5eEFIVTlqakNYUlBCcWp4MTNwZlo0NlVxaTdscUV4VlhpaTB0aVBZak9ZV0NzOXd3MDVmRzJj0gHAAUFVX3lxTFA4S0gtUXdpRGdvaVdNZXFmOTNtUlItZXpCaU5pZjdfZ0xKc2dNUXJ1UFFPd1VMRV9sLU10ZGJFSTc5aWJ5THY3MEVqSGI1dFVzampob1g3YnJzX2FjS2pCSVVyQUlPSE5JZjhnRVdJMG5uMVJiOGpmaXNrX0l4SnprcndDZHBabEdsVXY3TTZVcGliN3dNTnNUQ2ROUHZoUXhON1M2N280RU0wb25kTFNBWThQMVp1c3RyWDduRGVhMg?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Kash Patel told the Senate Judiciary Committee the FBI captured a fugitive in Venezuela tied to Tren de Aragua, completing a historic clean sweep.",
+    "publisherUrl": "https://www.foxnews.com/politics/kash-patel-reveals-fbi-capture-all-10-members-most-wanted-fugitive-list-during-hearing",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:54.943552+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMifkFVX3lxTFBSYXZpTUZCeEljZEtwOUhrWWZqUzd3MzRKWW5IUU80VVFhZ0JZMDVDekhFLTkteDJtWVBYMG1GN0Q0QkNLMEx2MGZfdFBVZ0lDeWtManp3aDh0OHJjSEc3Y0pnc2hMRE5PSkVvMFFKVnRpSndFMFZkUkFJN1dMUQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on Trump dismisses push for AI regulation despite warnings from tech leaders. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.cbsnews.com/news/trump-dismisses-ai-regulation-tech-slowdown/",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:54.706633+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcUh6QThLRENwUFk3OXlGaXBCMTlGMlQ1VjVwVU05NTZ3WjBscDd5eTdFTjQtbkVkRUxvVmEwNWZVQXdwbERjY2IxcjRQX2ZtMFlkLVZXVnZJSjJmeVVBNDFrU3FtcjFoWjBtbUJwZ2s3TXVaMXNia3hMbVBZUDhYU2xiYzNNZlFCSkhyWWxoYkVLdXBTRnlDNzBHQzg?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Indiana Fever guard Sophie Cunningham outlined the traits she wants in the WNBA's next commissioner — someone who values players, communicates openly, and can unite a diverse league.",
+    "publisherUrl": "https://www.cbsnews.com/chicago/news/sophie-cunningham-adam-silver-wnba-commissioner-discussion/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:54.687719+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiogFBVV95cUxPb081YVVpNkZEZkJ5WWVYWGdTX0pDd1ZlNWdzREJrR2x4aU1TX2pMdHo1enZ5QmZURkFtTG8xWE5hQVgxRm9yQ3A2MEpwaTEzY3JYbzFLVGRidUFpd0pGN2VqOFg1cUdyOUgtbkpHUWNtTWxqalZ5UnpqVHRBM1E5dVdqTFpNc0xZTExsWVdZeXppWmRJemp2WjBqRFNRQ0kySEE?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on What Is Driving Diesel Prices Up? Energy Chaos Caused by Two Wars. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://www.nytimes.com/2026/09/14/business/energy-environment/trump-diesel-russia-ukraine-iran.html",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:54.652180+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQ2FRRHp0ZFF2WmVNbnJaUElWVXJXTU43T0RlM0hFcldtdHowOFZIbU91S1Z5Y3lGNXhzS2xQMkpGd3U5bnAyd2RsUWVyRUd0YjNueklyQTlTSTdJSTlYQWtELVlFQVJsdC1tZTlOckxhV3N2YVhXMmc5LXZCOThmY01LY003ZlRVcHhwc0ZuT29YTkMzZklrVzMyMEhJN3pIMlZQaWxsQU1wU2tR?oc=5": {
+    "cacheVersion": 3,
+    "brief": "The Senate on Tuesday failed to advance a sweeping cryptocurrency bill known as the Clarity Act, during opposition from Democrats and a handful of Republicans.",
+    "publisherUrl": "https://www.cbsnews.com/news/senate-fails-to-advance-clarity-act-amid-democratic-concerns-about-crypto-bill/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:54.645000+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMigwFBVV95cUxOcFBYTHk5bk4ycnVGS3dRajgwWTRETzVuMThVbzYtM1FLZ0JRWlFSR2lmelV6bjJyaVdULTNFRE5rd00tQ2dQX2RwRE9TY3U2N3R2a1QxT3hzX0hDZ3Z1YWhkVzQ4U1Z1RW9DT3RCdHNIczRWWkU2NWlUV2Zad1lZVlBUWQ?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Thomas Massie accused Defense Secretary Pete Hegseth of defying Congress with the Iran war, suppressing free speech and other offenses.",
+    "publisherUrl": "https://www.cbsnews.com/news/pete-hegseth-iran-war-impeachment-thomas-massie/",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:54.643549+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMivwFBVV95cUxPcDZqVnlMdl9VeF9BbmhSQ2w1dmxBaEtRQ1AyYlZoV0ZCNjItTXppZFMzcTREdGZpVWFQYnQ5WGNtczF0NU9MbERpVkdzcUJYSFUxZmZ3c052LU1LSlBVa1d5b0MtRkppYmJMcmxYNzc5Q2pyQzl1UTIwSWZyeUd1bVBfMHAxUFVxd1dsZm15cm5GWTA5ZVlHZ2dCY1prMDd4VWpPRF9NTk1aQlc3LWlzYzBpd1RsS1lYVk4xQTAwc9IBxAFBVV95cUxPcUI5QlBIWnJObkFOdkxaTW1iVXpoMDFQc1p1a25jQ3VRT1oxcG55STdaM3dHUFlhc0FmUGhsTElIMWN2LTVzQUZPUnVsSzluNFdPNG9GTzR1b3JuMUl2di1Fajd4LURxbF9GeG5xYXZFZ1hWeGlOdTVSX0p2UWp4WVlQbnJYLTVJRDBRM1FzVjNhby1EanVPWmFnUThuUGV4eEtSZ3pfNlRHU3ZCcEotWkJKVS1nZjR5ZzM4b01JLTQ0c3NY?oc=5": {
+    "cacheVersion": 3,
+    "brief": "Two Italian Eurofighter Typhoons scrambled under NATO command and downed a drone over Lithuania that officials say likely came from Belarus.",
+    "publisherUrl": "https://www.foxnews.com/world/nato-jets-shoot-down-drone-lithuanian-airspace-russia-grows-increasingly-reckless-rutte-says",
+    "sourceKind": "article-meta",
+    "updatedAt": "2026-09-15T22:52:54.579709+00:00"
+  },
+  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQT3RtcEE3SVFlTXAycXRkTkFmUjBzN0MtWGQwajY2ZjhpZjFLelF2TzFhN2Z4T25fanRuZ01aQ05MY3dzQzUycjc1eG5Vc0EzMmNfZ21FTU9nT2xnSzVHQW56eE9Rdl90Wk9DcGpCNWtoUFE5TGhWelFma01rOFZJT0hlTFdzd0dTQ2FSMWNBTUE3NGkzd0Rkc3ZtRGhOZ0xmRTVuX0FXUGQydkp4V1MzOUludm5KdXpz?oc=5": {
+    "cacheVersion": 3,
+    "brief": "This story centers on New warnings about the risks of AI to humanity revive a long-running debate - apnews.com. The publisher did not expose enough public article text for a fuller verified brief.",
+    "publisherUrl": "https://apnews.com/article/artificial-intelligence-threats-humanity-anthropic-openai-98316b0d64de17191f33c0fbf1d37858",
+    "sourceKind": "headline-fallback",
+    "updatedAt": "2026-09-15T22:52:54.460381+00:00"
+  },
   "https://news.google.com/rss/articles/CBMifEFVX3lxTE5hY3ZsUHFvblI3M1daOHBReThBSC1tb3JkbmFPNzZDUjZleFZKaTdoWDd6OFUzdkRoeEZlZk82REcxZG16UFl0U1FPVWVLZU9CbnNhLURMdVBna2ZnSjNhdmpfWXBvM0lvb29melJRQVRYQ0d6Q05XSVE4RDXSAXxBVV95cUxOZ2tpMXg2SENMLU02TjFubzQzWnNWTnRUbFhSZzRURTNJeENJSy1DWDBPbmE2U1NKUDFFRlBWYjdOOVhOZENaMWx3RjZoTUFINkEwTFJjbEZ4N1U0OG9xVElxd2hibFBuaGJuR3RrTkh0UFNmUzZhR0t5WTFy?oc=5": {
     "cacheVersion": 3,
     "brief": "This story centers on Fake signatures found on forms to keep inmates in jail for ICE, NC sheriff says. The publisher did not expose enough public article text for a fuller verified brief.",
@@ -34,26 +888,12 @@
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:23.634063+00:00"
   },
-  "https://news.google.com/rss/articles/CBMixwFBVV95cUxQc296M0FwQXpjNXhFRTFabWdOZU5vMWFLdEZ0ZGFuX0Z5cXJESENRYWdROUh0X3VJWlhScmtub0tXclU5aHhZYVZxSDIyY1duQUF5YnBxdXFCNzFnYUZMNXUxRnRwUEV1bDBMd0N6Umwxei0wbjkwVDZuNmJfVmh1MGlHd3RNeHBEXzVHUm9RWkg1NjFBQlFfRFM2cXNIanBrNDZNRl82RzVhQlRBUl9CeFlnU1R0THNqakdMZEdNS0dWYVN1UDhr?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The world’s biggest AI companies are working to create a new industry standards body, OpenAI reported on Tuesday, as rising concerns over the risks of artificial intelligence fuel pressure for greater oversight….",
-    "publisherUrl": "https://www.france24.com/en/technology/20260915-openai-anthropic-and-google-in-talks-to-create-a-standards-body-as-ai-fears-rise",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:23.456854+00:00"
-  },
   "https://news.google.com/rss/articles/CBMimwFBVV95cUxQNzlkWkNWbUxqS21HNDNBV0Vxc2NWdUNlclY0WnVJN1FfVGQtbE5oVlVhcmd4RTFJMlRfemZTMk9IVTVUTThFT0w4SW1pLUtNekJYUEhMajN1YU10WXZMZVQ0NWdWRnJZdkQzUEh3UzBVWWkzMHJmWWF2anI3YTVFUnB4RU0yNldhbVRCUTRRbk5PZmhBVEI0elhHWQ?oc=5": {
     "cacheVersion": 3,
     "brief": "Internet detectives hopped into Offset’s comments trying to figure out who the woman in the artwork was, while some lent guesses like Saweetie or Cardi B rival BIA. Offset’s last album, Kiari , arrived in September 2025 and debuted at No.",
     "publisherUrl": "https://www.billboard.com/music/rb-hip-hop/offset-she-aint-mine-single-announcement-1236340967/",
     "sourceKind": "article-paragraphs",
     "updatedAt": "2026-09-15T22:04:23.318595+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiogFBVV95cUxQZ3hZWHdpSFpodVpyTEJBeVJGZlh3dFZOMlBVc2M3N3VhS0tZb1Y2dVdVV3lVT1RtLXhlTnZMekZuMmcxZW5vb19HcUUtVS03VWdjdkFtLXlESUozOVdzNnAtY2ZBeTV5c0owZ2F1SlN4OGdwc3lrQXFyTWF4QU9ma0Z2ODBIR0lCekVjM0pWem1ZMlE2VzZOTGNGNUkwdHFuWkE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Holiday faith drama The One, starring screen legend Martin Sheen and actress-singer Jana Kramer , has been picked up for U.S. distribution by Hawk Hill Pictures, which is expected to release the movie in theaters nationwide on November 5. The release date coincides with National Homeless Youth Awareness Month, bringing attention […].",
-    "publisherUrl": "https://deadline.com/2026/09/martin-sheen-jana-kramer-faith-film-the-one-us-release-date-1237104019/",
-    "sourceKind": "article-body",
-    "updatedAt": "2026-09-15T22:04:23.098004+00:00"
   },
   "https://news.google.com/rss/articles/CBMiowFBVV95cUxPZkZqSWFQWllnQklMdWpiVVFETHBkR0RHc0RpbFJXeWF3YVRmQzUwLVE5M0tEYnBtMWdSem9RUXFDc1JfRUtxRHcyWmNlV1JhbHFLRTNtVUtEcnJWUzVGZUdMSWRJOTUzVC1MOWlWdjAtRk1ZSG9IQ2ZOWjVyTURtRDdhMnBMZUFmRzFKMEZoYUdhNU9wdEd5VzNXTERaVlZPYTdZ?oc=5": {
     "cacheVersion": 3,
@@ -279,13 +1119,6 @@
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:17.851953+00:00"
   },
-  "https://news.google.com/rss/articles/CBMigwFBVV95cUxPbzd6SlRoeGhONEdnaEhXUWU1X0x3cGpxRFJxV29tc1UxdFREOVFXdFVaWTVLMTk5aWx2MVd5Z0tDclFiQUtORWYwc1ZKQlBNMTEzbnI3RmhjTUhtaEc0VGZwcHJiUjl2blZzeVdsYkNUVVJOcWpZc3dpN25GZVhScDU4bw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "7 Miami Hurricanes showed some mercy to the FAMU Rattlers after overwhelming them throughout the course of the 77-7 blowout win on Thursday night. They got to the national championship game before losing to Indiana, setting a winning […] The post Miami news: Hurricanes' win vs Florida A&M got so bad it had mercy rule measures appeared first on ClutchPoints.",
-    "publisherUrl": "https://sports.yahoo.com/articles/miami-fl-news-hurricanes-win-044426455.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:17.788856+00:00"
-  },
   "https://news.google.com/rss/articles/CBMiigFBVV95cUxQdE5OYk1RT0Z5amphbVVQaXFubFAxVV9mbEx0bWs1SXlGZTVkbmtsZGt4dUdIZEhOQ0pvelBrWXlLZ1JFUDltVERPVlRYaDkxSnNjeWVhTmxCdTJ0QWxacDBQZndvUkVzUW4yTXBTUnYyZWlwb2xlYjRwY05jQm5zVzkwMmh0dzlhMmc?oc=5": {
     "cacheVersion": 3,
     "brief": "Montgomery police have arrested and charged a sixth suspect in connection with a kidnapping incident last week.",
@@ -377,26 +1210,12 @@
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:15.505975+00:00"
   },
-  "https://news.google.com/rss/articles/CBMiekFVX3lxTFA2bnV2SmQ3NU5yMEFFVmlDdVlXREw0RW1Qd04wNGtERW8zQWQtbi12M3hac25QNXdwRFBtOWE3TUxpVXk1UnVWU2V2N3VnY0xMaGhrc25iZHRESUk4LXFKT3JVd1VCNzlHZWhoYlJveTg4cVJ6ajFJdXJR?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Dennis John Conway, age 70, passed away at his home in San Jose, California, on July 25, 2026.Dennis was preceded in death by his parents, Mary Ann and John Conway.He was the fifth of seven children and is survived by his siblings, James….",
-    "publisherUrl": "https://www.mercurynews.com/obituaries/dennis-john-conway-san-jose-ca/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:15.365006+00:00"
-  },
   "https://news.google.com/rss/articles/CBMinwFBVV95cUxOY3NGUzl1VF9PQklHLWZjNTF4dmRVZmwwREFud0hGRlpoWm1mTXdvT2JyNmp5NGhIeGxvWjNKNEl3UkxyWHB3d244WEpueTE2WER3V0s4cUtjLVJCZDBfd1pKRnRJTFVLeWptTERaTVlEaDZMTXljN1hoYzBoMGFhTmFBLUxycWQwUy1FWGdqemJxZUZzMm1mVzQ0U0d3bjQ?oc=5": {
     "cacheVersion": 3,
     "brief": "This story centers on Emotional photos from 9/11 memorials across Austin. The publisher did not expose enough public article text for a fuller verified brief.",
     "publisherUrl": "https://www.statesman.com/news/local/article/9-11-austin-events-memorials-photos-25th-22427537.php",
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:15.222992+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQRnY1ZnU4VTVIVGg4bVhVckMyVmwtS3ZSaTlHWFMyS1VVeVN4N0pOUG1YbDRIQkRuX25pTGc0WmpCMHdIQ2FleEo1QVY5UExhNGdDeFJhUGp6My0zZ1l6TVRGMzVveXNfcm9mTjkyNjZBUzBGUDJXY1d0NkNaREdKUlRvT2UteXNrZFRWMXc2X3VYSUJMWjlCZ0syNGdkbHNxOXgzTjhpeWIzM3c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "You can submit your best photo online at newsminer.com.",
-    "publisherUrl": "https://www.newsminer.com/gallery/photo_of_the_day/drink-up/image_a61d4603-7345-48a3-b00f-da99510c6bf1.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:15.153360+00:00"
   },
   "https://news.google.com/rss/articles/CBMiiAJBVV95cUxNTW80U1VrMHV4c2lNRjB4NjFJSlZQRXBHbm9jbzduclNReUdpQmkzS0FoeHB5TWhSa2pMU3A0T09uQl9hQWFQRk1IcW8wbGVkb3RKUkRHNWphdHRPZmE3ZVJTWm9PaG53Zy1xVWNhLVp5RGNLcGkzZE9uTHdrNVBSUEVUU0ZuSlpsSGFDcUt0eVh4bzBqNmJBUlVIc3JnTmJLczExVHN0aVVmd2JCZFRjUllGRjFuWEdFS3pKVFZRZEFoUzh6N044UnowN1F4VVN5YzI0eTl0UEpoeVlFT1IzWEZuS21UbkJST01BajZzQ3Y4T1VYZzZtckNYMjh6U0cwX0FVMHZsLW4?oc=5": {
     "cacheVersion": 3,
@@ -440,13 +1259,6 @@
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:14.246456+00:00"
   },
-  "https://news.google.com/rss/articles/CBMiygFBVV95cUxOazMxUmpkcUhUdnhzV2tfczZ0Q1Q0LUU4T0NabU54bmowY3pLOXJzQmhOSWM0UENWZkh6dm5yTzBQcDhnQ3JhNDB0MXhuQXFXZDk1VnFHb0hJR0RDLUhaM2NuNllmYldtWlVDRzk3VmZSdkROWjdFcENWa2dTQmZVZ0tqRXB4TEZ0NUJBRzJ2dGF5MGpUWV92NE5FRV95bjBkZFhXWjJFOFRfSEFxNjJfTjFPZEJEOEpNeTZKcC1zaUFrMHRMRGdpVjlB0gHKAUFVX3lxTE5rMzFSamRxSFR2eHNXa19zNnRDVDQtRThPQ1ptTnhuajBjeks5cnNCaE5JYzRQQ1ZmSHp2bnJPMFBwOGdDcmE0MHQxeG5BcVdkOTVWcUdvSElHREMtSFozY242WWZiV21aVUNHOTdWZlJ2RE5aN0VwQ1ZrZ1NCZlVnS2pFcHhMRnQ1QkFHMnZ0YXkwalRZX3Y0TkVFX3luMGRkWFdaMkU4VF9IQXE2Ml9OMU9kQkQ4Sk15NkpwLXNpQWswdExEZ2lWOUE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Carly Rush is, literally, an expert on the letter of the law. While working through a dual degree in public policy and law at Harvard University in 2013, Rush spent a summer as a law clerk fo….",
-    "publisherUrl": "https://thehill.com/the-hill-notable-staffers-2026/6077903-carly-rush-chief-counsel-senate-appropriations-committee-democrats/amp/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:14.244778+00:00"
-  },
   "https://news.google.com/rss/articles/CBMitAFBVV95cUxQYlZ3QlpmbDdTZWZhUFRnSVNSMEpJdGNCZmN3cEtUUm1TSDk0TUl0YnFPc3RmZFZSbjdXRHptcV85SVhvS1k4Ry1vMmxwaUR1R0hZSzZsclVtNUt0bWplcVJtbGQ1T0kzSFkxWmZZT0J6cHl2TG1TTnJyUEFLUmUyTlBBNGxhR3k5QnBjdmhaSzZYY1hSRTN4ZmNCOHNKWDJsQ210Nm9GZFR0R2RJNkRrV1NYT2LSAboBQVVfeXFMT1Z2V20wc2h5LVVOSUFlbF9kRHdXXzFQd2lKNWJmS1laOEh1RFVMM0NCMmFscGdZNTBNVkhCQ280TmVEc0J4WkRVRFM3WU8yZ1VXQThLSGVXc2RVYXo2ZUJsbWk5M0I2VEpEVmJTZ1o0SjQ1OVZfWXZyemNfaDk3VnVKZC0xNVY1aURGbmtGd2k3MnBzbWhOdy1KU2hyREJGMS1LWDA4ZnhsUUFRWjdZblI4OER5bFlTbXJR?oc=5": {
     "cacheVersion": 3,
     "brief": "This story centers on Albuquerque Sign Language Academy hosts 4th Enchantment Games September 19. The publisher did not expose enough public article text for a fuller verified brief.",
@@ -460,13 +1272,6 @@
     "publisherUrl": "https://www.lcsun-news.com/story/news/local/las-cruces/2026/09/12/new-386-lot-subdivision-approved-in-las-cruces/91685836007/",
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:14.226112+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNQl8wYlhaT1FGQ3F1Z01ubG9HZnJHYW05WHVzd0tSaGZVLTMtR090M2hsTHhQeHAtREk1S3loNktqUXNPaWRnei1KT0xwSEFJcW1vbGNpc1hRWG9ES2I0VEJCWHZ0VW1CRkxBVFVIcXU2NnBjcG5sNFc4UVRWeW9YYmExdnk2bzJQYjh3Sw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Today’s Nintendo Direct saw the announcement of It Takes Two coming to Switch 2. The award-winning modern classic and co-op gaming gem is finally making its way to Nintendo’s latest console on October….",
-    "publisherUrl": "https://www.cinelinx.com/games/game-news/it-takes-two-launches-on-nintendo-switch-2/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:14.205626+00:00"
   },
   "https://news.google.com/rss/articles/CBMiswFBVV95cUxQMTRaZFNNc281SnBUaER0WFg5cGFreW9tbU54QlNaSXhwczgzXzQyZUZxeENyTFlUa2JVUXNkd05BWk9MY1gxWEUxenVYMThmQlBkcXNOeDlsZ1ZrR0JQdmlXZlQ2WWg0ZElnY2R1TlBrclV5b0MzaExRV3FTOGVpelpOcV9YQnlHLTN4ZTJRRXlscF9RUkxzcGxacjB5NnRHa1hEMjFMUENsUUp3QlFmTEtXaw?oc=5": {
     "cacheVersion": 3,
@@ -488,13 +1293,6 @@
     "publisherUrl": "https://www.wamc.org/news/2026-09-15/vermont-senator-clashes-with-fbi-director-during-oversight-hearing",
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-15T22:04:13.814796+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirgFBVV95cUxORDZVY09NVjFJRHNQN2JYbDNDaGFRWWF1UnBUMlB1V2JKd3JmcmVDUHFuRko2QW0zMldFbWtHWDZuMTU0a3R5NWg0Ql9JUXpQMUQyYWFEWVJ6N1dWVDZXdEZ5clFSSU5TY3VpUU96ZkY4TnpvOHJoRjFMY3hRQUpXbEdSRnFCMFlyMTdfVzBFTFctZXlCZ0tkOHh5cHczbEEzeE9rMGFDZGEyTDdzY2c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Over 40% of US players cancelling Xbox Game Pass, PlayStation Plus Essential, and Nintendo Switch Online now cite rising costs as the main reason. Circana reports price pressure is a stronger cance….",
-    "publisherUrl": "https://gamedev.net/news/5699-more-than-40-of-people-cancelling-xbox-game-pass-playstation-plus-and-nintendo/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:13.741738+00:00"
   },
   "https://news.google.com/rss/articles/CBMiiAJBVV95cUxPUTl0SjRtMzMzTnNIajctM1k1Wk1YODVOaDVReWtXSmRaQkRUYWVybVJXVFBIMF9DN3VuSXJ3WDFEM1VRZTMtQzBaZldJamloeUx0d1QyQUg5VVFJTXZiSTNwSUtmM3NkSXFCeXM1LWd5VjVyMnhBVDVLWGxmd3NWcVJjZ2RkT2FsNDFTcDZUZVBxNXpYNk9fZFh6QUpYNkdLME8zcUZmNENfVEx0WjR1TThkZFRWd25CZXJEcWd3a0s1S3FpYzJ1NkdSb01rUWRFektEb1lqS0NTUGgxS1kzTHRSa0tWLS1pbHo0dFgzTlpMcm9DbjVBVmtRdlJ4a3FzYWtlZlkwcGw?oc=5": {
     "cacheVersion": 3,
@@ -524,13 +1322,6 @@
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-15T22:04:13.364874+00:00"
   },
-  "https://news.google.com/rss/articles/CBMiiAFBVV95cUxOMmpRbnhYV3JKSk1ickdjVks3SEYtLXY1VWFRZEJSYS1oNEJiLTQxMjltbE1BTTNaWnB5QlY0SmpKNnJiQS00UGFGci1CeGt6SVRXTTA2YmZVLWJyYnJnUC1HZWl1d3NrQmRtT055eFdRWUFOVEZ5aTEtSVpqaGNnalcwV3hSMHZf?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Jacob Coxon’s resignation put AI safety in the spotlight.",
-    "publisherUrl": "https://time.com/article/2026/09/15/ai-anthropic-researcher-quits-coxon-slowdown/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:13.229234+00:00"
-  },
   "https://news.google.com/rss/articles/CBMiigFBVV95cUxNazUxUzY3ZFlyM0R3WEI0Wk0zZzEwWnFyWGRjRnZMbXdFU1k0cU80MWRNUC1lTFlDbWJkN1hMQXdEd3hqTm03bzdmUDJ3NVJYeFU5RUV0UjJxX3dYbnB3R3dqQjlUVGwzOG52a09xZlpuNnBNVHIwVHVsMllSTEpzWVcxOWNWYktHV3c?oc=5": {
     "cacheVersion": 3,
     "brief": "Federal officials reported Jonathan Kramer had armed himself to carry out a mass casualty attack against the American people.",
@@ -551,20 +1342,6 @@
     "publisherUrl": "https://www.courant.com/2026/09/15/ct-officials-seeking-to-combat-increasing-hostility-and-threats-toward-elected-officials/",
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-15T22:04:12.839362+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi1AFBVV95cUxNbHc1YVlNaWpXWVRfS0RqenB3VWs2Sjl3aldJY29ma25OUFFaVmthWWE1UjZJeTNzelY2a2xxRjVnUU00SnJEWlNSTGhya09QMzdzNS0zcmM3UUwxZ1V5eklQVlMxaTcwTWZhVEE0NzNNSkhlclB6Q2hBSG1EY0pkUFpYY21KamVjazd6QnhYc0l4YjRhMXltQ3ZQdUpvTVI0d1VrUG5hdDJqd2Etd1RhblVZSGVKWVE0UjBxYTY3dk94QnM1Z2cxcHc2M2RRMjE3eURPcg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Harada and SNK’s Ozan Kocoglu discuss VS Studio’s vision, new IP plans, and lessons from Fatal Fury’s launch….",
-    "publisherUrl": "https://www.videogameschronicle.com/features/interviews/katsuhiro-harada-and-snk-discuss-their-bold-ambitions-to-revive-japans-golden-era/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:12.777325+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi2wFBVV95cUxPNE53Z1VGWE1JM1ZCSUxwd1ZxWUQ4bkFsQ0lIQlp6bTNJb3pDSFpqeTZQZENVcXpXUVRZWW10bHFzQXZJV1hGd1BLV01kMzBLYldyWjQyZEVxSGZac2JfdWZMWF9aWUwxejg3eldEbEppUDNxX3p3cmNtQXQ4VGltWVBmb1JfMTVIZG52TGNySGhtR3FVMGVxWXEwZVdfcXV1TmtFb3QxUm0zVzViRW5SUExMeGQ2SlRtcUcySTBpSHJ2Ymh2ZkktMGNvSjRIcXFfNjRDTTRLa2kzYk0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "A motorboat travels past commercial vessels anchored during haze in the Strait of Hormuz off Bandar Abbas, Iran, Monday, Sept. 7, 2026. (AP Photo/Vah….",
-    "publisherUrl": "https://www.the-journal.com/articles/associated-press/an-iranian-commercial-ship-is-struck-near-strait-of-hormuz-with-1-dead-iranian-media-say/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:12.732453+00:00"
   },
   "https://news.google.com/rss/articles/CBMirgFBVV95cUxPVzhNVFBiOTdvaDJwUXAzX3JOem1PQ1RhNmF5R0sxTjZtRXZSc1E1NWZzbGpmMlp6TEhyVk9JWUtRY3UtZ3FTSk1ZY3RoX3VFMnB4ZnZBY0RrbjZkNEFuY1BEWldvMmpOSExaWE01ZVA2UzhGS2E5UlNLYWlpa2tiVEpVei04ZWlPZUVhbDRhT1J5d3dRNi04bDdaN0JYbjNvb3JRTGE2NjNndGtxSnc?oc=5": {
     "cacheVersion": 3,
@@ -587,13 +1364,6 @@
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:12.570811+00:00"
   },
-  "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQX1FQVWFTNWY5THFid1QxcE1RQ1h0YnAwUDRnREozdmdxWG1TSGtzN29QMU1xdzFVTm93UmtlVndnQzJTVUlUbHZnOUtHM2ZKTmNNYnd0VHVZVHJTbVY3a2Fnc09PUkxxbmFOb2hQUkhnd3NNZUZwUXhHZzYzVEtQS3dXZ1REMjJ4Yjk3eU5YMjE2SlZUU3cwVWE3NnFyMEsxUG1Wem1oNUVUTGNtZEFZTTZaZ3AwT0E0ekZDbnd5aGl5bTJfUWFURQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Mustafa Farhat, 8, who was injured in an Israeli airstrike that hit his home and killed his parents, is comforted by his grandmother at a hospital in the town of Nabatiye….",
-    "publisherUrl": "https://www.the-journal.com/articles/associated-press/israeli-airstrikes-on-a-village-in-southern-lebanon-kill-9-people-wound-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:12.446823+00:00"
-  },
   "https://news.google.com/rss/articles/CBMiYkFVX3lxTE9adE5rcGQ3ajJLUUtXa2Q5bDdqVkFlN2Q3ZHdZRkNEeXRWaGUwdHZDbW52MlN0dUViSGJLZHo5cC1MTU4xYjFyWHI2Q0k0ZGs1TUtZa1hYQlJCeVRCZ3ByWXhR?oc=5": {
     "cacheVersion": 3,
     "brief": "Missouri's election maps in chaos after conflicting rulings With under two months until Election Day, the fights over congressional maps are still raging. In the last day, dueling and conflicting legal rulings have thrown Missouri’s maps into limbo.",
@@ -614,20 +1384,6 @@
     "publisherUrl": "https://www.reuters.com/world/uk/britain-upgrades-diplomatic-relations-with-venezuela-2026-09-15/",
     "sourceKind": "headline-fallback",
     "updatedAt": "2026-09-15T22:04:12.199758+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi1gFBVV95cUxPRFhma2x2NFZxQmh1aDNzNnpMcU1UeWFqYkJTZWw4UUtFdUg1NF8xRnExSURycWZMTURhMDUzaDZFRGV4Ni1scXBwVDdrbmVyVmEwa01KS1lQNHFDc25Ral81SEFiWWpjYVUtNklVTWFaQWdRZ3YyaVVtVzdJamMwRnZGSHcxZDR4QndVaWFnTktSbzJ1U1hHcWg0OC1JelJXQjd1b3k1VF9nNkV5aWxBZ3piVjgxQm1rSUl6bW1tSnU4aUNjMVA0Q2JWUXVEaV9nR2xIZDBB?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Cracks are beginning to show in France’s strong base of support for nuclear energy. Jospin has reported that France should reduce its dependence on nuclear from 80 percent to 60 percent of the nation’s energy supply, and […] The Clinton administration is likely to nominate as a federal judge a Utah conservative whom environmentalists have compared to James Watt.",
-    "publisherUrl": "https://grist.org/articles/page/6247/?gad_source=1&gad_campaignid=23093807749&gclid=EAIaIQobChMItMTvk_q5lgMV-SNECB2_NhQFEAAYASABEgLBuvD_BwE",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T22:04:12.197600+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxPaVY1OTFyUXdiTURnQTJlcF9vU3plQ2J6M0VfbUZkdnloMUwzODlEZjNJcFAwTkN2ME1yX2RPRUxtNUhUUF84NUZpZTV6UWR2aUNHYllZMmNJSEZKUXhhYThzZUhGcVlRbFdWcUstZFNKSGZBMzlLenVyNnRXeE9WMEMzNGdDRWZ6TThvX0ZYb3lnYndGWFJUM1hUXzZWdlhxSEZuZUpGeHcwbVVfbU1qRm94YnRoMmJWZXdjTw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Kim Kardashian, center, arrives to testify regarding a robbery of millions of dollars in jewels from her Paris hotel room in 2016, in Paris on May 13, 2025. (AP Ph….",
-    "publisherUrl": "https://www.the-journal.com/articles/associated-press/a-paris-court-awards-kim-kardashian-1-euro-after-her-2016-robbery/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T22:04:12.143556+00:00"
   },
   "https://news.google.com/rss/articles/CBMikgFBVV95cUxQcEpUcXY3bEtQV3BqQ0FBQmZaeTFzcHBENGd5TkF2Vk5YaS0zZ09YRVhsOXp6QXZjX2VwendXcGJpLVVaVV8yODk3V3pUaXJIYWRJRm5FOTlaU0hMZ1Voam1ydEJoUjcwWTJIazNqaWVfWjdtblREME1vTUs0ZG9jU1R2c0ZnaG80NTR0NFdQaFhwUdIBlwFBVV95cUxNX2tMUlBvaDZhcnZBbHVQNkpXQVRhbkNKeTVLTUw5M0JQZEV1V29TbTlseG8wOVJlQXZmTTNQQnZBcEFseVA0TFVaWVJYYjlrX1M5VWZNOTMxelpPYUlwanJrdzYxN3pId2gyY3ctSjBXMTF0dU0wV1ZvZDUtZWY1NnA2aUNxcE1fRXNlRVIxNGJRMlpmTFdr?oc=5": {
     "cacheVersion": 3,
@@ -1287,13 +2043,6 @@
     "sourceKind": "article-paragraphs",
     "updatedAt": "2026-09-15T21:49:49.417811+00:00"
   },
-  "https://news.google.com/rss/articles/CBMijAFBVV95cUxNQnl0TmpKcjd4Nmt3dVZyUVBMOVNvNlUtb1RNSDJNam9TVUEwMXZSVUx2NHlZNkRkS3pUS1NaZnFpSWVPemxZaVdtZFhiUUpkZ3I1V2FxNkd0eDZCaWtDcWNrX0dINGM3RmFobGZTOHU1dm5pT2lUSVMwSUdPbUhNakZ1SllVMmlRUFo5Nw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Read through the obituaries published today in Richmond Times-Dispatch. Betty was born April 16, 1936, in Richmond, VA, daughter of the late … Carlton, Richard Howlett , died on September 1, 2026.",
-    "publisherUrl": "https://richmond.com/news/local/collection_b11266e7-341a-569b-9891-7775e0b44a5e.html",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T21:49:49.402613+00:00"
-  },
   "https://news.google.com/rss/articles/CBMijAJBVV95cUxQQU4wQXJKWlFWRzlqdjJEYm5ESm9Qc0ZkSVVCWGdfUzJ6Z2hUN2JHbE10VDFoMktFNFg1S0tLbXVPYjJoaGNJUFNaSDhVWFBzWGJENzJENFdpSHo4SkFFellXS0RtYTFLdDVtaXFSYVhkanN6OEdORlFxTHJyYU04VnhReXc3VnE3ZEtkdjNjZW1hNzVyQ2VtVDUyRmgzdUl1ODBfRTVzY2xtRjZsNUJqY1NuV05PM2tOTk56SGJidjlPRS1SZUg4aS1OS2VNQTY4d191UW1EbzgzTHp4V0tnOFoxSXprQy1pZmJLWXFUVWJobjZEbjdhSjl2YXpxcFFBNlhuMWhiTk9VMllq?oc=5": {
     "cacheVersion": 3,
     "brief": "As Arkansas Peace Week approaches, an annual pilgrimage composed of a coalition of interfaith and community organizations is slated to take place in Little Rock.",
@@ -1440,20 +2189,6 @@
     "publisherUrl": "https://azdailysun.com/news/local/hch-pet-of-the-week-jolene/article_d096f852-4e2b-4fb5-b94f-8a9b374557dd.amp.html",
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-15T21:49:46.099852+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPRUZha0xaN0NmR2ZXeUNQX3RzRHdNaUM4RkJzWWV2MHJkai1iNTZsSHdtRVYtSHlEYlRnVm5vTzFkT1FjSXdjS1hMT3MzX0h6dm5jVUNNcHEyQWpyR2JyYUNlbERjZGZiSThITUFXTEF2NTVWT0FsbU9mZmNJN1l5b0cwVDlfc2lVTGNwVk03S0NaT0dYcXJfaTFZdnVwWVpXaG9VNDU5VmdlSTVt?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Aidan Thomas, playing for NMSU at the time, watches his ball after teeing off during the NB3 Matchplay at Twin Warriors Golf Club on the Pueblo of Santa Ana in 2024. (Jes….",
-    "publisherUrl": "https://www.tricityrecordnm.com/articles/news/record-purse-attracts-large-field-for-54-hole-new-mexico-open/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T21:49:46.017652+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikgFBVV95cUxPTGVORVZ6VlBNcUlOb3VPTUFwaDkzSTlXMFpzNzExTVpYenhOMjFPZHJ1cnEtNUd4aDdRTHQwTGc5T0o1a01wcmNfcDNvOXVia1FEai1MVXk3OWJoMTltNjhXWGNxTGFoOGlmZFRJTHdWQ2V0Q00wS2l3d2s5RUFxY3ZlRVdPNGFTNlhfaTh4S0lrQQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Country Club Crush, with Miguel Fuentes, Jr. in the irons, wins the $150,000 New Mexico Classic Lassie Stakes, Monday, Nov. 24, 2025 at Zia Park. Coady Media….",
-    "publisherUrl": "https://www.tricityrecordnm.com/petticoat-stakes-headlines-weekend-at-albuquerque-downs/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T21:49:45.996137+00:00"
   },
   "https://news.google.com/rss/articles/CBMifkFVX3lxTE9hc0dVY2ZDTGk5RWlXMk9MWlFZR0ZVWlVGcWV2V0haU3czZHhJWGdaUmZPeDdRNFI4UGRsM2V5VlFDZEJzeWZuWjNOZk9aeWtoOXJiSDhib0tBSmdPNWxSX0JFc3Npdk1jSVd0YWJhcnotRmRUNUVpUGdQRlVfUQ?oc=5": {
     "cacheVersion": 3,
@@ -11863,740 +12598,5 @@
     "publisherUrl": "https://www.businessoutreach.in/mediatek-dimensity-9600-pro/",
     "sourceKind": "article-meta",
     "updatedAt": "2026-09-15T13:20:43.977242+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOUEtfTFp6bG5hd1V5UlFMWVREREtpM2VfQkI0QWZ5bHc5X3JNTm42TmxNSmwtRFVqMUliTHBaeldxYmpMRTlIanB6M1BWa0ZJLUJlMWtuU2o4ME5oQ1U3NXlqblkxdjVLU0Iyc2dMQk16Zm1Vb0w5T2hzWXFQY25tU1Z5MjBETWE1SjFuaVd5dl9YdF9La1E4U0w2M0hkYjVzYmlfekJReUxxa1ZlbEhSRHZsRlNsNTFLNmRPTFhDUU5RZw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The China Daily article added to criticism from Chinese state media of warnings sounded by US AI executives, even as Beijing highlighted some similar technological risks. Chinese cybersecurity stocks extended their rally on the morning of Sept 15.",
-    "publisherUrl": "https://www.straitstimes.com/asia/east-asia/chinese-state-media-dismisses-self-serving-ai-slowdown-call?ref=latest-headlines",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:43.958001+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiigFBVV95cUxOeFZlNzd6S1d6V1I1MUZVTnRYUG5Jd2hfTkdqQVkxZ1FQN0J6cXV6RUtOY1doNVhHdDFpWkVuWE11cC1DSFA4RGxYRnJaV2o1aXNTZUhxSU56WjhpVlFhVUJlX2RyWWduUmhxYlotaHdZTV9INzBfQjIzMjY5SGpkeGRpZ2ZpOFhoM1E?oc=5": {
-    "cacheVersion": 3,
-    "brief": "An artificial intelligence researcher warned that Anthropic and OpenAI were moving ahead with AI that could become too powerful for humans to control.",
-    "publisherUrl": "https://www.japantimes.co.jp/business/2026/09/10/tech/anthropic-ai-gambling-lives/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:43.933772+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNbU8tcm5GYVprbFFwUDlSU3R3eHlLZnlDMFk4ZlB0OW83UTRzSFJXZGRYTC01VmJKSU1BbzdrVHJkSFltbHhHSDJuYmV3ZWlPNmdlUTVUbVpWMkFKa1NKWEllWURHdlVUaU1nWlQ2VGRXZS1pY2p5SU1iVEU3TW9NeGV3NU0yUXlRcXc4WHY1WWZsRXJCN3FkdkpnMEQ1WDJ1dnhYYWo3N3FkaEY3TUtRNkhXOEhINFRlSVl5U2NlcndYUWxESHpjMXF0SHFxSFYy?oc=5": {
-    "cacheVersion": 3,
-    "brief": "South Africa's draft national AI policy needs urgent revision to ensure AI sovereignty, including data security, infrastructure autonomy and local model ownership, writes Lars Gumede.",
-    "publisherUrl": "https://www.sowetan.co.za/opinion/columnists/2026-09-15-lars-gumede-cybersecurity-crisis-exposes-gaps-in-south-africas-ai-policy-plans/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:43.843574+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipwFBVV95cUxOOU9TMzJEUXlIMGRrUXA2WEZraXJJbFp0VUZBY0U3bHZ3QWdFUi0tZmw5Q3BiV0JQR1FjYkk5dGplMEFPOVZHQ2RxLXhoVEZaS1VuSk1JYUJFYnZDWnphTTR0Z1pFcjlLcUxIQ2NkOVBKSWw3d3hsY3RsTzdUc3NsTE50bjR6MU5mVVZFaHZzOFV4RzFsTS1lNE50eFJXZEhvVC1aOFh2NA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Four semiconductor plants to be ready in India this year, says Ashwini Vaishnaw. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://ddnews.gov.in/en/four-semiconductor-plants-to-be-ready-in-india-this-year-says-ashwini-vaishnaw/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:43.760793+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQckpNeUpkSExoSmlhbEt4anpjUTRzdGp1UDZvTF9QbXBvUk5ra1VwRWlYaHRkNXFhcjB3UXZZWVBBQzZ6a2RsR1Z0eDVkVGFhRzhRSEs1MExUU19HY09QNDQwYjVocm1IbFIyaUFiVTN0Smd5dUgxaVk1c3c1azBXUll2TzZLa2xCMDU1eUMyUm5OaHd1Ri14ZHN4OXhIM3lMWXlHeVlOem1JaGs?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Bitcoin rose even as major U.S. semiconductor stocks fell after calls within the AI industry to slow development for safety reasons. Chip stocks and the Philadelphia Semiconductor Index slid, while bitcoin, ether and XRP advanced.",
-    "publisherUrl": "https://www.digitaltoday.co.kr/en/view/103528/amodei-ai-slowdown-spooks-chip-stocks-while-bitcoin-rises-why",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:43.380665+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiowFBVV95cUxPRkRWMzg4SzNPeE5LNS10OTFkcmRycFpVaFhIN3owcGg4Ry05OXgyejBIaWtuZFVNNjhYMHVLU1dTQkhJa2pEZGRRY1RWNjhWaGFFRUlQQ0tza1FGbGx0ZjAtbVMyd0dVWUNhZG9iOC01VWFVdFdITm0xMHNhT296LU1zUEdmR01HR0VFd2ZFeEpDMFpkbVFZUjFIaXBmZ2Vid1Yw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "AI is powering an increasing array of hardware today, from robots and autonomous vehicles to drones and your phone.",
-    "publisherUrl": "https://resiliencemedia.co/exein-raises-270m-to-build-embedded-cybersecurity-for-physical-ai-systems/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:43.332283+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilwFBVV95cUxOS2JQeWtOUG9IamcxVUpOQjc5OHBtTGxucEFuTTlEOUl6cjhvVXhZazJZSDhGOGVJeTd4UE9RMFMxQTBRQWtUU0VxWXV2WXBjSGxfTC1zVk1WbXRMbXU1aUY3RlhINHVOMXBoUzRrcnNCNG1YVWhTcDFPampnM3ByclJJNXI3NVhtRUxMd1JVajZRVXF1aGpJ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Billionaire Stanley Druckenmiller Has Sold Micron, Broadcom, and Intel. Here's the Biggest AI Chip Designer Left in His Portfolio. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.fool.com/investing/2026/09/10/after-selling-micron-broadcom-and-intel-heres-the/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:42.917974+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiSEFVX3lxTE5tUHhWVndTVU90Q01CbU92UkZkZkI3NWJodGZlX2lDcEctckJkdDNlVldnWnlxcWhqd25FSGRHZlhOUDdDZElGLQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Google is assembling engineers in Israel to develop processors for robots and autonomous systems, led by former Hailo executive Guy Kaminitz.",
-    "publisherUrl": "https://www.jfeed.com/tech/tle35i",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:42.763374+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMinAFBVV95cUxPWE5wZG9VMlNpdElWcmpURk0xSG1LZjF2VldDX2VvLVNhN3BTM2JFUThKU0phYlBieDhsNHY1eGdvZjI5UlRPcFF6ZklTX0xvMjJRS0pLNUE5S05UM3prTjZqdVd4ZnplUzM1RzV5b0ZNNU5DYlVrdXNwVEpjRmZRVzdKTDExXzVWTXFlek02dXhxbi1CZjJIRUlROUg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Factbox on Alexander Zverev, who beat American eighth seed Ben Shelton 6-3 7-6 5-7 6-2 in the U.S. Open final on Sunday to win his second Grand Slam title.",
-    "publisherUrl": "https://www.reuters.com/sports/tennis/us-open-mens-singles-champion-alexander-zverev-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:42.504346+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihwFBVV95cUxQTFFqSmtLMk9WWUVza1Q1WUZiS0RpMkFER1RhT184ZUIzVnlFcXFFZGlDXzZlYVp0RzBUeHktQXhRenAzNDF1REdCT3ZqXzlwM1FndXZ4bWZkVVNsTlJkemVsYnc0WmIzdjJ4ajJURVlRZlJoRFhtQU1jRXBBX3VySHpQTDY5MmfSAYwBQVVfeXFMTUJ0VEdRZUFnb3FPS2NTWm5YTW5xdVBFWTduQVUxYzBQMkdjQnhuOUtheGFVMV93c1V5WGljcm8tOVhxQk54ZUpBSkhUSlp6YVI1V2FtWTZHZlFGaVVpRElMbEY4Q3VZb05NLURmUURJajZsd1UxaDhzeDhwRzdHX3NwTkwya2lmN1NrazY?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Cybersecurity concerns are feeding a broader AI safety debate, with industry leaders calling for measures to slow frontier AI development.",
-    "publisherUrl": "https://www.cnbc.com/2026/09/14/ai-models-cyber-weapon-cohere-safety-debate.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:42.421327+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixAFBVV95cUxNMUxwdHN5dDgxNEpDZFYzNVJtZFFrSHhmRkYweEpkUVd5N3BuY0UxQ0gtYkl4bGZIRWVQLUhlbG5PVE9vT0FBSlZBWFplM3RVLUhxbkoxaUtjcC1xdXdEam1IZHFPbUlDUVB5Y2VXNVRRX2tEY05sRDYtbVFlY0hycG9NRXgtZ2FGd1NIZ1dTekhYN3VwUE0yUkpDZHVYbmdvNXEwZDJkLW5KLUNDODBaZWU5VHk4OThNZi05MEVsN1RFMmJP?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Germany says halting AI development not 'viable' as Europe weighs safety of new tech. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/legal/litigation/germany-says-halting-ai-development-not-viable-calls-us-china-involvement-2026-09-14/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:42.347670+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMioAJBVV95cUxNakdOOE4zbWlTNHlVYTN5R1dIdTVjcWRZc1lVX2JFcU9vaEhGZy1IWVk4V094bHU3d010STN2U1h0N2pZVDNhOFIwMDZYU28yT2xlOW8tajJqNXJuOWtldnFOZnI1MkRsU3MwaG8xcWEzYW9WbkR4SVhRYzA0bjhoVzFLTHJXS3BOMjdqTW1seE9GMUxzRC01eUI4ZldSUnVDZTk2UVRnaTBHZzlXWHVXdGdKT3MxM05LUnpDMEhPc3l1NXIyeTV5b1c1aGFORXpURjBQQmlhSXhaSVhrYks2cllGbE9QTllVbEQzVDNlbEhNY0NJYmpseDdYWUljN2xPS2J6cTRKeExNUkwza3NUdGgtTk1jQ1lwZFp0dDlxR3c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The expert also criticized U.S. lawmakers for lagging behind technological advances and questioned the European regulatory model.",
-    "publisherUrl": "https://voz.us/en/politics/260915/39103/china-is-the-enemy-tech-expert-questions-the-slowdown-in-ai-development-and-accuses-anthropic-and-openai-of-stirring-up-fear-to-weaken-the-competition.html",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:42.104844+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi4AJBVV95cUxPQlJKSTQxVjZCVl9NOFMtYzA3VDk4WUNXN2RMZV9IQXptVC1hb2hHamdsd3QyUzdPNHFVTUx0OHFPOVJGS2ZUdEd5Y1BJa1gweGNBSFdfeFZNQ19wZEZONnhrai13Y0xaaDJYYXNhaUU0WWs2WVJzZ3hIdzRBelJyTGI3R256aDF0X0VPUWxtaThwb3o3UjJxRC1QTFVDYjVtS2xwTzJmUHdfT195eENQa0JCOTF6WnlwOU50Q3BRd2o1YldFQ2VMaTJPTlhGeUpmM0lVbFlvSWRRWGRnV1BNMW96N2NTQ0VlN25KcVlMVXF0dW1DMWpENmZzUEhBODAydWQtMGRVSW1zckpzNzkwa2tYdWItellzYmZ6cHVmRTRVRGVjY1Fsbi1hTWRURWx6WGtHZGpySnRqWHlWMEt1MURNMi1IRHY3UGYtV0VXaEpUZ00yRHRPeVpNN0ZIREVS0gHmAkFVX3lxTE1odFlNV2xZaWtKUlA1dEZPYTZidnpsOFg1TTNPTlZFVVgtX09INnBlSW9HLVhyXzluWVVmekNYT09qVkItRng2TFBvQ195Mm9weU95dTluVnJNcGVnY05Ka1dCSWxjMkQxdGVkT0prWHJObkJHcDhTWVQ3TG5ObnhLUHRkMXdRNDl2aGtDZXV3bkFuelFTUk90MnpNcXU0Ry1mYm5xSlI1ZkJoVHEzNXFmTkFvbWRFY004SC00Y3ItWHpJbHlrUzlmSGRYQXFuaHp0MkIxNzZuMW9vLVQxLUlWMTJ1SGFheWNtZjZZLXQ1WEtKN292VXZxdDA0WEpUMUx0ZFU1NWM3R0VTa0ZWUi16MjZ4VDFZc2wwUFAydlVXalN5d2ZHNVYxR1JDQ09XZTBGMjZqbzV4REtDaVlQeWRrTVFzenRvV0ZsWHFvRkc2SGNRV0NXVjI3NUNrQTRwZ2xFMVdIeUE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Three of the biggest enterprise technology names in the US are now setting terms for the two biggest AI labs.",
-    "publisherUrl": "https://timesofindia.indiatimes.com/technology/tech-news/nvidia-palantir-and-others-ask-employees-to-stop-using-openai-and-anthropic-ai-models-warn-the-two-companies-we-will-ban-you-unless-you-guarantee-no-stealing-of/articleshow/134254540.cms",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:41.963365+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitgFBVV95cUxNMEEwQktkWlpjRHA4YWhId3AzTzdFZGZXdFhqdUNMV1hqaXRnTlFvUVRtT0k1bEdJaWdkSkJ1WFhrQ0ZQNTQxazBaSm5IYVplcmd6WnJqSUtnc3ZUbWNYbXZCSkFIOTVOR0g5R010eEJTckVfRlN6eHhZNVlGNldCSkRNZzVqZlI1RXRMdXZ4SFlNLWx2QzB0RzZwbmkwa0FRbHV5aHptLV9Sdzg3QlIxcnhMMlotdw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "That explains why many companies are shifting to the significantly cheaper open models for routine work—and helps reveal a narrow band of workloads where frontier models are worth the cost. But the steadily narrowing performance gap between open and closed frontier models, coupled with the cost-effectiveness of open models, is now widely recognized by many companies.",
-    "publisherUrl": "https://arstechnica.com/ai/2026/09/exclusive-open-chinese-models-close-gap-with-silicon-valleys-frontier-ai-models/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:41.748518+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitwFBVV95cUxNZzAxcWJwUkZLbEtIV1hseTVTQ2lGb1Q2R0hRb2k1LW5KSW5QOXI2VXJNclBxWDZvUHJ0MmM4eXB4MHhqUF84Nk9hS3VPUlNleEpoMWduYXBvZFlOMlJiVEVZSFFFcGhsWXdVVThlOW1ZVG8wV0RBS3FkWDNQS0Y3a0RmT2JpM3FOQTJGSVBseVMtdmYxN2tLQi1OVFdvNklHOGNDZlNRemdpOFJYVDVPMm1heVZWSmc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "From durability to cameras and battery life, here's how the premium foldable phones stack up.",
-    "publisherUrl": "https://www.cnet.com/tech/mobile/iphone-duo-vs-galaxy-z-fold-8-ultra-apples-and-samsungs-premium-foldables-compared/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:41.726695+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMidkFVX3lxTFBleUdIYW5FZmFTUmxJa2Q5THpncVRjYkV6Wnp1V2JrQU4xY0RiekFqZEFLLU91N1piWExUQU9DTmZIQW5sekw3bGx3THl0MWFMRHpadmhudzRpd2w2OExKZ2RiU19pTnFrYlZTbmdKcjljNC1Rb3c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Veradigm Data Breach: Gang Claims 3.5M Records [2026]. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://tech-insider.org/veradigm-data-breach-ransomware-gang-2026/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:41.539178+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNdlB6ckhOUjNOZ3VfSVNXTVBvQWlkLTRiWUwxLU1KZG9fT0t3QVI5U043NS1pdGp6UHpCM0hjTHFzZm5OelhkWVdZbkY3RnBBbEdCVnFTXzhJNl8yTW4tOHo5UzU3SEU5VW0xNFZnQkhCNjJzWVVWTmZEQUhsUVNYalpYNnpIZUo1S0UxNEF0MHFtalVablBwWFF1ZDE5V25OSDIzd2tadlZqdU9xdDFQc1YwR1FxNW91aDJKeHNaeF9iQQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Legal software startup Harvey reported on Wednesday that it raised $550 million at a $15.5 billion valuation in a funding ​round co-led by new investors Diffusion and Lightspeed Venture Partners.",
-    "publisherUrl": "https://www.reuters.com/legal/government/legal-ai-startup-harvey-reaches-155-billion-valuation-new-funding-round-2026-09-09/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:41.340131+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivgFBVV95cUxOQlhQUVhMMWE4RFpEUXBNVWIyNHk0MXJzNkR6NUJtZlBmY3B5ZFhjNGJjaWtXZEtodlgzX0ZMV1M5WXh5UUw5S0cyaXlYc2RoYjlIemhzN0JCZ3pjTjBIOGxMZ24wWHNlNUZkeXRTQlN0Q1hTenNzaXlabWVISmFQRkxsSFNfVkJWOFJkdE9FSHhEOWFmQnBseDlnUXJGc2pWU09ZWXRfMW1wS21PQXA3M080em1reXYyaXdONWdR?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Rare show of unity from rival developers after safety warnings from Anthropic boss and AI researchers.",
-    "publisherUrl": "https://www.theguardian.com/technology/2026/sep/13/openai-sam-altman-elon-musk-back-anthropic-calls-brakes-ai-development",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:41.181220+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivgFBVV95cUxPb0E2ZEF1cmRjQ0JXRmJMTVNZbW91dXhTX2pySUNFN3hDZFNhZlVyeEhXd0pmcEFLVmVXZkxmNVVsS0hUc1pndGZSZHF6empzVFY1bUI5aWoxWVpPdlNYQnMtV3NORUo3ZnNONHhudlJOMFM0bTFndnItaTZmcndBekZfM1JXZS0yWU5BWWNjQmlBYThTZ1Blak1ENmVOemZERmMySV9GT2loYkpxMlp3ZzFPcV90YkZzQnF0NE9B?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Italy is seeking to keep the contracts to run hydro power plants ​in the hands of domestic companies, Energy ‌Minister Gilberto Pichetto Fratin reported on Monday, as the U.S.-Iran conflict puts national energy security at the ​top of the government's agenda.",
-    "publisherUrl": "https://www.reuters.com/business/energy/italy-aims-defend-national-ownership-hydro-power-plants-minister-says-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:41.127127+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMizAFBVV95cUxPX2wwUjk0T0o4TFIyZ0J3MDJ2Z2p3N2x0M0hTQjUxYVdIS3BkWnN6LXVlSHlPLTRhRVhaZFF3OVl5a1dpYmRoQUwyOE54MU15RUxjQjNqM1lNT1JzNWRhN2lVcFYzSjZUVTN3TnZYdlZmc2x4Qm5BNmM4Z2pUUzZQREJoemhnRHpIZko0UTNZTlRlY1N1eS1Fd0ZoekdNY0dROFFrTEJMbGJIMFI1UWdJS25UajM2NmtYSW0yQ29mNGphZzUzTm9RYTNXNjI?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Joel Hron, chief technology officer at Thomson Reuters, reports the next wave of AI is expected to be defined not by better chatbots but by trusted agents.",
-    "publisherUrl": "https://www.wired.com/sponsored/story/the-next-ai-race-will-not-be-won-by-the-smartest-agent-it-will-be-won-by-the-most-trusted-one/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.899444+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxPVV9DNXhVa1FBdzhsU2hlakMxby10RXY5V1I3T1Rhc1g2QTROZmk2MXE2eDYxN3FranBjUElBNUlMTGlGd3licl85Q1VtdnNRMzhSR2hydnhCS3V0enk4cFl4Mm8zeU9taHlaNDJwd3JtRDZQcWs4N0lFbDR6aFY1X1VNVG5YNVUyUmtmcXIyNEY?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Microsoft has started rolling out an emergency out-of-band update to fix problems with its record-breaking September patch Tuesday update. Microsoft’s out-of-band update, released yesterday, addresses these issues across Windows 11 versions 26h1, 25H2, and 24H2.",
-    "publisherUrl": "https://www.theverge.com/news/995302/microsoft-out-of-band-windows-11-update-fix-issues",
-    "sourceKind": "article-body",
-    "updatedAt": "2026-09-15T13:20:40.867565+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipwFBVV95cUxOUU9BOGpkbUk0UVhJRjlsRVNXdUZtNUw4ZGR4RGxqWW94OEF1T184SWh4bmhCX2hMTmJCa2dNZGpsSWlSOEhwaUtrUlVpUm5Nd3g1blU1UkxOZkU3MDhYQ2MyRUVMR1EyMXdPbzVFLW5SQ2pKcktpMmpLcl9PcDIyXzdhMERQcjd5X3gzUjFPcEdvandGSlg2aXFLZnZEcTBOV3ZWNVNZMA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "China tightened travel curbs on Tuesday ​as new exit-and-entry rules took effect, barring citizens deemed a potential threat to national ‌technology security from leaving the country.",
-    "publisherUrl": "https://www.reuters.com/world/china/chinas-new-tech-national-security-exit-rules-take-effect-2026-09-15/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.839509+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQeDdUSXMwLWNhY0JhRXAtUjVJamcyeFhTckRjbWNfelI0ajc1THAweTBRbW9faGR3cHVTeGI5RnNnbDhDSjZ3YzFQMEtzZnZaaGlBU1Y1UGFXSHE4NGwtRkFwV1VMWDlQSkpRakVHVlNVcU9qRHp6bm5JeDF2VlliM0VOeFNsaEwzX3FEWTMtUnM5d2lEUVRUdjZETzY1YXloWi1sbEt1dGRSTzNYM1VkaUtpcTZCcTZmNDFhYjd2bjdtQTNSeVlJMkZJR1A2Mm82WTVoNg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Mexico and the United States are racing to reach a bilateral trade deal before the U.S. midterm elections in under eight weeks, based on six sources in both countries familiar with the talks, an effort made ​more urgent by the collapse of Canadian negotiations with Washington.",
-    "publisherUrl": "https://www.reuters.com/business/autos-transportation/mexico-washington-sprint-toward-bilateral-trade-deal-before-us-elections-2026-09-11/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.736414+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitgFBVV95cUxOel9YQnZiN2dhLU1ROHQtdHR3WHlDN2gxakJzdUZIaTlBa19JNVM2RlNHcVdiRG5EQ1pQRmlRemQ5S2RLVUt6MGw5eU92YjYwWHNfQnk2c1k5bktpNGlhaGx0a0kwX0lzeVZTaHE5ekdneFlYbVhGOXgtMklVZzFWT1prTzFjYlpDWW1zQXltUEt4ZlRGOUlpQW9zclFYaVR3NnlLalAwZ2xZb3dYWUFxa2ttSWdrdw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Saudi shares fell on Sunday as new strikes on the kingdom and on ships in the Gulf tested nerves in the Middle East days after an attack on ​a Saudi oil pipeline.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/saudi-shares-drop-after-drone-attacks-target-key-oil-pipeline-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.508713+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixAFBVV95cUxNWWlmVi1xaVhrT2xxT3EwcktyZ0VKaGtVUGdRMmoxbnZNOEVTaF8ybDV5V0RwUVQ3OUFHVWl1Rk5DSExhUjVvTWNKOHFZa2tEMzhKQzJhUEtScEVBbGU0MkJ2VE1HQWg2TktqSXpyT19YZ1NJTmVHWVptWG5vbTJTOV9DTVhvX1VFVzBiQm4wWjVFdzI1NVBEekdYNXFRUkNXY3ppY1hNam00MkI0WVI5MDdESHZZdmVCeUZscTVZMWwtNms2?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Macklemore dropped from Ed Sheeran's US tour after 'Free Palestine' remarks. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/business/media-telecom/macklemore-dropped-ed-sheerans-us-tour-after-free-palestine-remarks-2026-09-14/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:40.253324+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQS1ZRSkVVc0RNU3o1SmI0NkkzTjd2YVdBbVRTbE1nV1pDYVl6UFZLTlZfMjhSeVc3dG1pcVVwbnJ4dVNJRUxLM3NCT0xEeWh6ZzJIZGRtTHhvcVRXWDdyR182U1daZDBpenUxb2pWYzg4TEowM05BU3dWcXN5YXpyUWxsa0FwMEktWEpmSl9kWlhTdkFMREFIVUZNeGdrX3Brc05GNl9ydUYzalJjRXU2Uk5qd0NaXzFsVG84b0ZJc3NUQlk?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Authorities in ​the Philippines reported on Sunday it could take weeks or months to identify the victims ‌of a ferry fire that killed 76 people.",
-    "publisherUrl": "https://www.reuters.com/world/asia-pacific/philippine-ferry-fire-victims-may-take-months-identify-authorities-say-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.219240+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQUTNpQUZmemxkOGh4bEtlV0pYb3NlR2lwYTlUMWs0emtlNTJiZUdFZDBFa0pscEd4dVRKRDd0YVp6VUFrdXVqX2pTRHBBMkVEcDFzZVlIcjRrdDc5cUM0UFBvS0V5cGdGcTBKSlF6d3p2Z1p0dkJGdmU4SDdqcGp4VC1SU3ZSMFpMVzlWeDE0bzlVbFRNVmJVaHhjbjZPdmpNZEctTklTSkFacFF3Z1pOZTZNSU9oWkFw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Cryptocurrency billionaire Christopher Harborne reported on Saturday he had donated £36 million to Britain's anti-immigration Reform UK, matching an ‌already record contribution to Nigel Farage's party a day earlier as it prepares for the next election.",
-    "publisherUrl": "https://www.reuters.com/world/uk/reform-uk-receives-second-36-million-donation-48-hours-telegraph-reports-2026-09-12/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.190675+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiowFBVV95cUxNekNBZWwxSDJKTHl3ZUNJZ0Mwd0xDbERTVXFOcXZxa3hVejJfdDZGWTVMcEhhbXlkaW5nTm9JVEF0N1ZBdnF1bWZHeGRDWDBoTnZMVlBiTWZDQ3lUUF9teU9ndmZvdHZCM0EtWTRfaEFTTTE0VlBxWG5NZkkzOHBmSXFTZ2w2Y1BrVmJHUmgxRVR2YkN6SF83M3ZhQkdrSENqbTJF?oc=5": {
-    "cacheVersion": 3,
-    "brief": "India is expected to be able to export up to 1.64 ​million metric tons of steel a year to the European Union ‌under a free trade agreement, but exporters is expected to still face carbon-related costs, based on the legal text of the pact.",
-    "publisherUrl": "https://www.reuters.com/world/india/india-gains-wider-eu-steel-access-carbon-levy-remains-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:40.008187+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipgFBVV95cUxQa0JTNnAtSDJTVWo4NXI0WE5xaDZ5aVJSZUFLOTlkLWxfa3BfVjh2d1RDYmNmZFUtU2xsVTdjOFE1ZC1GY3dHLWh2bnlTTUo1eHJ4Y2hnTFc4MUVLdjI5NzdSZFdDZ04xZlhtdEx0ZkJzeVJ1a0dQTFNCMkRmbnlpdnF3LVZxS1FnU1RzRDN5TWFqYzdzN3NmZDVPT1ZzUGV4ald2emJR?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Iceland's last remaining active whaling company reported it believed it could survive a renewed push to ban ​the practice, given that previous attempts to outlaw whale hunting ‌had repeatedly failed.",
-    "publisherUrl": "https://www.reuters.com/world/icelands-last-whaling-company-shrugs-off-threat-permanent-ban-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:39.830712+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiswFBVV95cUxOSmw3N3gxSDF1TmZtV1BQY2s3cVUxZGRjbW1FdlBMelhLbUYtblpJc3dDa2thTjNUUkJCdXFINm96VVl3dlh5QWFYVlp2cjVnUnowTVJYWmhlUGlOZEtYUzNBOUlpM3o2MUJPNDBySDh5VFBic2Mta3R1YTJKNFkyUFBMcXZOd1hVaXZDMTVHaGxVZW96WkJzem8wR3pSY3EwQzBVTEVhUi1waTlfQl9KQVVfYw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Turkish authorities have detained at least 47 people ​following a series of raids on the offices of LGBTQ+ associations in a ‌probe into prostitution and obscenity, prosecutors reported.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/turkey-detains-26-people-after-raids-targeting-lgbtq-groups-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:39.417916+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPSTEwTm9SQW1ESUFUUDJGOWt2VldUTXFUcTYtOGRnMWxyWTdheDc5VGg0MU9RYUtIVjBCb01SZkNoMVRqVlExVjFYdEs1enJNRDRtcGtoZ0pGSFlkRlRISFNtVFdfS2VKdzNIbXY0b0ZUOUZDal93TzlCd2ZNZkI4M1RidGNkY1JMaldMRk1TejZMVVN3VmU2T3ktbjRyUFVVMXY1NWFxY2trWjFjNXJzWFZXZDBHRXB5c2xmdV91enFXZWc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Police in the southern Chinese city of Guangzhou have ​arrested a knife-wielding man who injured ‌people outside a restaurant, the government reported late Monday.",
-    "publisherUrl": "https://www.reuters.com/world/china/chinese-police-arrest-man-after-guangzhou-knifing-incident-no-deaths-reported-2026-09-15/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:39.175148+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxQV1NQYW5PZjBhRlpIdDMwdFJWVTgtWWEzWXJzSjJZeDlBaG93LXRPMWZTWW9md0hTallxWDUxMGIzVlN3bVJLRTJINWNqTWFhWl9tWm5Wc3R3SHkxcFNOaDc4Y0x0RHZyekQ4OHE4OFhHMTc4UlJ1N3RrZmhZMFZtU3lJTGVrSndsMWtrT2d4eWdVY0R0S0czZGpmNFJnaXJGMUY4NHB1RzBkNUdL?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Putin says events in Europe, like AfD's win in Germany, caused by Western globalists. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/world/putin-events-europe-like-german-election-caused-by-globalists-west-2026-09-11/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:38.798043+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPa1BGN01HTFRaSGk0SnBxaHdGdzVGb2k2WGYwVVBSS1ZmUjNXQU5DSUMwZ0VUQnFjLWlIREE2UGRxMlkwV0NiaHNKSkZLMnpZMnBfTXlNWnBNWGpYTTlpLVZnaUxqMFNaOHZuX0JvNExsbGN6dVFLd1NtQncybkhQSVN2NmY2dnBxTEpldGpNLTByUFlIUmZ6bkJVeFUxZXU4VTFBQlpJNXN6V0Y4TWJqOTRyZmxDYzN2?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Every day since a torrent of mud and rocks destroyed a Nepal-China border crossing high up in the Himalayas last month, Arushi Gupta's parents have called and messaged their missing daughter hoping she somehow survived.",
-    "publisherUrl": "https://www.reuters.com/world/china/weeks-after-nepal-china-flood-disaster-families-missing-hold-out-hope-2026-09-15/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:38.612389+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxNMGtsNFhCU1JCWjQ4RGZOTGlxUnBBWGFPM1lRR0l3X3l5QmswT0xzSzdDcXRwS0VtN3JOdjNIUzlUU3Y0T1ViaVdhZ0UyNU1HT1BKbGlQWkJmVUZsc0d0ZGlKeC1LYWI1RXR4UkdmT2RHU25XU3pVamNJMWVOSmtXRUdSeFN4M1BpRHg2eGhGQ1V2THNqa2NkR1I2XzE3Ml9tTldEa1ZDZE1HdEJv?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Despite U.S. government initiatives, China remains dominant in the supply of critical minerals crucial for clean energy.",
-    "publisherUrl": "https://www.reuters.com/business/energy/us-invests-critical-minerals-china-maintains-grip--reeii-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:38.550055+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiygFBVV95cUxON1UxOEFocWZUYXJVTUdzcW10bmc3SGRzLWdXOFBUMjUxbVAyOUFrZTJQMXJpeFI3U1BheDVPYzdzOG5yOG04TjU0VWpCS2hBdDlmd3VVcV9VYzZXVjN6dHlSeklJR2ZkdWRlaGcyN2dFMjlHbFpHbjVybUJySmZTSGowSFNRYUhBQm9IajBENWFQeG5KOF9zNTk0NFhUYzFEOXczbHFpb2tPaW1ZSDlmUXgyZFRVNUZrNG1SSnFWZUw3LUh2LTdRNE9n?oc=5": {
-    "cacheVersion": 3,
-    "brief": "While Iran describes the Houthis as an ally, it publicly denies giving them military direction.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/iranian-arms-advice-helped-yemens-houthis-seize-key-red-sea-city-sources-say-2026-09-10/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:38.502099+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilAFBVV95cUxOYjkzaUlTSVF5ekc4elYyR2p6NXNFYXJSVzFGdkhoTWxNTmlVRnBpV012SlRiVG5wUlY3aTRZUmpkQ1I0cmJvYWtlVHRZTnlwaUVvVVNMVk5YWFU2dVY3VnlDMmNuWFM3RTFwdzc1dkVBUDhtUGx1eE9YVGhRaFo3T1ZtNEVLMkVyUW5YSDhGNEZfVXdX?oc=5": {
-    "cacheVersion": 3,
-    "brief": "India's annual retail inflation accelerated further in August as price pressures spread beyond food and transport, strengthening the ‌case for a rate hike by the central bank next month.",
-    "publisherUrl": "https://www.reuters.com/world/india/indias-august-retail-inflation-482-on-year-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:38.481876+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMioAFBVV95cUxQMmQyVk1kNXdDa2h2Z09feEpiU0ZHSTZoNmNRbUtsSkNCQ0F1eVRscnR4eWtIU3ZvOXZoeFQ1S1VnRmh2RTZHWkZzcG14Q1lQbHBwRHcwREFrSG1ZZnU3dEFPUmFVNXJCbWE2VEVEVWl3Uk44RkVJYjVlMExrQzlfSHZlQzB5M0FqN3BMSXI3bGlTdG9kR3Y4bktyVWpfZmJn?oc=5": {
-    "cacheVersion": 3,
-    "brief": "India notified changes in its payments legislation on Monday, specifying that banks cannot impose charges on payments ​via Unified Payments Interface transactions of up to 2,000 ‌rupees.",
-    "publisherUrl": "https://www.reuters.com/world/india/india-bars-bank-charges-upi-payments-up-2000-rupees-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:38.293717+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiywFBVV95cUxQRW1TdjBUMVMtNTZhX1kteHVyUWFKMlZtUEpJdWJpRzBERmRGQ3U2aDJsT0VCZGQxa0lUQ0h6cHo2VVdYR21SeEtUZGpYMGc3bFhsQW54UGRTQWpGcHFUQ3FaeWRYUElaMk1nVXlMaHZzZENQdDVROXA2T1hWSWJHeGNPbER5VEZWT2p1S29fLTdweWV6R093cjYtdy1ZVnJCUWtpYjY0NkVESGVRdy1zQTV3N3pnVks5c1dZN3R4WVZ4bFZlbk9rYjZBOA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Dozens of civil rights and advocacy groups are urging Congress to scrap a defense bill provision that would deepen U.S.-Israeli military technology ​ties, based on a letter seen by Reuters, at a time of growing U.S. skepticism toward the longtime ally.",
-    "publisherUrl": "https://www.reuters.com/legal/government/rights-groups-urge-us-lawmakers-drop-provision-deepen-defense-ties-with-israel-2026-09-03/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:37.828254+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiugFBVV95cUxPWk9BYU9VTHlxLTYyazVUdXIxN0FEc09yLVdHMWxLeDJCNl8wQTRhY09CMzN6QndyQXZVSnZPQThTa0R4QjdFT3R0VWJEa3JXaDRqTnM5YVhwMmN3Vllrc0Y0MndBUUVHQ1Y4X3VyU0I3WmhZZUNyc1BGZEJ3QmppbFVGcnRvOHhjU1Ixb29vVGVNNE5LYkxpbGJtaEJua213U2l6UjhNOUc1ODB2U3lGMlBFb3FPU3d5YUE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Republican senator's TV interview passes muster with FCC's Carr even though Democratic candidate's does not. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/world/us/republican-senators-tv-interview-passes-muster-with-fccs-carr-even-though-2026-09-13/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:37.807245+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxOQmFYd0hqU3pUXzRwRklUdC1WMkl4N2xFZHZkdnJndndRRTlITmctYlhjOWFQc013NWdoRUxuMFRzRWcwZWF2Q203aF84cE8zVF9ZZ0h6YnVNUk9wRjdnMFlFTW9YSWdVOWppMUJFOHNDTllGVTZlMHd6eFpERTlVbzB4c2t1amtmMldEYWZGZXBZWHZ5RThHS2dMWkJEUnBibm5WTFRCaGVQNGQtRUpBWDZMZ3F1dm9td25qXw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Iran protests as US prevents its nuclear chief attending IAEA meeting. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/iran-protests-us-prevents-its-nuclear-chief-attending-iaea-meeting-2026-09-14/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:37.788052+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiswFBVV95cUxQckJId0F1b1BVWVlMUk5FVHBwd0hESXBPbVJ3WHhQREpwWlpEbElwVjFBUzVBVjR5S0pWUlpPYVpPelJlUDJLeEtxc0hwR1k0VFg2QUM0OEoyTUpudU1WUnJrMVhjeWdiUGpHSWpyWjFwMEhFeWRfcmx6TTByVWx4aUdsbTY1X2pRaXdnRm5oT0tjVk5tcERSRVRZZ1Q2Rlo4ZmN5TnNQWVZjN3NQUG9wcHN0VQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Gavin Newsom says he won’t run for president if Kamala Harris does. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.washingtonpost.com/politics/2026/09/14/gavin-newsom-says-he-wont-run-president-if-kamala-harris-does/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:37.536765+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQbk52bU1NVDUxSVh6cnR3aFhtMnlOSFQ4Q1ZpWE5rTTZCVlgzUGFDLWFKSkhQUHNmSjcxblM5d2ZUTVlZNW9mVjNGa1NIVEZuU25KUkhicVJkVkFMTnFBSS1QQ0NVTUVsVEZ6RGhWUkczdUdOZ0JVYzN1SkNsMFdobFFyTFhEcmxEZ1dWWEhJNm5HQ3h3Z3JjMU9LVkxzZ2VWUzluTzBEVFpjclUxSnVpejJlWDJaUy16Rkxn?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Iran reported Tuesday it captured a U.S. uncrewed submarine in the Strait of Hormuz. The Pentagon reported it had malfunctioned over a day ago.",
-    "publisherUrl": "https://www.defensenews.com/news/your-military/2026/09/09/iran-says-it-captured-us-submarine-drone-in-strait-of-hormuz/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:37.471917+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOUk9oUjNYejhGeW1YblJUVWdfQ0JaZU52dHNPZUZVdnpMSkxYS3pKTWhLdjU0REdNUGdubUhnRl9KUXZabHRfbEQyOUJZeXUxQzZfcGFlbFV5V1BlSTVmRkhzdGJaNkpQa3p3OG9LZUt3Q3VXYkdrc2ZRWW9fcWQ4TkYxNFgxNFI0dlhIV0UyUU5Dbk44blJMempZVFVqVm5XbUlfV2dqSlN3YXBNUDlUQmVxS3JQMUxQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The vital East-West oil pipeline in Saudi Arabia, which ‌has helped relieve the logjam in the Strait of Hormuz, was temporarily shut down by a drone attack coming from Iraq, Saudi officials reported.",
-    "publisherUrl": "https://www.reuters.com/world/middle-east/yemens-houthis-reach-strategic-island-mouth-vital-shipping-lane-2026-09-11/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:37.409694+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitwFBVV95cUxQQ0RaOWVxcHlBUGVONHdNbXRHelJPX0NiWXFmQ2RIQUtCT0g0M2FqQll2cEFkT1JoZ1ZvNEh5d29ITXpJbFZsbm80SkxWOEE5b3ZoWEJiZFN4YkRHMGplTVhBY1ptNThpUk1FZHZhU1hEc0dMQjJwOHlTMHpET1IxSTJzYTZYNWl5dzhuWVhNcWJBdE5XSFcycmVOZDZqUjFkclJXcTF4ZW1wTmFkZHRjRTJtN2hCbjA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Russian convoy resupplies Syria coastal facilities for first time since Moscow-Damascus deal. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/world/russian-convoy-resupplies-syria-coastal-facilities-first-time-since-moscow-2026-09-14/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:37.045906+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi0wFBVV95cUxQNE5wdlBUSzZvRy16T2ZTZEczVUh5aUxsR1RrQ2dJbFVzWlh2UXlNS3lRbEFEckM0Wnc0M1N1UHhtQTlBY3BBWTRvVXI2bzBCZk04Uy1YcVJaWklKMWdsc1pPeXU5bFRHbzAzZXJCbmVRSFVVQzJ0QVl1VmREczJ2TWFzd2FPOXJNT0UwZU5LeGQxNEM0T2NLa2hzUFJmWTdjNkdYNVNNRVJydnI3dHY2cXVSTkNPQWNwRk5JZkhkQUNkQWY5UmwzcHBpa0YwVVhSY01z?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Actor Mahershala Ali was excited when he got a call from filmmaker Bassam Tariq about playing a three-dimensional character in a film in which ​his weapon of choice was a blade.",
-    "publisherUrl": "https://www.reuters.com/business/media-telecom/mahershala-ali-stars-action-thriller-exploring-faith-family-motherhood-toronto-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:36.581696+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxOdHlNbHJwdk95cTdKcU93R1RSY0ZtWGFGcm5Vcng1TlZia3YxRG80Snpza18xdVpPRV9vdTRiLXJ2RUVWU3JUbTIxdXJ2SG8xdHZoc2dtcDVnNUR5aTNfY0liRE9RMXVTMERrRzBvWTJzZy03b3V5WVVnckh1dzY2dzk2TlNuWDd6d1JDc3dScnNCS0NqZzlYUUlmZWxSUHVXbERzSTkzMDdNNTA0M2Q0S0R2SmZzb2M4RE0yOA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Saudi ​Arabia has ‌discovered 110 million ​tonnes ​of raw materials ⁠containing uranium ​concentrations ​in Medina, the kingdom's energy ​minister ​reported at the ‌IAEA ⁠General Conference in Vienna, ​Saudi ​state ⁠TV reported ​on ​Monday.",
-    "publisherUrl": "https://www.reuters.com/business/energy/saudi-arabia-discovers-110-million-tonnes-uranium-bearing-ore-medina-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:36.561659+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxPVUliRDNXQnJKbElYRGJrNC03YU9YNjBId1dGRkplcFVVN2hHNGxTVDlXQy0xZ2NmZ01iYm5kbFZkd3daWGhXazQ2MTdWb2NQenhfYU12dkhYOTI3LWViWXJ4T2oxT3p4WkFTN1FCbTFjUVpKbW5PcDlBNGxKRE04NTVmZldGc1BWdGZpOWdPUFlJbFdHTlE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Trump administration undermining rule of law at home and worldwide, based on intergovernmental report.",
-    "publisherUrl": "https://www.theguardian.com/us-news/2026/sep/15/us-democracy-indicators-lowest-for-50-years",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:36.397615+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitAFBVV95cUxQN01xekJGMnhaVnNBLXlVem9Gb09jVk5fMGZlUzFmVUlOZlp5LXg3dC1TTk1lRE02Q3UwRUVZVzNsOHh6NmVnYkNGQzhYVHNJNzNHSEIwZEFYVi1KbnowTUhfd3RaRFJZcU9rajlSanVOWGdiM2JPRjVrbTZyNHdGV0NxNHo0TUJhTVlIRXY1SUs1ajZ5TTY2ZEZXcDAxdFhTamFsRDVaM3JVSVFKbmxJT2RxM08?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Defending champions USA fell behind early but stormed back past France 97-79 on Sunday to win ​the Women's World Cup.",
-    "publisherUrl": "https://www.reuters.com/sports/usa-overcome-14-point-deficit-beat-france-97-79-to-win-womens-world-cup-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:36.383204+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNb0hxYi1hRXRlN01ldlJFSmk4ZDVnS1c0NE8xMm5PWXJFT3Vpd2prTWI4TGl5UTd6c1JKS24xVXpvOGpRY1VsYUUxQVk0TDVmNElEMUxLYnB4c2NfUWxmQWN0N21LWUY1TkZNc1pQWHczRUdhYTVJbEpiZXZPVi16SnZCdVN5eWotZ2dJaGt3UkNFdGF2NzUtTTFMU1dsR2EzcEpiQVRvRFFmaE1HdWZXSko1bVl3d2YyTGZPRUpGTEE5MW92SjJJNA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The agreement was seen as a sign of diplomatic progress between the countries divided by ‌the war.",
-    "publisherUrl": "https://www.reuters.com/business/aerospace-defense/brics-agrees-joint-declaration-before-new-delhi-summit-sources-say-2026-09-12/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:36.215981+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiggFBVV95cUxPQTlXTDV5ZDRPaTdNOEU2T2w5SkpjdFJtYU54MFRheWRTcnRjdUpMRzZGeHJpZ0pQS0JxZ1gyQjhReDdURVU5VnFleEd6VHZZenFZM0RBQXlhbkJMOFJuV2poM2FEMnV5d0FaUmc3bVotWHM1ZEU5RndCVXI2T1EwMi1n?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on How To Fix The Wardogs WD-L014 Error Code. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.gamespot.com/articles/how-to-fix-the-wardogs-wd-l014-error-code/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:35.798807+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPaFlybEpEZWtDbThQdk9OMFR0bFA0dmZtcUZLSEo2a0djT2xmanVSRlFRWVBRelg3dEUxTUJ1VW5zSWpFZDhGVzJHQWtxS2JkNm9XQUFFSUVTZjRDVTZ4RWd2YzZZZmZYNVAzOGdLWE9ZUzFBb0VKMXRTVXVtdjIyRFlORkZvaUc0ODBxcWRuVDhOTjc0WmdWamtZcmRPQmZoUi1jTmYxa0o4UUtD?oc=5": {
-    "cacheVersion": 3,
-    "brief": "India and China's leaders pledged on Saturday to build up business and transport ‌links, New Delhi reported, as both rebuild ties badly damaged by a 2020 military clash on their disputed Himalayan border.",
-    "publisherUrl": "https://www.reuters.com/world/china/chinas-xi-lands-delhi-brics-summit-indian-tv-channels-report-2026-09-12/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:35.768546+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitAFBVV95cUxNZ20xYWRGa2t3Y2JzX2s4ejdkMERXaWxoZV9NcFd5VElhYy13anZmZExpbXZSM25HdmhBWEM2SndzR3RMSkw5c3ZWSmhfUnJQOTFoV3hPdTJQalhTejNydkhWODdUUllRRk4xREpVZHZKT2xrWk02OXR6NWRzSXlseW16VE1DS1JNSk9pVWlweENBRnFYYl8ycDBWM3BBZVEySWFCRUg4dUVFX1VESl8xeUZRcVU?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on As Trump squeezes the International Criminal Court, more countries are leaving - AP News. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://apnews.com/article/icc-trump-sanctions-international-court-venezuela-chad-4d6979e781d0121a2e0a194d13c508be",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:35.592287+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitwFBVV95cUxNeUk1Qzc4NERxczhOaFNxZFhoNHpmX1VsdURET1ZhYm11Smc5MmpDeU4zU3p2RFZ4cDhsUDQyMUFXaW5QcE9xUWVoVlBxS3I4ekNXcGFjQWtaTUNFNDVRN0ZZcXk2a3ZNckxwLThFc2dQV1ZmMmZFdF83dHdxV3BpVDRKcXE2aHNfZTRXcTJKeWJZYTIwMjNwN2dpeFdDOEZlTHF3VFFxU1VRNE1sTWJtVWZGWHIyNVk?oc=5": {
-    "cacheVersion": 3,
-    "brief": "President Donald Trump reported he would ask European nations to pay back the United States for military aid and munitions previously sent to Ukraine.",
-    "publisherUrl": "https://www.defensenews.com/global/europe/2026/09/04/us-to-seek-back-payment-from-europe-for-ukraine-aid-trump-says/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:35.546867+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikgFBVV95cUxOSTBsQlVVMThMRmZ6a3gxOE5lRG1fbENPRnEwUmlWN3pXNUdGT1ZhMDZOQnFMbGZWZUk5ZTQzYUd0VVByOXdZVy01ZE85UTJ2dVBIZW1EX0ZzZjVaRjRyc09PTkpGQlJQc0JGQmh3b1J0NkllWFItWHhaNTVIRUxrbEJVaWQyVkpfcm0zcks0X1ZZdw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Latvia's airBaltic voluntarily filed for protection under Chapter 11 of the U.S. Bankruptcy Code in New York, it reported on Monday, as it seeks to restructure its debt ​pile and survive a deepening sector-wide crisis brought on by the Iran war.",
-    "publisherUrl": "https://www.reuters.com/world/airbaltic-files-chapter-11-bankruptcy-new-york-2026-09-14/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:35.455043+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQTWxETENqZTZsS2VkYnkzM1lNT1hqU2JOZU9Jcjl1QThRVkRhb3BiaThvMVh4YVZrdE9lVDZIR1JXbnRNSFJuWEtJdU9zYVYtU2ZzWHJTWUs2Y2FkTGwzUnBlNEY4YUh3WW9VSlNEdlFEdUt0d1dCeXo0WTY1R0FURTNrMkV6TTdiOHNIaEhtU3g4eFNOeXF6TFVfSlIwcjVsTVBZS1QzcUd4TDlKUnJpVEU4VllFNWpEZzg2X2gwdGJ3cmwtRlBIbXpma1lUaXRiQjNBeV9TRQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The U.S. does not have enough engineers, technicians and assemblers to rebuild military space assets destroyed in a war with China or Russia, per RAND.",
-    "publisherUrl": "https://www.defensenews.com/industry/techwatch/2026/09/04/space-industry-lacks-workers-needed-to-rebuild-satellites-lost-in-war-report-says/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:35.287151+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiwwFBVV95cUxOVk05VU1ybEIwWHk3Q3VqckNXRWtwVUZlVy1GQnJBaXo0ckV6NXh2RG92LXc3LTJxSVFBRU5JQUN1dEhZSmppanRZSGVTNjhuTzhVa0hZUWdJTFZYam9SRDl4RzNDb3dhRng0WnltR0pOcWdYTVNQc2lLd2FjZzFhVmM5bDRZMV9CQlpDelRWbzZxYzNzWVVCbmVobkFLcTdwbkNXRlpSRGdWR1pSaWhhbnZuS0dUYU5XMDFvZm9iMEl4ek0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on North Korea's Kim vows to expand ties with Russia, backs victory in 'sacred war'. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.reuters.com/world/asia-pacific/north-koreas-kim-vows-expand-ties-with-russia-backs-victory-sacred-war-2026-09-14/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:34.987453+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiY0FVX3lxTFA0VGlkTTIxY2JYN3FIaHFBVmdCVUNTbXBfZWp4LVMxbWlja0g4XzdJLWlFOGV2UzlYMV9qblRGWDhaUWF4YVdXN21nSDU0QW5rdzVkM0plU3FOWENPa2FXdVhOYw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Fox was honored with the Bob Hope Humanitarian Award for the work he’s done with his foundation on Parkinson’s research. Read on for the full list of winners from the 78th Emmy Awards.",
-    "publisherUrl": "https://www.ign.com/articles/2026-emmy-awards-winners",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:34.892542+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxPR2RFQmYtU2JMa0hQbHpmVlpfbFNDWVAyY2NzZHZjVUg4Umx3d2VEYWdxazIxeFpodEhEVmg0cjREZ3p0R3lTSGJ6QnUzc255ZDEzejlqRU5DWkI1X29tb1haZ2U0amxFOVBNLU41bjUyVGl1bW5oUWQ1Z1VhdjlHdXlXZzFlMkQydFBFTFI4aS0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Wardogs Twitch Drops: All Rewards And How To Get Them. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.gamespot.com/articles/wardogs-twitch-drops-all-rewards-and-how-to-get-them/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:34.763725+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMipAFBVV95cUxQcDNLY0xrWFpCRnVZeEpTWG1PSVJ1elp6Y2dnNDNvSDVBX1VSYWM3ajQ5elRROVFrRHc3Y0czQWlvTVM5alFlN0p5SUp4ZkxXQ3RpMHlvV3BGRjkxZXotZDNKQ0dTQ0l2YzhHWnpadjI3N1RDVHdjZjQ5NHU3VHpfY3JLRms1YXZTRjZTd205Qk1RX055SjJqWWlzYzVXMGFFVDhNZ9IBqgFBVV95cUxPV0pKbVVZQU9WRm1BZ0ZuYllnZXZ5RXdvWmlrY0JxMmtaeEFjV2lERVRsdWNqQ3BUcWdxQ040MDhQRkRUZVF0OGJYTEgxRWZtQXc3dmM5djBuMTkxcUdna2ZtZUlMNzBXaDdTYnlFVjdrSGw2UFh3MWRnRXg3RXlUWlJnbG5oYmd1OThqMHUxdGRYUzJvQVgtbFVYMDAyNHNpOVZnYVZGTk9UQQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Some experts say BRICS need not replace the West to succeed - only make Western dominance harder to exercise.",
-    "publisherUrl": "https://www.aljazeera.com/news/2026/9/11/bric-by-bric-has-brics-challenged-the-western-dominated-world",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:34.652622+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxOY1NFLUZ6cVNwX0JpdjJ3WHdDdl9qMnA3WFBxUWN0a1VWZ3RHcktSM2E4S0hjVnlZLW9scWFDUDNvTkNOOElGRk9lTmlULXFrTE9aeDF1RmtfRWlDaldKV0ZxamRxNnVnSGxVX1NoUndoYnBpNTdWVGNSMDItMTNRVFUzcXF5N3MtODVsRkUyUHNnVDRfcGJTdHdSM3k1WUZYY29TN1ZFQVl1VlpjS3VPbnhNQktmbGlIT0o0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Ottawa's latest measures are a response to tariffs imposed by President Trump last month on Canadian exports.",
-    "publisherUrl": "https://www.latimes.com/politics/story/2026-09-08/canadas-tariffs-go-into-effect-spotlighting-soured-relations-with-u-s",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:34.614681+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPek9mNU51dEhTOExCYW0wdzg0LTVmM2llMi1lNXBkS0Fja2otWkVKaGhhT1cyOGp3WHJQc0RjWUlWWW9RWkdGSlk0NGlFcEJsbV96ZXN3STVIeU91UG5OZXlXQ3hfTTIyMFp1S3NsT1g5dU1uZmtXTEU0LWRfMlhFODN2eVBlQUZ1TEExcUg5Q0lwakFpNjR6ZkEyMW9KX21NUUp1bkltZGc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "An analysis finds the cancellation of $1 billion in annual funding weakened protections around the world and undermined U.S. interests.",
-    "publisherUrl": "https://insideclimatenews.org/news/15092026/usaid-cancellation-weakened-global-environmental-protections/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:34.245230+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihANBVV95cUxOWG9KSFpFdGs3RUx1bjE0TDFTb0dkTkRISTY3NHA5REZLdzB2VHlqRzdmV09PeE1tM0VoaW5hS212OUdVZ3pTVGVMMHdDTjZOR0ZTRHlYajFrVG5lZ250RzJiQlo1aUFxZXI1ZDlvVFRRLTMwYjZmTTV1Q0xHVEpnMms4Qk81eHRGaGZ1dkFHaldCQ19xOEdweTJGQW95SGxhSFdBVnVpNG9lZ2VJYW80QTVBV1dHNjlLMi1kRE1pUFlVbFZMZFJBYkxMbFRpc3VqaWpreE0xaURsaksxWXdnUzJmRGx5SjFVN2h3YnhhaFZ4cjRvTTlLa0lVVktMVnV3VFNwMVpMQ3BCaW8yTmhYczk1SHQ2dkJ1RTRkUGdTSEY4eDBqYk03QlA4TXhDTFRXUkxDRFNqaEhQMGZGdzYtY2NvdHdra2tfN2E1MGItQ2M0UFE4V3BhWDJzVXRSZ3lySnI5QUFLN2Fad1ozUHQ3ajRwbGJ2OU8zT2xycW9HNlpDSm400gGKA0FVX3lxTE9mREtNNE5EU3JqTGc5RzYwZkM5ODM1aUV1aUNJZlgyb2NDb3ZsM0tMckszMU9Gc0FuOVRwdTRTUDlvN25sQ1ZYT0JPUktmeVN5X3FqN0RuSXdjV3ZRTXhiZnE2c3Uzd19mU3ZCbTVOdm9rS3BXVDQ1LU5BN2RHRkp0TlpuUnExeWsxTUpscnAydERMWW5ULWJMZUhjUzdtQlczVzNmUGM5NEhib3A5VnVpVXg1QnVIQ3UxWnUtUHQxN2RGSXh3cFNhMjZ3U19jVkJlRC1OM2N1X2RKRXAyMkVETTBDTlp2OFNvaUZhcVFrNmROaXJfRjhLTXFRNDB4QW1wSWFWMm9VbncwSWtCM3JUbzRvNnpKM3cyRGx2V21pa2dsVy1uV0szMWNCN1NCSVhwbmtPa0pyYTJibW5FcGE2ZHRFOW9oLVdpVFF3Y0dwZVg0ZWROUEJ6LXI2NWJmWDJBWkk5cU95WEhzdkY3eU44QjI4dzdtYTdFcGZRWGhrcWRSRU9WZ2x0c3c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Massive amounts of food, seed, and raw materials must be transported across borders to rebuild a nation following a catastrophic conflict, typically with significantly more hurry than caution. The United States provided Japan with this kind of extensive assistance in the years following World War II in the form of wheat, animal feed, and other agricultural supplies meant to avert widespread hunger and revive Japanese agriculture.",
-    "publisherUrl": "https://timesofindia.indiatimes.com/world/rest-of-world/in-the-1940s-common-ragweed-arrived-with-american-agricultural-aid-meant-to-rebuild-japan-but-it-spread-across-roadsides-fields-and-cities-nationwide-and-fuelled-a-massive-hay-fever-crisis/articleshow/134131147.cms",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:34.148566+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirAFBVV95cUxPMndlVi15QURjTkwwbUI2ZDhyMG5kcDZaV0I2OWh2ekl3eFdkbXpUa1cwSzRSZW4zRGE5Qk1EQzBKUG1KZHpDMmJEVXI4dUFVd2tzQUV3eUZSUXVhUXBPd3F5Z0F6MkFQZG5fbVVqYzFfeHBSSkJnUzY5Wk44UER2MmstalY3d3V6VklDMUlOWDd6dl85WS1pUF84NTRQQzVHV29nWk93algxckVB?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The passenger train was attacked shortly after former British Prime ‌Minister Boris Johnson and other European diplomats had used the same line.",
-    "publisherUrl": "https://www.reuters.com/world/china/russia-hits-truck-near-polish-border-latest-strike-near-nato-2026-09-13/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.997586+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikAFBVV95cUxOQ3lHeEZZVk1jdi0za21SUVo3VUhiY0hxbkd2cEJ0NUZMUTVucmhvZG1vT0RrUlFwaFZYaXVhWHVpNjEtZ1JDVHJfQzRfc0thVnExNEtLY05xUHYyQldJVWZZV1JneDRCV3c0d052UWZIbXZOdGNTanJ2X1h0M2JpMHVIZ29COFJfRG1ESDdrRUk?oc=5": {
-    "cacheVersion": 3,
-    "brief": "An unholy alliance is working toward an apocalyptic future from which only a chosen few is expected to emerge unscathed.",
-    "publisherUrl": "https://www.theguardian.com/us-news/ng-interactive/2026/sep/13/end-times-fascists-essay",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.818400+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiW0FVX3lxTE96eExJay15aUVxUVNWVGlSSXkxSXRBVFB5Y1o4bmF5UHUycmFfU0R4ZmFBVzlUdUFzYUpyM2NKZkhkY2NWZ3N2OENIUWxqakVqNVRqa1J1ZmlTR0U?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The US Air Force Secretary reports the weapons are necessary to defend the country against enemy action.",
-    "publisherUrl": "https://www.bbc.com/news/articles/ck790xg41ygro",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.629258+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiekFVX3lxTE9PaG5oLXB6RHlUcUg4X05seHowQm5ySmZkTGduNWxXc2hCX19GcFdtM1VPVEZBNDNnaWVZalFQSjJnR082Y0VOQ1pxMUdFOGNFbFVObUpDT2JNcW5vSTNnbHJ5di1ianNqeW9fbE9NSG1YQmJ5Rzk2LWh3?oc=5": {
-    "cacheVersion": 3,
-    "brief": "New Mexico has a high rate of sexual violence and no meaningful state-level protections for students. Searchlight New Mexico and The Santa Fe New Mexican are investigating what this means for students and parents in K-12 public schools.",
-    "publisherUrl": "https://searchlightnm.org/stories/sexual-assault-reporting-in-schools/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.456179+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMisAFBVV95cUxPcDNya0ltUGNWNGVmNGJMa2U5S2Y0VHVGTENHU3lFVDktYWxIdGNsWDEyaUktakFCcDR5LUtoblk0TFJzWklHVVJhdnN2d3FIYjhiOUpXQWRLMnllLWR5X3U0VlhuX1NNTE5ZMDJQTkg4NndjNVlJYTdpd0paX1czby1tTEVPaXhoOF9kM2s2eTQyQUJ6T0hDbDV0U0ZlNEpQU05CMWtZLWtZWVBMcko2Rw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "A Long Island doctor once treated 9/11 responders who were dying. Now she’s a reporter and trying to figure out why the illnesses haven’t stopped.",
-    "publisherUrl": "https://revealnews.org/podcast/9-11-first-responders-survivors-illness-death-world-trade-center-health-program/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.412863+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiiwFBVV95cUxPUHVTVi1paHFJUUxsSTN6NHRZUG5IYWNieks2MHM5a2U1aUdXWV9kbm5MZ3J1ek9jSzRxR1RTZGNpZE9lRlBTeFBlNXZOeVlaRERmbGZGa0tSb280SUFMUzhzalVkLVdYSVUxRkNnSUswd0h1X0RkUkRwYnpOS2Znb3l1LTh3WjJVMGRv?oc=5": {
-    "cacheVersion": 3,
-    "brief": "A new ruling affirms the right to pretrial release, and reports prosecutors must show specific cause to keep someone in jail.",
-    "publisherUrl": "https://www.themarshallproject.org/2026/05/09/california-money-bail-reform-decision",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.358440+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOR1VIOTNHVklmRzUzendsc3FzX3VVQjZMZXpqVzYzRlBtek1CcldWUFkwUUI4SUpDRklyOUNDRjNySEZ0bEt0Z1A5YXMzTVhodHVsREltRks4alpVUHBmNmZXbTdnbDZDaldENldITU9HcVctejlob0pxM3plN3pXSFQ3LS0wLW5pZ0NpSzVsVGFyMEhZRlFrcnZZaU9rYU8tYmlSc2FpZ1lWMkVUcWJYNV9ha2NGT283U3BlSHd3ZDZSVDFScm9oRjlzZzQtZm9YUTZza1FvUFZOSkM3dHc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "JEFFERSON CITY, Mo. — Dueling court orders eight weeks before Election Day left Missouri’s congressional map uncertain Tuesday as legal wrangling over a.",
-    "publisherUrl": "https://www.durangoherald.com/articles/associated-press/supreme-court-rebuffs-missouris-push-to-use-new-us-house-map-backed-by-trump-in-november/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.019225+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMizAFBVV95cUxQMlYteGw1V0N4UG00cFlUd1BZci1PQjk1cXFIOEZVaklaQ0tXdGs2Q1lzODJ2dXAwbl8yMGxHOGp1WkdwblpoWEVDYlpzMWdVSkdDdldZaWU5RFIwQ0pGQzR4Q1hoNklPalh6a2t5RlJGVVFicnBENWxGRFdQcTJzS21zaHFkenp1ejhvN2theVVCblBsQVhfR3A1eVBOaXZyUU9SYkhPSy1yd00xZFlHN25rRnFPNWRKeW1iZktqZTdRY0FaRTFGemJ6NWg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "On Friday, September 11, 2026, the President signed into law: H.R. 1276, which directs the Department of the Interior to remove all deed restriction from.",
-    "publisherUrl": "https://www.whitehouse.gov/briefings-statements/2026/09/congressional-bills-h-r-1276-h-r-2069-h-r-2196-and-h-r-5366-signed-into-law/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:33.000222+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMieEFVX3lxTE1Id0ZLemxuNW4wbzdodXpYNklMRGZuUXpSN29Kd1dCbEdDRVYweE5QdXVyQks2eno1UGlUVGtkZUlRVk1STVZiVWVzWTh2NzVOYlhKQmMyZVFYNE90YUFYUElIU0hYQWdzZ3Y4Sm9MaXRVR2s1dUJ5dg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Akanksha Patel, were on a pilgrimage after he graduated from a fellowship with the University of Minnesota’s Department of Orthopedic Surgery. Also: striking doctors in Minnesota, hospital executives' pay, fake doctor reviews, and more.",
-    "publisherUrl": "https://kffhealthnews.org/morning-breakout/healthcare-workers-091026/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:32.921617+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMitAFBVV95cUxPbHJybXpLMFF0MTJERUtsTVJvSW40VnJ3YkNWM1FaQmplRnhyeUdjMm5rYTZEUWdnVzlwdlVXX29MWE5VX3lMWmY0aFJMRmlaMEZqTDZDSjk0QTNxMXRaQm1xNm5neEdnSVRKWXg1cnNpRUhQeVZrV3hNU2FpaDJHWi1faWJYa2lFdVdjVV9zVi1jd2hJTEZCSWt1TldCTEJQYk14UkNHZks2b2I2YnlRZGtCOGk?oc=5": {
-    "cacheVersion": 3,
-    "brief": "And that means more districts grappling with whether to close or merge schools.",
-    "publisherUrl": "https://stateline.org/2026/09/15/fewer-students-too-many-schools-communities-confront-closures-and-consolidations/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:32.605470+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMidkFVX3lxTE1mNW1oMUE0MEpGYlF1Z05ReWJCTTYtdC1uVDVocUZjc0RfbHhLRUYwQWx6Z2JwOC1lcWx1UlNaTVpXU2VLTnBPVFVINWdBQ0p5MWxSaWNERHlVTlNKQkcyWFdUTlZodzJUaTJldDR5d2ZmN28xMXc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Fewer Employers Are Offering GLP-1 Weight Loss Drug Coverage This Year - kffhealthnews.org. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://kffhealthnews.org/morning-breakout/healthcare-costs-090826/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:32.446185+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMigAFBVV95cUxQLUpWVmxZNkVNNGxlamhNRjkteVhjUVJNMXhDQ3Vyc3V3UkdTVEcyeUM0ZnEzTUlJQXRYMUZsNkZ5LTN5Q0VzWDFrVmVFSVlpOFBSaEpwa19qd0Q4SExzankxMEpIQjMxT2k5R0Z3emE0cDFCNng3V3lwVjBQUDg1NNIBhgFBVV95cUxOWGtmd1BpZ1U2QlJOeTZIcXhKMTVTOVFEZDJKcDJPS1NzX2NsOG1RT2w2TkpUMDkwTWY1QzlZcGt4LVlmNV9NZlFVUG04S0Y1U2hUSUdFSk5sUlFId1VsZzlnd1JvOGlWQnY2LThiN1J6cjZDSjdSWHd3elNWS3FpYWJqMXFnUQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Supreme Court on Monday moved to allow President Donald Trump to implement key portions of his executive order on mail-in voting ahead of the November midterm election. The ruling did not address what is arguably the most controversial portion of the order: requiring the USPS to verify voting eligibility of each person receiving a mail ballot and withhold ballots from anyone not on a government list.",
-    "publisherUrl": "https://abcnews.com/US/usps-makes-new-rules-mail-ballots/story?id=135879673",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:32.309694+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilwFBVV95cUxNclhNSExSUGp0R2gyZk9JUmp3Mnd3RXlsbFg2OUh2UFFLQng1Z1owcU9LVlVSX09OWUNkMU84X1VlMWlva1VOUk5LZGtzWDlIbnBJcVVpTFp0Nm1QTDA5SzFUdmE0eGdPQ3E4R29nU1lIQ1FhYzN2NVJRUGI2bEc3WlQ4dWVGMExpYUpYVC1fRzloMS1UeFo0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "With under two months until Election Day, the fights over congressional maps are still raging. In the last day, dueling and conflicting legal rulings have thrown Missouri’s maps into limbo.",
-    "publisherUrl": "https://www.pbs.org/newshour/show/missouris-election-maps-in-chaos-after-conflicting-rulings",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:32.130374+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMivAFBVV95cUxNNi1aODBSMVNUYzJBLTE2N0oyaG5YNmprMlpndU95M2VEVDVDUGVQdmZoeDNLZ3J5ZkdmQlhlNVc5Qk9WREtjQ2FmekV5d1BEOUNxY1BLLW1zX2hWdjlvREI1R2ZrODBFNS0tQnJkTUYwVldCTjB1X01kTDMwWEE4M0V2aEk4NUxqbFc3Zm1EY1lDLVRLQ2x5cXV6bUt3YVk2RzRuLTFDc0d1dU0wUndiZHVRV0kwYjd2bE1qWA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "During a campaign already focusing on affordability, anxious voters are unlikely to be assuaged by headlines about healthcare costs rising even more next year. Joanne Kenen of the Johns Hopkins Bloomberg School of Public Health and Politico Magazine, Sandhya Raman of Bloomberg Law, and Amanda Seitz of KFF Health News join KFF Health News’ Julie Rovner to discuss these stories and more.",
-    "publisherUrl": "https://kffhealthnews.org/podcast/what-the-health-462-affordability-high-costs-midterms-abortion-pill-september-10-2026/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:31.833893+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihwFBVV95cUxNVkpZTWxfM21nb1NtYW5LS282WXQ3aS1Jazczd3F1bjZLT2FZQTgtQnBxazA2SmRGS0FweE9XWnExN045Qjh1bVVWOEkxYmR4Sk5Ua0JNYmgtbHM4cFZ2ZG9MR3hYOGNqaTdUMVA0WUFONWNJYU81NHNVcDdDN1ZEWldKcEc3QTg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Although baseball is incredibly important to the Dominican Republic, our reporting has found that abusive industry practices have hurt young players and their families. If you have a story to share — or if you want to follow along — here’s how.",
-    "publisherUrl": "https://www.propublica.org/getinvolved/dominican-republic-baseball-whatsapp-line",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:31.633317+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMidkFVX3lxTFB3a1JIUWpGMDZpUXZieU5fWE15QW12ZFIzQlc3WTBNbUcwNWY4SF9DSW92RktheHp2V1B6OVFOU3ktMU5veE1aNExoQm9QSk94MHBXQ1BnM2pBM2JtMXRVbXVodjBremNoeE15bk9YZEYyTjdNUHc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Wendell Berry made his choices and stuck to them. From these varying perspectives, Berry grappled with humanity and the natural world.",
-    "publisherUrl": "https://grist.org/culture/wendell-berry-life-on-earth-legacy-essay/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:31.372967+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiekFVX3lxTE5GNkMwRU1PR3Ntd1VVd0F3ZTdlbjFxVlN4MDdFYzVwNmEyb2NfYjN0eFJRRFNscVk5R3dKeEdiWU85UExoSUNkOWpaMU1iUlktT3A2czlfWnBNZVdlVkNGMFZzUXJuaTVOTDZhejU4U3FoOFZnSU9mTmxB?oc=5": {
-    "cacheVersion": 3,
-    "brief": "FBI agents quickly identified a Saudi suspect who helped two of the 9/11 hijackers. But families of the victims are demanding to know what happened in the bureau’s investigation of Omar al-Bayoumi.",
-    "publisherUrl": "https://www.propublica.org/article/fbi-911-saudi-bayoumi-investigation",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:31.284673+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMisgFBVV95cUxQVE9UYXhyckF0SG9wRlY1YVRGWW9nWmdZOFBEeW9ycHBaTENyNHRPOVFodFV4bGFqX04tTTdvZ2FXaDM0WG1FajZsem1aVGFoYnJleG4tTU5QRTFpR0NON3ltQ0JzX1pua2M1NDFLWHpUWndVcDlwZHNuTlZvZXdsMzlnNzVjTjNWQ3ZfNWRBTWlDWTBOUHNyemxKWnppRjVHZEhaUmpjVlB6OERmckJIMXRB?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The governor reports FEMA has twice denied state claims for reimbursement of National Guard costs incurred since the federally caused wildfire.",
-    "publisherUrl": "https://sourcenm.com/2026/09/08/new-mexico-sues-feds-over-refusing-to-reimburse-state-for-61m-in-wildfire-costs/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:31.201764+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiugFBVV95cUxOTlQ5alhBMVdQTVhPTGpOS0hfN1RtMGExNkowTDVfekJ3ZFVjQ1BQbTRFY1BJZFFuRFQ2eWNKVVk5UnBPdENxWUFiWFYydkZkT01ILVlXWFdjVlN0ZG9RbmI0c0xYSDhXRkV2YjBSb00tWW4xSTdBYWlzRWZGZW5yRHNnS3RHQndzTVBSNGtQcEdsMkJmYnhsUmk2TUJ6QmZZQUxUQW5IeEhTUjRmMjJETTNteTN5YlBQb0E?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Parties responded Wednesday in two New Mexico Supreme Court cases placing key permitting processes for Project Jupiter on hold.",
-    "publisherUrl": "https://searchlightnm.org/project-jupiter-developers-urge-new-mexico-supreme-court-to-get-permit-process-moving-again/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:31.027173+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMia0FVX3lxTE93NGtZSDh0VGxHWm5ZaTlOMURtdDJ6SWhXbTVjVHhVVm5lZi1OLTNWb3RFY0ZITWFfeTUzWTFPRzVVMHVNN0V0MndCTTJaN1FxZm8tcXoxMnpmYkFkaUU4aXk5U3pobnNnOEJj?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The New Mexico Racing Commission, which regulates horse races at non-tribal casinos across the state, plans to propose an $8.4 million budget during the next legislative session, NMRC Chief Financial Officer Amber Trujillo told a panel of state lawmakers last week. Fires and floods in Ruidoso are among the many challenges facing the state's horse racing industry.",
-    "publisherUrl": "https://sourcenm.com/tag/sunland-park-racetrack-and-casino/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:30.917510+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi0gFBVV95cUxQVlVKMlZ3VWpXRVJzMHBkNFNkbkhVUE9XR29JYmEwMDdsWVlxV2k1clhIWk0wNE4xN2IzMHhTTmV5cTdpNHNzbF9ZSXZFUFNGOHZSNVMxQVViUjQ1WHBFQ1dYd0tKcTB6MWZGaDVCbUtrWWVzdlItR0FxMEdpWkd4ek1VNVNyY0I5dVUxZnJxRTFHWHUydTBjblNQRVZ4cFFqS2pLcmstQzY3Nmoyb18xT3ZqcG8zX1Y5amx6cjl4aVIwSmNoUlN0akd0RTBZOVlVYkE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Federal law requires most colleges to follow crime statistics reporting rules. In New Mexico, compliance varies. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://searchlightnm.org/federal-law-requires-most-colleges-to-follow-crime-statistics-reporting-rules-in-new-mexico-compliance-varies/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:30.562843+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikgFBVV95cUxNZXVwdVhzQlFHR3FKUy1HS2U0cDBEZ3Fua1F2by14LUhNaFAyQldKQWVYMzFFSlJFMjltYXNORkZzSkdCcG5aMGtDVWhwa1VONFhQRjhVTVRqZnlTR184WDltQkxYa01sLVJNbGpEWkkxZkZZTlZBbG51U3FHbmFWbGc4QzdUc3dtUURNeWd3X3lIZw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "A multinational group meets this week at NATO headquarters in Belgium to discuss protections for civilians during combat. Even though the U.S. co-founded this effort, no American delegation is expected to be in the room.",
-    "publisherUrl": "https://www.propublica.org/article/trump-hegseth-dod-nato-civilian-harm-reduction-absent",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:30.519469+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMid0FVX3lxTE9rWDRDVndOWmZaWkdmYWJuU0ljTEVFVVZYZ0xGQkpFR2dNUGw4NGJIV3gzYWJTU3NQUS04blNESER0d0p2M1dpZ1R1MDAtWnVBVVBaS1A5Vy14WDVFaklIRmpSVXlFRDk2QmY0TWdxQ2VkWndOX1RV?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Here’s a collection of their appearances. Stay informed by signing up for the Morning Briefing and other emails: Health industry deals: A day of publicity, then nothing happens. The Trump administration plans to announce Monday that the United States is expected to no longer limit the planet-warming pollution that power plants pump into the air while burning coal and gas, based on two people familiar with the proposal.",
-    "publisherUrl": "https://kffhealthnews.org/morning-briefing/monday-september-14-2026/",
-    "sourceKind": "article-paragraphs",
-    "updatedAt": "2026-09-15T13:20:30.395235+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMirgFBVV95cUxNU1FuQ2ZVRjZNYnBQaFBfU3VLanRJMnhXYURZWTJ2OXBPOXl0dFBuOVAwQXlZVjRpRHpzN1FON21GRE9iWFlxRkNidFVxUWpxNG5SNzZPWVlXVWM3ZWFEaDFnRkFpQ2FJbVR5dzhvemtIZ1ZuTnduY1dBeU55STJfR3kzdTltT08zTDlHUFFaSHNQdm84aE1KeEVmbTRsTGY4eG5mQ0E0QW9DZ243a3c?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on The Meltdown in Employer-Sponsored Health Insurance - kffhealthnews.org. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://kffhealthnews.org/podcast/arm-and-a-leg-podcast-employer-sponsored-health-insurance-costs-businesses/",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:30.311131+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQdzhCaWxpU1Jfd0ptczAteTZOeGI3bTNublNfWGRXbVlSWFJoRXNVSzZFbVh0YVAtX05VbVE2SVBlWU82dTA3Y3NqR1hBNUdZSXlTZFZRQ19mcUlsVmx2WWdnd202SVhhRy1ReTV0Yzh1VXpDMTZCcWF4UklPX3lIZUVQVUtQYmRyMGxpancwT21UYUNVd0RHTXUzdzF0V08yRW8wU0MzcXlWQkE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Jon Rosenthal is up against far-right Republican Bo French, known for his Islamaphobic comments.",
-    "publisherUrl": "https://insideclimatenews.org/news/11092026/democrat-jon-rosenthal-runs-to-regulate-texas-oil-gas-industry/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:30.295548+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMigAFBVV95cUxNay0wMHdVQWJCVmpiYkx6ZVhxZjB4VkFqajFtWWVDZ215dUR3Ry0zdjJRNEJOeWhoMzZtVThQZ1MyangtTFdaak40MlZWaG05TUpjT2RhNUVONW4wNEtaU182VkJHOE1nUVFURFNod0prMXhkUV9HbUxzaUVtb3RobA?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The world’s second-largest oil consumer cut its use by 9 percent as the Iran war crimped supply. The drop could accelerate China’s pivot away from the fossil fuel.",
-    "publisherUrl": "https://insideclimatenews.org/news/02092026/china-oil-consumption-declines/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:30.165557+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMilgFBVV95cUxNWTBGRm5YU0J4QTh3NUVDMUNoeHlTUXU3Vm9MenIzWnpsckRXTHhqbjZ1X3VBODF5cUkwWW9RQWdmQWVwTVFMY0FEQkppdllZNjFPNVFDX0ZEbEo4c25JNnpRS2FXSXFzVHBfNW9hT3g0QTl3U0xFbVoyUW1EaG84TGEzV09VaUdwczFNaDhzV3gzdlFKOWc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "It's a grim moment for what was a booming industry in the state.",
-    "publisherUrl": "https://grist.org/transportation/georgia-bet-big-on-ev-manufacturing-trump-pulled-the-plug/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.911114+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMingFBVV95cUxOUThYWVRMbU92OWhlTF9fVWtseEprbTRsb0trb1dwTDZMU3RfN1drMjdCN0E2M19WNjgwYkJ0ZldtN0RHeHJNcXRJdko2Q3pENk51TUhkUW11cS1BWEVpSjROUzFEdVFZRW5ZTXRXMkhXT1RlOUM5MFhEdTRDaGUyZnF4X1dsUFc0QjNXR3Vfem8zeEcyOHl0RDExdkxsZw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Arctic Research Commission, Thomas Dans has backed a takeover of Greenland and other items on President Donald Trump’s list. But it’s not always clear where the administration’s agenda ends and his own begins.",
-    "publisherUrl": "https://www.propublica.org/article/thomas-dans-arctic-research-commission-trump-russia-propaganda",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.886171+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiggFBVV95cUxPV2lMcTdYaG9PMktiM0h0aGlJMTJ4eW0xaWR6MzdWRkswejZDTXhuQ2F3ejE2a0lmcWR3ejV5NTdJVmJDalpxczJiOFRHSkZkc0lESmlaRnhXWWNNOGpQejFmeUhqT3ZkSzJNcjBmTUdaRktoT0dOcFRmSWZfNnd3OWxn?oc=5": {
-    "cacheVersion": 3,
-    "brief": "U.S. efforts to advance plans​ to disarm Hamas and open the way for investment into rebuilding Gaza have stalled.",
-    "publisherUrl": "https://www.cbsnews.com/news/jared-kushner-gaza-peace-deal-israel-elections/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.848523+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiekFVX3lxTE85dTRHX0w1TWM0MDZTWkoxd3A5Q1BuRnd3N1BTdGtxcVF5ejBESjJzZDh0QnVkYWJERHluMzhzSEdJS09qSURsTFpNVGdaUWUzbGtINmREU3F5d0ZPNDI0N2VveWVDY2k1cHFFdk5ZZXhac2ZabUFKVS13?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The population on the West Coast has plunged by half, and environmental groups might sue the Trump administration for ignoring their plight.",
-    "publisherUrl": "https://grist.org/oceans/gray-whales-starving-arctic-warms-endangered/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.479947+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiuwFBVV95cUxPZ3FWWHVyLUNYNWVMR184YzdCS21pdzRpdVlQOENGcEtNaDBrdVhwelE0dklBcVRPbXo5OWlzUEtHSFQ5X01lbktiTE1FcWFaQVNoNzAwdXVTSmJUaWdENTRmcmpwZVdrOVBXS0JLbjhSVTdFV1lWWjFaSGxoVjBIQ21yZGVJdFo0VUtKN2FzUFlUX3BLZGZURFhpUEI0RnZ2ZmFPR0pNSDZRNU02LTlCUW95aGdyMndTVmg0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Consumer group reports online shops routinely failed to reimburse delivery costs of unwanted purchases or cost of items.",
-    "publisherUrl": "https://www.theguardian.com/business/2026/sep/15/uk-retailers-breaking-law-not-refunding-customers-returned-goods-which",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.365339+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiWkFVX3lxTFAyNEZYRThzT1dWNmdIdmVxVW1GNjZkT2lVZVVXWldhRHBaZElNLXdobWVZQ3A2akFNbE9xcVZjcW0tOHhSZDltWDYwektvbU9CekREbmpmX1VkZw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "A grower from Cornwall reports soil, density of crop, a good irrigation have protected him in drought.",
-    "publisherUrl": "https://www.bbc.com/news/articles/cde0lxgwzx4o",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.215702+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMimgFBVV95cUxOQ2lhMjBUZjZCd2ZvZ2pIbXp3dkcwUENZZzNtbnRrZjJscWxHMENXcGlJVGZyeWYxOWJnVFk2LTlIVjZEWUhJT1AxYnpfRVdlazQwbzk0M2lSYS1SaXJrMklVa1FsYlVZRE50VjV3Q0dtNGVOaGt0R1N2XzBlOU85WmtLNGNZTUNUS3ZDcHdFOFNCX2J0UHhRSHRB?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Sydney Sweeney fired back at critics of her Novig sports trading app ad by posting ESPN magazine covers featuring nude athletes like Serena Williams.",
-    "publisherUrl": "https://www.foxnews.com/outkick-sports/steamy-sydney-sweeney-ad-draws-backlash-female-athletes",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:29.030763+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMisAFBVV95cUxQSHgxc1pmdDBNR3o0YVlMbnFwcDBWV2NRVjktTXVRN3F0WUNySXRPTzFqeUoydnhYM240bDVuN3gwbnhFdXVNOTZyVGVaampPMmVuS242RXNjRG5xREdVYkZaOG8tREZSc1M4UkxmVFlGQlEzd2d2N0dWLUVsbERjUUpDWmdHc2MteUMzSC1udW54ejROWHA3LW5Dd0pyeVJ3OE9YSzhjNkhSUUF3OHNZdw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Man pleads not guilty, denied bond on charges in Tasia Fortune’s murder. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.nbcnews.com/news/us-news/man-pleads-not-guilty-denied-bond-charges-tasia-fortunes-murder-rcna597669",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:28.766463+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikwFBVV95cUxOdUpCVUZ5MkRLLUNCVjlUSlJSbE03TXJtTVR1QklJU0N6T1ZIdXh3UHIwdFREN05FTS16REVtV2ZWS3BrNDRDZExrMHhkNExLOU5kTHdmTFB0RFdDSy1ES1FKYmNHQXhfZmpITTVjTFRDTnZVSXlZeXJicHRrUXpHYmVlTlJyNTk2VkN3QUtRb2VXTkE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on U.S. Airstrikes Targeting Houthis Killed Scores of Civilians in Yemen. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.nytimes.com/2026/09/10/us/politics/us-airstrikes-houthis-civilian-deaths.html",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:28.729232+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiakFVX3lxTE5pSktFaTNxcXp2N0trcFR3U2p3SU9OV3ZKYXh3UGFqZnkwVEhpUjFkR3JhdXVEdVFzVDhHUGlVZmZhS2lTS3pQRXQ5VnlDSk55bU9BU2dha1lqWGl4NllMNDBKODhQWS10OUE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Both the United States and China are feverishly debating the correct balance of AI regulation and technological advancement, and each side has distinct advantages in the race.",
-    "publisherUrl": "https://www.cnn.com/2026/09/15/tech/ai-kill-everyone-china",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:28.703944+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMinwFBVV95cUxObTIyVk9HMlNhVl8wVUJOMjNaOGl3bWlnZGJBSU1EZkJXdlY5NWNWUEdxZjVSWHlfRGwwWHNpRkVJaVVScGEwYzVWQm9SNURKSl9BRkVVcEw3YUdtdEhSaEhMYjNXQkM4WGgya2lQUnVBcXBEMURVbWd0YnpzaERBN19iY0VKOTBXS0xBZHFDaE9tZ19na2phSzlHYWVNTGc?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on Oil Rises on Halted Pipeline as Goldman Flags Escalation of War - Bloomberg.com. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.bloomberg.com/news/articles/2026-09-14/latest-oil-market-news-and-analysis-for-sept-15",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:28.658113+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMikwFBVV95cUxQZ25qeG45Tk56aDhNbl9oTDBOSHViUDFDdjBZS1o5ejVUYWxKd2lvZVFuT1hlb3BqSXVFRHBaUGhUOXkzYkNqQ3RqYVhpTmR0bzhuUHFWOVRKMG0zVDFFSmFNOXdTMEh0Yjd6dWZaT182Yk1FVmJLbUo4YWVRX1B2U1dpUjZQaUFfLTduXzJjTGt6VDg?oc=5": {
-    "cacheVersion": 3,
-    "brief": "One week after the deadly floods, very little is known about China's dead or missing. China's control over media and digital censorship is in stark contrast to open reporting in Nepal.",
-    "publisherUrl": "https://www.npr.org/2026/09/07/nx-s1-5960357/nepal-floods-questions-over-chinas-reporting",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:28.382463+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixwFBVV95cUxNbkRkSl9oQ2hxWlMzQjZIME9USDQ0YTNFRXVuUlB3bUlSUm1wQXlYU0JWUUxVU3BDcFY3SkdXcHhxZUlNakQyTXdXUlVnc1pNUHdVMHhqUDVrU3VsVzA0ZXN6LWFyQ2FtZTYxRGo3QWJsVGRNOWgydGg4UDZxcERHa2FQejFCeFkyY0Q3djU4YTRxVExHS3BRcGU4clZKck5RajN0ZURFa2pHZTFmeEtRY2NodFB6TUk4NUFuUnZ0Sk1xR21IYks0?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Talks between Iran and Gulf countries about the future of the Strait of Hormuz were delayed after a key Saudi pipeline was hit.",
-    "publisherUrl": "https://www.nbcnews.com/business/business-news/diesel-oil-prices-jump-saudi-pipeline-shut-hormuz-talks-postponed-iran-rcna597579",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:28.281272+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQaXVhMFhXNVZEWEVPQXViMVFXS0FrMGhyWkxGbjRGRUdjS21IcUh0UThKYU10ZkVxUGlkc2o3aFpnVFlUT3d3b3lSYjh3V0EtVF9iMWZPX0FWb0FYZE9HZ2ZDeW9hNUFkUy1MSldvZEx3VTFhWkk3V21sUnhsN25BRkZpR3RmczNMbENGTi11S0xxWUFKT1NRMUd3VEcwRHBCTWNwR1Z2M2ZHZXd0ZFFaVWItOElYTzFrb0YwZG5UTTBlYUJzMVM0aWNKbVBPdWk3VXhld3NmSGtLZw?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Moscow would need to commit ‘honestly and on a long-term basis’ to ending the war before Kyiv would de-escalate.",
-    "publisherUrl": "https://www.theguardian.com/world/2026/sep/15/ukraine-war-briefing-no-energy-ceasefire-until-russia-stops-zelenskyy-confirms-after-trump-claim",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:28.129770+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVW9kVWNOSnJHQ0hNVHZfSzVsLXdha1ZDZEVHQ0Zmckl1NWQ0U1h5ME1BU0hhMlgyLUt5alZfSDBQQm9jSDBkYi1FMm9IYmVmenpkWmVyUTRyaXp2ZEVXX2JTTll4cXJMZm5nbHBjRkZWQjJGdEl6TWZCZDY2UlFWLWQ1QnN5QQ?oc=5": {
-    "cacheVersion": 3,
-    "brief": "The Trump administration targeted one of Russia’s largest banks on Monday for its alleged support for Iran – the latest move in its pressure campaign against Tehran.",
-    "publisherUrl": "https://www.cnn.com/2026/09/14/politics/us-announces-sanctions-major-russia-ban",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:28.095603+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMiigFBVV95cUxPSHJKa3lZSl9wejJpckVtMVQzcldlQ1BuQ01HN3AxdHVyck5vTTZtQ1dHbXRoUWJoYWpCV200dE1EOTZMYU1UYUVDLTJMcGt4R1lVYXNCczBlbkxZYUxEZzRRVnRySG5oZ3A2bUhZTlpoNFZ3cDB5VkQ5Sk1HeFZETlpSeDJ4RUZwQlE?oc=5": {
-    "cacheVersion": 3,
-    "brief": "This story centers on U.S. Imposes Sanctions on Russia’s VTB Bank Over Ties to Iran. The publisher did not expose enough public article text for a fuller verified brief.",
-    "publisherUrl": "https://www.nytimes.com/2026/09/14/business/us-sanctions-russia-vtb-bank-iran.html",
-    "sourceKind": "headline-fallback",
-    "updatedAt": "2026-09-15T13:20:28.015181+00:00"
-  },
-  "https://news.google.com/rss/articles/CBMixwFBVV95cUxQbmQ3c01Nbm5qTlZnaW5hZ2hnNXdxWi1lZWJSQTY4OHVZLUhIZzI2Z0lZLWRjbDNYRFZqSHROX2hGbnoxbDhtbWhlblQydFg0TFhnWE5yRDB1d3k5WnFOM010T2pnb1pmV1VHN3M3TW5fQXVqVXNFOUNFbFpVVXRPY3Fqb1V5eHFLcVNnaDE5SlN1MU8wV2hwQVZBUWc3VmFPbS1BTklsal84UjhjT2NIRElub3YzcjBQWG1ET2hoeUZtRTlqbGhr?oc=5": {
-    "cacheVersion": 3,
-    "brief": "Bob Mackie was known for his embellished and beaded designs for icons such as Cher, Dolly Parton, Tina Turner, Diana Ross and Liza Minnelli.",
-    "publisherUrl": "https://www.usatoday.com/story/entertainment/style/2026/09/14/bob-mackie-dead-fashion-designer-cher-dolly-parton-87/91759540007/",
-    "sourceKind": "article-meta",
-    "updatedAt": "2026-09-15T13:20:27.890409+00:00"
   }
 }
