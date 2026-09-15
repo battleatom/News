@@ -30,6 +30,7 @@ PATCHERS = [
     'scripts/patch_nfl_upcoming_window.py',
     'scripts/patch_nfl_live_center.py',
     'scripts/patch_nfl_streaming.py',
+    'scripts/patch_nfl_resilient.py',
     'scripts/patch_load_more.py',
     'scripts/patch_legislation_ui.py',
     'scripts/patch_legislation_location.py',
@@ -44,12 +45,7 @@ PATCHERS = [
     'scripts/patch_content_brief_ui.py',
     'scripts/patch_full_why_matters.py',
     'scripts/patch_system_health.py',
-    # V5 owns the complete final HTML: Entertainment is no longer a required
-    # post-build workflow mutation. The patcher is idempotent for compatibility
-    # with the older workflow step if that step is still invoked.
     'scripts/patch_entertainment_v4_ui.py',
-    # Collapse accumulated legacy `sections` declarations only after every feature
-    # patch has run. This makes repeated canonical builds byte-stable.
     'scripts/finalize_v5_html.py',
 ]
 
