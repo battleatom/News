@@ -2,15 +2,13 @@
 """Conservative V5.3 category-confidence router.
 
 Purpose:
-- act on V5.3 low-confidence flags without reverting to brittle keyword filters;
+- act on V5.3 low-confidence flags without brittle one-word filters;
 - reroute only when a specialist destination is a clearly stronger fit;
-- otherwise down-rank weak-fit stories within their existing publisher slots;
-- never delete stories or touch protected/special tabs.
+- otherwise down-rank weak-fit stories inside their current publisher slots;
+- never delete stories or touch protected/special tabs;
+- refuse reroutes that would create an exact/near duplicate in the destination.
 
-This layer is intentionally conservative. It only routes into specialist tabs
-(Technology, Gaming, NFL, Military, Entertainment) when the destination score is
-high and beats the current category by a wide margin. Broad civic/geographic
-categories are never chosen as automatic destinations.
+This runs only in the isolated V5.3 quality-lab branch.
 """
 from __future__ import annotations
 
@@ -18,6 +16,7 @@ import json
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
+from difflib import SequenceMatcher
 from pathlib import Path
 
 import v53_quality_layer as q
@@ -33,6 +32,7 @@ LOW_CONFIDENCE = 55
 DESTINATION_MIN = 74
 MIN_MARGIN = 24
 DOWNRANK_PENALTY = 12
+NEAR_DUPLICATE_RATIO = 0.90
 
 SPECIALISTS = {
     "nfl": {"nflcom","espn","cbssports","nbcsports","foxsports","yahoosports","profootballtalk","theathletic"},
@@ -42,8 +42,6 @@ SPECIALISTS = {
     "entertainment": {"variety","hollywoodreporter","deadline","billboard","rollingstone","entertainmentweekly","people","pitchfork","vulture"},
 }
 
-# Stronger signals than a single generic word. Phrases are weighted more heavily
-# and are combined with publisher specialty and existing article context.
 WEIGHTED_TERMS = {
     "technology": {
         "artificial intelligence": 16, "cybersecurity": 16, "ransomware": 16,
@@ -86,14 +84,20 @@ def set_tag(item, tag, value):
     node.text = str(value)
 
 
+def normalized_title(item):
+    value = text(item, "title").lower()
+    # Collector titles commonly append " - publisher"; remove that transport suffix.
+    value = re.sub(r"\s+-\s+[^-]{2,80}$", "", value)
+    value = re.sub(r"[^a-z0-9]+", " ", value)
+    return " ".join(value.split())
+
+
 def category_score(item, cat: str) -> int:
     hay = q.body_text(item).lower()
     src = q.norm_source(text(item, "source"))
     base = 42
-    # Reuse the quality layer's broad semantic vocabulary.
     broad_hits = sum(1 for term in q.CATEGORY_TERMS.get(cat, ()) if term in hay)
     base += min(24, broad_hits * 6)
-    # Add stronger phrase/topic evidence.
     weighted = sum(weight for term, weight in WEIGHTED_TERMS.get(cat, {}).items() if term in hay)
     base += min(30, weighted)
     if src in SPECIALISTS.get(cat, set()):
@@ -106,8 +110,6 @@ def current_score(item, cat: str) -> int:
         stored = int(float(text(item, "categoryConfidence") or 0))
     except Exception:
         stored = 0
-    # Use the stronger of the existing V5.3 score and this router's score so a
-    # route only happens when the current category is genuinely weak.
     return max(stored, category_score(item, cat))
 
 
@@ -116,10 +118,7 @@ def adjusted_quality(item) -> float:
         base = float(text(item, "v53QualityScore") or 0)
     except Exception:
         base = 0.0
-    action = text(item, "v53RoutingAction")
-    if action == "downrank":
-        return base - DOWNRANK_PENALTY
-    return base
+    return base - DOWNRANK_PENALTY if text(item, "v53RoutingAction") == "downrank" else base
 
 
 def reorder_same_source_pattern(items):
@@ -141,6 +140,25 @@ def reorder_same_source_pattern(items):
     return out
 
 
+def collides_with_destination(item, destination, destination_items):
+    """Return True when moving item would duplicate an existing destination story."""
+    needle = normalized_title(item)
+    if not needle:
+        return False
+    for other in destination_items.get(destination, ()):
+        if other is item:
+            continue
+        candidate = normalized_title(other)
+        if not candidate:
+            continue
+        if needle == candidate:
+            return True
+        # Near-title blocking is limited to meaningful headlines to avoid short-title noise.
+        if min(len(needle), len(candidate)) >= 32 and SequenceMatcher(None, needle, candidate).ratio() >= NEAR_DUPLICATE_RATIO:
+            return True
+    return False
+
+
 def main():
     tree = ET.parse(NEWS)
     channel = tree.getroot().find("channel")
@@ -150,9 +168,13 @@ def main():
     items = list(channel.findall("item"))
     original_count = len(items)
     original_categories = Counter(text(i, "category").lower() for i in items)
-    decisions = []
+    original_by_cat = defaultdict(list)
+    for item in items:
+        original_by_cat[text(item, "category").lower()].append(item)
+
     rerouted = []
     downranked = []
+    collision_blocked = []
 
     for item in items:
         cat = text(item, "category").lower()
@@ -163,10 +185,8 @@ def main():
         cur = current_score(item, cat)
         candidates = []
         for dest in SPECIALIST_DESTINATIONS:
-            if dest == cat:
-                continue
-            score = category_score(item, dest)
-            candidates.append((score, dest))
+            if dest != cat:
+                candidates.append((category_score(item, dest), dest))
         candidates.sort(reverse=True)
         best_score, best_dest = candidates[0]
         margin = best_score - cur
@@ -176,38 +196,50 @@ def main():
         set_tag(item, "v53RoutingBestScore", best_score)
         set_tag(item, "v53RoutingMargin", margin)
 
-        if cur < LOW_CONFIDENCE and best_score >= DESTINATION_MIN and margin >= MIN_MARGIN:
-            old = cat
-            set_tag(item, "category", best_dest)
-            # Preserve a trace of origin for audits and future tuning.
-            set_tag(item, "v53OriginalCategory", old)
-            set_tag(item, "v53RoutingAction", "reroute")
-            rec = {
-                "title": text(item, "title"), "source": text(item, "source"),
-                "from": old, "to": best_dest, "currentScore": cur,
-                "destinationScore": best_score, "margin": margin,
-            }
-            rerouted.append(rec); decisions.append(rec)
-        elif cur < LOW_CONFIDENCE:
+        qualifies = cur < LOW_CONFIDENCE and best_score >= DESTINATION_MIN and margin >= MIN_MARGIN
+        if qualifies and collides_with_destination(item, best_dest, original_by_cat):
             set_tag(item, "v53RoutingAction", "downrank")
             rec = {
                 "title": text(item, "title"), "source": text(item, "source"),
+                "from": cat, "to": best_dest, "currentScore": cur,
+                "destinationScore": best_score, "margin": margin,
+                "reason": "destination duplicate collision",
+            }
+            collision_blocked.append(rec)
+            downranked.append({
+                "title": text(item, "title"), "source": text(item, "source"),
                 "category": cat, "currentScore": cur, "bestCategory": best_dest,
                 "bestScore": best_score, "margin": margin,
-            }
-            downranked.append(rec); decisions.append(rec)
+                "reason": "reroute blocked by duplicate guard",
+            })
+        elif qualifies:
+            old = cat
+            set_tag(item, "category", best_dest)
+            set_tag(item, "v53OriginalCategory", old)
+            set_tag(item, "v53RoutingAction", "reroute")
+            rerouted.append({
+                "title": text(item, "title"), "source": text(item, "source"),
+                "from": old, "to": best_dest, "currentScore": cur,
+                "destinationScore": best_score, "margin": margin,
+            })
+        elif cur < LOW_CONFIDENCE:
+            set_tag(item, "v53RoutingAction", "downrank")
+            downranked.append({
+                "title": text(item, "title"), "source": text(item, "source"),
+                "category": cat, "currentScore": cur, "bestCategory": best_dest,
+                "bestScore": best_score, "margin": margin,
+            })
         else:
             set_tag(item, "v53RoutingAction", "keep")
 
-    # Rebuild category blocks and down-rank weak-fit stories only within each
-    # publisher's slots. This avoids broad source-order churn.
     by_cat = defaultdict(list)
     cat_order = []
     seen = set()
     for item in items:
         cat = text(item, "category").lower()
         if cat not in seen:
-            seen.add(cat); cat_order.append(cat)
+            seen.add(cat)
+            cat_order.append(cat)
         by_cat[cat].append(item)
 
     for item in list(channel.findall("item")):
@@ -221,12 +253,13 @@ def main():
     final_categories = Counter(text(i, "category").lower() for i in channel.findall("item"))
 
     report = {
-        "model": "v53-confidence-router-conservative",
+        "model": "v53-confidence-router-conservative-collision-safe",
         "thresholds": {
             "lowConfidenceBelow": LOW_CONFIDENCE,
             "destinationMinimum": DESTINATION_MIN,
             "minimumMargin": MIN_MARGIN,
             "downrankPenalty": DOWNRANK_PENALTY,
+            "nearDuplicateRatio": NEAR_DUPLICATE_RATIO,
         },
         "storyCountBefore": original_count,
         "storyCountAfter": final_count,
@@ -235,8 +268,10 @@ def main():
         "automaticDestinations": list(SPECIALIST_DESTINATIONS),
         "reroutedCount": len(rerouted),
         "downrankedCount": len(downranked),
+        "collisionBlockedCount": len(collision_blocked),
         "rerouted": rerouted[:100],
         "downranked": downranked[:100],
+        "collisionBlocked": collision_blocked[:100],
         "categoryCountsBefore": dict(original_categories),
         "categoryCountsAfter": dict(final_categories),
     }
