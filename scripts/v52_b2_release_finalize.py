@@ -8,7 +8,10 @@ exact order audited and rendered. It does two deliberately narrow things:
 2. Prevents a deep single-publisher tail after other source ladders are
    exhausted. The cap is applied only to editorial tabs where a single source
    can otherwise dominate the bottom of the feed. Local/Region are excluded
-   because their inventory is viewer-location scoped.
+   because their inventory is viewer-location scoped. NFL uses an adaptive
+   rule: if fewer than three qualified publishers survive upstream filtering,
+   it remains uncapped so useful inventory is not destroyed just because ESPN
+   is the only viable source on that run.
 
 This pass never changes category ownership and never changes the UX.
 """
@@ -26,14 +29,14 @@ REPORT = Path("/tmp/v52-b2-finalize.json")
 
 # A source may keep several strong stories, but it may not become the entire
 # tail of a tab once the other publisher ladders are exhausted.
-SOURCE_CAPS = {
+BASE_SOURCE_CAPS = {
     "top": 3,
     "world": 6,
     "us": 5,
     "presidential": 6,
     "federal": 5,
     "nm": 6,
-    "nfl": 8,          # current feed has very few non-ESPN sources; preserves >=10 cards
+    "nfl": 8,
     "technology": 6,
     "gaming": 6,
     "military": 6,
@@ -76,6 +79,27 @@ def norm_url(value):
         return value or ""
 
 
+def effective_source_caps(items):
+    """Return caps that are safe for this exact serialized candidate.
+
+    NFL is intentionally special. If fewer than three qualified publishers
+    survive all earlier relevance/source gates, enforcing the normal eight-card
+    cap can collapse an otherwise valid NFL feed. In that low-diversity case we
+    leave NFL uncapped; source-ladder ordering still places any alternate source
+    as early as possible. Once three or more publishers survive, the normal cap
+    resumes automatically.
+    """
+    caps = dict(BASE_SOURCE_CAPS)
+    nfl_sources = {
+        source_id(field(item, "source"))
+        for item in items
+        if field(item, "category").lower() == "nfl"
+    }
+    if len(nfl_sources) < 3:
+        caps.pop("nfl", None)
+    return caps, len(nfl_sources)
+
+
 def main():
     tree = ET.parse(NEWS)
     channel = tree.getroot().find("channel")
@@ -83,6 +107,7 @@ def main():
         raise SystemExit("RSS channel missing")
 
     items = list(channel.findall("item"))
+    source_caps, nfl_source_count = effective_source_caps(items)
     kept = []
     removed = []
     source_counts = defaultdict(Counter)
@@ -110,7 +135,7 @@ def main():
             if nu:
                 leg_urls.add(nu)
 
-        cap = SOURCE_CAPS.get(cat)
+        cap = source_caps.get(cat)
         if cap is not None and source_counts[cat][src] >= cap:
             removed.append({
                 "category": cat,
@@ -134,7 +159,10 @@ def main():
         "output": len(kept),
         "removedCount": len(removed),
         "removedByReason": dict(Counter(x["reason"] for x in removed)),
-        "sourceCaps": SOURCE_CAPS,
+        "sourceCaps": source_caps,
+        "configuredSourceCaps": BASE_SOURCE_CAPS,
+        "nflQualifiedSourceCount": nfl_source_count,
+        "nflAdaptiveCap": "uncapped-low-diversity" if "nfl" not in source_caps else source_caps["nfl"],
         "removed": removed[:100],
         "locationScopedTabsUncapped": ["local", "region"],
     }
