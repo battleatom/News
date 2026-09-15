@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""V5.3.1 topic-spacing pass for Technology and Gaming.
+"""Conservative topic-spacing pass for Technology and Gaming.
 
-Preserves every story. It only changes order inside the two target categories so
-near-duplicate topics do not sit back-to-back. Higher-impact/high-quality stories
-remain favored; topic repetition adds a temporary placement penalty rather than
-causing deletion.
+Preserves every story and the existing editorial order as much as possible. When
+an upcoming card repeats a strong product/company/topic from one of the previous
+four displayed cards, it is deferred until a different topic can be shown.
+Nothing is deleted and the pass does not globally re-rank the feed.
 """
 from __future__ import annotations
 
@@ -19,32 +19,23 @@ REPORT = Path("/tmp/v531-topic-spacing-report.json")
 TARGETS = {"technology", "gaming"}
 WINDOW = 4
 
+STRONG_PHRASES = (
+    "openai", "chatgpt", "anthropic", "claude", "nvidia", "geforce", "microsoft", "windows 11",
+    "apple", "iphone", "ios 27", "macos", "google", "pixel", "android", "samsung", "galaxy",
+    "meta", "facebook", "instagram", "whatsapp", "tiktok", "tesla", "spacex",
+    "nintendo switch 2", "switch 2", "nintendo", "playstation", "ps5", "xbox game pass", "xbox",
+    "steam frame", "steam deck", "steam", "valve", "epic games", "battle.net",
+    "007 first light", "james bond", "persona", "zelda", "metroid", "runescape", "diablo",
+)
+
 STOP = {
     "the","and","for","with","from","into","about","after","before","this","that","these","those",
     "new","news","latest","update","updates","report","reports","says","said","will","could","would","should",
     "how","why","what","when","where","who","your","our","their","its","has","have","had","was","were",
     "are","is","to","of","in","on","at","by","as","a","an","or","but","not","more","most","best",
-    "technology","tech","gaming","game","games","review","reviews","hands","first","look","watch","video",
+    "technology","tech","gaming","game","games","review","reviews","first","look","watch","video",
+    "release","releases","released","coming","available","edition","year","years","2026","2027",
 }
-
-GENERIC = {
-    "ai","software","hardware","computer","computing","console","pc","mobile","app","apps","device","devices",
-    "release","launch","announced","announcement","available","support","feature","features","update","updates",
-}
-
-IMPACT_TERMS = {
-    "breach":18,"cyberattack":20,"hack":16,"hacked":16,"security":10,"privacy":10,"surveillance":12,
-    "outage":16,"recall":16,"ban":14,"lawsuit":13,"court":12,"ruling":13,"regulation":12,"antitrust":14,
-    "layoffs":12,"acquisition":11,"merger":11,"shutdown":13,"vulnerability":16,"exploit":17,"malware":17,
-    "ransomware":20,"data":4,"chips":8,"semiconductor":8,"tariff":10,"government":8,"military":8,
-    "nintendo":4,"playstation":4,"xbox":4,"steam":4,"switch":4,"gpu":5,"iphone":4,"android":4,
-}
-
-PHRASES = (
-    "switch 2","playstation 5","ps5","xbox series","steam deck","steam os","steam machine","geforce rtx",
-    "windows 11","windows 12","iphone 17","iphone 18","galaxy s","pixel 10","openai","chatgpt",
-    "artificial intelligence","data center","data breach","cyber attack","cyberattack","game pass",
-)
 
 
 def text(item, tag):
@@ -59,51 +50,31 @@ def category(item):
     return text(item, "category").lower()
 
 
-def quality(item):
-    try:
-        return float(text(item, "v53QualityScore"))
-    except Exception:
-        return 50.0
-
-
-def impact(item):
-    hay = f"{title(item)} {text(item, 'description')} {text(item, 'whyMatters')}".lower()
-    score = quality(item)
-    for term, weight in IMPACT_TERMS.items():
-        if re.search(r"\b" + re.escape(term) + r"\b", hay):
-            score += weight
-    if re.search(r"\b(deal|sale|discount|coupon|best|guide|review|trailer|teaser)\b", title(item).lower()):
-        score -= 12
-    return score
-
-
 def fingerprint(item):
     raw = title(item).lower()
-    fp = set()
-    for phrase in PHRASES:
-        if phrase in raw:
-            fp.add(phrase.replace(" ", "_"))
-    words = [w for w in re.findall(r"[a-z0-9]+", raw) if len(w) >= 3 and w not in STOP]
-    for w in words:
-        if w not in GENERIC:
-            fp.add(w)
-    # Named/product tokens are especially useful for topic identity.
-    return fp
+    strong = {p for p in STRONG_PHRASES if p in raw}
+    words = {
+        w for w in re.findall(r"[a-z0-9]+", raw)
+        if len(w) >= 4 and w not in STOP
+    }
+    return strong, words
 
 
 def similarity(a, b):
-    fa, fb = fingerprint(a), fingerprint(b)
-    if not fa or not fb:
+    sa, wa = fingerprint(a)
+    sb, wb = fingerprint(b)
+    shared_strong = sa & sb
+    if shared_strong:
+        # A shared named company/product/topic is sufficient for spacing.
+        return 1.0
+    if not wa or not wb:
         return 0.0
-    shared = fa & fb
-    if not shared:
+    shared = wa & wb
+    # For non-curated tokens require multiple meaningful title terms; this avoids
+    # treating generic words like "release" or "game" as the same topic.
+    if len(shared) < 2:
         return 0.0
-    # One strong product/entity token can be enough for a repeated topic when the
-    # smaller title has few meaningful tokens; otherwise require broader overlap.
-    ratio = len(shared) / max(1, min(len(fa), len(fb)))
-    if any("_" in token for token in shared):
-        ratio = max(ratio, 0.80)
-    return ratio
+    return len(shared) / max(1, min(len(wa), len(wb)))
 
 
 def conflicts(candidate, recent):
@@ -111,18 +82,17 @@ def conflicts(candidate, recent):
 
 
 def spaced(items):
+    """Keep baseline order, only skipping forward when a recent topic conflicts."""
     remaining = list(items)
     out = []
     while remaining:
         recent = out[-WINDOW:]
-        ranked = sorted(
-            enumerate(remaining),
-            key=lambda pair: (-impact(pair[1]), pair[0]),
-        )
-        clean = [pair for pair in ranked if not conflicts(pair[1], recent)]
-        pick_idx, picked = (clean[0] if clean else ranked[0])
-        out.append(picked)
-        remaining.pop(pick_idx)
+        pick = 0
+        for idx, candidate in enumerate(remaining):
+            if not conflicts(candidate, recent):
+                pick = idx
+                break
+        out.append(remaining.pop(pick))
     return out
 
 
@@ -137,9 +107,15 @@ def conflict_count(items, limit=25):
         if matches:
             count += 1
             p, s = max(matches, key=lambda x: x[1])
-            if len(examples) < 10:
+            if len(examples) < 12:
                 examples.append({"story": title(item), "near": title(p), "similarity": round(s, 2)})
     return count, examples
+
+
+def displacement(before, after, limit=25):
+    old = {id(item): i for i, item in enumerate(before)}
+    moves = [abs(i-old[id(item)]) for i,item in enumerate(after[:limit])]
+    return round(sum(moves)/len(moves),2) if moves else 0
 
 
 def main():
@@ -153,41 +129,34 @@ def main():
         by_cat[category(item)].append(item)
 
     replacements = {}
-    report = {"policy": {"targets": sorted(TARGETS), "window": WINDOW, "deletes": 0}, "tabs": {}}
+    report = {"policy":{"targets":sorted(TARGETS),"window":WINDOW,"deletes":0,"ranking":"preserve baseline; defer only recent-topic conflicts"},"tabs":{}}
     for cat in TARGETS:
         before = by_cat.get(cat, [])
         after = spaced(before)
         replacements[cat] = iter(after)
-        before_conflicts, before_examples = conflict_count(before)
-        after_conflicts, after_examples = conflict_count(after)
+        bc, be = conflict_count(before)
+        ac, ae = conflict_count(after)
         report["tabs"][cat] = {
-            "count": len(before),
-            "beforeWindowConflictsTop25": before_conflicts,
-            "afterWindowConflictsTop25": after_conflicts,
-            "improvement": before_conflicts - after_conflicts,
-            "beforeTop25": [title(x) for x in before[:25]],
-            "afterTop25": [title(x) for x in after[:25]],
-            "beforeExamples": before_examples,
-            "afterExamples": after_examples,
-            "top5ImpactBefore": sorted([(round(impact(x),2), title(x)) for x in before], reverse=True)[:5],
-            "top5ImpactAfterPositions": [
-                {"position": next((i+1 for i, y in enumerate(after) if y is x), None), "impact": round(impact(x),2), "title": title(x)}
-                for x in sorted(before, key=impact, reverse=True)[:5]
-            ],
+            "count":len(before),
+            "beforeWindowConflictsTop25":bc,
+            "afterWindowConflictsTop25":ac,
+            "improvement":bc-ac,
+            "averageTop25Displacement":displacement(before,after),
+            "beforeTop25":[title(x) for x in before[:25]],
+            "afterTop25":[title(x) for x in after[:25]],
+            "beforeExamples":be,
+            "afterExamples":ae,
         }
 
     for item in items:
         channel.remove(item)
     for item in items:
-        cat = category(item)
-        if cat in TARGETS:
-            channel.append(next(replacements[cat]))
-        else:
-            channel.append(item)
+        cat=category(item)
+        channel.append(next(replacements[cat]) if cat in TARGETS else item)
 
-    tree.write(NEWS, encoding="utf-8", xml_declaration=True)
-    REPORT.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    print(json.dumps(report, indent=2))
+    tree.write(NEWS,encoding="utf-8",xml_declaration=True)
+    REPORT.write_text(json.dumps(report,indent=2),encoding="utf-8")
+    print(json.dumps(report,indent=2))
 
 
 if __name__ == "__main__":
