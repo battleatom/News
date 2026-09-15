@@ -1,0 +1,120 @@
+name: V5.2 Routing and D Pools A-B Test
+
+on:
+  push:
+    branches: [v5.2-routing-dpools]
+  workflow_dispatch:
+
+concurrency:
+  group: v52-routing-dpools-test
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Freeze V5.1 baseline
+        run: git show 77cc9a926757f7709f4c4a0dc09cab3f7b9c072a:News > /tmp/v51-News
+      - name: Focused regressions
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python tests/v52_patch_test.py
+          python tests/v52_routing_dpools_test.py
+          python tests/editorial_integrity_test.py
+          python tests/nfl_final_guard_test.py
+          python tests/entertainment_ranking_test.py
+      - name: Collect fresh V5.2 14-day feed
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            echo "V5.2 collection attempt ${attempt}/3"
+            if python scripts/update_news_v52.py; then success=1; break; fi
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 20)); fi
+          done
+          test "$success" -eq 1
+      - name: Run production refinement chain
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
+      - name: Apply V5.2 validity rotation duplicate and D Pool gates
+        run: |
+          python scripts/v52_postprocess.py --feed News --report v52-postprocess.json
+          python scripts/apply_feedback_pools.py --feed News --require-remote --report feedback-pool-report.json
+          python scripts/record_pull_stats.py --finalize
+      - name: Build and audit site without publishing it
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+          python scripts/preflight_feed.py
+      - name: Run V5.1 versus revised V5.2 content audit
+        run: |
+          git fetch origin v5.2-content-audit
+          git show origin/v5.2-content-audit:scripts/audit_v52_content.py > /tmp/audit_v52_content.py
+          cp /tmp/audit_v52_content.py scripts/audit_v52_content.py
+          python scripts/audit_v52_content.py --baseline /tmp/v51-News --candidate News
+      - name: Enforce source-sequence and obvious-leak contracts
+        run: |
+          python - <<'PY'
+          import re,xml.etree.ElementTree as ET
+          from collections import defaultdict
+          root=ET.parse('News').getroot(); by=defaultdict(list)
+          for i in root.findall('.//item'): by[(i.findtext('category') or '').strip()].append(i)
+          failures=[]
+          for cat,items in by.items():
+              if cat in {'top','x','underreported','boxoffice'}: continue
+              streak=0;best=0;last=None
+              for i in items:
+                  s=re.sub(r'[^a-z0-9]+','',(i.findtext('source') or '').lower())
+                  streak=streak+1 if s==last else 1;last=s;best=max(best,streak)
+              if best>2: failures.append(f'{cat}: source streak {best}>2')
+          bad=[]
+          sports=re.compile(r'\b(football|basketball|baseball|hockey|soccer|golf|tennis)\b',re.I)
+          for cat in ('world','nm','local','region'):
+              for i in by.get(cat,[]):
+                  if sports.search(i.findtext('title') or ''): bad.append((cat,i.findtext('title')))
+          if bad: failures.append('sports leaks: '+repr(bad[:8]))
+          print('sequence/leak failures:',failures)
+          if failures: raise SystemExit('\n'.join(failures))
+          PY
+      - name: Commit reports only, never the test build
+        if: always()
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git reset
+          git add v52-content-audit.json v52-content-audit.md v52-postprocess.json feedback-pool-report.json 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record revised V5.2 A-B test reports'
+          git push origin HEAD:v5.2-routing-dpools
