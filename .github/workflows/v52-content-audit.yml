@@ -1,0 +1,34 @@
+name: V5.2 Content A-B Audit
+
+on:
+  push:
+    branches: [v5.2-content-audit]
+    paths:
+      - 'scripts/audit_v52_content.py'
+      - '.github/workflows/v52-content-audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Materialize frozen V5.1 baseline
+        run: git show 77cc9a926757f7709f4c4a0dc09cab3f7b9c072a:News > /tmp/v51-News
+      - name: Run tab-by-tab A/B content audit
+        run: |
+          python -m py_compile scripts/audit_v52_content.py
+          python scripts/audit_v52_content.py --baseline /tmp/v51-News --candidate News
+      - name: Commit audit report to audit branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add v52-content-audit.json v52-content-audit.md
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Record V5.1 versus V5.2 content audit'
+          git push origin HEAD:v5.2-content-audit
