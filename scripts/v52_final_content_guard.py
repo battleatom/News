@@ -3,13 +3,13 @@
 
 Runs after the existing V5.1 refinement/routing chain. It is deliberately
 conservative: remove only high-confidence category leaks, re-run strict
-legislation separately, and reorder normal news tabs for publisher diversity
+legislation separately, and rebalance normal news tabs for publisher diversity
 without discarding otherwise valid reporting.
 """
 from __future__ import annotations
-import json,re
+import heapq,json,re
 import xml.etree.ElementTree as ET
-from collections import defaultdict
+from collections import Counter,defaultdict
 from pathlib import Path
 
 NEWS=Path('News')
@@ -26,24 +26,24 @@ REGION=re.compile(r'\b(arizona|colorado|utah|flagstaff|phoenix|denver|salt lake 
 LOCAL=re.compile(r'\b(farmington|san juan county|aztec|bloomfield|kirtland|shiprock|four corners|durango|la plata county|cortez|montezuma county|navajo nation)\b',re.I)
 TABLETOP=re.compile(r'\b(tabletop|board game|drinking game|party game|d&d-themed|dungeons?\s*&\s*dragons)\b',re.I)
 
+
 def field(i,n): return (i.findtext(n) or '').strip()
 def sid(i): return re.sub(r'[^a-z0-9]+','',(field(i,'source') or '').lower()) or 'unknown'
 def headline(i):
     t=field(i,'title')
     return t.rsplit(' - ',1)[0] if ' - ' in t else t
 
+
 def reject_reason(i,cat):
     t=headline(i)
     if cat in {'world','us','presidential','federal','nm','local','region'} and GAMING.search(t):
         return 'gaming-specialist-leak'
     if cat in {'world','us','presidential','federal','nm','local','region'} and SPORT.search(t):
-        # NFL belongs only in NFL; geography tabs should not become sports feeds.
         return 'sports-leak'
     if cat=='world':
         if US_LOCAL.search(t) and not WORLD.search(t): return 'us-local-leak'
         if TECH.search(t) and not WORLD.search(t): return 'technology-leak'
     if cat=='nm' and not (NM.search(t) or field(i,'state').lower()=='new mexico'):
-        # Keep statewide inventory metadata when present, but reject obvious non-NM sports above.
         if not field(i,'state'): return 'no-new-mexico-anchor'
     if cat=='region' and field(i,'state'):
         state=field(i,'state').lower()
@@ -52,22 +52,57 @@ def reject_reason(i,cat):
     if cat=='gaming' and TABLETOP.search(t) and not GAMING.search(t): return 'non-video-game'
     return None
 
-def rotate(rows):
-    """Publisher rounds: best remaining card from every source before repeats."""
-    buckets=defaultdict(list); order=[]
+
+def max_streak(rows):
+    best=0; last=None; run=0
     for item in rows:
         s=sid(item)
-        if s not in buckets: order.append(s)
-        buckets[s].append(item)
-    out=[]; round_no=0
-    while True:
-        added=False
-        for s in order:
-            if len(buckets[s])>round_no:
-                out.append(buckets[s][round_no]); added=True
-        if not added: break
-        round_no+=1
+        run=run+1 if s==last else 1
+        last=s; best=max(best,run)
+    return best
+
+
+def optimal_streak_bound(rows):
+    """Best possible maximum streak for the observed source counts."""
+    counts=Counter(sid(x) for x in rows)
+    if not counts: return 0
+    largest=max(counts.values()); others=sum(counts.values())-largest
+    if others==0: return largest
+    return max(1,(largest+others)//(others+1) if largest%(others+1)==0 else largest//(others+1)+1)
+
+
+def balance(rows):
+    """Concentration-aware source scheduler preserving per-source story order.
+
+    The most numerous publisher is spread across the tab instead of being left as
+    a long tail. Within each publisher, the original editorial ranking is kept.
+    """
+    if len(rows)<2: return rows
+    buckets=defaultdict(list); first={}
+    for pos,item in enumerate(rows):
+        s=sid(item); buckets[s].append(item); first.setdefault(s,pos)
+    if len(buckets)<2: return rows
+
+    heap=[]
+    for s,bucket in buckets.items():
+        heapq.heappush(heap,(-len(bucket),first[s],s))
+    out=[]; last=None; streak=0
+    while heap:
+        first_pick=heapq.heappop(heap)
+        candidates=[first_pick]
+        # If the leading source would exceed the ideal streak and another source
+        # exists, temporarily take the best alternate source.
+        bound=optimal_streak_bound([x for _,_,s in heap for x in buckets[s]] + [x for x in buckets[first_pick[2]]])
+        pick=first_pick
+        if first_pick[2]==last and streak>=max(1,bound) and heap:
+            second=heapq.heappop(heap); pick=second
+            heapq.heappush(heap,first_pick)
+        s=pick[2]
+        out.append(buckets[s].pop(0))
+        streak=streak+1 if s==last else 1; last=s
+        if buckets[s]: heapq.heappush(heap,(-len(buckets[s]),first[s],s))
     return out
+
 
 def main():
     tree=ET.parse(NEWS); channel=tree.getroot().find('channel')
@@ -80,8 +115,10 @@ def main():
         else: kept.append(item)
     by=defaultdict(list)
     for item in kept: by[field(item,'category').lower()].append(item)
-    reordered={cat:rotate(rows) if cat in ROTATE else rows for cat,rows in by.items()}
-    # Preserve category block order from the generated feed while changing only within-tab order.
+    before_streaks={cat:max_streak(rows) for cat,rows in by.items() if cat in ROTATE}
+    reordered={cat:balance(rows) if cat in ROTATE else rows for cat,rows in by.items()}
+    after_streaks={cat:max_streak(rows) for cat,rows in reordered.items() if cat in ROTATE}
+    ideal_bounds={cat:optimal_streak_bound(rows) for cat,rows in reordered.items() if cat in ROTATE}
     cat_order=[]
     for item in kept:
         cat=field(item,'category').lower()
@@ -90,7 +127,11 @@ def main():
     for cat in cat_order:
         for item in reordered[cat]: channel.append(item)
     tree.write(NEWS,encoding='utf-8',xml_declaration=True)
-    report={'removedCount':len(removed),'removed':removed,'rotatedTabs':sorted(ROTATE)}
+    report={
+        'removedCount':len(removed),'removed':removed,'balancedTabs':sorted(ROTATE),
+        'sourceStreakBefore':before_streaks,'sourceStreakAfter':after_streaks,
+        'optimalStreakBound':ideal_bounds,
+    }
     REPORT.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(report,indent=2))
 if __name__=='__main__': main()
