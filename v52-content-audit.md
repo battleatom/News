@@ -124,7 +124,7 @@ Likely duplicate candidates:
 ## legislation
 V5.1: 24 items, 5 sources, streak 13× New Mexico Legislature; V5.2: 23 items, 4 sources, streak 13× New Mexico Legislature.
 V5.2 top sources: New Mexico Legislature (13), Congress.gov (8), Associated Press (1), The Arkansas Democrat-Gazette (1)
-V5.2 duplicate flags: exact=1, fuzzy=0; mismatch candidates=0.
+V5.2 duplicate flags: exact=0, fuzzy=0; mismatch candidates=0.
 
 ## nm
 V5.1: 52 items, 14 sources, streak 6× KRQE; V5.2: 59 items, 21 sources, streak 10× krqe.com.
