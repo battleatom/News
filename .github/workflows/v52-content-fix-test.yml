@@ -4,7 +4,9 @@ on:
     branches: [v5.2-autotune]
     paths:
       - 'scripts/v52_final_content_guard.py'
+      - 'scripts/v52_source_ladders.py'
       - 'scripts/apply_feedback_pools_v52.py'
+      - 'tests/v52_source_ladders_test.py'
       - 'assets/card-feedback.js'
       - '.github/workflows/v52-content-fix-test.yml'
   workflow_dispatch:
@@ -25,9 +27,10 @@ jobs:
           git show origin/main:News > /tmp/v51-News
           git show origin/stable-v5.2-pre-autotune-2026-09-15:News > /tmp/v52-before-News
           git show origin/v5.2-content-audit:scripts/audit_v52_content.py > scripts/audit_v52_content.py
-      - name: Syntax, UX protection and D Pool contracts
+      - name: Syntax, UX, source ladder and D Pool contracts
         run: |
           python -m py_compile scripts/*.py tests/*.py
+          python tests/v52_source_ladders_test.py
           node --check assets/card-feedback.js
           python - <<'PY'
           import sys;sys.path.insert(0,'scripts')
@@ -86,11 +89,12 @@ jobs:
           python scripts/enforce_nfl_final.py
           python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
           python tests/v5_filter_shadow_test.py
-      - name: Apply V5.2 validity, diversity, duplicate and D Pool guards
+      - name: Apply B2 validity, dedupe, source ladders and D Pools
         run: |
           python scripts/v52_final_content_guard.py
           python scripts/enforce_official_legislation.py
           python scripts/cluster_related_coverage.py
+          python scripts/v52_source_ladders.py
           python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v52-d-pool-report.json
           python scripts/record_pull_stats.py --finalize
       - name: Run A-B audits against production and saved V5.2
@@ -102,16 +106,21 @@ jobs:
           python - <<'PY'
           import json,re,xml.etree.ElementTree as ET
           before=json.load(open('/tmp/before-after.json')); after=before['v52']; old=before['baseline']
-          guard=json.load(open('/tmp/v52-content-guard.json'));failures=[]
-          # Publisher balancing: exact theoretical bound for editorial tabs. Local
-          # and Region are balanced inside their viewer-selectable market/region banks.
+          guard=json.load(open('/tmp/v52-content-guard.json')); ladder=json.load(open('/tmp/v52-source-ladders.json'));failures=[]
+          # Publisher balancing from final content guard. Local/Region remain location-bank aware.
           for cat,actual in guard.get('sourceStreakAfter',{}).items():
             if cat in {'local','region'}: continue
             ideal=guard.get('optimalStreakBound',{}).get(cat,actual)
             if actual>ideal: failures.append(f'{cat} avoidable publisher streak {actual}, achievable {ideal}')
-          # Audit mismatch counts are advisory for broad US/Presidential/Technology;
-          # their lexical classifier over-flags valid stories. Gate the categories
-          # where the flags reliably represent the leakage this patch targets.
+          # Source-ladder structural contract: every configured tab must produce ranked rounds when inventory exists.
+          required={'top','world','us','presidential','federal','legislation','nm','local','region','nfl','technology','gaming','military','entertainment'}
+          missing=required-set(ladder.get('tabs',{}))
+          if missing: failures.append('missing source ladder tabs: '+','.join(sorted(missing)))
+          for cat,v in ladder.get('tabs',{}).items():
+            if v['after'] and v['round1Count']<=0: failures.append(f'{cat} has no source round 1')
+            if v['after']<max(8,int(v['before']*.55)) and v['before']>=10:
+              failures.append(f'{cat} source ladder over-pruned {v["before"]}->{v["after"]}')
+          # Reliable content-leak audit gates.
           for cat in ['world','nm','region','gaming','local']:
             if after[cat]['mismatchCount']>old[cat]['mismatchCount']:
               failures.append(f"{cat} mismatches worsened {old[cat]['mismatchCount']}->{after[cat]['mismatchCount']}")
@@ -126,7 +135,7 @@ jobs:
             if old_count>=10 and v['count']<10: failures.append(f'{cat} collapsed {old_count}->{v["count"]}')
           if old['region']['count']>=50 and after['region']['count']<50: failures.append(f"region inventory collapsed {old['region']['count']}->{after['region']['count']}")
           if old['local']['count']>=250 and after['local']['count']<250: failures.append(f"local inventory collapsed {old['local']['count']}->{after['local']['count']}")
-          # High-confidence semantic leak scan independent of the advisory audit.
+          # High-confidence semantic leak scan independent of advisory lexical flags.
           sport=re.compile(r'\b(nfl|nba|mlb|nhl|college football|high school football|football|basketball|baseball|hockey|soccer|golf|tennis|touchdown|quarterback|playoff|standings|scouting report)\b',re.I)
           gaming=re.compile(r'\b(video game|gaming|playstation|ps5|xbox|nintendo|switch 2|steam|game pass|esports|gameplay|dlc|game studio|game developer)\b',re.I)
           tech=re.compile(r'\b(ai|artificial intelligence|openai|chatgpt|anthropic|cybersecurity|ransomware|malware|semiconductor|nvidia|amd|intel|iphone|ios|android|gpu|cpu|data center)\b',re.I)
@@ -160,18 +169,20 @@ jobs:
           cp /tmp/before-after.json v52-autotune-before-after.json
           cp /tmp/v51-v52.json v52-autotune-v51-comparison.json
           cp /tmp/v52-content-guard.json v52-autotune-content-guard.json
+          cp /tmp/v52-source-ladders.json v52-autotune-source-ladders.json
           cp /tmp/v52-d-pool-report.json v52-autotune-d-pool-report.json
       - name: Commit validated branch preview only
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-d-pool-report.json
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-source-ladders.json v52-autotune-d-pool-report.json
           if git diff --cached --quiet; then echo 'Validated with no generated changes.'; exit 0; fi
-          git commit -m 'Build validated V5.2 autotune preview'
+          git commit -m 'Build validated V5.2 B2 source-ladder preview'
           git push origin HEAD:v5.2-autotune
       - name: Summarize results
         run: |
           echo '=== CONTENT GUARD ==='; cat /tmp/v52-content-guard.json
+          echo '=== SOURCE LADDERS ==='; cat /tmp/v52-source-ladders.json
           echo '=== D POOLS ==='; cat /tmp/v52-d-pool-report.json
           echo '=== BEFORE/AFTER AUDIT ==='; cat /tmp/before-after.md
           echo 'Production main was not modified. Preview was committed only to v5.2-autotune.'
