@@ -5,7 +5,7 @@
 
   const text=(item,tag)=>item.querySelector(tag)?.textContent?.trim()||'';
   const safe=v=>typeof esc==='function'?esc(v):String(v||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  function safeImage(v){try{const u=new URL(v,location.href);return /^https?:$/.test(u.protocol)?u.href:''}catch(e){return ''}}
+  // Entertainment image rendering intentionally inactive. Upstream image URLs were unreliable and did not render consistently.
 
   function ensureTab(){
     if(!Array.isArray(window.CANONICAL_SECTIONS)&&typeof CANONICAL_SECTIONS==='undefined')return false;
@@ -43,13 +43,12 @@
     data.visible.forEach((item,i)=>{
       const ar=document.createElement('article');ar.className='news-item entertainment-item';
       const title=text(item,'title')||'Untitled', link=text(item,'link')||'#', desc=text(item,'description'), why=text(item,'whyMatters');
-      const date=text(item,'pubDate'), source=text(item,'source'), image=safeImage(text(item,'imageUrl'));
+      const date=text(item,'pubDate'), source=text(item,'source');
       const label=text(item,'entertainmentLabel')||'ENTERTAINMENT';
       const under=[...item.querySelectorAll('underreportedLinks > article')].slice(0,2);
       const underHtml=under.length?`<div class="ent-underreported-links"><strong>UNDERREPORTED CONNECTION</strong>${under.map(r=>`<a href="${safe(text(r,'link'))}" target="_blank" rel="noopener noreferrer">${safe(text(r,'title'))}${text(r,'source')?` <span>· ${safe(text(r,'source'))}</span>`:''}</a>`).join('')}</div>`:'';
-      const imageHtml=image?`<a class="ent-image-link" href="${safe(link)}" target="_blank" rel="noopener noreferrer"><img class="ent-card-image" src="${safe(image)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('.ent-image-link')?.remove()"></a>`:'';
       const cls=safe(label.toLowerCase().replace(/[^a-z]+/g,'-'));
-      ar.innerHTML=`<div class="ent-card-flags"><span class="ent-tier ${cls}">${safe(label)}</span></div>${imageHtml}<h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
+      ar.innerHTML=`<div class="ent-card-flags"><span class="ent-tier ${cls}">${safe(label)}</span></div><h3><a href="${safe(link)}" target="_blank" rel="noopener noreferrer">${i+1}. ${safe(title)}</a></h3>${desc?`<p class="description">${safe(desc)}</p>`:''}${why?`<div class="why">${safe(why)}</div>`:''}${underHtml}<div class="meta"><span>${safe(typeof formatDate==='function'?formatDate(date):date)}</span>${source?`<span class="source">${safe(source)}</span>`:''}</div>`;
       body.appendChild(ar);
     });
     sec.appendChild(body);root.appendChild(sec);
@@ -66,7 +65,7 @@
   }
 
   const style=document.createElement('style');style.id='entertainment-v4-style';
-  style.textContent='.ent-section-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ent-section-header h2{margin-right:0}.ent-section-header .count{margin-left:auto}.ent-tier{display:inline-flex;border-radius:999px;font-weight:900;letter-spacing:.07em;padding:3px 7px;font-size:8.5px;background:rgba(190,24,93,.10);color:#be185d;border:1px solid rgba(190,24,93,.22)}.ent-card-flags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 7px}.ent-tier.major{background:rgba(220,38,38,.09);color:#b91c1c;border-color:rgba(220,38,38,.2)}.ent-tier.people-family,.ent-tier.philanthropy{background:rgba(22,163,74,.08);color:#15803d;border-color:rgba(22,163,74,.18)}.ent-image-link{display:block;margin:0 0 10px;border-radius:10px;overflow:hidden;background:rgba(100,116,139,.08)}.ent-card-image{display:block;width:100%;max-height:320px;object-fit:cover;aspect-ratio:16/9}.ent-underreported-links{margin-top:10px;padding:9px 10px;border-left:4px solid #dc2626;background:rgba(220,38,38,.06);border-radius:8px}.ent-underreported-links strong{display:block;margin-bottom:4px;color:#dc2626;font-size:8.5px}.ent-underreported-links a{display:block;margin-top:4px;color:#dc2626!important;text-decoration:none;font-size:10.5px;font-weight:800}.ent-underreported-links span{font-weight:600;opacity:.8}@media(max-width:600px){.ent-section-header .count{width:100%;margin-left:0;font-size:9px}}';
+  style.textContent='.ent-section-header{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.ent-section-header h2{margin-right:0}.ent-section-header .count{margin-left:auto}.ent-tier{display:inline-flex;border-radius:999px;font-weight:900;letter-spacing:.07em;padding:3px 7px;font-size:8.5px;background:rgba(190,24,93,.10);color:#be185d;border:1px solid rgba(190,24,93,.22)}.ent-card-flags{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:0 0 7px}.ent-tier.major{background:rgba(220,38,38,.09);color:#b91c1c;border-color:rgba(220,38,38,.2)}.ent-tier.people-family,.ent-tier.philanthropy{background:rgba(22,163,74,.08);color:#15803d;border-color:rgba(22,163,74,.18)}.ent-underreported-links{margin-top:10px;padding:9px 10px;border-left:4px solid #dc2626;background:rgba(220,38,38,.06);border-radius:8px}.ent-underreported-links strong{display:block;margin-bottom:4px;color:#dc2626;font-size:8.5px}.ent-underreported-links a{display:block;margin-top:4px;color:#dc2626!important;text-decoration:none;font-size:10.5px;font-weight:800}.ent-underreported-links span{font-weight:600;opacity:.8}@media(max-width:600px){.ent-section-header .count{width:100%;margin-left:0;font-size:9px}}';
   document.head.appendChild(style);
   let tries=0;const timer=setInterval(()=>{tries++;if(install()||tries>40)clearInterval(timer)},50);
   window.__entertainmentV4=true;
