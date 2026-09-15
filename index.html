@@ -879,7 +879,10 @@ function renderNfl(){
  }
  async function load(){
   try{
-   const r=await fetch((()=>{const now=new Date(),a=new Date(now),b=new Date(now);a.setDate(a.getDate()-1);b.setDate(b.getDate()+7);const f=d=>`${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`;return `https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=64&dates=${f(a)}-${f(b)}&ts=${Date.now()}`})(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);const d=await r.json();
+   let d=null,liveError=null;
+   try{const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=64&ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw new Error('scoreboard HTTP '+r.status);d=await r.json();}catch(e){liveError=e;}
+   if(!d?.events?.length){const r=await fetch('assets/nfl-scoreboard.json?ts='+Date.now(),{cache:'no-store'});if(!r.ok)throw liveError||new Error('cached scoreboard HTTP '+r.status);d=await r.json();}
+   if(!d?.events?.length)throw liveError||new Error('NFL scoreboard contains no events');
    [...body.querySelectorAll('.nfl-empty,.loading,.nfl-error')].forEach(x=>x.remove());grid.innerHTML='';
    if(!d.events?.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No NFL games currently scheduled.';body.appendChild(e);return;}
    const events=sortedEvents(d.events);if(!events.length){const e=document.createElement('div');e.className='empty nfl-empty';e.textContent='No current or upcoming NFL games in the scoreboard window.';body.appendChild(e);return;}
