@@ -1,0 +1,300 @@
+{
+  "removedCount": 28,
+  "reroutedCount": 10,
+  "removed": [
+    {
+      "category": "world",
+      "source": "The Journal",
+      "title": "NATO jets down drone in Lithuanian airspace after bloc warns strikes will drive support for Ukraine - the-journal.com",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "world",
+      "source": "CBS News",
+      "title": "Negotiations resume amid monthslong lockout of union workers at BP refinery in Whiting, Indiana",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "WTHR",
+      "title": "Indiana State Police investigating officer-involved shooting after high-speed chase in western Indiana",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "CBS News",
+      "title": "Man, 85, accused of shooting wife in Northwest Indiana",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "WTHR",
+      "title": "'He's exceptional' | Indiana native says it was a 'no brainer' to donate part of $1.2 million to charity after field goal kicks",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "WTHR",
+      "title": "Ramp to I-65 southbound near West 21st Street in Indianapolis shut down due to large police response",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "WTHR",
+      "title": "Indiana Women's Prison announces warden of 5 years has died",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "WTHR",
+      "title": "'Axe-wielding driver' arrested after attacking semi-trucks in northwestern Indiana",
+      "reason": "us-local-leak"
+    },
+    {
+      "category": "world",
+      "source": "ESPN",
+      "title": "Fans boo Titans in coach Saleh's debut as QB Ward struggles - ESPN",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "presidential",
+      "source": "Associated Press",
+      "title": "Trump loves the game of golf and takes pride in his relationships with some of the pros - AP News",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "presidential",
+      "source": "Associated Press",
+      "title": "Trump has support in Doonbeg, though tiny snails have snagged his Irish golf course plans - AP News",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "us",
+      "source": "Orlando Sentinel",
+      "title": "'U.S. Presidential Golf Course' proposed for Palm Beach County - Orlando Sentinel",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "nm",
+      "source": "Yahoo Sports",
+      "title": "OU football vs New Mexico TV channel, odds, scouting report for Sooners-Lobos - Yahoo Sports",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "nm",
+      "source": "KRQE",
+      "title": "New Mexico Lions Clubs host annual food drive - KRQE",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "nm",
+      "source": "Santa Fe New Mexican",
+      "title": "New Mexico state lawmakers hope housing bills will gain momentum in '27 - Santa Fe New Mexican",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "Tri City Record",
+      "title": "Los Alamos tops Farmington in shootout in girls soccer - Tri City Record",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "Arizona Daily Sun",
+      "title": "LOCAL ROUNDUP: Flagstaff football falls to 0-3 with loss at Tempe - Arizona Daily Sun",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "The Denver Post",
+      "title": "Broncos release WR Lil\u2019Jordan Humphrey before opener against Chiefs, expect him back - The Denver Post",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "The Virginian-Pilot",
+      "title": "757Teamz field hockey Top 15: Key win lifts Norfolk Academy as top teams brace for rugged games - The Virginian-Pilot",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "Sports Illustrated",
+      "title": "University City Lions Football (St. Louis, MO) News - Sports Illustrated",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "Yahoo Sports",
+      "title": "Milwaukee Brewers get the vote MLB insiders would not give the Dodgers - Yahoo Sports",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "CBS News",
+      "title": "As he prepares to run for mayor, Alexi Giannoulias hoping to keep the Bears in Chicago - CBS News",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "local",
+      "source": "The Portland Press Herald",
+      "title": "Class A stalwarts at top of 1st Varsity Maine girls soccer poll of 2026 - The Portland Press Herald",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "region",
+      "source": "The Topeka Capital-Journal",
+      "title": "Kansas football vs Arizona State | Odds, prediction, storylines - The Topeka Capital-Journal",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "region",
+      "source": "CBS News",
+      "title": "Colorado Parks and Wildlife says bears attacked teen inside condo and woman at campground - CBS News",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "region",
+      "source": "Yahoo Sports",
+      "title": "Colorado football rises again in USA TODAY Sports 1-138 re-rank - Yahoo Sports",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "region",
+      "source": "Yahoo Sports",
+      "title": "Iowa football rises in latest AP Top 25 rankings - Yahoo Sports",
+      "reason": "sports-leak"
+    },
+    {
+      "category": "region",
+      "source": "Sports Illustrated",
+      "title": "The Biggest Reason Why Iowa State Football Lost to Iowa in Cy-Hawk Game - Sports Illustrated",
+      "reason": "sports-leak"
+    }
+  ],
+  "rerouted": [
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Reuters",
+      "title": "Germany says halting AI development not 'viable' as Europe weighs safety of new tech"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "NBC News",
+      "title": "China dismisses AI slowdown calls and blasts \u2018fearmongering\u2019 from U.S. tech leaders"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Reuters",
+      "title": "How China is preparing for the risk of AI escaping human control"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "tech-insider.org",
+      "title": "Conti Ransomware Hacker Sentenced to 4 Years [2026] - tech-insider.org"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Industrial Cyber",
+      "title": "Global ransomware attacks hit record 997 in August 2026 as utility, healthcare and business attacks surge - Industrial Cyber"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "teiss.co.uk",
+      "title": "News - Ransomware group claims breach at Dunedin clinical research firm ZenTech - teiss.co.uk"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Chief Healthcare Executive",
+      "title": "What \u2018The Pitt\u2019 got right on a hospital ransomware attack - Chief Healthcare Executive"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Africa Business Communities",
+      "title": "Kenya cyber attacks up 6pc as ransomware nearly doubles globally - Africa Business Communities"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "IT Voice Media",
+      "title": "Quick Heal Warns of Evolving WhatsApp Malware Campaign - IT Voice Media"
+    },
+    {
+      "from": "world",
+      "to": "technology",
+      "source": "Tech Observer Magazine",
+      "title": "HBO Max Reddit account hijacked to spread malware via ClickFix ads - Tech Observer Magazine"
+    }
+  ],
+  "balancedTabs": [
+    "entertainment",
+    "federal",
+    "gaming",
+    "local",
+    "military",
+    "nfl",
+    "nm",
+    "presidential",
+    "region",
+    "technology",
+    "underreported",
+    "us",
+    "world"
+  ],
+  "sourceStreakBefore": {
+    "underreported": 3,
+    "world": 15,
+    "technology": 5,
+    "presidential": 20,
+    "military": 19,
+    "federal": 5,
+    "gaming": 3,
+    "us": 5,
+    "nm": 11,
+    "local": 5,
+    "region": 3,
+    "nfl": 24,
+    "entertainment": 2
+  },
+  "sourceStreakAfter": {
+    "underreported": 1,
+    "world": 2,
+    "technology": 1,
+    "presidential": 1,
+    "military": 1,
+    "federal": 1,
+    "gaming": 1,
+    "us": 1,
+    "nm": 1,
+    "local": 5,
+    "region": 1,
+    "nfl": 12,
+    "entertainment": 1
+  },
+  "optimalStreakBound": {
+    "underreported": 1,
+    "world": 2,
+    "technology": 1,
+    "presidential": 1,
+    "military": 1,
+    "federal": 1,
+    "gaming": 1,
+    "us": 1,
+    "nm": 1,
+    "local": 1,
+    "region": 1,
+    "nfl": 12,
+    "entertainment": 1
+  },
+  "locationInventoryPreserved": {
+    "local": "marketId",
+    "region": "region"
+  }
+}

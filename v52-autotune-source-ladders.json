@@ -1,0 +1,886 @@
+{
+  "tabs": {
+    "top": {
+      "before": 46,
+      "after": 45,
+      "removed": 1,
+      "namedHierarchySize": 21,
+      "activeSources": 19,
+      "sourceOrder": [
+        "reuters",
+        "associatedpress",
+        "bbc",
+        "npr",
+        "pbsnewshour",
+        "nytimes",
+        "washingtonpost",
+        "bloomberg",
+        "nbcnews",
+        "cbsnews",
+        "cnn",
+        "foxnews",
+        "politico",
+        "guardian",
+        "cnbc",
+        "usatoday",
+        "aljazeera",
+        "time",
+        "thehill"
+      ],
+      "topCounts": [
+        [
+          "associatedpress",
+          3
+        ],
+        [
+          "bbc",
+          3
+        ],
+        [
+          "npr",
+          3
+        ],
+        [
+          "pbsnewshour",
+          3
+        ],
+        [
+          "nytimes",
+          3
+        ],
+        [
+          "nbcnews",
+          3
+        ],
+        [
+          "cbsnews",
+          3
+        ],
+        [
+          "foxnews",
+          3
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 1
+      },
+      "round1Count": 19
+    },
+    "world": {
+      "before": 68,
+      "after": 68,
+      "removed": 0,
+      "namedHierarchySize": 16,
+      "activeSources": 22,
+      "sourceOrder": [
+        "reuters",
+        "associatedpress",
+        "bbc",
+        "aljazeera",
+        "guardian",
+        "nbcnews",
+        "pbsnewshour",
+        "tomshardware",
+        "defensenews",
+        "thejournal",
+        "arstechnica",
+        "thetimesofindia",
+        "videogameschronicle",
+        "cbc",
+        "durangoherald",
+        "techcrunch",
+        "insideclimatenews",
+        "losangelestimes",
+        "ign",
+        "gamespot",
+        "santafenewmexican",
+        "federalregistergov"
+      ],
+      "topCounts": [
+        [
+          "reuters",
+          38
+        ],
+        [
+          "defensenews",
+          6
+        ],
+        [
+          "guardian",
+          3
+        ],
+        [
+          "associatedpress",
+          2
+        ],
+        [
+          "gamespot",
+          2
+        ],
+        [
+          "bbc",
+          1
+        ],
+        [
+          "aljazeera",
+          1
+        ],
+        [
+          "nbcnews",
+          1
+        ]
+      ],
+      "removedReasons": {},
+      "round1Count": 22
+    },
+    "technology": {
+      "before": 91,
+      "after": 90,
+      "removed": 1,
+      "namedHierarchySize": 16,
+      "activeSources": 48,
+      "sourceOrder": [
+        "arstechnica",
+        "theverge",
+        "wired",
+        "techcrunch",
+        "tomshardware",
+        "cnet",
+        "reuters",
+        "cnbc",
+        "yahoofinance",
+        "thenationalnewscom",
+        "thetimesofindia",
+        "vozus",
+        "newyorkpost",
+        "themotleyfool",
+        "guardian",
+        "cbsnews",
+        "cryptonewsnet",
+        "bbc",
+        "nprorg",
+        "unknown",
+        "ssbcrack",
+        "channelinsider",
+        "sowetan",
+        "industrialcyber",
+        "jfeed",
+        "businessoutreachmagazine",
+        "thejapantimes",
+        "nbcnews",
+        "africabusinesscommunities",
+        "techedition"
+      ],
+      "topCounts": [
+        [
+          "reuters",
+          10
+        ],
+        [
+          "techcrunch",
+          9
+        ],
+        [
+          "theverge",
+          7
+        ],
+        [
+          "cnbc",
+          5
+        ],
+        [
+          "guardian",
+          5
+        ],
+        [
+          "arstechnica",
+          4
+        ],
+        [
+          "wired",
+          4
+        ],
+        [
+          "bbc",
+          3
+        ]
+      ],
+      "removedReasons": {
+        "non-informative-headline": 1
+      },
+      "round1Count": 48
+    },
+    "presidential": {
+      "before": 54,
+      "after": 53,
+      "removed": 1,
+      "namedHierarchySize": 15,
+      "activeSources": 13,
+      "sourceOrder": [
+        "associatedpress",
+        "reuters",
+        "nbcnews",
+        "cbsnews",
+        "pbsnewshour",
+        "thejerusalempost",
+        "cbc",
+        "bbc",
+        "nprorg",
+        "ajccom",
+        "thewhitehousegov",
+        "kremcom",
+        "odessaamerican"
+      ],
+      "topCounts": [
+        [
+          "reuters",
+          25
+        ],
+        [
+          "associatedpress",
+          17
+        ],
+        [
+          "nbcnews",
+          1
+        ],
+        [
+          "cbsnews",
+          1
+        ],
+        [
+          "pbsnewshour",
+          1
+        ],
+        [
+          "thejerusalempost",
+          1
+        ],
+        [
+          "cbc",
+          1
+        ],
+        [
+          "bbc",
+          1
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 1
+      },
+      "round1Count": 13
+    },
+    "military": {
+      "before": 58,
+      "after": 56,
+      "removed": 2,
+      "namedHierarchySize": 10,
+      "activeSources": 21,
+      "sourceOrder": [
+        "defensenews",
+        "reuters",
+        "associatedpress",
+        "bbc",
+        "thetimesofindia",
+        "cbsnews",
+        "cnn",
+        "thetelegraph",
+        "guardian",
+        "abcnewsbreakingnewslatestnewsandvideos",
+        "thejerusalempost",
+        "kotaterritorynews",
+        "aljazeera",
+        "hartfordcourant",
+        "pbsnewshour",
+        "kezi",
+        "usatoday",
+        "foxnews",
+        "newsweek",
+        "gamespot",
+        "tallahasseedemocrat"
+      ],
+      "topCounts": [
+        [
+          "defensenews",
+          24
+        ],
+        [
+          "cbsnews",
+          4
+        ],
+        [
+          "reuters",
+          2
+        ],
+        [
+          "bbc",
+          2
+        ],
+        [
+          "thetelegraph",
+          2
+        ],
+        [
+          "guardian",
+          2
+        ],
+        [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          2
+        ],
+        [
+          "thejerusalempost",
+          2
+        ]
+      ],
+      "removedReasons": {
+        "non-informative-headline": 1,
+        "short-vague-without-content": 1
+      },
+      "round1Count": 21
+    },
+    "federal": {
+      "before": 32,
+      "after": 32,
+      "removed": 0,
+      "namedHierarchySize": 14,
+      "activeSources": 18,
+      "sourceOrder": [
+        "associatedpress",
+        "reuters",
+        "thehill",
+        "nbcnews",
+        "foxnews",
+        "wired",
+        "losangelestimes",
+        "abcnewsbreakingnewslatestnewsandvideos",
+        "newsweek",
+        "austinamericanstatesman",
+        "ketv",
+        "theseattletimes",
+        "nprorg",
+        "usatoday",
+        "alcom",
+        "fresnobee",
+        "politicocom",
+        "theverge"
+      ],
+      "topCounts": [
+        [
+          "reuters",
+          9
+        ],
+        [
+          "associatedpress",
+          5
+        ],
+        [
+          "foxnews",
+          2
+        ],
+        [
+          "theseattletimes",
+          2
+        ],
+        [
+          "thehill",
+          1
+        ],
+        [
+          "nbcnews",
+          1
+        ],
+        [
+          "wired",
+          1
+        ],
+        [
+          "losangelestimes",
+          1
+        ]
+      ],
+      "removedReasons": {},
+      "round1Count": 18
+    },
+    "gaming": {
+      "before": 61,
+      "after": 61,
+      "removed": 0,
+      "namedHierarchySize": 14,
+      "activeSources": 39,
+      "sourceOrder": [
+        "ign",
+        "pcgamer",
+        "polygon",
+        "nintendolife",
+        "wccftech",
+        "toypeople",
+        "ea",
+        "metrocouk",
+        "beebomcom",
+        "thexboxhub",
+        "wnhub",
+        "gamingbible",
+        "dexerto",
+        "nintendowire",
+        "screenhubaustralia",
+        "seasonedgaming",
+        "explosionnetwork",
+        "geonews",
+        "rpgsite",
+        "techinsiderorg",
+        "gamedevnet",
+        "sirusgaming",
+        "nintendosmashcom",
+        "shatteredio",
+        "keengamer",
+        "vgchartz",
+        "finalweapon",
+        "radiotimes",
+        "notebookcheck",
+        "uzkursivmedia"
+      ],
+      "topCounts": [
+        [
+          "ign",
+          12
+        ],
+        [
+          "pcgamer",
+          8
+        ],
+        [
+          "polygon",
+          2
+        ],
+        [
+          "nintendolife",
+          2
+        ],
+        [
+          "thexboxhub",
+          2
+        ],
+        [
+          "techinsiderorg",
+          2
+        ],
+        [
+          "wccftech",
+          1
+        ],
+        [
+          "toypeople",
+          1
+        ]
+      ],
+      "removedReasons": {},
+      "round1Count": 39
+    },
+    "us": {
+      "before": 24,
+      "after": 22,
+      "removed": 2,
+      "namedHierarchySize": 17,
+      "activeSources": 12,
+      "sourceOrder": [
+        "associatedpress",
+        "reuters",
+        "nytimes",
+        "nbcnews",
+        "cbsnews",
+        "cnbc",
+        "thearkansasdemocratgazette",
+        "politicoeu",
+        "timemagazine",
+        "abcnewsbreakingnewslatestnewsandvideos",
+        "guardian",
+        "aljazeera"
+      ],
+      "topCounts": [
+        [
+          "reuters",
+          9
+        ],
+        [
+          "cnbc",
+          2
+        ],
+        [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          2
+        ],
+        [
+          "associatedpress",
+          1
+        ],
+        [
+          "nytimes",
+          1
+        ],
+        [
+          "nbcnews",
+          1
+        ],
+        [
+          "cbsnews",
+          1
+        ],
+        [
+          "thearkansasdemocratgazette",
+          1
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 2
+      },
+      "round1Count": 12
+    },
+    "nm": {
+      "before": 57,
+      "after": 54,
+      "removed": 3,
+      "namedHierarchySize": 13,
+      "activeSources": 18,
+      "sourceOrder": [
+        "krqe",
+        "kob4",
+        "koat",
+        "santafenewmexican",
+        "tricityrecord",
+        "reuters",
+        "kfox",
+        "guardian",
+        "nbcnews",
+        "thehill",
+        "lascrucessunnews",
+        "kxanaustin",
+        "cnn",
+        "thejerusalempost",
+        "foxnews",
+        "elpasotimes",
+        "axios",
+        "abcnewsbreakingnewslatestnewsandvideos"
+      ],
+      "topCounts": [
+        [
+          "krqe",
+          25
+        ],
+        [
+          "kob4",
+          4
+        ],
+        [
+          "santafenewmexican",
+          4
+        ],
+        [
+          "guardian",
+          3
+        ],
+        [
+          "lascrucessunnews",
+          3
+        ],
+        [
+          "koat",
+          2
+        ],
+        [
+          "tricityrecord",
+          2
+        ],
+        [
+          "reuters",
+          1
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 3
+      },
+      "round1Count": 18
+    },
+    "legislation": {
+      "before": 21,
+      "after": 21,
+      "removed": 0,
+      "namedHierarchySize": 4,
+      "activeSources": 2,
+      "sourceOrder": [
+        "congressgov",
+        "newmexicolegislature"
+      ],
+      "topCounts": [
+        [
+          "newmexicolegislature",
+          13
+        ],
+        [
+          "congressgov",
+          8
+        ]
+      ],
+      "removedReasons": {},
+      "round1Count": 2
+    },
+    "local": {
+      "before": 347,
+      "after": 329,
+      "removed": 18,
+      "namedHierarchySize": 10,
+      "activeSources": 166,
+      "sourceOrder": [
+        "tricityrecord",
+        "durangoherald",
+        "associatedpress",
+        "cbsnews",
+        "nbcnews",
+        "sandiegouniontribune",
+        "kremcom",
+        "thetimesofindia",
+        "theadvocate",
+        "wbrz",
+        "kcur",
+        "duluthnewstribune",
+        "argusleader",
+        "kotaterritorynews",
+        "wane15",
+        "alcom",
+        "buffalonews",
+        "hartfordcourant",
+        "lasvegasreviewjournal",
+        "missouliancom",
+        "abridgedpbskvie",
+        "kxanaustin",
+        "nolacom",
+        "abcnewsbreakingnewslatestnewsandvideos",
+        "wtoc",
+        "charlotteobserver",
+        "democratandchronicle",
+        "wbur",
+        "stgeorgenews",
+        "postregister"
+      ],
+      "topCounts": [
+        [
+          "cbsnews",
+          24
+        ],
+        [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          7
+        ],
+        [
+          "mlivecom",
+          6
+        ],
+        [
+          "thejournalcom",
+          5
+        ],
+        [
+          "buffalonews",
+          4
+        ],
+        [
+          "missouliancom",
+          4
+        ],
+        [
+          "stgeorgenews",
+          4
+        ],
+        [
+          "postregister",
+          4
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 18
+      },
+      "round1Count": 166
+    },
+    "region": {
+      "before": 73,
+      "after": 71,
+      "removed": 2,
+      "namedHierarchySize": 11,
+      "activeSources": 48,
+      "sourceOrder": [
+        "arizonadailysun",
+        "coloradopublicradio",
+        "kslcom",
+        "krdo",
+        "koaanews5",
+        "associatedpress",
+        "cbsnews",
+        "nbcnews",
+        "deseretnews",
+        "cbssports",
+        "northwestarkansasdemocratgazette",
+        "abcnewsbreakingnewslatestnewsandvideos",
+        "yahoofinancesingapore",
+        "cbc",
+        "ktvq",
+        "ktvbcom",
+        "oregonlivecom",
+        "foxnews",
+        "vermontpublic",
+        "wfae",
+        "yahoosports",
+        "kcrg",
+        "wusf",
+        "hollywoodreporter",
+        "anchoragedailynews",
+        "guardian",
+        "mprnews",
+        "katv",
+        "insideclimatenews",
+        "hawaiinewsnow"
+      ],
+      "topCounts": [
+        [
+          "cbsnews",
+          5
+        ],
+        [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          5
+        ],
+        [
+          "guardian",
+          4
+        ],
+        [
+          "arizonadailysun",
+          3
+        ],
+        [
+          "krdo",
+          2
+        ],
+        [
+          "foxnews",
+          2
+        ],
+        [
+          "yahoosports",
+          2
+        ],
+        [
+          "kcrg",
+          2
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 2
+      },
+      "round1Count": 48
+    },
+    "nfl": {
+      "before": 25,
+      "after": 25,
+      "removed": 0,
+      "namedHierarchySize": 9,
+      "activeSources": 2,
+      "sourceOrder": [
+        "espn",
+        "cbsnews"
+      ],
+      "topCounts": [
+        [
+          "espn",
+          24
+        ],
+        [
+          "cbsnews",
+          1
+        ]
+      ],
+      "removedReasons": {},
+      "round1Count": 2
+    },
+    "entertainment": {
+      "before": 78,
+      "after": 70,
+      "removed": 8,
+      "namedHierarchySize": 15,
+      "activeSources": 30,
+      "sourceOrder": [
+        "variety",
+        "hollywoodreporter",
+        "deadline",
+        "billboard",
+        "rollingstone",
+        "entertainmentweekly",
+        "people",
+        "enews",
+        "tmz",
+        "pagesix",
+        "bbc",
+        "usatoday",
+        "guardian",
+        "pennlivecom",
+        "wplglocal10",
+        "yahoonews",
+        "njcom",
+        "cbsnews",
+        "alcom",
+        "wbur",
+        "thecommercialappeal",
+        "peoplecom",
+        "thetimesofindia",
+        "thedesmoinesregister",
+        "nbcnews",
+        "timeoutworldwide",
+        "losangelestimes",
+        "thebismarcktribune",
+        "thetennessean",
+        "cbssports"
+      ],
+      "topCounts": [
+        [
+          "variety",
+          6
+        ],
+        [
+          "hollywoodreporter",
+          6
+        ],
+        [
+          "people",
+          6
+        ],
+        [
+          "usatoday",
+          6
+        ],
+        [
+          "deadline",
+          5
+        ],
+        [
+          "billboard",
+          4
+        ],
+        [
+          "entertainmentweekly",
+          4
+        ],
+        [
+          "bbc",
+          4
+        ]
+      ],
+      "removedReasons": {
+        "short-vague-without-content": 8
+      },
+      "round1Count": 30
+    }
+  },
+  "excluded": [
+    "underreported"
+  ],
+  "model": "per-tab-source-ladder-b2"
+}

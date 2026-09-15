@@ -1,0 +1,17 @@
+{
+  "localCount": 329,
+  "marketCount": 108,
+  "inventoryPreserved": true,
+  "globalSourceStreakBefore": {
+    "count": 17,
+    "source": "cbsnews"
+  },
+  "globalSourceStreakAfter": {
+    "count": 3,
+    "source": "cbsnews"
+  },
+  "maxPerMarketStreakBefore": 4,
+  "maxPerMarketStreakAfter": 4,
+  "unknownMarketItems": 0,
+  "method": "per-market source round-robin + cross-market interleave"
+}

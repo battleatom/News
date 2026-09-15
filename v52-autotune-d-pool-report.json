@@ -1,0 +1,39 @@
+{
+  "poolCounts": {
+    "D": 4,
+    "NR": 3,
+    "NW": 2
+  },
+  "removedCount": 3,
+  "removedByReason": {
+    "D": 3,
+    "NR": 0,
+    "NW": 0
+  },
+  "removed": [
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "'AI could kill us all': Anthropic researcher Jacob Coxon quits with warning about powerful AI models - thenationalnews.com",
+      "source": "thenationalnews.com"
+    },
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "Ex-Anthropic researcher Jacob Coxon warns AI could grow \"smart enough to kill us\" - CBS News",
+      "source": "CBS News"
+    },
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "\u2018Gambling with our lives\u2019: Anthropic researcher quits, warns against self-improving AI - TechCrunch",
+      "source": "TechCrunch"
+    }
+  ],
+  "matching": "indexed-v52",
+  "semantics": {
+    "D": "global exact article",
+    "NR": "category exact article",
+    "NW": "category exact article"
+  }
+}
