@@ -7,6 +7,8 @@
   let refreshing=null;
 
   const normalizeText=v=>String(v||'').toLowerCase().replace(/^\s*\d+[.)]\s*/,'').replace(/\s+/g,' ').trim();
+  const canonicalTitle=v=>normalizeText(v).replace(/\s+-\s+[^-]{2,60}$/,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim();
+  const canonicalSource=v=>normalizeText(v).replace(/^the\s+/,'').replace(/\.(com|org|net)$/,'').replace(/[^a-z0-9]+/g,'');
   const safeUrl=value=>{
     try{
       const u=new URL(value,location.href);
@@ -50,25 +52,22 @@
     const description=(descNode?.textContent||'').trim();
     const why=(whyNode?.textContent||'').trim();
     const tab=tabFor(card);
-    return {
-      title,url,source,description,why,tab,
-      titleKey:normalizeText(title),urlKey:url.toLowerCase(),sourceKey:normalizeText(source),
-      capturedAt:new Date().toISOString()
-    };
+    return {title,url,source,description,why,tab,titleKey:canonicalTitle(title),urlKey:url.toLowerCase(),sourceKey:canonicalSource(source),capturedAt:new Date().toISOString()};
   }
 
-  function sameRecord(record,data){
+  function sameRecord(record,data,requireCategory=true){
     const recordTab=normalizeText(record.category||record.tab);
-    if(recordTab!==normalizeText(data.tab))return false;
-    const recordUrl=String(record.url_key||record.urlKey||record.url||'').toLowerCase();
-    const recordTitle=normalizeText(record.title_key||record.titleKey||record.title);
-    const recordSource=normalizeText(record.source_key||record.sourceKey||record.source);
+    if(requireCategory&&recordTab&&recordTab!==normalizeText(data.tab))return false;
+    const recordUrl=safeUrl(record.url_key||record.urlKey||record.url||'').toLowerCase();
+    const recordTitle=canonicalTitle(record.title_key||record.titleKey||record.title);
+    const recordSource=canonicalSource(record.source_key||record.sourceKey||record.source);
     if(recordUrl&&data.urlKey&&recordUrl===data.urlKey)return true;
-    return !!recordTitle&&recordTitle===data.titleKey&&recordSource===data.sourceKey;
+    return !!recordTitle&&recordTitle===data.titleKey&&(!recordSource||!data.sourceKey||recordSource===data.sourceKey);
   }
 
   function suppressed(data){
-    return REASONS.some(reason=>remotePools[reason].some(record=>sameRecord(record,data)));
+    if(remotePools.D.some(record=>sameRecord(record,data,false)))return true;
+    return ['NR','NW'].some(reason=>remotePools[reason].some(record=>sameRecord(record,data,true)));
   }
 
   async function refreshPools(){
@@ -91,9 +90,7 @@
     if(!root)return;
     const visible=root.querySelectorAll('.news-item:not(.feedback-removing)').length;
     const countEl=root.querySelector('.section .section-header .count');
-    if(countEl&&/^Showing\s+\d+/i.test(countEl.textContent||'')){
-      countEl.textContent=(countEl.textContent||'').replace(/^Showing\s+\d+/i,`Showing ${visible}`);
-    }
+    if(countEl&&/^Showing\s+\d+/i.test(countEl.textContent||''))countEl.textContent=(countEl.textContent||'').replace(/^Showing\s+\d+/i,`Showing ${visible}`);
   }
 
   function backfill(tab){
@@ -112,19 +109,13 @@
     }
     window.requestAnimationFrame(()=>{
       renderFn(items);
-      window.requestAnimationFrame(()=>{
-        decorate(document);
-        syncVisibleCount();
-      });
+      window.requestAnimationFrame(()=>{decorate(document);syncVisibleCount();});
     });
   }
 
   function removeCard(card,tab){
     card.classList.add('feedback-removing');
-    window.setTimeout(()=>{
-      card.remove();
-      backfill(tab);
-    },150);
+    window.setTimeout(()=>{card.remove();backfill(tab);},150);
   }
 
   async function record(reason,card){
@@ -133,26 +124,11 @@
     const controls=card.querySelector(':scope > .card-feedback-controls');
     controls?.querySelectorAll('button').forEach(button=>{button.disabled=true;});
     try{
-      const response=await fetch(API_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body:JSON.stringify({
-          reason,
-          category:data.tab,
-          title:data.title,
-          url:data.url,
-          source:data.source,
-          description:data.description,
-          why:data.why,
-          capturedAt:data.capturedAt
-        })
-      });
+      const response=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({reason,category:data.tab,title:data.title,url:data.url,source:data.source,description:data.description,why:data.why,capturedAt:data.capturedAt})});
       if(!response.ok)throw new Error(`Feedback write failed (${response.status})`);
-      const entry={
-        reason,category:data.tab,title:data.title,url:data.url,source:data.source,
-        title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
-      };
-      if(!remotePools[reason].some(existing=>sameRecord(existing,data)))remotePools[reason].push(entry);
+      const entry={reason,category:data.tab,title:data.title,url:data.url,source:data.source,title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt};
+      const requireCategory=reason!=='D';
+      if(!remotePools[reason].some(existing=>sameRecord(existing,data,requireCategory)))remotePools[reason].push(entry);
       removeCard(card,data.tab);
       document.dispatchEvent(new CustomEvent('underreported:card-feedback',{detail:entry}));
     }catch(error){
@@ -186,15 +162,8 @@
     const labels={D:'Duplicate',NR:'Not Relevant',NW:'Not Wanted'};
     REASONS.forEach(reason=>{
       const button=document.createElement('button');
-      button.type='button';
-      button.className='card-feedback-btn';
-      button.dataset.feedback=reason;
-      button.textContent=reason;
-      button.title=labels[reason];
-      button.setAttribute('aria-label',labels[reason]);
-      button.addEventListener('click',event=>{
-        event.preventDefault();event.stopPropagation();record(reason,card);
-      });
+      button.type='button';button.className='card-feedback-btn';button.dataset.feedback=reason;button.textContent=reason;button.title=labels[reason];button.setAttribute('aria-label',labels[reason]);
+      button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();record(reason,card);});
       controls.appendChild(button);
     });
     card.appendChild(controls);
@@ -220,14 +189,7 @@
       }));
     });
     observer.observe(document.body,{childList:true,subtree:true});
-
-    window.UnderreportedFeedback={
-      getPools:()=>JSON.parse(JSON.stringify(remotePools)),
-      counts,
-      toJSON:()=>JSON.stringify(remotePools,null,2),
-      refresh:async()=>{await refreshPools();decorate(document);return counts();},
-      backfill
-    };
+    window.UnderreportedFeedback={getPools:()=>JSON.parse(JSON.stringify(remotePools)),counts,toJSON:()=>JSON.stringify(remotePools,null,2),refresh:async()=>{await refreshPools();decorate(document);return counts();},backfill};
     document.documentElement.dataset.cardFeedback='persistent';
   }
 
