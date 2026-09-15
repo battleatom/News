@@ -24,9 +24,9 @@ MAX_QUALITY_DROP = 10.0
 TECH_BRANDS = ("openai","chatgpt","anthropic","claude","nvidia","microsoft","apple","iphone","google","pixel","android","samsung","galaxy","meta","tiktok","tesla","spacex")
 GAMING_BRANDS = ("nintendo","switch","playstation","ps5","xbox","steam","valve","epic games","battle.net")
 EVENT_PHRASES = (
-    "007 first light","james bond","steam frame","steam deck","game pass","ps plus","subscription cancellations",
-    "persona 4","persona 5","persona 6","zelda","ocarina of time","metroid dread","diablo iv","runescape dragonwilds",
-    "windows 11","ios 27","iphone 18","pixel 11","data breach","ai slowdown","kill switch","glass imaging",
+    "007 first light","james bond","steam frame","steam deck","persona 4","persona 5","persona 6","zelda",
+    "ocarina of time","metroid dread","diablo iv","runescape dragonwilds","windows 11","ios 27","iphone 18",
+    "pixel 11","data breach","ai slowdown","kill switch","glass imaging",
 )
 
 STOP = {
@@ -61,6 +61,11 @@ def brand_set(item):
 def event_fingerprint(item):
     raw=title(item).lower()
     phrases={p for p in EVENT_PHRASES if p in raw}
+    # Normalize common multi-source coverage of the same subscription-price/cancellation story.
+    if re.search(r"\bcancel(?:s|led|ling|lations|lation)?\b", raw) and any(p in raw for p in ("game pass","ps plus","playstation","switch online","nintendo","xbox")):
+        phrases.add("gaming-subscription-cancellations")
+    if "cost" in raw and any(p in raw for p in ("game pass","ps plus","switch online")):
+        phrases.add("gaming-subscription-cancellations")
     words={w for w in re.findall(r"[a-z0-9]+",raw) if len(w)>=4 and w not in STOP and w not in {"nintendo","switch","playstation","xbox","steam","openai","anthropic","microsoft","apple","google"}}
     return phrases,words
 
