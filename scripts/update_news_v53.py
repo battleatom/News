@@ -10,6 +10,7 @@ import update_news_v52 as v52
 
 core = v52.core
 
+# Rebuild marker: NFL scoreboard query repaired on 2026-09-15.
 WORLD_SOURCE_EXPANSION = [
     ("BBC", "site:bbc.com/news/world international breaking politics conflict election economy"),
     ("Al Jazeera", "site:aljazeera.com/news international world politics conflict election economy"),
