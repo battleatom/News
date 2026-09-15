@@ -52,6 +52,17 @@ def source_key(value: str | None) -> str:
     return re.sub(r"[^a-z0-9]+", "", clean(value).lower())
 
 
+def title_key(value: str | None) -> str:
+    return " ".join(re.findall(r"[a-z0-9]+", clean(value).lower()))
+
+
+def canonical_link(value: str | None) -> str:
+    value = clean(value)
+    value = re.sub(r"([?&])(utm_[^=&]+|fbclid|gclid|mc_[^=&]+)=[^&#]*", "", value, flags=re.I)
+    value = re.sub(r"[?&]+$", "", value)
+    return value.rstrip("/").lower()
+
+
 def set_text(item: ET.Element, tag: str, value) -> None:
     node = item.find(tag)
     if node is None:
@@ -147,20 +158,27 @@ def main() -> None:
     kept = []
     removed_zero = []
     removed_broad = []
+    removed_duplicate = []
     histogram: dict[str, int] = {}
+    seen_links: set[str] = set()
+    seen_titles: set[str] = set()
 
     for item in under:
+        title = clean(item.findtext("title"))
+        link_key = canonical_link(item.findtext("link"))
+        tkey = title_key(title)
+        if (link_key and link_key in seen_links) or (tkey and tkey in seen_titles):
+            removed_duplicate.append(title)
+            continue
+
         recent, historical, oldest_days = evidence(item, now)
         count = len(recent)
         histogram[str(count)] = histogram.get(str(count), 0) + 1
-        title = clean(item.findtext("title"))
         if count < MIN_RECENT_SOURCES:
             removed_zero.append(title)
-            channel.remove(item)
             continue
         if count > MAX_RECENT_SOURCES:
             removed_broad.append(title)
-            channel.remove(item)
             continue
 
         score, label, confidence = signal_for(count)
@@ -186,19 +204,16 @@ def main() -> None:
             old_priority = int(float(clean(item.findtext("underreportedPriority")) or 0))
         except Exception:
             old_priority = 0
-        # Evidence quality is a meaningful rank signal without discarding the existing
-        # importance/freshness work. One-source stories are deliberately capped below
-        # stronger 2-4 source candidates.
         blended = round(old_priority * 0.55 + score * 0.45)
         if count == 1:
             blended = min(blended, 64)
         set_text(item, "underreportedPriority", max(0, min(100, blended)))
         kept.append(item)
+        if link_key:
+            seen_links.add(link_key)
+        if tkey:
+            seen_titles.add(tkey)
 
-    # Reorder only the Underreported cards; all other tab serialization remains intact.
-    remaining = list(channel.findall("item"))
-    for item in kept:
-        channel.remove(item)
     def order_key(item: ET.Element):
         try: p = int(float(clean(item.findtext("underreportedPriority")) or 0))
         except Exception: p = 0
@@ -208,9 +223,11 @@ def main() -> None:
         return (p, s, dt.timestamp() if dt else 0)
     kept.sort(key=order_key, reverse=True)
 
-    # Preserve existing convention: Top first, then Underreported, then the rest.
-    top = [i for i in remaining if clean(i.findtext("category")).lower() == "top"]
-    rest = [i for i in remaining if clean(i.findtext("category")).lower() != "top"]
+    # Rebuild from the original direct channel items. Underreported cards are
+    # replaced by the validated/deduped `kept` set exactly once. This avoids the
+    # previous serialization bug where retained cards were appended again via rest.
+    top = [i for i in items if clean(i.findtext("category")).lower() == "top"]
+    rest = [i for i in items if clean(i.findtext("category")).lower() not in {"top", "underreported"}]
     for item in list(channel.findall("item")):
         channel.remove(item)
     for item in top + kept + rest:
@@ -229,9 +246,11 @@ def main() -> None:
         "after": len(kept),
         "removedZeroRecentSupport": len(removed_zero),
         "removedBroadCoverage": len(removed_broad),
+        "removedExactDuplicates": len(removed_duplicate),
         "recentSourceHistogramBeforeGuard": histogram,
         "removedZeroTitles": removed_zero[:30],
         "removedBroadTitles": removed_broad[:30],
+        "removedDuplicateTitles": removed_duplicate[:30],
     }
     REPORT.write_text(json.dumps(report, indent=2), encoding="utf-8")
     print(json.dumps(report, indent=2))
