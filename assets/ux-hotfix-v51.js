@@ -135,14 +135,7 @@
       upcomingHeading.classList.add('boxoffice-coming-soon');
       const upcomingCards=groupCards(upcomingHeading);
       sortGroup(body,upcomingHeading,upcomingCards,1);
-      const orderedUpcoming=groupCards(upcomingHeading);
-      orderedUpcoming.forEach(card=>paintBoxOfficeCard(card,'cyan','COMING SOON'));
-      if(currentHeading&&currentHeading.compareDocumentPosition(upcomingHeading)&Node.DOCUMENT_POSITION_FOLLOWING){
-        const frag=document.createDocumentFragment();
-        frag.appendChild(upcomingHeading);
-        orderedUpcoming.forEach(card=>frag.appendChild(card));
-        body.insertBefore(frag,currentHeading);
-      }
+      groupCards(upcomingHeading).forEach(card=>paintBoxOfficeCard(card,'cyan','COMING SOON'));
     }
   }
 
