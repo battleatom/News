@@ -3,6 +3,11 @@ name: V5.2 Routing and D Pools A-B Test
 on:
   push:
     branches: [v5.2-routing-dpools]
+    paths-ignore:
+      - 'v52-content-audit.json'
+      - 'v52-content-audit.md'
+      - 'v52-postprocess.json'
+      - 'feedback-pool-report.json'
   workflow_dispatch:
 
 concurrency:
@@ -24,11 +29,14 @@ jobs:
       - name: Focused regressions
         run: |
           python -m py_compile scripts/*.py tests/*.py
+          node --check assets/card-feedback.js
           python tests/v52_patch_test.py
           python tests/v52_routing_dpools_test.py
           python tests/editorial_integrity_test.py
           python tests/nfl_final_guard_test.py
           python tests/entertainment_ranking_test.py
+          grep -q "sameRecord(record,data,false)" assets/card-feedback.js
+          grep -q "reason!=='D'" assets/card-feedback.js
       - name: Collect fresh V5.2 14-day feed
         run: |
           success=0
@@ -64,7 +72,7 @@ jobs:
           python scripts/enforce_editorial_integrity.py
           python scripts/enforce_nfl_final.py
           python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
-      - name: Apply V5.2 validity rotation duplicate and D Pool gates
+      - name: Apply V5.2 validity source scheduling duplicate and D Pool gates
         run: |
           python scripts/v52_postprocess.py --feed News --report v52-postprocess.json
           python scripts/apply_feedback_pools.py --feed News --require-remote --report feedback-pool-report.json
@@ -89,26 +97,29 @@ jobs:
           python - <<'PY'
           import re,xml.etree.ElementTree as ET
           from collections import defaultdict
-          root=ET.parse('News').getroot(); by=defaultdict(list)
-          for i in root.findall('.//item'): by[(i.findtext('category') or '').strip()].append(i)
+          root=ET.parse('News').getroot();by=defaultdict(list)
+          for i in root.findall('.//item'):by[(i.findtext('category') or '').strip()].append(i)
           failures=[]
           for cat,items in by.items():
-              if cat in {'top','x','underreported','boxoffice'}: continue
+              if cat in {'top','x','underreported','boxoffice'}:continue
               streak=0;best=0;last=None
               for i in items:
                   s=re.sub(r'[^a-z0-9]+','',(i.findtext('source') or '').lower())
                   streak=streak+1 if s==last else 1;last=s;best=max(best,streak)
-              if best>2: failures.append(f'{cat}: source streak {best}>2')
+              if best>2:failures.append(f'{cat}: source streak {best}>2')
           bad=[]
-          sports=re.compile(r'\b(football|basketball|baseball|hockey|soccer|golf|tennis)\b',re.I)
+          sports=re.compile(r'\b(nfl|nba|mlb|nhl|football|basketball|baseball|hockey|soccer|golf|tennis|quarterback|touchdown)\b',re.I)
+          obit=re.compile(r'\bobituar(?:y|ies)\b',re.I)
           for cat in ('world','nm','local','region'):
               for i in by.get(cat,[]):
-                  if sports.search(i.findtext('title') or ''): bad.append((cat,i.findtext('title')))
-          if bad: failures.append('sports leaks: '+repr(bad[:8]))
+                  title=i.findtext('title') or ''
+                  if sports.search(title):bad.append((cat,'sports',title))
+                  if cat in {'nm','local','region'} and obit.search(title):bad.append((cat,'obituary',title))
+          if bad:failures.append('obvious content leaks: '+repr(bad[:12]))
           print('sequence/leak failures:',failures)
-          if failures: raise SystemExit('\n'.join(failures))
+          if failures:raise SystemExit('\n'.join(failures))
           PY
-      - name: Commit reports only, never the test build
+      - name: Commit reports only never the test build
         if: always()
         run: |
           git config user.name 'github-actions[bot]'
