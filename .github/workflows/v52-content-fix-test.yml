@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/v52_final_content_guard.py'
       - 'scripts/v52_source_ladders.py'
+      - 'scripts/v52_b2_release_finalize.py'
       - 'scripts/apply_feedback_pools_v52.py'
       - 'tests/v52_source_ladders_test.py'
       - 'assets/card-feedback.js'
@@ -96,6 +97,7 @@ jobs:
           python scripts/cluster_related_coverage.py
           python scripts/v52_source_ladders.py
           python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v52-d-pool-report.json
+          python scripts/v52_b2_release_finalize.py
           python scripts/record_pull_stats.py --finalize
       - name: Run A-B audits against production and saved V5.2
         run: |
@@ -106,7 +108,7 @@ jobs:
           python - <<'PY'
           import json,re,xml.etree.ElementTree as ET
           before=json.load(open('/tmp/before-after.json')); after=before['v52']; old=before['baseline']
-          guard=json.load(open('/tmp/v52-content-guard.json')); ladder=json.load(open('/tmp/v52-source-ladders.json'));failures=[]
+          guard=json.load(open('/tmp/v52-content-guard.json')); ladder=json.load(open('/tmp/v52-source-ladders.json')); finalizer=json.load(open('/tmp/v52-b2-finalize.json'));failures=[]
           # Publisher balancing from final content guard. Local/Region remain location-bank aware.
           for cat,actual in guard.get('sourceStreakAfter',{}).items():
             if cat in {'local','region'}: continue
@@ -120,6 +122,10 @@ jobs:
             if v['after'] and v['round1Count']<=0: failures.append(f'{cat} has no source round 1')
             if v['after']<max(8,int(v['before']*.55)) and v['before']>=10:
               failures.append(f'{cat} source ladder over-pruned {v["before"]}->{v["after"]}')
+          # Final serialized feed must respect the B2 source-depth caps.
+          for cat,cap in finalizer.get('sourceCaps',{}).items():
+            actual=after[cat]['maxConsecutiveSameSource']['count']
+            if actual>cap: failures.append(f'{cat} final source streak {actual} exceeds B2 cap {cap}')
           # Reliable content-leak audit gates.
           for cat in ['world','nm','region','gaming','local']:
             if after[cat]['mismatchCount']>old[cat]['mismatchCount']:
@@ -170,12 +176,13 @@ jobs:
           cp /tmp/v51-v52.json v52-autotune-v51-comparison.json
           cp /tmp/v52-content-guard.json v52-autotune-content-guard.json
           cp /tmp/v52-source-ladders.json v52-autotune-source-ladders.json
+          cp /tmp/v52-b2-finalize.json v52-autotune-b2-finalize.json
           cp /tmp/v52-d-pool-report.json v52-autotune-d-pool-report.json
       - name: Commit validated branch preview only
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-source-ladders.json v52-autotune-d-pool-report.json
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-source-ladders.json v52-autotune-b2-finalize.json v52-autotune-d-pool-report.json
           if git diff --cached --quiet; then echo 'Validated with no generated changes.'; exit 0; fi
           git commit -m 'Build validated V5.2 B2 source-ladder preview'
           git push origin HEAD:v5.2-autotune
@@ -183,6 +190,7 @@ jobs:
         run: |
           echo '=== CONTENT GUARD ==='; cat /tmp/v52-content-guard.json
           echo '=== SOURCE LADDERS ==='; cat /tmp/v52-source-ladders.json
+          echo '=== B2 FINALIZER ==='; cat /tmp/v52-b2-finalize.json
           echo '=== D POOLS ==='; cat /tmp/v52-d-pool-report.json
           echo '=== BEFORE/AFTER AUDIT ==='; cat /tmp/before-after.md
           echo 'Production main was not modified. Preview was committed only to v5.2-autotune.'
