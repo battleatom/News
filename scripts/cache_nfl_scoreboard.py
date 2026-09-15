@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32'
-OUT = Path('nfl-scoreboard.json')
+OUT = Path('assets/nfl-scoreboard.json')
 
 req = urllib.request.Request(URL, headers={'User-Agent': 'Mozilla/5.0 NewsApp/5.3.1'})
 try:
@@ -16,6 +16,7 @@ try:
     if not isinstance(events, list) or not events:
         raise RuntimeError('ESPN scoreboard returned no events')
     payload = {'generatedAt': datetime.now(timezone.utc).isoformat(), 'source': 'ESPN', 'events': events}
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     print(f'Cached {len(events)} NFL scoreboard events.')
 except Exception as exc:
