@@ -42,6 +42,20 @@ def norm_url(s):
     except Exception:
         return s or ''
 
+def norm_legislation_url(s):
+    """Preserve official-record query parameters used to identify a specific bill.
+
+    Normal news URLs drop query strings to ignore tracking parameters. Official
+    legislature URLs can encode the bill identity in the query itself (for example,
+    NM Legislature Chamber/LegNo/LegType/year). Stripping that query makes distinct
+    bills look like one exact duplicate group, so legislation uses this stricter key.
+    """
+    try:
+        p=urlsplit(s or '')
+        return urlunsplit((p.scheme.lower(),p.netloc.lower(),p.path.rstrip('/'),p.query,''))
+    except Exception:
+        return s or ''
+
 def source_id(s): return re.sub(r'[^a-z0-9]+','',(s or '').lower()) or 'unknown'
 
 def text(item): return f"{field(item,'title')} {field(item,'description')} {field(item,'whyMatters')}"
@@ -106,7 +120,7 @@ def analyze(items):
         exact_titles=defaultdict(list); exact_urls=defaultdict(list)
         for i in arr:
             exact_titles[norm_title(field(i,'title'))].append(i)
-            u=norm_url(field(i,'link'))
+            u=(norm_legislation_url(field(i,'link')) if cat=='legislation' else norm_url(field(i,'link')))
             if u: exact_urls[u].append(i)
         exact=[]
         for k,v in exact_titles.items():
@@ -138,7 +152,8 @@ def analyze(items):
     title_places=defaultdict(list); url_places=defaultdict(list)
     for cat in OWNERSHIP:
         for i in by.get(cat,[]):
-            nt=norm_title(field(i,'title')); u=norm_url(field(i,'link'))
+            nt=norm_title(field(i,'title'))
+            u=(norm_legislation_url(field(i,'link')) if cat=='legislation' else norm_url(field(i,'link')))
             if nt: title_places[nt].append((cat,field(i,'title'),field(i,'source')))
             if u: url_places[u].append((cat,field(i,'title'),field(i,'source')))
     cross=[]; seen=set()
@@ -162,7 +177,7 @@ def render(old,new,cross_old,cross_new):
         b=new[cat]; a=old[cat]
         lines += [f'## {cat}',f"V5.1: {a['count']} items, {a['uniqueSources']} sources, streak {a['maxConsecutiveSameSource']['count']}× {a['maxConsecutiveSameSource']['source']}; V5.2: {b['count']} items, {b['uniqueSources']} sources, streak {b['maxConsecutiveSameSource']['count']}× {b['maxConsecutiveSameSource']['source']}.",
                   f"V5.2 top sources: {', '.join(f'{s} ({n})' for s,n in b['topSources'])}",
-                  f"V5.2 duplicate flags: exact={len(b['exactDuplicateGroups'])}, fuzzy={len(b['fuzzyDuplicatePairs'])}; mismatch candidates={b['mismatchCount']}."]
+                  f"V5.2 duplicate flags: exact={len(b['exactDuplicateGroups'])}, fuzzy={len(b['fuzzyDuplicatePairs'])}; mismatch candidates={b['mismatchCount']}." ]
         if b['mismatchCandidates']:
             lines.append('Mismatch candidates:')
             for x in b['mismatchCandidates'][:12]: lines.append(f"- #{x['position']} — {x['source']} — {x['title']} — {'; '.join(x['reasons'])}")
