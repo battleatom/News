@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/update_news_v53.py'
       - 'scripts/v53_quality_layer.py'
+      - 'scripts/v53_confidence_router.py'
       - 'scripts/v53_underreported_guard.py'
       - '.github/workflows/v53-quality-lab.yml'
   workflow_dispatch:
@@ -80,6 +81,7 @@ jobs:
           python scripts/v52_location_bank_order.py
           python scripts/v52_b2_release_finalize.py
           python scripts/v53_quality_layer.py
+          python scripts/v53_confidence_router.py
           python scripts/v53_underreported_guard.py
           python scripts/record_pull_stats.py --finalize
       - name: Audit against validated V5.2
@@ -92,14 +94,26 @@ jobs:
           import json, xml.etree.ElementTree as ET
           d=json.load(open('/tmp/v52-v53.json')); old=d['baseline']; new=d['v52']; failures=[]
           q=json.load(open('/tmp/v53-quality-report.json'))
+          r=json.load(open('/tmp/v53-routing-report.json'))
           ug=json.load(open('/tmp/v53-underreported-guard.json'))
           if q.get('hardDeletes') != 0: failures.append('quality layer deleted stories')
-          if not q.get('sourcePatternPreserved'): failures.append('source pattern not preserved')
+          if not q.get('sourcePatternPreserved'): failures.append('source pattern not preserved before routing')
+          if r.get('hardDeletes') != 0: failures.append('confidence router deleted stories')
+          if r.get('storyCountBefore') != r.get('storyCountAfter'): failures.append('confidence router changed total inventory')
+          # Router must remain conservative: protected tabs never move, and only strong-margin
+          # reroutes into specialist categories are allowed.
+          allowed={'technology','gaming','nfl','military','entertainment'}
+          if r.get('reroutedCount',0) > max(35, int(r.get('storyCountBefore',0)*0.05)):
+            failures.append('confidence router moved too many stories')
+          for rec in r.get('rerouted',[]):
+            if rec.get('to') not in allowed: failures.append('router used unapproved destination: '+str(rec))
+            if rec.get('destinationScore',0) < 74: failures.append('router destination below confidence floor: '+str(rec))
+            if rec.get('margin',0) < 24: failures.append('router margin below safety floor: '+str(rec))
+            if rec.get('from') in {'top','underreported','legislation','local','region','nm','x'}:
+              failures.append('router moved protected category: '+str(rec))
           for cat in ('top','underreported','world','presidential','federal','legislation','nm','local','region','nfl','technology','gaming','military','entertainment'):
             if new[cat]['exactDuplicateGroups']: failures.append(cat+' exact duplicate remains')
           if d.get('v52CrossTabRepeats'): failures.append('cross-tab repeat remains')
-          # Underreported is intentionally stricter in V5.3: do not force a 90% inventory
-          # floor that would reward unsupported cards. Require a useful pool instead.
           floors={'top':.85,'world':.80,'presidential':.80,'federal':.80,'legislation':.80,'nm':.80,'local':.80,'region':.80,'nfl':.90,'technology':.80,'gaming':.80,'military':.85,'entertainment':.80}
           for cat,ratio in floors.items():
             if old[cat]['count']>=10 and new[cat]['count'] < int(old[cat]['count']*ratio):
@@ -122,6 +136,7 @@ jobs:
               failures.append(f'{cat} mismatch regression {old[cat]["mismatchCount"]}->{new[cat]["mismatchCount"]}')
           if new['nfl']['count'] < 22: failures.append('NFL inventory below 22')
           if new['world']['count'] < 60: failures.append('World inventory below 60')
+          print('ROUTING_REPORT', r)
           print('UNDERREPORTED_GUARD', ug)
           print('FAILURES', failures)
           if failures: raise SystemExit('\n'.join(failures))
@@ -140,18 +155,20 @@ jobs:
           cp /tmp/v52-v53.json v53-v52-comparison.json
           cp /tmp/prod-v53.json v53-production-comparison.json
           cp /tmp/v53-quality-report.json v53-quality-report.json
+          cp /tmp/v53-routing-report.json v53-routing-report.json
           cp /tmp/v53-underreported-guard.json v53-underreported-guard.json
           cp /tmp/v53-d-pool-report.json v53-d-pool-report.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v53-v52-comparison.json v53-production-comparison.json v53-quality-report.json v53-underreported-guard.json v53-d-pool-report.json
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v53-v52-comparison.json v53-production-comparison.json v53-quality-report.json v53-routing-report.json v53-underreported-guard.json v53-d-pool-report.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Build validated V5.3 quality-lab preview'
+            git commit -m 'Build validated V5.3 confidence-routing preview'
             git push origin HEAD:v5.3-quality-lab
           fi
       - name: Summarize
         run: |
           echo '=== V5.3 QUALITY ==='; cat /tmp/v53-quality-report.json
+          echo '=== CONFIDENCE ROUTER ==='; cat /tmp/v53-routing-report.json
           echo '=== UNDERREPORTED GUARD ==='; cat /tmp/v53-underreported-guard.json
           echo '=== V5.2 -> V5.3 ==='; cat /tmp/v52-v53.md
           echo 'Production main and validated V5.2 were not modified.'
