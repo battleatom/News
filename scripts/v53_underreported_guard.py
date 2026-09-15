@@ -84,7 +84,6 @@ def evidence(item: ET.Element, now: datetime):
     primary = source_key(item.findtext("source"))
     recent: dict[str, float] = {}
     historical: dict[str, float] = {}
-    oldest_days = 0
     for node in coverage_nodes(item):
         src = source_key(node.findtext("source"))
         if not src or src == primary:
@@ -93,10 +92,16 @@ def evidence(item: ET.Element, now: datetime):
         if not dt:
             continue
         age_days = max(0.0, (now - dt).total_seconds() / 86400.0)
-        oldest_days = max(oldest_days, int(age_days))
         bucket = recent if age_days <= RECENT_WINDOW_DAYS else historical
         if src not in bucket or age_days < bucket[src]:
             bucket[src] = age_days
+
+    # A publisher with both recent and old coverage is a recent supporting source,
+    # not an additional historical source. This keeps historical metadata from
+    # double-counting the same publisher while leaving eligibility/ranking unchanged.
+    for src in recent:
+        historical.pop(src, None)
+    oldest_days = int(max(historical.values(), default=0))
     return recent, historical, oldest_days
 
 
