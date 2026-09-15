@@ -1,0 +1,59 @@
+{
+  "policy": {
+    "recentEvidenceWindowDays": 90,
+    "minimumRecentSupportingSources": 1,
+    "maximumRecentSupportingSources": 8,
+    "highConfidenceZone": "2-4 recent independent approved sources",
+    "historicalCoverage": "background only; never counted as current support"
+  },
+  "before": 75,
+  "after": 20,
+  "removedZeroRecentSupport": 54,
+  "removedBroadCoverage": 1,
+  "removedExactDuplicates": 0,
+  "recentSourceHistogramBeforeGuard": {
+    "0": 54,
+    "3": 2,
+    "1": 11,
+    "5": 3,
+    "2": 3,
+    "4": 1,
+    "9": 1
+  },
+  "removedZeroTitles": [
+    "The Dust Settled. The Health Effects of 9/11 Didn\u2019t. - Inside Climate News",
+    "A Texas LNG Plant Pumps Out Chronic, Unpermitted Pollution, a Watchdog Finds - Inside Climate News",
+    "2 Chicago-Area Hospitals Will Go Into Receivership, But Priority Will Be To Stabilize Them, Not Reopen Them - KFF Health News",
+    "25 Years After 9/11, the Health Toll Is Still Unfolding - Inside Climate News",
+    "Report: Medicare Spent $380M On Organs Never Used In Medicare-Covered Transplants - KFF Health News",
+    "The Alabama Legislature Was on a Collision Course With Alabama Power. Then Came Spring Break. - Inside Climate News",
+    "Gray whales are starving as the Arctic warms. Will the US protect them? - grist.org",
+    "An Overdue Trash Bill Left This Alabama Woman in Handcuffs. She\u2019s Not Alone. - Inside Climate News",
+    "China\u2019s Carbon Pollution Fell in Recent Months as Oil Demand Plummeted - Inside Climate News",
+    "A federal judge just told Trump there's no \u2018emergency' to justify keeping a Michigan coal plant open - grist.org",
+    "Meet the Mechanical Engineer Running to Regulate the Texas Oil and Gas Industry - Inside Climate News",
+    "A NY Hospital Tried To Close Its Birthing Center. This City United To Fight Back. - KFF Health News",
+    "Coral Reefs Can Recover But Relentless Marine Heat Waves Won\u2019t Let Them - Inside Climate News",
+    "The world is adapting to extreme heat \u2014 but not nearly fast enough - grist.org",
+    "How Grassroots Opposition to a New Asphalt Plant Was Infiltrated by an Outside Operative - Inside Climate News",
+    "New Trump Rules Would Limit State Power to Block Pipelines, Energy Projects - Inside Climate News",
+    "2 Minnesota-Connected Doctors Among The Missing After Nepal Floods - KFF Health News",
+    "Chemours to Pay $455 Million for Fayetteville Works Contamination - Inside Climate News",
+    "America\u2019s houseplants come at a steep price for greenhouse workers - grist.org",
+    "Maryland Under Pressure as Local Moratoriums Supercharge Opposition to Data Centers - Inside Climate News",
+    "Papa Johns, Propaganda and Putin: How a MAGA Influencer With Ties to Russia Became Trump\u2019s Arctic Adviser - ProPublica",
+    "Readers Wrestle With Healthcare Inequalities and Want a Word With Congress - KFF Health News",
+    "Trump topples the last pillar of Biden\u2019s climate agenda - grist.org",
+    "Democrats Demand Trump Administration Halt Collection of Patients\u2019 ER Records - KFF Health News",
+    "Did the California Supreme Court Just Remake the State\u2019s Bail System? - The Marshall Project",
+    "U.S. Postal Service Failed to Properly Handle Some Ballots During This Year\u2019s Primary Elections, Audit Finds - ProPublica",
+    "How California Is Kicking Its Natural Gas Habit - Inside Climate News",
+    "Inside the \u2018Shadow Surge\u2019 Driving ICE Arrests to New Heights - The Marshall Project",
+    "Vouchers Promise Students With Disabilities a Path to Private School. Parents Say That\u2019s Not the Reality. - ProPublica",
+    "The Meltdown in Employer-Sponsored Health Insurance - KFF Health News"
+  ],
+  "removedBroadTitles": [
+    "Carney says US trade war 'will come at a cost' as Canada strikes back on tariffs - BBC"
+  ],
+  "removedDuplicateTitles": []
+}

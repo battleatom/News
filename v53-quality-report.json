@@ -1,20 +1,14 @@
 {
   "model": "v53-conservative-quality-layer",
-  "storyCountUnchanged": 1051,
+  "storyCountUnchanged": 1048,
   "sourcePatternPreserved": true,
   "hardDeletes": 0,
-  "lowConfidenceReviewCount": 60,
+  "lowConfidenceReviewCount": 53,
   "lowConfidenceReview": [
     {
       "category": "world",
       "source": "BBC",
       "title": "US confirms for first time it has deployed space weapons",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "The Times of India",
-      "title": "In the 1940s, common ragweed spread with American agricultural aid meant to rebuild Japan, but it became - The Times of India",
       "confidence": 42
     },
     {
@@ -43,32 +37,8 @@
     },
     {
       "category": "world",
-      "source": "Reuters",
-      "title": "TIFF 2026: Mahershala Ali stars in action thriller exploring faith, family and motherhood",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Reuters",
-      "title": "India's Nifty 50 closes at 5-month low on elevated oil prices, bond yields",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Reuters",
-      "title": "Saudi Arabia discovers 110 million tonnes of uranium-bearing ore in Medina",
-      "confidence": 42
-    },
-    {
-      "category": "world",
       "source": "CBC",
       "title": "Will the U.S. midterm results affect Trump's tariffs on Canada? Democrats think yes - CBC",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Reuters",
-      "title": "Gulf oil threatened anew as Houthis reach key island and pipeline is shut down",
       "confidence": 42
     },
     {
@@ -79,8 +49,32 @@
     },
     {
       "category": "world",
+      "source": "Reuters",
+      "title": "TIFF 2026: Mahershala Ali stars in action thriller exploring faith, family and motherhood",
+      "confidence": 42
+    },
+    {
+      "category": "world",
       "source": "The Guardian",
       "title": "Democracy indicators in US at lowest levels for 50 years, data shows",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
+      "title": "India's Nifty 50 closes at 5-month low on elevated oil prices, bond yields",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Defense News",
+      "title": "France experiments with smaller tank units to evade drone attacks - Defense News",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
+      "title": "Winter is coming: airBaltic debt woes herald tough season ahead for smaller airlines",
       "confidence": 42
     },
     {
@@ -93,12 +87,6 @@
       "category": "world",
       "source": "Reuters",
       "title": "India opens door to fees on large payments made via UPI system",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Defense News",
-      "title": "France experiments with smaller tank units to evade drone attacks - Defense News",
       "confidence": 42
     },
     {
@@ -116,6 +104,12 @@
     {
       "category": "world",
       "source": "Reuters",
+      "title": "India's August goods trade deficit narrows as gold imports plunge",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
       "title": "Weeks after the Nepal flood disaster, families of the missing hold out hope",
       "confidence": 42
     },
@@ -123,6 +117,18 @@
       "category": "world",
       "source": "Reuters",
       "title": "Chinese police arrest man after Guangzhou knifing incident, no deaths reported",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
+      "title": "Iceland's last whaling company shrugs off threat of permanent ban",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
+      "title": "JPMorgan to launch long-awaited 'frontier' local currency debt index",
       "confidence": 42
     },
     {
@@ -140,6 +146,12 @@
     {
       "category": "world",
       "source": "Reuters",
+      "title": "Philippine ferry fire victims may take months to identify, authorities say",
+      "confidence": 42
+    },
+    {
+      "category": "world",
+      "source": "Reuters",
       "title": "Turkey detains dozens after sweeping raids targeting LGBTQ+ groups",
       "confidence": 42
     },
@@ -147,24 +159,6 @@
       "category": "world",
       "source": "Reuters",
       "title": "Saudi shares drop after pipeline attack, leading Gulf decline",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Reuters",
-      "title": "Canada's former leader Justin Trudeau launches production company",
-      "confidence": 42
-    },
-    {
-      "category": "world",
-      "source": "Reuters",
-      "title": "Explainer: Why is the Bab el-Mandeb Strait so important?",
-      "confidence": 42
-    },
-    {
-      "category": "technology",
-      "source": "Tech Observer Magazine",
-      "title": "HBO Max Reddit account hijacked to spread malware via ClickFix ads - Tech Observer Magazine",
       "confidence": 42
     },
     {
@@ -198,12 +192,6 @@
       "confidence": 42
     },
     {
-      "category": "military",
-      "source": "GameSpot",
-      "title": "Ace Combat 8: Wings Of Theve \u2013 Official Story Overview Trailer - GameSpot",
-      "confidence": 42
-    },
-    {
       "category": "federal",
       "source": "Politico",
       "title": "Appeals court rejects ICE detention policy, setting stage for SCOTUS - Politico",
@@ -219,12 +207,6 @@
       "category": "us",
       "source": "Reuters",
       "title": "US rail fuel surcharges on grain hit record highs, squeezing farmers in harvest season - Reuters",
-      "confidence": 42
-    },
-    {
-      "category": "us",
-      "source": "npr.org",
-      "title": "A cancer survivor hoped to work \u2014 then she lost her Medicaid disability coverage - npr.org",
       "confidence": 42
     },
     {
@@ -266,61 +248,7 @@
     {
       "category": "entertainment",
       "source": "USA Today",
-      "title": "'Dancing with the Stars' Season 35 kicks off with two-night premiere - USA Today",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "E! News",
-      "title": "7 New York Fashion Week Runway Trends That Are Surprisingly Wearable for Fall - E! News",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "TMZ",
-      "title": "Floyd Mayweather's Daughter Yaya Ordered to Pay 8-Figure Sum Over 2020 Stabbing - TMZ",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "USA Today",
-      "title": "Zendaya and Tom Holland's wedding gets bombshell update from Law Roach - USA Today",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "The Guardian",
-      "title": "Cost of watching sport in Australia creeps up as streaming services search for long-term viability - The Guardian",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "BBC",
-      "title": "Strictly Come Dancing 2026 contestants reveal why they're heading for the ballroom, their dream songs to dance to and what they're most nervous about - BBC",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "USA Today",
-      "title": "Alan Ritchson and wife Catherine split after 20 years of marriage - USA Today",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "Los Angeles Times",
-      "title": "Macklemore removed from Ed Sheeran's tour after onstage support for Palestinians. He has no regrets - Los Angeles Times",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "The Tennessean",
-      "title": "Nashville songwriter Parker Welling launches podcast | Exclusive - The Tennessean",
-      "confidence": 42
-    },
-    {
-      "category": "entertainment",
-      "source": "USA Today",
-      "title": "Gillian Anderson comes out as pansexual, reveals relationships with women - USA Today",
+      "title": "'Always Lalisa' director Sue Kim praises Lisa of Blackpink's work ethic - USA Today",
       "confidence": 42
     },
     {
@@ -331,14 +259,44 @@
     },
     {
       "category": "entertainment",
-      "source": "Yahoo News",
-      "title": "Elon Musk\u2019s Baby Mama Dishes to Don Lemon on Billionaire\u2019s Alleged Drug Use \u2014 Claims She Saw Him Using Ketamine - yahoo.com",
+      "source": "The Guardian",
+      "title": "Cost of watching sport in Australia creeps up as streaming services search for long-term viability - The Guardian",
       "confidence": 42
     },
     {
       "category": "entertainment",
-      "source": "TMZ",
-      "title": "Hayden Panettiere Died From Fentanyl-Laced Oxy, Sources - TMZ",
+      "source": "tmz.com",
+      "title": "Floyd Mayweather's Daughter Yaya Ordered to Pay 8-Figure Sum Over 2020 Stabbing - tmz.com",
+      "confidence": 42
+    },
+    {
+      "category": "entertainment",
+      "source": "Los Angeles Times",
+      "title": "Macklemore removed from Ed Sheeran's tour after onstage support for Palestinians. He has no regrets - Los Angeles Times",
+      "confidence": 42
+    },
+    {
+      "category": "entertainment",
+      "source": "USA Today",
+      "title": "Alan Ritchson and wife Catherine split after 20 years of marriage - USA Today",
+      "confidence": 42
+    },
+    {
+      "category": "entertainment",
+      "source": "USA Today",
+      "title": "Gillian Anderson comes out as pansexual, reveals relationships with women - USA Today",
+      "confidence": 42
+    },
+    {
+      "category": "entertainment",
+      "source": "Savannah Morning News",
+      "title": "Free jazz fills Forsyth Park during Savannah festival weekend - Savannah Morning News",
+      "confidence": 42
+    },
+    {
+      "category": "entertainment",
+      "source": "The Tennessean",
+      "title": "Nashville songwriter Parker Welling launches podcast | Exclusive - The Tennessean",
       "confidence": 42
     },
     {
@@ -355,8 +313,8 @@
     },
     {
       "category": "entertainment",
-      "source": "Yahoo News",
-      "title": "Jaclyn Smith and husband lived in different states for nearly two decades of relationship: \u2018We made it work\u2019 - yahoo.com",
+      "source": "tmz.com",
+      "title": "Hayden Panettiere Died From Fentanyl-Laced Oxy, Sources - tmz.com",
       "confidence": 42
     },
     {
@@ -368,8 +326,8 @@
   ],
   "tabs": {
     "top": {
-      "count": 40,
-      "uniqueCanonicalSources": 18,
+      "count": 41,
+      "uniqueCanonicalSources": 17,
       "topSources": [
         [
           "associatedpress",
@@ -392,6 +350,10 @@
           3
         ],
         [
+          "bloomberg",
+          3
+        ],
+        [
           "nbcnews",
           3
         ],
@@ -406,13 +368,9 @@
         [
           "cnbc",
           3
-        ],
-        [
-          "usatoday",
-          3
         ]
       ],
-      "averageQuality": 87.01,
+      "averageQuality": 87.21,
       "publisherCountries": [
         [
           "United States",
@@ -424,7 +382,7 @@
         ],
         [
           "Global",
-          1
+          2
         ],
         [
           "Qatar",
@@ -434,18 +392,18 @@
       "storyCountries": [
         [
           "United States",
-          6
-        ],
-        [
-          "China",
-          4
+          5
         ],
         [
           "Iran",
-          3
+          4
         ],
         [
           "Russia",
+          2
+        ],
+        [
+          "China",
           1
         ],
         [
@@ -464,7 +422,7 @@
       "topSources": [
         [
           "insideclimatenews",
-          15
+          18
         ],
         [
           "kffhealthnews",
@@ -476,22 +434,18 @@
         ],
         [
           "propublica",
-          9
+          7
+        ],
+        [
+          "sourcenewmexico",
+          5
         ],
         [
           "themarshallproject",
           5
         ],
         [
-          "sourcenewmexico",
-          4
-        ],
-        [
-          "searchlightnewmexico",
-          3
-        ],
-        [
-          "thejournal",
+          "reuters",
           2
         ],
         [
@@ -499,11 +453,15 @@
           2
         ],
         [
-          "reuters",
+          "thejournal",
           2
+        ],
+        [
+          "associatedpress",
+          1
         ]
       ],
-      "averageQuality": 81.87,
+      "averageQuality": 82.02,
       "publisherCountries": [
         [
           "Global",
@@ -511,6 +469,10 @@
         ],
         [
           "United States",
+          2
+        ],
+        [
+          "United Kingdom",
           1
         ]
       ],
@@ -520,11 +482,15 @@
           5
         ],
         [
+          "Russia",
+          3
+        ],
+        [
           "United States",
           3
         ],
         [
-          "Russia",
+          "Canada",
           2
         ],
         [
@@ -532,15 +498,7 @@
           1
         ],
         [
-          "Ukraine",
-          1
-        ],
-        [
           "Iran",
-          1
-        ],
-        [
-          "Canada",
           1
         ],
         [
@@ -550,16 +508,16 @@
       ]
     },
     "world": {
-      "count": 71,
-      "uniqueCanonicalSources": 22,
+      "count": 70,
+      "uniqueCanonicalSources": 23,
       "topSources": [
         [
           "reuters",
-          38
+          35
         ],
         [
           "defensenews",
-          7
+          8
         ],
         [
           "guardian",
@@ -570,7 +528,7 @@
           2
         ],
         [
-          "nbcnews",
+          "thejournal",
           2
         ],
         [
@@ -590,15 +548,15 @@
           1
         ],
         [
-          "pbsnewshour",
+          "cbsnews",
           1
         ]
       ],
-      "averageQuality": 71.88,
+      "averageQuality": 71.85,
       "publisherCountries": [
         [
           "Global",
-          38
+          35
         ],
         [
           "United Kingdom",
@@ -615,39 +573,27 @@
         [
           "Qatar",
           1
-        ],
-        [
-          "India",
-          1
         ]
       ],
       "storyCountries": [
         [
           "Iran",
-          10
+          9
+        ],
+        [
+          "India",
+          6
         ],
         [
           "China",
           5
         ],
         [
-          "India",
-          5
-        ],
-        [
           "Russia",
-          4
+          3
         ],
         [
           "Canada",
-          3
-        ],
-        [
-          "Ukraine",
-          3
-        ],
-        [
-          "France",
           2
         ],
         [
@@ -655,7 +601,15 @@
           2
         ],
         [
-          "Japan",
+          "Ukraine",
+          2
+        ],
+        [
+          "France",
+          2
+        ],
+        [
+          "United States",
           1
         ],
         [
@@ -665,8 +619,8 @@
       ]
     },
     "technology": {
-      "count": 80,
-      "uniqueCanonicalSources": 47,
+      "count": 75,
+      "uniqueCanonicalSources": 44,
       "topSources": [
         [
           "theverge",
@@ -694,14 +648,14 @@
         ],
         [
           "wired",
-          3
-        ],
-        [
-          "bbc",
-          3
+          2
         ],
         [
           "tomshardware",
+          2
+        ],
+        [
+          "bbc",
           2
         ],
         [
@@ -709,11 +663,11 @@
           2
         ]
       ],
-      "averageQuality": 71.1,
+      "averageQuality": 71.38,
       "publisherCountries": [
         [
           "United Kingdom",
-          8
+          7
         ],
         [
           "Global",
@@ -721,6 +675,10 @@
         ],
         [
           "India",
+          1
+        ],
+        [
+          "United States",
           1
         ]
       ],
@@ -730,11 +688,11 @@
           4
         ],
         [
-          "United States",
-          3
+          "India",
+          2
         ],
         [
-          "India",
+          "United States",
           2
         ],
         [
@@ -753,11 +711,11 @@
     },
     "presidential": {
       "count": 50,
-      "uniqueCanonicalSources": 12,
+      "uniqueCanonicalSources": 11,
       "topSources": [
         [
           "reuters",
-          25
+          26
         ],
         [
           "associatedpress",
@@ -776,6 +734,10 @@
           1
         ],
         [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          1
+        ],
+        [
           "thejerusalempost",
           1
         ],
@@ -790,17 +752,13 @@
         [
           "ajccom",
           1
-        ],
-        [
-          "thewhitehousegov",
-          1
         ]
       ],
-      "averageQuality": 74.5,
+      "averageQuality": 74.59,
       "publisherCountries": [
         [
           "Global",
-          25
+          26
         ],
         [
           "United States",
@@ -818,7 +776,7 @@
       "storyCountries": [
         [
           "United States",
-          4
+          3
         ],
         [
           "Russia",
@@ -838,28 +796,103 @@
         ]
       ]
     },
+    "federal": {
+      "count": 30,
+      "uniqueCanonicalSources": 16,
+      "topSources": [
+        [
+          "reuters",
+          9
+        ],
+        [
+          "associatedpress",
+          5
+        ],
+        [
+          "foxnews",
+          2
+        ],
+        [
+          "theseattletimes",
+          2
+        ],
+        [
+          "politico",
+          1
+        ],
+        [
+          "npr",
+          1
+        ],
+        [
+          "nbcnews",
+          1
+        ],
+        [
+          "pbswisconsin",
+          1
+        ],
+        [
+          "wired",
+          1
+        ],
+        [
+          "abcnewsbreakingnewslatestnewsandvideos",
+          1
+        ]
+      ],
+      "averageQuality": 72.18,
+      "publisherCountries": [
+        [
+          "Global",
+          9
+        ],
+        [
+          "United States",
+          6
+        ]
+      ],
+      "storyCountries": [
+        [
+          "Japan",
+          1
+        ],
+        [
+          "United States",
+          1
+        ],
+        [
+          "China",
+          1
+        ],
+        [
+          "India",
+          1
+        ]
+      ]
+    },
     "military": {
-      "count": 53,
-      "uniqueCanonicalSources": 20,
+      "count": 55,
+      "uniqueCanonicalSources": 21,
       "topSources": [
         [
           "defensenews",
-          23
+          25
         ],
         [
           "cbsnews",
-          4
+          3
         ],
         [
           "bbc",
           2
         ],
         [
-          "guardian",
+          "thetelegraph",
           2
         ],
         [
-          "thetelegraph",
+          "guardian",
           2
         ],
         [
@@ -883,7 +916,7 @@
           2
         ]
       ],
-      "averageQuality": 75.42,
+      "averageQuality": 75.89,
       "publisherCountries": [
         [
           "United Kingdom",
@@ -900,6 +933,10 @@
         [
           "Global",
           1
+        ],
+        [
+          "India",
+          1
         ]
       ],
       "storyCountries": [
@@ -908,7 +945,15 @@
           9
         ],
         [
+          "United States",
+          2
+        ],
+        [
           "China",
+          1
+        ],
+        [
+          "Ukraine",
           1
         ],
         [
@@ -922,91 +967,12 @@
         [
           "India",
           1
-        ],
-        [
-          "United States",
-          1
-        ]
-      ]
-    },
-    "federal": {
-      "count": 34,
-      "uniqueCanonicalSources": 19,
-      "topSources": [
-        [
-          "reuters",
-          10
-        ],
-        [
-          "associatedpress",
-          5
-        ],
-        [
-          "foxnews",
-          2
-        ],
-        [
-          "theseattletimes",
-          2
-        ],
-        [
-          "politico",
-          1
-        ],
-        [
-          "thehill",
-          1
-        ],
-        [
-          "npr",
-          1
-        ],
-        [
-          "nbcnews",
-          1
-        ],
-        [
-          "wired",
-          1
-        ],
-        [
-          "losangelestimes",
-          1
-        ]
-      ],
-      "averageQuality": 72.15,
-      "publisherCountries": [
-        [
-          "Global",
-          10
-        ],
-        [
-          "United States",
-          6
-        ]
-      ],
-      "storyCountries": [
-        [
-          "United States",
-          2
-        ],
-        [
-          "Japan",
-          1
-        ],
-        [
-          "China",
-          1
-        ],
-        [
-          "India",
-          1
         ]
       ]
     },
     "gaming": {
       "count": 52,
-      "uniqueCanonicalSources": 38,
+      "uniqueCanonicalSources": 39,
       "topSources": [
         [
           "ign",
@@ -1021,16 +987,20 @@
           2
         ],
         [
-          "nintendolife",
-          2
-        ],
-        [
           "thexboxhub",
           2
         ],
         [
           "techinsiderorg",
           2
+        ],
+        [
+          "gamespot",
+          1
+        ],
+        [
+          "nintendolife",
+          1
         ],
         [
           "wccftech",
@@ -1043,19 +1013,37 @@
         [
           "metrocouk",
           1
-        ],
-        [
-          "beebom",
-          1
         ]
       ],
       "averageQuality": 77.11,
       "publisherCountries": [],
       "storyCountries": []
     },
+    "legislation": {
+      "count": 21,
+      "uniqueCanonicalSources": 2,
+      "topSources": [
+        [
+          "newmexicolegislature",
+          13
+        ],
+        [
+          "congressgov",
+          8
+        ]
+      ],
+      "averageQuality": 91.47,
+      "publisherCountries": [],
+      "storyCountries": [
+        [
+          "United States",
+          1
+        ]
+      ]
+    },
     "us": {
-      "count": 22,
-      "uniqueCanonicalSources": 13,
+      "count": 21,
+      "uniqueCanonicalSources": 12,
       "topSources": [
         [
           "reuters",
@@ -1064,10 +1052,6 @@
         [
           "cnbc",
           2
-        ],
-        [
-          "associatedpress",
-          1
         ],
         [
           "nytimes",
@@ -1094,11 +1078,15 @@
           1
         ],
         [
-          "france24com",
+          "france24",
+          1
+        ],
+        [
+          "guardian",
           1
         ]
       ],
-      "averageQuality": 69.67,
+      "averageQuality": 69.96,
       "publisherCountries": [
         [
           "Global",
@@ -1106,7 +1094,11 @@
         ],
         [
           "United States",
-          2
+          1
+        ],
+        [
+          "France",
+          1
         ],
         [
           "United Kingdom",
@@ -1129,12 +1121,16 @@
       ]
     },
     "nm": {
-      "count": 57,
-      "uniqueCanonicalSources": 17,
+      "count": 64,
+      "uniqueCanonicalSources": 18,
       "topSources": [
         [
           "krqe",
-          27
+          24
+        ],
+        [
+          "sourcenewmexico",
+          10
         ],
         [
           "santafenewmexican",
@@ -1161,19 +1157,15 @@
           2
         ],
         [
+          "albuquerquejournal",
+          1
+        ],
+        [
           "reuters",
-          1
-        ],
-        [
-          "kfox",
-          1
-        ],
-        [
-          "nbcnews",
           1
         ]
       ],
-      "averageQuality": 70.16,
+      "averageQuality": 70.64,
       "publisherCountries": [
         [
           "United Kingdom",
@@ -1187,35 +1179,13 @@
       "storyCountries": [
         [
           "Mexico",
-          52
-        ]
-      ]
-    },
-    "legislation": {
-      "count": 21,
-      "uniqueCanonicalSources": 2,
-      "topSources": [
-        [
-          "newmexicolegislature",
-          13
-        ],
-        [
-          "congressgov",
-          8
-        ]
-      ],
-      "averageQuality": 91.47,
-      "publisherCountries": [],
-      "storyCountries": [
-        [
-          "United States",
-          1
+          59
         ]
       ]
     },
     "local": {
-      "count": 325,
-      "uniqueCanonicalSources": 161,
+      "count": 321,
+      "uniqueCanonicalSources": 157,
       "topSources": [
         [
           "cbsnews",
@@ -1223,14 +1193,18 @@
         ],
         [
           "abcnewsbreakingnewslatestnewsandvideos",
-          7
+          9
         ],
         [
           "mlivecom",
+          6
+        ],
+        [
+          "pennlivecom",
           5
         ],
         [
-          "thejournalcom",
+          "stgeorgenews",
           4
         ],
         [
@@ -1242,11 +1216,7 @@
           4
         ],
         [
-          "missouliancom",
-          4
-        ],
-        [
-          "stgeorgenews",
+          "themercurynews",
           4
         ],
         [
@@ -1258,7 +1228,7 @@
           4
         ]
       ],
-      "averageQuality": 80.9,
+      "averageQuality": 80.91,
       "publisherCountries": [
         [
           "United States",
@@ -1267,53 +1237,45 @@
         [
           "India",
           1
+        ],
+        [
+          "Qatar",
+          1
         ]
       ],
       "storyCountries": [
         [
           "United States",
-          6
+          7
         ],
         [
           "India",
           2
         ],
         [
-          "Canada",
-          1
-        ],
-        [
           "Mexico",
-          1
-        ],
-        [
-          "Iran",
           1
         ]
       ]
     },
     "region": {
-      "count": 66,
-      "uniqueCanonicalSources": 44,
+      "count": 68,
+      "uniqueCanonicalSources": 51,
       "topSources": [
         [
           "cbsnews",
-          6
+          4
         ],
         [
           "abcnewsbreakingnewslatestnewsandvideos",
           4
         ],
         [
-          "guardian",
-          4
-        ],
-        [
-          "foxnews",
+          "arizonadailysun",
           3
         ],
         [
-          "anchoragedailynews",
+          "alaskapublicmedia",
           3
         ],
         [
@@ -1321,31 +1283,39 @@
           2
         ],
         [
-          "yahoosports",
+          "nbcnews",
           2
         ],
         [
-          "kcrg",
+          "sportsillustrated",
+          2
+        ],
+        [
+          "guardian",
+          2
+        ],
+        [
+          "koco",
           2
         ],
         [
           "ktla",
           2
-        ],
-        [
-          "espn",
-          2
         ]
       ],
-      "averageQuality": 82.32,
+      "averageQuality": 81.86,
       "publisherCountries": [
         [
-          "United Kingdom",
-          4
+          "United States",
+          3
         ],
         [
-          "United States",
+          "United Kingdom",
           2
+        ],
+        [
+          "Global",
+          1
         ],
         [
           "Canada",
@@ -1355,7 +1325,7 @@
       "storyCountries": [
         [
           "United States",
-          1
+          9
         ]
       ]
     },
@@ -1372,13 +1342,13 @@
           1
         ]
       ],
-      "averageQuality": 79.87,
+      "averageQuality": 79.89,
       "publisherCountries": [],
       "storyCountries": []
     },
     "entertainment": {
       "count": 70,
-      "uniqueCanonicalSources": 26,
+      "uniqueCanonicalSources": 29,
       "topSources": [
         [
           "people",
@@ -1386,10 +1356,6 @@
         ],
         [
           "variety",
-          6
-        ],
-        [
-          "usatoday",
           6
         ],
         [
@@ -1401,7 +1367,7 @@
           5
         ],
         [
-          "yahoonews",
+          "usatoday",
           5
         ],
         [
@@ -1409,41 +1375,37 @@
           4
         ],
         [
+          "rollingstone",
+          4
+        ],
+        [
           "entertainmentweekly",
           4
         ],
         [
-          "bbc",
-          4
+          "yahoonews",
+          3
         ],
         [
-          "rollingstone",
+          "enews",
           2
         ]
       ],
-      "averageQuality": 70.54,
+      "averageQuality": 71.06,
       "publisherCountries": [
         [
           "United Kingdom",
-          6
+          4
         ],
         [
           "India",
-          1
+          2
         ]
       ],
       "storyCountries": [
         [
           "Palestinian Territories",
           3
-        ],
-        [
-          "France",
-          1
-        ],
-        [
-          "India",
-          1
         ],
         [
           "China",
@@ -1468,11 +1430,11 @@
           1
         ],
         [
-          "pennlivecom",
+          "tomshardware",
           1
         ],
         [
-          "losangelestimes",
+          "pbswisconsin",
           1
         ],
         [
@@ -1484,7 +1446,7 @@
           1
         ],
         [
-          "tomshardware",
+          "industrialcyber",
           1
         ],
         [
@@ -1492,17 +1454,13 @@
           1
         ],
         [
-          "foxnews",
+          "defensenews",
           1
         ]
       ],
-      "averageQuality": 81.11,
+      "averageQuality": 81.61,
       "publisherCountries": [],
       "storyCountries": [
-        [
-          "United States",
-          1
-        ],
         [
           "China",
           1
