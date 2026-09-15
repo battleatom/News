@@ -1,0 +1,190 @@
+{
+  "input": 1108,
+  "output": 1087,
+  "rejected": 19,
+  "rerouted": 12,
+  "sameEventRemoved": 2,
+  "rejectedExamples": [
+    [
+      "world",
+      "2 Indiana football veterans ineligible as court case continues. What we know",
+      "sports-in-civic-tab"
+    ],
+    [
+      "world",
+      "Negotiations resume amid monthslong lockout of union workers at BP refinery in Whiting, Indiana",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Indiana State Police investigating officer-involved shooting after high-speed chase in western Indiana",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Indiana Jones",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Reports of ICE activity surge across Indianapolis",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Man, 85, accused of shooting wife in Northwest Indiana",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Ramp to I-65 southbound near West 21st Street in Indianapolis shut down due to large police response",
+      "domestic-local-in-world"
+    ],
+    [
+      "world",
+      "Indiana Women's Prison announces warden of 5 years has died",
+      "domestic-local-in-world"
+    ],
+    [
+      "gaming",
+      "This Fantasy Party Game Combines Drinking Rules With D&D-Themed Gameplay",
+      "non-video-game-content"
+    ],
+    [
+      "legislation",
+      "Trump agreed to new ethics rules to get a crypto bill across the line. But that might not be enough",
+      "non-official-legislation-source"
+    ],
+    [
+      "legislation",
+      "Hill pushes legislation changing consumer protection agency",
+      "non-official-legislation-source"
+    ],
+    [
+      "legislation",
+      "Burlington music bar Radio Bean faces closure from steep insurance bill",
+      "non-official-legislation-source"
+    ],
+    [
+      "local",
+      "Los Alamos tops Farmington in shootout in girls soccer",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "LOCAL ROUNDUP: Flagstaff football falls to 0-3 with loss at Tempe",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "757Teamz field hockey Top 15: Key win lifts Norfolk Academy as top teams brace for rugged games",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "University City Lions Football (St. Louis, MO) News",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Archibald: After tragedy, family of Alabama soccer star ripped apart by ICE",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "Iowa football rises in latest AP Top 25 rankings",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "The Biggest Reason Why Iowa State Football Lost to Iowa in Cy-Hawk Game",
+      "sports-in-civic-tab"
+    ]
+  ],
+  "reroutedExamples": [
+    [
+      "world",
+      "technology",
+      "COMMENTARY: Trading Day: AI-pocalypse now",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "How China is preparing for the risk of AI escaping human control",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Germany says halting AI development not 'viable' as Europe weighs safety of new tech",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "China dismisses AI slowdown calls and blasts \u2018fearmongering\u2019 from U.S. tech leaders",
+      "strong-tech-owner"
+    ],
+    [
+      "us",
+      "technology",
+      "US Senator Sanders and podcaster Bannon, longtime foes, to urge AI restrictions",
+      "strong-tech-owner"
+    ],
+    [
+      "nm",
+      "technology",
+      "New Mexico lawyer fined for using AI-generated brief containing fabricated testimony",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
+      "Ocasio-Cortez: \u2018Put a data center up in Mar-a-Lago\u2019",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
+      "Shelf Life: University of Montana prof explores generative AI at Missoula Public Library",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
+      "PNW power crunch starts with AI. The bigger challenge may come after",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
+      "\u2018Recipe for disaster\u2019: Philadelphia activists urge City Council to pass a data center moratorium",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
+      "Not just Flock: AI-powered surveillance is becoming more common in Maine",
+      "strong-tech-owner"
+    ],
+    [
+      "region",
+      "technology",
+      "Nevada County DA faces scrutiny after prosecutors allegedly used generative AI that fabricated facts",
+      "strong-tech-owner"
+    ]
+  ],
+  "duplicateExamples": [
+    [
+      "underreported",
+      "Texas",
+      "Texas Judge Rules Against Alaskan Surrogate Seeking Custody"
+    ],
+    [
+      "entertainment",
+      "Fashion",
+      "See the best photos from New York Fashion Week 2026"
+    ]
+  ]
+}

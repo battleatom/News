@@ -1,0 +1,43 @@
+{
+  "poolCounts": {
+    "D": 3,
+    "NR": 0,
+    "NW": 2
+  },
+  "removedCount": 4,
+  "removedByReason": {
+    "D": 3,
+    "NR": 0,
+    "NW": 1
+  },
+  "removed": [
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "\u2018Gambling with our lives\u2019: Anthropic researcher quits, warns against self-improving AI - TechCrunch",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxPSno0NFM4UmFYa1FUdWpYUWRwdlZuWXFGUEU5dHBNYWFnZkZvZ2FUclVNQXU5ZDFDVzZXQVFCQnJSZjRUZW5ZcHRGV2dIZUlldkZ2WE5iRFNMRWRFOThvMjNTS2VhQUxpTGJEd2MwLTU0bVN6T3ZNOGFtbVltVEZzajcyZXpfenRrMTQwSWNqZDdpd2FXbVBveWFJT1NfMjBSTzlZdi1YNkswZzdxY0VTVlY3eHJ1U0c2?oc=5",
+      "source": "TechCrunch"
+    },
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "Ex-Anthropic researcher Jacob Coxon warns AI could grow \"smart enough to kill us\" - CBS News",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBYOVBYNk5waEQwNWtHUjg1a3lGUDFEbk1ya3N6Slk5MkZnNEhaSjlWbElISVdNRlhzS2hPUFhfV3hxUEVOeS1obk1BZ29Gb1BzTDJZd01IbUVCNmRUcHhGdTc4eXZxZlNWb1p1WHJKVVhobEpyeWtKWkR3dDRQZw?oc=5",
+      "source": "CBS News"
+    },
+    {
+      "reason": "D",
+      "category": "technology",
+      "title": "'AI could kill us all': Anthropic researcher Jacob Coxon quits with warning about powerful AI models - thenationalnews.com",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPUl9ZLWsxUVVYNEp5eVA5bXk2cFhUVjFlcF9HOGVBTWRNZWU1V2E1WndoeFE4S0gtaU5UZ0ppdUttVnlzZE5vR2Y4cmZBVGIwSXMteGQtZDV6VGJTWnBsbkEwVWVNUzdnQmoxa1pONHk4eXBmbnE0UE9fVjkzTGxzUGp3Mm1fQ3d3bGVsRF9pYmFnNDBKQ3pxWQ?oc=5",
+      "source": "thenationalnews.com"
+    },
+    {
+      "reason": "NW",
+      "category": "technology",
+      "title": "using AI companions - WIRED - wired.com",
+      "url": "https://news.google.com/rss/articles/CBMi0wRBVV95cUxNYl9NMzYtclRjWEFJVHM5c3VXcV84VTFBQlRKNE5TZlFNcHpRTjVzOVc3UEtQRXZtYkFRbDVvZkpmYkgxYVdDdWNMV21Ra3hqUUhqU3UxZG4xRXFqZU05RFpOd0dwdkJRb0V3Wms1QlV6RkM5Mjh4Tk9aOVQyT1lqT1BaTzc1NWdmcFJoQ3hmLTV2ODcyWHJGeS13MDAzRXJjVzc3RDAxOGRpSzEtVUZkdUh1aWxMTXQ0TTJOQ0pYY1dlVzZvaDRyODg5MUp4Z0FlRVF4bUdZTUdZRW1OTFJBTDlzbnBQbEhGOUNoLWhGWktLY2NxWW5sRkd5ZFR6YWZ2QmdzLW1SUTdfem1nSWZYWHE1bnN3RWZwbzRtT1Nsa1EyQk9EWEFHMEtZNUNMZzBJX0VrQ3Y3RTNpTHVwZkdTUGpSME5wUFZHQzJ2bzVrNk9VYUI4ZnkzUUZRNFV0VGpzU09ZZnFmM3BLU2hSOVhlY2wyaWxDOExkQk5HeDBFbTdXQ3dtZ040VHFCQVFCUG9mcFV4Ylg5MWhnS2JxbS1iQThYWTZRMGNzMHprY0ZleTJuSU56REhTcHRiUXpJQ2l4dmJIQ2x0N3N6djQ4WFFVRmlpYWoxRUE5QWNGNEhRQjFaWkhGekpVWGZoaU5yMktLay1WNzgtajZxNVhXX29WdmVFMFJtM2hIWW01Y1h4OExtOGhxclUwNHZHcHZib1hlZzVDOHlKX01JcEN5VXFDem01U3doYktnVm0yY0F4dGI2MW9EQXZhQjBnaGFsenRKMDk0?oc=5",
+      "source": "Wired"
+    }
+  ]
+}
