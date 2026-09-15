@@ -1,0 +1,4531 @@
+{
+  "baseline": {
+    "top": {
+      "count": 53,
+      "uniqueSources": 11,
+      "topSources": [
+        [
+          "Fox News",
+          5
+        ],
+        [
+          "CBS News",
+          5
+        ],
+        [
+          "Associated Press",
+          5
+        ],
+        [
+          "The New York Times",
+          5
+        ],
+        [
+          "NBC News",
+          5
+        ],
+        [
+          "The Washington Post",
+          5
+        ]
+      ],
+      "topSourceShare": 9.4,
+      "first10Sources": [
+        "Fox News",
+        "Fox News",
+        "CBS News",
+        "CBS News",
+        "Associated Press",
+        "The New York Times",
+        "NBC News",
+        "Associated Press",
+        "The Washington Post",
+        "Reuters"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 2,
+        "source": "Fox News",
+        "startPosition": 1
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "x": {
+      "count": 10,
+      "uniqueSources": 9,
+      "topSources": [
+        [
+          "The New York Times",
+          2
+        ],
+        [
+          "KFF Health News",
+          1
+        ],
+        [
+          "Yahoo Finance",
+          1
+        ],
+        [
+          "People",
+          1
+        ],
+        [
+          "The Hill",
+          1
+        ],
+        [
+          "The Times of India",
+          1
+        ]
+      ],
+      "topSourceShare": 20.0,
+      "first10Sources": [
+        "KFF Health News",
+        "Yahoo Finance",
+        "People",
+        "The New York Times",
+        "The Hill",
+        "The Times of India",
+        "The New York Times",
+        "Tom's Hardware",
+        "The Sunday Guardian",
+        "Defense News"
+      ],
+      "first10DistinctSources": 9,
+      "maxConsecutiveSameSource": {
+        "count": 1,
+        "source": "KFF Health News",
+        "startPosition": 1
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "underreported": {
+      "count": 75,
+      "uniqueSources": 22,
+      "topSources": [
+        [
+          "Inside Climate News",
+          14
+        ],
+        [
+          "KFF Health News",
+          10
+        ],
+        [
+          "ProPublica",
+          9
+        ],
+        [
+          "The Marshall Project",
+          8
+        ],
+        [
+          "Grist",
+          6
+        ],
+        [
+          "Source New Mexico",
+          3
+        ]
+      ],
+      "topSourceShare": 18.7,
+      "first10Sources": [
+        "ProPublica",
+        "The Journal",
+        "KFF Health News",
+        "Reuters",
+        "PBS",
+        "CBS News",
+        "PBS",
+        "Politico",
+        "KFF Health News",
+        "CBS News"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "ProPublica",
+        "startPosition": 64
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "entertainment": {
+      "count": 80,
+      "uniqueSources": 28,
+      "topSources": [
+        [
+          "Variety",
+          6
+        ],
+        [
+          "The Hollywood Reporter",
+          6
+        ],
+        [
+          "People",
+          6
+        ],
+        [
+          "The Guardian",
+          6
+        ],
+        [
+          "E! News",
+          6
+        ],
+        [
+          "Yahoo News",
+          6
+        ]
+      ],
+      "topSourceShare": 7.5,
+      "first10Sources": [
+        "Variety",
+        "The Hollywood Reporter",
+        "Entertainment Weekly",
+        "The Hollywood Reporter",
+        "The Hollywood Reporter",
+        "Entertainment Weekly",
+        "People",
+        "The Hollywood Reporter",
+        "The Hollywood Reporter",
+        "USA Today"
+      ],
+      "first10DistinctSources": 5,
+      "maxConsecutiveSameSource": {
+        "count": 2,
+        "source": "The Hollywood Reporter",
+        "startPosition": 4
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 10,
+          "title": "Hayden Panettiere's boyfriend Brian Hickerson detained, his brother arrested - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Zendaya and Tom Holland's wedding gets bombshell update from Law Roach - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "Sydney Sweeney's new sports ad is not her first controversy - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Andrew Scott to Reprise Starring Role in \u2018Sea Wall\u2019 Play for Limited Run and Filmed Adaptation (EXCLUSIVE) - Variety",
+          "source": "Variety",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 20,
+          "title": "Gillian Anderson comes out as pansexual, reveals relationships with women - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "Pierce Brosnan Says Tom Hardy \u2018MobLand\u2019 Feud Was \u201cStorm In A Teacup\u201d - deadline.com",
+          "source": "Deadline",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Influencer Madalina Apostol Dies a Month After Celebrating 40th Birthday - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "7 New York Fashion Week Runway Trends That Are Surprisingly Wearable for Fall - E! News",
+          "source": "E! News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 32,
+          "title": "Jeff Arcuri and Katie Thurston Are Discussing Surrogacy amid Her Cancer Diagnosis (Exclusive) - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "Why \u2018How Long Gone\u2019 Created Their Own Awards Show \u2014 and \u2018Squashed the Beef\u2019 With Bowen Yang - Variety",
+          "source": "Variety",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 36,
+          "title": "Barbara Eden gave this teen idol his first kiss that wasn\u2019t from his wife - Yahoo",
+          "source": "Yahoo News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "Hayden Panettiere Died From Fentanyl-Laced Oxy, Sources - TMZ",
+          "source": "TMZ",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 39,
+          "title": "The Family Stone Sequel In Works With Almost All Cast Returning - deadline.com",
+          "source": "Deadline",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 43,
+          "title": "Sydney Sweeney responds to Novig ad controversy without using a single word - Yahoo",
+          "source": "Yahoo News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 51,
+          "title": "\u2018The Pitt\u2019s Taylor Dearden Says She \u2018Never\u2019 Wants Dad Bryan Cranston to Guest Star on the Show - People.com",
+          "source": "People.com",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "Touring - Billboard",
+          "source": "Billboard",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 60,
+          "title": "Strictly Come Dancing 2026 contestants reveal why they're heading for the ballroom, their dream songs to dance to and what they're most nervous about - BBC",
+          "source": "BBC",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 64,
+          "title": "Why Jay-Z Thinks Beyonc\u00e9, Their 3 Kids Watching His Docuseries Could Be \u201cCringe\" - E! News",
+          "source": "E! News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 74,
+          "title": "Nashville musicians set new Broadway standards. What they demand - The Tennessean",
+          "source": "The Tennessean",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 79,
+          "title": "Closed wedding venue seeks new suitor for \u00a318m - BBC",
+          "source": "BBC",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 20
+    },
+    "world": {
+      "count": 90,
+      "uniqueSources": 32,
+      "topSources": [
+        [
+          "Reuters",
+          35
+        ],
+        [
+          "Politico",
+          9
+        ],
+        [
+          "WTHR",
+          5
+        ],
+        [
+          "NBC News",
+          4
+        ],
+        [
+          "Defense News",
+          4
+        ],
+        [
+          "Al Jazeera",
+          3
+        ]
+      ],
+      "topSourceShare": 38.9,
+      "first10Sources": [
+        "PBS",
+        "Yahoo Sports",
+        "BBC",
+        "NBC News",
+        "Al Jazeera",
+        "CBS News",
+        "Axios",
+        "WTHR",
+        "Tom's Hardware",
+        "Ars Technica"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 9,
+        "source": "Reuters",
+        "startPosition": 45
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "2 Indiana football veterans ineligible as court case continues. What we know",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "fails World semantic gate",
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Negotiations resume amid monthslong lockout of union workers at BP refinery in Whiting, Indiana",
+          "source": "CBS News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 7,
+          "title": "'Burb Bites: Shein's Central Indiana footprint expands",
+          "source": "Axios",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "Indiana State Police investigating officer-involved shooting after high-speed chase in western Indiana",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "Rocket Report: Europe joins the commercial launch club; a Ravn X sighting?",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Why Indiana flags are lowered to half-staff today",
+          "source": "IndyStar",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "9/11 and Tampa: Two weeks that reshaped Australian politics",
+          "source": "Politico",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Iranian Transactions and Sanctions Regulations",
+          "source": "Federal Register (.gov)",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "Britain\u2019s dramatic crackdown on Israeli settlements sparks fierce response as US blowback looms",
+          "source": "Fox News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 17,
+          "title": "COMMENTARY: Trading Day: AI-pocalypse now",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 18,
+          "title": "How China is preparing for the risk of AI escaping human control",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Iceland's last whaling company shrugs off threat of permanent ban",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 20,
+          "title": "US, South Korean officials to broach thorny Hormuz mission at talks this week",
+          "source": "Defense News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 22,
+          "title": "Germany says halting AI development not 'viable' as Europe weighs safety of new tech",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 26,
+          "title": "China dismisses AI slowdown calls and blasts \u2018fearmongering\u2019 from U.S. tech leaders",
+          "source": "NBC News",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "Poland finds suspected Russian drone in sea close to Baltic coast",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 28,
+          "title": "Man, 85, accused of shooting wife in Northwest Indiana",
+          "source": "CBS News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Petrol and diesel prices hit highest since 2022",
+          "source": "BBC",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "War crimes tribunal to announce verdict in trial of former Kosovo president Thaci",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "Iranian strait authority issues updated list of sanctioned vessels",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 33,
+          "title": "'He's exceptional' | Indiana native says it was a 'no brainer' to donate part of $1.2 million to charity after field goal kicks",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 35,
+          "title": "Houthis' Yemen advance leaves Gulf states with uncomfortable choice",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 36,
+          "title": "Ramp to I-65 southbound near West 21st Street in Indianapolis shut down due to large police response",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "Turkey detains dozens after sweeping raids targeting LGBTQ+ groups",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 39,
+          "title": "Indiana Women's Prison announces warden of 5 years has died",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 40,
+          "title": "TIFF 2026: Mahershala Ali stars in action thriller exploring faith, family and motherhood",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 42,
+          "title": "At least 129 missing after Indonesian passenger ship capsizes",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 43,
+          "title": "Republican senator's TV interview passes muster with FCC's Carr even though Democratic candidate's does not",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 44,
+          "title": "'Axe-wielding driver' arrested after attacking semi-trucks in northwestern Indiana",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 47,
+          "title": "Farage's Reform UK lands second record \u00a336 million donation in 48 hours",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "No signed Hormuz deal expected yet from Oman meeting on Monday, Iranian official says",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "Iranian arms and advice helped Yemen's Houthis seize key Red Sea city, sources say",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 50,
+          "title": "Morning Bid: Lenders say show me the money as bond carnage spreads",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 52,
+          "title": "Lula maintains lead over Flavio Bolsonaro ahead of Brazil election, Datafolha poll shows",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 53,
+          "title": "Gulf oil threatened anew as Houthis reach key island and pipeline is shut down",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 54,
+          "title": "ClickFix attacks are tricking Mac and Windows users into hacking themselves - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 55,
+          "title": "Conti Ransomware Hacker Sentenced to 4 Years [2026] - tech-insider.org",
+          "source": "tech-insider.org",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 56,
+          "title": "Global ransomware attacks hit record 997 in August 2026 as utility, healthcare and business attacks surge - Industrial Cyber",
+          "source": "Industrial Cyber",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 57,
+          "title": "Cisco Firewall Manager Hacked by Sandworm Espionage Implant and Qilin Ransomware - Tech Times",
+          "source": "Tech Times",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "What \u2018The Pitt\u2019 got right on a hospital ransomware attack - Chief Healthcare Executive",
+          "source": "Chief Healthcare Executive",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        }
+      ],
+      "mismatchCount": 55
+    },
+    "us": {
+      "count": 20,
+      "uniqueSources": 12,
+      "topSources": [
+        [
+          "Reuters",
+          8
+        ],
+        [
+          "NBC News",
+          2
+        ],
+        [
+          "NPR",
+          1
+        ],
+        [
+          "The New York Times",
+          1
+        ],
+        [
+          "Time Magazine",
+          1
+        ],
+        [
+          "americanpress.com",
+          1
+        ]
+      ],
+      "topSourceShare": 40.0,
+      "first10Sources": [
+        "Reuters",
+        "NBC News",
+        "Reuters",
+        "Reuters",
+        "NPR",
+        "Reuters",
+        "The New York Times",
+        "Time Magazine",
+        "NBC News",
+        "Reuters"
+      ],
+      "first10DistinctSources": 5,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "Reuters",
+        "startPosition": 10
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 1,
+          "title": "US NTSB says one-third of FAA answers to safety recommendations are 'unacceptable' - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 3,
+          "title": "US rail fuel surcharges on grain hit record highs, squeezing farmers in harvest season - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "Houthi advance in Yemen puts U.S. in a new bind - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 5,
+          "title": "A cancer survivor hoped to work \u2014 then she lost her Medicaid disability coverage - NPR",
+          "source": "NPR",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Canadian boycott of US products pushes grocers to adapt, explore new supply sources - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 7,
+          "title": "Visa Issue Threatens U.S.-Brazil Cooperation on Crime - The New York Times",
+          "source": "The New York Times",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "U.S. Diesel Prices Just Surpassed a Record $6 Per Gallon. Here Are Three Ways That Affects You - Time Magazine",
+          "source": "Time Magazine",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 9,
+          "title": "Map: Track the spread of measles in the U.S. - NBC News",
+          "source": "NBC News",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "US consumer prices accelerate in August, push Fed closer to rate hike - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 11,
+          "title": "US average diesel price passes $6 a gallon for the first time, GasBuddy says - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Peru to join US anti-drug coalition 'Shield of the Americas' after Rubio visit - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "Nubank launches US high-yield savings account, credit cards, remittances - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "How every US state approaches 9/11 history in schools - ABC News - Breaking News, Latest News and Videos",
+          "source": "ABC News - Breaking News, Latest News and Videos",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Why the election could make Washington's looming next fiscal crisis harder - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        }
+      ],
+      "mismatchCount": 14
+    },
+    "presidential": {
+      "count": 54,
+      "uniqueSources": 8,
+      "topSources": [
+        [
+          "Reuters",
+          27
+        ],
+        [
+          "Associated Press",
+          16
+        ],
+        [
+          "Politico",
+          5
+        ],
+        [
+          "BBC",
+          2
+        ],
+        [
+          "CBC",
+          1
+        ],
+        [
+          "NPR",
+          1
+        ]
+      ],
+      "topSourceShare": 50.0,
+      "first10Sources": [
+        "Associated Press",
+        "CBC",
+        "Associated Press",
+        "Reuters",
+        "BBC",
+        "BBC",
+        "Reuters",
+        "NPR",
+        "Reuters",
+        "Reuters"
+      ],
+      "first10DistinctSources": 5,
+      "maxConsecutiveSameSource": {
+        "count": 14,
+        "source": "Reuters",
+        "startPosition": 9
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "Trump, former U.S. presidents mark 25 years since 9/11 attacks at separate ceremonies",
+          "source": "CBC",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 3,
+          "title": "Trump calls on Ukraine to halt strikes on Russian diesel fuel, citing a global shortage - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "Trump tells Ukraine's Zelenskiy to stop hitting Russian diesel",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Trump's comments on a united Ireland may have targeted audience across the Atlantic",
+          "source": "BBC",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "Trump officials propose sweeping changes to the census that would reshape voting maps - NPR",
+          "source": "NPR",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 9,
+          "title": "Trump dismisses AI safety alarm, says US already has tools to police industry - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "Trump approval up from record low, but outlook sours for Republicans, Reuters/Ipsos poll finds - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 11,
+          "title": "Trump downplays report China entities helped Iran before attack that killed US troops - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Trump reiterates support for united Ireland, says won't talk about Scotland 'yet' - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "Trump says US could stay in Iran and keep oil, like Venezuela deal - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Trump and Musk super PACs unleash millions to boost Republicans in battleground races - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "Trump says he would 'love' to see a united Ireland - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "Trump criticizes Smithsonian's focus on oppression - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 17,
+          "title": "Trump says he would be OK with China building cars in US - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Five big takeaways from Trump's midterm convention - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 24,
+          "title": "Trump calls AI risks a \u2018hoax,\u2019 says there is a \u2018SICK conspiracy\u2019 against AI and data centers - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 25,
+          "title": "Trump nominates Republican lawmaker as ambassador to Saudi Arabia - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 26,
+          "title": "Trump says he will consider request to release more 9/11 records - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "Trump loves the game of golf and takes pride in his relationships with some of the pros - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "sports-looking headline in civic/geography tab",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Trump's backing for a united Ireland has reignited a divisive political issue. Here's what to know - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "Trump has support in Doonbeg, though tiny snails have snagged his Irish golf course plans - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "sports-looking headline in civic/geography tab",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "Trump says 'very negative forces' raising exaggerated concerns over AI - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 33,
+          "title": "Trump touches a nerve while in Ireland by saying reunification would be \u2018fantastic\u2019 - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "Trump wants the Smithsonian Institution to install George Washington statues and exhibit - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 35,
+          "title": "Trump ally in Wisconsin sticks close to the president as Democrats push to flip swing district - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "Trump fans in Brazil, Rubio honored, and other top photos from Latin America and the Caribbean - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 39,
+          "title": "Trump list of US-designated \u2018foreign terrorist organizations\u2019 in Latin America grows to 21 - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 42,
+          "title": "Trump's trip to GOP soiree in Texas is briefly delayed after Air Force One's emergency slide deploys - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 45,
+          "title": "Trump says Iran war will end right after U.S. midterm elections - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 47,
+          "title": "Trump gave $45,000 cash gifts to close aide Natalie Harp and others - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "CIA releases dozens of presidential daily briefs on bin Laden and al-Qaida before Sept. 11 - apnews.com",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 50,
+          "title": "Trump: Vote GOP or \u2018go to hell\u2019 - Politico",
+          "source": "Politico",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 51,
+          "title": "Trump\u2019s TPS crusade hits home - Politico",
+          "source": "Politico",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 52,
+          "title": "Trump\u2019s health picks: Who\u2019s moving, who\u2019s stalled - Politico",
+          "source": "Politico",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 34
+    },
+    "federal": {
+      "count": 25,
+      "uniqueSources": 16,
+      "topSources": [
+        [
+          "Reuters",
+          5
+        ],
+        [
+          "Politico",
+          5
+        ],
+        [
+          "Associated Press",
+          2
+        ],
+        [
+          "The Detroit News",
+          1
+        ],
+        [
+          "The Hill",
+          1
+        ],
+        [
+          "NBC News",
+          1
+        ]
+      ],
+      "topSourceShare": 20.0,
+      "first10Sources": [
+        "The Detroit News",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Associated Press",
+        "Associated Press",
+        "The Hill",
+        "NBC News"
+      ],
+      "first10DistinctSources": 5,
+      "maxConsecutiveSameSource": {
+        "count": 5,
+        "source": "Reuters",
+        "startPosition": 2
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 20,
+          "title": "Federal Judges Rebuke ICE Detention as Similar to WWII Internment Camps - Newsweek",
+          "source": "Newsweek",
+          "reasons": [
+            "weak/no federal anchor"
+          ]
+        },
+        {
+          "position": 21,
+          "title": "Appeals court rejects ICE detention policy, setting stage for SCOTUS - Politico",
+          "source": "Politico",
+          "reasons": [
+            "weak/no federal anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 2
+    },
+    "legislation": {
+      "count": 24,
+      "uniqueSources": 5,
+      "topSources": [
+        [
+          "New Mexico Legislature",
+          13
+        ],
+        [
+          "Congress.gov",
+          8
+        ],
+        [
+          "The Arkansas Democrat-Gazette",
+          1
+        ],
+        [
+          "Politico",
+          1
+        ],
+        [
+          "KXAN Austin",
+          1
+        ]
+      ],
+      "topSourceShare": 54.2,
+      "first10Sources": [
+        "The Arkansas Democrat-Gazette",
+        "Politico",
+        "KXAN Austin",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov"
+      ],
+      "first10DistinctSources": 4,
+      "maxConsecutiveSameSource": {
+        "count": 13,
+        "source": "New Mexico Legislature",
+        "startPosition": 12
+      },
+      "exactDuplicateGroups": [
+        [
+          "HB 38 \u2014 Wheelchair Insurance Coverage",
+          "HB 270 \u2014 Contributions To Apprentice & Training Pgms.",
+          "SB 273 \u2014 Correction Faciliity Loss Of Revenue",
+          "SB 3 \u2014 Commitment Procedure Changes & Definitions",
+          "HB 253 \u2014 Public Education Changes",
+          "HB 30 \u2014 Teacher Residency Act Changes",
+          "SB 151 \u2014 Corporate Income Tax Changes",
+          "HB 124 \u2014 New Americans Division In Wsd",
+          "HB 34 \u2014 School Nurse Licensure Provisions",
+          "HB 108 \u2014 Watershed District Taxes And Directors",
+          "HB 109 \u2014 Water Project Fund Changes",
+          "SB 264 \u2014 Election Rights & Troops At Elections",
+          "HB 43 \u2014 Disability & Survivor Pensions Changes"
+        ]
+      ],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "nm": {
+      "count": 52,
+      "uniqueSources": 14,
+      "topSources": [
+        [
+          "KRQE",
+          27
+        ],
+        [
+          "Source New Mexico",
+          7
+        ],
+        [
+          "KOB 4",
+          4
+        ],
+        [
+          "Tri City Record",
+          3
+        ],
+        [
+          "KOAT",
+          2
+        ],
+        [
+          "Sports Illustrated",
+          1
+        ]
+      ],
+      "topSourceShare": 51.9,
+      "first10Sources": [
+        "Source New Mexico",
+        "KRQE",
+        "KOAT",
+        "Sports Illustrated",
+        "Yahoo Sports",
+        "Albuquerque Journal",
+        "Searchlight New Mexico",
+        "KXAN Austin",
+        "Axios",
+        "ABC News - Breaking News, Latest News and Videos"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 6,
+        "source": "KRQE",
+        "startPosition": 12
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [
+        {
+          "a": "New Mexico remembers 9/11 - Source New Mexico",
+          "b": "Shelter permit issue, Pacific Fusion, Heat, 9/11 commemoration, New Mexico State Fair patrols - KRQE",
+          "sourceA": "Source New Mexico",
+          "sourceB": "KRQE",
+          "ratio": 0.25,
+          "overlap": 0.8
+        }
+      ],
+      "mismatchCandidates": [
+        {
+          "position": 5,
+          "title": "OU football vs New Mexico TV channel, odds, scouting report for Sooners-Lobos - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        }
+      ],
+      "mismatchCount": 1
+    },
+    "local": {
+      "count": 369,
+      "uniqueSources": 169,
+      "topSources": [
+        [
+          "CBS News",
+          23
+        ],
+        [
+          "ABC News - Breaking News, Latest News and Videos",
+          6
+        ],
+        [
+          "MLive.com",
+          6
+        ],
+        [
+          "Yahoo Sports",
+          5
+        ],
+        [
+          "OregonLive.com",
+          5
+        ],
+        [
+          "Knoxville News Sentinel",
+          5
+        ]
+      ],
+      "topSourceShare": 6.2,
+      "first10Sources": [
+        "Tri City Record",
+        "Tri City Record",
+        "Las Cruces Sun-News",
+        "Arizona Daily Star",
+        "KOLD",
+        "Arizona Daily Star",
+        "Arizona Daily Star",
+        "Arizona Daily Sun",
+        "Arizona Daily Sun",
+        "Arizona Daily Sun"
+      ],
+      "first10DistinctSources": 5,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "the-journal.com",
+        "startPosition": 21
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [
+        {
+          "a": "HCH Pet of the Week: Jolene - Arizona Daily Sun",
+          "b": "HCH Pet of the Week: Magnet - Arizona Daily Sun",
+          "sourceA": "Arizona Daily Sun",
+          "sourceB": "Arizona Daily Sun",
+          "ratio": 0.85,
+          "overlap": 0.83
+        },
+        {
+          "a": "Missoula and Western Montana neighbors: Obituaries for September 11 - The Missoulian",
+          "b": "Bismarck neighbors: Obituaries for September 11 - The Bismarck Tribune",
+          "sourceA": "The Missoulian",
+          "sourceB": "The Bismarck Tribune",
+          "ratio": 0.75,
+          "overlap": 0.83
+        },
+        {
+          "a": "Drink up - Fairbanks Daily News-Miner",
+          "b": "Nuggets - Fairbanks Daily News-Miner",
+          "sourceA": "Fairbanks Daily News-Miner",
+          "sourceB": "Fairbanks Daily News-Miner",
+          "ratio": 0.84,
+          "overlap": 0.8
+        },
+        {
+          "a": "Fairbanks weighs new rules for e-bikes and e-motos - Fairbanks Daily News-Miner",
+          "b": "Nuggets - Fairbanks Daily News-Miner",
+          "sourceA": "Fairbanks Daily News-Miner",
+          "sourceB": "Fairbanks Daily News-Miner",
+          "ratio": 0.56,
+          "overlap": 0.8
+        },
+        {
+          "a": "Tanana-Yukon Historical Society kicks off new season - Fairbanks Daily News-Miner",
+          "b": "Nuggets - Fairbanks Daily News-Miner",
+          "sourceA": "Fairbanks Daily News-Miner",
+          "sourceB": "Fairbanks Daily News-Miner",
+          "ratio": 0.57,
+          "overlap": 0.8
+        },
+        {
+          "a": "Tulsa neighbors: Obituaries for September 14 - Tulsa World",
+          "b": "Bismarck neighbors: Obituaries for September 11 - The Bismarck Tribune",
+          "sourceA": "Tulsa World",
+          "sourceB": "The Bismarck Tribune",
+          "ratio": 0.88,
+          "overlap": 0.67
+        },
+        {
+          "a": "Daphane Bonds Obituary (2026) - Memphis, TN - The Daily Memphian - PennLive.com",
+          "b": "Tyrone Jordan Obituary (1965 - 2026) - Memphis, TN - The Daily Memphian - MLive.com",
+          "sourceA": "PennLive.com",
+          "sourceB": "MLive.com",
+          "ratio": 0.82,
+          "overlap": 0.78
+        },
+        {
+          "a": "Marvin Campbell Obituary (2026) - Harrisburg, PA - PennLive.com",
+          "b": "Marvin Wirt Obituary (2026) - Harrisburg, PA - PennLive.com",
+          "sourceA": "PennLive.com",
+          "sourceB": "PennLive.com",
+          "ratio": 0.85,
+          "overlap": 0.83
+        }
+      ],
+      "mismatchCandidates": [
+        {
+          "position": 4,
+          "title": "Roadless areas in Coronado National Forest could see road building again - Arizona Daily Star",
+          "source": "Arizona Daily Star",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "LOCAL ROUNDUP: Flagstaff football falls to 0-3 with loss at Tempe - Arizona Daily Sun",
+          "source": "Arizona Daily Sun",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 20,
+          "title": "Juan Galis Sanchez Obituary (1989 - 2026) - Denver, CO - The Denver Gazette - Durango Herald",
+          "source": "Durango Herald",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "\u2018Food is the connector\u2019: Multiple groups collaborate on community garden on Cedar City Paiute reservation - St. George News",
+          "source": "St. George News",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "What's Going There: In-N-Out Burger, Cafe Rio open as Desert Color and SunRiver area explodes with growth - St. George News",
+          "source": "St. George News",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 79,
+          "title": "Tupu Alualu out as Saint Louis football coach - Honolulu Star-Advertiser",
+          "source": "Honolulu Star-Advertiser",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 100,
+          "title": "PNW power crunch starts with AI. The bigger challenge may come after - Yakima Herald-Republic",
+          "source": "Yakima Herald-Republic",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 105,
+          "title": "Fairbanks weighs new rules for e-bikes and e-motos - Fairbanks Daily News-Miner",
+          "source": "Fairbanks Daily News-Miner",
+          "reasons": [
+            "production classifier prefers legislation"
+          ]
+        },
+        {
+          "position": 121,
+          "title": "Man sentenced to 2 years in connection with Central Texas skimming operation, authorities say - KSAT",
+          "source": "KSAT",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        },
+        {
+          "position": 140,
+          "title": "Louisville adds fifth-year forward LJ Wells to the basketball roster for this season - KRQE",
+          "source": "KRQE",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 162,
+          "title": "757Teamz field hockey Top 15: Key win lifts Norfolk Academy as top teams brace for rugged games - The Virginian-Pilot",
+          "source": "The Virginian-Pilot",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 180,
+          "title": "University City Lions Football (St. Louis, MO) News - Sports Illustrated",
+          "source": "Sports Illustrated",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 195,
+          "title": "How to watch Iowa State football vs Iowa today, time, TV channel - The Des Moines Register",
+          "source": "The Des Moines Register",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 200,
+          "title": "US Senator's View: Trade with Canada, so good for Minnesota, threatened by tariffs - Duluth News Tribune",
+          "source": "Duluth News Tribune",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        },
+        {
+          "position": 215,
+          "title": "Milwaukee Brewers get the vote MLB insiders would not give the Dodgers - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 225,
+          "title": "Judge exempts Chicago Archdiocese, nuns, other Catholic workers from Illinois medical aid in dying law - CBS News",
+          "source": "CBS News",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        },
+        {
+          "position": 244,
+          "title": "Polymarket referral code \u201cCLEVE\u201d updates $50 bonus in OH for Chiefs-Broncos on Monday Night Football - Cleveland.com",
+          "source": "Cleveland.com",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 267,
+          "title": "Archibald: After tragedy, family of Alabama soccer star ripped apart by ICE - AL.com",
+          "source": "AL.com",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 360,
+          "title": "Not just Flock: AI-powered surveillance is becoming more common in Maine - The Portland Press Herald",
+          "source": "The Portland Press Herald",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        }
+      ],
+      "mismatchCount": 19
+    },
+    "region": {
+      "count": 73,
+      "uniqueSources": 40,
+      "topSources": [
+        [
+          "CBS News",
+          7
+        ],
+        [
+          "East Idaho News",
+          7
+        ],
+        [
+          "Yahoo Sports",
+          5
+        ],
+        [
+          "NBC News",
+          5
+        ],
+        [
+          "Colorado Springs Gazette",
+          3
+        ],
+        [
+          "ABC News - Breaking News, Latest News and Videos",
+          3
+        ]
+      ],
+      "topSourceShare": 9.6,
+      "first10Sources": [
+        "Arizona Daily Sun",
+        "CBS News",
+        "Denver7",
+        "CBS News",
+        "KOAA News 5",
+        "KRDO",
+        "Colorado Springs Gazette",
+        "Colorado Springs Gazette",
+        "KRDO",
+        "KSL.com"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 6,
+        "source": "East Idaho News",
+        "startPosition": 30
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 19,
+          "title": "A bitter battle is brewing in one of Washington state\u2019s last swing districts - KUOW",
+          "source": "KUOW",
+          "reasons": [
+            "production classifier prefers legislation"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "What TV channel is West Virginia football on today? Preview, streaming options - OregonLive.com",
+          "source": "OregonLive.com",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 72,
+          "title": "Former Georgia Democratic state lawmaker avoids additional jail time for COVID-19 unemployment fraud - CBS News",
+          "source": "CBS News",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        }
+      ],
+      "mismatchCount": 3
+    },
+    "nfl": {
+      "count": 23,
+      "uniqueSources": 2,
+      "topSources": [
+        [
+          "ESPN",
+          22
+        ],
+        [
+          "CBS News",
+          1
+        ]
+      ],
+      "topSourceShare": 95.7,
+      "first10Sources": [
+        "CBS News",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN"
+      ],
+      "first10DistinctSources": 2,
+      "maxConsecutiveSameSource": {
+        "count": 22,
+        "source": "ESPN",
+        "startPosition": 2
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "technology": {
+      "count": 68,
+      "uniqueSources": 34,
+      "topSources": [
+        [
+          "TechCrunch",
+          8
+        ],
+        [
+          "Reuters",
+          5
+        ],
+        [
+          "The Verge",
+          5
+        ],
+        [
+          "Yahoo Finance",
+          4
+        ],
+        [
+          "CNBC",
+          4
+        ],
+        [
+          "Ars Technica",
+          3
+        ]
+      ],
+      "topSourceShare": 11.8,
+      "first10Sources": [
+        "Reuters",
+        "Reuters",
+        "Yahoo Finance",
+        "Ars Technica",
+        "CNET",
+        "ABC7 Bay Area",
+        "Mashable",
+        "NPR",
+        "TechTimes Vietnam",
+        "tech-insider.org"
+      ],
+      "first10DistinctSources": 9,
+      "maxConsecutiveSameSource": {
+        "count": 3,
+        "source": "Politico",
+        "startPosition": 65
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "Global AI stocks fall as industry chiefs call for slowing development",
+          "source": "Reuters",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "Apple releases iOS 27, macOS Golden Gate 27 with Siri AI and Liquid Glass refinements - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Microsoft\u2019s new AI \u2018code of conduct\u2019 tells models not to hack systems or trick humans - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Trump goes scorched earth on AI warnings, raging about data center opposition and regulation - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 18,
+          "title": "Is Big Tech\u2019s AI slowdown a safety pact or a cartel? - The Verge",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Apple Home\u2019s new security camera features cost as much as $60 a month - The Verge",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 22,
+          "title": "What execs and politicians are saying about slowing down AI development - The Verge",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 23,
+          "title": "AI bots \"Timmy,\" \"Ren,\" and \"Jackie\" are flooding social media with slop - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 26,
+          "title": "AI leaders want to hit the brakes after years of reckless speed - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "The Top New Features in Apple\u2019s iOS 27 and iPadOS 27 - wired.com",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 28,
+          "title": "Fashion app Daydream uses Apple Intelligence to help you shop the outfits in your camera roll - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Hear how AI can engineer nature\u2019s comeback at Disrupt 2026 - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "Microsoft sets limits for future AI models as industry throttles frontier development - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "AI Leaders Are Calling for a Slowdown. Trump\u2019s Team Says It\u2019s on Them - wired.com",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 32,
+          "title": "Watch Data Centers Could Save the Planet\u2014If They Don\u2019t Destroy It First - wired.com",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 36,
+          "title": "Trump and Mike Johnson think the AI industry is overreacting - The Verge",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "What\u2019s behind the AI industry\u2019s latest warnings of doom? - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 40,
+          "title": "Apple\u2019s 2026 Lineup: New Devices Open Bigger Opportunities for Channel Partners - Channel Insider",
+          "source": "Channel Insider",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 41,
+          "title": "AI CEOs say they need to slow the pace of development. But will they? - theguardian.com",
+          "source": "theguardian.com",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 43,
+          "title": "Dramatic insider warnings over AI fall flat with some in Silicon Valley - BBC",
+          "source": "BBC",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 46,
+          "title": "Beijing Refuses to Slow AI Research, Criticizes \u2018Fearmongering\u2019 from U.S. - breitbart.com",
+          "source": "breitbart.com",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "Genesis Mission Project Uses AI to Speed Thin Film Development - HPCwire",
+          "source": "HPCwire",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 56,
+          "title": "Market Watch: AI Chip Stocks Tumble, Crude Spikes Past $108, and Bitcoin Braces for Volatility - Blockonomi",
+          "source": "Blockonomi",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 64,
+          "title": "US senators weigh requiring AI giants to commit to preventing catastrophe - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 65,
+          "title": "Obama calls for Dems to focus on AI - Politico",
+          "source": "Politico",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        }
+      ],
+      "mismatchCount": 25
+    },
+    "gaming": {
+      "count": 63,
+      "uniqueSources": 35,
+      "topSources": [
+        [
+          "IGN",
+          12
+        ],
+        [
+          "PC Gamer",
+          9
+        ],
+        [
+          "Tom's Hardware",
+          4
+        ],
+        [
+          "Notebookcheck",
+          3
+        ],
+        [
+          "Nintendo Life",
+          3
+        ],
+        [
+          "Polygon",
+          2
+        ]
+      ],
+      "topSourceShare": 19.0,
+      "first10Sources": [
+        "Reuters",
+        "Mashable",
+        "CNET",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "The Sunday Guardian",
+        "IGN",
+        "Sirus Gaming"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "Tom's Hardware",
+        "startPosition": 4
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 25,
+          "title": "This Fantasy Party Game Combines Drinking Rules With D&D-Themed Gameplay - IGN",
+          "source": "IGN",
+          "reasons": [
+            "fails Gaming semantic gate"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "Arc Raiders Expeditions may not come back: 'Maybe we'll scrap the whole system' - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        },
+        {
+          "position": 61,
+          "title": "Bungie delays next Marathon update and ends 'strict seasonal schedule' as it goes all-in on Destiny-like features - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        },
+        {
+          "position": 62,
+          "title": "Valve canned finished VR headsets 'three, four years ago' - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        }
+      ],
+      "mismatchCount": 4
+    },
+    "military": {
+      "count": 50,
+      "uniqueSources": 10,
+      "topSources": [
+        [
+          "Defense News",
+          37
+        ],
+        [
+          "ABC News - Breaking News, Latest News and Videos",
+          3
+        ],
+        [
+          "Reuters",
+          2
+        ],
+        [
+          "Breaking Defense",
+          2
+        ],
+        [
+          "GameSpot",
+          1
+        ],
+        [
+          "Politico",
+          1
+        ]
+      ],
+      "topSourceShare": 74.0,
+      "first10Sources": [
+        "Defense News",
+        "Reuters",
+        "Reuters",
+        "GameSpot",
+        "Defense News",
+        "ABC News - Breaking News, Latest News and Videos",
+        "Breaking Defense",
+        "Politico",
+        "Military Times",
+        "Al Jazeera"
+      ],
+      "first10DistinctSources": 8,
+      "maxConsecutiveSameSource": {
+        "count": 17,
+        "source": "Defense News",
+        "startPosition": 34
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    }
+  },
+  "v52": {
+    "top": {
+      "count": 46,
+      "uniqueSources": 18,
+      "topSources": [
+        [
+          "Fox News",
+          3
+        ],
+        [
+          "CBS News",
+          3
+        ],
+        [
+          "Associated Press",
+          3
+        ],
+        [
+          "The New York Times",
+          3
+        ],
+        [
+          "CNBC",
+          3
+        ],
+        [
+          "NPR",
+          3
+        ]
+      ],
+      "topSourceShare": 6.5,
+      "first10Sources": [
+        "Reuters",
+        "Fox News",
+        "CBS News",
+        "Associated Press",
+        "The New York Times",
+        "CNN",
+        "CNBC",
+        "The Guardian",
+        "NPR",
+        "Bloomberg"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 1,
+        "source": "Reuters",
+        "startPosition": 1
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "x": {
+      "count": 10,
+      "uniqueSources": 10,
+      "topSources": [
+        [
+          "KFF Health News",
+          1
+        ],
+        [
+          "Yahoo Finance",
+          1
+        ],
+        [
+          "Yahoo News",
+          1
+        ],
+        [
+          "The Guardian",
+          1
+        ],
+        [
+          "Wired",
+          1
+        ],
+        [
+          "Entertainment Weekly",
+          1
+        ]
+      ],
+      "topSourceShare": 10.0,
+      "first10Sources": [
+        "KFF Health News",
+        "Yahoo Finance",
+        "Yahoo News",
+        "The Guardian",
+        "Wired",
+        "Entertainment Weekly",
+        "NBC Sports",
+        "Tom's Hardware",
+        "The Sunday Guardian",
+        "Grist"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 1,
+        "source": "KFF Health News",
+        "startPosition": 1
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "underreported": {
+      "count": 74,
+      "uniqueSources": 21,
+      "topSources": [
+        [
+          "Inside Climate News",
+          15
+        ],
+        [
+          "KFF Health News",
+          11
+        ],
+        [
+          "ProPublica",
+          9
+        ],
+        [
+          "The Marshall Project",
+          8
+        ],
+        [
+          "Grist",
+          7
+        ],
+        [
+          "Source New Mexico",
+          4
+        ]
+      ],
+      "topSourceShare": 20.3,
+      "first10Sources": [
+        "KFF Health News",
+        "pbs.org",
+        "Reuters",
+        "ProPublica",
+        "Tom's Hardware",
+        "pbs.org",
+        "Durango Herald",
+        "KFF Health News",
+        "Source New Mexico",
+        "Grist"
+      ],
+      "first10DistinctSources": 8,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "ProPublica",
+        "startPosition": 61
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "entertainment": {
+      "count": 76,
+      "uniqueSources": 28,
+      "topSources": [
+        [
+          "Variety",
+          6
+        ],
+        [
+          "USA Today",
+          6
+        ],
+        [
+          "People",
+          6
+        ],
+        [
+          "Yahoo News",
+          6
+        ],
+        [
+          "Billboard",
+          6
+        ],
+        [
+          "The Hollywood Reporter",
+          5
+        ]
+      ],
+      "topSourceShare": 7.9,
+      "first10Sources": [
+        "Variety",
+        "Variety",
+        "The Hollywood Reporter",
+        "USA Today",
+        "The Hollywood Reporter",
+        "USA Today",
+        "USA Today",
+        "Variety",
+        "USA Today",
+        "USA Today"
+      ],
+      "first10DistinctSources": 3,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "People",
+        "startPosition": 26
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 1,
+          "title": "2026 Emmys Predictions in Every Category (Final) - Variety",
+          "source": "Variety",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 2,
+          "title": "Bob Mackie, Renowned Fashion Designer to Cher, Tina Turner, Carol Burnett and More, Dies at 87 - Variety",
+          "source": "Variety",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "See the best photos from New York Fashion Week 2026 - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 7,
+          "title": "Zendaya and Tom Holland's wedding gets bombshell update from Law Roach - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 9,
+          "title": "Hayden Panettiere's boyfriend Brian Hickerson detained, his brother arrested - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Sydney Sweeney's new sports ad is not her first controversy - USA Today",
+          "source": "USA Today",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "7 New York Fashion Week Runway Trends That Are Surprisingly Wearable for Fall - E! News",
+          "source": "E! News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "Gillian Anderson Reveals She Identifies as Pansexual, Reflects on Relationships with Women: \u2018I Didn\u2019t Have the Language\u2019 - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 18,
+          "title": "Mikayla Matthews Announces Shocking Exit from \u2018Mormon Wives\u2019 - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Gary Myers Dies: NASCAR Driver, Patriarch Of Racing Family Was 76 - Deadline",
+          "source": "Deadline",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 22,
+          "title": "Pierce Brosnan Says Tom Hardy \u2018MobLand\u2019 Feud Was \u201cStorm In A Teacup\u201d - Deadline",
+          "source": "Deadline",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "Influencer Madalina Apostol Dies a Month After Celebrating 40th Birthday - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 28,
+          "title": "Jeff Arcuri and Katie Thurston Are Discussing Surrogacy amid Her Cancer Diagnosis (Exclusive) - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Erin Andrews Details Her Offseason Conversation with Patrick Mahomes as Chiefs QB Readies for Return After Injury (Exclusive) - People.com",
+          "source": "People",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 32,
+          "title": "Why \u2018How Long Gone\u2019 Created Their Own Awards Show \u2014 and \u2018Squashed the Beef\u2019 With Bowen Yang - Variety",
+          "source": "Variety",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "The Family Stone Sequel In Works With Almost All Cast Returning - Deadline",
+          "source": "Deadline",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 39,
+          "title": "Pretty Ricky\u2019s Spectacular Smith Sued By Arizona Woman Alleging Sexual Assault - Yahoo",
+          "source": "Yahoo News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "Fashion - The Guardian",
+          "source": "The Guardian",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "Taylor Frankie Paul Says She's Single and Celibate After Bachelorette Cheating Drama - E! News",
+          "source": "E! News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 56,
+          "title": "Darlene Love suggests Frank Sinatra threatened her ex-husband after he ran off with their 3-month-old son - Yahoo",
+          "source": "Yahoo News",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 57,
+          "title": "\u2018The Pitt\u2019s Taylor Dearden Says She \u2018Never\u2019 Wants Dad Bryan Cranston to Guest Star on the Show - People.com",
+          "source": "People.com",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 62,
+          "title": "Strictly Come Dancing 2026 contestants reveal why they're heading for the ballroom, their dream songs to dance to and what they're most nervous about - BBC",
+          "source": "BBC",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        },
+        {
+          "position": 76,
+          "title": "Closed wedding venue seeks new suitor for \u00a318m - BBC",
+          "source": "BBC",
+          "reasons": [
+            "weak/no entertainment anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 23
+    },
+    "world": {
+      "count": 81,
+      "uniqueSources": 32,
+      "topSources": [
+        [
+          "Reuters",
+          37
+        ],
+        [
+          "NBC News",
+          3
+        ],
+        [
+          "CBS News",
+          3
+        ],
+        [
+          "WTHR",
+          3
+        ],
+        [
+          "Defense News",
+          3
+        ],
+        [
+          "The Guardian",
+          3
+        ]
+      ],
+      "topSourceShare": 45.7,
+      "first10Sources": [
+        "pbs.org",
+        "Yahoo Sports",
+        "BBC",
+        "NBC News",
+        "Al Jazeera",
+        "CBS News",
+        "WTHR",
+        "Tom's Hardware",
+        "CNBC",
+        "Ars Technica"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 11,
+        "source": "Reuters",
+        "startPosition": 35
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "2 Indiana football veterans ineligible as court case continues. What we know",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "fails World semantic gate",
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Negotiations resume amid monthslong lockout of union workers at BP refinery in Whiting, Indiana",
+          "source": "CBS News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 7,
+          "title": "Indiana State Police investigating officer-involved shooting after high-speed chase in western Indiana",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "Rocket Report: Europe joins the commercial launch club; a Ravn X sighting?",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Iranian Transactions and Sanctions Regulations",
+          "source": "Federal Register (.gov)",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "Indiana Jones - IGN Deutschland",
+          "source": "IGN",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Reports of ICE activity surge across Indianapolis",
+          "source": "IndyStar",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "COMMENTARY: Trading Day: AI-pocalypse now",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "How China is preparing for the risk of AI escaping human control",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 17,
+          "title": "Iceland's last whaling company shrugs off threat of permanent ban",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 18,
+          "title": "US, South Korean officials to broach thorny Hormuz mission at talks this week",
+          "source": "Defense News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 20,
+          "title": "Germany says halting AI development not 'viable' as Europe weighs safety of new tech",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 24,
+          "title": "China dismisses AI slowdown calls and blasts \u2018fearmongering\u2019 from U.S. tech leaders",
+          "source": "NBC News",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 25,
+          "title": "Poland finds suspected Russian drone in sea close to Baltic coast",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 26,
+          "title": "Man, 85, accused of shooting wife in Northwest Indiana",
+          "source": "CBS News",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "War crimes tribunal to announce verdict in trial of former Kosovo president Thaci",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Houthis' Yemen advance leaves Gulf states with uncomfortable choice",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "Ramp to I-65 southbound near West 21st Street in Indianapolis shut down due to large police response",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "Turkey detains dozens after sweeping raids targeting LGBTQ+ groups",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 33,
+          "title": "The end times fascists are plotting their escape from our world. Our mission is clear | Naomi Klein and Astra Taylor",
+          "source": "The Guardian",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "Indiana Women's Prison announces warden of 5 years has died",
+          "source": "WTHR",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 35,
+          "title": "TIFF 2026: Mahershala Ali stars in action thriller exploring faith, family and motherhood",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "At least 129 missing after Indonesian passenger ship capsizes",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 38,
+          "title": "Republican senator's TV interview passes muster with FCC's Carr even though Democratic candidate's does not",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 40,
+          "title": "Farage's Reform UK lands second record \u00a336 million donation in 48 hours",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 41,
+          "title": "No signed Hormuz deal expected yet from Oman meeting on Monday, Iranian official says",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 42,
+          "title": "Iranian arms and advice helped Yemen's Houthis seize key Red Sea city, sources say",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 43,
+          "title": "Morning Bid: Lenders say show me the money as bond carnage spreads",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 45,
+          "title": "Gulf oil threatened anew as Houthis reach key island and pipeline is shut down",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "How 9/11 changed the world - The Latest",
+          "source": "The Guardian",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "Explainer: Why is the Bab el-Mandeb Strait so important?",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 50,
+          "title": "Norway's Princess Astrid dies, aged 94, two days after king's funeral",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 51,
+          "title": "After election triumph, German far-right seeks allies to form state government",
+          "source": "Reuters",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 54,
+          "title": "ClickFix attacks are tricking Mac and Windows users into hacking themselves - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 55,
+          "title": "Conti Ransomware Hacker Sentenced to 4 Years [2026] - tech-insider.org",
+          "source": "tech-insider.org",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 56,
+          "title": "Global ransomware attacks hit record 997 in August 2026 as utility, healthcare and business attacks surge - Industrial Cyber",
+          "source": "Industrial Cyber",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 57,
+          "title": "Cisco Firewall Manager Hacked by Sandworm Espionage Implant and Qilin Ransomware - Tech Times",
+          "source": "Tech Times",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "What \u2018The Pitt\u2019 got right on a hospital ransomware attack - Chief Healthcare Executive",
+          "source": "Chief Healthcare Executive",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        },
+        {
+          "position": 59,
+          "title": "Kenya cyber attacks up 6pc as ransomware nearly doubles globally - Africa Business Communities",
+          "source": "Africa Business Communities",
+          "reasons": [
+            "fails World semantic gate",
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 60,
+          "title": "News - Ransomware group claims breach at Dunedin clinical research firm ZenTech - teiss",
+          "source": "teiss",
+          "reasons": [
+            "fails World semantic gate"
+          ]
+        }
+      ],
+      "mismatchCount": 45
+    },
+    "us": {
+      "count": 22,
+      "uniqueSources": 13,
+      "topSources": [
+        [
+          "Reuters",
+          7
+        ],
+        [
+          "NBC News",
+          2
+        ],
+        [
+          "CNBC",
+          2
+        ],
+        [
+          "Associated Press",
+          2
+        ],
+        [
+          "IGN",
+          1
+        ],
+        [
+          "The New York Times",
+          1
+        ]
+      ],
+      "topSourceShare": 31.8,
+      "first10Sources": [
+        "IGN",
+        "Reuters",
+        "NBC News",
+        "Reuters",
+        "Reuters",
+        "The New York Times",
+        "Time Magazine",
+        "Reuters",
+        "thetimestribune.com",
+        "NBC News"
+      ],
+      "first10DistinctSources": 6,
+      "maxConsecutiveSameSource": {
+        "count": 3,
+        "source": "Reuters",
+        "startPosition": 11
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "US NTSB says one-third of FAA answers to safety recommendations are 'unacceptable' - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "US rail fuel surcharges on grain hit record highs, squeezing farmers in harvest season - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 5,
+          "title": "Houthi advance in Yemen puts U.S. in a new bind - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Visa Issue Threatens U.S.-Brazil Cooperation on Crime - The New York Times",
+          "source": "The New York Times",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 7,
+          "title": "U.S. Diesel Prices Just Surpassed a Record $6 Per Gallon. Here Are Three Ways That Affects You - Time Magazine",
+          "source": "Time Magazine",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "Afghan woman deported from US in first use of secretive terrorism court - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "Map: Track the spread of measles in the U.S. - NBC News",
+          "source": "NBC News",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 11,
+          "title": "US consumer prices accelerate in August, push Fed closer to rate hike - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Peru to join US anti-drug coalition 'Shield of the Americas' after Rubio visit - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "EXCLUSIVE: US grant for MAGA-aligned groups in Europe excludes French applicants over election fears - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "How every US state approaches 9/11 history in schools - ABC News - Breaking News, Latest News and Videos",
+          "source": "ABC News - Breaking News, Latest News and Videos",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "George Clooney on the current state of US politics - AP News",
+          "source": "AP News",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 17,
+          "title": "Reporters - US state of Louisiana in battle over electoral map - France 24",
+          "source": "France 24",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        },
+        {
+          "position": 22,
+          "title": "Why the election could make Washington's looming next fiscal crisis harder - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails US semantic gate"
+          ]
+        }
+      ],
+      "mismatchCount": 14
+    },
+    "presidential": {
+      "count": 60,
+      "uniqueSources": 14,
+      "topSources": [
+        [
+          "Reuters",
+          25
+        ],
+        [
+          "Associated Press",
+          23
+        ],
+        [
+          "The Guardian",
+          1
+        ],
+        [
+          "CBC",
+          1
+        ],
+        [
+          "BBC",
+          1
+        ],
+        [
+          "NPR",
+          1
+        ]
+      ],
+      "topSourceShare": 41.7,
+      "first10Sources": [
+        "Associated Press",
+        "The Guardian",
+        "CBC",
+        "Associated Press",
+        "Reuters",
+        "BBC",
+        "Reuters",
+        "NPR",
+        "NBC News",
+        "Reuters"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 16,
+        "source": "Reuters",
+        "startPosition": 10
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 3,
+          "title": "Trump's 9/11 statements come under scrutiny again",
+          "source": "CBC",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 4,
+          "title": "Trump calls on Ukraine to halt strikes on Russian diesel fuel, citing a global shortage",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 5,
+          "title": "Trump tells Ukraine's Zelenskiy to stop hitting Russian diesel",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 6,
+          "title": "Trump's comments on a united Ireland may have targeted audience across the Atlantic",
+          "source": "BBC",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "Trump officials propose sweeping changes to the census that would reshape voting maps - NPR",
+          "source": "NPR",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 9,
+          "title": "Trump calls for a Bombardier plane ban, drawing pushback from a GOP senator - NBC News",
+          "source": "NBC News",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 10,
+          "title": "Trump dismisses AI safety alarm, says US already has tools to police industry - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 11,
+          "title": "Trump approval up from record low, but outlook sours for Republicans, Reuters/Ipsos poll finds - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 12,
+          "title": "Trump calls $5,000 payouts 'easy' to fit into federal budget - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "Trump downplays report China entities helped Iran before attack that killed US troops - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Trump reiterates support for united Ireland, says won't talk about Scotland 'yet' - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 15,
+          "title": "Trump says US could stay in Iran and keep oil, like Venezuela deal - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "Trump and Musk super PACs unleash millions to boost Republicans in battleground races - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 17,
+          "title": "Trump says he would 'love' to see a united Ireland - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 18,
+          "title": "Trump criticizes Smithsonian's focus on oppression - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 19,
+          "title": "Trump says he would be OK with China building cars in US - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 21,
+          "title": "Five big takeaways from Trump's midterm convention - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 26,
+          "title": "Trump says war to end \"immediately\" after midterms as Iran damages U.S. jets in strikes",
+          "source": "CBS News",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "Trump calls AI risks a \u2018hoax,\u2019 says there is a \u2018SICK conspiracy\u2019 against AI and data centers - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "Trump nominates Republican lawmaker as ambassador to Saudi Arabia - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "Trump nominates wife of 'God Bless the USA' singer Lee Greenwood to serve as US ambassador - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 32,
+          "title": "Trump says he's lifting a 10% tariff on Irish whiskey because 'everybody's been bugging me' about it - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 33,
+          "title": "Trump says he will consider request to release more 9/11 records - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "Trump loves the game of golf and takes pride in his relationships with some of the pros - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "sports-looking headline in civic/geography tab",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 36,
+          "title": "Trump's backing for a united Ireland has reignited a divisive political issue. Here's what to know - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 37,
+          "title": "Trump has support in Doonbeg, though tiny snails have snagged his Irish golf course plans - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "sports-looking headline in civic/geography tab",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 38,
+          "title": "Trump says 'very negative forces' raising exaggerated concerns over AI - Reuters",
+          "source": "Reuters",
+          "reasons": [
+            "technology/product-looking headline outside Technology",
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 40,
+          "title": "Trump touches a nerve while in Ireland by saying reunification would be \u2018fantastic\u2019 - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 41,
+          "title": "Trump wants the Smithsonian Institution to install George Washington statues and exhibit - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 42,
+          "title": "Trump ally in Wisconsin sticks close to the president as Democrats push to flip swing district - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 43,
+          "title": "Trump's teasing is the price Paxton had to pay to use Republican midterm convention to raise money - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 45,
+          "title": "Trump fans in Brazil, Rubio honored, and other top photos from Latin America and the Caribbean - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 47,
+          "title": "Trump wraps up GOP convention with blunt warning: Vote or \u2018you go to hell\u2019 - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 49,
+          "title": "Trump list of US-designated \u2018foreign terrorist organizations\u2019 in Latin America grows to 21 - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 53,
+          "title": "Trump defends Iran war, slams Democrats and promises cash at Republicans' midterm convention - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 54,
+          "title": "Trump says oil prices that spiked because of Iran war likely won't come down until after midterms - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 55,
+          "title": "Trump's trip to GOP soiree in Texas is briefly delayed after Air Force One's emergency slide deploys - AP News",
+          "source": "Associated Press",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "Trump admin targets tax-exempt status at private colleges \u2014 threatening a key tax break for donations - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "weak/no presidential anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 38
+    },
+    "federal": {
+      "count": 34,
+      "uniqueSources": 23,
+      "topSources": [
+        [
+          "Reuters",
+          6
+        ],
+        [
+          "Associated Press",
+          4
+        ],
+        [
+          "Politico",
+          2
+        ],
+        [
+          "NPR",
+          2
+        ],
+        [
+          "The Hill",
+          2
+        ],
+        [
+          "Fresno Bee",
+          1
+        ]
+      ],
+      "topSourceShare": 17.6,
+      "first10Sources": [
+        "Fresno Bee",
+        "Wired",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Reuters",
+        "Associated Press",
+        "Associated Press",
+        "Associated Press"
+      ],
+      "first10DistinctSources": 4,
+      "maxConsecutiveSameSource": {
+        "count": 5,
+        "source": "Reuters",
+        "startPosition": 3
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [
+        {
+          "a": "No constitutional right to clean water, federal court finds - USA Today",
+          "b": "Federal court tells lead-poisoned Jackson, Mississippi residents they have no constitutional right to clean water - Yahoo Finance",
+          "sourceA": "USA Today",
+          "sourceB": "Yahoo Finance",
+          "ratio": 0.45,
+          "overlap": 0.89
+        }
+      ],
+      "mismatchCandidates": [
+        {
+          "position": 19,
+          "title": "US Treasury issues $1 coin with Trump's face on it - France 24",
+          "source": "France 24",
+          "reasons": [
+            "weak/no federal anchor"
+          ]
+        },
+        {
+          "position": 22,
+          "title": "Federal Judges Rebuke ICE Detention as Similar to WWII Internment Camps - Newsweek",
+          "source": "Newsweek",
+          "reasons": [
+            "weak/no federal anchor"
+          ]
+        },
+        {
+          "position": 23,
+          "title": "Appeals court rejects ICE detention policy, setting stage for SCOTUS - Politico",
+          "source": "Politico",
+          "reasons": [
+            "weak/no federal anchor"
+          ]
+        }
+      ],
+      "mismatchCount": 3
+    },
+    "legislation": {
+      "count": 23,
+      "uniqueSources": 4,
+      "topSources": [
+        [
+          "New Mexico Legislature",
+          13
+        ],
+        [
+          "Congress.gov",
+          8
+        ],
+        [
+          "Associated Press",
+          1
+        ],
+        [
+          "The Arkansas Democrat-Gazette",
+          1
+        ]
+      ],
+      "topSourceShare": 56.5,
+      "first10Sources": [
+        "Associated Press",
+        "The Arkansas Democrat-Gazette",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov",
+        "Congress.gov"
+      ],
+      "first10DistinctSources": 3,
+      "maxConsecutiveSameSource": {
+        "count": 13,
+        "source": "New Mexico Legislature",
+        "startPosition": 11
+      },
+      "exactDuplicateGroups": [
+        [
+          "HB 38 \u2014 Wheelchair Insurance Coverage",
+          "HB 270 \u2014 Contributions To Apprentice & Training Pgms.",
+          "SB 273 \u2014 Correction Faciliity Loss Of Revenue",
+          "SB 3 \u2014 Commitment Procedure Changes & Definitions",
+          "HB 253 \u2014 Public Education Changes",
+          "HB 30 \u2014 Teacher Residency Act Changes",
+          "SB 151 \u2014 Corporate Income Tax Changes",
+          "HB 124 \u2014 New Americans Division In Wsd",
+          "HB 34 \u2014 School Nurse Licensure Provisions",
+          "HB 108 \u2014 Watershed District Taxes And Directors",
+          "HB 109 \u2014 Water Project Fund Changes",
+          "SB 264 \u2014 Election Rights & Troops At Elections",
+          "HB 43 \u2014 Disability & Survivor Pensions Changes"
+        ]
+      ],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "nm": {
+      "count": 59,
+      "uniqueSources": 21,
+      "topSources": [
+        [
+          "krqe.com",
+          23
+        ],
+        [
+          "Santa Fe New Mexican",
+          8
+        ],
+        [
+          "KOAT",
+          4
+        ],
+        [
+          "KOB 4",
+          4
+        ],
+        [
+          "The Guardian",
+          3
+        ],
+        [
+          "Tri City Record",
+          2
+        ]
+      ],
+      "topSourceShare": 39.0,
+      "first10Sources": [
+        "Fox News",
+        "krqe.com",
+        "KOAT",
+        "Sports Illustrated",
+        "Yahoo Sports",
+        "Santa Fe New Mexican",
+        "The Guardian",
+        "El Paso Times",
+        "Searchlight New Mexico",
+        "KOB 4"
+      ],
+      "first10DistinctSources": 10,
+      "maxConsecutiveSameSource": {
+        "count": 10,
+        "source": "krqe.com",
+        "startPosition": 18
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 5,
+          "title": "OU football vs New Mexico TV channel, odds, scouting report for Sooners-Lobos - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        }
+      ],
+      "mismatchCount": 1
+    },
+    "local": {
+      "count": 359,
+      "uniqueSources": 171,
+      "topSources": [
+        [
+          "CBS News",
+          26
+        ],
+        [
+          "ABC News - Breaking News, Latest News and Videos",
+          8
+        ],
+        [
+          "MLive.com",
+          7
+        ],
+        [
+          "AL.com",
+          5
+        ],
+        [
+          "Tri City Record",
+          4
+        ],
+        [
+          "the-journal.com",
+          4
+        ]
+      ],
+      "topSourceShare": 7.2,
+      "first10Sources": [
+        "Tri City Record",
+        "Tri City Record",
+        "Tri City Record",
+        "Santa Fe New Mexican",
+        "Las Cruces Sun-News",
+        "Arizona Daily Star",
+        "KOLD",
+        "Arizona Daily Sun",
+        "Las Vegas Review-Journal",
+        "NPR Las Vegas"
+      ],
+      "first10DistinctSources": 8,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "St. George News",
+        "startPosition": 28
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [
+        {
+          "a": "Gary Lane - Fairbanks Daily News-Miner",
+          "b": "Drink up - Fairbanks Daily News-Miner",
+          "sourceA": "Fairbanks Daily News-Miner",
+          "sourceB": "Fairbanks Daily News-Miner",
+          "ratio": 0.82,
+          "overlap": 0.67
+        },
+        {
+          "a": "Bill Williams Obituary (1951 - 2026) - Memphis, TN - The Daily Memphian - PennLive.com",
+          "b": "Ramon Briones Obituary (1974 - 2026) - Memphis, TN - The Daily Memphian - MLive.com",
+          "sourceA": "PennLive.com",
+          "sourceB": "MLive.com",
+          "ratio": 0.81,
+          "overlap": 0.7
+        },
+        {
+          "a": "Marvin Campbell Obituary (2026) - Harrisburg, PA - PennLive.com",
+          "b": "Marvin Wirt Obituary (2026) - Harrisburg, PA - PennLive.com",
+          "sourceA": "PennLive.com",
+          "sourceB": "PennLive.com",
+          "ratio": 0.85,
+          "overlap": 0.83
+        }
+      ],
+      "mismatchCandidates": [
+        {
+          "position": 7,
+          "title": "Local leaders discuss affordability in Tucson, Pima County - KOLD",
+          "source": "KOLD",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 8,
+          "title": "LOCAL ROUNDUP: Flagstaff football falls to 0-3 with loss at Tempe - Arizona Daily Sun",
+          "source": "Arizona Daily Sun",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "Juan Galis Sanchez Obituary (1989 - 2026) - Denver, CO - The Denver Gazette - Durango Herald",
+          "source": "Durango Herald",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 29,
+          "title": "\u2018Food is the connector\u2019: Multiple groups collaborate on community garden on Cedar City Paiute reservation - St. George News",
+          "source": "St. George News",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "What's Going There: In-N-Out Burger, Cafe Rio open as Desert Color and SunRiver area explodes with growth - St. George News",
+          "source": "St. George News",
+          "reasons": [
+            "production classifier prefers region"
+          ]
+        },
+        {
+          "position": 39,
+          "title": "Shelf Life: University of Montana prof explores generative AI at Missoula Public Library - The Missoulian",
+          "source": "The Missoulian",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 98,
+          "title": "PNW power crunch starts with AI. The bigger challenge may come after - Yakima Herald-Republic",
+          "source": "Yakima Herald-Republic",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 104,
+          "title": "Fairbanks weighs new rules for e-bikes and e-motos - Fairbanks Daily News-Miner",
+          "source": "Fairbanks Daily News-Miner",
+          "reasons": [
+            "production classifier prefers legislation"
+          ]
+        },
+        {
+          "position": 125,
+          "title": "Texas Tech opening remote telescope access to campus community - KCBD",
+          "source": "KCBD",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 157,
+          "title": "757Teamz field hockey Top 15: Key win lifts Norfolk Academy as top teams brace for rugged games - The Virginian-Pilot",
+          "source": "The Virginian-Pilot",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 175,
+          "title": "University City Lions Football (St. Louis, MO) News - Sports Illustrated",
+          "source": "Sports Illustrated",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 198,
+          "title": "US Senator's View: Trade with Canada, so good for Minnesota, threatened by tariffs - Duluth News Tribune",
+          "source": "Duluth News Tribune",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        },
+        {
+          "position": 211,
+          "title": "Milwaukee Brewers get the vote MLB insiders would not give the Dodgers - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 219,
+          "title": "Judge exempts Chicago Archdiocese, nuns, other Catholic workers from Illinois medical aid in dying law - CBS News",
+          "source": "CBS News",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        },
+        {
+          "position": 249,
+          "title": "Bill Williams Obituary (1951 - 2026) - Memphis, TN - The Daily Memphian - PennLive.com",
+          "source": "PennLive.com",
+          "reasons": [
+            "production classifier prefers legislation"
+          ]
+        },
+        {
+          "position": 261,
+          "title": "Archibald: After tragedy, family of Alabama soccer star ripped apart by ICE - AL.com",
+          "source": "AL.com",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 351,
+          "title": "Not just Flock: AI-powered surveillance is becoming more common in Maine - The Portland Press Herald",
+          "source": "The Portland Press Herald",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        }
+      ],
+      "mismatchCount": 17
+    },
+    "region": {
+      "count": 73,
+      "uniqueSources": 42,
+      "topSources": [
+        [
+          "CBS News",
+          7
+        ],
+        [
+          "ABC News - Breaking News, Latest News and Videos",
+          6
+        ],
+        [
+          "Fox News",
+          6
+        ],
+        [
+          "Yahoo Sports",
+          4
+        ],
+        [
+          "Oil City News",
+          4
+        ],
+        [
+          "Arizona Daily Sun",
+          3
+        ]
+      ],
+      "topSourceShare": 9.6,
+      "first10Sources": [
+        "ABC News - Breaking News, Latest News and Videos",
+        "Arizona Daily Sun",
+        "Arizona Daily Sun",
+        "Arizona Daily Sun",
+        "CBS News",
+        "Colorado Springs Gazette",
+        "CBS News",
+        "KOAA News 5",
+        "KRDO",
+        "Colorado Springs Gazette"
+      ],
+      "first10DistinctSources": 6,
+      "maxConsecutiveSameSource": {
+        "count": 3,
+        "source": "Arizona Daily Sun",
+        "startPosition": 2
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 18,
+          "title": "Nevada County DA faces scrutiny after prosecutors allegedly used generative AI that fabricated facts - CBS News",
+          "source": "CBS News",
+          "reasons": [
+            "technology/product-looking headline outside Technology"
+          ]
+        },
+        {
+          "position": 25,
+          "title": "A bitter battle is brewing in one of Washington state\u2019s last swing districts - KUOW",
+          "source": "KUOW",
+          "reasons": [
+            "production classifier prefers legislation"
+          ]
+        },
+        {
+          "position": 38,
+          "title": "Iowa football rises in latest AP Top 25 rankings - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 40,
+          "title": "The Biggest Reason Why Iowa State Football Lost to Iowa in Cy-Hawk Game - Sports Illustrated",
+          "source": "Sports Illustrated",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "What TV channel is West Virginia football on today? Preview, streaming options - OregonLive.com",
+          "source": "OregonLive.com",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 50,
+          "title": "West Virginia assistant coach Noel Devine arrested on strangulation charge hours after WVU's win over UT-Martin - Yahoo Sports",
+          "source": "Yahoo Sports",
+          "reasons": [
+            "sports-looking headline in civic/geography tab"
+          ]
+        },
+        {
+          "position": 72,
+          "title": "Former Georgia Democratic state lawmaker avoids additional jail time for COVID-19 unemployment fraud - CBS News",
+          "source": "CBS News",
+          "reasons": [
+            "production classifier prefers federal"
+          ]
+        }
+      ],
+      "mismatchCount": 7
+    },
+    "nfl": {
+      "count": 25,
+      "uniqueSources": 2,
+      "topSources": [
+        [
+          "ESPN",
+          23
+        ],
+        [
+          "CBS News",
+          2
+        ]
+      ],
+      "topSourceShare": 92.0,
+      "first10Sources": [
+        "CBS News",
+        "CBS News",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN",
+        "ESPN"
+      ],
+      "first10DistinctSources": 2,
+      "maxConsecutiveSameSource": {
+        "count": 23,
+        "source": "ESPN",
+        "startPosition": 3
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    },
+    "technology": {
+      "count": 70,
+      "uniqueSources": 35,
+      "topSources": [
+        [
+          "TechCrunch",
+          9
+        ],
+        [
+          "The Verge",
+          6
+        ],
+        [
+          "Wired",
+          5
+        ],
+        [
+          "Reuters",
+          4
+        ],
+        [
+          "Yahoo Finance",
+          4
+        ],
+        [
+          "The Guardian",
+          4
+        ]
+      ],
+      "topSourceShare": 12.9,
+      "first10Sources": [
+        "Reuters",
+        "Reuters",
+        "NBC News",
+        "Yahoo Finance",
+        "CNET",
+        "The Guardian",
+        "ABC7 Bay Area",
+        "Mashable",
+        "NPR",
+        "TechTimes Vietnam"
+      ],
+      "first10DistinctSources": 9,
+      "maxConsecutiveSameSource": {
+        "count": 2,
+        "source": "Reuters",
+        "startPosition": 1
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [
+        {
+          "a": "Apple releases iOS 27, macOS Golden Gate 27 with Siri AI and Liquid Glass refinements - Ars Technica",
+          "b": "Apple releases iOS 27 with Siri AI overhaul - theverge.com",
+          "sourceA": "Ars Technica",
+          "sourceB": "The Verge",
+          "ratio": 0.58,
+          "overlap": 0.88
+        }
+      ],
+      "mismatchCandidates": [
+        {
+          "position": 2,
+          "title": "Global AI stocks fall as industry chiefs call for slowing development",
+          "source": "Reuters",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 3,
+          "title": "Two of the world\u2019s top AI chief executives publicly agree on slowing AI development",
+          "source": "NBC News",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 11,
+          "title": "Apple releases iOS 27, macOS Golden Gate 27 with Siri AI and Liquid Glass refinements - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 13,
+          "title": "Apple releases iOS 27 with Siri AI overhaul - theverge.com",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 14,
+          "title": "Microsoft\u2019s new AI \u2018code of conduct\u2019 tells models not to hack systems or trick humans - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 16,
+          "title": "Trump goes scorched earth on AI warnings, raging about data center opposition and regulation - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 23,
+          "title": "Is Big Tech\u2019s AI slowdown a safety pact or a cartel? - theverge.com",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 24,
+          "title": "Apple Home\u2019s new security camera features cost as much as $60 a month - theverge.com",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 25,
+          "title": "AI CEOs say they need to slow the pace of development. But will they? - The Guardian",
+          "source": "The Guardian",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 27,
+          "title": "AI bots \"Timmy,\" \"Ren,\" and \"Jackie\" are flooding social media with slop - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 30,
+          "title": "AI leaders want to hit the brakes after years of reckless speed - Ars Technica",
+          "source": "Ars Technica",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 31,
+          "title": "The Top New Features in Apple\u2019s iOS 27 and iPadOS 27 - WIRED",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 33,
+          "title": "Fashion app Daydream uses Apple Intelligence to help you shop the outfits in your camera roll - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 34,
+          "title": "Hear how AI can engineer nature\u2019s comeback at Disrupt 2026 - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 35,
+          "title": "Microsoft sets limits for future AI models as industry throttles frontier development - CNBC",
+          "source": "CNBC",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 36,
+          "title": "using AI companions - WIRED - WIRED",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 38,
+          "title": "AI Leaders Are Calling for a Slowdown. Trump\u2019s Team Says It\u2019s on Them - WIRED",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 44,
+          "title": "Trump and Mike Johnson think the AI industry is overreacting - theverge.com",
+          "source": "The Verge",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 45,
+          "title": "What\u2019s behind the AI industry\u2019s latest warnings of doom? - TechCrunch",
+          "source": "TechCrunch",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 46,
+          "title": "Apple\u2019s 2026 Lineup: New Devices Open Bigger Opportunities for Channel Partners - Channel Insider",
+          "source": "Channel Insider",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 47,
+          "title": "Try These 3 iOS 27 Safari Settings to Get More Out of Apple\u2019s Browser - WIRED",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 48,
+          "title": "AI Agents Are Thirsty for Power - WIRED",
+          "source": "Wired",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 52,
+          "title": "Beijing Refuses to Slow AI Research, Criticizes \u2018Fearmongering\u2019 from U.S. - breitbart.com",
+          "source": "breitbart.com",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 54,
+          "title": "Genesis Mission Project Uses AI to Speed Thin Film Development - HPCwire",
+          "source": "HPCwire",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 61,
+          "title": "Market Watch: AI Chip Stocks Tumble, Crude Spikes Past $108, and Bitcoin Braces for Volatility - blockonomi.com",
+          "source": "blockonomi.com",
+          "reasons": [
+            "fails Technology semantic gate"
+          ]
+        },
+        {
+          "position": 69,
+          "title": "US senators weigh requiring AI giants to commit to preventing catastrophe - The Mighty 790 KFGO",
+          "source": "The Mighty 790 KFGO",
+          "reasons": [
+            "fails Technology semantic gate",
+            "production classifier prefers legislation"
+          ]
+        }
+      ],
+      "mismatchCount": 26
+    },
+    "gaming": {
+      "count": 61,
+      "uniqueSources": 35,
+      "topSources": [
+        [
+          "IGN",
+          11
+        ],
+        [
+          "PC Gamer",
+          9
+        ],
+        [
+          "Tom's Hardware",
+          4
+        ],
+        [
+          "Nintendo Life",
+          3
+        ],
+        [
+          "Notebookcheck",
+          2
+        ],
+        [
+          "Polygon",
+          2
+        ]
+      ],
+      "topSourceShare": 18.0,
+      "first10Sources": [
+        "Mashable",
+        "CNET",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "Tom's Hardware",
+        "The Sunday Guardian",
+        "IGN",
+        "GameLuster",
+        "Sirus Gaming"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 4,
+        "source": "Tom's Hardware",
+        "startPosition": 3
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [
+        {
+          "position": 24,
+          "title": "This Fantasy Party Game Combines Drinking Rules With D&D-Themed Gameplay - IGN",
+          "source": "IGN",
+          "reasons": [
+            "fails Gaming semantic gate"
+          ]
+        },
+        {
+          "position": 55,
+          "title": "Arc Raiders Expeditions may not come back: 'Maybe we'll scrap the whole system' - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        },
+        {
+          "position": 58,
+          "title": "Bungie delays next Marathon update and ends 'strict seasonal schedule' as it goes all-in on Destiny-like features - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        },
+        {
+          "position": 59,
+          "title": "Valve canned finished VR headsets 'three, four years ago' - PC Gamer",
+          "source": "PC Gamer",
+          "reasons": [
+            "hardware/technology-only headline in Gaming"
+          ]
+        }
+      ],
+      "mismatchCount": 4
+    },
+    "military": {
+      "count": 47,
+      "uniqueSources": 19,
+      "topSources": [
+        [
+          "Defense News",
+          13
+        ],
+        [
+          "The Guardian",
+          4
+        ],
+        [
+          "CBS News",
+          4
+        ],
+        [
+          "Reuters",
+          3
+        ],
+        [
+          "BBC",
+          3
+        ],
+        [
+          "CNN",
+          2
+        ]
+      ],
+      "topSourceShare": 27.7,
+      "first10Sources": [
+        "Defense News",
+        "Reuters",
+        "Reuters",
+        "The Guardian",
+        "Reuters",
+        "CNN",
+        "Associated Press",
+        "KSAT",
+        "Defense News",
+        "BBC"
+      ],
+      "first10DistinctSources": 7,
+      "maxConsecutiveSameSource": {
+        "count": 8,
+        "source": "Defense News",
+        "startPosition": 25
+      },
+      "exactDuplicateGroups": [],
+      "fuzzyDuplicatePairs": [],
+      "mismatchCandidates": [],
+      "mismatchCount": 0
+    }
+  },
+  "baselineCrossTabRepeats": [],
+  "v52CrossTabRepeats": []
+}
