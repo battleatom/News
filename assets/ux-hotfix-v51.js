@@ -9,6 +9,7 @@
     red:'#dc2626'
   };
   const RAIL_CLASSES=['rail-blue','rail-green','rail-orange','rail-purple','rail-red'];
+  const BOXOFFICE_RAIL_COLORS={cyan:'#06b6d4',blue:'#2563eb',green:'#16a34a',red:'#dc2626'};
 
   function canonicalTabKey(value){
     let text=String(value||'').toLowerCase().trim();
@@ -56,8 +57,11 @@
       .movie-news{margin-top:10px;font-size:.82rem;line-height:1.38}
       .movie-news .underreported-label{font-size:.72rem!important;letter-spacing:.08em}
       .movie-news a{display:block;margin-top:6px;font-size:.82rem!important;line-height:1.38!important;font-weight:600!important;text-decoration-thickness:1px}
-      .boxoffice-section-title.boxoffice-coming-soon{border-left-color:#06b6d4!important}
-      .movie-card.boxoffice-upcoming-card{border-left:5px solid #06b6d4!important}
+      html body .boxoffice-section-title.boxoffice-coming-soon{border-left-color:#06b6d4!important}
+      html body .news-item.movie-card.boxoffice-upcoming-card{border-left:5px solid #06b6d4!important}
+      html body .news-item.movie-card.boxoffice-new-card{border-left:5px solid #2563eb!important}
+      html body .news-item.movie-card.boxoffice-playing-card{border-left:5px solid #16a34a!important}
+      html body .news-item.movie-card.boxoffice-leaving-card{border-left:5px solid #dc2626!important}
       @media(max-width:700px){.movie-news a{font-size:.8rem!important;line-height:1.36!important}}
     `;
     document.head.appendChild(style);
@@ -70,6 +74,18 @@
     const raw=pill.replace(/^Release(?:d)?\s*:?[ ]*/i,'').trim();
     const ts=Date.parse(raw);
     return Number.isFinite(ts)?ts:0;
+  }
+
+  function paintBoxOfficeCard(card,color,statusText){
+    if(!(card instanceof Element)||!BOXOFFICE_RAIL_COLORS[color])return;
+    ['boxoffice-upcoming-card','boxoffice-new-card','boxoffice-playing-card','boxoffice-leaving-card'].forEach(cls=>card.classList.remove(cls));
+    const cls=color==='cyan'?'boxoffice-upcoming-card':color==='blue'?'boxoffice-new-card':color==='green'?'boxoffice-playing-card':'boxoffice-leaving-card';
+    card.classList.add(cls);
+    card.dataset.boxofficeRail=color;
+    card.style.setProperty('border-left',`5px solid ${BOXOFFICE_RAIL_COLORS[color]}`,'important');
+    card.style.setProperty('border-inline-start',`5px solid ${BOXOFFICE_RAIL_COLORS[color]}`,'important');
+    const status=card.querySelector('.movie-status');
+    if(status&&statusText)status.textContent=statusText;
   }
 
   function groupCards(heading){
@@ -104,6 +120,14 @@
     if(currentHeading){
       if(currentHeading.textContent!=='🎥 Now Playing — newest releases first')currentHeading.textContent='🎥 Now Playing — newest releases first';
       sortGroup(body,currentHeading,groupCards(currentHeading),-1);
+      groupCards(currentHeading).forEach(card=>{
+        const statusText=(card.querySelector('.movie-status')?.textContent||'').toLowerCase();
+        if(statusText.includes('leaving')){paintBoxOfficeCard(card,'red','LEAVING SOON');return;}
+        const released=boxOfficeCardDate(card);
+        const ageDays=released?Math.floor((Date.now()-released)/86400000):999;
+        if(ageDays>=0&&ageDays<=14)paintBoxOfficeCard(card,'blue','NEW RELEASE');
+        else paintBoxOfficeCard(card,'green','NOW PLAYING');
+      });
     }
 
     if(upcomingHeading){
@@ -112,11 +136,7 @@
       const upcomingCards=groupCards(upcomingHeading);
       sortGroup(body,upcomingHeading,upcomingCards,1);
       const orderedUpcoming=groupCards(upcomingHeading);
-      orderedUpcoming.forEach(card=>{
-        card.classList.add('boxoffice-upcoming-card');
-        const status=card.querySelector('.movie-status');
-        if(status&&status.textContent!=='COMING SOON')status.textContent='COMING SOON';
-      });
+      orderedUpcoming.forEach(card=>paintBoxOfficeCard(card,'cyan','COMING SOON'));
       if(currentHeading&&currentHeading.compareDocumentPosition(upcomingHeading)&Node.DOCUMENT_POSITION_FOLLOWING){
         const frag=document.createDocumentFragment();
         frag.appendChild(upcomingHeading);
