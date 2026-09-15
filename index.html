@@ -55,7 +55,7 @@
 <style id="related-coverage-v1-style">.related-coverage{margin:11px 0 0;padding:10px 0 0;border-top:1px solid var(--ui-line);font-size:10px;color:#64748b}.related-coverage strong{display:inline-block;color:#475569;margin-bottom:3px}.related-coverage a{display:block;margin-top:5px;color:#475569;text-decoration:none;font-weight:650}.related-coverage a:hover{text-decoration:underline}.related-coverage .source{color:#94a3b8;font-weight:500}</style>
 
 <link rel="stylesheet" href="styles/v2.css?v=a07e364a5925">
-<link rel="stylesheet" href="styles/v5-visual.css?v=686f11bbbd91" data-v5-visual="true">
+<link rel="stylesheet" href="styles/v5-visual.css?v=6dec12918085" data-v5-visual="true">
 <link rel="stylesheet" href="styles/card-feedback.css?v=f405151c3c4f" data-card-feedback-style="true">
 <link rel="stylesheet" href="styles/v51-sticky-nav.css?v=4f42039d65e8" data-v51-sticky-nav="true">
 <script src="assets/location-v2.js?v=75b5f135ab7e" defer></script>
@@ -459,6 +459,7 @@ const CANONICAL_SECTIONS=[['top','🔴 Top Stories','#dc2626'],['nfl','🏈 NFL'
 sections=CANONICAL_SECTIONS;
 const AUTO_PULL_MS=15*60*1000;
 var lastSuccessfulPull=0,nextScheduledPull=0,pullInProgress=false;
+// New-article/update audio intentionally inactive. The former Web Audio pop code was removed.
 function normalizeDuplicateKey(item){const link=(item.querySelector('link')?.textContent||'').trim().toLowerCase().replace(/[?#].*$/,'').replace(/\/$/,'');if(link)return 'l:'+link;const title=(item.querySelector('title')?.textContent||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();return 't:'+title;}
 function dedupeFetchedItems(items){const seen=new Set(),out=[];for(const item of items){const category=(item.querySelector('category')?.textContent||'world').trim().toLowerCase();const topic=(item.querySelector('xTopic')?.textContent||'').trim().toLowerCase();const identity=category==='x'&&topic?'x-topic:'+topic:category+'|'+normalizeDuplicateKey(item);if(seen.has(identity))continue;seen.add(identity);out.push(item);}return {items:out,removed:items.length-out.length};}
 function canonicalBuildTabs(){const root=document.getElementById('tabs');if(!root)return;root.innerHTML='';const seen=new Set();CANONICAL_SECTIONS.forEach(([key,label,accent])=>{if(seen.has(key))return;seen.add(key);const b=document.createElement('button');b.className='tab'+(key===active?' active':'');b.textContent=key==='region'&&typeof detectedLocation!=='undefined'&&detectedLocation?'🌎 '+(typeof regionLabels!=='undefined'?regionLabels[detectedRegion]:'Region'):label;b.style.setProperty('--accent',accent);b.onclick=()=>{active=key;localStorage.setItem('underreported-active-tab',active);canonicalBuildTabs();canonicalRender(allItems)};root.appendChild(b)});}
