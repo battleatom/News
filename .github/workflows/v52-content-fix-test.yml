@@ -7,6 +7,7 @@ on:
       - 'scripts/v52_source_ladders.py'
       - 'scripts/v52_b2_release_finalize.py'
       - 'scripts/v52_location_bank_order.py'
+      - 'scripts/v52_inventory_recovery.py'
       - 'scripts/apply_feedback_pools_v52.py'
       - 'tests/v52_source_ladders_test.py'
       - 'assets/card-feedback.js'
@@ -53,6 +54,18 @@ jobs:
           if missing: raise SystemExit('Browser D Pool semantics missing: '+repr(missing))
           print('Browser D Pool global/category semantics contract passed')
           PY
+          python - <<'PY'
+          import sys,xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import v52_b2_release_finalize as f
+          def bill(num,url='https://nmlegis.gov/Bills'):
+            i=ET.Element('item')
+            for k,v in [('category','legislation'),('source','New Mexico Legislature'),('jurisdiction','New Mexico'),('billNumber',num),('officialSource',url),('title',num)]: ET.SubElement(i,k).text=v
+            return i
+          a,b=bill('HB 108'),bill('HB 109')
+          assert f.legislation_identity(a)[0] != f.legislation_identity(b)[0]
+          print('Distinct bill identities remain distinct even with shared official URL')
+          PY
           git diff --exit-code origin/stable-v5.2-pre-autotune-2026-09-15 -- styles/ assets/v51-category-sticky-ux.js assets/v3-ui.js assets/app-v2.js || {
             echo 'Protected UX changed unexpectedly'; exit 1;
           }
@@ -89,8 +102,10 @@ jobs:
           python scripts/enrich_x_issues.py
           python scripts/enforce_editorial_integrity.py
           python scripts/enforce_nfl_final.py
+          cp News /tmp/v52-pre-global-filter-News
           python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
           python tests/v5_filter_shadow_test.py
+          python scripts/v52_inventory_recovery.py --source /tmp/v52-pre-global-filter-News --target News --nfl-target 25
       - name: Apply B2 validity, dedupe, source ladders and D Pools
         run: |
           python scripts/v52_final_content_guard.py
@@ -124,10 +139,13 @@ jobs:
             if v['after'] and v['round1Count']<=0: failures.append(f'{cat} has no source round 1')
             if v['after']<max(8,int(v['before']*.55)) and v['before']>=10:
               failures.append(f'{cat} source ladder over-pruned {v["before"]}->{v["after"]}')
-          # Local must retain the complete market bank and eliminate cross-market source clumping.
+          # Local is a viewer-filtered nationwide bank. Protect each market strictly;
+          # allow a small serialized cross-market streak that no viewer sees as one market.
           if not location.get('inventoryPreserved',False): failures.append('local market inventory changed during ordering')
-          if location.get('globalSourceStreakAfter',{}).get('count',999)>4:
-            failures.append(f"local serialized source streak remains {location.get('globalSourceStreakAfter',{}).get('count')}")
+          if location.get('maxPerMarketStreakAfter',999)>4:
+            failures.append(f"local per-market source streak remains {location.get('maxPerMarketStreakAfter')}")
+          if location.get('globalSourceStreakAfter',{}).get('count',999)>6:
+            failures.append(f"local cross-market serialized source streak remains {location.get('globalSourceStreakAfter',{}).get('count')}")
           # Final serialized feed must respect the B2 source-depth caps.
           for cat,cap in finalizer.get('sourceCaps',{}).items():
             actual=after[cat]['maxConsecutiveSameSource']['count']
@@ -147,6 +165,11 @@ jobs:
             if old_count>=10 and v['count']<10: failures.append(f'{cat} collapsed {old_count}->{v["count"]}')
           if old['region']['count']>=50 and after['region']['count']<50: failures.append(f"region inventory collapsed {old['region']['count']}->{after['region']['count']}")
           if old['local']['count']>=250 and after['local']['count']<250: failures.append(f"local inventory collapsed {old['local']['count']}->{after['local']['count']}")
+          # Inventory-recovery goals versus the saved pre-autotune V5.2 baseline.
+          recovery_floor={'world':0.80,'presidential':0.80,'military':0.90,'nfl':0.90,'legislation':0.80}
+          for cat,ratio in recovery_floor.items():
+            if old[cat]['count']>=10 and after[cat]['count'] < int(old[cat]['count']*ratio):
+              failures.append(f"{cat} inventory recovery insufficient {old[cat]['count']}->{after[cat]['count']} target>={ratio:.0%}")
           # Legislation must preserve enough distinct official records for pagination.
           if old['legislation']['count']>=10 and after['legislation']['count']<10:
             failures.append(f"legislation inventory collapsed {old['legislation']['count']}->{after['legislation']['count']}")
