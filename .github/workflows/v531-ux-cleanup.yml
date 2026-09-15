@@ -57,14 +57,16 @@ jobs:
           for cat in ('technology','gaming'):
               b=[(x.findtext('title') or '').strip() for x in before.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
               a=[(x.findtext('title') or '').strip() for x in after.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
-              assert len(a)==len(b) and sorted(a)==sorted(b)
+              assert len(a)==len(b) and sorted(a)==sorted(b), f'{cat}: reorder-only contract failed'
               r=report['tabs'][cat]
-              assert r['afterWindowConflictsTop25'] <= r['beforeWindowConflictsTop25']
-              print(cat, r['beforeWindowConflictsTop25'], '->', r['afterWindowConflictsTop25'])
+              assert r['afterEventConflictsTop25'] <= r['beforeEventConflictsTop25'], r
+              assert r['afterAdjacentBrandConflictsTop25'] <= r['beforeAdjacentBrandConflictsTop25'], r
+              assert r['combinedAfter'] <= r['combinedBefore'], r
+              print(cat, 'events',r['beforeEventConflictsTop25'],'->',r['afterEventConflictsTop25'],'adjacent brands',r['beforeAdjacentBrandConflictsTop25'],'->',r['afterAdjacentBrandConflictsTop25'],'combined',r['combinedBefore'],'->',r['combinedAfter'],'avg displacement',r['averageTop25Displacement'])
               print('BEFORE')
-              for i,t in enumerate(r['beforeTop25'][:10],1): print(i,t)
+              for i,t in enumerate(r['beforeTop25'][:12],1): print(i,t)
               print('AFTER')
-              for i,t in enumerate(r['afterTop25'][:10],1): print(i,t)
+              for i,t in enumerate(r['afterTop25'][:12],1): print(i,t)
           PY
       - name: Summary
-        run: echo 'Underreported impact ordering and Technology/Gaming topic spacing validation complete.'
+        run: echo 'Underreported impact ordering and Technology/Gaming event/brand spacing validation complete.'
