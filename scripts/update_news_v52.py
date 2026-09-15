@@ -4,16 +4,20 @@
 V5.2 is intentionally additive: production V5.1 remains untouched.
 Changes in this wrapper:
 - expand normal Google News discovery and age acceptance to 14 days;
-- rank Top Stories with source quality as a modest tie/quality signal;
-- enforce source diversity: first 10 max 1/source, first 30 max 2/source,
-  full 60 max 3/source;
+- use a larger ranked primary-source roster for Top Stories;
+- rank Top Stories with source quality as a modest quality signal;
+- rotate Top Stories by publisher round: every source's best distinct event first,
+  then every source's second-best, then third-best (maximum 3/source);
 - keep the existing event clustering/related-coverage logic from V5.1.
+
+Google News remains the RSS discovery/transport layer. Publisher-specific queries,
+source ranking, event clustering and diversity decide what is actually selected.
 """
 from __future__ import annotations
 
 import re
 import urllib.parse
-from collections import Counter
+from collections import Counter, defaultdict
 
 import update_news_v4 as v4
 
@@ -21,11 +25,23 @@ core = v4.core
 
 V52_MAX_AGE_HOURS = 14 * 24
 TOP_VISIBLE_WINDOW = 10
-TOP_MID_WINDOW = 30
 TOP_POOL_SIZE = 60
-TOP_VISIBLE_SOURCE_CAP = 1
-TOP_MID_SOURCE_CAP = 2
 TOP_POOL_SOURCE_CAP = 3
+
+# Additional strong publishers used as source-specific primary discovery for Top.
+# These augment the V5.1 roster; they do not replace it.
+V52_TOP_SOURCE_QUERIES = [
+    ("Bloomberg", "site:bloomberg.com breaking world US politics economy news"),
+    ("CNBC", "site:cnbc.com breaking US world politics economy news"),
+    ("Politico", "site:politico.com breaking US politics government news"),
+    ("The Hill", "site:thehill.com breaking US politics government news"),
+    ("Axios", "site:axios.com breaking US politics world business news"),
+    ("The Guardian", "site:theguardian.com breaking world US politics news"),
+    ("PBS NewsHour", "site:pbs.org/newshour breaking US world politics news"),
+    ("Al Jazeera", "site:aljazeera.com breaking world international US news"),
+    ("Financial Times", "site:ft.com world US politics economy breaking news"),
+    ("TIME", "site:time.com US world politics breaking news"),
+]
 
 # General-news source ranking. This is deliberately a modest ranking signal, not
 # an editorial override: story impact, freshness and multi-source confirmation
@@ -38,19 +54,25 @@ SOURCE_QUALITY = {
     "afp": 19,
     "bbc": 18,
     "npr": 18,
+    "pbsnewshour": 17,
     # Tier B — established national/international reporting
     "bloomberg": 17,
     "newyorktimes": 16,
     "washingtonpost": 16,
+    "financialtimes": 16,
     "nbcnews": 15,
     "abcnews": 15,
     "cbsnews": 15,
+    "cnbc": 15,
+    "axios": 15,
+    "politico": 14,
     "cnn": 14,
     "foxnews": 14,
+    "aljazeera": 14,
     "usatoday": 13,
-    "theguardian": 13,
-    "politico": 14,
+    "guardian": 13,
     "thehill": 12,
+    "time": 12,
     # Tier C — strong category specialists
     "espn": 14,
     "nflcom": 15,
@@ -117,41 +139,36 @@ def top_score(item: dict, newest_time) -> tuple:
     return (impact + confirmation + quality, item.get("published"))
 
 
-def _take_with_cap(ranked: list[dict], selected: list[dict], selected_keys: set, counts: Counter,
-                   cap: int, stop_at: int) -> None:
-    for item in ranked:
-        if len(selected) >= stop_at:
-            return
-        k = core.key(item)
-        sid = source_id(item.get("source") or "")
-        if not k or k in selected_keys or counts[sid] >= cap:
-            continue
-        selected.append(item)
-        selected_keys.add(k)
-        counts[sid] += 1
-
-
 def rank_top_pool_v52(base_pool: list[dict]) -> list[dict]:
-    """Re-rank an already event-clustered V5.1 Top pool with source diversity."""
+    """Round-robin an already event-clustered V5.1 Top pool by publisher.
+
+    Round 1 = each publisher's highest-ranked distinct event.
+    Round 2 = each publisher's second-highest distinct event.
+    Round 3 = each publisher's third-highest distinct event.
+    Within each round, stories are still ordered by impact/confirmation/source score.
+    """
     if not base_pool:
         return []
     newest_time = max(x["published"] for x in base_pool)
     ranked = sorted(base_pool, key=lambda x: top_score(x, newest_time), reverse=True)
 
+    buckets: dict[str, list[dict]] = defaultdict(list)
+    seen_keys: set = set()
+    for item in ranked:
+        k = core.key(item)
+        if not k or k in seen_keys:
+            continue
+        seen_keys.add(k)
+        buckets[source_id(item.get("source") or "")].append(item)
+
     selected: list[dict] = []
-    selected_keys: set = set()
-    counts: Counter = Counter()
-
-    # Screen 1: one best distinct event per publisher.
-    _take_with_cap(ranked, selected, selected_keys, counts, TOP_VISIBLE_SOURCE_CAP, TOP_VISIBLE_WINDOW)
-    # If fewer than ten distinct publishers exist, allow a second item only as a fallback.
-    if len(selected) < TOP_VISIBLE_WINDOW:
-        _take_with_cap(ranked, selected, selected_keys, counts, TOP_MID_SOURCE_CAP, TOP_VISIBLE_WINDOW)
-
-    # Deeper list: two per source through card 30.
-    _take_with_cap(ranked, selected, selected_keys, counts, TOP_MID_SOURCE_CAP, TOP_MID_WINDOW)
-    # Full rotation: at most three per publisher.
-    _take_with_cap(ranked, selected, selected_keys, counts, TOP_POOL_SOURCE_CAP, TOP_POOL_SIZE)
+    for round_index in range(TOP_POOL_SOURCE_CAP):
+        round_items = [bucket[round_index] for bucket in buckets.values() if len(bucket) > round_index]
+        round_items.sort(key=lambda x: top_score(x, newest_time), reverse=True)
+        for item in round_items:
+            if len(selected) >= TOP_POOL_SIZE:
+                return selected
+            selected.append(item)
     return selected
 
 
@@ -165,13 +182,23 @@ def select_top_stories_v52(unique):
     selected = rank_top_pool_v52(base)
     counts = Counter(source_id(x.get("source") or "") for x in selected)
     first10 = [source_id(x.get("source") or "") for x in selected[:10]]
+    all_sources = {source_id(x.get("source") or "") for x in selected}
+    first_round = [source_id(x.get("source") or "") for x in selected[:len(all_sources)]]
     print(
         "V5.2 TOP diversity: "
         f"{len(set(first10))}/{len(first10)} distinct sources in first 10; "
+        f"{len(set(first_round))}/{len(first_round)} distinct in source round 1; "
         f"max source count {max(counts.values(), default=0)} across {len(selected)} retained stories."
     )
     return selected
 
+
+# Augment the current V5.1 source roster without duplicating named publishers.
+_existing_top_sources = {name.lower() for name, _ in core.MAINSTREAM_TOP_QUERIES}
+for _name, _query in V52_TOP_SOURCE_QUERIES:
+    if _name.lower() not in _existing_top_sources:
+        core.MAINSTREAM_TOP_QUERIES.append((_name, _query))
+        _existing_top_sources.add(_name.lower())
 
 # Apply V5.2 behavior to the same core module used by the current V4/V5.1 chain.
 core.MAX_AGE_HOURS = V52_MAX_AGE_HOURS
