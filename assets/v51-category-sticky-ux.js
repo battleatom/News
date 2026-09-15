@@ -71,7 +71,15 @@
     const tabs=document.getElementById('tabs');
     if(tabs){
       new MutationObserver(()=>scrollActiveTab('auto')).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
-      tabs.addEventListener('click',()=>requestAnimationFrame(()=>scrollActiveTab('smooth')),true);
+      tabs.addEventListener('click',e=>{
+        const clicked=e.target.closest('.tab');
+        if(!clicked)return;
+        const wasActive=clicked.classList.contains('active');
+        requestAnimationFrame(()=>{
+          scrollActiveTab('smooth');
+          if(!wasActive)window.scrollTo({top:0,left:0,behavior:'auto'});
+        });
+      },true);
     }
     window.addEventListener('resize',()=>scrollActiveTab('auto'),{passive:true});
   }
