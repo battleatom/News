@@ -6,6 +6,9 @@ on:
       - 'assets/entertainment-v4.js'
       - 'scripts/patch_site_features.py'
       - 'styles/v5-visual.css'
+      - 'scripts/v53_quality_layer.py'
+      - 'scripts/update_news_v53.py'
+      - 'scripts/v53_underreported_guard.py'
       - '.github/workflows/v531-ux-cleanup.yml'
   workflow_dispatch:
 permissions:
@@ -20,7 +23,7 @@ jobs:
         run: git fetch origin stable-v5.3-2026-09-16
       - name: Syntax checks
         run: |
-          python -m py_compile scripts/patch_site_features.py
+          python -m py_compile scripts/patch_site_features.py scripts/v53_quality_layer.py scripts/update_news_v53.py scripts/v53_underreported_guard.py
           node --check assets/entertainment-v4.js
       - name: Verify feature cleanup
         run: |
@@ -28,14 +31,29 @@ jobs:
           ! grep -Eq 'imageUrl|ent-card-image|ent-image-link|safeImage' assets/entertainment-v4.js
           grep -q 'display:block!important' styles/v5-visual.css
           grep -q 'overflow-wrap:anywhere!important' styles/v5-visual.css
+      - name: Quality layer exact-output parity
+        run: |
+          rm -rf /tmp/v53-base /tmp/v53-candidate
+          mkdir -p /tmp/v53-base /tmp/v53-candidate
+          git show origin/stable-v5.3-2026-09-16:News > /tmp/v53-base/News
+          cp /tmp/v53-base/News /tmp/v53-candidate/News
+          git show origin/stable-v5.3-2026-09-16:scripts/v53_quality_layer.py > /tmp/v53-base/v53_quality_layer.py
+          cp scripts/v53_quality_layer.py /tmp/v53-candidate/v53_quality_layer.py
+          (cd /tmp/v53-base && python v53_quality_layer.py >/tmp/v53-base.stdout)
+          cp /tmp/v53-quality-report.json /tmp/v53-base-report.json
+          (cd /tmp/v53-candidate && python v53_quality_layer.py >/tmp/v53-candidate.stdout)
+          cp /tmp/v53-quality-report.json /tmp/v53-candidate-report.json
+          cmp /tmp/v53-base/News /tmp/v53-candidate/News
+          cmp /tmp/v53-base-report.json /tmp/v53-candidate-report.json
+          echo 'Quality optimization output is byte-identical to stable V5.3.'
       - name: Protect sticky navigation UX
         run: |
           git diff --exit-code origin/stable-v5.3-2026-09-16 -- assets/v51-category-sticky-ux.js styles/v51-sticky-nav.css
       - name: Limit patch scope
         run: |
-          ALLOWED='^(assets/entertainment-v4.js|scripts/patch_site_features.py|styles/v5-visual.css|.github/workflows/v531-ux-cleanup.yml)$'
+          ALLOWED='^(assets/entertainment-v4.js|scripts/patch_site_features.py|styles/v5-visual.css|scripts/v53_quality_layer.py|scripts/update_news_v53.py|scripts/v53_underreported_guard.py|.github/workflows/v531-ux-cleanup.yml)$'
           bad=$(git diff --name-only origin/stable-v5.3-2026-09-16...HEAD | grep -Ev "$ALLOWED" || true)
           if [ -n "$bad" ]; then echo "Unexpected files changed:"; echo "$bad"; exit 1; fi
       - name: Summary
         run: |
-          echo 'V5.3.1 UX cleanup passed: Why it matters wrapping improved, entertainment images inactive, update audio removed, sticky UX unchanged.'
+          echo 'V5.3.1 validation passed: UX cleanup preserved, quality-layer optimization output matches stable V5.3 exactly, sticky UX unchanged.'
