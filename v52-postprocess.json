@@ -1,9 +1,10 @@
 {
-  "input": 1108,
-  "output": 1087,
-  "rejected": 19,
-  "rerouted": 12,
-  "sameEventRemoved": 2,
+  "input": 1107,
+  "output": 1041,
+  "rejected": 48,
+  "rerouted": 26,
+  "sameEventRemoved": 14,
+  "sourceTailDropped": 4,
   "rejectedExamples": [
     [
       "world",
@@ -36,16 +37,6 @@
       "domestic-local-in-world"
     ],
     [
-      "world",
-      "Ramp to I-65 southbound near West 21st Street in Indianapolis shut down due to large police response",
-      "domestic-local-in-world"
-    ],
-    [
-      "world",
-      "Indiana Women's Prison announces warden of 5 years has died",
-      "domestic-local-in-world"
-    ],
-    [
       "gaming",
       "This Fantasy Party Game Combines Drinking Rules With D&D-Themed Gameplay",
       "non-video-game-content"
@@ -62,8 +53,18 @@
     ],
     [
       "legislation",
-      "Burlington music bar Radio Bean faces closure from steep insurance bill",
+      "White House agrees to new ethics language in crypto bill",
       "non-official-legislation-source"
+    ],
+    [
+      "nm",
+      "How to Watch No. 24 Oklahoma vs. New Mexico",
+      "sports-in-civic-tab"
+    ],
+    [
+      "nm",
+      "OU football vs New Mexico TV channel, odds, scouting report for Sooners-Lobos",
+      "sports-in-civic-tab"
     ],
     [
       "local",
@@ -77,6 +78,46 @@
     ],
     [
       "local",
+      "Kim Cox Obituary",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Missoula and Western Montana neighbors: Obituaries for September 11",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Phyllis Morrison Obituary (1929 - 2026) - Bakersfield, CA - Bakersfield Californian",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Dennis Conway Obituary - San Jose, CA (1955-2026)",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Linda Janiece Gracy Obituary - San Jose, CA (1947-2026)",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Lilyann Brannon Obituary - San Jose, CA (1921-2021)",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Cause of death revealed for 19-year-old Houston-area softball player",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Tulsa neighbors: Obituaries for September 14",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
       "757Teamz field hockey Top 15: Key win lifts Norfolk Academy as top teams brace for rugged games",
       "sports-in-civic-tab"
     ],
@@ -87,7 +128,107 @@
     ],
     [
       "local",
+      "Louise Jackson Obituary",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Milwaukee Brewers get the vote MLB insiders would not give the Dodgers",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Milwaukee Brewers: Pat Murphy sees a tired Shane Drohan, Drohan says he feels the best he has",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Victor William Allison, IV Obituary (1972 - 2026) - Detroit, MI - Ann Arbor News",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Tonya Juron Johnson Obituary (1971 - 2026) - Detroit, MI - Ann Arbor News",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Jeremy Kuzma Obituary (2026) - Grand Rapids, MI",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Michael Cook Obituary (12/27/1956 - 09/13/2026) - Grand Rapids, MI",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Ella Horjus Obituary (2026) - Grand Rapids, MI",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Kurt Mirandette Obituary (10/23/1953 - 09/06/2026) - Grand Rapids, MI",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Edmund Rossman Obituary (2026) - Middleburg Hts., OH",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Bill Williams Obituary (1951 - 2026) - Memphis, TN - The Daily Memphian",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Ramon Briones Obituary (1974 - 2026) - Memphis, TN - The Daily Memphian",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Alesa Ann (Strange) Lanier Obituary",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
       "Archibald: After tragedy, family of Alabama soccer star ripped apart by ICE",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Miami (FL) news: Hurricanes' win vs Florida A&M got so bad it had mercy rule measures",
+      "sports-in-civic-tab"
+    ],
+    [
+      "local",
+      "Marvin Campbell Obituary (2026) - Harrisburg, PA",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Marvin Wirt Obituary (2026) - Harrisburg, PA",
+      "obituary-in-news-bank"
+    ],
+    [
+      "local",
+      "Trenton Ironhawks Sign Five New Jersey Natives as Inaugural Roster Takes Shape",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "Was Oregon's offensive line giving away the type of play based on how it lined up in Oklahoma State's upset win?",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "Texas rises to No. 1 in AP Top 25; Ohio State, Oregon tumble",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "Big Ten on CBS 2026 schedule: USC vs. Rutgers, Michigan vs. Iowa headline upcoming slate",
       "sports-in-civic-tab"
     ],
     [
@@ -97,11 +238,28 @@
     ],
     [
       "region",
-      "The Biggest Reason Why Iowa State Football Lost to Iowa in Cy-Hawk Game",
+      "Iowa band member taken off life support after collapsing at game",
+      "sports-in-civic-tab"
+    ],
+    [
+      "region",
+      "Arkansas football coach Ryan Silverfield reacts to tipping plays allegation",
       "sports-in-civic-tab"
     ]
   ],
   "reroutedExamples": [
+    [
+      "world",
+      "technology",
+      "Ukraine triumphs in 'first-ever' drone-vs-drone boat battle \u2014 video shows Russian MBeK destroyed by Sargan 3000's 12.7mm automatic turret",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Rocket Report: Europe joins the commercial launch club; a Ravn X sighting?",
+      "strong-tech-owner"
+    ],
     [
       "world",
       "technology",
@@ -124,6 +282,72 @@
       "world",
       "technology",
       "China dismisses AI slowdown calls and blasts \u2018fearmongering\u2019 from U.S. tech leaders",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Key leaders sound the alarm on AI. And, Iran-Gulf diplomacy hits a setback",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "China criticises idea it is in 'malicious competition' over AI",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "ClickFix attacks are tricking Mac and Windows users into hacking themselves",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Conti Ransomware Hacker Sentenced to 4 Years [2026]",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Global ransomware attacks hit record 997 in August 2026 as utility, healthcare and business attacks surge",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Cisco Firewall Manager Hacked by Sandworm Espionage Implant and Qilin Ransomware",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "What \u2018The Pitt\u2019 got right on a hospital ransomware attack",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "Kenya cyber attacks up 6pc as ransomware nearly doubles globally",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "News - Ransomware group claims breach at Dunedin clinical research firm ZenTech",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "HBO Max Reddit account hijacked to spread malware via ClickFix ads",
+      "strong-tech-owner"
+    ],
+    [
+      "world",
+      "technology",
+      "SCADA and Industrial Control Malware: Securing Electrical Substations Against Weaponized Firmware Exploits",
       "strong-tech-owner"
     ],
     [
@@ -159,6 +383,12 @@
     [
       "local",
       "technology",
+      "Meta to hold eight El Paso meetings this fall as data center agreement talks advance",
+      "strong-tech-owner"
+    ],
+    [
+      "local",
+      "technology",
       "\u2018Recipe for disaster\u2019: Philadelphia activists urge City Council to pass a data center moratorium",
       "strong-tech-owner"
     ],
@@ -177,14 +407,96 @@
   ],
   "duplicateExamples": [
     [
-      "underreported",
-      "Texas",
-      "Texas Judge Rules Against Alaskan Surrogate Seeking Custody"
+      "presidential",
+      "Trump says he will consider request to release more 9/11 records",
+      "Trump says he will consider releasing more 9/11 records after families\u2019 request"
     ],
     [
-      "entertainment",
-      "Fashion",
-      "See the best photos from New York Fashion Week 2026"
+      "legislation",
+      "HB 270 \u2014 Contributions To Apprentice & Training Pgms.",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "SB 273 \u2014 Correction Faciliity Loss Of Revenue",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "SB 3 \u2014 Commitment Procedure Changes & Definitions",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 253 \u2014 Public Education Changes",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 30 \u2014 Teacher Residency Act Changes",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "SB 151 \u2014 Corporate Income Tax Changes",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 124 \u2014 New Americans Division In Wsd",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 34 \u2014 School Nurse Licensure Provisions",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 108 \u2014 Watershed District Taxes And Directors",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 109 \u2014 Water Project Fund Changes",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "SB 264 \u2014 Election Rights & Troops At Elections",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "legislation",
+      "HB 43 \u2014 Disability & Survivor Pensions Changes",
+      "HB 38 \u2014 Wheelchair Insurance Coverage"
+    ],
+    [
+      "nm",
+      "Democrat Pete Buttigieg rallies Las Cruces voters in support of Vasquez, Haaland",
+      "Buttigieg rallies for Haaland, Vasquez in Las Cruces"
+    ]
+  ],
+  "sourceTailDropExamples": [
+    [
+      "legislation",
+      "Congress.gov",
+      "H.R. 9380 \u2014 119th Congress (2025-2026): Expanding Access to Credit through Consumer-Permissioned Data Act"
+    ],
+    [
+      "legislation",
+      "Congress.gov",
+      "H.R. 2001 \u2014 119th Congress (2025-2026): Action for Dental Health Act"
+    ],
+    [
+      "legislation",
+      "Congress.gov",
+      "H.R. 9519 \u2014 119th Congress (2025-2026): Social Security 2100 Act"
+    ],
+    [
+      "legislation",
+      "Congress.gov",
+      "H.R. 7661 \u2014 Text - H.R.7661"
     ]
   ]
 }
