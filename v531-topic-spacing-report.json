@@ -1,0 +1,226 @@
+{
+  "policy": {
+    "targets": [
+      "gaming",
+      "technology"
+    ],
+    "eventWindow": 4,
+    "brandWindow": 1,
+    "lookahead": 18,
+    "maxQualityDrop": 10.0,
+    "deletes": 0,
+    "ranking": "baseline order with event spacing and adjacent-brand spacing"
+  },
+  "tabs": {
+    "technology": {
+      "count": 80,
+      "beforeEventConflictsTop25": 0,
+      "afterEventConflictsTop25": 0,
+      "beforeAdjacentBrandConflictsTop25": 3,
+      "afterAdjacentBrandConflictsTop25": 0,
+      "combinedBefore": 3,
+      "combinedAfter": 0,
+      "averageTop25Displacement": 0.4,
+      "beforeTop25": [
+        "Google\u2019s Pixel 11 is cheaper ahead of iPhone 18 Pro launch - The Verge",
+        "Microsoft\u2019s new AI \u2018code of conduct\u2019 tells models not to hack systems or trick humans - TechCrunch",
+        "Trump privately met with OpenAI\u2019s Altman at GOP convention, MS Now reports - Reuters",
+        "OpenAI boss Sam Altman spells out how and why the AI industry wants to slow down: 'We could lose control' - CNBC",
+        "OpenAI boss and Elon Musk back calls to put brakes on \u2018reckless\u2019 AI development - The Guardian",
+        "Apple releases iOS 27, macOS Golden Gate 27 with Siri AI and Liquid Glass refinements - Ars Technica",
+        "The Next AI Race Will Not Be Won by the Smartest Agent. It Will Be Won by the Most Trusted One - WIRED",
+        "AI 'kill switch' may need to be mandatory, Anthropic co-founder tells BBC - BBC",
+        "Microsoft issues emergency Windows 11 update to fix its record-breaking patch - The Verge",
+        "OpenAI buys smartphone camera maker Glass Imaging for $300 million, report says - TechCrunch",
+        "Anthropic says AI can boost U.S. GDP by 32%, up to $44.4 trillion in four years \u2014 economics model predicts that displaced employees 'may have to switch to jobs like electrician and nurse' - Tom's Hardware",
+        "Legal AI startup Harvey reaches $15.5 billion valuation in new funding round - Reuters",
+        "Amodei AI slowdown talk spooks chip stocks while bitcoin rises. Why? - \ub514\uc9c0\ud138\ud22c\ub370\uc774",
+        "Veradigm Data Breach: Gang Claims 3.5M Records [2026] - tech-insider.org",
+        "Trump goes scorched earth on AI warnings, raging about data center opposition and regulation - CNBC",
+        "OpenAI urges UK lawmakers to rein in technology amid growing safety fears - The Guardian",
+        "Exclusive: Paying for frontier AI models buys 4-month head start at 5x the cost - Ars Technica",
+        "Apple Home\u2019s new security camera features cost as much as $60 a month - The Verge",
+        "AI infrastructure company Cornelis raises $205M to chip away at Nvidia\u2019s dominance - TechCrunch",
+        "Germany says halting AI development not 'viable' as Europe weighs safety of new tech",
+        "AI Leaders Are Calling for a Slowdown. Trump\u2019s Team Says It\u2019s on Them - WIRED",
+        "iPhone Duo vs. Galaxy Z Fold 8 Ultra: Apple's and Samsung's Premium Foldables Compared - CNET",
+        "AI models are becoming the \u2018most potent cyber weapon\u2019 ever created, Cohere CEO says - CNBC",
+        "Anthropic, OpenAI CEOs call for pacing AI development after researcher says technology could 'kill all humans' - Yahoo Finance",
+        "Nvidia, Palantir and others ask employees to stop using OpenAI and Anthropic AI models; warn the two comp - The Times of India"
+      ],
+      "afterTop25": [
+        "Google\u2019s Pixel 11 is cheaper ahead of iPhone 18 Pro launch - The Verge",
+        "Microsoft\u2019s new AI \u2018code of conduct\u2019 tells models not to hack systems or trick humans - TechCrunch",
+        "Trump privately met with OpenAI\u2019s Altman at GOP convention, MS Now reports - Reuters",
+        "Apple releases iOS 27, macOS Golden Gate 27 with Siri AI and Liquid Glass refinements - Ars Technica",
+        "OpenAI boss Sam Altman spells out how and why the AI industry wants to slow down: 'We could lose control' - CNBC",
+        "The Next AI Race Will Not Be Won by the Smartest Agent. It Will Be Won by the Most Trusted One - WIRED",
+        "OpenAI boss and Elon Musk back calls to put brakes on \u2018reckless\u2019 AI development - The Guardian",
+        "AI 'kill switch' may need to be mandatory, Anthropic co-founder tells BBC - BBC",
+        "Microsoft issues emergency Windows 11 update to fix its record-breaking patch - The Verge",
+        "OpenAI buys smartphone camera maker Glass Imaging for $300 million, report says - TechCrunch",
+        "Anthropic says AI can boost U.S. GDP by 32%, up to $44.4 trillion in four years \u2014 economics model predicts that displaced employees 'may have to switch to jobs like electrician and nurse' - Tom's Hardware",
+        "Legal AI startup Harvey reaches $15.5 billion valuation in new funding round - Reuters",
+        "Amodei AI slowdown talk spooks chip stocks while bitcoin rises. Why? - \ub514\uc9c0\ud138\ud22c\ub370\uc774",
+        "Veradigm Data Breach: Gang Claims 3.5M Records [2026] - tech-insider.org",
+        "Trump goes scorched earth on AI warnings, raging about data center opposition and regulation - CNBC",
+        "OpenAI urges UK lawmakers to rein in technology amid growing safety fears - The Guardian",
+        "Exclusive: Paying for frontier AI models buys 4-month head start at 5x the cost - Ars Technica",
+        "Apple Home\u2019s new security camera features cost as much as $60 a month - The Verge",
+        "AI infrastructure company Cornelis raises $205M to chip away at Nvidia\u2019s dominance - TechCrunch",
+        "Germany says halting AI development not 'viable' as Europe weighs safety of new tech",
+        "AI Leaders Are Calling for a Slowdown. Trump\u2019s Team Says It\u2019s on Them - WIRED",
+        "iPhone Duo vs. Galaxy Z Fold 8 Ultra: Apple's and Samsung's Premium Foldables Compared - CNET",
+        "AI models are becoming the \u2018most potent cyber weapon\u2019 ever created, Cohere CEO says - CNBC",
+        "Anthropic, OpenAI CEOs call for pacing AI development after researcher says technology could 'kill all humans' - Yahoo Finance",
+        "Billionaire Stanley Druckenmiller Has Sold Micron, Broadcom, and Intel. Here's the Biggest AI Chip Designer Left in His Portfolio. - fool.com"
+      ],
+      "beforeExamples": [
+        {
+          "type": "adjacent-brand",
+          "story": "OpenAI boss Sam Altman spells out how and why the AI industry wants to slow down: 'We could lose control' - CNBC",
+          "near": "Trump privately met with OpenAI\u2019s Altman at GOP convention, MS Now reports - Reuters"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "OpenAI boss and Elon Musk back calls to put brakes on \u2018reckless\u2019 AI development - The Guardian",
+          "near": "OpenAI boss Sam Altman spells out how and why the AI industry wants to slow down: 'We could lose control' - CNBC"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Nvidia, Palantir and others ask employees to stop using OpenAI and Anthropic AI models; warn the two comp - The Times of India",
+          "near": "Anthropic, OpenAI CEOs call for pacing AI development after researcher says technology could 'kill all humans' - Yahoo Finance"
+        }
+      ],
+      "afterExamples": []
+    },
+    "gaming": {
+      "count": 52,
+      "beforeEventConflictsTop25": 1,
+      "afterEventConflictsTop25": 0,
+      "beforeAdjacentBrandConflictsTop25": 14,
+      "afterAdjacentBrandConflictsTop25": 2,
+      "combinedBefore": 15,
+      "combinedAfter": 2,
+      "averageTop25Displacement": 4.6,
+      "beforeTop25": [
+        "James Bond Game 007 First Light Delayed Until 2027 on Nintendo Switch 2 - IGN",
+        "After nearly a year of silence following its last-minute delay, Kingmakers resurfaces with an extended gameplay video and new playtest - PC Gamer",
+        "Upcoming Nintendo Switch 2 Games: Release Dates for 2026 and Beyond - IGN",
+        "Valve working on Steam Frame strap that adds Index-like speakers and hot-swappable batteries, 'coming soon' - PC Gamer",
+        "Nintendo Opens the Zelda: Ocarina of Time Pre-orders Fans Were Waiting For - Polygon.com",
+        "Mega Man: Dual Override (2027) | Switch 2 Game - Nintendo Life",
+        "The Royal Writ Is A Delightfully Dark Deckbuilder - Now On Game Pass, Xbox, PlayStation, Switch - TheXboxHub",
+        "Switch Online Cancels Hit 50% on Cost vs 40% Xbox [2026] - tech-insider.org",
+        "Metroid Dread Drops in Price for Nintendo Switch Following the Metroid Ravenous Reveal - IGN",
+        "Thief designer Randy Smith Evergreen refused to work for Xbox because it would be like 'walking past some stakes with human skulls on them' and pretending 'it's probably fine in this direction' - PC Gamer",
+        "Nintendo Switch 2 Docked VRR Leapfrogs PS5, but the Catch Falls Squarely on Game Developers - Wccftech",
+        "A Look Back at the 2024 Gaming Layoffs: PlayStation and Xbox Couldn't Escape, So How Did Nintendo Become the Only Company Unscathed? - \u73a9\u5177\u4eba TOY PEOPLE",
+        "007 First Light on Switch 2 delayed less than a week after 2026 confirmation - Metro.co.uk",
+        "Xbox Game Pass, PS Plus, and Nintendo Switch Online Are Seeing More Subscription Cancellations Over Rising Costs - Beebom",
+        "Blizzard has no plans to turn Battle.net into a competitor to Steam and the Epic Games Store - WN Hub",
+        "Persona 5, 4 & 3 on Xbox and Nintendo Switch: Release dates, trailers & everything we know - Dexerto",
+        "Diablo IV: Age Of Hatred Collection coming to Nintendo Switch 2 this week - Nintendo Wire",
+        "7 big new video games out this week \u2013 PlayStation, Xbox, PC, Switch - ScreenHub Australia",
+        "Bitcast 397 : Kojima to Xbox, Nintendo Directs, and PlayStation WTF!? - Seasoned Gaming",
+        "Clive Barker\u2019s Hellraiser: Revival Is Coming To Nintendo Switch 2 In October - Explosion Network",
+        "US gamers forced to cancel PlayStation, Nintendo and Xbox subscriptions as costs climb - Geo News",
+        "RuneScape: Dragonwilds is now available on PS5, Xbox, Switch 2, and PC - RPG Site",
+        "More than 40% of people cancelling Xbox Game Pass, PlayStation \u2026 - GameDev.net",
+        "Persona 4 Revival & Persona 6 Is Set To Released For The Nintendo Switch 2 - Sirus Gaming",
+        "Palia Nintendo Switch 2 Edition is Coming This Holiday Season - nintendosmash.com"
+      ],
+      "afterTop25": [
+        "James Bond Game 007 First Light Delayed Until 2027 on Nintendo Switch 2 - IGN",
+        "After nearly a year of silence following its last-minute delay, Kingmakers resurfaces with an extended gameplay video and new playtest - PC Gamer",
+        "Upcoming Nintendo Switch 2 Games: Release Dates for 2026 and Beyond - IGN",
+        "Valve working on Steam Frame strap that adds Index-like speakers and hot-swappable batteries, 'coming soon' - PC Gamer",
+        "Nintendo Opens the Zelda: Ocarina of Time Pre-orders Fans Were Waiting For - Polygon.com",
+        "The Royal Writ Is A Delightfully Dark Deckbuilder - Now On Game Pass, Xbox, PlayStation, Switch - TheXboxHub",
+        "Mega Man: Dual Override (2027) | Switch 2 Game - Nintendo Life",
+        "Thief designer Randy Smith Evergreen refused to work for Xbox because it would be like 'walking past some stakes with human skulls on them' and pretending 'it's probably fine in this direction' - PC Gamer",
+        "Metroid Dread Drops in Price for Nintendo Switch Following the Metroid Ravenous Reveal - IGN",
+        "Blizzard has no plans to turn Battle.net into a competitor to Steam and the Epic Games Store - WN Hub",
+        "Switch Online Cancels Hit 50% on Cost vs 40% Xbox [2026] - tech-insider.org",
+        "Nintendo Switch 2 Docked VRR Leapfrogs PS5, but the Catch Falls Squarely on Game Developers - Wccftech",
+        "Xbox to publish Kojima Productions' Physint after PlayStation ditches project - Game Developer",
+        "007 First Light on Switch 2 delayed less than a week after 2026 confirmation - Metro.co.uk",
+        "A Look Back at the 2024 Gaming Layoffs: PlayStation and Xbox Couldn't Escape, So How Did Nintendo Become the Only Company Unscathed? - \u73a9\u5177\u4eba TOY PEOPLE",
+        "Steam Frame release date, price, pre-order and latest news - Radio Times",
+        "Xbox Game Pass, PS Plus, and Nintendo Switch Online Are Seeing More Subscription Cancellations Over Rising Costs - Beebom",
+        "Top-rated Steam PC Games Released Last Week (7th\u201313th of September 2026) - GameGrin",
+        "Persona 5, 4 & 3 on Xbox and Nintendo Switch: Release dates, trailers & everything we know - Dexerto",
+        "Discover Your Next Must-Play PC Game With Steam Hype - IGN Southeast Asia",
+        "Diablo IV: Age Of Hatred Collection coming to Nintendo Switch 2 this week - Nintendo Wire",
+        "More than 40% of people cancelling Xbox Game Pass, PlayStation \u2026 - GameDev.net",
+        "Clive Barker\u2019s Hellraiser: Revival Is Coming To Nintendo Switch 2 In October - Explosion Network",
+        "Steam Frame Games: What You Can Actually Play on It - vr.org",
+        "7 big new video games out this week \u2013 PlayStation, Xbox, PC, Switch - ScreenHub Australia"
+      ],
+      "beforeExamples": [
+        {
+          "type": "adjacent-brand",
+          "story": "Mega Man: Dual Override (2027) | Switch 2 Game - Nintendo Life",
+          "near": "Nintendo Opens the Zelda: Ocarina of Time Pre-orders Fans Were Waiting For - Polygon.com"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "The Royal Writ Is A Delightfully Dark Deckbuilder - Now On Game Pass, Xbox, PlayStation, Switch - TheXboxHub",
+          "near": "Mega Man: Dual Override (2027) | Switch 2 Game - Nintendo Life"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Switch Online Cancels Hit 50% on Cost vs 40% Xbox [2026] - tech-insider.org",
+          "near": "The Royal Writ Is A Delightfully Dark Deckbuilder - Now On Game Pass, Xbox, PlayStation, Switch - TheXboxHub"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Metroid Dread Drops in Price for Nintendo Switch Following the Metroid Ravenous Reveal - IGN",
+          "near": "Switch Online Cancels Hit 50% on Cost vs 40% Xbox [2026] - tech-insider.org"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "A Look Back at the 2024 Gaming Layoffs: PlayStation and Xbox Couldn't Escape, So How Did Nintendo Become the Only Company Unscathed? - \u73a9\u5177\u4eba TOY PEOPLE",
+          "near": "Nintendo Switch 2 Docked VRR Leapfrogs PS5, but the Catch Falls Squarely on Game Developers - Wccftech"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Xbox Game Pass, PS Plus, and Nintendo Switch Online Are Seeing More Subscription Cancellations Over Rising Costs - Beebom",
+          "near": "007 First Light on Switch 2 delayed less than a week after 2026 confirmation - Metro.co.uk"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Diablo IV: Age Of Hatred Collection coming to Nintendo Switch 2 this week - Nintendo Wire",
+          "near": "Persona 5, 4 & 3 on Xbox and Nintendo Switch: Release dates, trailers & everything we know - Dexerto"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "7 big new video games out this week \u2013 PlayStation, Xbox, PC, Switch - ScreenHub Australia",
+          "near": "Diablo IV: Age Of Hatred Collection coming to Nintendo Switch 2 this week - Nintendo Wire"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Bitcast 397 : Kojima to Xbox, Nintendo Directs, and PlayStation WTF!? - Seasoned Gaming",
+          "near": "7 big new video games out this week \u2013 PlayStation, Xbox, PC, Switch - ScreenHub Australia"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Clive Barker\u2019s Hellraiser: Revival Is Coming To Nintendo Switch 2 In October - Explosion Network",
+          "near": "Bitcast 397 : Kojima to Xbox, Nintendo Directs, and PlayStation WTF!? - Seasoned Gaming"
+        }
+      ],
+      "afterExamples": [
+        {
+          "type": "adjacent-brand",
+          "story": "Mega Man: Dual Override (2027) | Switch 2 Game - Nintendo Life",
+          "near": "The Royal Writ Is A Delightfully Dark Deckbuilder - Now On Game Pass, Xbox, PlayStation, Switch - TheXboxHub"
+        },
+        {
+          "type": "adjacent-brand",
+          "story": "Nintendo Switch 2 Docked VRR Leapfrogs PS5, but the Catch Falls Squarely on Game Developers - Wccftech",
+          "near": "Switch Online Cancels Hit 50% on Cost vs 40% Xbox [2026] - tech-insider.org"
+        }
+      ]
+    }
+  }
+}
