@@ -1,23 +1,23 @@
 #!/usr/bin/env python3
 """Final B2 release pass.
 
-Runs after source ladders and D-pool removals so the serialized News feed is the
-exact order audited and rendered. It does two deliberately narrow things:
+Runs after source ladders, D-pool removals, and location-bank ordering so the
+serialized News feed is the exact order audited and rendered.
 
-1. Removes exact Legislation duplicates by normalized title or canonical URL.
-2. Prevents a deep single-publisher tail after other source ladders are
-   exhausted. The cap is applied only to editorial tabs where a single source
-   can otherwise dominate the bottom of the feed. Local/Region are excluded
-   because their inventory is viewer-location scoped. NFL uses an adaptive
-   rule: if fewer than three qualified publishers survive upstream filtering,
-   it remains uncapped so useful inventory is not destroyed just because ESPN
-   is the only viable source on that run.
+This pass deliberately does only two editorial-safety jobs:
+1. Deduplicate Legislation by official record identity first, then canonical
+   official URL. Normalized title is only a fallback when no official identity
+   exists, so distinct bills with similar titles are never collapsed together.
+2. Prevent deep single-publisher tails. World, Presidential, and New Mexico use
+   proportional caps so strong inventory is retained while one source cannot
+   dominate the whole tab. NFL remains adaptive when source diversity is sparse.
 
 This pass never changes category ownership and never changes the UX.
 """
 from __future__ import annotations
 
 import json
+import math
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
@@ -27,21 +27,27 @@ from urllib.parse import urlsplit, urlunsplit
 NEWS = Path("News")
 REPORT = Path("/tmp/v52-b2-finalize.json")
 
-# A source may keep several strong stories, but it may not become the entire
-# tail of a tab once the other publisher ladders are exhausted.
+# Fixed caps are appropriate where there is normally enough source breadth.
 BASE_SOURCE_CAPS = {
     "top": 3,
-    "world": 6,
     "us": 5,
-    "presidential": 6,
     "federal": 5,
-    "nm": 6,
     "nfl": 8,
     "technology": 6,
     "gaming": 6,
     "military": 6,
     "entertainment": 6,
 }
+
+# These tabs can legitimately have one wire/local publisher carrying many of
+# the strongest stories. Keep up to 35% of the candidate tab from one source,
+# with a floor of six, instead of throwing away useful inventory at six cards.
+PROPORTIONAL_SOURCE_CAPS = {
+    "world": 0.35,
+    "presidential": 0.35,
+    "nm": 0.35,
+}
+PROPORTIONAL_FLOOR = 6
 
 
 def field(item, name):
@@ -64,11 +70,13 @@ def source_id(value):
 
 def norm_title(value):
     s = (value or "").lower()
-    # Match the audit's exact-title normalization so a duplicate cannot pass
-    # the finalizer and then fail the release gate.
     s = re.sub(r"\s+-\s+[^-]{2,50}$", "", s)
     s = re.sub(r"[^a-z0-9 ]+", " ", s)
     return " ".join(s.split())
+
+
+def norm_identity(value):
+    return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
 
 
 def norm_url(value):
@@ -79,17 +87,28 @@ def norm_url(value):
         return value or ""
 
 
-def effective_source_caps(items):
-    """Return caps that are safe for this exact serialized candidate.
+def legislation_identity(item):
+    """Return the strongest available identity for an official record."""
+    bill = norm_identity(field(item, "billNumber"))
+    jurisdiction = norm_identity(field(item, "jurisdiction"))
+    source = source_id(field(item, "source"))
+    if bill:
+        return f"bill:{jurisdiction or source}:{bill}"
+    official = norm_url(field(item, "officialSource") or field(item, "link"))
+    if official:
+        return f"url:{official}"
+    title = norm_title(field(item, "title"))
+    return f"title:{source}:{title}" if title else ""
 
-    NFL is intentionally special. If fewer than three qualified publishers
-    survive all earlier relevance/source gates, enforcing the normal eight-card
-    cap can collapse an otherwise valid NFL feed. In that low-diversity case we
-    leave NFL uncapped; source-ladder ordering still places any alternate source
-    as early as possible. Once three or more publishers survive, the normal cap
-    resumes automatically.
-    """
+
+def effective_source_caps(items):
     caps = dict(BASE_SOURCE_CAPS)
+    category_counts = Counter(field(item, "category").lower() for item in items)
+    for cat, fraction in PROPORTIONAL_SOURCE_CAPS.items():
+        total = category_counts.get(cat, 0)
+        if total:
+            caps[cat] = max(PROPORTIONAL_FLOOR, int(math.ceil(total * fraction)))
+
     nfl_sources = {
         source_id(field(item, "source"))
         for item in items
@@ -97,7 +116,7 @@ def effective_source_caps(items):
     }
     if len(nfl_sources) < 3:
         caps.pop("nfl", None)
-    return caps, len(nfl_sources)
+    return caps, len(nfl_sources), dict(category_counts)
 
 
 def main():
@@ -107,11 +126,11 @@ def main():
         raise SystemExit("RSS channel missing")
 
     items = list(channel.findall("item"))
-    source_caps, nfl_source_count = effective_source_caps(items)
+    source_caps, nfl_source_count, category_counts = effective_source_caps(items)
     kept = []
     removed = []
     source_counts = defaultdict(Counter)
-    leg_titles = set()
+    leg_identities = set()
     leg_urls = set()
 
     for item in items:
@@ -119,21 +138,22 @@ def main():
         src = source_id(field(item, "source"))
 
         if cat == "legislation":
-            nt = norm_title(field(item, "title"))
-            nu = norm_url(field(item, "link"))
-            duplicate = (nt and nt in leg_titles) or (nu and nu in leg_urls)
+            ident = legislation_identity(item)
+            official_url = norm_url(field(item, "officialSource") or field(item, "link"))
+            duplicate = (ident and ident in leg_identities) or (official_url and official_url in leg_urls)
             if duplicate:
                 removed.append({
                     "category": cat,
                     "source": field(item, "source"),
                     "title": field(item, "title"),
-                    "reason": "exact-legislation-duplicate",
+                    "billNumber": field(item, "billNumber"),
+                    "reason": "official-legislation-identity-duplicate",
                 })
                 continue
-            if nt:
-                leg_titles.add(nt)
-            if nu:
-                leg_urls.add(nu)
+            if ident:
+                leg_identities.add(ident)
+            if official_url:
+                leg_urls.add(official_url)
 
         cap = source_caps.get(cat)
         if cap is not None and source_counts[cat][src] >= cap:
@@ -160,9 +180,13 @@ def main():
         "removedCount": len(removed),
         "removedByReason": dict(Counter(x["reason"] for x in removed)),
         "sourceCaps": source_caps,
-        "configuredSourceCaps": BASE_SOURCE_CAPS,
+        "configuredFixedSourceCaps": BASE_SOURCE_CAPS,
+        "proportionalSourceCaps": PROPORTIONAL_SOURCE_CAPS,
+        "proportionalFloor": PROPORTIONAL_FLOOR,
+        "categoryCountsBeforeFinalizer": category_counts,
         "nflQualifiedSourceCount": nfl_source_count,
         "nflAdaptiveCap": "uncapped-low-diversity" if "nfl" not in source_caps else source_caps["nfl"],
+        "legislationDedupPolicy": "billNumber+jurisdiction, then canonical official URL, title only when identity is unavailable",
         "removed": removed[:100],
         "locationScopedTabsUncapped": ["local", "region"],
     }
