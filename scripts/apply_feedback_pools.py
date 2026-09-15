@@ -1,181 +1,107 @@
 #!/usr/bin/env python3
 """Apply persistent D/NR/NW feedback pools to the generated RSS feed.
 
-D (Duplicate): suppresses the exact article identity globally.
-NR (Not Relevant): suppresses the exact article identity in the recorded category.
-NW (Not Wanted): suppresses the exact article identity in the recorded category.
-
-The pool service is intentionally treated as authoritative in production. Use
---require-remote to fail instead of publishing without feedback enforcement.
+D = suppress the marked article globally.
+NR/NW = suppress the marked article only in the recorded category.
+V5.2 hardens canonical title/source matching and de-duplicates pool rows in memory.
 """
 from __future__ import annotations
-
-import argparse
-import json
-import re
-import sys
-import urllib.error
-import urllib.parse
-import urllib.request
+import argparse,json,re,sys,urllib.error,urllib.parse,urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
-DEFAULT_API = "https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/news-feedback"
-REASONS = ("D", "NR", "NW")
+DEFAULT_API='https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/news-feedback'
+REASONS=('D','NR','NW')
+DROP_Q={'utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','fbclid'}
 
+def normalize_text(v:str|None)->str:
+    s=(v or '').lower();s=re.sub(r'^\s*\d+[.)]\s*','',s);s=re.sub(r'\s+',' ',s).strip();return s
 
-def normalize_text(value: str | None) -> str:
-    text = (value or "").lower()
-    text = re.sub(r"^\s*\d+[.)]\s*", "", text)
-    return re.sub(r"\s+", " ", text).strip()
+def canonical_title(v:str|None)->str:
+    s=normalize_text(v)
+    # Feed titles commonly append a publisher suffix. Remove it for stable identity.
+    s=re.sub(r'\s+-\s+[^-]{2,60}$','',s)
+    s=re.sub(r'[^a-z0-9 ]+',' ',s);return re.sub(r'\s+',' ',s).strip()
 
+def canonical_source(v:str|None)->str:
+    s=normalize_text(v)
+    s=re.sub(r'^the\s+','',s)
+    s=re.sub(r'\.(com|org|net)$','',s)
+    return re.sub(r'[^a-z0-9]+','',s)
 
-def normalize_url(value: str | None) -> str:
-    raw = (value or "").strip()
-    if not raw:
-        return ""
+def normalize_url(v:str|None)->str:
+    raw=(v or '').strip()
+    if not raw:return ''
     try:
-        parts = urllib.parse.urlsplit(raw)
-        if parts.scheme not in {"http", "https"}:
-            return ""
-        pairs = urllib.parse.parse_qsl(parts.query, keep_blank_values=True)
-        drop = {"utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "gclid", "fbclid"}
-        query = urllib.parse.urlencode([(k, v) for k, v in pairs if k not in drop])
-        clean = urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path, query, ""))
-        return clean.rstrip("/").lower()
-    except Exception:
-        return raw.rstrip("/").lower()
+        p=urllib.parse.urlsplit(raw)
+        if p.scheme not in {'http','https'}:return ''
+        pairs=urllib.parse.parse_qsl(p.query,keep_blank_values=True)
+        q=urllib.parse.urlencode([(k,v) for k,v in pairs if k.lower() not in DROP_Q])
+        return urllib.parse.urlunsplit((p.scheme.lower(),p.netloc.lower(),p.path.rstrip('/'),q,'')).lower()
+    except Exception:return raw.rstrip('/').lower()
 
+def item_identity(i:ET.Element)->dict[str,str]:
+    title=(i.findtext('title') or '').strip();source=(i.findtext('source') or '').strip();url=(i.findtext('link') or '').strip()
+    return {'title':title,'title_key':canonical_title(title),'source':source,'source_key':canonical_source(source),'url':url,'url_key':normalize_url(url),'category':normalize_text(i.findtext('category'))}
 
-def item_identity(item: ET.Element) -> dict[str, str]:
-    title = (item.findtext("title") or "").strip()
-    url = (item.findtext("link") or "").strip()
-    source = (item.findtext("source") or "").strip()
-    category = normalize_text(item.findtext("category"))
-    return {
-        "title": title,
-        "title_key": normalize_text(title),
-        "url": url,
-        "url_key": normalize_url(url),
-        "source": source,
-        "source_key": normalize_text(source),
-        "category": category,
-    }
+def pool_identity(r:dict[str,Any])->dict[str,str]:
+    return {'title_key':canonical_title(r.get('title_key') or r.get('title')),'source_key':canonical_source(r.get('source_key') or r.get('source')),'url_key':normalize_url(r.get('url_key') or r.get('url')),'category':normalize_text(r.get('category'))}
 
+def same_article(item:dict[str,str],record:dict[str,Any],*,require_category:bool)->bool:
+    r=pool_identity(record)
+    if require_category and r['category'] and item['category']!=r['category']:return False
+    if r['url_key'] and item['url_key'] and r['url_key']==item['url_key']:return True
+    if r['title_key'] and r['title_key']==item['title_key']:
+        # A canonical title match is strong enough when sources are equivalent or one source is absent.
+        return not r['source_key'] or not item['source_key'] or r['source_key']==item['source_key']
+    return False
 
-def pool_identity(record: dict[str, Any]) -> dict[str, str]:
-    return {
-        "title_key": normalize_text(record.get("title_key") or record.get("title")),
-        "url_key": normalize_url(record.get("url_key") or record.get("url")),
-        "source_key": normalize_text(record.get("source_key") or record.get("source")),
-        "category": normalize_text(record.get("category")),
-    }
-
-
-def same_article(item: dict[str, str], record: dict[str, Any], *, require_category: bool) -> bool:
-    r = pool_identity(record)
-    if require_category and r["category"] and item["category"] != r["category"]:
-        return False
-    if r["url_key"] and item["url_key"] and r["url_key"] == item["url_key"]:
-        return True
-    return bool(
-        r["title_key"]
-        and r["title_key"] == item["title_key"]
-        and r["source_key"] == item["source_key"]
-    )
-
-
-def matched_reason(item: dict[str, str], pools: dict[str, list[dict[str, Any]]]) -> str | None:
-    for record in pools.get("D", []):
-        if same_article(item, record, require_category=False):
-            return "D"
-    for reason in ("NR", "NW"):
-        for record in pools.get(reason, []):
-            if same_article(item, record, require_category=True):
-                return reason
+def matched_reason(item,pools):
+    for r in pools.get('D',[]):
+        if same_article(item,r,require_category=False):return 'D'
+    for reason in ('NR','NW'):
+        for r in pools.get(reason,[]):
+            if same_article(item,r,require_category=True):return reason
     return None
 
+def dedupe_pool(rows:list[dict[str,Any]],reason:str)->list[dict[str,Any]]:
+    out=[];seen=set()
+    for r in rows:
+        x=pool_identity(r)
+        key=(x['url_key'] or x['title_key'],x['source_key'],'' if reason=='D' else x['category'])
+        if not key[0] or key in seen:continue
+        seen.add(key);out.append(r)
+    return out
 
-def fetch_pools(api_url: str, timeout: float = 15.0) -> dict[str, list[dict[str, Any]]]:
-    request = urllib.request.Request(api_url, headers={"Accept": "application/json", "User-Agent": "underreported-feed/1.0"})
-    with urllib.request.urlopen(request, timeout=timeout) as response:
-        if response.status != 200:
-            raise RuntimeError(f"feedback API returned HTTP {response.status}")
-        payload = json.loads(response.read().decode("utf-8"))
-    raw = payload.get("pools") if isinstance(payload, dict) else None
-    if not isinstance(raw, dict):
-        raise RuntimeError("feedback API payload has no pools object")
-    pools: dict[str, list[dict[str, Any]]] = {reason: [] for reason in REASONS}
-    for reason in REASONS:
-        rows = raw.get(reason, [])
-        if not isinstance(rows, list):
-            raise RuntimeError(f"feedback pool {reason} is not a list")
-        pools[reason] = [row for row in rows if isinstance(row, dict)]
-    return pools
+def fetch_pools(api_url:str,timeout:float=15.0):
+    req=urllib.request.Request(api_url,headers={'Accept':'application/json','User-Agent':'underreported-feed/1.0'})
+    with urllib.request.urlopen(req,timeout=timeout) as resp:
+        if resp.status!=200:raise RuntimeError(f'feedback API returned HTTP {resp.status}')
+        payload=json.loads(resp.read().decode('utf-8'))
+    raw=payload.get('pools') if isinstance(payload,dict) else None
+    if not isinstance(raw,dict):raise RuntimeError('feedback API payload has no pools object')
+    return {reason:dedupe_pool([x for x in raw.get(reason,[]) if isinstance(x,dict)],reason) for reason in REASONS}
 
-
-def apply_pools(feed_path: Path, pools: dict[str, list[dict[str, Any]]]) -> dict[str, Any]:
-    tree = ET.parse(feed_path)
-    root = tree.getroot()
-    channel = root.find("channel") if root.tag.lower() == "rss" else None
-    parent = channel if channel is not None else root
-    items = list(parent.findall("item"))
-    removed: list[dict[str, str]] = []
-    for item in items:
-        identity = item_identity(item)
-        reason = matched_reason(identity, pools)
-        if not reason:
-            continue
-        parent.remove(item)
-        removed.append({
-            "reason": reason,
-            "category": identity["category"],
-            "title": identity["title"],
-            "url": identity["url"],
-            "source": identity["source"],
-        })
+def apply_pools(feed_path:Path,pools):
+    tree=ET.parse(feed_path);root=tree.getroot();channel=root.find('channel') if root.tag.lower()=='rss' else None;parent=channel if channel is not None else root
+    removed=[]
+    for i in list(parent.findall('item')):
+        ident=item_identity(i);reason=matched_reason(ident,pools)
+        if not reason:continue
+        parent.remove(i);removed.append({'reason':reason,'category':ident['category'],'title':ident['title'],'url':ident['url'],'source':ident['source']})
     if removed:
-        try:
-            ET.indent(tree, space="  ")
-        except AttributeError:
-            pass
-        tree.write(feed_path, encoding="utf-8", xml_declaration=True)
-    return {
-        "poolCounts": {reason: len(pools.get(reason, [])) for reason in REASONS},
-        "removedCount": len(removed),
-        "removedByReason": {reason: sum(1 for row in removed if row["reason"] == reason) for reason in REASONS},
-        "removed": removed,
-    }
+        try:ET.indent(tree,space='  ')
+        except AttributeError:pass
+        tree.write(feed_path,encoding='utf-8',xml_declaration=True)
+    return {'poolCounts':{r:len(pools.get(r,[])) for r in REASONS},'removedCount':len(removed),'removedByReason':{r:sum(1 for x in removed if x['reason']==r) for r in REASONS},'removed':removed}
 
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--feed", default="News")
-    parser.add_argument("--api", default=DEFAULT_API)
-    parser.add_argument("--require-remote", action="store_true")
-    parser.add_argument("--report", default="/tmp/feedback-pool-report.json")
-    args = parser.parse_args()
-
-    try:
-        pools = fetch_pools(args.api)
-    except (OSError, urllib.error.URLError, urllib.error.HTTPError, ValueError, RuntimeError, json.JSONDecodeError) as exc:
-        message = f"Feedback pool fetch failed: {exc}"
-        if args.require_remote:
-            print(message, file=sys.stderr)
-            return 1
-        print(message + "; continuing without feedback suppression.", file=sys.stderr)
-        pools = {reason: [] for reason in REASONS}
-
-    report = apply_pools(Path(args.feed), pools)
-    Path(args.report).write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
-    print("Persistent feedback pools:", report["poolCounts"])
-    print("Removed by feedback:", report["removedByReason"])
-    if report["removed"]:
-        for row in report["removed"][:20]:
-            print(f"  [{row['reason']}] {row['category']}: {row['title']}")
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+def main():
+    p=argparse.ArgumentParser();p.add_argument('--feed',default='News');p.add_argument('--api',default=DEFAULT_API);p.add_argument('--require-remote',action='store_true');p.add_argument('--report',default='/tmp/feedback-pool-report.json');a=p.parse_args()
+    try:pools=fetch_pools(a.api)
+    except (OSError,urllib.error.URLError,urllib.error.HTTPError,ValueError,RuntimeError,json.JSONDecodeError) as exc:
+        if a.require_remote:print(f'Feedback pool fetch failed: {exc}',file=sys.stderr);return 1
+        print(f'Feedback pool fetch failed: {exc}; continuing without suppression.',file=sys.stderr);pools={r:[] for r in REASONS}
+    report=apply_pools(Path(a.feed),pools);Path(a.report).write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+    print('Persistent feedback pools:',report['poolCounts']);print('Removed by feedback:',report['removedByReason']);return 0
+if __name__=='__main__':raise SystemExit(main())
