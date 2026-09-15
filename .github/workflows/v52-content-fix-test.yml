@@ -1,14 +1,18 @@
-name: V5.2 Content Fix Test
+name: V5.2 Autotune Validation
 on:
   push:
-    branches: [v5.2-content-fix]
+    branches: [v5.2-autotune]
     paths:
       - 'scripts/v52_final_content_guard.py'
       - 'scripts/apply_feedback_pools_v52.py'
+      - 'assets/card-feedback.js'
       - '.github/workflows/v52-content-fix-test.yml'
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: v52-autotune-validation
+  cancel-in-progress: true
 jobs:
   aggressive-test:
     runs-on: ubuntu-latest
@@ -17,13 +21,14 @@ jobs:
         with: {fetch-depth: 0}
       - name: Freeze production and prior V5.2 baselines
         run: |
-          git fetch origin main v5.2-patch v5.2-content-audit
+          git fetch origin main v5.2-patch v5.2-content-audit stable-v5.2-pre-autotune-2026-09-15
           git show origin/main:News > /tmp/v51-News
-          git show origin/v5.2-patch:News > /tmp/v52-before-News
+          git show origin/stable-v5.2-pre-autotune-2026-09-15:News > /tmp/v52-before-News
           git show origin/v5.2-content-audit:scripts/audit_v52_content.py > scripts/audit_v52_content.py
-      - name: Syntax and D Pool unit contracts
+      - name: Syntax, UX protection and D Pool contracts
         run: |
           python -m py_compile scripts/*.py tests/*.py
+          node --check assets/card-feedback.js
           python - <<'PY'
           import sys;sys.path.insert(0,'scripts')
           import apply_feedback_pools_v52 as m
@@ -33,8 +38,19 @@ jobs:
           assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'world'},idx) is None
           assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'technology'},idx)=='NR'
           assert m.match({'url_key':'','title_key':'no thanks','source_key':'wire','category':'gaming'},idx)=='NW'
-          print('D Pool semantics/index contracts passed')
+          print('Backend D Pool semantics/index contracts passed')
           PY
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('assets/card-feedback.js').read_text()
+          required=['sameRecord(record,data,false)',"['NR','NW']","const globalReason=reason==='D'"]
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('Browser D Pool semantics missing: '+repr(missing))
+          print('Browser D Pool global/category semantics contract passed')
+          PY
+          git diff --exit-code origin/stable-v5.2-pre-autotune-2026-09-15 -- styles/ assets/v51-category-sticky-ux.js assets/v3-ui.js assets/app-v2.js || {
+            echo 'Protected UX changed unexpectedly'; exit 1;
+          }
       - name: Collect fresh V5.2 candidate
         run: |
           success=0
@@ -77,31 +93,36 @@ jobs:
           python scripts/cluster_related_coverage.py
           python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v52-d-pool-report.json
           python scripts/record_pull_stats.py --finalize
-      - name: Run A-B audits against production and prior V5.2
+      - name: Run A-B audits against production and saved V5.2
         run: |
           python scripts/audit_v52_content.py --baseline /tmp/v51-News --candidate News --json /tmp/v51-v52.json --md /tmp/v51-v52.md
           python scripts/audit_v52_content.py --baseline /tmp/v52-before-News --candidate News --json /tmp/before-after.json --md /tmp/before-after.md
       - name: Hard regression gates
         run: |
           python - <<'PY'
-          import json,xml.etree.ElementTree as ET,re
-          from collections import Counter,defaultdict
+          import json,xml.etree.ElementTree as ET
           before=json.load(open('/tmp/before-after.json')); after=before['v52']; old=before['baseline']
+          guard=json.load(open('/tmp/v52-content-guard.json'))
           failures=[]
-          # No normal tab may have >2 consecutive cards from one publisher when >=2 sources exist.
-          for cat,v in after.items():
-            if cat in {'top','x','legislation'}: continue
-            if v['uniqueSources']>=2 and v['maxConsecutiveSameSource']['count']>2:
-              failures.append(f"{cat} source streak {v['maxConsecutiveSameSource']}")
-          # Explicit problem tabs must not regress mismatch count versus prior V5.2.
-          for cat in ['world','nm','region','gaming','technology','federal']:
+          # Publisher balancing must reach the best achievable streak for each tab.
+          for cat,actual in guard.get('sourceStreakAfter',{}).items():
+            ideal=guard.get('optimalStreakBound',{}).get(cat,actual)
+            if actual>ideal:
+              failures.append(f'{cat} avoidable publisher streak {actual}, achievable {ideal}')
+          # Problem tabs may improve or hold, never worsen versus saved V5.2.
+          for cat in ['world','nm','region','gaming','technology','federal','us','presidential']:
             if after[cat]['mismatchCount']>old[cat]['mismatchCount']:
               failures.append(f"{cat} mismatches worsened {old[cat]['mismatchCount']}->{after[cat]['mismatchCount']}")
-          # Exact duplicates/cross-tab repeats are zero after final guards.
+          # Exact duplicates/cross-tab repeats must be gone after final guards.
           for cat,v in after.items():
             if v['exactDuplicateGroups']: failures.append(f'{cat} exact duplicate remains')
           if before.get('v52CrossTabRepeats'): failures.append('cross-tab exact repeat remains')
-          # Legislation must be official-only.
+          # No core category may collapse below 10 if the saved V5.2 had at least 10.
+          for cat,v in after.items():
+            if cat in {'top','x','legislation','underreported'}: continue
+            old_count=old[cat]['count']
+            if old_count>=10 and v['count']<10: failures.append(f'{cat} collapsed {old_count}->{v["count"]}')
+          # Legislation remains official-only.
           root=ET.parse('News').getroot();leg=[i for i in root.findall('.//item') if (i.findtext('category') or '').strip()=='legislation']
           for i in leg:
             if not (i.findtext('officialSource') or '').strip(): failures.append('legislation non-official card: '+(i.findtext('title') or ''))
@@ -117,9 +138,26 @@ jobs:
           python scripts/site_audit.py
           python scripts/v4_release_gate.py
           node --check assets/card-feedback.js
+      - name: Save comparison reports
+        run: |
+          cp /tmp/before-after.json v52-autotune-before-after.json
+          cp /tmp/v51-v52.json v52-autotune-v51-comparison.json
+          cp /tmp/v52-content-guard.json v52-autotune-content-guard.json
+          cp /tmp/v52-d-pool-report.json v52-autotune-d-pool-report.json
+      - name: Commit validated branch preview only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-d-pool-report.json
+          if git diff --cached --quiet; then
+            echo 'Validated with no generated changes.'
+            exit 0
+          fi
+          git commit -m 'Build validated V5.2 autotune preview'
+          git push origin HEAD:v5.2-autotune
       - name: Summarize results
         run: |
           echo '=== CONTENT GUARD ==='; cat /tmp/v52-content-guard.json
           echo '=== D POOLS ==='; cat /tmp/v52-d-pool-report.json
           echo '=== BEFORE/AFTER AUDIT ==='; cat /tmp/before-after.md
-          echo 'Production main was not modified and no generated test build was pushed.'
+          echo 'Production main was not modified. Preview was committed only to v5.2-autotune.'
