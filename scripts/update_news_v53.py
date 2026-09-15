@@ -37,10 +37,7 @@ NFL_SOURCE_EXPANSION = [
 ]
 
 
-def _extend_fallback(category: str, additions):
-    table = getattr(core, "TRUSTED_CATEGORY_FALLBACKS", None)
-    if not isinstance(table, dict):
-        return
+def _extend_fallback(table: dict, category: str, additions) -> None:
     rows = table.setdefault(category, [])
     seen = {(str(name).lower(), str(query).lower()) for name, query in rows}
     for name, query in additions:
@@ -50,11 +47,32 @@ def _extend_fallback(category: str, additions):
             seen.add(key)
 
 
+def _expanded_fallbacks():
+    """Return an expanded copy so V5.3 never mutates V5.2's shared table in-place."""
+    source = getattr(core, "TRUSTED_CATEGORY_FALLBACKS", None)
+    if not isinstance(source, dict):
+        return None
+    table = {category: list(rows) for category, rows in source.items()}
+    _extend_fallback(table, "world", WORLD_SOURCE_EXPANSION)
+    _extend_fallback(table, "nfl", NFL_SOURCE_EXPANSION)
+    return table
+
+
 def main():
-    _extend_fallback("world", WORLD_SOURCE_EXPANSION)
-    _extend_fallback("nfl", NFL_SOURCE_EXPANSION)
-    print(f"V5.3 source expansion: world +{len(WORLD_SOURCE_EXPANSION)}, nfl +{len(NFL_SOURCE_EXPANSION)} discovery queries")
-    v52.main()
+    sentinel = object()
+    original = getattr(core, "TRUSTED_CATEGORY_FALLBACKS", sentinel)
+    expanded = _expanded_fallbacks()
+    if expanded is not None:
+        core.TRUSTED_CATEGORY_FALLBACKS = expanded
+    try:
+        print(f"V5.3 source expansion: world +{len(WORLD_SOURCE_EXPANSION)}, nfl +{len(NFL_SOURCE_EXPANSION)} discovery queries")
+        v52.main()
+    finally:
+        if expanded is not None:
+            if original is sentinel:
+                delattr(core, "TRUSTED_CATEGORY_FALLBACKS")
+            else:
+                core.TRUSTED_CATEGORY_FALLBACKS = original
 
 
 if __name__ == "__main__":
