@@ -3,7 +3,7 @@
 
 Preserves every story and the existing editorial order as much as possible. When
 an upcoming card repeats a strong product/company/topic from one of the previous
-four displayed cards, it can be deferred within a bounded lookahead window.
+four displayed cards, it can be deferred for a comparable-quality different topic.
 Nothing is deleted and the pass does not globally re-rank the feed.
 """
 from __future__ import annotations
@@ -18,7 +18,9 @@ NEWS = Path("News")
 REPORT = Path("/tmp/v531-topic-spacing-report.json")
 TARGETS = {"technology", "gaming"}
 WINDOW = 4
-LOOKAHEAD = 10
+PRIMARY_LOOKAHEAD = 10
+EXTENDED_LOOKAHEAD = 20
+MAX_QUALITY_DROP = 8.0
 
 STRONG_PHRASES = (
     "openai", "chatgpt", "anthropic", "claude", "nvidia", "geforce", "microsoft", "windows 11",
@@ -38,6 +40,8 @@ STOP = {
     "release","releases","released","coming","available","edition","year","years","2026","2027",
 }
 
+LOW_VALUE_TITLE = re.compile(r"\b(best|top[- ]rated|all the|release dates|everything we know|guide|deals?|sale|discount|coupon)\b", re.I)
+
 
 def text(item, tag):
     return (item.findtext(tag) or "").strip()
@@ -49,6 +53,23 @@ def title(item):
 
 def category(item):
     return text(item, "category").lower()
+
+
+def quality(item):
+    try:
+        return float(text(item, "v53QualityScore"))
+    except Exception:
+        try:
+            return float(text(item, "sourceQualityScore")) * 0.75
+        except Exception:
+            return 50.0
+
+
+def candidate_quality(item):
+    score = quality(item)
+    if LOW_VALUE_TITLE.search(title(item)):
+        score -= 10
+    return score
 
 
 def fingerprint(item):
@@ -75,17 +96,34 @@ def conflicts(candidate, recent):
 
 
 def spaced(items):
-    """Preserve baseline order and only search a short distance for variety."""
+    """Preserve rank, but allow a deeper jump only for comparable-quality variety."""
     remaining = list(items)
     out = []
     while remaining:
         recent = out[-WINDOW:]
-        pick = 0
-        for idx, candidate in enumerate(remaining[:LOOKAHEAD]):
+        current = remaining[0]
+        if not conflicts(current, recent):
+            out.append(remaining.pop(0))
+            continue
+
+        pick = None
+        # First use a short lookahead, preserving the original rank preference.
+        for idx, candidate in enumerate(remaining[1:PRIMARY_LOOKAHEAD], start=1):
             if not conflicts(candidate, recent):
                 pick = idx
                 break
-        out.append(remaining.pop(pick))
+
+        # If the next ten are saturated, search a bit farther, but only promote a
+        # story whose quality is close to the deferred current story. This prevents
+        # listicles/filler from jumping ahead merely to create variety.
+        if pick is None:
+            floor = candidate_quality(current) - MAX_QUALITY_DROP
+            for idx, candidate in enumerate(remaining[PRIMARY_LOOKAHEAD:EXTENDED_LOOKAHEAD], start=PRIMARY_LOOKAHEAD):
+                if not conflicts(candidate, recent) and candidate_quality(candidate) >= floor:
+                    pick = idx
+                    break
+
+        out.append(remaining.pop(pick if pick is not None else 0))
     return out
 
 
@@ -114,7 +152,7 @@ def main():
     if channel is None: raise SystemExit("RSS channel not found")
     items=list(channel.findall("item")); by_cat=defaultdict(list)
     for item in items: by_cat[category(item)].append(item)
-    replacements={}; report={"policy":{"targets":sorted(TARGETS),"window":WINDOW,"lookahead":LOOKAHEAD,"deletes":0,"ranking":"preserve baseline; bounded deferral only"},"tabs":{}}
+    replacements={}; report={"policy":{"targets":sorted(TARGETS),"window":WINDOW,"primaryLookahead":PRIMARY_LOOKAHEAD,"extendedLookahead":EXTENDED_LOOKAHEAD,"maxQualityDrop":MAX_QUALITY_DROP,"deletes":0,"ranking":"preserve baseline; comparable-quality bounded deferral only"},"tabs":{}}
     for cat in TARGETS:
         before=by_cat.get(cat,[]); after=spaced(before); replacements[cat]=iter(after)
         bc,be=conflict_count(before); ac,ae=conflict_count(after)
