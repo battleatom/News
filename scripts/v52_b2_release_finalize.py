@@ -5,8 +5,10 @@ Runs after source ladders, D-pool removals, and location-bank ordering so the
 serialized News feed is the exact order audited and rendered.
 
 Editorial-safety jobs:
-1. Deduplicate Legislation by bill identity first, plus exact rendered title/link
-   duplicates so a reader never sees the same official card twice.
+1. Deduplicate Legislation by authoritative bill identity. For numbered bills,
+   jurisdiction + billNumber is the only duplicate key; shared legislature links
+   never collapse distinct bills. URL/title fallback is used only when billNumber
+   is missing.
 2. Limit source dominance without throwing away healthy inventory. Tabs whose
    strongest publisher legitimately carries many stories use proportional caps.
 3. Smooth retained source depth across the whole tab instead of leaving a dominant
@@ -120,7 +122,6 @@ def effective_source_caps(items):
 
 
 def theoretical_streak_bound(rows):
-    """Smallest possible max streak for the observed publisher counts."""
     counts = Counter(source_id(field(x, "source")) for x in rows)
     if not counts:
         return 0
@@ -144,13 +145,7 @@ def max_source_streak(rows):
 
 
 def smooth_sources(rows):
-    """Evenly distribute publishers while preserving story order inside each source.
-
-    Each source's kth story receives an ideal fractional slot across the full tab.
-    Merging those slots preserves the source ladder's per-publisher story ranking but
-    prevents the final rounds from becoming a large one-source block after smaller
-    publisher buckets are exhausted.
-    """
+    """Evenly distribute publishers while preserving story order inside each source."""
     if len(rows) < 2:
         return list(rows)
 
@@ -171,8 +166,6 @@ def smooth_sources(rows):
     scheduled.sort(key=lambda x: (x[0], x[1], x[2], x[3]))
     out = [x[4] for x in scheduled]
 
-    # A tiny local repair handles fractional-slot ties that can otherwise create a
-    # longer streak than mathematically necessary. Never changes order within a source.
     target = theoretical_streak_bound(rows)
     if max_source_streak(out) <= target:
         return out
@@ -182,14 +175,10 @@ def smooth_sources(rows):
     rebuilt = []
     last = None
     run = 0
+    emitted = Counter()
     while any(queues.values()):
         candidates = [sid for sid in source_order if queues[sid]]
-        allowed = [sid for sid in candidates if not (sid == last and run >= target)]
-        if not allowed:
-            allowed = candidates
-        # Prefer the source furthest behind its proportional share, with original
-        # source-ladder order as the stable tie-break.
-        emitted = Counter(source_id(field(x, "source")) for x in rebuilt)
+        allowed = [sid for sid in candidates if not (sid == last and run >= target)] or candidates
         chosen = max(
             allowed,
             key=lambda sid: (
@@ -200,6 +189,7 @@ def smooth_sources(rows):
         )
         item = queues[chosen].pop(0)
         rebuilt.append(item)
+        emitted[chosen] += 1
         if chosen == last:
             run += 1
         else:
@@ -221,9 +211,8 @@ def main():
     source_counts = defaultdict(Counter)
     category_kept = Counter()
     leg_identities = set()
-    leg_urls_without_bill = set()
-    leg_render_titles = set()
-    leg_render_links = set()
+    leg_fallback_urls = set()
+    leg_fallback_titles = set()
 
     for item in items:
         cat = field(item, "category").lower()
@@ -233,59 +222,40 @@ def main():
             ident, has_bill_identity = legislation_identity(item)
             official_url = norm_url(field(item, "officialSource") or field(item, "link"))
             render_title = norm_title(field(item, "title"))
-            render_link = norm_url(field(item, "link"))
 
             if has_bill_identity:
-                duplicate_identity = bool(ident and ident in leg_identities)
+                duplicate = bool(ident and ident in leg_identities)
             else:
-                duplicate_identity = bool(
+                duplicate = bool(
                     (ident and ident in leg_identities)
-                    or (official_url and official_url in leg_urls_without_bill)
+                    or (official_url and official_url in leg_fallback_urls)
+                    or (render_title and render_title in leg_fallback_titles)
                 )
-            duplicate_render = bool(
-                (render_title and render_title in leg_render_titles)
-                or (render_link and render_link in leg_render_links)
-            )
-            if duplicate_identity or duplicate_render:
+            if duplicate:
                 removed.append({
                     "category": cat,
                     "source": field(item, "source"),
                     "title": field(item, "title"),
                     "billNumber": field(item, "billNumber"),
-                    "reason": (
-                        "official-legislation-identity-duplicate"
-                        if duplicate_identity
-                        else "official-legislation-render-duplicate"
-                    ),
+                    "reason": "official-legislation-identity-duplicate",
                 })
                 continue
             if ident:
                 leg_identities.add(ident)
-            if official_url and not has_bill_identity:
-                leg_urls_without_bill.add(official_url)
-            if render_title:
-                leg_render_titles.add(render_title)
-            if render_link:
-                leg_render_links.add(render_link)
+            if not has_bill_identity:
+                if official_url:
+                    leg_fallback_urls.add(official_url)
+                if render_title:
+                    leg_fallback_titles.add(render_title)
 
         cat_max = CATEGORY_MAX.get(cat)
         if cat_max is not None and category_kept[cat] >= cat_max:
-            removed.append({
-                "category": cat,
-                "source": field(item, "source"),
-                "title": field(item, "title"),
-                "reason": f"category-release-cap-{cat_max}",
-            })
+            removed.append({"category": cat, "source": field(item, "source"), "title": field(item, "title"), "reason": f"category-release-cap-{cat_max}"})
             continue
 
         cap = source_caps.get(cat)
         if cap is not None and source_counts[cat][src] >= cap:
-            removed.append({
-                "category": cat,
-                "source": field(item, "source"),
-                "title": field(item, "title"),
-                "reason": f"source-depth-cap-{cap}",
-            })
+            removed.append({"category": cat, "source": field(item, "source"), "title": field(item, "title"), "reason": f"source-depth-cap-{cap}"})
             continue
 
         source_counts[cat][src] += 1
@@ -338,7 +308,7 @@ def main():
         "categoryCountsAfterFinalizer": dict(Counter(field(x, "category").lower() for x in rebuilt)),
         "nflQualifiedSourceCount": nfl_source_count,
         "nflAdaptiveCap": source_caps.get("nfl"),
-        "legislationDedupPolicy": "bill identity first; exact normalized rendered title/link also unique",
+        "legislationDedupPolicy": "numbered bills dedupe only by jurisdiction+billNumber; URL/title fallback only when billNumber is absent",
         "sourceStreakBeforeSmoothing": streak_before,
         "sourceStreakAfterSmoothing": streak_after,
         "sourceStreakTargets": streak_targets,
