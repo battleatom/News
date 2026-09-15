@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
 from collections import Counter
+from urllib.parse import unquote
 import sys
 from pathlib import Path
 
@@ -25,7 +26,7 @@ def make_item(source, rank, hours=1):
 
 def test_constants():
     assert v52.V52_MAX_AGE_HOURS == 336
-    assert 'when:14d' in v52.expanded_feed_url('world news')
+    assert 'when:14d' in unquote(v52.expanded_feed_url('world news'))
     assert v52.TOP_VISIBLE_SOURCE_CAP == 1
     assert v52.TOP_MID_SOURCE_CAP == 2
     assert v52.TOP_POOL_SOURCE_CAP == 3
@@ -33,7 +34,6 @@ def test_constants():
 
 def test_first_ten_are_source_diverse():
     pool=[]
-    # Twelve publishers, with Reuters having many individually strong candidates.
     sources=['Reuters','Associated Press','BBC','NPR','NBC News','ABC News','CBS News','CNN','Fox News','USA Today','Politico','The Guardian']
     for i,src in enumerate(sources):
         pool.append(make_item(src,0,hours=i+1))
@@ -74,7 +74,6 @@ def test_quality_is_modest_tiebreaker():
     now=datetime.now(timezone.utc)
     a=make_item('Reuters',0,1); b=make_item('Unknown Blog',0,1)
     a['published']=b['published']=now-timedelta(hours=1)
-    # Same text makes impact effectively tied; quality should prefer Reuters.
     a['title']=b['title']='Government announces major policy change'
     a['description']=b['description']='Breaking national policy update'
     assert v52.top_score(a, now)[0] > v52.top_score(b, now)[0]
