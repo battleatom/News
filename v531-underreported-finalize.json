@@ -1,0 +1,81 @@
+{
+  "count": 15,
+  "invalidRecentSourceCounts": 0,
+  "ordering": "public impact > underreporting priority > signal > recency",
+  "beforeTop10": [
+    "NATO jets down drone in Lithuanian airspace after bloc warns strikes will drive support for Ukraine - the-journal.com",
+    "Donald Trump Jr.\u2019s Bahamas Wedding Was Secretly Bankrolled by Russian Oligarch Close to Putin - ProPublica",
+    "The Trump Administration Wants to Fast-Track Arctic Drilling - Inside Climate News",
+    "2 people killed and suspect is dead in downtown Minneapolis shooting - the-journal.com",
+    "Missouri's election maps in chaos after conflicting rulings - PBS",
+    "Georgia bet big on EV manufacturing. Trump pulled the plug. - grist.org",
+    "America is losing its war against wildfire - grist.org",
+    "Data Center Boom Brings Health Hazards, Former EPA Officials Warn - Inside Climate News",
+    "Solutions - grist.org",
+    "A NY Hospital Tried To Close Its Birthing Center. This City United To Fight Back. - kffhealthnews.org"
+  ],
+  "afterTop10": [
+    "America is losing its war against wildfire - grist.org",
+    "2 people killed and suspect is dead in downtown Minneapolis shooting - the-journal.com",
+    "Project Jupiter developers urge New Mexico Supreme Court to get permit process moving again - Searchlight New Mexico",
+    "Nonprofits Are Helping Musicians Pay for Insurance in Austin, Texas, and Beyond - kffhealthnews.org",
+    "Missouri's election maps in chaos after conflicting rulings - PBS",
+    "Ectopic Pregnancy Deaths Have Nearly Doubled. It\u2019s Worse in States With Abortion Bans. - ProPublica",
+    "A NY Hospital Tried To Close Its Birthing Center. This City United To Fight Back. - kffhealthnews.org",
+    "NATO jets down drone in Lithuanian airspace after bloc warns strikes will drive support for Ukraine - the-journal.com",
+    "Donald Trump Jr.\u2019s Bahamas Wedding Was Secretly Bankrolled by Russian Oligarch Close to Putin - ProPublica",
+    "Georgia bet big on EV manufacturing. Trump pulled the plug. - grist.org"
+  ],
+  "afterTop10Detail": [
+    {
+      "impact": 50,
+      "support": 1,
+      "title": "America is losing its war against wildfire - grist.org"
+    },
+    {
+      "impact": 42,
+      "support": 2,
+      "title": "2 people killed and suspect is dead in downtown Minneapolis shooting - the-journal.com"
+    },
+    {
+      "impact": 34,
+      "support": 1,
+      "title": "Project Jupiter developers urge New Mexico Supreme Court to get permit process moving again - Searchlight New Mexico"
+    },
+    {
+      "impact": 32,
+      "support": 1,
+      "title": "Nonprofits Are Helping Musicians Pay for Insurance in Austin, Texas, and Beyond - kffhealthnews.org"
+    },
+    {
+      "impact": 30,
+      "support": 5,
+      "title": "Missouri's election maps in chaos after conflicting rulings - PBS"
+    },
+    {
+      "impact": 30,
+      "support": 1,
+      "title": "Ectopic Pregnancy Deaths Have Nearly Doubled. It\u2019s Worse in States With Abortion Bans. - ProPublica"
+    },
+    {
+      "impact": 29,
+      "support": 1,
+      "title": "A NY Hospital Tried To Close Its Birthing Center. This City United To Fight Back. - kffhealthnews.org"
+    },
+    {
+      "impact": 20,
+      "support": 2,
+      "title": "NATO jets down drone in Lithuanian airspace after bloc warns strikes will drive support for Ukraine - the-journal.com"
+    },
+    {
+      "impact": 20,
+      "support": 4,
+      "title": "Donald Trump Jr.\u2019s Bahamas Wedding Was Secretly Bankrolled by Russian Oligarch Close to Putin - ProPublica"
+    },
+    {
+      "impact": 20,
+      "support": 1,
+      "title": "Georgia bet big on EV manufacturing. Trump pulled the plug. - grist.org"
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+name: V5.2 Autotune Validation
+on:
+  push:
+    branches: [v5.2-autotune]
+    paths:
+      - 'scripts/v52_final_content_guard.py'
+      - 'scripts/v52_source_ladders.py'
+      - 'scripts/v52_b2_release_finalize.py'
+      - 'scripts/v52_location_bank_order.py'
+      - 'scripts/v52_inventory_recovery.py'
+      - 'scripts/apply_feedback_pools_v52.py'
+      - 'tests/v52_source_ladders_test.py'
+      - 'assets/card-feedback.js'
+      - '.github/workflows/v52-content-fix-test.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v52-autotune-validation
+  cancel-in-progress: true
+jobs:
+  aggressive-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Freeze production and prior V5.2 baselines
+        run: |
+          git fetch origin main v5.2-patch v5.2-content-audit stable-v5.2-pre-autotune-2026-09-15
+          git show origin/main:News > /tmp/v51-News
+          git show origin/stable-v5.2-pre-autotune-2026-09-15:News > /tmp/v52-before-News
+          git show origin/v5.2-content-audit:scripts/audit_v52_content.py > scripts/audit_v52_content.py
+      - name: Syntax, UX, source ladder and D Pool contracts
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python tests/v52_source_ladders_test.py
+          node --check assets/card-feedback.js
+          python - <<'PY'
+          import sys;sys.path.insert(0,'scripts')
+          import apply_feedback_pools_v52 as m
+          pools={'D':[{'url':'https://x/a?utm_source=z','category':'world'}], 'NR':[{'url':'https://x/b','category':'technology'}], 'NW':[{'title':'No Thanks','source':'Wire','category':'gaming'}]}
+          idx=m.build_index(pools)
+          assert m.match({'url_key':'https://x/a','title_key':'','source_key':'','category':'gaming'},idx)=='D'
+          assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'world'},idx) is None
+          assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'technology'},idx)=='NR'
+          assert m.match({'url_key':'','title_key':'no thanks','source_key':'wire','category':'gaming'},idx)=='NW'
+          print('Backend D Pool semantics/index contracts passed')
+          PY
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('assets/card-feedback.js').read_text()
+          required=['sameRecord(record,data,false)',"['NR','NW']","const globalReason=reason==='D'"]
+          missing=[x for x in required if x not in s]
+          if missing: raise SystemExit('Browser D Pool semantics missing: '+repr(missing))
+          print('Browser D Pool global/category semantics contract passed')
+          PY
+          python - <<'PY'
+          import sys,xml.etree.ElementTree as ET
+          sys.path.insert(0,'scripts')
+          import v52_b2_release_finalize as f
+          def bill(num,url='https://nmlegis.gov/Bills'):
+            i=ET.Element('item')
+            for k,v in [('category','legislation'),('source','New Mexico Legislature'),('jurisdiction','New Mexico'),('billNumber',num),('officialSource',url),('title',num)]: ET.SubElement(i,k).text=v
+            return i
+          a,b=bill('HB 108'),bill('HB 109')
+          assert f.legislation_identity(a)[0] != f.legislation_identity(b)[0]
+          print('Distinct bill identities remain distinct even with shared official URL')
+          PY
+          git diff --exit-code origin/stable-v5.2-pre-autotune-2026-09-15 -- styles/ assets/v51-category-sticky-ux.js assets/v3-ui.js assets/app-v2.js || {
+            echo 'Protected UX changed unexpectedly'; exit 1;
+          }
+      - name: Collect fresh V5.2 candidate
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            if python scripts/update_news_v52.py; then success=1; break; fi
+            sleep $((attempt*15))
+          done
+          test "$success" -eq 1
+      - name: Run full current refinement chain
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          cp News /tmp/v52-pre-global-filter-News
+          python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
+          python tests/v5_filter_shadow_test.py
+          python scripts/v52_inventory_recovery.py --source /tmp/v52-pre-global-filter-News --target News --nfl-target 25
+      - name: Apply B2 validity, dedupe, source ladders and D Pools
+        run: |
+          python scripts/v52_final_content_guard.py
+          python scripts/enforce_official_legislation.py
+          python scripts/cluster_related_coverage.py
+          python scripts/v52_source_ladders.py
+          python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v52-d-pool-report.json
+          python scripts/v52_location_bank_order.py
+          python scripts/v52_b2_release_finalize.py
+          python scripts/record_pull_stats.py --finalize
+      - name: Run A-B audits against production and saved V5.2
+        run: |
+          python scripts/audit_v52_content.py --baseline /tmp/v51-News --candidate News --json /tmp/v51-v52.json --md /tmp/v51-v52.md
+          python scripts/audit_v52_content.py --baseline /tmp/v52-before-News --candidate News --json /tmp/before-after.json --md /tmp/before-after.md
+      - name: Hard regression gates
+        run: |
+          python - <<'PY'
+          import json,re,xml.etree.ElementTree as ET
+          before=json.load(open('/tmp/before-after.json')); after=before['v52']; old=before['baseline']
+          guard=json.load(open('/tmp/v52-content-guard.json')); ladder=json.load(open('/tmp/v52-source-ladders.json')); finalizer=json.load(open('/tmp/v52-b2-finalize.json')); location=json.load(open('/tmp/v52-location-bank-order.json'));failures=[]
+          # Publisher balancing from final content guard. Local/Region remain location-bank aware.
+          for cat,actual in guard.get('sourceStreakAfter',{}).items():
+            if cat in {'local','region'}: continue
+            ideal=guard.get('optimalStreakBound',{}).get(cat,actual)
+            if actual>ideal: failures.append(f'{cat} avoidable publisher streak {actual}, achievable {ideal}')
+          # Source-ladder structural contract: every configured tab must produce ranked rounds when inventory exists.
+          required={'top','world','us','presidential','federal','legislation','nm','local','region','nfl','technology','gaming','military','entertainment'}
+          missing=required-set(ladder.get('tabs',{}))
+          if missing: failures.append('missing source ladder tabs: '+','.join(sorted(missing)))
+          for cat,v in ladder.get('tabs',{}).items():
+            if v['after'] and v['round1Count']<=0: failures.append(f'{cat} has no source round 1')
+            if v['after']<max(8,int(v['before']*.55)) and v['before']>=10:
+              failures.append(f'{cat} source ladder over-pruned {v["before"]}->{v["after"]}')
+          # Local is a viewer-filtered nationwide bank. Protect each market strictly;
+          # allow a small serialized cross-market streak that no viewer sees as one market.
+          if not location.get('inventoryPreserved',False): failures.append('local market inventory changed during ordering')
+          if location.get('maxPerMarketStreakAfter',999)>4:
+            failures.append(f"local per-market source streak remains {location.get('maxPerMarketStreakAfter')}")
+          if location.get('globalSourceStreakAfter',{}).get('count',999)>6:
+            failures.append(f"local cross-market serialized source streak remains {location.get('globalSourceStreakAfter',{}).get('count')}")
+          # Final serialized feed must respect the B2 source-depth caps.
+          for cat,cap in finalizer.get('sourceCaps',{}).items():
+            actual=after[cat]['maxConsecutiveSameSource']['count']
+            if actual>cap: failures.append(f'{cat} final source streak {actual} exceeds B2 cap {cap}')
+          # Reliable content-leak audit gates.
+          for cat in ['world','nm','region','gaming','local']:
+            if after[cat]['mismatchCount']>old[cat]['mismatchCount']:
+              failures.append(f"{cat} mismatches worsened {old[cat]['mismatchCount']}->{after[cat]['mismatchCount']}")
+          # Exact duplicates/cross-tab repeats must be gone.
+          for cat,v in after.items():
+            if v['exactDuplicateGroups']: failures.append(f'{cat} exact duplicate remains')
+          if before.get('v52CrossTabRepeats'): failures.append('cross-tab exact repeat remains')
+          # Preserve useful inventory, especially location-relative banks.
+          for cat,v in after.items():
+            if cat in {'top','x','legislation','underreported'}: continue
+            old_count=old[cat]['count']
+            if old_count>=10 and v['count']<10: failures.append(f'{cat} collapsed {old_count}->{v["count"]}')
+          if old['region']['count']>=50 and after['region']['count']<50: failures.append(f"region inventory collapsed {old['region']['count']}->{after['region']['count']}")
+          if old['local']['count']>=250 and after['local']['count']<250: failures.append(f"local inventory collapsed {old['local']['count']}->{after['local']['count']}")
+          # Inventory-recovery goals versus the saved pre-autotune V5.2 baseline.
+          recovery_floor={'world':0.80,'presidential':0.80,'military':0.90,'nfl':0.90,'legislation':0.80}
+          for cat,ratio in recovery_floor.items():
+            if old[cat]['count']>=10 and after[cat]['count'] < int(old[cat]['count']*ratio):
+              failures.append(f"{cat} inventory recovery insufficient {old[cat]['count']}->{after[cat]['count']} target>={ratio:.0%}")
+          # Legislation must preserve enough distinct official records for pagination.
+          if old['legislation']['count']>=10 and after['legislation']['count']<10:
+            failures.append(f"legislation inventory collapsed {old['legislation']['count']}->{after['legislation']['count']}")
+          # High-confidence semantic leak scan independent of advisory lexical flags.
+          sport=re.compile(r'\b(nfl|nba|mlb|nhl|college football|high school football|football|basketball|baseball|hockey|soccer|golf|tennis|touchdown|quarterback|playoff|standings|scouting report)\b',re.I)
+          gaming=re.compile(r'\b(video game|gaming|playstation|ps5|xbox|nintendo|switch 2|steam|game pass|esports|gameplay|dlc|game studio|game developer)\b',re.I)
+          tech=re.compile(r'\b(ai|artificial intelligence|openai|chatgpt|anthropic|cybersecurity|ransomware|malware|semiconductor|nvidia|amd|intel|iphone|ios|android|gpu|cpu|data center)\b',re.I)
+          fed=re.compile(r'\b(congress|house passes|senate|supreme court|scotus|federal court|federal judge|fbi|doj|dhs|irs|epa|treasury|government shutdown|funding stopgap)\b',re.I)
+          root=ET.parse('News').getroot();items=root.findall('.//item')
+          civic={'world','us','presidential','federal','nm','local','region'}
+          for i in items:
+            cat=(i.findtext('category') or '').strip().lower();title=(i.findtext('title') or '').strip()
+            if cat in civic and sport.search(title): failures.append(f'{cat} sports leak: {title}')
+            if cat in civic and gaming.search(title): failures.append(f'{cat} gaming leak: {title}')
+            if cat=='world' and tech.search(title): failures.append('world technology leak: '+title)
+            if cat=='world' and fed.search(title): failures.append('world federal leak: '+title)
+          # Legislation remains official-only.
+          leg=[i for i in items if (i.findtext('category') or '').strip()=='legislation']
+          for i in leg:
+            if not (i.findtext('officialSource') or '').strip(): failures.append('legislation non-official card: '+(i.findtext('title') or ''))
+          print('FAILURES',failures[:30])
+          if failures: raise SystemExit('\n'.join(failures[:30]))
+          PY
+      - name: Build and audit site
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+          node --check assets/card-feedback.js
+      - name: Save comparison reports
+        run: |
+          cp /tmp/before-after.json v52-autotune-before-after.json
+          cp /tmp/v51-v52.json v52-autotune-v51-comparison.json
+          cp /tmp/v52-content-guard.json v52-autotune-content-guard.json
+          cp /tmp/v52-source-ladders.json v52-autotune-source-ladders.json
+          cp /tmp/v52-location-bank-order.json v52-autotune-location-bank-order.json
+          cp /tmp/v52-b2-finalize.json v52-autotune-b2-finalize.json
+          cp /tmp/v52-d-pool-report.json v52-autotune-d-pool-report.json
+      - name: Commit validated branch preview only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-autotune-before-after.json v52-autotune-v51-comparison.json v52-autotune-content-guard.json v52-autotune-source-ladders.json v52-autotune-location-bank-order.json v52-autotune-b2-finalize.json v52-autotune-d-pool-report.json
+          if git diff --cached --quiet; then echo 'Validated with no generated changes.'; exit 0; fi
+          git commit -m 'Build validated V5.2 B2 source-ladder preview'
+          git push origin HEAD:v5.2-autotune
+      - name: Summarize results
+        run: |
+          echo '=== CONTENT GUARD ==='; cat /tmp/v52-content-guard.json
+          echo '=== SOURCE LADDERS ==='; cat /tmp/v52-source-ladders.json
+          echo '=== LOCATION BANK ORDER ==='; cat /tmp/v52-location-bank-order.json
+          echo '=== B2 FINALIZER ==='; cat /tmp/v52-b2-finalize.json
+          echo '=== D POOLS ==='; cat /tmp/v52-d-pool-report.json
+          echo '=== BEFORE/AFTER AUDIT ==='; cat /tmp/before-after.md
+          echo 'Production main was not modified. Preview was committed only to v5.2-autotune.'

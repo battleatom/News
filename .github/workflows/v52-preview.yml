@@ -1,0 +1,217 @@
+name: V5.2 Preview Validation
+
+on:
+  push:
+    branches: [v5.2-patch]
+    paths-ignore:
+      - 'News'
+      - 'index.html'
+      - 'update-stats.json'
+      - 'boxoffice.json'
+      - 'refresh-health.json'
+      - 'verification-report.json'
+      - 'content-brief-cache.json'
+      - 'v52-report.json'
+  workflow_dispatch:
+
+concurrency:
+  group: v52-preview-validation
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V5.2 branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Freeze V5.1 baseline artifacts
+        run: |
+          cp News /tmp/v51-News
+          cp index.html /tmp/v51-index.html
+          git rev-parse HEAD > /tmp/v52-head-before.txt
+
+      - name: Syntax and focused V5.2 regressions
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python tests/v52_patch_test.py
+          python tests/editorial_integrity_test.py
+          python tests/nfl_final_guard_test.py
+          python tests/entertainment_ranking_test.py
+          python scripts/preflight_feed.py
+
+      - name: Verify V5.1 UI implementation is untouched
+        run: |
+          git fetch origin main
+          python - <<'PY'
+          import subprocess
+          changed=subprocess.check_output(['git','diff','--name-only','origin/main...HEAD'],text=True).splitlines()
+          allowed={'scripts/update_news_v52.py','tests/v52_patch_test.py','.github/workflows/v52-preview.yml'}
+          unexpected=[p for p in changed if p not in allowed]
+          if unexpected:
+              raise SystemExit('Unexpected V5.2 source changes: '+repr(unexpected))
+          print('V5.1 production UI/source files untouched:', changed)
+          PY
+
+      - name: Collect V5.2 14-day feed
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            echo "V5.2 collection attempt ${attempt}/3"
+            if python scripts/update_news_v52.py; then success=1; break; fi
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt * 20)); fi
+          done
+          test "$success" -eq 1
+
+      - name: Run current production refinement chain
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
+          python tests/v5_filter_shadow_test.py
+          python scripts/record_pull_stats.py --finalize
+
+      - name: Verify final duplicate and X-topic contracts
+        run: |
+          python - <<'PY'
+          import json, importlib.util, sys, xml.etree.ElementTree as ET
+          from pathlib import Path
+          report=json.loads(Path('verification-report.json').read_text(encoding='utf-8'))
+          pairs=report.get('residualStrongDuplicatePairs',[])
+          if pairs: raise SystemExit('Residual strong duplicate pairs: '+repr(pairs[:10]))
+          sys.path.insert(0,str(Path('scripts').resolve()))
+          spec=importlib.util.spec_from_file_location('integrity',Path('scripts/enforce_editorial_integrity.py'))
+          m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+          expected=list(m.TOPIC_RULES)
+          items=ET.parse('News').getroot().findall('.//item')
+          x=[i for i in items if (i.findtext('category') or '').strip()=='x']
+          topics=[(i.findtext('xTopic') or '').strip() for i in x]
+          if len(x)!=10 or topics!=expected or len(set(topics))!=10:
+              raise SystemExit('X validation failed: '+repr(topics))
+          print('Duplicate and X-topic contracts passed.')
+          PY
+
+      - name: Build final V5.2 site with current production builder
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+          python -m py_compile scripts/*.py tests/*.py
+
+      - name: Aggressive V5.1 versus V5.2 comparison
+        run: |
+          python - <<'PY'
+          import json, re, xml.etree.ElementTree as ET
+          from collections import Counter
+          from datetime import timezone
+          from email.utils import parsedate_to_datetime
+          from pathlib import Path
+
+          def rows(path):
+              root=ET.parse(path).getroot()
+              out=[]
+              for i in root.findall('.//item'):
+                  out.append({
+                      'title':(i.findtext('title') or '').strip(),
+                      'source':(i.findtext('source') or '').strip(),
+                      'category':(i.findtext('category') or '').strip(),
+                      'pubDate':(i.findtext('pubDate') or '').strip(),
+                  })
+              return out
+
+          def sid(v): return re.sub(r'[^a-z0-9]+','',(v or '').lower()) or 'unknown'
+          old=rows('/tmp/v51-News'); new=rows('News')
+          old_counts=Counter(x['category'] for x in old); new_counts=Counter(x['category'] for x in new)
+          core=['world','us','presidential','federal','nm','region','nfl','technology','gaming','military','entertainment']
+          failures=[]
+          for cat in core:
+              if old_counts.get(cat,0)>0 and new_counts.get(cat,0)==0:
+                  failures.append(f'{cat} fell to zero')
+              floor=min(old_counts.get(cat,0),10)
+              if old_counts.get(cat,0)>=10 and new_counts.get(cat,0)<floor:
+                  failures.append(f'{cat} unexpectedly collapsed: {old_counts[cat]} -> {new_counts[cat]}')
+
+          old_top=[x for x in old if x['category']=='top']
+          new_top=[x for x in new if x['category']=='top']
+          new_first10=[sid(x['source']) for x in new_top[:10]]
+          new_first30=Counter(sid(x['source']) for x in new_top[:30])
+          new_all=Counter(sid(x['source']) for x in new_top)
+          if len(new_first10)>=10 and len(set(new_first10))<10:
+              failures.append('V5.2 first ten Top Stories are not one-source-per-card')
+          if max(new_first30.values(),default=0)>2:
+              failures.append('V5.2 first 30 exceed 2 stories/source')
+          if max(new_all.values(),default=0)>3:
+              failures.append('V5.2 Top pool exceeds 3 stories/source')
+
+          # Ensure the generated UX still contains the known-good V5.1 shell/features.
+          html=Path('index.html').read_text(encoding='utf-8')
+          for token in ['v51-sticky-shell','v51-category-sticky-ux.js','card-feedback.js']:
+              if token not in html: failures.append('Generated site missing '+token)
+
+          ages=[]
+          from datetime import datetime
+          now=datetime.now(timezone.utc)
+          for x in new:
+              try:
+                  dt=parsedate_to_datetime(x['pubDate'])
+                  if dt.tzinfo is None: dt=dt.replace(tzinfo=timezone.utc)
+                  ages.append((now-dt.astimezone(timezone.utc)).total_seconds()/86400)
+              except Exception: pass
+
+          report={
+              'baselineCommit':'77cc9a926757f7709f4c4a0dc09cab3f7b9c072a',
+              'baselineTotal':len(old),'v52Total':len(new),
+              'baselineCounts':dict(old_counts),'v52Counts':dict(new_counts),
+              'baselineTopFirst10Sources':[x['source'] for x in old_top[:10]],
+              'v52TopFirst10Sources':[x['source'] for x in new_top[:10]],
+              'v52TopFirst10DistinctSources':len(set(new_first10)),
+              'v52TopMaxSourceFirst30':max(new_first30.values(),default=0),
+              'v52TopMaxSourceFullPool':max(new_all.values(),default=0),
+              'oldestV52StoryDays':round(max(ages),2) if ages else None,
+              'failures':failures,
+          }
+          Path('v52-report.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8')
+          print(json.dumps(report,indent=2))
+          if failures: raise SystemExit('V5.2 comparison failed: '+repr(failures))
+          PY
+
+      - name: Commit validated live preview to V5.2 branch only
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v52-report.json
+          if git diff --cached --quiet; then
+            echo 'Preview generated with no artifact changes.'
+            exit 0
+          fi
+          git commit -m 'Build validated V5.2 live preview'
+          git push origin HEAD:v5.2-patch

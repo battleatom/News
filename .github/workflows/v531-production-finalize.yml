@@ -1,0 +1,98 @@
+name: V5.3.1 Production Finalize
+
+on:
+  workflow_run:
+    workflows: ["Update News Feed"]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: v531-production-finalize
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Sync latest main
+        run: |
+          git fetch origin main
+          git checkout main
+          git reset --hard origin/main
+
+      - name: Validate V5.3.1 production layer
+        run: python -m py_compile scripts/v53_quality_layer.py scripts/v53_underreported_guard.py scripts/v531_underreported_finalize.py scripts/v531_topic_spacing.py
+
+      - name: Apply V5.3.1 quality and diversity layer
+        run: |
+          cp News /tmp/v531-production-before
+          python scripts/v53_quality_layer.py
+          python scripts/v53_underreported_guard.py
+          python scripts/v531_underreported_finalize.py
+          python scripts/v531_topic_spacing.py
+
+      - name: Validate Underreported evidence and impact order
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          rows=[i for i in ET.parse('News').getroot().findall('.//item') if (i.findtext('category') or '').strip()=='underreported']
+          assert rows, 'Underreported cannot be empty'
+          counts=[int((i.findtext('recentSupportingSourceCount') or i.findtext('supportingSourceCount') or '0').strip() or 0) for i in rows]
+          impacts=[float((i.findtext('underreportedImpactScore') or '0').strip() or 0) for i in rows]
+          assert all(1 <= n <= 8 for n in counts), counts
+          assert impacts == sorted(impacts, reverse=True), impacts
+          print('Underreported evidence and impact ordering passed:', len(rows))
+          PY
+
+      - name: Validate Technology and Gaming are reorder-only
+        run: |
+          python - <<'PY'
+          import collections, xml.etree.ElementTree as ET
+          def ids(path,cat):
+              rows=[]
+              for i in ET.parse(path).getroot().findall('.//item'):
+                  if (i.findtext('category') or '').strip()!=cat: continue
+                  rows.append(((i.findtext('link') or '').strip(),(i.findtext('title') or '').strip()))
+              return collections.Counter(rows)
+          for cat in ('technology','gaming'):
+              before=ids('/tmp/v531-production-before',cat); after=ids('News',cat)
+              assert before==after, f'{cat} inventory changed instead of reorder-only'
+              print(cat, 'reorder-only inventory passed:', sum(after.values()))
+          PY
+
+      - name: Rebuild and audit site
+        run: |
+          python scripts/build_site.py
+          python scripts/site_audit.py
+
+      - name: Commit validated V5.3.1 production layer
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html
+          if git diff --cached --quiet; then
+            echo 'No V5.3.1 production changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Apply V5.3.1 quality and topic spacing'
+          for attempt in 1 2 3; do
+            if git push origin main; then exit 0; fi
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo 'Concurrent production update conflict; refusing silent resolution.'
+              exit 1
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          exit 1

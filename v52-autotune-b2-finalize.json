@@ -1,0 +1,227 @@
+{
+  "input": 1079,
+  "output": 1064,
+  "removedCount": 15,
+  "removedByReason": {
+    "source-depth-cap-6": 15
+  },
+  "sourceCaps": {
+    "top": 3,
+    "technology": 6,
+    "gaming": 6,
+    "entertainment": 6,
+    "nfl": 24,
+    "world": 38,
+    "presidential": 30,
+    "nm": 25,
+    "us": 10,
+    "federal": 12,
+    "military": 26
+  },
+  "configuredFixedSourceCaps": {
+    "top": 3,
+    "technology": 6,
+    "gaming": 6,
+    "entertainment": 6,
+    "nfl": 8
+  },
+  "proportionalSourceCaps": {
+    "world": 0.55,
+    "presidential": 0.55,
+    "nm": 0.45,
+    "us": 0.45,
+    "federal": 0.35,
+    "military": 0.45
+  },
+  "proportionalFloor": 6,
+  "categoryMax": {
+    "nfl": 25
+  },
+  "categoryCountsBeforeFinalizer": {
+    "top": 45,
+    "underreported": 75,
+    "world": 68,
+    "technology": 87,
+    "presidential": 53,
+    "military": 56,
+    "federal": 32,
+    "gaming": 61,
+    "us": 22,
+    "nm": 54,
+    "legislation": 21,
+    "local": 329,
+    "region": 71,
+    "nfl": 25,
+    "entertainment": 70,
+    "x": 10
+  },
+  "categoryCountsAfterFinalizer": {
+    "top": 45,
+    "underreported": 75,
+    "world": 68,
+    "technology": 80,
+    "presidential": 53,
+    "military": 56,
+    "federal": 32,
+    "gaming": 53,
+    "us": 22,
+    "nm": 54,
+    "legislation": 21,
+    "local": 329,
+    "region": 71,
+    "nfl": 25,
+    "entertainment": 70,
+    "x": 10
+  },
+  "nflQualifiedSourceCount": 2,
+  "nflAdaptiveCap": 24,
+  "legislationDedupPolicy": "numbered bills dedupe only by jurisdiction+billNumber; URL/title fallback only when billNumber is absent",
+  "sourceStreakBeforeSmoothing": {
+    "federal": 5,
+    "nfl": 23,
+    "entertainment": 1,
+    "military": 20,
+    "us": 7,
+    "presidential": 9,
+    "nm": 21,
+    "technology": 1,
+    "top": 1,
+    "world": 32,
+    "gaming": 1
+  },
+  "sourceStreakAfterSmoothing": {
+    "federal": 1,
+    "nfl": 12,
+    "entertainment": 1,
+    "military": 11,
+    "us": 6,
+    "presidential": 8,
+    "nm": 12,
+    "technology": 1,
+    "top": 1,
+    "world": 19,
+    "gaming": 1
+  },
+  "sourceStreakTargets": {
+    "federal": 1,
+    "nfl": 12,
+    "entertainment": 1,
+    "military": 1,
+    "us": 1,
+    "presidential": 1,
+    "nm": 1,
+    "technology": 1,
+    "top": 1,
+    "world": 2,
+    "gaming": 1
+  },
+  "rebalancedTabs": [
+    "entertainment",
+    "federal",
+    "gaming",
+    "military",
+    "nfl",
+    "nm",
+    "presidential",
+    "technology",
+    "top",
+    "us",
+    "world"
+  ],
+  "removed": [
+    {
+      "category": "technology",
+      "source": "The Verge",
+      "title": "China: AI CEOs are \u201cfear mongering.\u201d - The Verge",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "Reuters",
+      "title": "US senators weigh requiring AI giants to commit to preventing catastrophe - Reuters",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "TechCrunch",
+      "title": "Hear how AI can engineer nature\u2019s comeback at Disrupt 2026 - TechCrunch",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "Reuters",
+      "title": "OpenAI pushes for mandatory national AI safety rules - Reuters",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "TechCrunch",
+      "title": "What\u2019s behind the AI industry\u2019s latest warnings of doom? - TechCrunch",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "Reuters",
+      "title": "How China is preparing for the risk of AI escaping human control",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "technology",
+      "source": "Reuters",
+      "title": "Lawyer cites fake witnesses in murder case and blames ChatGPT - Reuters",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "Core Keeper - Official 'Riders of the Underground' Update Release Date Trailer - IGN",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "PC Gamer",
+      "title": "I've been using the Steam Frame for 3 weeks\u2014here's what I think - PC Gamer",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "Xbox Saves Kojima's Physint from PlayStation Cancellation - IGN Daily Fix - IGN",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "PC Gamer",
+      "title": "Here's the Aniimo release time for your region - PC Gamer",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "PlayStation 5 - Official 'Now's Your Chance' Trailer - za.ign.com",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "Remembering Nintendo GameCube, 25 Years On From Launch - IGN Nordic",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "This Fantasy Party Game Combines Drinking Rules With D&D-Themed Gameplay - IGN",
+      "reason": "source-depth-cap-6"
+    },
+    {
+      "category": "gaming",
+      "source": "IGN",
+      "title": "The Steam Frame Starts at $1,059, Due to Rising Hardware Costs. Is It Still a Meta Quest 3 Replacement? - IGN",
+      "reason": "source-depth-cap-6"
+    }
+  ],
+  "locationScopedTabsUncapped": [
+    "local",
+    "region"
+  ]
+}

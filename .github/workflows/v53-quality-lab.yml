@@ -1,0 +1,157 @@
+name: V5.3 Quality Lab
+on:
+  push:
+    branches: [v5.3-quality-lab]
+    paths:
+      - 'scripts/update_news_v53.py'
+      - 'scripts/v53_quality_layer.py'
+      - 'scripts/v53_underreported_guard.py'
+      - '.github/workflows/v53-quality-lab.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: v53-quality-lab
+  cancel-in-progress: true
+jobs:
+  quality-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Freeze validated V5.2 baseline
+        run: |
+          git fetch origin v5.2-autotune v5.2-content-audit main stable-v5.2-pre-autotune-2026-09-15
+          git show origin/v5.2-autotune:News > /tmp/v52-validated-News
+          git show origin/main:News > /tmp/production-News
+          git show origin/v5.2-content-audit:scripts/audit_v52_content.py > scripts/audit_v52_content.py
+      - name: Contracts and protected UX
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python tests/v52_source_ladders_test.py
+          node --check assets/card-feedback.js
+          git diff --exit-code origin/v5.2-autotune -- styles/ assets/v51-category-sticky-ux.js assets/v3-ui.js assets/app-v2.js || {
+            echo 'Protected UX changed unexpectedly'; exit 1;
+          }
+      - name: Collect fresh V5.3 candidate
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            if python scripts/update_news_v53.py; then success=1; break; fi
+            sleep $((attempt*15))
+          done
+          test "$success" -eq 1
+      - name: Run validated V5.2 refinement chain
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          cp News /tmp/v53-pre-global-filter-News
+          python scripts/v5_global_filter.py --apply --report /tmp/v53-filter-report.json
+          python tests/v5_filter_shadow_test.py
+          python scripts/v52_inventory_recovery.py --source /tmp/v53-pre-global-filter-News --target News --nfl-target 25
+      - name: Apply B2 and V5.3 quality layer
+        run: |
+          python scripts/v52_final_content_guard.py
+          python scripts/enforce_official_legislation.py
+          python scripts/cluster_related_coverage.py
+          python scripts/v52_source_ladders.py
+          python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v53-d-pool-report.json
+          python scripts/v52_location_bank_order.py
+          python scripts/v52_b2_release_finalize.py
+          python scripts/v53_quality_layer.py
+          python scripts/v53_underreported_guard.py
+          python scripts/record_pull_stats.py --finalize
+      - name: Audit against validated V5.2
+        run: |
+          python scripts/audit_v52_content.py --baseline /tmp/v52-validated-News --candidate News --json /tmp/v52-v53.json --md /tmp/v52-v53.md
+          python scripts/audit_v52_content.py --baseline /tmp/production-News --candidate News --json /tmp/prod-v53.json --md /tmp/prod-v53.md
+      - name: V5.3 hard gates
+        run: |
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          d=json.load(open('/tmp/v52-v53.json')); old=d['baseline']; new=d['v52']; failures=[]
+          q=json.load(open('/tmp/v53-quality-report.json'))
+          ug=json.load(open('/tmp/v53-underreported-guard.json'))
+          if q.get('hardDeletes') != 0: failures.append('quality layer deleted stories')
+          if not q.get('sourcePatternPreserved'): failures.append('source pattern not preserved')
+          for cat in ('top','underreported','world','presidential','federal','legislation','nm','local','region','nfl','technology','gaming','military','entertainment'):
+            if new[cat]['exactDuplicateGroups']: failures.append(cat+' exact duplicate remains')
+          if d.get('v52CrossTabRepeats'): failures.append('cross-tab repeat remains')
+          # Underreported is intentionally stricter in V5.3: do not force a 90% inventory
+          # floor that would reward unsupported cards. Require a useful pool instead.
+          floors={'top':.85,'world':.80,'presidential':.80,'federal':.80,'legislation':.80,'nm':.80,'local':.80,'region':.80,'nfl':.90,'technology':.80,'gaming':.80,'military':.85,'entertainment':.80}
+          for cat,ratio in floors.items():
+            if old[cat]['count']>=10 and new[cat]['count'] < int(old[cat]['count']*ratio):
+              failures.append(f'{cat} inventory regression {old[cat]["count"]}->{new[cat]["count"]}')
+          if new['underreported']['count'] < 20:
+            failures.append(f"Underreported quality pool too small: {new['underreported']['count']}")
+          if ug.get('after') != new['underreported']['count']:
+            failures.append('Underreported guard/audit count mismatch')
+          root=ET.parse('News').getroot()
+          for i in root.findall('.//item'):
+            if (i.findtext('category') or '').strip().lower()!='underreported': continue
+            try: recent=int(float((i.findtext('recentSupportingSourceCount') or '0').strip()))
+            except Exception: recent=0
+            try: window=int(float((i.findtext('supportingEvidenceWindowDays') or '0').strip()))
+            except Exception: window=0
+            if recent < 1 or recent > 8: failures.append('Underreported evidence count outside 1-8: '+(i.findtext('title') or ''))
+            if window != 90: failures.append('Underreported evidence window not 90 days: '+(i.findtext('title') or ''))
+          for cat in ('world','nm','region','gaming','local'):
+            if new[cat]['mismatchCount'] > old[cat]['mismatchCount']:
+              failures.append(f'{cat} mismatch regression {old[cat]["mismatchCount"]}->{new[cat]["mismatchCount"]}')
+          if new['nfl']['count'] < 22: failures.append('NFL inventory below 22')
+          if new['world']['count'] < 60: failures.append('World inventory below 60')
+          print('UNDERREPORTED_GUARD', ug)
+          print('FAILURES', failures)
+          if failures: raise SystemExit('\n'.join(failures))
+          PY
+      - name: Build and audit site
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+          node --check assets/card-feedback.js
+      - name: Save reports and preview
+        run: |
+          cp /tmp/v52-v53.json v53-v52-comparison.json
+          cp /tmp/prod-v53.json v53-production-comparison.json
+          cp /tmp/v53-quality-report.json v53-quality-report.json
+          cp /tmp/v53-underreported-guard.json v53-underreported-guard.json
+          cp /tmp/v53-d-pool-report.json v53-d-pool-report.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News index.html update-stats.json boxoffice.json refresh-health.json content-brief-cache.json verification-report.json v53-v52-comparison.json v53-production-comparison.json v53-quality-report.json v53-underreported-guard.json v53-d-pool-report.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Build validated V5.3 quality-lab preview'
+            git push origin HEAD:v5.3-quality-lab
+          fi
+      - name: Summarize
+        run: |
+          echo '=== V5.3 QUALITY ==='; cat /tmp/v53-quality-report.json
+          echo '=== UNDERREPORTED GUARD ==='; cat /tmp/v53-underreported-guard.json
+          echo '=== V5.2 -> V5.3 ==='; cat /tmp/v52-v53.md
+          echo 'Production main and validated V5.2 were not modified.'

@@ -57,9 +57,9 @@
     };
   }
 
-  function sameRecord(record,data){
+  function sameRecord(record,data,requireCategory=true){
     const recordTab=normalizeText(record.category||record.tab);
-    if(recordTab!==normalizeText(data.tab))return false;
+    if(requireCategory&&recordTab&&recordTab!==normalizeText(data.tab))return false;
     const recordUrl=String(record.url_key||record.urlKey||record.url||'').toLowerCase();
     const recordTitle=normalizeText(record.title_key||record.titleKey||record.title);
     const recordSource=normalizeText(record.source_key||record.sourceKey||record.source);
@@ -68,7 +68,8 @@
   }
 
   function suppressed(data){
-    return REASONS.some(reason=>remotePools[reason].some(record=>sameRecord(record,data)));
+    if(remotePools.D.some(record=>sameRecord(record,data,false)))return true;
+    return ['NR','NW'].some(reason=>remotePools[reason].some(record=>sameRecord(record,data,true)));
   }
 
   async function refreshPools(){
@@ -152,7 +153,8 @@
         reason,category:data.tab,title:data.title,url:data.url,source:data.source,
         title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
       };
-      if(!remotePools[reason].some(existing=>sameRecord(existing,data)))remotePools[reason].push(entry);
+      const globalReason=reason==='D';
+      if(!remotePools[reason].some(existing=>sameRecord(existing,data,!globalReason)))remotePools[reason].push(entry);
       removeCard(card,data.tab);
       document.dispatchEvent(new CustomEvent('underreported:card-feedback',{detail:entry}));
     }catch(error){

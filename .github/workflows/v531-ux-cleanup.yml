@@ -1,0 +1,83 @@
+name: V5.3.1 UX Cleanup Validation
+on:
+  push:
+    branches: [v5.3.1-ux-cleanup]
+    paths:
+      - 'assets/entertainment-v4.js'
+      - 'scripts/patch_site_features.py'
+      - 'styles/v5-visual.css'
+      - 'scripts/v53_quality_layer.py'
+      - 'scripts/update_news_v53.py'
+      - 'scripts/v53_underreported_guard.py'
+      - 'scripts/v531_underreported_finalize.py'
+      - 'scripts/v531_topic_spacing.py'
+      - '.github/workflows/v531-ux-cleanup.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Fetch stable baseline
+        run: |
+          git fetch origin stable-v5.3-2026-09-16
+          git show origin/stable-v5.3-2026-09-16:News > News
+      - name: Syntax and protected UX
+        run: |
+          python -m py_compile scripts/v53_quality_layer.py scripts/update_news_v53.py scripts/v53_underreported_guard.py scripts/v531_underreported_finalize.py scripts/v531_topic_spacing.py scripts/patch_site_features.py
+          node --check assets/entertainment-v4.js
+          git diff --exit-code origin/stable-v5.3-2026-09-16 -- assets/v51-category-sticky-ux.js styles/v51-sticky-nav.css
+      - name: Capture baseline and run refinements
+        run: |
+          cp News /tmp/original-News
+          python scripts/v53_underreported_guard.py
+          python scripts/v531_underreported_finalize.py
+          python scripts/v531_topic_spacing.py
+          cp /tmp/v531-underreported-finalize.json v531-underreported-finalize.json
+          cp /tmp/v531-topic-spacing-report.json v531-topic-spacing-report.json
+      - name: Validate Underreported
+        run: |
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          ch=ET.parse('News').getroot().find('channel')
+          rows=[x for x in ch.findall('item') if (x.findtext('category') or '').strip().lower()=='underreported']
+          counts=[int(float((x.findtext('recentSupportingSourceCount') or '0'))) for x in rows]
+          impacts=[int(float((x.findtext('underreportedImpactScore') or '0'))) for x in rows]
+          assert rows
+          assert all(1 <= n <= 8 for n in counts), counts
+          assert impacts == sorted(impacts, reverse=True), impacts
+          print(json.dumps(json.load(open('v531-underreported-finalize.json')), indent=2))
+          PY
+      - name: Compare Technology and Gaming
+        run: |
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          report=json.load(open('v531-topic-spacing-report.json'))
+          before=ET.parse('/tmp/original-News').getroot().find('channel')
+          after=ET.parse('News').getroot().find('channel')
+          for cat in ('technology','gaming'):
+              b=[(x.findtext('title') or '').strip() for x in before.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
+              a=[(x.findtext('title') or '').strip() for x in after.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
+              assert len(a)==len(b) and sorted(a)==sorted(b), f'{cat}: reorder-only contract failed'
+              r=report['tabs'][cat]
+              assert r['afterEventConflictsTop25'] <= r['beforeEventConflictsTop25'], r
+              assert r['afterAdjacentBrandConflictsTop25'] <= r['beforeAdjacentBrandConflictsTop25'], r
+              assert r['combinedAfter'] <= r['combinedBefore'], r
+              print(cat, 'events',r['beforeEventConflictsTop25'],'->',r['afterEventConflictsTop25'],'adjacent brands',r['beforeAdjacentBrandConflictsTop25'],'->',r['afterAdjacentBrandConflictsTop25'],'combined',r['combinedBefore'],'->',r['combinedAfter'],'avg displacement',r['averageTop25Displacement'])
+          PY
+      - name: Materialize validated preview feed
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add News v531-underreported-finalize.json v531-topic-spacing-report.json
+          if git diff --cached --quiet; then
+            echo 'Validated preview feed already materialized.'
+          else
+            git commit -m 'Materialize validated V5.3.1 content preview'
+            git push origin HEAD:v5.3.1-ux-cleanup
+          fi
+      - name: Summary
+        run: echo 'Underreported impact ordering and Technology/Gaming event/brand spacing validated and materialized to preview branch.'
