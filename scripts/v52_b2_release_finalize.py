@@ -5,12 +5,12 @@ Runs after source ladders, D-pool removals, and location-bank ordering so the
 serialized News feed is the exact order audited and rendered.
 
 Editorial-safety jobs:
-1. Deduplicate Legislation by bill identity first. Shared agency/index URLs are
-   never allowed to collapse distinct bill numbers.
+1. Deduplicate Legislation by bill identity first, plus exact rendered title/link
+   duplicates so a reader never sees the same official card twice.
 2. Limit source dominance without throwing away healthy inventory. Tabs whose
    strongest publisher legitimately carries many stories use proportional caps.
-3. Rebalance the retained capped tabs after filtering so source diversity is
-   distributed through the whole list instead of forming a one-source tail.
+3. Smooth retained source depth across the whole tab instead of leaving a dominant
+   publisher in a deep-scroll tail. Per-source story order remains intact.
 4. Keep NFL adaptive when qualified source diversity is sparse, with a 25-story
    release ceiling so one-source recovery cannot flood the tab.
 
@@ -29,7 +29,6 @@ from urllib.parse import urlsplit, urlunsplit
 NEWS = Path("News")
 REPORT = Path("/tmp/v52-b2-finalize.json")
 
-# Fixed caps are appropriate where the candidate pool normally has broad source depth.
 BASE_SOURCE_CAPS = {
     "top": 3,
     "technology": 6,
@@ -38,10 +37,6 @@ BASE_SOURCE_CAPS = {
     "nfl": 8,
 }
 
-# These tabs can legitimately have a wire/specialist/local publisher carrying a
-# large share of the strongest stories. Proportional caps preserve inventory while
-# still preventing pathological dominance. A final round-robin spreads the retained
-# source depth through the list rather than leaving a one-publisher tail.
 PROPORTIONAL_SOURCE_CAPS = {
     "world": 0.55,
     "presidential": 0.55,
@@ -124,29 +119,93 @@ def effective_source_caps(items):
     return caps, len(nfl_sources), dict(category_counts)
 
 
-def rebalance_sources(rows):
-    """Round-robin retained publishers while preserving per-source story order."""
+def theoretical_streak_bound(rows):
+    """Smallest possible max streak for the observed publisher counts."""
+    counts = Counter(source_id(field(x, "source")) for x in rows)
+    if not counts:
+        return 0
+    largest = max(counts.values())
+    others = len(rows) - largest
+    return max(1, int(math.ceil(largest / (others + 1))))
+
+
+def max_source_streak(rows):
+    best = cur = 0
+    last = None
+    for item in rows:
+        sid = source_id(field(item, "source"))
+        if sid == last:
+            cur += 1
+        else:
+            last = sid
+            cur = 1
+        best = max(best, cur)
+    return best
+
+
+def smooth_sources(rows):
+    """Evenly distribute publishers while preserving story order inside each source.
+
+    Each source's kth story receives an ideal fractional slot across the full tab.
+    Merging those slots preserves the source ladder's per-publisher story ranking but
+    prevents the final rounds from becoming a large one-source block after smaller
+    publisher buckets are exhausted.
+    """
     if len(rows) < 2:
         return list(rows)
+
     buckets = defaultdict(list)
     first_pos = {}
     for pos, item in enumerate(rows):
         sid = source_id(field(item, "source"))
         buckets[sid].append(item)
         first_pos.setdefault(sid, pos)
-    order = sorted(buckets, key=lambda sid: first_pos[sid])
-    out = []
-    round_no = 0
-    while True:
-        added = 0
-        for sid in order:
-            if round_no < len(buckets[sid]):
-                out.append(buckets[sid][round_no])
-                added += 1
-        if not added:
-            break
-        round_no += 1
-    return out
+
+    total = len(rows)
+    scheduled = []
+    for sid, bucket in buckets.items():
+        count = len(bucket)
+        for idx, item in enumerate(bucket):
+            ideal = ((idx + 0.5) * total) / count
+            scheduled.append((ideal, first_pos[sid], idx, sid, item))
+    scheduled.sort(key=lambda x: (x[0], x[1], x[2], x[3]))
+    out = [x[4] for x in scheduled]
+
+    # A tiny local repair handles fractional-slot ties that can otherwise create a
+    # longer streak than mathematically necessary. Never changes order within a source.
+    target = theoretical_streak_bound(rows)
+    if max_source_streak(out) <= target:
+        return out
+
+    queues = {sid: list(bucket) for sid, bucket in buckets.items()}
+    source_order = sorted(queues, key=lambda sid: first_pos[sid])
+    rebuilt = []
+    last = None
+    run = 0
+    while any(queues.values()):
+        candidates = [sid for sid in source_order if queues[sid]]
+        allowed = [sid for sid in candidates if not (sid == last and run >= target)]
+        if not allowed:
+            allowed = candidates
+        # Prefer the source furthest behind its proportional share, with original
+        # source-ladder order as the stable tie-break.
+        emitted = Counter(source_id(field(x, "source")) for x in rebuilt)
+        chosen = max(
+            allowed,
+            key=lambda sid: (
+                len(queues[sid]) / max(1, len(buckets[sid])),
+                -emitted[sid],
+                -first_pos[sid],
+            ),
+        )
+        item = queues[chosen].pop(0)
+        rebuilt.append(item)
+        if chosen == last:
+            run += 1
+        else:
+            last = chosen
+            run = 1
+    return rebuilt
 
 
 def main():
@@ -163,6 +222,8 @@ def main():
     category_kept = Counter()
     leg_identities = set()
     leg_urls_without_bill = set()
+    leg_render_titles = set()
+    leg_render_links = set()
 
     for item in items:
         cat = field(item, "category").lower()
@@ -171,26 +232,41 @@ def main():
         if cat == "legislation":
             ident, has_bill_identity = legislation_identity(item)
             official_url = norm_url(field(item, "officialSource") or field(item, "link"))
-            # A bill number + jurisdiction/source is authoritative. Distinct bills may
-            # legitimately share the same legislature index URL, so URL equality is
-            # considered only for records that do not have a bill identity.
+            render_title = norm_title(field(item, "title"))
+            render_link = norm_url(field(item, "link"))
+
             if has_bill_identity:
-                duplicate = bool(ident and ident in leg_identities)
+                duplicate_identity = bool(ident and ident in leg_identities)
             else:
-                duplicate = bool((ident and ident in leg_identities) or (official_url and official_url in leg_urls_without_bill))
-            if duplicate:
+                duplicate_identity = bool(
+                    (ident and ident in leg_identities)
+                    or (official_url and official_url in leg_urls_without_bill)
+                )
+            duplicate_render = bool(
+                (render_title and render_title in leg_render_titles)
+                or (render_link and render_link in leg_render_links)
+            )
+            if duplicate_identity or duplicate_render:
                 removed.append({
                     "category": cat,
                     "source": field(item, "source"),
                     "title": field(item, "title"),
                     "billNumber": field(item, "billNumber"),
-                    "reason": "official-legislation-identity-duplicate",
+                    "reason": (
+                        "official-legislation-identity-duplicate"
+                        if duplicate_identity
+                        else "official-legislation-render-duplicate"
+                    ),
                 })
                 continue
             if ident:
                 leg_identities.add(ident)
             if official_url and not has_bill_identity:
                 leg_urls_without_bill.add(official_url)
+            if render_title:
+                leg_render_titles.add(render_title)
+            if render_link:
+                leg_render_links.add(render_link)
 
         cat_max = CATEGORY_MAX.get(cat)
         if cat_max is not None and category_kept[cat] >= cat_max:
@@ -216,14 +292,20 @@ def main():
         category_kept[cat] += 1
         kept.append(item)
 
-    # Rebalance only source-capped global tabs. Local/Region remain location-bank
-    # ordered, Underreported has its own ranking, and Legislation preserves official order.
     rebalance_tabs = set(source_caps) - {"local", "region", "legislation"}
     grouped = defaultdict(list)
     for item in kept:
         grouped[field(item, "category").lower()].append(item)
+
+    streak_before = {}
+    streak_after = {}
+    streak_targets = {}
     for cat in rebalance_tabs:
-        grouped[cat] = rebalance_sources(grouped.get(cat, []))
+        rows = grouped.get(cat, [])
+        streak_before[cat] = max_source_streak(rows)
+        streak_targets[cat] = theoretical_streak_bound(rows)
+        grouped[cat] = smooth_sources(rows)
+        streak_after[cat] = max_source_streak(grouped[cat])
 
     rebuilt = []
     emitted = set()
@@ -256,7 +338,10 @@ def main():
         "categoryCountsAfterFinalizer": dict(Counter(field(x, "category").lower() for x in rebuilt)),
         "nflQualifiedSourceCount": nfl_source_count,
         "nflAdaptiveCap": source_caps.get("nfl"),
-        "legislationDedupPolicy": "billNumber+jurisdiction/source is authoritative; shared URLs dedupe only records without bill identity",
+        "legislationDedupPolicy": "bill identity first; exact normalized rendered title/link also unique",
+        "sourceStreakBeforeSmoothing": streak_before,
+        "sourceStreakAfterSmoothing": streak_after,
+        "sourceStreakTargets": streak_targets,
         "rebalancedTabs": sorted(rebalance_tabs),
         "removed": removed[:100],
         "locationScopedTabsUncapped": ["local", "region"],
