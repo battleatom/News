@@ -27,47 +27,52 @@ def make_item(source, rank, hours=1):
 def test_constants():
     assert v52.V52_MAX_AGE_HOURS == 336
     assert 'when:14d' in unquote(v52.expanded_feed_url('world news'))
-    assert v52.TOP_VISIBLE_SOURCE_CAP == 1
-    assert v52.TOP_MID_SOURCE_CAP == 2
     assert v52.TOP_POOL_SOURCE_CAP == 3
+    assert len(v52.V52_TOP_SOURCE_QUERIES) >= 8
+    assert len(v52.core.MAINSTREAM_TOP_QUERIES) >= 20
 
 
-def test_first_ten_are_source_diverse():
+def test_first_round_is_one_per_source():
     pool=[]
     sources=['Reuters','Associated Press','BBC','NPR','NBC News','ABC News','CBS News','CNN','Fox News','USA Today','Politico','The Guardian']
     for i,src in enumerate(sources):
-        pool.append(make_item(src,0,hours=i+1))
-    for i in range(5):
-        pool.append(make_item('Reuters',i+1,hours=1+i))
+        for rank in range(4):
+            pool.append(make_item(src,rank,hours=i+rank+1))
     ranked=v52.rank_top_pool_v52(pool)
-    first10=[v52.source_id(x['source']) for x in ranked[:10]]
-    assert len(first10)==10
-    assert len(set(first10))==10, first10
+    first_round=[v52.source_id(x['source']) for x in ranked[:len(sources)]]
+    assert len(first_round)==len(sources)
+    assert len(set(first_round))==len(sources), first_round
+    first10=first_round[:10]
+    assert len(set(first10))==10
 
 
 def test_best_per_source_leads():
-    pool=[make_item('Reuters',0,hours=1),make_item('Reuters',1,hours=20)]
-    pool += [make_item(f'Source {i}',0,hours=i+2) for i in range(1,12)]
-    ranked=v52.rank_top_pool_v52(pool)
-    reuters=[x for x in ranked if v52.source_id(x['source'])=='reuters']
-    assert reuters
-    assert reuters[0]['link'].endswith('/Reuters/0')
-
-
-def test_caps_across_pool():
+    sources=['Reuters']+[f'Source {i}' for i in range(1,12)]
     pool=[]
-    for s in range(25):
-        source=f'Publisher {s}'
+    for source in sources:
+        pool.append(make_item(source,0,hours=1))
+        pool.append(make_item(source,1,hours=20))
+    ranked=v52.rank_top_pool_v52(pool)
+    first_round=ranked[:len(sources)]
+    assert all(x['link'].endswith('/0') for x in first_round)
+
+
+def test_round_robin_and_full_cap():
+    pool=[]
+    sources=[f'Publisher {s}' for s in range(25)]
+    for s,source in enumerate(sources):
         for i in range(6):
             pool.append(make_item(source,i,hours=(i+s)%48+1))
     ranked=v52.rank_top_pool_v52(pool)
     counts=Counter(v52.source_id(x['source']) for x in ranked)
-    assert len(ranked) <= 60
+    assert len(ranked)==60
     assert max(counts.values(), default=0) <= 3
-    first30=Counter(v52.source_id(x['source']) for x in ranked[:30])
-    assert max(first30.values(), default=0) <= 2
-    first10=[v52.source_id(x['source']) for x in ranked[:10]]
-    assert len(first10)==len(set(first10))
+    # Round one is complete before any publisher receives a second card.
+    first_round=[v52.source_id(x['source']) for x in ranked[:25]]
+    assert len(set(first_round))==25
+    # Round two is complete before round three starts; first 50 have max two/source.
+    first_two=Counter(v52.source_id(x['source']) for x in ranked[:50])
+    assert max(first_two.values())==2
 
 
 def test_quality_is_modest_tiebreaker():
@@ -80,5 +85,5 @@ def test_quality_is_modest_tiebreaker():
 
 
 if __name__ == '__main__':
-    test_constants(); test_first_ten_are_source_diverse(); test_best_per_source_leads(); test_caps_across_pool(); test_quality_is_modest_tiebreaker()
+    test_constants(); test_first_round_is_one_per_source(); test_best_per_source_leads(); test_round_robin_and_full_cap(); test_quality_is_modest_tiebreaker()
     print('V5.2 patch regressions passed.')
