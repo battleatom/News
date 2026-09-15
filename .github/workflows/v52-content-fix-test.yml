@@ -1,0 +1,125 @@
+name: V5.2 Content Fix Test
+on:
+  push:
+    branches: [v5.2-content-fix]
+    paths:
+      - 'scripts/v52_final_content_guard.py'
+      - 'scripts/apply_feedback_pools_v52.py'
+      - '.github/workflows/v52-content-fix-test.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  aggressive-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Freeze production and prior V5.2 baselines
+        run: |
+          git fetch origin main v5.2-patch v5.2-content-audit
+          git show origin/main:News > /tmp/v51-News
+          git show origin/v5.2-patch:News > /tmp/v52-before-News
+          git show origin/v5.2-content-audit:scripts/audit_v52_content.py > scripts/audit_v52_content.py
+      - name: Syntax and D Pool unit contracts
+        run: |
+          python -m py_compile scripts/*.py tests/*.py
+          python - <<'PY'
+          import sys;sys.path.insert(0,'scripts')
+          import apply_feedback_pools_v52 as m
+          pools={'D':[{'url':'https://x/a?utm_source=z','category':'world'}], 'NR':[{'url':'https://x/b','category':'technology'}], 'NW':[{'title':'No Thanks','source':'Wire','category':'gaming'}]}
+          idx=m.build_index(pools)
+          assert m.match({'url_key':'https://x/a','title_key':'','source_key':'','category':'gaming'},idx)=='D'
+          assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'world'},idx) is None
+          assert m.match({'url_key':'https://x/b','title_key':'','source_key':'','category':'technology'},idx)=='NR'
+          assert m.match({'url_key':'','title_key':'no thanks','source_key':'wire','category':'gaming'},idx)=='NW'
+          print('D Pool semantics/index contracts passed')
+          PY
+      - name: Collect fresh V5.2 candidate
+        run: |
+          success=0
+          for attempt in 1 2 3; do
+            if python scripts/update_news_v52.py; then success=1; break; fi
+            sleep $((attempt*15))
+          done
+          test "$success" -eq 1
+      - name: Run full current refinement chain
+        run: |
+          python scripts/refine_entertainment.py
+          python scripts/guard_entertainment_rank.py
+          python scripts/refine_tech_gaming.py
+          python scripts/collect_official_legislation_strict.py
+          python scripts/enrich_world_content.py
+          python scripts/underreported_priority.py --discover
+          python scripts/enrich_underreported.py
+          python scripts/underreported_priority.py --rank
+          python scripts/enrich_legislation.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enrich_box_office.py
+          python scripts/patch_boxoffice_location.py
+          python scripts/clean_news.py
+          python scripts/filter_landing_pages.py
+          python scripts/record_pull_stats.py
+          python scripts/cluster_related_coverage.py
+          python scripts/verify_feed_v4.py --apply
+          python scripts/enforce_us_federal.py
+          python scripts/enforce_official_legislation.py
+          python scripts/enrich_x_issues.py
+          python scripts/enforce_editorial_integrity.py
+          python scripts/enforce_nfl_final.py
+          python scripts/v5_global_filter.py --apply --report /tmp/v52-filter-report.json
+          python tests/v5_filter_shadow_test.py
+      - name: Apply V5.2 validity, diversity, duplicate and D Pool guards
+        run: |
+          python scripts/v52_final_content_guard.py
+          python scripts/enforce_official_legislation.py
+          python scripts/cluster_related_coverage.py
+          python scripts/apply_feedback_pools_v52.py --require-remote --report /tmp/v52-d-pool-report.json
+          python scripts/record_pull_stats.py --finalize
+      - name: Run A-B audits against production and prior V5.2
+        run: |
+          python scripts/audit_v52_content.py --baseline /tmp/v51-News --candidate News --json /tmp/v51-v52.json --md /tmp/v51-v52.md
+          python scripts/audit_v52_content.py --baseline /tmp/v52-before-News --candidate News --json /tmp/before-after.json --md /tmp/before-after.md
+      - name: Hard regression gates
+        run: |
+          python - <<'PY'
+          import json,xml.etree.ElementTree as ET,re
+          from collections import Counter,defaultdict
+          before=json.load(open('/tmp/before-after.json')); after=before['v52']; old=before['baseline']
+          failures=[]
+          # No normal tab may have >2 consecutive cards from one publisher when >=2 sources exist.
+          for cat,v in after.items():
+            if cat in {'top','x','legislation'}: continue
+            if v['uniqueSources']>=2 and v['maxConsecutiveSameSource']['count']>2:
+              failures.append(f"{cat} source streak {v['maxConsecutiveSameSource']}")
+          # Explicit problem tabs must not regress mismatch count versus prior V5.2.
+          for cat in ['world','nm','region','gaming','technology','federal']:
+            if after[cat]['mismatchCount']>old[cat]['mismatchCount']:
+              failures.append(f"{cat} mismatches worsened {old[cat]['mismatchCount']}->{after[cat]['mismatchCount']}")
+          # Exact duplicates/cross-tab repeats are zero after final guards.
+          for cat,v in after.items():
+            if v['exactDuplicateGroups']: failures.append(f'{cat} exact duplicate remains')
+          if before.get('v52CrossTabRepeats'): failures.append('cross-tab exact repeat remains')
+          # Legislation must be official-only.
+          root=ET.parse('News').getroot();leg=[i for i in root.findall('.//item') if (i.findtext('category') or '').strip()=='legislation']
+          for i in leg:
+            if not (i.findtext('officialSource') or '').strip(): failures.append('legislation non-official card: '+(i.findtext('title') or ''))
+          print('FAILURES',failures)
+          if failures: raise SystemExit('\n'.join(failures))
+          PY
+      - name: Build and audit site
+        run: |
+          python -m pip install --quiet beautifulsoup4 googlenewsdecoder==0.1.7
+          python scripts/create_content_briefs.py
+          python scripts/update_why_matters.py
+          python scripts/build_site.py
+          python scripts/site_audit.py
+          python scripts/v4_release_gate.py
+          node --check assets/card-feedback.js
+      - name: Summarize results
+        run: |
+          echo '=== CONTENT GUARD ==='; cat /tmp/v52-content-guard.json
+          echo '=== D POOLS ==='; cat /tmp/v52-d-pool-report.json
+          echo '=== BEFORE/AFTER AUDIT ==='; cat /tmp/before-after.md
+          echo 'Production main was not modified and no generated test build was pushed.'
