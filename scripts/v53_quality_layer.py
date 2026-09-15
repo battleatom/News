@@ -13,12 +13,10 @@ This script does NOT alter UX, D/NR/NW pools, category ownership, or story count
 from __future__ import annotations
 
 import json
-import math
 import re
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from pathlib import Path
-from urllib.parse import urlsplit
 
 NEWS = Path("News")
 REPORT = Path("/tmp/v53-quality-report.json")
@@ -173,12 +171,16 @@ def information_score(item):
     return max(0, min(30, score))
 
 
-def total_quality(item):
-    sq = source_quality(item)
-    cc = category_confidence(item)
-    info = information_score(item)
-    # Reliability/relevance dominate; information richness is a modest tie-breaker.
-    return round(sq * 0.44 + cc * 0.46 + info * (10/30), 2)
+def stored_quality(item):
+    """Read the score already computed during metadata enrichment."""
+    try:
+        return float(text(item, "v53QualityScore"))
+    except (TypeError, ValueError):
+        # Defensive fallback for direct helper use before main() enriches the item.
+        sq = source_quality(item)
+        cc = category_confidence(item)
+        info = information_score(item)
+        return round(sq * 0.44 + cc * 0.46 + info * (10/30), 2)
 
 
 def reorder_with_same_source_pattern(items):
@@ -190,7 +192,7 @@ def reorder_with_same_source_pattern(items):
         pattern.append(sid)
         buckets[sid].append((pos, item))
     for sid in buckets:
-        buckets[sid].sort(key=lambda pair: (-total_quality(pair[1]), pair[0]))
+        buckets[sid].sort(key=lambda pair: (-stored_quality(pair[1]), pair[0]))
     offsets = Counter()
     output = []
     for sid in pattern:
@@ -219,7 +221,10 @@ def main():
         story_countries = Counter()
         for item in arr:
             sid = norm_source(text(item, "source"))
-            sq = source_quality(item); cc = category_confidence(item); tq = total_quality(item)
+            sq = source_quality(item)
+            cc = category_confidence(item)
+            info = information_score(item)
+            tq = round(sq * 0.44 + cc * 0.46 + info * (10/30), 2)
             pc = PUBLISHER_COUNTRY.get(sid, "")
             sc = infer_story_country(item)
             set_tag(item, "canonicalSource", sid)
