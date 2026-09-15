@@ -26,9 +26,9 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
       .boxoffice-status-key span{display:inline-flex;align-items:center;gap:5px}.boxoffice-status-key i{width:9px;height:9px;border-radius:3px;display:inline-block}.boxoffice-status-key .cyan{background:#06b6d4}.boxoffice-status-key .blue{background:#2563eb}.boxoffice-status-key .green{background:#16a34a}.boxoffice-status-key .red{background:#dc2626}
       .movie-card.movie-rail-cyan{border-left:5px solid #06b6d4!important}.movie-card.movie-rail-blue{border-left:5px solid #2563eb!important}.movie-card.movie-rail-green{border-left:5px solid #16a34a!important}.movie-card.movie-rail-red{border-left:5px solid #dc2626!important}
       .movie-status.status-upcoming{background:rgba(6,182,212,.12);color:#0e7490}.movie-status.status-new{background:rgba(37,99,235,.11);color:#1d4ed8}.movie-status.status-playing{background:rgba(22,163,74,.11);color:#15803d}.movie-status.status-leaving{background:rgba(220,38,38,.11);color:#b91c1c}
-      .movie-release-line{margin:1px 0 8px;color:#64748b;font-size:10.5px;font-weight:700;line-height:1.35}.movie-release-line strong{color:#334155}.movie-release-line .leave{color:#b91c1c;font-weight:850}
+      .movie-release-line{margin:1px 0 8px;color:#64748b;font-size:10.5px;font-weight:700;line-height:1.35}.movie-release-line strong{color:#334155}.movie-release-line .leave{color:#b91c1c;font-weight:850}.movie-release-line .confirmed{color:#64748b;font-weight:800}
       .boxoffice-movie-group{margin:18px 0 8px;padding-left:10px;border-left:3px solid #64748b;font-size:14px;font-weight:850}.boxoffice-movie-group.now{border-left-color:#2563eb}.boxoffice-movie-group.upcoming{border-left-color:#06b6d4}
-      @media(prefers-color-scheme:dark){.boxoffice-status-key{background:rgba(15,23,42,.42);color:#a7b0bd}.movie-release-line{color:#a7b0bd}.movie-release-line strong{color:#e5e7eb}.movie-status.status-upcoming{color:#67e8f9}.movie-status.status-new{color:#93c5fd}.movie-status.status-playing{color:#86efac}.movie-status.status-leaving{color:#fca5a5}}
+      @media(prefers-color-scheme:dark){.boxoffice-status-key{background:rgba(15,23,42,.42);color:#a7b0bd}.movie-release-line{color:#a7b0bd}.movie-release-line strong{color:#e5e7eb}.movie-release-line .confirmed{color:#a7b0bd}.movie-status.status-upcoming{color:#67e8f9}.movie-status.status-new{color:#93c5fd}.movie-status.status-playing{color:#86efac}.movie-status.status-leaving{color:#fca5a5}}
     `;document.head.appendChild(st);
   }
   function movieState(movie){
@@ -37,7 +37,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const leaving=parseMovieDate(movie.leavingDate);
     const status=(movie.status||'').toLowerCase();
     const upcoming=movie.isUpcoming===true||status.includes('upcoming')||(release&&dayStart(release)>today);
-    if(upcoming)return {key:'upcoming',rail:'movie-rail-cyan',label:'Upcoming'};
+    if(upcoming)return {key:'upcoming',rail:'movie-rail-cyan',label:'Coming soon'};
     const leavingSoon=movie.leavingSoon===true||status.includes('leaving')||(leaving&&dayStart(leaving)>=today&&(dayStart(leaving)-today)/DAY<=7);
     if(leavingSoon)return {key:'leaving',rail:'movie-rail-red',label:'Leaving soon'};
     if(release){const age=(today-dayStart(release))/DAY;if(age>=0&&age<=14)return {key:'new',rail:'movie-rail-blue',label:'New release'};}
@@ -56,7 +56,13 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
         if(days>0)parts.push(`${days} day${days===1?'':'s'} in theaters`);
       }
     }
-    if(movie.leavingDate){const leave=fmtMovieDate(movie.leavingDate);if(leave)parts.push(`<span class="leave">Leaves theaters ${esc(leave)}</span>`);}
+    if(movie.leavingDate){
+      const leave=fmtMovieDate(movie.leavingDate);
+      if(leave)parts.push(`<span class="leave">Last confirmed local showtime ${esc(leave)}</span>`);
+    }else if(movie.confirmedThrough && state.key!=='upcoming'){
+      const through=fmtMovieDate(movie.confirmedThrough);
+      if(through)parts.push(`<span class="confirmed">Showtimes confirmed through ${esc(through)}</span>`);
+    }
     return parts.length?`<div class="movie-release-line">${parts.join(' · ')}</div>`:'';
   }
   function renderMovieCard(movie,body){
@@ -84,15 +90,15 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     intro.innerHTML=`Showing national movie releases plus box-office/theater news selected for <strong>${esc(stateName)}</strong>.${state==='NM'&&/Farmington/i.test(localStorage.getItem('underreported-location')||'')?' Local Farmington showtimes are included when available.':''}`;
     sec.appendChild(intro);
     const body=document.createElement('div');body.className='section-body';
-    const key=document.createElement('div');key.className='boxoffice-status-key';key.innerHTML='<span><i class="cyan"></i>Upcoming</span><span><i class="blue"></i>New release</span><span><i class="green"></i>Now playing</span><span><i class="red"></i>Leaving soon</span>';body.appendChild(key);
+    const key=document.createElement('div');key.className='boxoffice-status-key';key.innerHTML='<span><i class="cyan"></i>Coming soon</span><span><i class="blue"></i>New release</span><span><i class="green"></i>Now playing</span><span><i class="red"></i>Leaving soon</span>';body.appendChild(key);
 
-    if(current.length){
-      const nowTitle=document.createElement('div');nowTitle.className='boxoffice-movie-group now';nowTitle.textContent='🎥 Now Playing — newest releases first';body.appendChild(nowTitle);
-      current.forEach(movie=>renderMovieCard(movie,body));
-    }
     if(upcoming.length){
       const upcomingTitle=document.createElement('div');upcomingTitle.className='boxoffice-movie-group upcoming';upcomingTitle.textContent='🩵 Coming Soon — next releases first';body.appendChild(upcomingTitle);
       upcoming.forEach(movie=>renderMovieCard(movie,body));
+    }
+    if(current.length){
+      const nowTitle=document.createElement('div');nowTitle.className='boxoffice-movie-group now';nowTitle.textContent='🎥 Now Playing — newest releases first';body.appendChild(nowTitle);
+      current.forEach(movie=>renderMovieCard(movie,body));
     }
     if(!movies.length){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');}
 
@@ -126,4 +132,4 @@ if '</body>' in s:
 else:
     s += '\n' + SCRIPT + '\n'
 P.write_text(s, encoding='utf-8')
-print('Installed location-aware Box Office renderer with release-status rails, release dates, and deterministic movie ordering.')
+print('Installed location-aware Box Office renderer with cyan upcoming, blue new, green playing, red leaving rails, release dates, and deterministic movie ordering.')
