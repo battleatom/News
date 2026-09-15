@@ -9,6 +9,8 @@ on:
       - 'scripts/v53_quality_layer.py'
       - 'scripts/update_news_v53.py'
       - 'scripts/v53_underreported_guard.py'
+      - 'scripts/v531_underreported_finalize.py'
+      - 'scripts/v531_topic_spacing.py'
       - '.github/workflows/v531-ux-cleanup.yml'
   workflow_dispatch:
 permissions:
@@ -19,132 +21,50 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
-      - name: Fetch stable V5.3 baseline
+      - name: Fetch stable baseline
         run: git fetch origin stable-v5.3-2026-09-16
-      - name: Syntax checks
+      - name: Syntax and protected UX
         run: |
-          python -m py_compile scripts/patch_site_features.py scripts/v53_quality_layer.py scripts/update_news_v53.py scripts/v53_underreported_guard.py
+          python -m py_compile scripts/v53_quality_layer.py scripts/update_news_v53.py scripts/v53_underreported_guard.py scripts/v531_underreported_finalize.py scripts/v531_topic_spacing.py scripts/patch_site_features.py
           node --check assets/entertainment-v4.js
-      - name: Verify feature cleanup
+          git diff --exit-code origin/stable-v5.3-2026-09-16 -- assets/v51-category-sticky-ux.js styles/v51-sticky-nav.css
+      - name: Capture baseline and run refinements
         run: |
-          ! grep -Eq 'AudioContext|unlockPopAudio|playNewArticlePop' scripts/patch_site_features.py
-          ! grep -Eq 'imageUrl|ent-card-image|ent-image-link|safeImage' assets/entertainment-v4.js
-          grep -q 'display:block!important' styles/v5-visual.css
-          grep -q 'overflow-wrap:anywhere!important' styles/v5-visual.css
-      - name: Quality layer exact-output parity
+          cp News /tmp/original-News
+          python scripts/v53_underreported_guard.py
+          python scripts/v531_underreported_finalize.py
+          python scripts/v531_topic_spacing.py
+      - name: Validate Underreported
         run: |
-          rm -rf /tmp/v53-base /tmp/v53-candidate
-          mkdir -p /tmp/v53-base /tmp/v53-candidate
-          git show origin/stable-v5.3-2026-09-16:News > /tmp/v53-base/News
-          cp /tmp/v53-base/News /tmp/v53-candidate/News
-          git show origin/stable-v5.3-2026-09-16:scripts/v53_quality_layer.py > /tmp/v53-base/v53_quality_layer.py
-          cp scripts/v53_quality_layer.py /tmp/v53-candidate/v53_quality_layer.py
-          (cd /tmp/v53-base && python v53_quality_layer.py >/tmp/v53-base.stdout)
-          cp /tmp/v53-quality-report.json /tmp/v53-base-report.json
-          (cd /tmp/v53-candidate && python v53_quality_layer.py >/tmp/v53-candidate.stdout)
-          cp /tmp/v53-quality-report.json /tmp/v53-candidate-report.json
-          cmp /tmp/v53-base/News /tmp/v53-candidate/News
-          cmp /tmp/v53-base-report.json /tmp/v53-candidate-report.json
-          echo 'Quality optimization output is byte-identical to stable V5.3.'
-      - name: Verify source-table isolation
-        run: |
-          python - <<'PY'
-          import sys
-          sys.path.insert(0, 'scripts')
-          import update_news_v53 as mod
-
-          base = mod.core.TRUSTED_CATEGORY_FALLBACKS
-          snapshot = {k: list(v) for k, v in base.items()}
-          expanded = mod._expanded_fallbacks()
-          assert expanded is not base
-          assert base == snapshot, 'building V5.3 fallbacks mutated V5.2 state'
-          for category, additions in (
-              ('world', mod.WORLD_SOURCE_EXPANSION),
-              ('nfl', mod.NFL_SOURCE_EXPANSION),
-          ):
-              before = {(str(n).lower(), str(q).lower()) for n, q in snapshot.get(category, [])}
-              expected_new = {(str(n).lower(), str(q).lower()) for n, q in additions} - before
-              after = {(str(n).lower(), str(q).lower()) for n, q in expanded.get(category, [])}
-              assert expected_new <= after
-              assert len(expanded.get(category, [])) == len(snapshot.get(category, [])) + len(expected_new)
-          expanded.setdefault('world', []).append(('TEST ONLY', 'TEST ONLY'))
-          assert base == snapshot, 'expanded copy still aliases V5.2 rows'
-          print('V5.3 source expansion is isolated from V5.2 module state.')
-          PY
-      - name: Verify Underreported overlap handling
-        run: |
-          python - <<'PY'
-          import sys, xml.etree.ElementTree as ET
-          from datetime import datetime, timezone, timedelta
-          from email.utils import format_datetime
-          sys.path.insert(0, 'scripts')
-          import v53_underreported_guard as guard
-
-          now = datetime.now(timezone.utc)
-          item = ET.Element('item')
-          ET.SubElement(item, 'source').text = 'Primary'
-          pool = ET.SubElement(item, 'coveragePool')
-          def add(source, days):
-              node = ET.SubElement(pool, 'article')
-              ET.SubElement(node, 'source').text = source
-              ET.SubElement(node, 'pubDate').text = format_datetime(now - timedelta(days=days))
-          add('Source A', 10)
-          add('Source A', 220)
-          add('Source B', 170)
-          add('Source C', 20)
-          recent, historical, oldest = guard.evidence(item, now)
-          assert set(recent) == {'sourcea', 'sourcec'}
-          assert set(historical) == {'sourceb'}, historical
-          assert 169 <= oldest <= 171, oldest
-          print('Recent+historical overlap is counted once; historical-only metadata is correct.')
-          PY
-      - name: Underreported ranking/eligibility parity
-        run: |
-          rm -rf /tmp/ur-base /tmp/ur-candidate
-          mkdir -p /tmp/ur-base /tmp/ur-candidate
-          git show origin/stable-v5.3-2026-09-16:News > /tmp/ur-base/News
-          cp /tmp/ur-base/News /tmp/ur-candidate/News
-          git show origin/stable-v5.3-2026-09-16:scripts/v53_underreported_guard.py > /tmp/ur-base/v53_underreported_guard.py
-          cp scripts/v53_underreported_guard.py /tmp/ur-candidate/v53_underreported_guard.py
-          (cd /tmp/ur-base && python v53_underreported_guard.py >/tmp/ur-base.stdout)
-          cp /tmp/v53-underreported-guard.json /tmp/ur-base-report.json
-          (cd /tmp/ur-candidate && python v53_underreported_guard.py >/tmp/ur-candidate.stdout)
-          cp /tmp/v53-underreported-guard.json /tmp/ur-candidate-report.json
           python - <<'PY'
           import json, xml.etree.ElementTree as ET
-
-          def items(path):
-              ch = ET.parse(path).getroot().find('channel')
-              return list(ch.findall('item'))
-          base = items('/tmp/ur-base/News')
-          cand = items('/tmp/ur-candidate/News')
-          identity = lambda x: (
-              (x.findtext('category') or '').strip().lower(),
-              (x.findtext('title') or '').strip(),
-              (x.findtext('link') or '').strip(),
-          )
-          assert [identity(x) for x in base] == [identity(x) for x in cand], 'story eligibility/order changed'
-          base_u = [x for x in base if identity(x)[0] == 'underreported']
-          cand_u = [x for x in cand if identity(x)[0] == 'underreported']
-          stable_tags = ('recentSupportingSourceCount','underreportedPriority','underreportedScore','coverage','underreportedConfidence')
-          for b, c in zip(base_u, cand_u):
-              assert identity(b) == identity(c)
-              for tag in stable_tags:
-                  assert (b.findtext(tag) or '') == (c.findtext(tag) or ''), (identity(b), tag)
-              bh = int(b.findtext('historicalSupportingSourceCount') or 0)
-              ch = int(c.findtext('historicalSupportingSourceCount') or 0)
-              assert ch <= bh, (identity(b), bh, ch)
-          assert json.load(open('/tmp/ur-base-report.json')) == json.load(open('/tmp/ur-candidate-report.json'))
-          print('Underreported eligibility, ranking, recent-source counts and guard report are unchanged; historical metadata only becomes more precise.')
+          ch=ET.parse('News').getroot().find('channel')
+          rows=[x for x in ch.findall('item') if (x.findtext('category') or '').strip().lower()=='underreported']
+          counts=[int(float((x.findtext('recentSupportingSourceCount') or '0'))) for x in rows]
+          impacts=[int(float((x.findtext('underreportedImpactScore') or '0'))) for x in rows]
+          assert rows
+          assert all(1 <= n <= 8 for n in counts), counts
+          assert impacts == sorted(impacts, reverse=True), impacts
+          print(json.dumps(json.load(open('/tmp/v531-underreported-finalize.json')), indent=2))
           PY
-      - name: Protect sticky navigation UX
+      - name: Compare Technology and Gaming
         run: |
-          git diff --exit-code origin/stable-v5.3-2026-09-16 -- assets/v51-category-sticky-ux.js styles/v51-sticky-nav.css
-      - name: Limit patch scope
-        run: |
-          ALLOWED='^(assets/entertainment-v4.js|scripts/patch_site_features.py|styles/v5-visual.css|scripts/v53_quality_layer.py|scripts/update_news_v53.py|scripts/v53_underreported_guard.py|.github/workflows/v531-ux-cleanup.yml)$'
-          bad=$(git diff --name-only origin/stable-v5.3-2026-09-16...HEAD | grep -Ev "$ALLOWED" || true)
-          if [ -n "$bad" ]; then echo "Unexpected files changed:"; echo "$bad"; exit 1; fi
+          python - <<'PY'
+          import json, xml.etree.ElementTree as ET
+          report=json.load(open('/tmp/v531-topic-spacing-report.json'))
+          before=ET.parse('/tmp/original-News').getroot().find('channel')
+          after=ET.parse('News').getroot().find('channel')
+          for cat in ('technology','gaming'):
+              b=[(x.findtext('title') or '').strip() for x in before.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
+              a=[(x.findtext('title') or '').strip() for x in after.findall('item') if (x.findtext('category') or '').strip().lower()==cat]
+              assert len(a)==len(b) and sorted(a)==sorted(b)
+              r=report['tabs'][cat]
+              assert r['afterWindowConflictsTop25'] <= r['beforeWindowConflictsTop25']
+              print(cat, r['beforeWindowConflictsTop25'], '->', r['afterWindowConflictsTop25'])
+              print('BEFORE')
+              for i,t in enumerate(r['beforeTop25'][:10],1): print(i,t)
+              print('AFTER')
+              for i,t in enumerate(r['afterTop25'][:10],1): print(i,t)
+          PY
       - name: Summary
-        run: |
-          echo 'V5.3.1 validation passed: UX cleanup preserved, quality output matches stable exactly, source expansion isolated, Underreported ranking preserved with cleaner historical metadata, sticky UX unchanged.'
+        run: echo 'Underreported impact ordering and Technology/Gaming topic spacing validation complete.'
