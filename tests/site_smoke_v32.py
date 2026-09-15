@@ -26,6 +26,16 @@ def farmington_suite(browser):
     assert page.locator('#tabs > .tab[data-nav-key="nm"]').count()==1, 'State tab missing'
     assert 'New Mexico' in page.locator('#tabs > .tab[data-nav-key="nm"]').inner_text(), 'Farmington did not resolve to New Mexico State tab'
 
+    # NFL must still render when the browser cannot reach ESPN. This verifies the
+    # same-origin assets/nfl-scoreboard.json fallback that keeps score cards alive.
+    page.route('**://site.api.espn.com/apis/site/v2/sports/football/nfl/**',lambda route: route.abort())
+    base.click_key(page,'nfl')
+    page.wait_for_selector('#news-feed .nfl-game-card',timeout=10000)
+    nfl_cards=page.locator('#news-feed .nfl-game-card').count()
+    assert nfl_cards>0, 'NFL fallback rendered no score cards with ESPN blocked'
+    assert page.locator('#news-feed .nfl-error').count()==0, 'NFL fallback displayed an error instead of score cards'
+    page.unroute('**://site.api.espn.com/apis/site/v2/sports/football/nfl/**')
+
     # Presidential routing is now canonical/server-side. The retired browser
     # classifier must not return, and every item available to this tab must already
     # carry the presidential category.
@@ -108,14 +118,26 @@ def mobile_suite(browser):
 
     page.evaluate('window.scrollTo(0, Math.min(1400, document.documentElement.scrollHeight-600))')
     page.wait_for_timeout(250)
-    positions=page.evaluate("""() => ({
-      toolbar:document.querySelector('.toolbar')?.getBoundingClientRect().top,
-      tabs:document.querySelector('.tabs')?.getBoundingClientRect().top,
-      scrollY:window.scrollY
-    })""")
+    positions=page.evaluate("""() => {
+      const box=selector=>document.querySelector(selector)?.getBoundingClientRect();
+      return {
+        shell:box('.v51-sticky-shell')?.top,
+        shellPosition:getComputedStyle(document.querySelector('.v51-sticky-shell')).position,
+        toolbar:box('.toolbar')?.top,
+        stats:box('#pull-stats-ui')?.top,
+        markets:box('.markets')?.top,
+        tabs:box('.tabs')?.top,
+        tabsBottom:box('.tabs')?.bottom,
+        viewport:window.innerHeight,
+        scrollY:window.scrollY
+      };
+    }""")
     assert positions['scrollY']>100, f'Mobile page did not scroll enough for sticky test: {positions}'
-    assert abs(positions['toolbar'])<=2, f'Mobile toolbar is not sticky at viewport top: {positions}'
-    assert 31<=positions['tabs']<=38, f'Mobile category rail is not sticky below toolbar: {positions}'
+    assert positions['shellPosition']=='sticky' and abs(positions['shell'])<=2, f'Mobile control shell is not pinned to viewport top: {positions}'
+    ordered=[positions['toolbar'],positions['stats'],positions['markets'],positions['tabs']]
+    assert all(v is not None and v>=-2 for v in ordered), f'Mobile sticky controls moved above the viewport: {positions}'
+    assert ordered==sorted(ordered), f'Mobile sticky control order changed: {positions}'
+    assert positions['tabsBottom']<=positions['viewport']+2, f'Mobile sticky control stack extends beyond the viewport: {positions}'
 
     overflow=page.evaluate('document.documentElement.scrollWidth-document.documentElement.clientWidth')
     assert overflow<=4, f'Mobile page overflows horizontally by {overflow}px'
@@ -135,7 +157,7 @@ def main():
         denver_suite(browser)
         mobile_suite(browser)
         browser.close()
-    print('V5 SMOKE PASS — canonical Presidential routing, X renderer, consolidated State & County location hub, sticky mobile navigation, briefs, badges and scrolling.')
+    print('V5 SMOKE PASS — NFL offline fallback, canonical Presidential routing, X renderer, consolidated State & County location hub, sticky control shell, briefs, badges and scrolling.')
 
 
 if __name__=='__main__':
