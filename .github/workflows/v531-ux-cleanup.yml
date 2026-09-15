@@ -1,0 +1,41 @@
+name: V5.3.1 UX Cleanup Validation
+on:
+  push:
+    branches: [v5.3.1-ux-cleanup]
+    paths:
+      - 'assets/entertainment-v4.js'
+      - 'scripts/patch_site_features.py'
+      - 'styles/v5-visual.css'
+      - '.github/workflows/v531-ux-cleanup.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Fetch stable V5.3 baseline
+        run: git fetch origin stable-v5.3-2026-09-16
+      - name: Syntax checks
+        run: |
+          python -m py_compile scripts/patch_site_features.py
+          node --check assets/entertainment-v4.js
+      - name: Verify feature cleanup
+        run: |
+          ! grep -Eq 'AudioContext|unlockPopAudio|playNewArticlePop' scripts/patch_site_features.py
+          ! grep -Eq 'imageUrl|ent-card-image|ent-image-link|safeImage' assets/entertainment-v4.js
+          grep -q 'display:block!important' styles/v5-visual.css
+          grep -q 'overflow-wrap:anywhere!important' styles/v5-visual.css
+      - name: Protect sticky navigation UX
+        run: |
+          git diff --exit-code origin/stable-v5.3-2026-09-16 -- assets/v51-category-sticky-ux.js styles/v51-sticky-nav.css
+      - name: Limit patch scope
+        run: |
+          ALLOWED='^(assets/entertainment-v4.js|scripts/patch_site_features.py|styles/v5-visual.css|.github/workflows/v531-ux-cleanup.yml)$'
+          bad=$(git diff --name-only origin/stable-v5.3-2026-09-16...HEAD | grep -Ev "$ALLOWED" || true)
+          if [ -n "$bad" ]; then echo "Unexpected files changed:"; echo "$bad"; exit 1; fi
+      - name: Summary
+        run: |
+          echo 'V5.3.1 UX cleanup passed: Why it matters wrapping improved, entertainment images inactive, update audio removed, sticky UX unchanged.'
