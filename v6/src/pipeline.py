@@ -47,20 +47,37 @@ def near_duplicate(a: Story, b: Story) -> bool:
     aa,bb=normalize_title(a.title),normalize_title(b.title)
     return len(ta & tb)>=4 and min(len(aa),len(bb))>=35 and SequenceMatcher(None,aa,bb).ratio()>=0.92
 
-def technology_has_enough_information(story: Story) -> bool:
-    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
+def _summary_residual(story: Story) -> tuple[str,list[str],list[str]]:
     title=normalize_title(story.title);summary=normalize_title(story.summary);source=normalize_title(story.source)
-    if not title:return False
-    # Remove boilerplate source/title text from the summary before measuring what new information it adds.
     residual=summary
     for token in sorted((title,source),key=len,reverse=True):
         if token:residual=residual.replace(token," ")
     residual=re.sub(r"\s+"," ",residual).strip()
     title_words=[w for w in title.split() if len(w)>=3]
     residual_words=[w for w in residual.split() if len(w)>=3]
-    # A descriptive headline can stand on its own. Short/vague headlines need a summary that adds real context.
+    return residual,title_words,residual_words
+
+def technology_has_enough_information(story: Story) -> bool:
+    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
+    title=normalize_title(story.title)
+    if not title:return False
+    residual,title_words,residual_words=_summary_residual(story)
     if len(title_words)>=5 or len(title)>=42:return True
     return len(residual_words)>=8 and len(residual)>=55
+
+def presidential_has_enough_information(story: Story, now: datetime) -> bool:
+    """Keep the U.S. presidency surface current and reject headline-only/stale feed artifacts."""
+    if age_hours(story,now) > 24*21:
+        return False
+    title=normalize_title(story.title)
+    if not title:return False
+    residual,title_words,residual_words=_summary_residual(story)
+    if len(residual_words)>=6 and len(residual)>=40:
+        return True
+    if len(title_words)>=8 or len(title)>=58:
+        return True
+    strong_terms=("executive order","tariff","sanction","nomination","veto","signed","signs","policy","budget","immigration","weapons sale","ceasefire","trade","cabinet","address")
+    return len(title_words)>=5 and any(term in title for term in strong_terms)
 
 def age_hours(story: Story, now: datetime) -> float:
     return max(0.0, (now - story.published_dt).total_seconds()/3600)
@@ -94,6 +111,7 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
         story.title=re.sub(r"\s+"," ",story.title).strip();story.summary=re.sub(r"\s+"," ",story.summary).strip();story.url=normalize_url(story.url)
         if not story.title or not story.url or not relevant_to_category(story): continue
         if story.category=="technology" and not technology_has_enough_information(story): continue
+        if story.category=="presidential" and not presidential_has_enough_information(story,now): continue
         story.importance=importance_score(story,now);story.why_matters=why_matters(story);cleaned.append(story)
     by_cat=defaultdict(list)
     for story in cleaned: by_cat[story.category].append(story)
