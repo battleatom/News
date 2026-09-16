@@ -1,0 +1,29 @@
+{
+  "version": "6",
+  "generatedAt": "2026-09-16T03:19:41.174234Z",
+  "storyCount": 439,
+  "categoryCounts": {
+    "top": 40,
+    "nfl": 24,
+    "x": 20,
+    "underreported": 21,
+    "world": 40,
+    "us": 40,
+    "presidential": 12,
+    "federal": 14,
+    "legislation": 43,
+    "nm": 24,
+    "local": 9,
+    "region": 40,
+    "technology": 22,
+    "gaming": 40,
+    "military": 25,
+    "entertainment": 25,
+    "boxoffice": 0
+  },
+  "collectorErrors": [],
+  "nflError": "",
+  "boxOfficeError": "",
+  "marketsError": "",
+  "buildMode": "live"
+}

@@ -1,0 +1,519 @@
+{
+  "generatedAt": "2026-09-16T03:19:41.174234Z",
+  "games": [
+    {
+      "id": "401872656",
+      "name": "New England Patriots at Seattle Seahawks",
+      "shortName": "NE @ SEA",
+      "date": "2026-09-10T00:20Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Seattle Seahawks",
+          "abbr": "SEA",
+          "score": "13",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png",
+          "color": "002a5c"
+        },
+        {
+          "name": "New England Patriots",
+          "abbr": "NE",
+          "score": "10",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png",
+          "color": "002a5c"
+        }
+      ],
+      "broadcasts": [
+        "NBC"
+      ],
+      "venue": "Lumen Field",
+      "plays": []
+    },
+    {
+      "id": "401872657",
+      "name": "San Francisco 49ers at Los Angeles Rams",
+      "shortName": "SF VS LAR",
+      "date": "2026-09-11T00:35Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Los Angeles Rams",
+          "abbr": "LAR",
+          "score": "7",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lar.png",
+          "color": "003594"
+        },
+        {
+          "name": "San Francisco 49ers",
+          "abbr": "SF",
+          "score": "27",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+          "color": "aa0000"
+        }
+      ],
+      "broadcasts": [
+        "Netflix"
+      ],
+      "venue": "Melbourne Cricket Ground",
+      "plays": []
+    },
+    {
+      "id": "401872925",
+      "name": "Tampa Bay Buccaneers at Cincinnati Bengals",
+      "shortName": "TB @ CIN",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Cincinnati Bengals",
+          "abbr": "CIN",
+          "score": "33",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cin.png",
+          "color": "fb4f14"
+        },
+        {
+          "name": "Tampa Bay Buccaneers",
+          "abbr": "TB",
+          "score": "27",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tb.png",
+          "color": "bd1c36"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Paycor Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872923",
+      "name": "New Orleans Saints at Detroit Lions",
+      "shortName": "NO @ DET",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final/OT",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Detroit Lions",
+          "abbr": "DET",
+          "score": "31",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png",
+          "color": "0076b6"
+        },
+        {
+          "name": "New Orleans Saints",
+          "abbr": "NO",
+          "score": "30",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png",
+          "color": "d3bc8d"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Ford Field",
+      "plays": []
+    },
+    {
+      "id": "401872924",
+      "name": "New York Jets at Tennessee Titans",
+      "shortName": "NYJ @ TEN",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Tennessee Titans",
+          "abbr": "TEN",
+          "score": "10",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png",
+          "color": "4495d2"
+        },
+        {
+          "name": "New York Jets",
+          "abbr": "NYJ",
+          "score": "23",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png",
+          "color": "115740"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "Nissan Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872659",
+      "name": "Baltimore Ravens at Indianapolis Colts",
+      "shortName": "BAL @ IND",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Indianapolis Colts",
+          "abbr": "IND",
+          "score": "23",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png",
+          "color": "003b75"
+        },
+        {
+          "name": "Baltimore Ravens",
+          "abbr": "BAL",
+          "score": "41",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png",
+          "color": "29126f"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "Lucas Oil Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872658",
+      "name": "Atlanta Falcons at Pittsburgh Steelers",
+      "shortName": "ATL @ PIT",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Pittsburgh Steelers",
+          "abbr": "PIT",
+          "score": "20",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+          "color": "000000"
+        },
+        {
+          "name": "Atlanta Falcons",
+          "abbr": "ATL",
+          "score": "13",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png",
+          "color": "a71930"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Acrisure Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872661",
+      "name": "Chicago Bears at Carolina Panthers",
+      "shortName": "CHI @ CAR",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Carolina Panthers",
+          "abbr": "CAR",
+          "score": "37",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png",
+          "color": "0085ca"
+        },
+        {
+          "name": "Chicago Bears",
+          "abbr": "CHI",
+          "score": "59",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/chi.png",
+          "color": "0b1c3a"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Bank of America Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872922",
+      "name": "Cleveland Browns at Jacksonville Jaguars",
+      "shortName": "CLE @ JAX",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Jacksonville Jaguars",
+          "abbr": "JAX",
+          "score": "34",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
+          "color": "007487"
+        },
+        {
+          "name": "Cleveland Browns",
+          "abbr": "CLE",
+          "score": "10",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+          "color": "472a08"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "EverBank Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872660",
+      "name": "Buffalo Bills at Houston Texans",
+      "shortName": "BUF @ HOU",
+      "date": "2026-09-13T17:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Houston Texans",
+          "abbr": "HOU",
+          "score": "31",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png",
+          "color": "021018"
+        },
+        {
+          "name": "Buffalo Bills",
+          "abbr": "BUF",
+          "score": "36",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
+          "color": "00338d"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "Reliant Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872928",
+      "name": "Miami Dolphins at Las Vegas Raiders",
+      "shortName": "MIA @ LV",
+      "date": "2026-09-13T20:25Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Las Vegas Raiders",
+          "abbr": "LV",
+          "score": "27",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png",
+          "color": "000000"
+        },
+        {
+          "name": "Miami Dolphins",
+          "abbr": "MIA",
+          "score": "13",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/mia.png",
+          "color": "008e97"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Allegiant Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872927",
+      "name": "Green Bay Packers at Minnesota Vikings",
+      "shortName": "GB @ MIN",
+      "date": "2026-09-13T20:25Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Minnesota Vikings",
+          "abbr": "MIN",
+          "score": "39",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png",
+          "color": "4f2683"
+        },
+        {
+          "name": "Green Bay Packers",
+          "abbr": "GB",
+          "score": "22",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png",
+          "color": "204e32"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "U.S. Bank Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872929",
+      "name": "Washington Commanders at Philadelphia Eagles",
+      "shortName": "WSH @ PHI",
+      "date": "2026-09-13T20:25Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Philadelphia Eagles",
+          "abbr": "PHI",
+          "score": "24",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png",
+          "color": "06424d"
+        },
+        {
+          "name": "Washington Commanders",
+          "abbr": "WSH",
+          "score": "22",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png",
+          "color": "5a1414"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "venue": "Lincoln Financial Field",
+      "plays": []
+    },
+    {
+      "id": "401872926",
+      "name": "Arizona Cardinals at Los Angeles Chargers",
+      "shortName": "ARI @ LAC",
+      "date": "2026-09-13T20:25Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Los Angeles Chargers",
+          "abbr": "LAC",
+          "score": "14",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lac.png",
+          "color": "0080c6"
+        },
+        {
+          "name": "Arizona Cardinals",
+          "abbr": "ARI",
+          "score": "26",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+          "color": "a40227"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "venue": "SoFi Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872930",
+      "name": "Dallas Cowboys at New York Giants",
+      "shortName": "DAL @ NYG",
+      "date": "2026-09-14T00:20Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "New York Giants",
+          "abbr": "NYG",
+          "score": "28",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png",
+          "color": "003c7f"
+        },
+        {
+          "name": "Dallas Cowboys",
+          "abbr": "DAL",
+          "score": "20",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png",
+          "color": "002a5c"
+        }
+      ],
+      "broadcasts": [
+        "NBC"
+      ],
+      "venue": "MetLife Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872931",
+      "name": "Denver Broncos at Kansas City Chiefs",
+      "shortName": "DEN @ KC",
+      "date": "2026-09-15T00:15Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Kansas City Chiefs",
+          "abbr": "KC",
+          "score": "31",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png",
+          "color": "e31837"
+        },
+        {
+          "name": "Denver Broncos",
+          "abbr": "DEN",
+          "score": "10",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png",
+          "color": "0a2343"
+        }
+      ],
+      "broadcasts": [
+        "ESPN",
+        "ABC"
+      ],
+      "venue": "Arrowhead Stadium",
+      "plays": []
+    }
+  ],
+  "error": ""
+}

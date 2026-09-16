@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-09-16T03:19:41.174234Z",
+  "markets": [
+    {
+      "symbol": "^GSPC",
+      "label": "S&P 500",
+      "price": 7585.73,
+      "previousClose": 7673.52,
+      "changePct": -1.1440642625548754,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^DJI",
+      "label": "Dow",
+      "price": 52093.1,
+      "previousClose": 52786.07,
+      "changePct": -1.3127895295103447,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^IXIC",
+      "label": "Nasdaq",
+      "price": 25981.57,
+      "previousClose": 26421.41,
+      "changePct": -1.6647105510266114,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "BTC-USD",
+      "label": "Bitcoin",
+      "price": 75951.73,
+      "previousClose": 77270.47,
+      "changePct": -1.7066545602738088,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "GC=F",
+      "label": "Gold",
+      "price": 4368.0,
+      "previousClose": 4407.3,
+      "changePct": -0.8917024028316697,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "CL=F",
+      "label": "Oil",
+      "price": 104.5,
+      "previousClose": 102.48,
+      "changePct": 1.9711163153786064,
+      "currency": "USD",
+      "marketState": ""
+    }
+  ],
+  "error": ""
+}
