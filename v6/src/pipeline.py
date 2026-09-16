@@ -332,5 +332,5 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
             chosen=select_diverse(rows,target,source_cap,near_duplicate)
         output.extend(chosen)
     category_order={name:i for i,name in enumerate(registry["categories"])}
-    output.sort(key=lambda s:(category_order[s.category], -(s.underreported_priority if s.category=="underreported" else s.importance), -s.published_dt.timestamp()))
+    output.sort(key=lambda s:category_order[s.category])
     return output
