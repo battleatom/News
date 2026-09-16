@@ -114,7 +114,7 @@ def parse_availability_dates(page:str)->list[date]:
     for m,d,y in re.findall(r"\b(\d{1,2})/(\d{1,2})/(20\d{2})\b",clean(page)):
         try:found.add(date(int(y),int(m),int(d)))
         except ValueError:pass
-    months=r"January|February|March|April|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr"
+    months=r"January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
     for mon,day_num,year in re.findall(fr"\b({months})\s+(\d{{1,2}}),?\s+(20\d{{2}})\b",clean(page),re.I):
         try:found.add(datetime.strptime(f"{mon} {day_num} {year}","%b %d %Y" if len(mon)<=3 else "%B %d %Y").date())
         except ValueError:pass
