@@ -24,16 +24,12 @@
     if(!grid){
       grid=document.createElement('div');
       grid.className='admin-source-health-grid';
-      const rows=[...block.children].filter(el=>el!==headerRow);
-      rows.forEach(row=>grid.appendChild(row));
+      [...block.children].filter(el=>el!==headerRow).forEach(row=>grid.appendChild(row));
       block.appendChild(grid);
     }
     if(wrap.lastElementChild!==block)wrap.appendChild(block);
   }
-  const schedule=()=>{if(adminActive())setTimeout(apply,80)};
-  new MutationObserver(schedule).observe(feed,{childList:true,subtree:false});
-  new MutationObserver(schedule).observe(tabs,{subtree:true,attributes:true,attributeFilter:['aria-selected'],childList:true});
-  tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(apply,160)},true);
-  document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')schedule()});
-  setInterval(()=>{if(adminActive())apply()},2000);
+  tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(apply,120)},true);
+  document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')setTimeout(apply,60)});
+  setTimeout(apply,250);
 })();
