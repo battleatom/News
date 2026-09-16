@@ -40,20 +40,59 @@ def _tracked_topics(rows:list[Story])->set[str]:
     return {term for term,count in counts.items() if 3<=count<=upper}
 
 
-def select_diverse(rows:list[Story],target:int,source_cap:int,near_duplicate)->list[Story]:
-    """Select a varied tab: canonical event coverage, publisher spread and topic spread."""
-    tracked=_tracked_topics(rows)
-    chosen=[];source_counts=defaultdict(int);topic_counts=defaultdict(int)
+def _hard_dedupe(rows:list[Story],near_duplicate)->list[Story]:
+    """Hard-remove only duplicate/near-identical event coverage."""
+    canonical=[]
     for story in rows:
+        if any(near_duplicate(story,prior) or same_event(story,prior) for prior in canonical):
+            continue
+        canonical.append(story)
+    return canonical
+
+
+def select_diverse(rows:list[Story],target:int,source_cap:int,near_duplicate)->list[Story]:
+    """Keep real inventory while reordering repeated publishers/topics behind variety.
+
+    True same-event duplicates are removed. Publisher/topic repetition is soft: stories are
+    deferred and can return later in the tab so diversity never destroys valid inventory.
+    """
+    candidates=_hard_dedupe(rows,near_duplicate)
+    if not candidates or target<=0:return []
+    tracked=_tracked_topics(candidates)
+    chosen=[];chosen_ids=set();source_counts=defaultdict(int);topic_counts=defaultdict(int)
+
+    def add(story:Story)->None:
+        chosen.append(story);chosen_ids.add(id(story))
+        source_counts[_norm(story.source) or "unknown"]+=1
+        for term in (_title_terms(story)&tracked):topic_counts[term]+=1
+
+    # Pass 1: build a varied lead section. Conflicts are deferred, never discarded.
+    lead_target=min(20,target)
+    for story in candidates:
+        if len(chosen)>=lead_target:break
         source_key=_norm(story.source) or "unknown"
-        top_window=len(chosen)<20
-        publisher_limit=min(source_cap,2) if top_window else source_cap
-        if source_counts[source_key]>=publisher_limit:continue
-        if any(near_duplicate(story,prior) or same_event(story,prior) for prior in chosen):continue
         topics=_title_terms(story)&tracked
-        topic_limit=2 if top_window else 4
-        if topics and any(topic_counts[term]>=topic_limit for term in topics):continue
-        chosen.append(story);source_counts[source_key]+=1
-        for term in topics:topic_counts[term]+=1
+        if source_counts[source_key]>=min(source_cap,2):continue
+        if topics and any(topic_counts[term]>=2 for term in topics):continue
+        add(story)
+
+    # Pass 2: continue with moderate topic spacing and the normal publisher cap.
+    for story in candidates:
         if len(chosen)>=target:break
+        if id(story) in chosen_ids:continue
+        source_key=_norm(story.source) or "unknown"
+        topics=_title_terms(story)&tracked
+        if source_counts[source_key]>=source_cap:continue
+        if topics and any(topic_counts[term]>=4 for term in topics):continue
+        add(story)
+
+    # Pass 3: fill remaining slots from deferred valid stories. Topic limits are now
+    # intentionally relaxed; source caps and hard event dedupe still remain enforced.
+    for story in candidates:
+        if len(chosen)>=target:break
+        if id(story) in chosen_ids:continue
+        source_key=_norm(story.source) or "unknown"
+        if source_counts[source_key]>=source_cap:continue
+        add(story)
+
     return chosen
