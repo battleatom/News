@@ -45,7 +45,7 @@ def collect_nfl()->tuple[list[dict],str]:
         return rows,""
     except Exception as exc:return [],f"{type(exc).__name__}: {exc}"
 
-MARKETS=[("^GSPC","S&P 500"),("^DJI","DOW"),("^IXIC","NASDAQ"),("^VIX","VIX"),("CL=F","WTI OIL"),("GC=F","GOLD"),("^TNX","10Y")]
+MARKETS=[("^GSPC","S&P 500"),("^DJI","DOW"),("^IXIC","NASDAQ"),("^RUT","RUSSELL 2000"),("^VIX","VIX"),("CL=F","WTI OIL"),("BZ=F","BRENT"),("NG=F","NAT GAS"),("GC=F","GOLD"),("SI=F","SILVER"),("HG=F","COPPER"),("DX-Y.NYB","U.S. DOLLAR"),("^TNX","10Y"),("BTC-USD","BITCOIN"),("ETH-USD","ETHEREUM")]
 def collect_markets()->tuple[list[dict],str]:
     rows=[];errors=[]
     for symbol,label in MARKETS:
@@ -114,7 +114,7 @@ def parse_availability_dates(page:str)->list[date]:
     for m,d,y in re.findall(r"\b(\d{1,2})/(\d{1,2})/(20\d{2})\b",clean(page)):
         try:found.add(date(int(y),int(m),int(d)))
         except ValueError:pass
-    months=r"January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec"
+    months=r"January|February|March|April|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr"
     for mon,day_num,year in re.findall(fr"\b({months})\s+(\d{{1,2}}),?\s+(20\d{{2}})\b",clean(page),re.I):
         try:found.add(datetime.strptime(f"{mon} {day_num} {year}","%b %d %Y" if len(mon)<=3 else "%B %d %Y").date())
         except ValueError:pass
