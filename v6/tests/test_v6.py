@@ -27,7 +27,7 @@ class V6PipelineTests(unittest.TestCase):
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));story=next(x for x in out if x.id=="u")
         self.assertEqual(story.supporting_source_count,2);self.assertEqual(story.coverage_gap_score,86);self.assertGreater(story.underreported_priority,0);self.assertEqual(story.coverage_score,story.underreported_priority);self.assertEqual(len(story.related),2);self.assertTrue(story.what_happened);self.assertTrue(story.what_is_missing);self.assertTrue(story.background);self.assertTrue(story.what_next)
     def test_underreported_priority_balances_gap_with_corroboration(self):
-        zero=Story("z","underreported","Investigation finds hospital billing failures","https://example.com/z","Primary","2026-09-15T12:00:00Z","An investigation found hospital billing failures affecting patients and regulators are reviewing the findings.")
+        zero=Story("z","underreported","Investigation documents river contamination near rural towns","https://example.com/z","Primary","2026-09-15T12:00:00Z","An investigation documented river contamination affecting rural towns while environmental regulators review the findings.")
         supported=Story("s","underreported","Investigation finds hospital safety failures","https://example.com/s","Primary2","2026-09-15T12:00:00Z","An investigation found hospital safety failures affecting patients and regulators are reviewing the findings.",related=[
             {"title":"Hospital safety failures draw state review","url":"https://a.example/1","source":"Reuters","published_at":"2026-09-15T11:00:00Z"},
             {"title":"State reviews hospital safety failures","url":"https://b.example/2","source":"Associated Press","published_at":"2026-09-15T10:00:00Z"},
