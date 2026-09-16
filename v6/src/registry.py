@@ -4,9 +4,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_REGISTRY = ROOT / "config" / "sources.json"
+EXTRA_REGISTRY = ROOT / "config" / "sources-extra.json"
 
-def load_registry(path: str | Path = DEFAULT_REGISTRY) -> dict:
-    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+
+def _load_json(path: Path) -> dict:
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _validate(payload: dict) -> dict:
     categories = payload.get("categories", {})
     sources = payload.get("sources", [])
     if not categories:
@@ -26,4 +31,14 @@ def load_registry(path: str | Path = DEFAULT_REGISTRY) -> dict:
         if source.get("kind") == "rss" and not source.get("url"):
             raise ValueError(f"source {sid} is missing a url")
         seen.add(sid)
+    payload["source_count"] = len(sources)
     return payload
+
+
+def load_registry(path: str | Path = DEFAULT_REGISTRY) -> dict:
+    base_path = Path(path)
+    payload = _load_json(base_path)
+    if base_path.resolve() == DEFAULT_REGISTRY.resolve() and EXTRA_REGISTRY.exists():
+        extra = _load_json(EXTRA_REGISTRY)
+        payload["sources"] = [*payload.get("sources", []), *extra.get("sources", [])]
+    return _validate(payload)

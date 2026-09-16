@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from difflib import SequenceMatcher
 
 from model import Story
+from relevance import relevant_to_category
 
 TRACKING = {"utm_source","utm_medium","utm_campaign","utm_term","utm_content","gclid","fbclid"}
 IMPACT_TERMS = {
@@ -50,22 +51,19 @@ def age_hours(story: Story, now: datetime) -> float:
     return max(0.0, (now - story.published_dt).total_seconds()/3600)
 
 def importance_score(story: Story, now: datetime) -> float:
-    text=f"{story.title} {story.summary}".lower()
-    score=0.0
+    text=f"{story.title} {story.summary}".lower();score=0.0
     for term,weight in IMPACT_TERMS.items():
         if term in text: score += weight
     for term,weight in ROUTINE_TERMS.items():
         if term in text: score += weight
     score += max(0.0, 18.0 - age_hours(story,now)/8.0)
     if story.category=="underreported": score += 5
-    if story.category=="legislation" and any(x in story.source.lower() for x in ("congress","federal register","white house")): score += 10
+    if story.category=="legislation" and any(x in story.source.lower() for x in ("congress","federal register","white house","govinfo")): score += 10
     return round(score,2)
 
 def why_matters(story: Story) -> str:
-    text=f"{story.title} {story.summary}".lower()
-    hits=[term for term in IMPACT_TERMS if term in text][:2]
-    if hits:
-        return f"This report involves {' and '.join(hits)}; the linked source has the underlying details and latest updates."
+    text=f"{story.title} {story.summary}".lower();hits=[term for term in IMPACT_TERMS if term in text][:2]
+    if hits: return f"This report involves {' and '.join(hits)}; the linked source has the underlying details and latest updates."
     if story.category=="legislation": return "This is an official-policy or legislation item that may change rules, government action, or legal requirements."
     if story.category in {"local","region","nm"}: return "This story is included because it has direct state or regional relevance and may affect nearby communities."
     if story.category=="technology": return "This could affect technology products, services, security, or the companies behind them."
@@ -75,27 +73,24 @@ def why_matters(story: Story) -> str:
     return "This is a current development selected for recency, source quality, and potential public impact."
 
 def process(stories: list[Story], registry: dict, *, now: datetime | None=None) -> list[Story]:
-    now=now or datetime.now(timezone.utc)
-    valid_categories=set(registry["categories"])
-    cleaned=[]
+    now=now or datetime.now(timezone.utc);valid_categories=set(registry["categories"]);cleaned=[]
     for story in stories:
         if story.category not in valid_categories: continue
         story.title=re.sub(r"\s+"," ",story.title).strip();story.summary=re.sub(r"\s+"," ",story.summary).strip();story.url=normalize_url(story.url)
-        if not story.title or not story.url: continue
+        if not story.title or not story.url or not relevant_to_category(story): continue
         story.importance=importance_score(story,now);story.why_matters=why_matters(story);cleaned.append(story)
     by_cat=defaultdict(list)
     for story in cleaned: by_cat[story.category].append(story)
     output=[]
     for category, rows in by_cat.items():
         cfg=registry["categories"][category];target=int(cfg.get("target",50));source_cap=int(cfg.get("source_cap",8))
-        rows.sort(key=lambda s:(s.importance,s.published_dt), reverse=True)
-        chosen=[];source_counts=defaultdict(int)
+        rows.sort(key=lambda s:(s.importance,s.published_dt), reverse=True);chosen=[];source_counts=defaultdict(int)
         for story in rows:
             source_key=re.sub(r"[^a-z0-9]+"," ",story.source.lower()).strip() or "unknown"
-            if source_counts[source_key]>=source_cap: continue
-            if any(near_duplicate(story,prior) for prior in chosen): continue
+            if source_counts[source_key]>=source_cap or any(near_duplicate(story,prior) for prior in chosen): continue
             chosen.append(story);source_counts[source_key]+=1
             if len(chosen)>=target: break
         output.extend(chosen)
-    output.sort(key=lambda s:(list(registry["categories"]).index(s.category), -s.importance, -s.published_dt.timestamp()))
+    category_order={name:i for i,name in enumerate(registry["categories"])}
+    output.sort(key=lambda s:(category_order[s.category], -s.importance, -s.published_dt.timestamp()))
     return output
