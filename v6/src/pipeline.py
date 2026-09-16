@@ -52,14 +52,18 @@ def near_duplicate(a: Story, b: Story) -> bool:
     return len(ta & tb)>=4 and min(len(aa),len(bb))>=35 and SequenceMatcher(None,aa,bb).ratio()>=0.92
 
 
-def technology_has_enough_information(story: Story) -> bool:
-    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
-    title=normalize_title(story.title);summary=normalize_title(story.summary);source=normalize_title(story.source)
-    if not title:return False
+def _summary_residual(story: Story) -> str:
+    summary=normalize_title(story.summary);title=normalize_title(story.title);source=normalize_title(story.source)
     residual=summary
     for token in sorted((title,source),key=len,reverse=True):
         if token:residual=residual.replace(token," ")
-    residual=re.sub(r"\s+"," ",residual).strip()
+    return re.sub(r"\s+"," ",residual).strip()
+
+
+def technology_has_enough_information(story: Story) -> bool:
+    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
+    title=normalize_title(story.title);residual=_summary_residual(story)
+    if not title:return False
     title_words=[w for w in title.split() if len(w)>=3]
     residual_words=[w for w in residual.split() if len(w)>=3]
     if len(title_words)>=5 or len(title)>=42:return True
@@ -68,6 +72,13 @@ def technology_has_enough_information(story: Story) -> bool:
 
 def age_hours(story: Story, now: datetime) -> float:
     return max(0.0, (now - story.published_dt).total_seconds()/3600)
+
+
+def presidential_has_enough_information(story: Story, now: datetime) -> bool:
+    """Keep current U.S.-presidency coverage, but reject stale cards whose feed text adds no context."""
+    if age_hours(story,now)<=14*24:return True
+    residual=_summary_residual(story)
+    return len(residual)>=45 and len([w for w in residual.split() if len(w)>=3])>=7
 
 
 def importance_score(story: Story, now: datetime) -> float:
@@ -137,13 +148,13 @@ def _what_next(summary: str) -> str:
     return ""
 
 
-def enrich_underreported(stories: list[Story], now: datetime) -> None:
-    """Build V6 Underreported evidence packages from the already-collected normalized story pool."""
-    for story in stories:
+def enrich_underreported(visible_stories: list[Story], evidence_pool: list[Story], now: datetime) -> None:
+    """Build V6 Underreported evidence packages from the normalized collected story pool."""
+    for story in visible_stories:
         if story.category!="underreported":continue
         candidates=[]
         primary_source=_source_key(story.source)
-        for other in stories:
+        for other in evidence_pool:
             if other.id==story.id or normalize_url(other.url)==normalize_url(story.url):continue
             score=_related_score(story,other)
             if score<0.40:continue
@@ -181,14 +192,17 @@ def enrich_underreported(stories: list[Story], now: datetime) -> None:
 
 
 def process(stories: list[Story], registry: dict, *, now: datetime | None=None) -> list[Story]:
-    now=now or datetime.now(timezone.utc);valid_categories=set(registry["categories"]);cleaned=[]
+    now=now or datetime.now(timezone.utc);valid_categories=set(registry["categories"]);cleaned=[];evidence_pool=[]
     for story in stories:
         if story.category not in valid_categories: continue
         story.title=re.sub(r"\s+"," ",story.title).strip();story.summary=re.sub(r"\s+"," ",story.summary).strip();story.url=normalize_url(story.url)
-        if not story.title or not story.url or not relevant_to_category(story): continue
+        if not story.title or not story.url:continue
+        evidence_pool.append(story)
+        if not relevant_to_category(story): continue
         if story.category=="technology" and not technology_has_enough_information(story): continue
+        if story.category=="presidential" and not presidential_has_enough_information(story,now):continue
         story.importance=importance_score(story,now);story.why_matters=why_matters(story);cleaned.append(story)
-    enrich_underreported(cleaned,now)
+    enrich_underreported(cleaned,evidence_pool,now)
     by_cat=defaultdict(list)
     for story in cleaned: by_cat[story.category].append(story)
     output=[]
