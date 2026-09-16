@@ -1,10 +1,18 @@
 export const PAGE_SIZE=20;
+const BOOKMARK_KEY="underreported-v6-bookmarks";
+function readBookmarks(){try{return JSON.parse(localStorage.getItem(BOOKMARK_KEY)||"[]")}catch{return[]}}
+function writeBookmarks(rows){try{localStorage.setItem(BOOKMARK_KEY,JSON.stringify(rows))}catch{}}
 export class Store{
-  constructor(){this.feed=null;this.nfl={games:[],error:""};this.boxoffice={movies:[],error:""};this.active="top";this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]])}
-  setFeed(feed){this.feed=feed;if(!feed?.categories?.[this.active])this.active=Object.keys(feed?.categories||{})[0]||"top"}
-  setActive(category){if(this.feed?.categories?.[category])this.active=category;if(!this.visible.has(category))this.visible.set(category,PAGE_SIZE)}
+  constructor(){this.feed=null;this.nfl={games:[],error:""};this.boxoffice={movies:[],error:""};this.markets={markets:[],error:""};this.status={};this.active="top";this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]]);this.bookmarks=readBookmarks();this.newIds=new Set();this.selectedNfl=""}
+  setFeed(feed){this.feed=feed;if(!feed?.categories?.[this.active]&&this.active!=="bookmarks")this.active=Object.keys(feed?.categories||{})[0]||"top"}
+  setActive(category){if(category==="bookmarks"||this.feed?.categories?.[category])this.active=category;if(!this.visible.has(category))this.visible.set(category,PAGE_SIZE)}
   shown(category=this.active){return this.visible.get(category)||PAGE_SIZE}
   loadMore(category=this.active,amount=PAGE_SIZE){this.visible.set(category,this.shown(category)+amount)}
   resetPage(category=this.active){this.visible.set(category,PAGE_SIZE)}
-  categoryStories(category=this.active){return this.feed?.stories?.[category]||[]}
+  categoryStories(category=this.active){if(category==="bookmarks")return this.bookmarks;return this.feed?.stories?.[category]||[]}
+  allStories(){return Object.values(this.feed?.stories||{}).flat()}
+  bookmarkIds(){return new Set(this.bookmarks.map(row=>row.id))}
+  isBookmarked(id){return this.bookmarks.some(row=>row.id===id)}
+  toggleBookmark(story){const i=this.bookmarks.findIndex(row=>row.id===story.id);let saved;if(i>=0){this.bookmarks.splice(i,1);saved=false}else{this.bookmarks.unshift({...story,bookmarked_at:new Date().toISOString()});saved=true}writeBookmarks(this.bookmarks);return saved}
+  storyById(id){return this.allStories().find(row=>row.id===id)||this.bookmarks.find(row=>row.id===id)||null}
 }
