@@ -11,14 +11,23 @@
   `;
   document.head.appendChild(style);
   const adminActive=()=>!!tabs.querySelector('.tab[data-category="admin"][aria-selected="true"]');
+  let observedWrap=null,wrapObserver=null,applying=false;
+  function ensureObserver(wrap){
+    if(observedWrap===wrap)return;
+    wrapObserver?.disconnect();observedWrap=wrap;
+    wrapObserver=new MutationObserver(()=>{if(adminActive())queueMicrotask(apply)});
+    wrapObserver.observe(wrap,{childList:true});
+  }
   function apply(){
-    if(!adminActive())return;
+    if(applying||!adminActive())return;
     const wrap=feed.firstElementChild;if(!wrap)return;
+    ensureObserver(wrap);
     const heading=[...wrap.querySelectorAll('strong')].find(el=>el.textContent.trim()==='Source Health');
     if(!heading)return;
     const headerRow=heading.parentElement?.parentElement;
     const block=headerRow?.parentElement;
     if(!block)return;
+    applying=true;
     block.id='admin-source-health-block';
     let grid=block.querySelector(':scope > .admin-source-health-grid');
     if(!grid){
@@ -28,6 +37,7 @@
       block.appendChild(grid);
     }
     if(wrap.lastElementChild!==block)wrap.appendChild(block);
+    applying=false;
   }
   tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(apply,120)},true);
   document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')setTimeout(apply,60)});
