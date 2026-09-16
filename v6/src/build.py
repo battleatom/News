@@ -39,7 +39,14 @@ def build(*,fixture:Path|None=None)->dict:
     write_json(DIST/"nfl.json",{"generatedAt":generated,"games":nfl,"error":nfl_error})
     write_json(DIST/"boxoffice.json",{"generatedAt":generated,"localCity":"Farmington, NM","movies":boxoffice,"error":boxoffice_error})
     write_json(DIST/"markets.json",{"generatedAt":generated,"markets":markets,"error":markets_error})
-    status={"version":"6","generatedAt":generated,"storyCount":len(stories),"categoryCounts":{k:len(v) for k,v in by_category.items()},"collectorErrors":collector_errors,"nflError":nfl_error,"boxOfficeError":boxoffice_error,"marketsError":markets_error,"buildMode":"fixture" if fixture else "live"}
+    error_by_source={row.get("source",""):row.get("error","") for row in collector_errors}
+    raw_counts={}
+    for story in raw:
+        sid=str(getattr(story,"source_id","") or "")
+        if sid:raw_counts[sid]=raw_counts.get(sid,0)+1
+    source_statuses=[] if fixture else [{"id":row.get("id",""),"name":row.get("name",row.get("id","")),"category":row.get("category",""),"status":"error" if row.get("id","") in error_by_source else "live","storyCount":raw_counts.get(row.get("id",""),0),"error":error_by_source.get(row.get("id",""),"")} for row in registry.get("sources",[])]
+    healthy_sources=sum(1 for row in source_statuses if row["status"]=="live")
+    status={"version":"6","generatedAt":generated,"storyCount":len(stories),"categoryCounts":{k:len(v) for k,v in by_category.items()},"collectorErrors":collector_errors,"sourceStatuses":source_statuses,"sourceCount":len(source_statuses),"healthySourceCount":healthy_sources,"nflError":nfl_error,"boxOfficeError":boxoffice_error,"marketsError":markets_error,"buildMode":"fixture" if fixture else "live"}
     write_json(DIST/"status.json",status);return status
 
 def main()->None:
