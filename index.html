@@ -31,58 +31,9 @@
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script type="module" src="app.js"></script>
-  <script src="tab-ux.js?v=2"></script>
-  <script src="admin-ops.js?v=2"></script>
-  <script>
-  (()=>{
-    const statusStyle=document.createElement("style");
-    statusStyle.textContent=`
-      .toolbar{align-items:flex-start;justify-content:flex-start;flex-wrap:wrap;gap:6px 8px;padding-bottom:7px}
-      .local-status,.refresh-status{display:flex;align-items:center;flex-wrap:wrap;gap:6px;white-space:normal;text-align:left}
-      .local-status .sep{display:none}
-      .status-pill,#local-date,#local-time,#location-button{display:inline-flex;align-items:center;min-height:28px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);box-shadow:0 2px 7px rgba(15,23,42,.045);font-size:.64rem;font-weight:800;line-height:1.15;white-space:nowrap}
-      #location-button{color:var(--text);text-decoration:none;cursor:pointer}
-      #location-button:hover{border-color:var(--line-strong)}
-      .status-pill.status-live{color:var(--good);background:rgba(21,128,61,.055);border-color:rgba(21,128,61,.16)}
-      .status-pill.status-warn{color:var(--warn);background:rgba(180,83,9,.055);border-color:rgba(180,83,9,.16)}
-      @media(max-width:760px){.toolbar{padding:0 12px 7px;gap:5px}.local-status,.refresh-status{gap:5px}.status-pill,#local-date,#local-time,#location-button{min-height:27px;padding:4px 8px;font-size:.6rem}}
-    `;
-    document.head.appendChild(statusStyle);
-    const date=document.getElementById("local-date"),time=document.getElementById("local-time"),locationButton=document.getElementById("location-button"),refresh=document.getElementById("refresh-status"),weather=document.getElementById("weather-status");
-    if(weather){weather.style.display="none"}
-    const renderRefreshPills=()=>{
-      if(!refresh||refresh.querySelector(".status-pill"))return;
-      const raw=(refresh.textContent||"").trim();if(!raw)return;
-      const parts=raw.split(" · ").map(x=>x.trim()).filter(Boolean);
-      refresh.innerHTML=parts.map((part,i)=>{const live=/^(✓|↻)/.test(part),warn=/^⚠/.test(part);return `<span class="status-pill${live?" status-live":""}${warn?" status-warn":""}">${part}</span>`}).join("");
-    };
-    renderRefreshPills();
-    if(refresh)new MutationObserver(()=>renderRefreshPills()).observe(refresh,{childList:true,subtree:false,characterData:false});
-  })();
-  </script>
-  <script>
-  (()=>{
-    const KEY="underreported-v6-location";
-    let last="",lastAt=0,busy=false;
-    const label=code=>{code=Number(code);if(code===0)return["☀️","Clear"];if(code<=2)return["🌤️","Partly cloudy"];if(code===3)return["☁️","Cloudy"];if(code<=48)return["🌫️","Fog"];if(code<=57)return["🌦️","Drizzle"];if(code<=67)return["🌧️","Rain"];if(code<=77)return["🌨️","Snow"];if(code<=82)return["🌦️","Showers"];if(code<=86)return["🌨️","Snow showers"];if(code<=99)return["⛈️","Storm"];return["🌡️","Weather"]};
-    const dayName=(date,i)=>i===0?"Today":i===1?"Tomorrow":new Intl.DateTimeFormat(undefined,{weekday:"short"}).format(new Date(date+"T12:00:00"));
-    function location(){try{const v=JSON.parse(localStorage.getItem(KEY)||"null");return v&&Number.isFinite(Number(v.lat))&&Number.isFinite(Number(v.lon))?v:null}catch{return null}}
-    function strip(){
-      let el=document.getElementById("weather-forecast-strip");if(el)return el;
-      const toolbar=document.querySelector(".toolbar");if(!toolbar)return null;
-      const old=document.getElementById("weather-status");
-      if(old){old.style.display="none";const sep=old.previousElementSibling;if(sep?.classList.contains("sep"))sep.style.display="none"}
-      const style=document.createElement("style");
-      style.textContent="#weather-forecast-strip{max-width:var(--max);margin:0 auto;padding:0 18px 8px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;scroll-snap-type:x proximity}#weather-forecast-strip::-webkit-scrollbar{display:none}.weather-forecast-track{display:flex;width:max-content;min-width:100%;gap:7px;align-items:center;flex-wrap:nowrap}.weather-pill{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;min-height:30px;padding:5px 9px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--text);box-shadow:0 2px 7px rgba(15,23,42,.055);font-size:.64rem;font-weight:800;scroll-snap-align:start}.weather-pill.current{border-color:rgba(37,99,235,.28);background:rgba(37,99,235,.06)}.weather-icon{font-size:.9rem;line-height:1}.weather-day{font-weight:950}.weather-detail{color:var(--muted);font-weight:700}.weather-rain{color:#2563eb;font-weight:850}@media(max-width:760px){#weather-forecast-strip{padding:0 12px 7px}.weather-forecast-track{min-width:max-content}.weather-pill{min-height:29px;padding:5px 8px;font-size:.62rem}}";
-      document.head.appendChild(style);
-      el=document.createElement("div");el.id="weather-forecast-strip";el.setAttribute("aria-label","Current weather and five-day forecast. Swipe horizontally for more.");
-      el.innerHTML='<div class="weather-forecast-track"><span class="weather-pill current">🌡️ Weather loading…</span></div>';
-      toolbar.insertAdjacentElement("afterend",el);return el
-    }
-    function render(data){const el=strip();if(!el)return;const temp=Math.round(Number(data.current?.temperature_2m)),[icon,text]=label(data.current?.weather_code),daily=data.daily||{},dates=daily.time||[];const current=Number.isFinite(temp)?`<span class="weather-pill current"><span class="weather-icon">${icon}</span><span>${temp}°</span><span class="weather-detail">${text}</span></span>`:"";const days=dates.slice(0,5).map((date,i)=>{const [di]=label(daily.weather_code?.[i]),hi=Math.round(Number(daily.temperature_2m_max?.[i])),lo=Math.round(Number(daily.temperature_2m_min?.[i])),rain=Math.round(Number(daily.precipitation_probability_max?.[i]));return `<span class="weather-pill"><span class="weather-icon">${di}</span><span class="weather-day">${dayName(date,i)}</span><span>${hi}° / ${lo}°</span><span class="weather-rain">💧 ${rain}%</span></span>`}).join("");el.innerHTML=`<div class="weather-forecast-track">${current}${days}</div>`}
-    async function refresh(force=false){if(busy)return;strip();const loc=location();if(!loc)return;const key=Number(loc.lat).toFixed(3)+","+Number(loc.lon).toFixed(3);if(!force&&key===last&&Date.now()-lastAt<900000)return;busy=true;try{const q=new URLSearchParams({latitude:String(loc.lat),longitude:String(loc.lon),current:"temperature_2m,weather_code",daily:"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",temperature_unit:"fahrenheit",timezone:"auto",forecast_days:"5"}),r=await fetch("https://api.open-meteo.com/v1/forecast?"+q,{cache:"no-store"});if(!r.ok)throw new Error("weather "+r.status);render(await r.json());last=key;lastAt=Date.now()}catch(e){console.warn("Weather pills failed",e)}finally{busy=false}}
-    strip();setTimeout(()=>refresh(true),700);setInterval(()=>refresh(false),5000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)refresh(false)});
-  })();
-  </script>
+  <script src="status-ux.js?v=3"></script>
+  <script src="tab-ux.js?v=3"></script>
+  <script src="admin-ops.js?v=3"></script>
+  <script type="module" src="weather.js?v=3"></script>
 </body>
 </html>
