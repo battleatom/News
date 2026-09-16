@@ -9,6 +9,7 @@ from model import Story
 from pipeline import normalize_url, near_duplicate, process
 from diversity import same_event
 from registry import load_registry
+from movie_artwork import _is_schedule_label, _title_variants
 
 class V6PipelineTests(unittest.TestCase):
     def setUp(self): self.registry=load_registry()
@@ -67,5 +68,14 @@ class V6PipelineTests(unittest.TestCase):
     def test_legislation_keeps_actual_rule_and_bill(self):
         rows=[Story("fr","legislation","Public Inspection: Proposed Rule Changes for Investors Exchange LLC","https://example.com/fr","Federal Register","2026-09-15T12:00:00Z","Proposed rule changes under federal securities regulation."),Story("bill","legislation","Text - S.4013 - National Constitutional Carry Act","https://example.com/bill","Congress.gov","2026-09-15T12:00:00Z","Senate bill text and status.")]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual({x.id for x in out},{"fr","bill"})
+    def test_boxoffice_schedule_labels_are_not_movies(self):
+        for title in ("3rd quarter","October 2026","Summer 2026","Time","Release Date"):
+            self.assertTrue(_is_schedule_label(title),title)
+        self.assertFalse(_is_schedule_label("The Odyssey"))
+    def test_boxoffice_title_variants_help_special_events_match(self):
+        variants=_title_variants("SB19 Wakas at Simula: The Trilogy Concert Finale In Cinemas")
+        self.assertIn("SB19 Wakas at Simula",variants)
+        self.assertIn("SB19 Wakas at Simula: The Trilogy Concert Finale",variants)
+        self.assertIn("Adore Him",_title_variants("Adore Him: He is Here"))
 
 if __name__=="__main__": unittest.main()
