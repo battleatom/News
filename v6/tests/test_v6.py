@@ -25,7 +25,15 @@ class V6PipelineTests(unittest.TestCase):
             Story("b","federal","EPA repeal of power plant emissions limits advances","https://b.example/x","Outlet B","2026-09-13T12:00:00Z","Related report."),
         ]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));story=next(x for x in out if x.id=="u")
-        self.assertEqual(story.supporting_source_count,2);self.assertEqual(story.coverage_score,86);self.assertEqual(len(story.related),2);self.assertTrue(story.what_happened);self.assertTrue(story.what_is_missing);self.assertTrue(story.background);self.assertTrue(story.what_next)
+        self.assertEqual(story.supporting_source_count,2);self.assertEqual(story.coverage_gap_score,86);self.assertGreater(story.underreported_priority,0);self.assertEqual(story.coverage_score,story.underreported_priority);self.assertEqual(len(story.related),2);self.assertTrue(story.what_happened);self.assertTrue(story.what_is_missing);self.assertTrue(story.background);self.assertTrue(story.what_next)
+    def test_underreported_priority_balances_gap_with_corroboration(self):
+        zero=Story("z","underreported","Investigation finds hospital billing failures","https://example.com/z","Primary","2026-09-15T12:00:00Z","An investigation found hospital billing failures affecting patients and regulators are reviewing the findings.")
+        supported=Story("s","underreported","Investigation finds hospital safety failures","https://example.com/s","Primary2","2026-09-15T12:00:00Z","An investigation found hospital safety failures affecting patients and regulators are reviewing the findings.",related=[
+            {"title":"Hospital safety failures draw state review","url":"https://a.example/1","source":"Reuters","published_at":"2026-09-15T11:00:00Z"},
+            {"title":"State reviews hospital safety failures","url":"https://b.example/2","source":"Associated Press","published_at":"2026-09-15T10:00:00Z"},
+        ])
+        out=process([zero,supported],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));by={x.id:x for x in out}
+        self.assertEqual(by["z"].coverage_gap_score,96);self.assertEqual(by["z"].supporting_source_count,0);self.assertEqual(by["s"].supporting_source_count,2);self.assertGreater(by["s"].corroboration_score,by["z"].corroboration_score);self.assertGreater(by["s"].underreported_priority,by["z"].underreported_priority)
     def test_presidential_rejects_foreign_and_former_office_personal_stories(self):
         rows=[Story("fr","presidential","French candidates gain ground in 2027 presidential race","https://example.com/fr","Reuters","2026-09-15T12:00:00Z","Polling in France shows movement in the presidential field."),Story("former","presidential","Deputies respond to trespasser at ex-Vice President's home","https://example.com/former","AP","2026-09-15T12:00:00Z","Deputies responded to a residential trespassing report.")]
         self.assertEqual(process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
