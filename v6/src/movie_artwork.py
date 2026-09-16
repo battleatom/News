@@ -49,6 +49,39 @@ def _similarity(left: str, right: str) -> float:
     return difflib.SequenceMatcher(None, a, b).ratio()
 
 
+def _is_schedule_label(title: str) -> bool:
+    value = _clean(title).lower()
+    if not value:
+        return True
+    month_names = "january|february|march|april|may|june|july|august|september|october|november|december"
+    season_names = "spring|summer|fall|autumn|winter"
+    if re.fullmatch(rf"(?:{month_names})\s+20\d{{2}}", value):
+        return True
+    if re.fullmatch(rf"(?:{season_names})\s+20\d{{2}}", value):
+        return True
+    if re.fullmatch(r"(?:1st|2nd|3rd|4th)\s+quarter", value):
+        return True
+    if value in {"time", "date", "title", "movie", "movies", "release date", "release schedule", "tbd", "to be announced"}:
+        return True
+    return False
+
+
+def _title_variants(title: str) -> list[str]:
+    title = _clean(title)
+    variants = [title]
+    without_cinema = re.sub(r"\s+in\s+cinemas\s*$", "", title, flags=re.I).strip()
+    if without_cinema and without_cinema not in variants:
+        variants.append(without_cinema)
+    without_suffix = re.sub(r"\s*[:–—-]\s*(?:the\s+)?(?:trilogy\s+)?concert.*$", "", without_cinema, flags=re.I).strip()
+    if without_suffix and len(without_suffix) >= 4 and without_suffix not in variants:
+        variants.append(without_suffix)
+    if ":" in title:
+        short = title.split(":", 1)[0].strip()
+        if len(short) >= 4 and short not in variants:
+            variants.append(short)
+    return variants
+
+
 def _tmdb(title: str, release_date: str = "") -> dict:
     if not TMDB_API_KEY:
         return {}
@@ -226,6 +259,7 @@ def _wikipedia(title: str, release_date: str = "") -> dict:
 
 
 def ensure_movie_artwork(movies: list[dict]) -> dict:
+    movies[:] = [movie for movie in movies if not _is_schedule_label(str(movie.get("title") or ""))]
     total = len(movies)
     filled = 0
     source_fills: dict[str, int] = {}
@@ -237,13 +271,24 @@ def ensure_movie_artwork(movies: list[dict]) -> dict:
         if not title:
             continue
         release_date = str(movie.get("releaseDate") or "")
-        result = _tmdb(title, release_date)
+        variants = _title_variants(title)
+        result = {}
+        for candidate in variants:
+            result = _tmdb(candidate, release_date)
+            if result.get("poster"):
+                break
         if not result.get("poster"):
-            result = _tmdb_web(title, release_date)
+            for candidate in variants:
+                result = _tmdb_web(candidate, release_date)
+                if result.get("poster"):
+                    break
         if not result.get("poster"):
             result = _showtimes_artwork(str(movie.get("movieUrl") or ""))
         if not result.get("poster"):
-            result = _wikipedia(title, release_date)
+            for candidate in variants:
+                result = _wikipedia(candidate, release_date)
+                if result.get("poster"):
+                    break
         if not result.get("poster"):
             continue
         movie["poster"] = result["poster"]
