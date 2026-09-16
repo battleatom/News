@@ -18,5 +18,11 @@ class V6PipelineTests(unittest.TestCase):
         a=Story("a","world","Major storm closes schools across northern New Mexico","https://a.example/x","A","2026-09-15T12:00:00Z");b=Story("b","world","Major storm closes schools across northern New Mexico today","https://b.example/y","B","2026-09-15T12:01:00Z");self.assertTrue(near_duplicate(a,b))
     def test_process_dedupes_and_scores(self):
         rows=[Story("a","world","Cyberattack causes emergency outage across city","https://a.example/x?utm_source=test","A","2026-09-15T12:00:00Z","Officials reported an outage."),Story("b","world","Cyberattack causes emergency outage across city","https://a.example/x","B","2026-09-15T12:01:00Z","Duplicate.")];out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual(len(out),1);self.assertGreater(out[0].importance,0);self.assertTrue(any(term in out[0].why_matters.lower() for term in ("outage","emergency","attack")))
+    def test_legislation_rejects_generic_white_house_release(self):
+        row=Story("wh","legislation","First Lady Melania Trump’s Special Visit to Ashe County, North Carolina","https://example.com/wh","The White House","2026-09-15T12:00:00Z","Bearing witness to a community’s resilience.")
+        self.assertEqual(process([row],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
+    def test_legislation_keeps_actual_rule_and_bill(self):
+        rows=[Story("fr","legislation","Public Inspection: Proposed Rule Changes for Investors Exchange LLC","https://example.com/fr","Federal Register","2026-09-15T12:00:00Z","Proposed rule changes under federal securities regulation."),Story("bill","legislation","Text - S.4013 - National Constitutional Carry Act","https://example.com/bill","Congress.gov","2026-09-15T12:00:00Z","Senate bill text and status.")]
+        out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual({x.id for x in out},{"fr","bill"})
 
 if __name__=="__main__": unittest.main()
