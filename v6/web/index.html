@@ -8,6 +8,7 @@
   <meta name="description" content="Underreported V6 — high-impact, local and undercovered news in a clean standalone architecture.">
   <title>Underreported V6</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="status-toolbar.css">
 </head>
 <body>
   <a class="skip-link" href="#feed">Skip to stories</a>
@@ -20,7 +21,7 @@
       <div id="health" class="health" aria-live="polite">Loading V6…</div>
     </header>
     <div class="toolbar" aria-label="Site status">
-      <div id="local-status" class="local-status"><span id="local-date">—</span><span class="sep">·</span><span id="local-time">—</span><span class="sep">·</span><button id="location-button" class="text-button" type="button">Location: resolving…</button><span id="weather-status" class="weather-status"></span></div>
+      <div id="local-status" class="local-status"><span id="local-date">—</span><span class="sep">·</span><span id="local-time">—</span><span class="sep">·</span><button id="location-button" class="text-button" type="button">Location: resolving…</button><span class="sep">·</span><span id="weather-status" class="weather-status"></span></div>
       <div id="refresh-status" class="refresh-status" aria-live="polite">Feed: loading…</div>
     </div>
     <div id="markets" class="markets" aria-label="Market snapshot"></div>
@@ -31,5 +32,6 @@
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script type="module" src="app.js"></script>
+  <script type="module" src="status-toolbar.js"></script>
 </body>
 </html>
