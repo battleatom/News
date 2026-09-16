@@ -21,6 +21,9 @@ class V6PipelineTests(unittest.TestCase):
     def test_legislation_rejects_generic_white_house_release(self):
         row=Story("wh","legislation","First Lady Melania Trump’s Special Visit to Ashe County, North Carolina","https://example.com/wh","The White House","2026-09-15T12:00:00Z","Bearing witness to a community’s resilience.")
         self.assertEqual(process([row],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
+    def test_legislation_rejects_generic_law_and_rule_mentions(self):
+        rows=[Story("law","legislation","Attorney General discusses law enforcement priorities","https://example.com/law","The White House","2026-09-15T12:00:00Z","Officials discussed crime and law enforcement."),Story("rule","legislation","Court ruling changes campaign landscape","https://example.com/rule","News","2026-09-15T12:00:00Z","The ruling drew reactions from both parties.")]
+        self.assertEqual(process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
     def test_legislation_keeps_actual_rule_and_bill(self):
         rows=[Story("fr","legislation","Public Inspection: Proposed Rule Changes for Investors Exchange LLC","https://example.com/fr","Federal Register","2026-09-15T12:00:00Z","Proposed rule changes under federal securities regulation."),Story("bill","legislation","Text - S.4013 - National Constitutional Carry Act","https://example.com/bill","Congress.gov","2026-09-15T12:00:00Z","Senate bill text and status.")]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual({x.id for x in out},{"fr","bill"})
