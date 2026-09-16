@@ -63,9 +63,16 @@ SHOWTIMES_SLUG=os.environ.get("BOXOFFICE_CITY_SLUG","farmington-nm").strip() or 
 SHOWTIMES_LABEL=os.environ.get("BOXOFFICE_CITY_LABEL","Farmington, NM").strip() or "Farmington, NM"
 SHOWTIMES_URL=f"https://www.showtimes.com/movie-times/{SHOWTIMES_SLUG}/"
 RELEASE_YEAR=datetime.now(timezone.utc).year
-RELEASE_URL=f"https://www.the-numbers.com/movies/release-schedule/{RELEASE_YEAR}"
+RELEASE_YEARS=(RELEASE_YEAR,RELEASE_YEAR+1)
 TMDB_API_KEY=os.environ.get("TMDB_API_KEY","").strip()
 TMDB_IMAGE_BASE="https://image.tmdb.org/t/p/w500"
+UPCOMING_DAYS=365
+UPCOMING_MAX=80
+MAJOR_US_DISTRIBUTORS=(
+    "20th century","a24","amazon mgm","angel studios","apple original","bleecker street",
+    "briarcliff","disney","focus features","ifc","lionsgate","neon","paramount",
+    "roadside attractions","searchlight","sony pictures","universal","warner bros"
+)
 
 def parse_local_showtimes(page:str)->list[dict]:
     blocks=list(re.finditer(r"<h2[^>]*>(.*?)</h2>(.*?)(?=<h2[^>]*>|</main>|</body>)",page,re.I|re.S));current="";rows=[]
@@ -78,32 +85,37 @@ def parse_local_showtimes(page:str)->list[dict]:
         rows.append({"title":heading.replace(" Watch Trailer","").strip(),"theater":current,"rating":rating,"runtime":runtime,"showtimes":list(dict.fromkeys(times)),"movieUrl":urllib.parse.urljoin(SHOWTIMES_URL,html.unescape(href.group(1))) if href else ""})
     return rows
 
-def parse_release_schedule(page:str)->list[dict]:
+def parse_release_schedule(page:str,release_year:int)->list[dict]:
     month_re=r"(?:January|February|March|April|May|June|July|August|September|October|November|December)";out=[];seen=set();current_month="";last_date:date|None=None
     tokens=re.split(r"(<h[1-3][^>]*>.*?</h[1-3]>|<tr[^>]*>.*?</tr>)",page,flags=re.I|re.S)
     for token in tokens:
         heading=re.match(r"<h[1-3][^>]*>(.*?)</h[1-3]>",token,re.I|re.S)
         if heading:
-            m=re.search(fr"\b({month_re})\s+{RELEASE_YEAR}\b",clean(heading.group(1)),re.I)
+            m=re.search(fr"\b({month_re})\s+{release_year}\b",clean(heading.group(1)),re.I)
             if m:current_month=m.group(1).title()
             continue
         if not token.lower().startswith("<tr"):continue
         cells=[clean(x) for x in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>",token,re.I|re.S)]
         if not cells:continue
         first=cells[0];title_idx=1
-        dm=re.search(fr"\b({month_re})\s+(\d{{1,2}})(?:,?\s+({RELEASE_YEAR}))?\b",first,re.I)
+        dm=re.search(fr"\b({month_re})\s+(\d{{1,2}})(?:,?\s+({release_year}))?\b",first,re.I)
         if dm:
-            try:last_date=datetime.strptime(f"{dm.group(1)} {dm.group(2)} {RELEASE_YEAR}","%B %d %Y").date()
+            try:last_date=datetime.strptime(f"{dm.group(1)} {dm.group(2)} {release_year}","%B %d %Y").date()
             except ValueError:last_date=None
         elif re.fullmatch(r"\d{1,2}",first) and current_month:
-            try:last_date=datetime.strptime(f"{current_month} {int(first)} {RELEASE_YEAR}","%B %d %Y").date()
+            try:last_date=datetime.strptime(f"{current_month} {int(first)} {release_year}","%B %d %Y").date()
             except ValueError:last_date=None
         elif last_date is not None and first:title_idx=0
         else:continue
         if last_date is None or title_idx>=len(cells):continue
-        title=re.sub(r"\s*\([^)]*(?:Wide|Limited|IMAX|re-release|Special Engagement|Event)[^)]*\)\s*$","",cells[title_idx],flags=re.I).strip();key=(title_key(title),last_date.isoformat())
+        raw_title=cells[title_idx]
+        tag_match=re.search(r"\(([^)]*)\)\s*$",raw_title)
+        release_type=clean(tag_match.group(1)) if tag_match else ""
+        title=re.sub(r"\s*\([^)]*\)\s*$","",raw_title).strip()
+        distributor=cells[title_idx+1].strip() if title_idx+1<len(cells) else ""
+        key=(title_key(title),last_date.isoformat())
         if not key[0] or key in seen:continue
-        seen.add(key);out.append({"title":title,"releaseDate":last_date.isoformat()})
+        seen.add(key);out.append({"title":title,"releaseDate":last_date.isoformat(),"releaseType":release_type,"distributor":distributor})
     return out
 
 def parse_availability_dates(page:str)->list[date]:
@@ -146,8 +158,12 @@ def tmdb_movie(title:str,release_date:str="")->dict:
         if not candidates:return{}
         score,item=max(candidates,key=lambda pair:pair[0])
         if score<.88:return{}
-        poster=item.get("poster_path") or "";overview=clean(item.get("overview") or "")
-        return{"overview":overview,"poster":TMDB_IMAGE_BASE+poster if poster else "","voteAverage":item.get("vote_average") or 0,"tmdbId":item.get("id") or "","metadataSource":"TMDB"}
+        details={}
+        try:details=fetch_json(f"https://api.themoviedb.org/3/movie/{item.get('id')}?"+urllib.parse.urlencode({"api_key":TMDB_API_KEY,"language":"en-US"}))
+        except Exception:pass
+        poster=item.get("poster_path") or details.get("poster_path") or "";overview=clean(item.get("overview") or details.get("overview") or "")
+        countries=details.get("origin_country") or [row.get("iso_3166_1") for row in details.get("production_countries") or [] if row.get("iso_3166_1")]
+        return{"overview":overview,"poster":TMDB_IMAGE_BASE+poster if poster else "","voteAverage":item.get("vote_average") or details.get("vote_average") or 0,"tmdbId":item.get("id") or "","metadataSource":"TMDB","originalLanguage":item.get("original_language") or details.get("original_language") or "","originCountry":countries or [],"popularity":item.get("popularity") or details.get("popularity") or 0}
     except Exception:return{}
 
 def wiki_movie(title:str)->dict:
@@ -162,8 +178,24 @@ def enrich_movie(movie:dict)->dict:
     primary=tmdb_movie(movie["title"],movie.get("releaseDate","") or "")
     fallback={}
     if not primary.get("overview") or not primary.get("poster"):fallback=wiki_movie(movie["title"])
-    merged={"overview":primary.get("overview") or fallback.get("overview") or "","poster":primary.get("poster") or fallback.get("poster") or "","voteAverage":primary.get("voteAverage") or movie.get("voteAverage") or 0,"tmdbId":primary.get("tmdbId") or "","metadataSource":primary.get("metadataSource") or fallback.get("metadataSource") or ""}
+    merged={"overview":primary.get("overview") or fallback.get("overview") or "","poster":primary.get("poster") or fallback.get("poster") or "","voteAverage":primary.get("voteAverage") or movie.get("voteAverage") or 0,"tmdbId":primary.get("tmdbId") or "","metadataSource":primary.get("metadataSource") or fallback.get("metadataSource") or "","originalLanguage":primary.get("originalLanguage") or "","originCountry":primary.get("originCountry") or [],"popularity":primary.get("popularity") or 0}
     movie.update(merged);movie["news"]=google_movie_news(movie["title"]);return movie
+
+def is_mainstream_us_upcoming(movie:dict)->bool:
+    release_type=(movie.get("releaseType") or "").lower()
+    if "wide" not in release_type or any(token in release_type for token in ("re-release","special engagement","event","festival","limited")):return False
+    language=(movie.get("originalLanguage") or "").lower()
+    if language and language!="en":return False
+    countries={str(code).upper() for code in movie.get("originCountry") or [] if code}
+    distributor=(movie.get("distributor") or "").lower()
+    major=any(name in distributor for name in MAJOR_US_DISTRIBUTORS)
+    if countries and "US" not in countries and not major:return False
+    if not major:
+        if not movie.get("tmdbId"):return False
+        try:popularity=float(movie.get("popularity") or 0)
+        except Exception:popularity=0
+        if popularity<4:return False
+    return True
 
 def collect_boxoffice()->tuple[list[dict],str]:
     errors=[];local={};today=datetime.now(timezone.utc).date()
@@ -173,8 +205,10 @@ def collect_boxoffice()->tuple[list[dict],str]:
         movie=local.setdefault(row["title"],{"title":row["title"],"rating":row.get("rating","") ,"runtime":row.get("runtime","") ,"movieUrl":row.get("movieUrl","") ,"theaters":[]})
         if not movie.get("movieUrl") and row.get("movieUrl"):movie["movieUrl"]=row["movieUrl"]
         movie["theaters"].append({"name":row["theater"],"showtimes":row["showtimes"]})
-    try:releases=parse_release_schedule(fetch_text(RELEASE_URL))
-    except Exception as exc:errors.append(f"releases: {type(exc).__name__}: {exc}");releases=[]
+    releases=[]
+    for release_year in RELEASE_YEARS:
+        try:releases.extend(parse_release_schedule(fetch_text(f"https://www.the-numbers.com/movies/release-schedule/{release_year}"),release_year))
+        except Exception as exc:errors.append(f"releases-{release_year}: {type(exc).__name__}: {exc}")
     release_by_key={title_key(r["title"]):r["releaseDate"] for r in releases if title_key(r.get("title",""))};release_keys=list(release_by_key)
     def release_for(title:str)->str:
         key=title_key(title)
@@ -197,12 +231,17 @@ def collect_boxoffice()->tuple[list[dict],str]:
     for release in releases:
         try:release_date=datetime.fromisoformat(release["releaseDate"]).date()
         except Exception:continue
-        if release_date<=today or (release_date-today).days>90 or title_key(release["title"]) in local_keys:continue
-        upcoming.append({"id":"upcoming-"+re.sub(r"[^a-z0-9]+","-",release["title"].lower()).strip("-")[:70],"title":release["title"],"releaseDate":release["releaseDate"],"overview":"","poster":"","status":"upcoming","voteAverage":0,"rating":"","runtime":"","theaters":[],"news":[],"source":"The Numbers","confirmedThrough":"","leavingDate":"","leavingSoon":False})
-        if len(upcoming)>=24:break
+        if release_date<=today or (release_date-today).days>UPCOMING_DAYS or title_key(release["title"]) in local_keys:continue
+        if "wide" not in (release.get("releaseType") or "").lower():continue
+        upcoming.append({"id":"upcoming-"+re.sub(r"[^a-z0-9]+","-",release["title"].lower()).strip("-")[:70],"title":release["title"],"releaseDate":release["releaseDate"],"releaseType":release.get("releaseType","") ,"distributor":release.get("distributor","") ,"overview":"","poster":"","status":"upcoming","voteAverage":0,"rating":"","runtime":"","theaters":[],"news":[],"source":"The Numbers - U.S. Theatrical","confirmedThrough":"","leavingDate":"","leavingSoon":False})
     rows.extend(upcoming)
     if rows:
         with ThreadPoolExecutor(max_workers=8) as pool:rows=[future.result() for future in as_completed([pool.submit(enrich_movie,row) for row in rows])]
+        rows=[row for row in rows if row.get("status")!="upcoming" or is_mainstream_us_upcoming(row)]
+        playing=[row for row in rows if row.get("status")=="playing"]
+        upcoming=[row for row in rows if row.get("status")=="upcoming"]
+        upcoming.sort(key=lambda m:(m.get("releaseDate") or "9999-99-99",m.get("title","").lower()))
+        rows=playing+upcoming[:UPCOMING_MAX]
         rows.sort(key=lambda m:(0 if m["status"]=="playing" else 1,-(datetime.fromisoformat(m["releaseDate"]).timestamp() if m.get("releaseDate") and m["status"]=="playing" else 0) if m["status"]=="playing" else (datetime.fromisoformat(m["releaseDate"]).timestamp() if m.get("releaseDate") else 9e18),m["title"].lower()))
     if not rows:
         try:
