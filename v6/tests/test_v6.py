@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/"src"))
 from model import Story
 from pipeline import normalize_url, near_duplicate, process
+from diversity import same_event
 from registry import load_registry
 
 class V6PipelineTests(unittest.TestCase):
@@ -16,8 +17,21 @@ class V6PipelineTests(unittest.TestCase):
     def test_tracking_parameters_are_removed(self): self.assertEqual(normalize_url("https://example.com/a?utm_source=x&keep=1#frag"),"https://example.com/a?keep=1")
     def test_semantic_duplicate_detection(self):
         a=Story("a","world","Major storm closes schools across northern New Mexico","https://a.example/x","A","2026-09-15T12:00:00Z");b=Story("b","world","Major storm closes schools across northern New Mexico today","https://b.example/y","B","2026-09-15T12:01:00Z");self.assertTrue(near_duplicate(a,b))
+    def test_broader_same_event_detection(self):
+        a=Story("a","world","Northern Arizona wildfire evacuation expands across mountain communities","https://a.example/x","A","2026-09-15T12:00:00Z")
+        b=Story("b","world","Wildfire evacuation across northern Arizona mountain communities grows overnight","https://b.example/y","B","2026-09-15T12:05:00Z")
+        self.assertTrue(same_event(a,b))
     def test_process_dedupes_and_scores(self):
         rows=[Story("a","world","Cyberattack causes emergency outage across city","https://a.example/x?utm_source=test","A","2026-09-15T12:00:00Z","Officials reported an outage."),Story("b","world","Cyberattack causes emergency outage across city","https://a.example/x","B","2026-09-15T12:01:00Z","Duplicate.")];out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual(len(out),1);self.assertGreater(out[0].importance,0);self.assertTrue(any(term in out[0].why_matters.lower() for term in ("outage","emergency","attack")))
+    def test_topic_saturation_limits_repeated_company_in_top_window(self):
+        rows=[
+            Story("a1","technology","Anthropic launches Claude security controls for enterprise administrators","https://a.example/1","Outlet A","2026-09-15T12:00:00Z","Anthropic announced enterprise security controls for Claude administrators and business customers."),
+            Story("a2","technology","Anthropic expands Claude tools for software development teams","https://b.example/2","Outlet B","2026-09-15T11:50:00Z","Anthropic expanded Claude development tools for software teams using its artificial intelligence platform."),
+            Story("a3","technology","Anthropic signs new cloud agreement for Claude infrastructure","https://c.example/3","Outlet C","2026-09-15T11:40:00Z","Anthropic signed a cloud infrastructure agreement supporting Claude artificial intelligence services."),
+            Story("g","technology","Google releases Android privacy protections for mobile users","https://d.example/4","Outlet D","2026-09-15T11:30:00Z","Google released Android privacy protections affecting mobile users and application permissions."),
+        ]
+        out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));titles=[x.title.lower() for x in out]
+        self.assertEqual(sum("anthropic" in title for title in titles),2);self.assertTrue(any("google" in title for title in titles))
     def test_underreported_builds_evidence_package_from_collected_pool(self):
         rows=[
             Story("u","underreported","EPA moves to repeal power plant emissions limits","https://primary.example/u","Primary","2026-09-15T12:00:00Z","EPA plans to repeal power plant emissions limits and is expected to announce the final action later this month."),
