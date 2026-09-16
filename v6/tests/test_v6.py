@@ -23,7 +23,7 @@ class V6PipelineTests(unittest.TestCase):
         self.assertTrue(same_event(a,b))
     def test_process_dedupes_and_scores(self):
         rows=[Story("a","world","Cyberattack causes emergency outage across city","https://a.example/x?utm_source=test","A","2026-09-15T12:00:00Z","Officials reported an outage."),Story("b","world","Cyberattack causes emergency outage across city","https://a.example/x","B","2026-09-15T12:01:00Z","Duplicate.")];out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual(len(out),1);self.assertGreater(out[0].importance,0);self.assertTrue(any(term in out[0].why_matters.lower() for term in ("outage","emergency","attack")))
-    def test_topic_saturation_limits_repeated_company_in_top_window(self):
+    def test_topic_saturation_defers_instead_of_discarding_valid_stories(self):
         rows=[
             Story("a1","technology","Anthropic launches Claude security controls for enterprise administrators","https://a.example/1","Outlet A","2026-09-15T12:00:00Z","Anthropic announced enterprise security controls for Claude administrators and business customers."),
             Story("a2","technology","Anthropic expands Claude tools for software development teams","https://b.example/2","Outlet B","2026-09-15T11:50:00Z","Anthropic expanded Claude development tools for software teams using its artificial intelligence platform."),
@@ -31,7 +31,8 @@ class V6PipelineTests(unittest.TestCase):
             Story("g","technology","Google releases Android privacy protections for mobile users","https://d.example/4","Outlet D","2026-09-15T11:30:00Z","Google released Android privacy protections affecting mobile users and application permissions."),
         ]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));titles=[x.title.lower() for x in out]
-        self.assertEqual(sum("anthropic" in title for title in titles),2);self.assertTrue(any("google" in title for title in titles))
+        self.assertEqual(len(out),4);self.assertEqual(sum("anthropic" in title for title in titles),3)
+        self.assertLess(titles.index(next(t for t in titles if "google" in t)),titles.index(next(t for t in titles[2:] if "anthropic" in t)))
     def test_underreported_builds_evidence_package_from_collected_pool(self):
         rows=[
             Story("u","underreported","EPA moves to repeal power plant emissions limits","https://primary.example/u","Primary","2026-09-15T12:00:00Z","EPA plans to repeal power plant emissions limits and is expected to announce the final action later this month."),
