@@ -185,16 +185,11 @@ def is_mainstream_us_upcoming(movie:dict)->bool:
     release_type=(movie.get("releaseType") or "").lower()
     if "wide" not in release_type or any(token in release_type for token in ("re-release","special engagement","event","festival","limited")):return False
     language=(movie.get("originalLanguage") or "").lower()
-    if language and language!="en":return False
+    if language!="en":return False
     countries={str(code).upper() for code in movie.get("originCountry") or [] if code}
+    if "US" not in countries:return False
     distributor=(movie.get("distributor") or "").lower()
-    major=any(name in distributor for name in MAJOR_US_DISTRIBUTORS)
-    if countries and "US" not in countries and not major:return False
-    if not major:
-        if not movie.get("tmdbId"):return False
-        try:popularity=float(movie.get("popularity") or 0)
-        except Exception:popularity=0
-        if popularity<4:return False
+    if not any(name in distributor for name in MAJOR_US_DISTRIBUTORS):return False
     return True
 
 def collect_boxoffice()->tuple[list[dict],str]:
