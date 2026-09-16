@@ -14,12 +14,20 @@
   function apply(){
     if(!adminActive())return;
     const wrap=feed.firstElementChild;if(!wrap)return;
-    const heading=[...wrap.querySelectorAll('div')].find(el=>el.children.length===0&&el.textContent.trim()==='Source Health');
+    const heading=[...wrap.querySelectorAll('strong')].find(el=>el.textContent.trim()==='Source Health');
     if(!heading)return;
-    const block=heading.parentElement;if(!block)return;
+    const headerRow=heading.parentElement?.parentElement;
+    const block=headerRow?.parentElement;
+    if(!block)return;
     block.id='admin-source-health-block';
-    const grid=[...block.children].find(el=>el!==heading&&el.children.length>2)||block.children[1];
-    if(grid)grid.classList.add('admin-source-health-grid');
+    let grid=block.querySelector(':scope > .admin-source-health-grid');
+    if(!grid){
+      grid=document.createElement('div');
+      grid.className='admin-source-health-grid';
+      const rows=[...block.children].filter(el=>el!==headerRow);
+      rows.forEach(row=>grid.appendChild(row));
+      block.appendChild(grid);
+    }
     if(wrap.lastElementChild!==block)wrap.appendChild(block);
   }
   const schedule=()=>{if(adminActive())setTimeout(apply,80)};
