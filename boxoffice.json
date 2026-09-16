@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-16T15:16:18.509346Z",
+  "generatedAt": "2026-09-16T19:05:43.672626Z",
   "localCity": "Farmington, NM",
   "movies": [
     {
       "id": "local-fall-2-deadpoint",
       "title": "Fall 2: Deadpoint",
       "releaseDate": "2026-09-02",
-      "overview": "Fall 2: Deadpoint is a 2026 American survival thriller film directed by Peter and Michael Spierig from a screenplay by Scott Mann and Jonathan Frank. The sequel to Fall (2022), it stars Harriet Slater, Arsema Thomas, Tom Brittney, and Virginia Gardner.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/d/db/Fall_2_Deadpoint.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "On a perilous climb across Thailand's Mount Kwan, two climbers become trapped thousands of feet above the ground, where vertigo-inducing heights, sheer exposure, and impossible odds turn every moment into a fight for survival.",
+      "poster": "https://image.tmdb.org/t/p/w500/fgSm5ylwiXbIHn8UbUXDjk9RRu4.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.8,
       "rating": "PG",
       "runtime": "1h 37m",
       "theaters": [
@@ -47,17 +47,19 @@
       "confirmedThrough": "2026-10-06",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1101412,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-the-odyssey",
       "title": "The Odyssey",
       "releaseDate": "2026-07-17",
-      "overview": "The Odyssey is a 2026 epic action fantasy film written and directed by Christopher Nolan, who produced it with his wife Emma Thomas. An adaptation of Homer's ancient Greek epic poem the Odyssey, it stars an ensemble cast including Matt Damon, Tom Holland, Anne Hathaway, Robert Pattinson, Lupita Nyong'o, Samantha Morton, Zendaya, and Charlize Theron. In the film, Odysseus (Damon), the Greek king of Ithaca, undergoes a long and perilous journey home after the Trojan War and encounters mythical beings as he attempts to reunite with his wife Penelope (Hathaway).",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/9/90/The_Odyssey_%282026_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Odysseus, the legendary King of Ithaca, embarks on a long and perilous journey home following the Trojan War. Throughout his voyage, he is forced to confront the whims of gods, mythological monsters, and trials that stretch both his cunning and his humanity to the breaking point.",
+      "poster": "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 8.01,
       "rating": "R",
       "runtime": "2h 52m",
       "theaters": [
@@ -85,15 +87,15 @@
           "pubDate": "Sat, 12 Sep 2026 16:59:34 GMT"
         },
         {
+          "title": "The ‘Odyssey’ Scholar Emily Wilson, a Critic of the Movie, Is Redoing Her Translation - The New York Times",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQNDNjTkY5ZjRTeGZpdi15QnhrSi0wNkZqTnkydEZFUTU4UGpYRDFMaFdEZGRUdWR2VXoxejhyUURmZlpqeEw0bDZnOUZUczFKTEF6cjAyellnenFqWlhqN21fU095Qks0b09TSmN3YjhvMG5SWVFhbFRQci1JSFhkQkxPeDc?oc=5",
+          "source": "The New York Times",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+        },
+        {
           "title": "‘The Odyssey’ Beats ‘Deadpool & Wolverine’ as Biggest R-Rated Movie of All Time With $1.35 Billion - Variety",
           "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNR3lxd3hKU2dza2N5S1VPZDhlQTB1aFFtcDVVNDR0UXRhQUMtWENROEw0ZXdaYWxObTVERmlzM3BMRndXODhwNEtjRGZBaEFOWlFfb0kyUlM3M1Y4WGozTkY5RV9BNlNxZXZpRWdXOURROS1Kb21HenZXNzJ2N2s3OFo0Q1NnZ1RsV2FlMklnU3VoM3dDbVlNVlpfNGFmNVBwVk9CVXRlczR5V2Z1WTgtWk11UzE?oc=5",
           "source": "Variety",
-          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "'The Odyssey' Becomes Highest-Grossing R-Rated Movie Ever - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNM3VRbFdiUnN5VXhkOTh3bXVucl8xSWtxQUZIT01Ta0RqWlQ1MlFLSzMxbEtFc2k2VDczMDI2RDY1WGpYU3ZVSVBidmZmTWphSGg4TG44VnFuQUVacEhaZlNLZXczWXdnSHVrVkZORElhQlIwUEIyYjhHN3htckFFSWYwTEU?oc=5",
-          "source": "Deadline",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -101,17 +103,19 @@
       "confirmedThrough": "2026-11-17",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1368337,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-by-any-means",
       "title": "By Any Means",
       "releaseDate": "",
-      "overview": "By Any Means may refer to:By Any Means , a BBC documentary television series By Any Means , a BBC crime television series Right to the Edge: Sydney to Tokyo by Any Means also known as By Any Means 2, a 2009 adventure series By Any Means (mixtape), a mixtape by rapper Kevin Gates By Any Means, a 2025 album by Indo-Canadian rapper Sukha By Any Means , an American thriller film By Any Means , an American historical crime thriller film",
-      "poster": "",
+      "overview": "In 1960s Mississippi, a young Black FBI agent is forced to partner with a notorious mafia hitman to investigate a wave of brutal civil rights murders.",
+      "poster": "https://image.tmdb.org/t/p/w500/f4hdIed8vh10O8TkQ1CkHS8MQ3G.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 8.1,
       "rating": "R",
       "runtime": "1h 47m",
       "theaters": [
@@ -137,15 +141,15 @@
       ],
       "news": [
         {
-          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
-          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
-          "source": "AP News",
-          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
-        },
-        {
           "title": "'By Any Means' Review: A Bluntly Drawn Historical Thriller - Variety",
           "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWjMtM1RnZGlyeEM1UG5lQUZwLUFQWGh3RXE4ZnJGSm1hTXRlckFNdGloejQ1WFBDbVA3N2VKOU1rTXlrU0pOSWNta0lybGt3a2xUa3pZN1pNXzZTbVZVZnF1M2p0bnRoWndpMjBGNEFQWS1sNkZxZW1sSEdXSW02Qm1hQzJfd0JlcFI4?oc=5",
           "source": "Variety",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
+          "source": "AP News",
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
@@ -159,17 +163,19 @@
       "confirmedThrough": "2026-10-20",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1380417,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-cars",
       "title": "Cars",
       "releaseDate": "",
-      "overview": "Cars is a 2006 American animated sports comedy film directed by John Lasseter, who co-wrote it with Joe Ranft, Dan Fogelman, Kiel Murray, Phil Lorin and Jorgen Klubien. Produced by Pixar Animation Studios for Walt Disney Pictures, the film stars Paul Newman and Owen Wilson, with an ensemble voice cast consisting of Bonnie Hunt, Larry the Cable Guy, Tony Shalhoub, Cheech Marin, Michael Wallis, George Carlin, Paul Dooley, Jenifer Lewis, Guido Quaroni, Michael Keaton, Katherine Helmond, John Ratzenberger, and Richard Petty.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/3/34/Cars_2006.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Lightning McQueen, a hotshot rookie race car driven to succeed, discovers that life is about the journey, not the finish line, when he finds himself unexpectedly detoured in the sleepy Route 66 town of Radiator Springs. On route across the country to the big Piston Cup Championship in California to compete against two seasoned pros, McQueen gets to know the town's offbeat characters.",
+      "poster": "https://image.tmdb.org/t/p/w500/2Touk3m5gzsqr1VsvxypdyHY5ci.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 7.052,
       "rating": "G",
       "runtime": "1h 56m",
       "theaters": [
@@ -184,9 +190,9 @@
       ],
       "news": [
         {
-          "title": "Animators from Pixar's 'Cars' reveal Utah's inspiration for the movie - KSL.com",
+          "title": "Animators from Pixar's 'Cars' reveal Utah's inspiration for the movie - KSL News",
           "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQUld2eHVMeHVpekc4ZTAxVXRkbjNmVzBaNHk1SG5UN2Z4dHBlbk1iQlZMc1pCeFNKNXhkekVNYWtCMzFuSW1JYjhxV3drUWZiRWR2dnJuNTZrV25uNHV5M0I1RHVvUGRPM1hBRy01X0F5aGZ1RTY2dXRtNU5fWGtWU0tabFNQNDhBcFdlU3g3RHlCbmI3MjFZbmJBQU1RTWJBUzZ2Uw?oc=5",
-          "source": "KSL.com",
+          "source": "KSL News",
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         },
         {
@@ -206,17 +212,19 @@
       "confirmedThrough": "2026-09-16",
       "leavingDate": "2026-09-16",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 920,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-coyote-vs-acme",
       "title": "Coyote vs. Acme",
       "releaseDate": "",
-      "overview": "",
-      "poster": "",
+      "overview": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
+      "poster": "https://image.tmdb.org/t/p/w500/vhv7lBWYM0DUuNU2a0V7Rhq21dD.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 7.594,
       "rating": "PG",
       "runtime": "1h 41m",
       "theaters": [
@@ -244,9 +252,9 @@
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes - arstechnica.com",
+          "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes - Ars Technica",
           "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNWU9PSzdwTUJXUDFsSHUyblFvTDdKLXBnZmhQMnNYY0hkTmdUTk0xNFhNRW03M1pxaXM2X3BTM0hJdHJqdENOeUllTWx0RFFNSVlDN05hcVZoUkNIbHUxWURySlhCT1pYNi1Hd0o5b0MwVF8wSGJmTDhNWGs1NE02Tmg0a0F2d05jZjZkZUlzdU5RYy02TVZ4OHdENTF4VVhxYTNVSGg3R0FlZw?oc=5",
-          "source": "arstechnica.com",
+          "source": "Ars Technica",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -254,17 +262,19 @@
       "confirmedThrough": "2026-09-29",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1204680,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-insidious-out-of-the-further",
       "title": "Insidious: Out of the Further",
       "releaseDate": "",
-      "overview": "Insidious: Out of the Further is a 2026 American supernatural horror film that serves as a sequel to Insidious: The Red Door (2023) and is the sixth installment in the Insidious franchise. In the film, a young woman who can interact with and bring spirits to the mortal world is soon haunted by malevolent forces. It stars Amelia Eve, Brandon Perea and Maisie Richardson-Sellers, with Lin Shaye reprising her role from the previous films. It is written and directed by Jacob Chase.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/5/5c/Insidious-out-of-the-further-poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Gemma, a young mother raising her daughter in the house she grew up in, discovers she can travel into The Further, where she possesses an ability to bring what lives there back to the real world.",
+      "poster": "https://image.tmdb.org/t/p/w500/4tTrW9dXCByS5wt2pXVWb58zNjz.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.5,
       "rating": "PG",
       "runtime": "1h 46m",
       "theaters": [
@@ -290,12 +300,6 @@
       ],
       "news": [
         {
-          "title": "INSIDIOUS: OUT OF THE FURTHER Entertains Barbarella - Ain't It Cool News",
-          "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE0weGJHaXBTcDhaZnd0cVhiaVgwcE9NMTBIcFpTRnVkWHNCN29vbElRRzZRQjc1RVFaNW9hUzNlSWJZdVRhZUpkZE00eXNNMWNqbUdXcXhTbmlqVFQ5YUhETUN4MjczTUF3M2tybmhVdXhOeEFXV0dz?oc=5",
-          "source": "Ain't It Cool News",
-          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "Box Office: ‘Insidious: Out of the Further’ Makes $3 Million in Previews - Variety",
           "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOSFBYd3pheWV1R1NLZW0wd2VvTHdoMnVwTFo0Unl4OFFTX3p6cFQ0RUM1SUFldTg0c0RqWERqVkJvOXd1TWhVT3RyNW10UzkzTEhJZldwZUlxcWZFZENyekRqOVFYOHNjY3gyU1V1VnVTbV9KeDgyMnFsZm9JcHRYNmdmbXNpOEpZOWVEUHVsclhRaFNESWFFTjV4M0JnQQ?oc=5",
           "source": "Variety",
@@ -306,23 +310,31 @@
           "link": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPMDFlU2NVNkRZZVlyNXdiUlp3VXU3TUFIM3BfeEctY04tZVF3UFczMVRyZW9CVVo1YWtkaE0xRmRRci1vMnJfN0tadXY3bld0M1hlUVhzdjJYeXhtR3Q1S2tNemZ2THdRZjdYeTd5bkszUEZSWFhNN3I1UGRXQnA5cnNYMkNzMlh3MUdwUnJKLTRrUlBrZnl4dko0V092bXU4YWN4MXE0QlNyMFBXNXdKN2RpNmE3WUs1dHlfc1VlVEhNYks4MERYMUNHcU1qeEVCa2doOFJRYnI0dEtFcVE?oc=5",
           "source": "Los Angeles Times",
           "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "There’s a Good Reason They Keep Making More Insidious Movies - Vulture",
+          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxObWcxZmhvanBWSlpMWXpDVFBJXzRyYllvMjNCTVZOc2g3X3kyLTl6SjB0TDZvVlBTQ3kxN056VDkyNzJSc21GU2pleU5SelVHN2V5dU5KcU96TGI3eVM5cWV5Yk1WTlVXeUpCZlhLb0pZU0oxVHlMYkZDOTIzRERrS05pQ2NwOF92bUZtSDh5eFM4SjZJT1c5YlBR?oc=5",
+          "source": "Vulture",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
       "confirmedThrough": "2026-09-16",
       "leavingDate": "2026-09-16",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1291595,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-onslaught",
       "title": "Onslaught",
       "releaseDate": "",
-      "overview": "Onslaught is a 2026 American action horror film directed by Adam Wingard and written by Simon Barrett, starring Adria Arjona, Dan Stevens, Eric Wareheim, Reginald VelJohnson, Michael Biehn, Alex Pereira, Drew Starkey, and Rebecca Hall. Set in the same continuity as The Guest, the film follows an army sniper as she struggles to protect her young daughter from an army of genetically engineered super soldiers who escaped from a secret military facility.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/5/54/Onslaught_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "When a rogue squad of genetically engineered super soldiers break loose in the desert, a badass Army sniper must unleash hell to protect her young daughter.",
+      "poster": "https://image.tmdb.org/t/p/w500/cOGtvhc6Ij9KvzM6jZsfQyg0B0O.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.1,
       "rating": "R",
       "runtime": "1h 32m",
       "theaters": [
@@ -348,9 +360,9 @@
           "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Onslaught (2026) | Movie Review - Deep Focus Review",
+          "title": "Onslaught (2026) | Movie Review - deepfocusreview.com",
           "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTFBvbkNIalRGZWpLZHlNMlVUcHRBc0ZVam1uVUNQdzdfWVFjNWQ4a3NldDktUGFwMUYwNkdKeTJaUVQtRXpoTGVETmFHUFZ5c1g5aV91ZkNlZ3dzTEtubU1J?oc=5",
-          "source": "Deep Focus Review",
+          "source": "deepfocusreview.com",
           "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
         }
       ],
@@ -358,17 +370,19 @@
       "confirmedThrough": "2026-10-06",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1284046,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-practical-magic-2",
       "title": "Practical Magic 2",
       "releaseDate": "",
-      "overview": "Practical Magic 2 is a 2026 American romantic fantasy film directed by Susanne Bier from a screenplay by Akiva Goldsman, Georgia Pritchett, and Kelly Marcel, based on the 2021 novel The Book of Magic by Alice Hoffman. The sequel to Practical Magic (1998), the film stars Sandra Bullock, Nicole Kidman, Dianne Wiest, and Stockard Channing reprising their roles from the previous film, alongside new cast members Joey King, Lee Pace, Maisie Williams, and Xolo Maridueña.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/4/47/Practical_Magic_2_%28film_poster%29.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "The Owens sisters must confront the dark curse that threatens to unravel their family once and for all.",
+      "poster": "https://image.tmdb.org/t/p/w500/ogwQOLbCfncjvBhFb5l0OmQH8KC.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.069,
       "rating": "PG",
       "runtime": "2h 10m",
       "theaters": [
@@ -415,17 +429,19 @@
       "confirmedThrough": "2026-10-13",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1302904,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-runner",
       "title": "Runner",
       "releaseDate": "",
-      "overview": "Runner is a 2026 drama film directed by Laura García Alonso from a screenplay that she co-wrote with Pol Cortecans. It stars Alba Sáez.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/f/f5/Runner_%282026_film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "A former soldier is thrown into a brutal race against time when a critical medical delivery makes him and his unlikely partner the targets of a ruthless cartel. As the mission spirals into a deadly manhunt, every detour, delay, and bullet pushes them closer to failure. With betrayal closing in from every side, they must survive the chase and deliver their cargo to save the life of a little girl.",
+      "poster": "https://image.tmdb.org/t/p/w500/yBKMAIj7clP42UkFejhGDBBoTpb.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 7.8,
       "rating": "PG",
       "runtime": "1h 37m",
       "theaters": [
@@ -445,12 +461,12 @@
           "title": "Runner review – Alan Ritchson and Owen Wilson thriller is serviceable B-movie camp - The Guardian",
           "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNUhNc043bnVUR3NFQ0YwU0R6UDJVR1g3WlUxT2pDbVhzdVZMTVZVcHY1Rnk0SnZWVlVSWlYzUnF5Ny1CczFEYU9yS0plOXZLR19maDJRT0sxSnd1bGQ2dnBoYm0yT0RRZHNjSFNWeXFiVDRxTElCaTF0Q2ZGVk03WjdVVHNid1JRbzZyMA?oc=5",
           "source": "The Guardian",
-          "pubDate": "Tue, 08 Sep 2026 11:01:00 GMT"
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "The Runner review: Take a jog instead of watching this Prime original - Roger Ebert",
+          "title": "The Runner review: Take a jog instead of watching this Prime original - rogerebert.com",
           "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOQ1pCNU9IVnFNNEg1Zk5DMEVOdEh4bm91akllRzkwQWxXOXNjVWVXZ09OYUliazd4ZGlkalRvRlEtdUFkZzBGY2lKdlgyaDJRbWZMeENwVmFzNGpiOUk5WGVYQjBYRjE5Z19YeVkybXRZNkhRR2JEVnFib0xPbmZpTDctczlPa2FmU2FxVURn?oc=5",
-          "source": "Roger Ebert",
+          "source": "rogerebert.com",
           "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
         },
         {
@@ -464,17 +480,19 @@
       "confirmedThrough": "2026-10-13",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1377237,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-spa-weekend",
       "title": "Spa Weekend",
       "releaseDate": "",
-      "overview": "Spa Weekend is a 2026 American comedy film written and directed by Jon Lucas and Scott Moore. It stars Leslie Mann, Isla Fisher, Michelle Buteau, Anna Faris, and Adam Demos, telling the story of four friends who reconnect with one another for a spa weekend.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/0/09/Spa_Weekend_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Four lifelong friends realize that somewhere between careers, relationships, families, and everyday responsibilities, they’ve forgotten how to take care of themselves and each other. Burned out and overdue for a break, the women escape to a luxury spa retreat for an unforgettable weekend dedicated to fun, laughter, and a lot of really bad decisions.",
+      "poster": "https://image.tmdb.org/t/p/w500/i3I19SbOyz6AIl0cSYdyVJRucMr.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.8,
       "rating": "R",
       "runtime": "1h 37m",
       "theaters": [
@@ -510,17 +528,19 @@
       "confirmedThrough": "2026-09-22",
       "leavingDate": "2026-09-22",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1341138,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-spider-man-brand-new-day",
       "title": "Spider-Man: Brand New Day",
       "releaseDate": "",
-      "overview": "Spider-Man: Brand New Day is a 2026 American superhero film based on the Marvel Comics character Spider-Man. Produced by Columbia Pictures, Marvel Studios, and Pascal Pictures, and distributed by Sony Pictures Releasing, it is the 38th film in the Marvel Cinematic Universe (MCU) and the fourth film in the MCU Spider-Man film series following Spider-Man: No Way Home (2021). The film was directed by Destin Daniel Cretton, written by Chris McKenna and Erik Sommers, and stars Tom Holland as Peter Parker / Spider-Man alongside Zendaya, Sadie Sink, Jacob Batalon, Jon Bernthal, Florence Pugh, Tramell Tillman, Marisa Tomei, and Mark Ruffalo. In the film, Parker is on his own and dedicated to protecting New York City as the hero Spider-Man. His personal struggles and overworking cause his superpowers to evolve while he faces a new telepathic threat.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/9/9a/Spider-Man_Brand_New_Day_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.",
+      "poster": "https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 7.849,
       "rating": "PG",
       "runtime": "2h 25m",
       "theaters": [
@@ -544,39 +564,41 @@
       ],
       "news": [
         {
-          "title": "Box Office: ‘Spider-Man: Brand New Day’ Remains No. 1 in Sixth Weekend, Nears ‘Avengers: Endgame’ All-Time Domestic Record - Variety",
-          "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNbV94QWFTbU4zME5YSG5HR1IwY3g4cnNmd2lQT3NQa1FaNXVEZkdEamlmNkI5cnVKUUxYMUxXZ2w3LVdLY1cyMFFaai1JdGMyb3ZXazMyUTVicjVpeXo3VHdoTnFzV3ljSGhJdXRGbHJ0YnZJREgxOVZ1bGludjRmd1R5OGZqaXh5a201QWNNWlc3S0JEOGYwdnpEZ1oyeUVwTVh3?oc=5",
-          "source": "Variety",
-          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
-        },
-        {
-          "title": "‘Spider-Man’ Brand New Day Has A Jean Grey Problem - Erik Kain | Substack",
-          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBRX04xSGRHYlpZMGYwa0ItMGM0UEZQQTFGb21SSEZMMkZTVzF4VjNUMmZUSURCa1VtQWpsSkxCN3ppWUh5YlVwSFM0VzNwVnA4WDFiZjE3bTBRZW9FWEtYb1NKc21tdUtJQzJtVkd6cS1WZ04ySFBqdQ?oc=5",
-          "source": "Erik Kain | Substack",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "‘Spider-Man: Brand New Day’ Box Office Set to Sink ‘Titanic’ From All-Time Top 5 - The Hollywood Reporter",
-          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPOC10YUVDUnJNemgxYjVvSnByMFN5S09Da0pHWVhGMTVWVEdFTFVsSjAzVlA1RHhDcEFLM055cThXVG5rWGJ3UzBZZDF5Z194ZVA4aFpUbEgxXzJ2ZUdkUEI2eXhjbVZNcU5hR0dnRkFRcVBmRnM1cVdQZVdfWG5KVndzNU5UUGZzWFlrNzI5Ym9FTnM3NWVwVDQ3eVAzMTdoOFRDOGItYWtRc3l2OE9GbzVMQXhtQzA?oc=5",
+          "title": "‘Spider-Man: Brand New Day’ Hits No. 1 on All-Time Domestic Chart, Topping ‘Force Awakens’ - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPYjdkOVk4WG84YWtoS2l2RVlPSWo5X1M2QjFFVTBkajkzZU9Vb00zSlV5N2h5bHVJNE5kSlB4ZWkzaDNyZ0pNT0JuZUI2M1lnbXptalZkVm9OYUEtQ2dvRkVRTTNfRXM0QzRva2Z0SGliRjZuOHByV21QeUlHblA4eGY4V1VXamFqcXVoM0JuOXFIVHdUV0pBekdtX3pEWU5OaThvTGNuQTg2YU55Qy1YXzFtejRpQnJqZFRaWTBPZw?oc=5",
           "source": "The Hollywood Reporter",
-          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+          "pubDate": "Wed, 16 Sep 2026 15:29:17 GMT"
+        },
+        {
+          "title": "‘Spider-Man: Brand New Day’ Overtakes ‘Star Wars: Force Awakens’ as Highest-Grossing Movie of All Time at Domestic Box Office - Variety",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQdzlNbjRBMFB3ZmxPaERjaFJNajBzNm5XMXYyMnlEU3h4VFpER0hndEtEYzRIcE1ibHpBREJWRDBUamZmS2lKLXFveDZhM1hKSFhCWWhMYlZlTEFJdWhDWWpPUldPeUtnTFdWYlJpV0lwTFA3UVNsRVBDM05QdjRKNl9uNkN3M2hlSjVxcC1raDJKT3RBdjZEQ1lUMXdIOEJtZi1ScEtDam9fT3J0T21GU0ljNA?oc=5",
+          "source": "Variety",
+          "pubDate": "Wed, 16 Sep 2026 14:49:00 GMT"
+        },
+        {
+          "title": "‘Spider-Man’ Brand New Day Has A Jean Grey Problem - diabolical.substack.com",
+          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBRX04xSGRHYlpZMGYwa0ItMGM0UEZQQTFGb21SSEZMMkZTVzF4VjNUMmZUSURCa1VtQWpsSkxCN3ppWUh5YlVwSFM0VzNwVnA4WDFiZjE3bTBRZW9FWEtYb1NKc21tdUtJQzJtVkd6cS1WZ04ySFBqdQ?oc=5",
+          "source": "diabolical.substack.com",
+          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
       "confirmedThrough": "2026-09-16",
       "leavingDate": "2026-09-16",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 969681,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-the-dog-stars",
       "title": "The Dog Stars",
       "releaseDate": "",
-      "overview": "The Dog Stars is a 2026 post-apocalyptic action thriller film directed and produced by Ridley Scott, from a screenplay by Mark L. Smith, based on the 2012 novel by Peter Heller. The film stars Jacob Elordi, Josh Brolin, Margaret Qualley, and Guy Pearce, and follows the survivors of a global flu pandemic in rural Colorado.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/6/68/The_Dog_Stars_%28film%29_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "After the world's population has been ravaged by a pandemic, a man lives a lonesome existence in a Colorado airplane hangar with his dog and a dour gunman he has befriended. When a mysterious transmission comes through on the radio while he’s flying his old Cessna, it sparks a hunt for the provenance of the sound.",
+      "poster": "https://image.tmdb.org/t/p/w500/A7i16oDi03qrKep5pBfuTWNUTb.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.636,
       "rating": "R",
       "runtime": "1h 58m",
       "theaters": [
@@ -614,17 +636,19 @@
       "confirmedThrough": "2026-09-16",
       "leavingDate": "2026-09-16",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1384216,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-the-end-of-oak-street",
       "title": "The End of Oak Street",
       "releaseDate": "",
-      "overview": "The End of Oak Street is a 2026 American science fiction survival film written, co-produced, and directed by David Robert Mitchell. It stars Anne Hathaway, Ewan McGregor, Maisy Stella and Christian Convery as a family whose suburban neighborhood has been transported from 1982 into the age of dinosaurs.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/7/7e/The_End_of_Oak_Street_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown, the Platt family soon discovers that their very survival depends on them sticking together as they navigate their now unrecognizable surroundings.",
+      "poster": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 6.752,
       "rating": "PG",
       "runtime": "1h 39m",
       "theaters": [
@@ -647,16 +671,16 @@
       ],
       "news": [
         {
-          "title": "‘The End of Oak Street’ Is the Best Dinosaur Movie in 30 Years - Autostraddle",
-          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOdjBPN2p3RWp1UWtnU1NMSk1iaDExWHN0M1dpbGowYTBfQUczTlBQRFlLaUplYVFidjhJVjhTa1BpOWlJZWQyMk5wUDBEZzJrYUgyVVJHbmF0eF9oRDJ4UWxrNU1UMkdmcGNubWhBOFAyYWdtRVNKWTNnT0FDRjhlSXMta05iTkJ3RE9mSXdhazJaZEZh?oc=5",
-          "source": "Autostraddle",
-          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "‘The End of Oak Street’ is both new and nostalgic - Deseret News",
           "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNOUZlRHhtSWVRZWM1N0NCNDBtU3ZMYmxEbW1pcXJ3MzAwbXc0a2VWSUU1TVRqaUNsaGdFbmhSRGVFQ3FveEMtMXpSeU9XVzROTnJJdzZzYUx0WXh4TlZOVDlwWjJ2X3I2c0VZa0EyX3ZrcDNiR2RqXzJBbkpUQVhzdXhtVEtOWi1XTGtrSXR0bDJ6TDZL?oc=5",
           "source": "Deseret News",
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The End of Oak Street’ Is the Best Dinosaur Movie in 30 Years - autostraddle.com",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOdjBPN2p3RWp1UWtnU1NMSk1iaDExWHN0M1dpbGowYTBfQUczTlBQRFlLaUplYVFidjhJVjhTa1BpOWlJZWQyMk5wUDBEZzJrYUgyVVJHbmF0eF9oRDJ4UWxrNU1UMkdmcGNubWhBOFAyYWdtRVNKWTNnT0FDRjhlSXMta05iTkJ3RE9mSXdhazJaZEZh?oc=5",
+          "source": "autostraddle.com",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
           "title": "‘The End of Oak Street’ hits streaming—Where to watch the Anne Hathaway movie - New York Post",
@@ -669,17 +693,19 @@
       "confirmedThrough": "2026-11-03",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1101383,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "local-the-uprising",
       "title": "The Uprising",
       "releaseDate": "",
-      "overview": "",
-      "poster": "",
+      "overview": "As war and plague devastate 14th-century England, a humble peasant ignites a rebellion, uniting an army of commoners to defy the King’s might in a desperate fight for justice and survival.",
+      "poster": "https://image.tmdb.org/t/p/w500/7TUl15TOsIvndKlgMWTtLgtEzZP.jpg",
       "status": "playing",
-      "voteAverage": 0,
+      "voteAverage": 7.2,
       "rating": "R",
       "runtime": "2h 8m",
       "theaters": [
@@ -716,17 +742,19 @@
       "confirmedThrough": "2026-09-16",
       "leavingDate": "2026-09-16",
       "leavingSoon": true,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 977942,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-the-transformers-the-movie",
       "title": "The Transformers: The Movie",
       "releaseDate": "2026-09-17",
-      "overview": "",
-      "poster": "",
+      "overview": "The Autobots must stop a colossal planet-consuming robot who goes after the Autobot Matrix of Leadership. At the same time, they must defend themselves against an all-out attack from the Decepticons.",
+      "poster": "https://image.tmdb.org/t/p/w500/xJ5W0mOAWCVaXmU0pBZh4NjSRv2.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 7.1,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -738,9 +766,9 @@
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Transformers: The Movie 40th Anniversary Screenings to Feature New Optimus Prime: Awakening Short - Crunchyroll",
+          "title": "Transformers: The Movie 40th Anniversary Screenings to Feature New Optimus Prime: Awakening Short - crunchyroll.com",
           "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQWERLVXdzMmh1dHV4Zks0eWpvcGxQRWxQaDdSVlVUODRVaFVpUHlCSFBKU014VHByMjlRVC1VdkVvMVR3R3dxdUFQbjFhc085ckNQRk1NUlNWSElCR0hINnptT1R4SzhxQUNoTl96c2lNSXB2dzBKanNQQ2ZaY3BtdkhDaGxLLTNldUp3bFplSHFURHBjREJGSktrMFNqQWlVYklN?oc=5",
-          "source": "Crunchyroll",
+          "source": "crunchyroll.com",
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
@@ -754,17 +782,19 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1857,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-bad-apples",
       "title": "Bad Apples",
       "releaseDate": "2026-09-18",
-      "overview": "",
-      "poster": "",
+      "overview": "A struggling primary school teacher begins to make some questionable decisions after one of her students is injured.",
+      "poster": "https://image.tmdb.org/t/p/w500/60BxAjKM20ABTSYnWZcJ8ExiVNL.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 7.0,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -782,25 +812,27 @@
           "pubDate": "Fri, 11 Sep 2026 11:16:25 GMT"
         },
         {
-          "title": "'Bad Apples' review: Teachers, this film is for you - Mashable SEA",
-          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOWHNYQ0hCRER4c05FcVUwTm9oZTk5WTg0QzZLT3F0ZVItMUxLOTZjQXpWUnp5WktnMlFFWHFWbzhuYU1UZW5jeVNVeG1pZ3Y1YTNzUzZtem1VLWY0SUtHMXppZlk3N05wTWxmcjNYQWxLcHI5UENOZ0pwekJiZHlhVXBKclVBLWFrZ0ZtNFBn?oc=5",
-          "source": "Mashable SEA",
-          "pubDate": "Fri, 11 Sep 2026 09:00:00 GMT"
+          "title": "'Bad Apples' Director Jonatan Etzler on Morality, Education & Creating the Film’s Villains - Film Focus Online",
+          "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNZEtSTGhvaUNhNlV3UXNZVXNER3R3djVBZHlqaE9oZjdXSUFJNHFTOHZ6N1dYNnZvUlFrZ3RfOUtRQkRIb2xlb3FMSzJEd25QeHRZeEVNVGd5ZDNqeXpxendDbTAwWndUZmlieXh3MDdFaG1RY19oTTU2N2s4eGpFNnBlV0ptY3NzSUkweEx4LUVHZUYwSlVvQ2VpaUFEOTRzRXNDd2daT2JTbmVQT3NVc25pTjFCUldPbERObmNLaw?oc=5",
+          "source": "Film Focus Online",
+          "pubDate": "Wed, 09 Sep 2026 20:21:22 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1198654,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-the-route-to-cappyness",
       "title": "The Route to Cappyness",
       "releaseDate": "2026-09-19",
-      "overview": "",
-      "poster": "",
+      "overview": "A filmmaker embarks on a global adventure to uncover the viral fascination of the capybara, including exploring how they have become cultural symbols of serenity in Japan.",
+      "poster": "https://image.tmdb.org/t/p/w500/7scUsql29Jvddblgy6MP9UiWJoz.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -814,31 +846,33 @@
           "pubDate": "Mon, 14 Sep 2026 13:17:00 GMT"
         },
         {
+          "title": "The Route to Cappyness: Notts filmmaker Sharon Walia on her brand new documentary - leftlion.co.uk",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQdl9jOTgwRjJzWEtpVjFPZDJyNUtlQ2JHVFM5djBjZUhPbjFWWHpSdTgtODN3NVpleC1VMmZfRWx1NF9UMUNWYk1FVUJ4bEtKXzZvaGRUNVJCU2ljV1pHVTlPRUhmU2F6aGFURjNQYVhpM0FiRFhvRzZOQ1JNbGN3aExGQ3haanVTMTBmSUtpbnBhRWpEZWpBZVgwVHJWUFJwd2NSX3NzTWRYdU9iOEIxWjFqTDF6bGEwbnBjYUhB?oc=5",
+          "source": "leftlion.co.uk",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
           "title": "At Disney Springs, a new film gets up close with the capybara - Orlando Sentinel",
           "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQS0Z5bURJM2lWVEFrWU5OeWs1U2Fuc0NuSGFiaUV2cXZ4UjZaV1cyS0U1eVNiSnVkSjZmc2FMc2M4RVRuVmJiMkYtdklvNDNDazcyVUNiUmtJZUtPRS1JZXlXamxHcElRLWwzUXp4YmJsUWlzSzFPRjlEMG5jQ3U0ZVRUVktlbXk4WTZ1Qmh6Q2xGQQ?oc=5",
           "source": "Orlando Sentinel",
           "pubDate": "Tue, 15 Sep 2026 16:48:57 GMT"
-        },
-        {
-          "title": "The Route to Cappyness: Notts filmmaker Sharon Walia on her brand new documentary - LeftLion",
-          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQdl9jOTgwRjJzWEtpVjFPZDJyNUtlQ2JHVFM5djBjZUhPbjFWWHpSdTgtODN3NVpleC1VMmZfRWx1NF9UMUNWYk1FVUJ4bEtKXzZvaGRUNVJCU2ljV1pHVTlPRUhmU2F6aGFURjNQYVhpM0FiRFhvRzZOQ1JNbGN3aExGQ3haanVTMTBmSUtpbnBhRWpEZWpBZVgwVHJWUFJwd2NSX3NzTWRYdU9iOEIxWjFqTDF6bGEwbnBjYUhB?oc=5",
-          "source": "LeftLion",
-          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1474107,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-nct-127-5th-tour-neo-city-seoul-the-redline-in-cinemas",
       "title": "NCT 127 5th Tour ‘Neo City: Seoul — The Redline’ in Cinemas",
       "releaseDate": "2026-09-20",
-      "overview": "",
-      "poster": "",
+      "overview": "Back after almost two years, NCT 127's fifth tour, NCT 127 5TH TOUR ‘NEO CITY : SEOUL - THE REDLINE’, is coming live to cinemas! Experience the explosive energy, world-class performances, and electrifying atmosphere of KSPO DOME brought to life on the big screen with immersive sound. NCTzens, join us for the spectacular kickoff of 'THE REDLINE'!",
+      "poster": "https://image.tmdb.org/t/p/w500/yvD0TWLNHlyP9dNHStjFV8v68nP.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -852,31 +886,33 @@
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
+          "title": "NCT 127 Brings Their 5TH TOUR ‘NEO CITY: SEOUL THE REDLINE’ To Cinemas - forbes.com",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxNUm9aQ0NSSWpzT0x0ckVrZ1E5UVUyUGhVTGhsWTJuSWUtYTVZMTU3bVpoQ1l0bWtDSmk4Y3lDTU5VMjdMX0hTS1VQMkR6YUIzY0xWWkNuTUhaSzFHeE5Xekdjd0VWZ0FESHJZMEk0NnBDYTdZLWdjT3R1ZmlYN3ctMWhGV0EyMVlqOEZreEpyYThsaHV0RklfTmpPVmNRd25FSlhLZXltMk5nb0F1VU0tOFp3Um8ydGVPWm5CRmVn?oc=5",
+          "source": "forbes.com",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
           "title": "NCT 127 5TH TOUR 'NEO CITY : SEOUL - THE REDLINE' in CINEMAS: Official Trailer - Rotten Tomatoes",
           "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNVEJBVGw4VWNKV1FJUE1fNExuLXh6YVJVQllBV0V6N1dZVEQydWVNdFJma2tkWmdZa3VrUlZTMmc0bl9ReWQ2MWZ2cEV2LXZmX3Y5Q3M0VXhRMTZ0RmZRc0FGOFRzSlpGQ2NCUU9FTGpxWWJRY1Eyd3FYNS1rR0VPaDZ4OFlQeG5IZUNuMEFGNmhrTi1VaENoZWZB?oc=5",
           "source": "Rotten Tomatoes",
           "pubDate": "Sat, 29 Aug 2026 13:37:08 GMT"
-        },
-        {
-          "title": "NCT 127 Bring ‘NEO CITY : SEOUL – THE REDLINE’ Live To Cinemas Worldwide - That Eric Alper",
-          "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxOUHRIMmcyWm1KVFo5bE5PbnNSSGdXa19UdFM3TnZ4OTZ0QndhOUVsVnJvZFpFRDh6OWVlYTdST25MZWtyRDRFSWVfZUdqdUNnblJ5RjAwSjd0Uks3SldqVm9zc3U0QmhNU0hOR3JwOTA4RFA4OGJJcVJMQkpuZ1JrSlBVTHF1WmlFZ21sVjBaZ1BYeE0wRnR0WTRkWXl2WHZNTkJHbEQtQnZmZ1JM?oc=5",
-          "source": "That Eric Alper",
-          "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1740257,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-take-me-home",
       "title": "Take Me Home",
       "releaseDate": "2026-09-23",
-      "overview": "",
-      "poster": "",
+      "overview": "Anna (Anna Sargent making her acting debut), a middle-aged Korean adoptee with a cognitive disability, cares for her aging parents in a fragile balance of meeting one another’s needs. Alongside her sister Emily (Ali Ahn) and her father (Victor Slezak), they must confront challenging questions about the future, but Anna remains determined to build a life where all of them can thrive.",
+      "poster": "https://image.tmdb.org/t/p/w500/oC9NQnmyPr5bcqog5sTKZofdQw7.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -890,9 +926,9 @@
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Bonnet Springs hosts screening for movie partially shot in Lakeland - aol.com",
+          "title": "Bonnet Springs hosts screening for movie partially shot in Lakeland - AOL.com",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxNcERPbUlNaXhNS1loTnhZQkF3QktBN3JwQXR3VEo4bUcxTHRVOE9zaEtJX3RycFB4ZTlCTFBqMl9ZRDB4M2lHV3FhdmpLRWx2ZXktLW9lWm9TUUxGN1ZzeUZDTVhvWFFFUEcwaWdMZ1JXamVqcVpxeE4zOXpDWnF5dEVqUDY4MzA?oc=5",
-          "source": "aol.com",
+          "source": "AOL.com",
           "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
         },
         {
@@ -906,17 +942,19 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1569461,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-avengers-endgame",
       "title": "Avengers: Endgame",
       "releaseDate": "2026-09-25",
-      "overview": "",
-      "poster": "",
+      "overview": "After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
+      "poster": "https://image.tmdb.org/t/p/w500/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 8.2,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -934,9 +972,9 @@
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "The Russos Say You're 'Required' To See 'Endgame' in Theaters Again - pajiba.com",
+          "title": "The Russos Say You're 'Required' To See 'Endgame' in Theaters Again - Pajiba",
           "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOVkZXTDZRMDAxWm9BU1JLb0xsQkQtRUdMQzdaTFhIeVdTMnA0aW02U3UxMFVmYlRvYWU5Ti1XcGp3aHlTUVNqaXc0NTVsRXNSVnNhTHc2ekRVV2g2NkYxcW9DTWE0Uk5palJ2clRWRENCMXZwMWl4NWxubFdvdkRmRjJaV0I2SHZpWklGWFFELURsVUFnMFJwN2h3?oc=5",
-          "source": "pajiba.com",
+          "source": "Pajiba",
           "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -944,17 +982,19 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 299534,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-princess-mononoke",
       "title": "Princess Mononoke",
       "releaseDate": "2026-09-26",
-      "overview": "Princess Mononoke is a 1997 Japanese animated historical fantasy film written and directed by Hayao Miyazaki. Set in the Muromachi period of Japanese history, the film follows Ashitaka, a young Emishi prince who journeys west to cure his cursed arm and becomes embroiled in the conflict between the forest of the gods and a nearby town, as well as the feud between Lady Eboshi, the town's leader, and San, a human girl raised by wolves. Produced by Toshio Suzuki, animated by Studio Ghibli, and distributed by Toho, it stars the voices of Yōji Matsuda, Yuriko Ishida, Yūko Tanaka, Kaoru Kobayashi, Masahiko Nishimura, Tsunehiko Kamijō, Akihiro Miwa, Mitsuko Mori, and Hisaya Morishige.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/8/8c/Princess_Mononoke_Japanese_poster.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "Ashitaka, a prince of the disappearing Emishi people, is cursed by a demonized boar god and must journey to the west to find a cure. Along the way, he encounters San, a young human woman fighting to protect the forest, and Lady Eboshi, who is trying to destroy it. Ashitaka must find a way to bring balance to this conflict.",
+      "poster": "https://image.tmdb.org/t/p/w500/cMYCDADoLKLbB83g4WnJegaZimC.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 8.319,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -982,40 +1022,10 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
-    },
-    {
-      "id": "upcoming-3rd-quarter",
-      "title": "3rd quarter",
-      "releaseDate": "2026-09-30",
-      "overview": "",
-      "poster": "",
-      "status": "upcoming",
-      "voteAverage": 0,
-      "rating": "",
-      "runtime": "",
-      "theaters": [],
-      "news": [
-        {
-          "title": "Ventas Acquires Sierra Del Sol Senior Living in Tucson for $14.96 Million - Real Estate Daily News",
-          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPVlFJZDd3c2lpNG5RV1ExeWk3WWRfbUs5Tm1YTVJXckoyS2RfVFpTSENoUU5xcGlsZTlsR0xIYkdpWjJSYzRGTVozX3dTSTdaSW1CWUlwVW5WOTdiQXpRNkU0UUxITElzb2JOdUREOF9kQU9rQWllc3JJLTZubTRKb0ZFcFRZTm8wbXhRLWM2YjE0ejlMajl1b2p4SFk3VEE2RTJVWVJFc3N3UQ?oc=5",
-          "source": "Real Estate Daily News",
-          "pubDate": "Thu, 10 Sep 2026 08:00:51 GMT"
-        },
-        {
-          "title": "The mathematical reason NFL teams are now more aggressive on 4th down - wearethemighty.com",
-          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE9EQ0ItRnNzQktBQ0g5MGR1dHZBSHE5aEhINHVwbFpkcnFsMVdFWXoyWjkwY3k1ZjRIaXF1M01obGdjVzBhUG9zdzd3cmNaeFB6Q2pVR3F4cEZHYUZZWEs4THRVd2p6aEJEclRXbUNtV0wzVF8yNVh4bQ?oc=5",
-          "source": "wearethemighty.com",
-          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
-        }
-      ],
-      "source": "The Numbers",
-      "confirmedThrough": "",
-      "leavingDate": "",
-      "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 128,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-begotten",
@@ -1036,9 +1046,9 @@
           "pubDate": "Wed, 09 Sep 2026 17:05:33 GMT"
         },
         {
-          "title": "Beyond Fest 2026 Announces Massive Lineup That Includes 'Beware Boiúna’, 'Victorian Psycho', And More - Bloody Disgusting",
+          "title": "Beyond Fest 2026 Announces Massive Lineup That Includes 'Beware Boiúna’, 'Victorian Psycho', And More - bloody-disgusting.com",
           "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE5fZmRKeWdWOWN1V25vVTEtSDhkV01OVXFFSWk5Ul9FMzBIOFdJRGhhRWF3N25XTjdxWkc5LVo2N2NiRUQ5Vkw5RVRhRVlMSUJtNGc?oc=5",
-          "source": "Bloody Disgusting",
+          "source": "bloody-disgusting.com",
           "pubDate": "Wed, 09 Sep 2026 17:00:59 GMT"
         },
         {
@@ -1053,90 +1063,16 @@
       "leavingDate": "",
       "leavingSoon": false,
       "tmdbId": "",
-      "metadataSource": "Wikipedia"
-    },
-    {
-      "id": "upcoming-october-2026",
-      "title": "October 2026",
-      "releaseDate": "2026-09-30",
-      "overview": "",
-      "poster": "",
-      "status": "upcoming",
-      "voteAverage": 0,
-      "rating": "",
-      "runtime": "",
-      "theaters": [],
-      "news": [
-        {
-          "title": "Fall movie preview: All the 2026 films you need to know about - Mashable",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5BZkRhOGdSTVJGeGhNOHd4YnJoZlB2cEZTWVBLRDdidndCLUFla3dSNF9MT1lRbHVBUVREa1cxRkYxakk3RXVHRjRTS1JVZjByMVNpdm5mRlZ1RTJwRV8zRnhmN2JYMGNVSUE?oc=5",
-          "source": "Mashable",
-          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "First Look at What’s Coming to Netflix in October 2026 - What's on Netflix",
-          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPS1VNaTBXdTdiVDNLdkVZSFlHWXB6ckhqNFRsaHhmZXE3R0cxWlNIQVZpYS1BRzFjVTZlRWZVSy1TRUJmR01wYkFtTXVZWmRtam40bUU1UWlBSFNnb1pVTGk2dF92ekJJVmFSMVRzdWw5Q0I1NHFrZVBNX3d0Z2JNLW42TXd6QWN3aWxEZmppcjZtYXVoWkhyTDJkRzRIdzFY?oc=5",
-          "source": "What's on Netflix",
-          "pubDate": "Wed, 09 Sep 2026 13:14:50 GMT"
-        },
-        {
-          "title": "Woody Allen To Start Shooting Next Project In Spain In October - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQZUdMMERncHVfcUVtcmsxcWdSOFlZeDdmVllkY0wyTFY3OUJUT2RQdlpQbHdaSnVmVUdCU2ZsSVoxVGlWR2VoSXlVTERJS24yUmJiVEdnUGtiUlBtV3l4SEt1aXVvV0d0SHJaV01IZjJBRUMySENZb3ktTkZfdlR2MUl3?oc=5",
-          "source": "Deadline",
-          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
-        }
-      ],
-      "source": "The Numbers",
-      "confirmedThrough": "",
-      "leavingDate": "",
-      "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
-    },
-    {
-      "id": "upcoming-summer-2026",
-      "title": "Summer 2026",
-      "releaseDate": "2026-09-30",
-      "overview": "",
-      "poster": "",
-      "status": "upcoming",
-      "voteAverage": 0,
-      "rating": "",
-      "runtime": "",
-      "theaters": [],
-      "news": [
-        {
-          "title": "Summer U.S. Box Office Hits All-Time $4.76B Record: How Audiences Surrendered To Moviegoing - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE01ckVFNXg2OWg3M2YwTFBZTHFsSmRDT0pmOHhiTzF2Y0xjeWptN1hDR3pXOVhRalVxZ1ZsMUFSUjhwdlJHeFBhU0tqakhWd25USjRkWGd5WVVWRXhPb3JsVk1ZM29MVFkxQk0wUHh5VEtZQnhfMGJvZWRn?oc=5",
-          "source": "Deadline",
-          "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
-        },
-        {
-          "title": "What a historic summer box office reveals about massive shifts in the theatrical industry - CNBC",
-          "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTE9mXy1LdlNLT2F6QjZ5UFhMcllma0N6eWZVaEdKeUdEclRhUTQ0eGZuOEFhYkhWVTVlODVHc3FMU2JzQTRMRTd3RmNVcDBoLU94Tm1DZk0wRUdWbU1JeHZKV05uSVZVUTJjQXRZLW96elFWV1HSAXhBVV95cUxOYk9BVmluVHFhMWFScUx4NVFKMVNqY2JiaGxPYUZlZnl0Tm1WV1JYSk5ONHVwbjF5TlRodnRGV01vczFWQlU2ektwZ0l6MHVuNXphVVAxZFFWY251dHBfY1k5TUFfdVQ4ZFQtdG0wY3NWZklrQWdNa1E?oc=5",
-          "source": "CNBC",
-          "pubDate": "Wed, 09 Sep 2026 18:08:00 GMT"
-        },
-        {
-          "title": "2026 Film Summer - The Rider News",
-          "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBqd3p1NFlsTXpSSHh0NDdKdV91NHhyUGtYSzRvZVpmSE9GS0pjcDFRMjZFTmFjem1TUDNpX2c1Y1pMVU1qTUxXSm9yWVhKZmllbkVFWA?oc=5",
-          "source": "The Rider News",
-          "pubDate": "Wed, 09 Sep 2026 07:06:57 GMT"
-        }
-      ],
-      "source": "The Numbers",
-      "confirmedThrough": "",
-      "leavingDate": "",
-      "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "metadataSource": "Wikipedia",
+      "posterReachable": true,
+      "artworkSource": "Wikipedia"
     },
     {
       "id": "upcoming-rolling-loud",
       "title": "Rolling Loud",
       "releaseDate": "2026-10-01",
-      "overview": "",
-      "poster": "",
+      "overview": "Rolling Loud: The Movie is an upcoming American comedy film written and directed by Jeremy Garelick. The film stars Owen Wilson, Matt Rife, Christine Ko, Christian Convery, and Henry Winkler alongside musical guests such as Sexyy Red, Ty Dolla Sign, Ski Mask the Slump God, and Travis Scott.",
+      "poster": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5c/Rolling_Loud_Logo.png/330px-Rolling_Loud_Logo.png?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1156,9 +1092,9 @@
           "pubDate": "Mon, 14 Sep 2026 15:01:41 GMT"
         },
         {
-          "title": "'Rolling Loud' movie stars Matt Rife and Owen Wilson - providencejournal.com",
+          "title": "'Rolling Loud' movie stars Matt Rife and Owen Wilson - The Providence Journal",
           "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxORHFmd1dWTW1HQndOWWpUcXA4Z2dmT0tNOGE5aGNuVi1Sa3RZMDU2OVZfY1BvQjFreGZ5QlA2MlVTTVVSbTBkbnZVUkVEWEF0RlF2VVBncnNlRW05WF8wZnFmMlNrNUJBX1lyVEUzTGVHOWwwVS1iWW9FZnozWlBiZVRQWnE1cmI5cmlFeDk2R001LWdlekFTR0RIeTRJRWo2Ulp5U3EwZnppNlBQVFdZa2V6MlBYaTlMMlFxcF83NVd1a1d4TmVhdEladE5yUi1E?oc=5",
-          "source": "providencejournal.com",
+          "source": "The Providence Journal",
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -1167,20 +1103,28 @@
       "leavingDate": "",
       "leavingSoon": false,
       "tmdbId": "",
-      "metadataSource": ""
+      "metadataSource": "Wikipedia",
+      "posterReachable": true,
+      "artworkSource": "Wikipedia"
     },
     {
       "id": "upcoming-digger",
       "title": "Digger",
       "releaseDate": "2026-10-02",
-      "overview": "",
-      "poster": "",
+      "overview": "The most powerful man in the world embarks on a frantic mission to prove he is humanity's savior before the disaster he's unleashed destroys everything.",
+      "poster": "https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
       "runtime": "",
       "theaters": [],
       "news": [
+        {
+          "title": "Tom Cruise: Hollywood’s Most Elusive Star Speaks - GQ",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBMVXRLZVJfRnJqbTJGMTV0UzF3cDBRbXJHUTF5VjhYX054Y0hxZmw5b3owT2tGV01DTWFlZW9PZ2RGb2pIeFhvNzhDamI1X0VHMzl2WUNNNktrdFlYRnlIZnJheUs5Vm5CTVU4bU9zSQ?oc=5",
+          "source": "GQ",
+          "pubDate": "Tue, 15 Sep 2026 11:55:00 GMT"
+        },
         {
           "title": "No, Tom Cruise’s ‘Digger’ Isn’t a Musical - Variety",
           "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQRkpBbjk0aHpmT1JXbW1XSnJEa09NeUU3TUNyQVJHNS1BTjdQZFdKMHdmcWRCU2RWdVRIbkZVTWNSZ2lCc0VkZzBPNkhrVmZROFd3ZkVtai1BNG5CN21iQl9MSEhxaTZmS0xUYVBoQWdtWGk1NFpCTTFXQks5ZlYzLUNCMFUwa05nSGVqWg?oc=5",
@@ -1192,27 +1136,23 @@
           "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQd0hXZ3ZYbDlmRExoSEdfUEpWd0hZcjZCa2hMWE11RGFaZ0NSemctb3Y2RUVTbkdiZnQ1UWxsM2hsVl9xOW9WRTVzbGpwV3h2YVdMUE9haXU3VE82amRqTFlzeFdfRjcwZFdScTRsTmtFTFpfLTUyU0RRZ2hnUGg1dncwSVNhcUU1X29JcjkyVHE5bE1hc3Z2Y3V5b2JFcncwakpWLThXTVpfek9rV3dkMGJNSEJxdw?oc=5",
           "source": "empireonline.com",
           "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "'Digger' Trailer: Tom Cruise Movie From Alejandro G. Iñárritu - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1maWtyWnB0R3IxeGx1ZlBOOGkyaTBHdjE2Y2taeGV0d3V3dElfSkFfTkhLZUtxbURmTUJoT1g5Q0pxMjRuX1lLM3lOMTczMnRsWHRzUzA2Z1habWZkdGhuMHpMZGprVmhyVTFLNkdEUko2eVdO?oc=5",
-          "source": "Deadline",
-          "pubDate": "Wed, 09 Sep 2026 16:07:00 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1248832,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-adore-him-he-is-here",
       "title": "Adore Him: He is Here",
       "releaseDate": "2026-10-04",
-      "overview": "",
-      "poster": "",
+      "overview": "Through cinematic reenactments that span salvation history and intimate modern-day interviews from around the world, this film explores the transforming power of meeting the Creator of the Universe face to face. From encountering the Ark of the Covenant as it traveled across the wilderness to bumping into Jesus as he taught in the marketplace, this story builds to a culmination in the Eucharist, and today millions are finding out how much God truly loves them as they adore Him in the Blessed Sacrament. He is here. Will you come?",
+      "poster": "https://image.tmdb.org/t/p/w500/rqcFc1E020D1e0hQqLUhyFlJBpQ.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1230,15 +1170,17 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": "1711918",
+      "metadataSource": "TMDB Web",
+      "posterReachable": true,
+      "artworkSource": "TMDB Web"
     },
     {
       "id": "upcoming-love-of-your-life",
       "title": "Love of Your Life",
       "releaseDate": "2026-10-07",
-      "overview": "Love of Your Life is an upcoming American romantic drama film directed by Rachel Morrison, from a script by Julia Cox. It stars Margaret Qualley, Aaron Pierre, Patrick Schwarzenegger, Gabriel Basso, and Catherine Keener. It is produced by Ryan Gosling and Jessie Henderson.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/f/ff/Love_of_Your_Life_poster.jpeg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "After a chance encounter sparks a sweeping romance, Maya's future is suddenly upended, sending her on an unexpected journey to love and live again.",
+      "poster": "https://image.tmdb.org/t/p/w500/o7ZCmjeW59yujCcAJjjYSJRoZLe.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1258,18 +1200,20 @@
           "pubDate": "Mon, 14 Sep 2026 02:30:00 GMT"
         },
         {
-          "title": "Margaret Qualley Gives an Exclusive First Look at ‘Love of Your Life’ - ELLE",
-          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPR2x2Z3VKai1IR1FLYlVodnJZUkp3bmJud1RnNmlralJON3hBR0VabUNwQ1JPTjdoT0NVVHhNZWtvaEFCMDRuUERuMVFWYVpmWlM0RDJjV3ZfUzF2eWFPM0o2TFhSYmh2M1doZ1l1WmVfbU45eWtSYlpzeE1KY0xxX21CX1NWNGpSdmRTbTh4YUNrS21HS2gtWHJEZ0gxNDVudzJWbA?oc=5",
-          "source": "ELLE",
-          "pubDate": "Wed, 09 Sep 2026 13:04:11 GMT"
+          "title": "‘Love of Your Life’ Review: Margaret Qualley Plays a Woman Adrift in the Kind of Lush and Tender Romantic Drama Hollywood Rarely Makes Anymore - IndieWire",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPY1gwMnVEelEyUDc0ZjNidUlpdTJhZlE1WU5ITUlwX25uZkQ1SEl1TUNQcDQ1ekNwOEZkMGpncGFZVjFNdUFQYVVTQlNwbE9VdC1zUEpqdzdOOWdiQTBpSEw4bm51RjRxUGk3T0RCS0FHZU1XYUk5MElGSjFJcEVmSVdjQzR2a3VOenptb0pmODZZMWVPUF9QUjFuTTZhOXZvWHQ5dQ?oc=5",
+          "source": "IndieWire",
+          "pubDate": "Mon, 14 Sep 2026 02:30:00 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1381078,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-sb19-wakas-at-simula-the-trilogy-concert-finale-in-cinemas",
@@ -1290,16 +1234,16 @@
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Filipino Pop Idol Group SB19 Hits Theatres in SB19 Wakas at Simula: The Trilogy Concert Finale - theouterhaven.net",
-          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPMGNGU3hGR3h2cUxhYVA4Wk1yMHFjLWZta0RKZ1JUZHY3X0g2c1NFRVVobV9uWWwwZ1Bjai1BalVhUkZndFdDTmZDWTdma3Z5TzJwNlNzWkJwOEdjZWhIVmNzNVZlVmhVMVR6RF9xLWNZWVFTTGNtbzRudDVIU2FOQVEzUUx5NWM0UUh2S2xkbUxLOTAwTl9LcGxWTHYwNzFJM050MzZXclRfSGhXXzU4aE5zdTlTZ0pKUk41WXJRSUxRQQ?oc=5",
-          "source": "theouterhaven.net",
-          "pubDate": "Fri, 11 Sep 2026 02:24:06 GMT"
+          "title": "P-POP IDOL GROUP SB19 DEBUTS NEW CONCERT FILM SB19 WAKAS at SIMULA: THE TRILOGY CONCERT FINALE IN CINEMAS - EIN News",
+          "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxPM3N0TWNqZ2lMNXpiQnlMcXk2STN2TGRVdVB1Wm1LMGtHZzhDSElUcHVvdUYyR1BVc1d0cGR2ZlBtbU1lbHAxYmRGNTdEOEJxb2NVMWRPZHBELUUyVW1ZZEdFY3IyRDdiVlhSbDVaTVdMYW15MHJzc0lGT08taUE0aFQ2c1JXYm9TcUotRy1NZ1k2UkNoNlFBZE9wZUwxcUhaVEI1VjNQU2JTU1AtWVJVX0Zkd1o2SXBQUnpwbWRiRUZfb1VjZk42RXRndFdRUW9GQ08tTHBsSGl3eXF1ZFRr?oc=5",
+          "source": "EIN News",
+          "pubDate": "Thu, 10 Sep 2026 16:55:00 GMT"
         },
         {
-          "title": "Trailer for SB19's 'Wakas at Simula: The Trilogy Finale' film shows concert's epic scale - GMA Network",
-          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxOSW92VU9WcVR0eU03X0N5QTJqQzRzNVZ0eEppbEdYdVZ3a3ZmU1RNc05pZnB2WEZRY1l2djZDSXdYRVI2QTk5azN4cTZsRWM2NTN3eUgzSWxudkI4MDZKWVo5dVg5RHltMkpldnBGaVppdWx3bnQ4enNpdjRFVkZWd3ZNbk90S21QNWY4Tk5HTDVkZ1ZjZkNuV2hJQ2ZkbjROVEZZcmFTOXhWYWo4WTM4RGM0bjBJNXEtM3JvZjdEcTVOeGN5UGZiSURSYlA3eHB2dnRVREhiV25OZHNDOGg1Z0dHbGbSAeoBQVVfeXFMUHlTTEliX3I1V2dObzY0TVJvTlp0QTVBMnZUc2czbnBhaWVrQ3MzNS1zS09za2hBVG5KaDNSS3RLRG5kMDVWVW9iUGNxNHMweDRia1p0WTJWU1RGNUdJeFVScFNmLU5BVGJtZWJ6SW1FWFN4dG5DbGNJeFhQNzlaMVVKbGF3ajRybGYxT2hpV1psQTBEYVFZRGltdzBHbEFpaFNNWkh1TzRSWTVkOHhueTVMVm5xQ0ZoNzZIRlRLcUhMSFEzZWxPMFNnU1lNZjlyMXBzV2NkNi1CZENJM1B4SWF0Z3pzQURMYXVR?oc=5",
-          "source": "GMA Network",
-          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+          "title": "Filipino Pop Idol Group SB19 Hits Theatres in SB19 Wakas at Simula: The Trilogy Concert Finale - The Outerhaven",
+          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPMGNGU3hGR3h2cUxhYVA4Wk1yMHFjLWZta0RKZ1JUZHY3X0g2c1NFRVVobV9uWWwwZ1Bjai1BalVhUkZndFdDTmZDWTdma3Z5TzJwNlNzWkJwOEdjZWhIVmNzNVZlVmhVMVR6RF9xLWNZWVFTTGNtbzRudDVIU2FOQVEzUUx5NWM0UUh2S2xkbUxLOTAwTl9LcGxWTHYwNzFJM050MzZXclRfSGhXXzU4aE5zdTlTZ0pKUk41WXJRSUxRQQ?oc=5",
+          "source": "The Outerhaven",
+          "pubDate": "Fri, 11 Sep 2026 02:24:06 GMT"
         }
       ],
       "source": "The Numbers",
@@ -1307,14 +1251,15 @@
       "leavingDate": "",
       "leavingSoon": false,
       "tmdbId": "",
-      "metadataSource": ""
+      "metadataSource": "",
+      "posterReachable": false
     },
     {
       "id": "upcoming-angel-and-the-badman",
       "title": "Angel and the Badman",
       "releaseDate": "2026-10-09",
-      "overview": "",
-      "poster": "",
+      "overview": "A wounded outlaw finds unexpected mercy in the care of a rancher's daughter. The hope of love pulls him toward a different life until the law, and his violent past, close in on his new home. Now he must choose the kind of man he'll become.",
+      "poster": "https://image.tmdb.org/t/p/w500/igrWgzlxwHLzuNUrL4agCNmRfDi.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1344,17 +1289,19 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1669915,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-gone-with-the-wind",
       "title": "Gone with the Wind",
       "releaseDate": "2026-10-10",
-      "overview": "",
-      "poster": "",
+      "overview": "The spoiled daughter of a Georgia plantation owner conducts a tumultuous romance with a cynical profiteer during the American Civil War and Reconstruction Era.",
+      "poster": "https://image.tmdb.org/t/p/w500/lNz2Ow0wGCAvzckW7EOjE03KcYv.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 7.904,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -1382,15 +1329,17 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 770,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-always-lalisa",
       "title": "Always Lalisa",
       "releaseDate": "2026-10-12",
-      "overview": "",
-      "poster": "",
+      "overview": "Documentary following global superstar LISA during a transformative year away from BLACKPINK, the K-pop phenomenon that made her one of the world's most recognizable performers. Documenting a year of risk, reinvention, and self-discovery as LISA begins to define her next chapter.",
+      "poster": "https://image.tmdb.org/t/p/w500/pOZnrUX1UMblLiqq9ZtZUde3cQV.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1420,55 +1369,19 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
-    },
-    {
-      "id": "upcoming-time",
-      "title": "Time",
-      "releaseDate": "2026-10-15",
-      "overview": "",
-      "poster": "",
-      "status": "upcoming",
-      "voteAverage": 0,
-      "rating": "",
-      "runtime": "",
-      "theaters": [],
-      "news": [
-        {
-          "title": "Summer Box Office Breaks All-Time Record With $4.67 Billion - Variety",
-          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPV3ZuT0xkNmZfUWhRcHphaFNUMzlPY0l1RTBXd0IwYzcwcTVNMVhXNS1KdHZPdFNQZXNJMWFLenVzSlBmUlFRLUJJSWVEYko3UUVlQjRIbi13X2gyLV9hN05YUTBGN3dUTjhLRXZlY2ppbFo0RVF1Z1NYVlRrWmEyYnpsVzVJUkRTSGJsbWFBT2o3Tm9GN2haQw?oc=5",
-          "source": "Variety",
-          "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
-        },
-        {
-          "title": "Once Upon a Time in the Middle East: Shen Teng leads anti-war blockbuster - South China Morning Post",
-          "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxOYUFFRTJzbzhodUFLZm1yTG45Z0R1UHE5LVVkeWhoVW83UHRYRm9qUmJWbXpJelMwcHVENGREYXVDeVNBeTNMNVRxcjVFWTRoLUYxV0pnQnRjNFpTbDBRbFduUVgwYmQzaEd3NUczWGRTbXlBWFNmLXQwaTNxbTllOWI3WWtFTmNvVndteHVETjhCRzdnSktGV2tQaWpTYXlmVTMzaHYxSjVJTUQ5cksyUm5jTmZid3hITWVlYlJBT3VzdERaUVJmRlVTalZ2T3N0SnNfY19qSVXSAdgBQVVfeXFMTXVEU2RPNHF4c2M3QUc2MEZqQ2JaRHFveC03VTlsa0U3dGxiLXpkc3Y0a1dxSHZ1QWwwZUpwQVRhZTZzeXQwUGN3VmpqeTZnOThVRVVlZjhvU2RpNy15MzJzYnE5U3JsRWxPVEU5YVV5UWFwNjdvTU5mUjZVSDZaaU9vRWFLZExtQnN3a3NjU1V4MFFObHZ1eFVxbFNyeUhLYXhTZ2Zfd0lqdk9hd3JTOE8tQkRmTnVIQ25TaHA1M0Z1bDNsRGFtUHlpVGJvZjVaNGQ0SkZ6c0xo?oc=5",
-          "source": "South China Morning Post",
-          "pubDate": "Wed, 09 Sep 2026 08:15:05 GMT"
-        },
-        {
-          "title": "34 Anime Movies And TV Shows That People Consider An Absolute “10/10 Masterclass” From Start To Finish, And Honestly, I Agree With A Lot Of These - BuzzFeed",
-          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE1hR291dXR4UUZlZkozS184M2x4NEFNcW9ZeE45NGdibEM3R001Znk1OWkyclZFcEFUbDBIcEY5cGdTeE1oME91VERkUThvM2EySmdWVGhwNXNDLTFQZGVkdF9DclYyT0dMUzZsTQ?oc=5",
-          "source": "BuzzFeed",
-          "pubDate": "Sun, 13 Sep 2026 01:20:47 GMT"
-        }
-      ],
-      "source": "The Numbers",
-      "confirmedThrough": "",
-      "leavingDate": "",
-      "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1489932,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-california-schemin",
       "title": "California Schemin’",
       "releaseDate": "2026-10-16",
-      "overview": "",
-      "poster": "",
+      "overview": "After being ridiculed for their Scottish accents, two ambitious musicians reinvent themselves as American rappers and fool the British music industry into a lucrative record deal, only for their elaborate lie to unravel under the weight of instant fame.",
+      "poster": "https://image.tmdb.org/t/p/w500/2tYRbCPZVQD1AjZ6YGMRx71lbDU.jpg",
       "status": "upcoming",
-      "voteAverage": 0,
+      "voteAverage": 5.9,
       "rating": "",
       "runtime": "",
       "theaters": [],
@@ -1480,31 +1393,33 @@
           "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "California Schemin’: Wild story of Scottish Rappers Hits the Big Screen - Music Connection Magazine",
-          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNRFFieS1aOVpQRkpHMlhBdUdOU0RIbktrdW0wTzByN1A4VVpZdi1yVXNEMkx3ME11WUlLdS1mdlFLQ2NBVm5pdGhWR0lndU9DVUdxaFdqVmpMd0FzeW1XTkxWZFRtcHllT3pfUmxacU1PekxMU0ZwUkoza1BHb0MtWGwzNzNfUk42U3BFSHp0eDdLTVFkQ09BX3ZEa3VQYmdvR1dONg?oc=5",
-          "source": "Music Connection Magazine",
-          "pubDate": "Thu, 20 Aug 2026 13:03:13 GMT"
-        },
-        {
           "title": "New Trailer For James Mcfvoy's CALIFORNIA SCHEMIN' Sees Two Scottish Rappers Con Their Way Into the Music Industry - GeekTyrant",
           "link": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNb093T3Z0a2lmT09ZeDFpMzgyaWhyY0dzY2NrSXY2MUpZRzFSYko0LUtzbjRMaWR0c0dfQjFpVXc2RVI2dlBjNDBJNExVbXJvaVhYU3FhU0RpMFgxc0dEQUtGZTZfZ2pKVWhid0VsYlBBNnAzVDQxcGFROVJtNGVjUzU5dW1mYnU2T0VLZUNmX0RmWHRjWF9CU2lzRmdzbWE0d3dQdkNEMWhjUDNDOUZVQVNvTnhGUHM0ZzBjS2lXQmEwQjBqYjNRall5dlpCeWNJLUt1d2ZyTQ?oc=5",
           "source": "GeekTyrant",
           "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "California Schemin’ Review: James McAvoy Unpacks the Infamous Scottish Rap Hoax - Showbiz Junkies",
+          "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxPV2JfdWFtYWNVNGo5VDRmY0R6NThyenppS2YwcHpwMW13MndhSk44bnF0T01jVDJUd3RGaFBXbEFxMHpmbDJoVThtM0hJUFpfM2lpVW43emVHZmZoV2hGTjVzbmRUYnhyUXZLck9CZUF2MVc5Wk1penpXQzBGREM2ZXhkMNIBiAFBVV95cUxQSnRValNxWVVXWHBzN0RNUHhwQ1ZVaGJxdllGR2tLUTczMmhISEpBLUQyNFJkUFZyeFBQekhlYk9OMUdYbkRyazdWMHFTRnV0V2VNTFotSVkzZ2RxMXZLbTFQV1FNN28zMlBwY2FfZjB2LXVtTkJqUUQwZFl5aUZFdGxDdW4xT3RV?oc=5",
+          "source": "Showbiz Junkies",
+          "pubDate": "Wed, 09 Sep 2026 19:43:48 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1193550,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-a-body-in-the-woods",
       "title": "A Body in the Woods",
       "releaseDate": "2026-10-17",
-      "overview": "",
-      "poster": "",
+      "overview": "A hard-hitting police investigation with Rossy de Palma taking the lead as the police officer responsible for solving the murder of a young woman whose mutilated body is found in the woods by local hunters.",
+      "poster": "https://image.tmdb.org/t/p/w500/3OVHIEdro8UP5Z2Yr447T04vVep.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1518,31 +1433,33 @@
           "pubDate": "Wed, 16 Sep 2026 08:44:55 GMT"
         },
         {
-          "title": "Worcester police on Wednesday released new surveillance footage of Karen Solomon, the woman wanted in connection with the death of a longtime police officer. Police did not share where the Ring camera video was taken, but the timecode is from Tuesday - facebook.com",
-          "link": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxPbkhqMHYwcGpkMXBjX1RYYkk4Q2tJMng5ZmdTcXdSclJyd1l4X0QzRmx2Zk1LbV9SS1RDZVl3cjdGeGx0XzVFRFBnYTVNU05jbHBabENmTzNqeTlLRmdlUGFVX0Z2RnY2N1R6Mmg2cHc0amNGeGozWU9XWkpsY3A5QmdycW9qSWVhelpYbGxGUC02b1E2clF0RktsaEtnSG1HcTlJb3hkWDNFSldlbUFNSUxpanZPdzE2WG1NWl9BbjB0dHFiQUJJU0N3SFVBdXE2c1VlcURSby1KUQ?oc=5",
-          "source": "facebook.com",
-          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "20 great movies you can watch with your kids - Yardbarker",
           "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQbkEyS0NWZXFVc1BPRUNGSlI1TlRxNG9nbDl0MnZrbHE5a1RCS1dfdXkyMG1jYjhWZFNkYnRFWFJkZFJ5Vy1nd0RlZXRpZ3pvQUZKUmF2OXNMTDFYb0ItT3E4NXRod2VqTEF2ZzF3bGoyWDRiWFhzMnJOVFZvUllsZl9tQzY2SnNKVnVnVkg2cGVLTkpPVmFrR3BmRkVBWnBKLUJDNDBaamRJdFU?oc=5",
           "source": "Yardbarker",
           "pubDate": "Sat, 22 Aug 2026 08:41:46 GMT"
+        },
+        {
+          "title": "Top Films to See at the 2026 Bath Film Festival - UK Film Review",
+          "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxNSVdoM0NlNEotM19QeW9Zbm1pZGsxbk9ubXZDSlZ4OGpnR2p3NWJHTmEwc0YyczdtWFoyOVp3dlp3OW1xRHJSRGFFZGlWbWVZMFJaMDU2azA4WkU2VUx1VERCOTQwdnFQMWVRTHBzNlJoUE5DcEk4VFU5RkRfSzdLaHR4TFgySG92S3NN?oc=5",
+          "source": "UK Film Review",
+          "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers",
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": "175371",
+      "metadataSource": "TMDB Web",
+      "posterReachable": true,
+      "artworkSource": "TMDB Web"
     },
     {
       "id": "upcoming-capturing-bigfoot",
       "title": "Capturing Bigfoot",
       "releaseDate": "2026-10-20",
-      "overview": "",
-      "poster": "",
+      "overview": "On October 20, 1967, Roger Patterson captured 60 seconds of film showing a creature walking through the Northern California woods—footage that became the most analyzed and debated in history. Fifty-seven years later, a reel of 16mm film discovered in a safe changes everything, revealing the untold story behind the world's greatest mystery, told for the first time by Patterson's own son and the people who were there.",
+      "poster": "https://image.tmdb.org/t/p/w500/5je8ali4g3RUYDnxk706KoPflGi.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1550,9 +1467,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "New Documentary ‘Capturing Bigfoot’ Blows the Legend of the Sasquatch Wide Open — Watch Trailer - indiewire.com",
+          "title": "New Documentary ‘Capturing Bigfoot’ Blows the Legend of the Sasquatch Wide Open — Watch Trailer - IndieWire",
           "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPSmR1VTMtdkFtaGdHaXo2ZDRTZmx0a3Y5LWxONFUzVklGSTlYYl9sZGFUWnh1QThVUmNaN0Z3VTQ0elo2MVZ2SlFrUlJBa21VZnZUZGliallCR3VkSDdsY2czeHFJaUdaQWl5ZU1IMU95YUpVbXJ2VEVBVkV4Z1hCellZT21wNnJRYlpjNnA4YzdzY3M?oc=5",
-          "source": "indiewire.com",
+          "source": "IndieWire",
           "pubDate": "Thu, 10 Sep 2026 17:00:00 GMT"
         },
         {
@@ -1562,9 +1479,9 @@
           "pubDate": "Sun, 13 Sep 2026 16:16:26 GMT"
         },
         {
-          "title": "'Capturing Bigfoot' Trailer - New Documentary Promises to Change the Bigfoot Game Forever - Bloody Disgusting",
+          "title": "'Capturing Bigfoot' Trailer - New Documentary Promises to Change the Bigfoot Game Forever - bloody-disgusting.com",
           "link": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNVU9rQXVIMC01cFVUV3Y1Sk1QRVlfQmREVkFCMUs3UHNMYm94TThqWUJ2ZEh4R3ZjU1FhbHlaUWV4R0NLbUlTOHI4blpkZlhhanlMSTNzVm9ONUZnVXc1NU9hLVM5YVdoWkxfbXlodGxwSlJJSUo1djRaZk5FVjhUQU9jdmc2VHRqdXVheWNzZHI0a2l5dlJXeTM0UUtMV0s0TWpqVTVKRHNNcGRSOFJmU3kyd2NMNTVpbXV6eGhlYjB4N3pkWEp1dk53?oc=5",
-          "source": "Bloody Disgusting",
+          "source": "bloody-disgusting.com",
           "pubDate": "Fri, 11 Sep 2026 17:42:40 GMT"
         }
       ],
@@ -1572,15 +1489,17 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": ""
+      "tmdbId": 1629356,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     },
     {
       "id": "upcoming-ali-g-who-iz-i",
       "title": "Ali G: Who Iz I?",
       "releaseDate": "2026-10-23",
-      "overview": "Ali G: Who Iz I? is an upcoming British comedy film written, produced, directed, and starring Sacha Baron Cohen as Ali G, the character he originally played on the Channel 4 comedy series The 11 O'Clock Show and Da Ali G Show. The film is a sequel to Ali G Indahouse (2002). Marking Baron Cohen's feature directorial debut, the film is scheduled to be released on 23 October 2026.",
-      "poster": "https://upload.wikimedia.org/wikipedia/en/0/03/Ali_G%2C_Who_Iz_I%3F_poster.jpg?utm_source=en.wikipedia.org&utm_campaign=api&utm_content=thumbnail_unscaled",
+      "overview": "After twenty years spent \"chillin', tokin' and bonin'\", Ali G is shocked to discover that his long-term girlfriend, Julie, is 8 months pregnant. Faced with an extra mouth to feed, he gets off his batty and heads to America to reclaim his former glory… but soon encounters adversaries who will ultimately threaten his and his child's very existence.",
+      "poster": "https://image.tmdb.org/t/p/w500/uTyVxPeWX8Ai30IQoyDDQONNcq.jpg",
       "status": "upcoming",
       "voteAverage": 0,
       "rating": "",
@@ -1610,9 +1529,24 @@
       "confirmedThrough": "",
       "leavingDate": "",
       "leavingSoon": false,
-      "tmdbId": "",
-      "metadataSource": "Wikipedia"
+      "tmdbId": 1727734,
+      "metadataSource": "TMDB",
+      "posterReachable": true,
+      "artworkSource": "TMDB"
     }
   ],
+  "artwork": {
+    "movieCount": 34,
+    "posterCount": 33,
+    "reachablePosterCount": 33,
+    "missingPosterCount": 1,
+    "posterCoverage": 0.9706,
+    "fallbackFilled": 2,
+    "repairedBrokenPosters": 0,
+    "fallbackFilledBySource": {
+      "TMDB Web": 2
+    },
+    "tmdbConfigured": true
+  },
   "error": ""
 }
