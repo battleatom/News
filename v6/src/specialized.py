@@ -45,7 +45,7 @@ def collect_nfl()->tuple[list[dict],str]:
         return rows,""
     except Exception as exc:return [],f"{type(exc).__name__}: {exc}"
 
-MARKETS=[("^GSPC","S&P 500"),("^DJI","Dow"),("^IXIC","Nasdaq"),("BTC-USD","Bitcoin"),("GC=F","Gold"),("CL=F","Oil")]
+MARKETS=[("^GSPC","S&P 500"),("^DJI","DOW"),("^IXIC","NASDAQ"),("^VIX","VIX"),("CL=F","WTI OIL"),("GC=F","GOLD"),("^TNX","10Y")]
 def collect_markets()->tuple[list[dict],str]:
     rows=[];errors=[]
     for symbol,label in MARKETS:

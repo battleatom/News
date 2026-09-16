@@ -9,6 +9,8 @@ def main():
         assert page.locator("#tabs .tab").count()>=17
         assert page.locator("#app-shell").evaluate("el=>getComputedStyle(el).position")=="sticky"
         assert page.locator("#markets").count()==1 and page.locator("#refresh-status").count()==1 and page.locator("#location-button").count()==1
+        assert page.locator("#markets .markets-track").count()==1;assert page.locator("#markets .market-label").get_by_text("MARKETS",exact=True).count()==1;assert page.locator("#markets .market-item").count()==0
+        market_style=page.locator("#markets").evaluate("el=>({overflowX:getComputedStyle(el).overflowX,height:el.getBoundingClientRect().height})");assert market_style["overflowX"]=="auto";assert abs(market_style["height"]-32)<=1
         page.locator("#tabs .tab").filter(has_text="World").click();page.wait_for_selector(".story-card");initial=page.locator(".story-card").count();assert initial>0
         assert page.locator(".legend").count()==1;assert page.locator(".feedback-controls").count()>0;assert page.locator(".bookmark-btn").count()>0;assert page.get_by_text("WHY IT MATTERS").count()>0
         footer=page.locator(".feedback-controls").first;buttons=footer.locator("button");assert buttons.count()==3;assert footer.get_by_text("D · Duplicate",exact=True).count()==1;assert footer.get_by_text("NR · Not Relevant",exact=True).count()==1;assert footer.get_by_text("NW · Not Wanted",exact=True).count()==1
