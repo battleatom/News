@@ -58,12 +58,26 @@
     tabs.scrollTo({left:Math.max(0,Math.min(max,target)),behavior});
   }
 
+  function nudgeAdmin(){
+    const active=tabs.querySelector('.tab[aria-selected="true"]');
+    if(active?.dataset.category!=="admin")return;
+    const feed=document.getElementById("feed");
+    if(!feed)return;
+    const marker=document.createComment("admin-ops-render");
+    feed.appendChild(marker);
+    requestAnimationFrame(()=>marker.remove());
+  }
+
   let previousSelected="";
   function sync(behavior="smooth"){
     decorate();
     const active=tabs.querySelector('.tab[aria-selected="true"]');
     const key=active?.dataset.category||"";
-    if(key&&key!==previousSelected){previousSelected=key;requestAnimationFrame(()=>centerActive(behavior))}
+    if(key&&key!==previousSelected){
+      previousSelected=key;
+      requestAnimationFrame(()=>centerActive(behavior));
+      if(key==="admin")setTimeout(nudgeAdmin,100);
+    }
   }
 
   let resizeTimer=0;
@@ -82,6 +96,7 @@
       requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:y,left:0,behavior:"auto"})));
     }
     setTimeout(()=>centerActive("smooth"),20);
+    if(button.dataset.category==="admin")setTimeout(nudgeAdmin,140);
   },true);
 
   new MutationObserver(()=>sync("smooth")).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:["aria-selected","class"]});
