@@ -24,7 +24,17 @@ class Story:
     what_next: str = ""
     coverage_label: str = ""
     coverage_score: int = 0
+    coverage_gap_score: int = 0
     supporting_source_count: int = 0
+    corroboration_score: int = 0
+    freshness_score: int = 0
+    coverage_momentum_score: int = 0
+    continuing_relevance_score: int = 0
+    saturation_penalty: int = 0
+    underreported_priority: int = 0
+    recent_supporting_sources_6h: int = 0
+    recent_supporting_sources_24h: int = 0
+    prior_supporting_sources_72h: int = 0
     related: list[dict[str, Any]] = field(default_factory=list)
 
     @property
