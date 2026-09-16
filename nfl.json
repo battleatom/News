@@ -1,0 +1,600 @@
+{
+  "generatedAt": "2026-09-16T15:16:18.509346Z",
+  "games": [
+    {
+      "id": "2026_01_DEN_KC",
+      "name": "Denver Broncos at Kansas City Chiefs",
+      "shortName": "DEN @ KC",
+      "date": "2026-09-15T00:15:00Z",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
+      "teams": [
+        {
+          "name": "Denver Broncos",
+          "abbr": "DEN",
+          "score": "10",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Kansas City Chiefs",
+          "abbr": "KC",
+          "score": "31",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "401872932",
+      "name": "Detroit Lions at Buffalo Bills",
+      "shortName": "DET @ BUF",
+      "date": "2026-09-18T00:15Z",
+      "status": "Scheduled",
+      "detail": "9/17 - 8:15 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Buffalo Bills",
+          "abbr": "BUF",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
+          "color": "00338d",
+          "alternateColor": "d50a0a"
+        },
+        {
+          "name": "Detroit Lions",
+          "abbr": "DET",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png",
+          "color": "0076b6",
+          "alternateColor": "bbbbbb"
+        }
+      ],
+      "broadcasts": [
+        "Prime Video"
+      ],
+      "watchUrl": "",
+      "venue": "Highmark Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872933",
+      "name": "Carolina Panthers at Atlanta Falcons",
+      "shortName": "CAR @ ATL",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Atlanta Falcons",
+          "abbr": "ATL",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png",
+          "color": "a71930",
+          "alternateColor": "000000"
+        },
+        {
+          "name": "Carolina Panthers",
+          "abbr": "CAR",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png",
+          "color": "0085ca",
+          "alternateColor": "000000"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "Mercedes-Benz Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872938",
+      "name": "New Orleans Saints at Baltimore Ravens",
+      "shortName": "NO @ BAL",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Baltimore Ravens",
+          "abbr": "BAL",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png",
+          "color": "29126f",
+          "alternateColor": "000000"
+        },
+        {
+          "name": "New Orleans Saints",
+          "abbr": "NO",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png",
+          "color": "d3bc8d",
+          "alternateColor": "000000"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "M&T Bank Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872937",
+      "name": "Minnesota Vikings at Chicago Bears",
+      "shortName": "MIN @ CHI",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Chicago Bears",
+          "abbr": "CHI",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/chi.png",
+          "color": "0b1c3a",
+          "alternateColor": "e64100"
+        },
+        {
+          "name": "Minnesota Vikings",
+          "abbr": "MIN",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png",
+          "color": "4f2683",
+          "alternateColor": "ffc62f"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "Soldier Field",
+      "plays": []
+    },
+    {
+      "id": "401872934",
+      "name": "Cincinnati Bengals at Houston Texans",
+      "shortName": "CIN @ HOU",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Houston Texans",
+          "abbr": "HOU",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png",
+          "color": "021018",
+          "alternateColor": "eb0028"
+        },
+        {
+          "name": "Cincinnati Bengals",
+          "abbr": "CIN",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cin.png",
+          "color": "fb4f14",
+          "alternateColor": "000000"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "Reliant Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872946",
+      "name": "Pittsburgh Steelers at New England Patriots",
+      "shortName": "PIT @ NE",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "New England Patriots",
+          "abbr": "NE",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png",
+          "color": "002a5c",
+          "alternateColor": "c60c30"
+        },
+        {
+          "name": "Pittsburgh Steelers",
+          "abbr": "PIT",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
+          "color": "000000",
+          "alternateColor": "ffb612"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "Gillette Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872936",
+      "name": "Green Bay Packers at New York Jets",
+      "shortName": "GB @ NYJ",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "New York Jets",
+          "abbr": "NYJ",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png",
+          "color": "115740",
+          "alternateColor": "ffffff"
+        },
+        {
+          "name": "Green Bay Packers",
+          "abbr": "GB",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png",
+          "color": "204e32",
+          "alternateColor": "ffb612"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "MetLife Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872935",
+      "name": "Cleveland Browns at Tampa Bay Buccaneers",
+      "shortName": "CLE @ TB",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Tampa Bay Buccaneers",
+          "abbr": "TB",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tb.png",
+          "color": "bd1c36",
+          "alternateColor": "3e3a35"
+        },
+        {
+          "name": "Cleveland Browns",
+          "abbr": "CLE",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
+          "color": "472a08",
+          "alternateColor": "ff3c00"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "Raymond James Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872939",
+      "name": "Philadelphia Eagles at Tennessee Titans",
+      "shortName": "PHI @ TEN",
+      "date": "2026-09-20T17:00Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 1:00 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Tennessee Titans",
+          "abbr": "TEN",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png",
+          "color": "4495d2",
+          "alternateColor": "001532"
+        },
+        {
+          "name": "Philadelphia Eagles",
+          "abbr": "PHI",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png",
+          "color": "06424d",
+          "alternateColor": "000000"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "Nissan Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872940",
+      "name": "Jacksonville Jaguars at Denver Broncos",
+      "shortName": "JAX @ DEN",
+      "date": "2026-09-20T20:05Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 4:05 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Denver Broncos",
+          "abbr": "DEN",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png",
+          "color": "0a2343",
+          "alternateColor": "fc4c02"
+        },
+        {
+          "name": "Jacksonville Jaguars",
+          "abbr": "JAX",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/jax.png",
+          "color": "007487",
+          "alternateColor": "d7a22a"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "Empower Field at Mile High",
+      "plays": []
+    },
+    {
+      "id": "401872941",
+      "name": "Las Vegas Raiders at Los Angeles Chargers",
+      "shortName": "LV @ LAC",
+      "date": "2026-09-20T20:05Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 4:05 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Los Angeles Chargers",
+          "abbr": "LAC",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lac.png",
+          "color": "0080c6",
+          "alternateColor": "ffc20e"
+        },
+        {
+          "name": "Las Vegas Raiders",
+          "abbr": "LV",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png",
+          "color": "000000",
+          "alternateColor": "a5acaf"
+        }
+      ],
+      "broadcasts": [
+        "CBS"
+      ],
+      "watchUrl": "",
+      "venue": "SoFi Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872943",
+      "name": "Seattle Seahawks at Arizona Cardinals",
+      "shortName": "SEA @ ARI",
+      "date": "2026-09-20T20:25Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 4:25 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Arizona Cardinals",
+          "abbr": "ARI",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ari.png",
+          "color": "a40227",
+          "alternateColor": "ffffff"
+        },
+        {
+          "name": "Seattle Seahawks",
+          "abbr": "SEA",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png",
+          "color": "002a5c",
+          "alternateColor": "69be28"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "State Farm Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872944",
+      "name": "Washington Commanders at Dallas Cowboys",
+      "shortName": "WSH @ DAL",
+      "date": "2026-09-20T20:25Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 4:25 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Dallas Cowboys",
+          "abbr": "DAL",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png",
+          "color": "002a5c",
+          "alternateColor": "b0b7bc"
+        },
+        {
+          "name": "Washington Commanders",
+          "abbr": "WSH",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png",
+          "color": "5a1414",
+          "alternateColor": "ffb612"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "AT&T Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872942",
+      "name": "Miami Dolphins at San Francisco 49ers",
+      "shortName": "MIA @ SF",
+      "date": "2026-09-20T20:25Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 4:25 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "San Francisco 49ers",
+          "abbr": "SF",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
+          "color": "aa0000",
+          "alternateColor": "b3995d"
+        },
+        {
+          "name": "Miami Dolphins",
+          "abbr": "MIA",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/mia.png",
+          "color": "008e97",
+          "alternateColor": "fc4c02"
+        }
+      ],
+      "broadcasts": [
+        "FOX"
+      ],
+      "watchUrl": "",
+      "venue": "Levi's Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872945",
+      "name": "Indianapolis Colts at Kansas City Chiefs",
+      "shortName": "IND @ KC",
+      "date": "2026-09-21T00:20Z",
+      "status": "Scheduled",
+      "detail": "9/20 - 8:20 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Kansas City Chiefs",
+          "abbr": "KC",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png",
+          "color": "e31837",
+          "alternateColor": "ffb612"
+        },
+        {
+          "name": "Indianapolis Colts",
+          "abbr": "IND",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png",
+          "color": "003b75",
+          "alternateColor": "ffffff"
+        }
+      ],
+      "broadcasts": [
+        "NBC"
+      ],
+      "watchUrl": "",
+      "venue": "Arrowhead Stadium",
+      "plays": []
+    },
+    {
+      "id": "401872947",
+      "name": "New York Giants at Los Angeles Rams",
+      "shortName": "NYG @ LAR",
+      "date": "2026-09-22T00:15Z",
+      "status": "Scheduled",
+      "detail": "9/21 - 8:15 PM EDT",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Los Angeles Rams",
+          "abbr": "LAR",
+          "score": "0",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lar.png",
+          "color": "003594",
+          "alternateColor": "ffd100"
+        },
+        {
+          "name": "New York Giants",
+          "abbr": "NYG",
+          "score": "0",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyg.png",
+          "color": "003c7f",
+          "alternateColor": "c9243f"
+        }
+      ],
+      "broadcasts": [
+        "ESPN",
+        "ABC"
+      ],
+      "watchUrl": "",
+      "venue": "SoFi Stadium",
+      "plays": []
+    }
+  ],
+  "error": ""
+}

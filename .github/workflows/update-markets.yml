@@ -1,55 +1,10 @@
-name: Update Market Data
+name: Update Market Data (V5 Legacy - Retired)
 
 on:
-  schedule:
-    - cron: '*/10 * * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - 'scripts/update_markets.py'
-      - '.github/workflows/update-markets.yml'
-
-permissions:
-  contents: write
-
-concurrency:
-  group: update-market-data
-  cancel-in-progress: true
 
 jobs:
-  update-markets:
+  retired:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout latest main
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-
-      - name: Update market data
-        run: python scripts/update_markets.py
-
-      - name: Commit market data
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add markets.json
-          if git diff --cached --quiet; then
-            echo "Market data is already current."
-            exit 0
-          fi
-          git commit -m "Auto-update market data"
-          for attempt in 1 2 3; do
-            if git push origin main; then
-              exit 0
-            fi
-            git fetch origin main
-            if ! git rebase origin/main; then
-              echo "Market update conflicts with a concurrent commit; refusing to resolve silently."
-              git rebase --abort || true
-              exit 1
-            fi
-            if [ "$attempt" -lt 3 ]; then sleep 3; fi
-          done
-          exit 1
+      - run: echo "Legacy market updates are retired. V6 publishes markets.json as part of the V6 production build."

@@ -1,1 +1,141 @@
-{"updatedAt":"2026-09-16T13:44:00.354964+00:00","marketClosed":false,"source":"Yahoo Finance chart endpoint","markets":[{"symbol":"^GSPC","price":7598.31,"previousClose":7585.73,"changePct":0.16583769788801916,"marketState":"UNKNOWN","currency":"USD","updated":1789566239,"name":"S&P 500","kind":"index"},{"symbol":"^DJI","price":51968.51,"previousClose":52093.11,"changePct":-0.23918710171076085,"marketState":"UNKNOWN","currency":"USD","updated":1789566238,"name":"DOW","kind":"index"},{"symbol":"^IXIC","price":26101.691,"previousClose":25981.57,"changePct":0.4623315681076978,"marketState":"UNKNOWN","currency":"USD","updated":1789566233,"name":"NASDAQ","kind":"index"},{"symbol":"^VIX","price":16.74,"previousClose":17.2,"changePct":-2.674418604651168,"marketState":"UNKNOWN","currency":"USD","updated":1789565101,"name":"VIX","kind":"index"},{"symbol":"CL=F","price":103.81,"previousClose":105.83,"changePct":-1.9087215345365172,"marketState":"UNKNOWN","currency":"USD","updated":1789565630,"name":"WTI OIL","kind":"commodity"},{"symbol":"GC=F","price":4392.5,"previousClose":4332.8,"changePct":1.377861890694235,"marketState":"UNKNOWN","currency":"USD","updated":1789565638,"name":"GOLD","kind":"commodity"},{"symbol":"^TNX","price":4.977,"previousClose":4.996,"changePct":-0.3803042433947183,"marketState":"UNKNOWN","currency":"USD","updated":1789565334,"name":"10Y","kind":"index"}],"opec":{"name":"OPEC","status":"WATCH"}}
+{
+  "generatedAt": "2026-09-16T15:16:18.509346Z",
+  "markets": [
+    {
+      "symbol": "^GSPC",
+      "label": "S&P 500",
+      "price": 7616.81,
+      "previousClose": 7636.36,
+      "changePct": -0.25601202667238415,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^DJI",
+      "label": "DOW",
+      "price": 52086.63,
+      "previousClose": 52380.66,
+      "changePct": -0.5613331332595008,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^IXIC",
+      "label": "NASDAQ",
+      "price": 26207.4,
+      "previousClose": 26253.34,
+      "changePct": -0.17497964068572577,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^RUT",
+      "label": "RUSSELL 2000",
+      "price": 2881.38,
+      "previousClose": 2921.24,
+      "changePct": -1.3644103189056556,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^VIX",
+      "label": "VIX",
+      "price": 16.8,
+      "previousClose": 17.84,
+      "changePct": -5.829596412556049,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "CL=F",
+      "label": "WTI OIL",
+      "price": 102.12,
+      "previousClose": 100.05,
+      "changePct": 2.068965517241387,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "BZ=F",
+      "label": "BRENT",
+      "price": 105.36,
+      "previousClose": 104.61,
+      "changePct": 0.7169486664754804,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "NG=F",
+      "label": "NAT GAS",
+      "price": 2.91,
+      "previousClose": 2.83,
+      "changePct": 2.896503002472619,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "GC=F",
+      "label": "GOLD",
+      "price": 4394.0,
+      "previousClose": 4408.9,
+      "changePct": -0.33795277733674245,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "SI=F",
+      "label": "SILVER",
+      "price": 65.26,
+      "previousClose": 64.55,
+      "changePct": 1.093658022740656,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "HG=F",
+      "label": "COPPER",
+      "price": 6.51,
+      "previousClose": 6.47,
+      "changePct": 0.564185794883688,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "DX-Y.NYB",
+      "label": "U.S. DOLLAR",
+      "price": 99.67,
+      "previousClose": 99.12,
+      "changePct": 0.5569007263922442,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "^TNX",
+      "label": "10Y",
+      "price": 4.96,
+      "previousClose": 4.94,
+      "changePct": 0.38430420711974367,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "BTC-USD",
+      "label": "BITCOIN",
+      "price": 75654.62,
+      "previousClose": 77270.47,
+      "changePct": -2.091161086505629,
+      "currency": "USD",
+      "marketState": ""
+    },
+    {
+      "symbol": "ETH-USD",
+      "label": "ETHEREUM",
+      "price": 2391.25,
+      "previousClose": 2525.94,
+      "changePct": -5.332444741662181,
+      "currency": "USD",
+      "marketState": ""
+    }
+  ],
+  "error": ""
+}
