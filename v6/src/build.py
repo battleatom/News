@@ -9,7 +9,8 @@ from collector import collect_all
 from model import Story
 from pipeline import process
 from registry import load_registry
-from specialized import collect_nfl, collect_boxoffice, collect_markets
+from nfl import collect_nfl
+from specialized import collect_boxoffice, collect_markets
 
 ROOT=Path(__file__).resolve().parents[1];WEB=ROOT/"web";DIST=ROOT/"dist"
 
