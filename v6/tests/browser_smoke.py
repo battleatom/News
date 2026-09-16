@@ -13,6 +13,7 @@ def main():
         assert page.locator(".legend").count()==1;assert page.locator(".feedback-controls").count()>0;assert page.locator(".bookmark-btn").count()>0;assert page.get_by_text("WHY IT MATTERS").count()>0
         bm=page.locator(".bookmark-btn").first;bm.click();page.locator("#tabs .tab").filter(has_text="Bookmarks").click();page.wait_for_timeout(150);assert page.locator(".story-card").count()>0
         page.locator("#tabs .tab").filter(has_text="Technology").click();page.wait_for_selector(".story-card");assert page.locator(".story-card").count()>0
+        page.reload(wait_until="domcontentloaded");page.wait_for_selector("#tabs .tab");assert page.locator('#tabs .tab[aria-selected="true"]').filter(has_text="Technology").count()==1;assert page.locator(".story-card").count()>0
         page.locator("#tabs .tab").filter(has_text="NFL").click();page.wait_for_timeout(150);assert page.locator(".nfl-grid").count()==1
         if args.require_boxoffice:
             page.locator("#tabs .tab").filter(has_text="Box Office").click();page.wait_for_timeout(300);assert page.get_by_role("heading",name="Box Office").count()>0;assert page.locator(".movie-card").count()>0;assert page.get_by_text("Local showtimes").count()>0
