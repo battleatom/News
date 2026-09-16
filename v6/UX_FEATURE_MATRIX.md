@@ -42,7 +42,8 @@ V6 uses V5.3.1 as a behavioral specification only. No V2/V3/V4/V5 runtime assets
 - [x] NFL team logos, scores, kickoff, broadcaster/streaming links
 - [x] NFL live center and live play feed when ESPN provides plays
 - [x] Box Office Now Playing / Coming Soon ordering
-- [x] Box Office cyan/blue/green status rails
+- [x] Box Office cyan upcoming / blue new / green playing / red leaving-soon states
+- [x] Leaving-soon calculation from confirmed local showtime horizon, not movie age
 - [x] Movie description/poster when available
 - [x] Local theater showtimes when the build source provides them
 - [x] Fallback local showtime search when theater data is unavailable

@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];DIST=ROOT/"dist"
 REQUIRED_FEATURE_MARKERS={
  "sticky_shell":"id=\"app-shell\"","markets":"id=\"markets\"","tabs":"id=\"tabs\"","location":"id=\"location-button\"","auto_refresh":"id=\"refresh-status\"",
- "bookmarks":"data-bookmark","feedback":"data-feedback","why_matters":"WHY IT MATTERS","related":"Coverage ·","nfl":"nfl-live-center","boxoffice":"Local showtimes","legislation":"OFFICIAL SOURCE","underreported":"Underreported"
+ "bookmarks":"data-bookmark","feedback":"data-feedback","why_matters":"WHY IT MATTERS","related":"Coverage ·","nfl":"nfl-live-center","boxoffice":"Local showtimes","boxoffice_leaving":"LEAVING SOON","legislation":"OFFICIAL SOURCE","underreported":"Underreported"
 }
 def fail(errors:list[str])->None:
     for error in errors:print("ERROR:",error)
