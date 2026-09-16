@@ -2,35 +2,97 @@
   "sources": [
     {"id":"top-cbs","name":"CBS News","kind":"google_news","category":"top","query":"site:cbsnews.com breaking news United States world"},
     {"id":"top-nbc","name":"NBC News","kind":"google_news","category":"top","query":"site:nbcnews.com breaking news United States world"},
-    {"id":"world-guardian","name":"The Guardian","kind":"google_news","category":"world","query":"site:theguardian.com world international"},
-    {"id":"world-aljazeera","name":"Al Jazeera","kind":"google_news","category":"world","query":"site:aljazeera.com world international"},
+    {"id":"top-bbc","name":"BBC","kind":"google_news","category":"top","query":"site:bbc.com/news breaking news world United States"},
+    {"id":"top-abc","name":"ABC News","kind":"google_news","category":"top","query":"site:abcnews.go.com breaking news United States world"},
+    {"id":"top-cnn","name":"CNN","kind":"google_news","category":"top","query":"site:cnn.com breaking news United States world"},
+    {"id":"top-fox","name":"Fox News","kind":"google_news","category":"top","query":"site:foxnews.com breaking news United States world"},
+    {"id":"top-usatoday","name":"USA Today","kind":"google_news","category":"top","query":"site:usatoday.com breaking news United States world"},
+
+    {"id":"world-guardian","name":"The Guardian","kind":"google_news","category":"world","query":"site:theguardian.com/world international politics conflict election economy"},
+    {"id":"world-aljazeera","name":"Al Jazeera","kind":"google_news","category":"world","query":"site:aljazeera.com/news international world politics conflict election economy"},
+    {"id":"world-npr","name":"NPR","kind":"google_news","category":"world","query":"site:npr.org world international politics conflict"},
+    {"id":"world-france24","name":"France 24","kind":"google_news","category":"world","query":"site:france24.com/en international world politics conflict election"},
+    {"id":"world-dw","name":"Deutsche Welle","kind":"google_news","category":"world","query":"site:dw.com/en world international politics conflict election"},
+    {"id":"world-cbc","name":"CBC News","kind":"google_news","category":"world","query":"site:cbc.ca/news/world international world politics conflict election"},
+    {"id":"world-nhk","name":"NHK World","kind":"google_news","category":"world","query":"site:nhk.or.jp/nhkworld world international Asia politics economy"},
+    {"id":"world-hindu","name":"The Hindu","kind":"google_news","category":"world","query":"site:thehindu.com/news/international world Asia politics conflict"},
+    {"id":"world-scmp","name":"South China Morning Post","kind":"google_news","category":"world","query":"site:scmp.com/news/world international Asia politics economy"},
+    {"id":"world-toi","name":"The Times of India","kind":"google_news","category":"world","query":"site:timesofindia.indiatimes.com/world international politics conflict"},
+    {"id":"world-kyiv","name":"The Kyiv Independent","kind":"google_news","category":"world","query":"site:kyivindependent.com Ukraine Europe war diplomacy"},
+    {"id":"world-haaretz","name":"Haaretz","kind":"google_news","category":"world","query":"site:haaretz.com Israel Middle East politics conflict"},
+
     {"id":"us-cbs","name":"CBS News","kind":"google_news","category":"us","query":"site:cbsnews.com United States national news"},
     {"id":"us-nbc","name":"NBC News","kind":"google_news","category":"us","query":"site:nbcnews.com United States national news"},
+    {"id":"us-usatoday","name":"USA Today","kind":"google_news","category":"us","query":"site:usatoday.com United States national politics news"},
+    {"id":"us-abc","name":"ABC News","kind":"google_news","category":"us","query":"site:abcnews.go.com United States national politics news"},
+    {"id":"us-cnn","name":"CNN","kind":"google_news","category":"us","query":"site:cnn.com United States national politics news"},
+    {"id":"us-fox","name":"Fox News","kind":"google_news","category":"us","query":"site:foxnews.com United States national politics news"},
+
     {"id":"presidential-npr","name":"NPR","kind":"google_news","category":"presidential","query":"site:npr.org White House president administration"},
+    {"id":"presidential-cbs","name":"CBS News","kind":"google_news","category":"presidential","query":"site:cbsnews.com White House president administration presidential action"},
+    {"id":"presidential-nbc","name":"NBC News","kind":"google_news","category":"presidential","query":"site:nbcnews.com White House president administration presidential action"},
+    {"id":"presidential-abc","name":"ABC News","kind":"google_news","category":"presidential","query":"site:abcnews.go.com White House president administration presidential action"},
+
     {"id":"federal-scotusblog","name":"SCOTUSblog","kind":"google_news","category":"federal","query":"site:scotusblog.com Supreme Court federal law"},
+    {"id":"federal-npr","name":"NPR","kind":"google_news","category":"federal","query":"site:npr.org Congress Supreme Court DOJ FBI federal agency"},
+    {"id":"federal-cbs","name":"CBS News","kind":"google_news","category":"federal","query":"site:cbsnews.com Congress Supreme Court DOJ FBI federal agency"},
+    {"id":"federal-nbc","name":"NBC News","kind":"google_news","category":"federal","query":"site:nbcnews.com Congress Supreme Court DOJ FBI federal agency"},
+
     {"id":"legislation-govinfo","name":"GovInfo","kind":"google_news","category":"legislation","query":"site:govinfo.gov bill law public law regulation"},
+
     {"id":"nm-kob","name":"KOB 4","kind":"google_news","category":"nm","query":"site:kob.com New Mexico news"},
     {"id":"nm-krqe","name":"KRQE","kind":"google_news","category":"nm","query":"site:krqe.com New Mexico news"},
     {"id":"nm-santafenewmexican","name":"Santa Fe New Mexican","kind":"google_news","category":"nm","query":"site:santafenewmexican.com New Mexico news"},
+    {"id":"nm-abqjournal","name":"Albuquerque Journal","kind":"google_news","category":"nm","query":"site:abqjournal.com New Mexico news government health education environment"},
+    {"id":"nm-koat","name":"KOAT","kind":"google_news","category":"nm","query":"site:koat.com New Mexico news"},
+
     {"id":"local-daily-times","name":"Farmington Daily Times","kind":"google_news","category":"local","query":"site:daily-times.com Farmington San Juan County New Mexico","state":"NM","market":"Farmington"},
     {"id":"local-kobf","name":"KOBF","kind":"google_news","category":"local","query":"Farmington NM KOBF San Juan County","state":"NM","market":"Farmington"},
+
     {"id":"region-azcentral","name":"Arizona Republic","kind":"google_news","category":"region","query":"site:azcentral.com Arizona regional news","region":"southwest"},
     {"id":"region-denverpost","name":"Denver Post","kind":"google_news","category":"region","query":"site:denverpost.com Colorado regional news","region":"southwest"},
     {"id":"region-sltrib","name":"Salt Lake Tribune","kind":"google_news","category":"region","query":"site:sltrib.com Utah regional news","region":"southwest"},
+    {"id":"region-coloradosun","name":"Colorado Sun","kind":"google_news","category":"region","query":"site:coloradosun.com Colorado news","region":"southwest"},
+    {"id":"region-ksl","name":"KSL","kind":"google_news","category":"region","query":"site:ksl.com Utah news","region":"southwest"},
+
     {"id":"tech-wired","name":"Wired","kind":"google_news","category":"technology","query":"site:wired.com technology AI cybersecurity"},
     {"id":"tech-toms","name":"Tom's Hardware","kind":"google_news","category":"technology","query":"site:tomshardware.com chips GPU CPU technology"},
     {"id":"tech-cisa","name":"CISA","kind":"google_news","category":"technology","query":"site:cisa.gov cybersecurity advisory vulnerability"},
+    {"id":"tech-engadget","name":"Engadget","kind":"google_news","category":"technology","query":"site:engadget.com technology AI devices software computing"},
+    {"id":"tech-zdnet","name":"ZDNET","kind":"google_news","category":"technology","query":"site:zdnet.com AI cybersecurity software hardware technology"},
+    {"id":"tech-register","name":"The Register","kind":"google_news","category":"technology","query":"site:theregister.com AI cybersecurity cloud chips software"},
+
     {"id":"gaming-polygon","name":"Polygon","kind":"google_news","category":"gaming","query":"site:polygon.com gaming Nintendo Xbox PlayStation PC"},
     {"id":"gaming-nintendolife","name":"Nintendo Life","kind":"google_news","category":"gaming","query":"site:nintendolife.com Nintendo gaming"},
     {"id":"gaming-eurogamer","name":"Eurogamer","kind":"google_news","category":"gaming","query":"site:eurogamer.net gaming PlayStation Xbox Nintendo PC"},
+    {"id":"gaming-vgc","name":"VGC","kind":"google_news","category":"gaming","query":"site:videogameschronicle.com gaming PlayStation Xbox Nintendo PC"},
+    {"id":"gaming-gamesindustry","name":"GamesIndustry.biz","kind":"google_news","category":"gaming","query":"site:gamesindustry.biz games industry studios publishers business"},
+    {"id":"gaming-rps","name":"Rock Paper Shotgun","kind":"google_news","category":"gaming","query":"site:rockpapershotgun.com PC gaming Steam games"},
+
     {"id":"mil-breakingdefense","name":"Breaking Defense","kind":"google_news","category":"military","query":"site:breakingdefense.com Pentagon defense military"},
     {"id":"mil-dod","name":"U.S. Department of Defense","kind":"google_news","category":"military","query":"site:defense.gov military Pentagon official"},
+    {"id":"mil-reuters","name":"Reuters","kind":"google_news","category":"military","query":"site:reuters.com US military Pentagon defense"},
+    {"id":"mil-usni","name":"USNI News","kind":"google_news","category":"military","query":"site:news.usni.org Navy Marines Pentagon military"},
+    {"id":"mil-airspace","name":"Air & Space Forces Magazine","kind":"google_news","category":"military","query":"site:airandspaceforces.com Air Force Space Force defense military"},
+
     {"id":"ent-hollywoodreporter","name":"The Hollywood Reporter","kind":"google_news","category":"entertainment","query":"site:hollywoodreporter.com film television entertainment"},
     {"id":"ent-rollingstone","name":"Rolling Stone","kind":"google_news","category":"entertainment","query":"site:rollingstone.com music film television entertainment"},
+    {"id":"ent-people","name":"People","kind":"google_news","category":"entertainment","query":"site:people.com celebrity actor actress music television film entertainment"},
+    {"id":"ent-indiewire","name":"IndieWire","kind":"google_news","category":"entertainment","query":"site:indiewire.com film television streaming entertainment"},
+
     {"id":"under-stateline","name":"Stateline","kind":"google_news","category":"underreported","query":"site:stateline.org states policy investigation"},
     {"id":"under-insideclimate","name":"Inside Climate News","kind":"google_news","category":"underreported","query":"site:insideclimatenews.org investigation climate environment"},
     {"id":"under-texastribune","name":"Texas Tribune","kind":"google_news","category":"underreported","query":"site:texastribune.org investigation public policy"},
+    {"id":"under-reveal","name":"Reveal","kind":"google_news","category":"underreported","query":"site:revealnews.org investigation government justice environment health"},
+
     {"id":"nfl-espn","name":"ESPN","kind":"google_news","category":"nfl","query":"site:espn.com/nfl NFL injuries trades roster scores"},
-    {"id":"nfl-athletic","name":"The Athletic","kind":"google_news","category":"nfl","query":"site:nytimes.com/athletic NFL injuries trades roster"}
+    {"id":"nfl-athletic","name":"The Athletic","kind":"google_news","category":"nfl","query":"site:nytimes.com/athletic/nfl NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-official","name":"NFL.com","kind":"google_news","category":"nfl","query":"site:nfl.com/news NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-cbs","name":"CBS Sports","kind":"google_news","category":"nfl","query":"site:cbssports.com/nfl NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-nbc","name":"NBC Sports","kind":"google_news","category":"nfl","query":"site:nbcsports.com/nfl NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-fox","name":"Fox Sports","kind":"google_news","category":"nfl","query":"site:foxsports.com/nfl NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-yahoo","name":"Yahoo Sports","kind":"google_news","category":"nfl","query":"site:sports.yahoo.com/nfl NFL injury trade roster game coach quarterback"},
+    {"id":"nfl-pft","name":"ProFootballTalk","kind":"google_news","category":"nfl","query":"site:nbcsports.com/nfl/profootballtalk NFL injury trade roster coach"},
+    {"id":"nfl-usatoday","name":"USA Today","kind":"google_news","category":"nfl","query":"site:usatoday.com/sports/nfl NFL injury trade roster game coach"}
   ]
 }
