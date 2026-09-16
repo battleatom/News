@@ -49,6 +49,49 @@ def _similarity(left: str, right: str) -> float:
     return difflib.SequenceMatcher(None, a, b).ratio()
 
 
+def _normalize_poster_url(url: str) -> str:
+    url = html.unescape((url or "").strip())
+    if not url:
+        return ""
+    try:
+        parsed = urllib.parse.urlsplit(url)
+    except Exception:
+        return url
+    if parsed.netloc.lower() == "media.themoviedb.org":
+        match = re.search(r"/t/p/[^/]+/(.+)$", parsed.path)
+        if match:
+            return f"{TMDB_IMAGE_BASE}/{match.group(1).lstrip('/')}"
+    return url
+
+
+def _poster_reachable(url: str) -> bool:
+    url = _normalize_poster_url(url)
+    if not url:
+        return False
+    try:
+        request = urllib.request.Request(url, headers={
+            "User-Agent": UA,
+            "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+            "Range": "bytes=0-2047",
+        })
+        with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
+            content_type = (response.headers.get("Content-Type") or "").lower()
+            sample = response.read(64)
+        if content_type.startswith("image/"):
+            return True
+        return sample.startswith((b"\xff\xd8\xff", b"\x89PNG\r\n\x1a\n", b"GIF87a", b"GIF89a", b"RIFF")) or b"<svg" in sample.lower()
+    except Exception:
+        return False
+
+
+def _valid_result(result: dict) -> bool:
+    poster = _normalize_poster_url(str(result.get("poster") or ""))
+    if not poster or not _poster_reachable(poster):
+        return False
+    result["poster"] = poster
+    return True
+
+
 def _is_schedule_label(title: str) -> bool:
     value = _clean(title).lower()
     if not value:
@@ -162,7 +205,7 @@ def _tmdb_web(title: str, release_date: str = "") -> dict:
         score = _similarity(title, re.sub(r"\s*\(\d{4}\)\s*$", "", page_title))
         if target_year and target_year in page:
             score += 0.06
-        poster = _meta(page, "og:image") or _meta(page, "twitter:image")
+        poster = _normalize_poster_url(_meta(page, "og:image") or _meta(page, "twitter:image"))
         if poster:
             score += 0.03
         if score > best_score and poster:
@@ -228,15 +271,7 @@ def _wikipedia(title: str, release_date: str = "") -> dict:
         if result.get("poster"):
             return result
     try:
-        params = {
-            "action": "query",
-            "list": "search",
-            "srsearch": f'"{title}" film {year}',
-            "srlimit": "8",
-            "format": "json",
-            "utf8": "1",
-            "origin": "*",
-        }
+        params = {"action": "query", "list": "search", "srsearch": f'"{title}" film {year}', "srlimit": "8", "format": "json", "utf8": "1", "origin": "*"}
         payload = _json("https://en.wikipedia.org/w/api.php?" + urllib.parse.urlencode(params))
     except Exception:
         return {}
@@ -258,40 +293,51 @@ def _wikipedia(title: str, release_date: str = "") -> dict:
     return {}
 
 
+def _find_artwork(title: str, release_date: str, movie_url: str) -> dict:
+    variants = _title_variants(title)
+    for candidate in variants:
+        result = _tmdb(candidate, release_date)
+        if _valid_result(result):
+            return result
+    for candidate in variants:
+        result = _tmdb_web(candidate, release_date)
+        if _valid_result(result):
+            return result
+    result = _showtimes_artwork(movie_url)
+    if _valid_result(result):
+        return result
+    for candidate in variants:
+        result = _wikipedia(candidate, release_date)
+        if _valid_result(result):
+            return result
+    return {}
+
+
 def ensure_movie_artwork(movies: list[dict]) -> dict:
     movies[:] = [movie for movie in movies if not _is_schedule_label(str(movie.get("title") or ""))]
     total = len(movies)
     filled = 0
+    repaired = 0
     source_fills: dict[str, int] = {}
     for movie in movies:
-        if movie.get("poster"):
+        original = _normalize_poster_url(str(movie.get("poster") or ""))
+        if original and _poster_reachable(original):
+            movie["poster"] = original
+            movie["posterReachable"] = True
             movie.setdefault("artworkSource", movie.get("metadataSource") or "existing")
             continue
+        if original:
+            repaired += 1
+        movie["poster"] = ""
+        movie["posterReachable"] = False
         title = str(movie.get("title") or "").strip()
         if not title:
             continue
-        release_date = str(movie.get("releaseDate") or "")
-        variants = _title_variants(title)
-        result = {}
-        for candidate in variants:
-            result = _tmdb(candidate, release_date)
-            if result.get("poster"):
-                break
-        if not result.get("poster"):
-            for candidate in variants:
-                result = _tmdb_web(candidate, release_date)
-                if result.get("poster"):
-                    break
-        if not result.get("poster"):
-            result = _showtimes_artwork(str(movie.get("movieUrl") or ""))
-        if not result.get("poster"):
-            for candidate in variants:
-                result = _wikipedia(candidate, release_date)
-                if result.get("poster"):
-                    break
-        if not result.get("poster"):
+        result = _find_artwork(title, str(movie.get("releaseDate") or ""), str(movie.get("movieUrl") or ""))
+        if not result:
             continue
         movie["poster"] = result["poster"]
+        movie["posterReachable"] = True
         if not movie.get("overview") and result.get("overview"):
             movie["overview"] = result["overview"]
         if not movie.get("tmdbId") and result.get("tmdbId"):
@@ -303,13 +349,15 @@ def ensure_movie_artwork(movies: list[dict]) -> dict:
         movie["artworkSource"] = result.get("artworkSource") or result.get("metadataSource") or "fallback"
         filled += 1
         source_fills[movie["artworkSource"]] = source_fills.get(movie["artworkSource"], 0) + 1
-    poster_count = sum(bool(movie.get("poster")) for movie in movies)
+    reachable_count = sum(bool(movie.get("poster")) and movie.get("posterReachable") is True for movie in movies)
     return {
         "movieCount": total,
-        "posterCount": poster_count,
-        "missingPosterCount": max(0, total - poster_count),
-        "posterCoverage": round((poster_count / total), 4) if total else 0.0,
+        "posterCount": reachable_count,
+        "reachablePosterCount": reachable_count,
+        "missingPosterCount": max(0, total - reachable_count),
+        "posterCoverage": round((reachable_count / total), 4) if total else 0.0,
         "fallbackFilled": filled,
+        "repairedBrokenPosters": repaired,
         "fallbackFilledBySource": source_fills,
         "tmdbConfigured": bool(TMDB_API_KEY),
     }
