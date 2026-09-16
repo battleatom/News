@@ -10,7 +10,7 @@ def main():
             before=page.locator(".story-card").count();button.click();assert page.locator(".story-card").count()>=before
         page.locator("#tabs .tab").filter(has_text="Technology").click();page.wait_for_selector(".story-card");assert page.locator(".story-card").count()>0
         if args.require_boxoffice:
-            page.locator("#tabs .tab").filter(has_text="Box Office").click();page.wait_for_timeout(300);assert page.locator(".movie-card").count()>0
+            page.locator("#tabs .tab").filter(has_text="Box Office").click();page.wait_for_timeout(300);assert page.get_by_role("heading",name="Box Office").count()>0;assert page.locator(".special-card").count()>0
         assert not errors,errors;browser.close()
     print("V6 browser smoke passed.")
 if __name__=="__main__": main()
