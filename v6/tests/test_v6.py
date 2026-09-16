@@ -9,7 +9,7 @@ from model import Story
 from pipeline import normalize_url, near_duplicate, process
 from diversity import same_event
 from registry import load_registry
-from movie_artwork import _is_schedule_label, _title_variants
+from movie_artwork import _is_schedule_label, _title_variants, _normalize_poster_url
 
 class V6PipelineTests(unittest.TestCase):
     def setUp(self): self.registry=load_registry()
@@ -50,6 +50,12 @@ class V6PipelineTests(unittest.TestCase):
         ])
         out=process([zero,supported],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));by={x.id:x for x in out}
         self.assertEqual(by["z"].coverage_gap_score,96);self.assertEqual(by["z"].supporting_source_count,0);self.assertEqual(by["s"].supporting_source_count,2);self.assertGreater(by["s"].corroboration_score,by["z"].corroboration_score);self.assertGreater(by["s"].underreported_priority,by["z"].underreported_priority)
+    def test_underreported_rejects_generic_topic_page_title(self):
+        row=Story("weak","underreported","Domestic Violence","https://themarshallproject.org/domestic-violence","The Marshall Project","2026-09-14T08:00:00Z","Domestic Violence themarshallproject.org")
+        self.assertEqual(process([row],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
+    def test_underreported_keeps_short_title_when_summary_is_substantive(self):
+        row=Story("short","underreported","Water Crisis","https://example.com/water","Investigative Outlet","2026-09-15T12:00:00Z","Residents in three rural communities lost access to safe drinking water after testing found contamination above federal limits, prompting emergency deliveries and a state investigation.")
+        out=process([row],self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual([x.id for x in out],["short"])
     def test_presidential_rejects_foreign_and_former_office_personal_stories(self):
         rows=[Story("fr","presidential","French candidates gain ground in 2027 presidential race","https://example.com/fr","Reuters","2026-09-15T12:00:00Z","Polling in France shows movement in the presidential field."),Story("former","presidential","Deputies respond to trespasser at ex-Vice President's home","https://example.com/former","AP","2026-09-15T12:00:00Z","Deputies responded to a residential trespassing report.")]
         self.assertEqual(process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
@@ -77,5 +83,8 @@ class V6PipelineTests(unittest.TestCase):
         self.assertIn("SB19 Wakas at Simula",variants)
         self.assertIn("SB19 Wakas at Simula: The Trilogy Concert Finale",variants)
         self.assertIn("Adore Him",_title_variants("Adore Him: He is Here"))
+    def test_tmdb_media_url_is_normalized_to_image_host(self):
+        url=_normalize_poster_url("https://media.themoviedb.org/t/p/w600_and_h900_bestv2/abc123.jpg")
+        self.assertEqual(url,"https://image.tmdb.org/t/p/w500/abc123.jpg")
 
 if __name__=="__main__": unittest.main()
