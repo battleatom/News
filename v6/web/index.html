@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Underreported V6 clean-architecture test build.">
+  <title>Underreported V6</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#feed">Skip to stories</a>
+  <div id="app-shell" class="app-shell">
+    <header class="masthead"><div><h1>UNDERREPORTED</h1><p>V6 clean test build</p></div><div id="health" class="health" aria-live="polite">Loading…</div></header>
+    <div class="utility-row"><span id="location-status">Location: resolving…</span><span id="update-status">Feed: loading…</span></div>
+    <nav id="tabs" class="tabs" aria-label="News categories"></nav>
+  </div>
+  <main class="page"><section id="feed" class="feed" aria-live="polite"></section></main>
+  <template id="story-template">
+    <article class="story-card"><div class="story-card__body"><div class="story-meta"></div><h2><a class="story-link" target="_blank" rel="noopener noreferrer"></a></h2><p class="story-summary"></p><p class="story-why"><strong>WHY IT MATTERS</strong><span></span></p></div><div class="feedback-controls" role="group" aria-label="Article feedback"><button type="button" data-feedback="D" title="Duplicate">D</button><button type="button" data-feedback="NR" title="Not Relevant">NR</button><button type="button" data-feedback="NW" title="Not Wanted">NW</button></div></article>
+  </template>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

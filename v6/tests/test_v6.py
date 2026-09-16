@@ -1,0 +1,22 @@
+from __future__ import annotations
+import sys
+import unittest
+from datetime import datetime, timezone
+from pathlib import Path
+
+ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/"src"))
+from model import Story
+from pipeline import normalize_url, near_duplicate, process
+from registry import load_registry
+
+class V6PipelineTests(unittest.TestCase):
+    def setUp(self): self.registry=load_registry()
+    def test_registry_is_explicit_and_unique(self):
+        ids=[row["id"] for row in self.registry["sources"]];self.assertEqual(len(ids),len(set(ids)));self.assertIn("world",self.registry["categories"]);self.assertIn("boxoffice",self.registry["categories"])
+    def test_tracking_parameters_are_removed(self): self.assertEqual(normalize_url("https://example.com/a?utm_source=x&keep=1#frag"),"https://example.com/a?keep=1")
+    def test_semantic_duplicate_detection(self):
+        a=Story("a","world","Major storm closes schools across northern New Mexico","https://a.example/x","A","2026-09-15T12:00:00Z");b=Story("b","world","Major storm closes schools across northern New Mexico today","https://b.example/y","B","2026-09-15T12:01:00Z");self.assertTrue(near_duplicate(a,b))
+    def test_process_dedupes_and_scores(self):
+        rows=[Story("a","world","Cyberattack causes emergency outage across city","https://a.example/x?utm_source=test","A","2026-09-15T12:00:00Z","Officials reported an outage."),Story("b","world","Cyberattack causes emergency outage across city","https://a.example/x","B","2026-09-15T12:01:00Z","Duplicate.")];out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual(len(out),1);self.assertGreater(out[0].importance,0);self.assertTrue(any(term in out[0].why_matters.lower() for term in ("outage","emergency","attack")))
+
+if __name__=="__main__": unittest.main()

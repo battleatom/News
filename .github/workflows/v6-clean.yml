@@ -1,0 +1,65 @@
+name: V6 Clean Build
+
+on:
+  push:
+    branches: [v6]
+    paths:
+      - 'v6/**'
+      - '.github/workflows/v6-clean.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v6-clean-build
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout V6
+        uses: actions/checkout@v4
+        with:
+          ref: v6
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate standalone Python
+        run: python -m py_compile v6/src/*.py v6/tests/test_v6.py v6/tests/browser_smoke.py
+      - name: Unit tests
+        run: python -m unittest discover -s v6/tests -p 'test_*.py'
+      - name: Deterministic V6 build
+        run: python v6/src/build.py --fixture v6/tests/fixtures/stories.json
+      - name: Static architecture audit
+        run: python v6/src/audit.py
+      - name: Install browser test dependencies
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Browser smoke test
+        run: |
+          python -m http.server 8766 --bind 127.0.0.1 --directory v6/dist >/tmp/v6-http.log 2>&1 &
+          echo $! >/tmp/v6-http.pid
+          sleep 2
+          python v6/tests/browser_smoke.py
+      - name: Upload deterministic V6 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-fixture-build
+          path: v6/dist
+          if-no-files-found: error
+      - name: Independent live V6 collection
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python v6/src/build.py
+      - name: Audit live V6 build
+        run: python v6/src/audit.py
+      - name: Upload live V6 build
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-live-build
+          path: v6/dist
+          if-no-files-found: error
