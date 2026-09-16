@@ -34,6 +34,10 @@ jobs:
           for f in v6/web/*.js; do node --input-type=module --check < "$f"; done
       - name: Unit tests
         run: python -m unittest discover -s v6/tests -p 'test_*.py'
+      - name: Verify Alpha Vantage credential
+        env:
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+        run: python v6/src/markets.py --verify-alpha
       - name: Deterministic V6 build
         run: python v6/src/build.py --fixture v6/tests/fixtures/stories.json
       - name: Static architecture audit
@@ -58,6 +62,7 @@ jobs:
       - name: Independent live V6 collection
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         run: python v6/src/build.py
       - name: Audit live V6 build
         run: python v6/src/audit.py
