@@ -14,6 +14,16 @@ from model import Story
 UA = "Underreported-V6/1.0 (+https://battleatom.github.io/)"
 TIMEOUT = 15
 MAX_WORKERS = 10
+EVIDENCE_WORKERS = 6
+MAX_UNDERREPORTED_EVIDENCE = 40
+MAX_EVIDENCE_POOL = 24
+
+COMMON_TRUSTED = {
+    "reuters","associatedpress","apnews","npr","cbsnews","nbcnews","bbc","theguardian","aljazeera",
+    "propublica","kffhealthnews","themarshallproject","centerforpublicintegrity","stateline","insideclimatenews",
+    "texastribune","newyorktimes","washingtonpost","wallstreetjournal","usatoday","abcnews","cnn","foxnews",
+    "politico","axios","bloomberg","forbes","time","newsweek","pbsnewshour","latimes","chicagotribune",
+}
 
 def clean_text(value: str) -> str:
     value = html.unescape(value or "")
@@ -35,8 +45,8 @@ def parse_date(value: str) -> datetime:
         dt = dt.replace(tzinfo=timezone.utc)
     return dt.astimezone(timezone.utc)
 
-def google_news_url(query: str) -> str:
-    q = urllib.parse.quote(f"{query} when:7d")
+def google_news_url(query: str, days: int = 7) -> str:
+    q = urllib.parse.quote(f"{query} when:{days}d")
     return f"https://news.google.com/rss/search?q={q}&hl=en-US&gl=US&ceid=US:en"
 
 def request_xml(url: str) -> ET.Element:
@@ -96,6 +106,72 @@ def collect_one(source_cfg: dict) -> tuple[str, list[Story], str]:
     except Exception as exc:
         return source_cfg["id"], [], f"{type(exc).__name__}: {exc}"
 
+def _source_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", (value or "").lower())
+
+def _terms(value: str) -> set[str]:
+    stop={"the","and","for","with","from","into","after","before","about","this","that","says","said","new","news","latest","update","report","reports","world","united","states","will","are","was","were","has","have","had","not","but","its","their"}
+    return {w for w in re.findall(r"[a-z0-9]+", (value or "").lower()) if len(w)>=3 and w not in stop}
+
+def _trusted_keys(registry: dict) -> set[str]:
+    keys={_source_key(row.get("name", "")) for row in registry.get("sources", [])}
+    return {x for x in keys if x} | COMMON_TRUSTED
+
+def _collect_evidence_for_story(story: Story, trusted: set[str]) -> list[dict]:
+    query_words=[w for w in re.findall(r"[A-Za-z0-9]+", story.title) if len(w)>2][:14]
+    if len(query_words)<2:
+        return []
+    target=_terms(story.title)
+    primary_source=_source_key(story.source)
+    try:
+        root=request_xml(google_news_url(" ".join(query_words), 14))
+    except Exception:
+        return []
+    candidates=[]
+    now=datetime.now(timezone.utc)
+    for item in root.findall(".//item"):
+        title=title_from_item(item);url=item_link(item)
+        source=source_from_item(item, "")
+        if not title or not url or not source:
+            continue
+        skey=_source_key(source)
+        if not skey or skey==primary_source or skey not in trusted:
+            continue
+        words=_terms(title)
+        overlap=len(target & words)
+        if overlap<2:
+            continue
+        published=parse_date(item.findtext("pubDate") or "")
+        if published.timestamp()<=0 or published>now:
+            continue
+        age_hours=max(0.0,(now-published).total_seconds()/3600)
+        score=overlap*10+max(0.0,8.0-age_hours/12.0)
+        candidates.append((score,published,{"title":title,"url":url,"source":source,"published_at":published.isoformat().replace("+00:00","Z")}))
+    candidates.sort(key=lambda row:(row[0],row[1]),reverse=True)
+    out=[];seen_sources=set();seen_urls=set()
+    for _,_,row in candidates:
+        skey=_source_key(row["source"]);url=row["url"]
+        if skey in seen_sources or url in seen_urls:
+            continue
+        seen_sources.add(skey);seen_urls.add(url);out.append(row)
+        if len(out)>=MAX_EVIDENCE_POOL:
+            break
+    return out
+
+def enrich_underreported_evidence(stories: list[Story], registry: dict) -> None:
+    candidates=[s for s in stories if s.category=="underreported"][:MAX_UNDERREPORTED_EVIDENCE]
+    if not candidates:
+        return
+    trusted=_trusted_keys(registry)
+    with ThreadPoolExecutor(max_workers=min(EVIDENCE_WORKERS,len(candidates))) as executor:
+        futures={executor.submit(_collect_evidence_for_story,story,trusted):story for story in candidates}
+        for future in as_completed(futures):
+            story=futures[future]
+            try:
+                story.related=future.result()
+            except Exception:
+                story.related=[]
+
 def collect_all(registry: dict) -> tuple[list[Story], list[dict]]:
     stories: list[Story] = []
     errors: list[dict] = []
@@ -108,4 +184,5 @@ def collect_all(registry: dict) -> tuple[list[Story], list[dict]]:
             stories.extend(rows)
             if error:
                 errors.append({"source": sid, "name": source.get("name", sid), "error": error})
+    enrich_underreported_evidence(stories, registry)
     return stories, errors
