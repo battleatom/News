@@ -37,6 +37,7 @@ jobs:
       - name: Build live V6
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         run: python v6/src/build.py
 
       - name: Audit live V6
