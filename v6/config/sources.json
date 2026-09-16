@@ -3,7 +3,7 @@
   "categories": {
     "top": {"label":"Top Stories","target":50,"source_cap":8},
     "nfl": {"label":"NFL","target":40,"source_cap":8},
-    "x": {"label":"Top Issues","target":20,"source_cap":5},
+    "x": {"label":"X","target":10,"source_cap":1},
     "underreported": {"label":"Underreported","target":40,"source_cap":4},
     "world": {"label":"World","target":60,"source_cap":8},
     "us": {"label":"United States","target":60,"source_cap":8},
@@ -59,7 +59,16 @@
     {"id":"under-marshall","name":"The Marshall Project","kind":"google_news","category":"underreported","query":"site:themarshallproject.org criminal justice investigation"},
     {"id":"under-publicintegrity","name":"Center for Public Integrity","kind":"google_news","category":"underreported","query":"site:publicintegrity.org investigation government inequality"},
     {"id":"under-kff","name":"KFF Health News","kind":"google_news","category":"underreported","query":"site:kffhealthnews.org investigation health policy"},
-    {"id":"x-issues","name":"Top issues discovery","kind":"google_news","category":"x","query":"trending issue public reaction social media United States"},
+    {"id":"x-health","name":"X · Health","kind":"google_news","category":"x","query":"health medical disease FDA public health trending social media"},
+    {"id":"x-technology","name":"X · Technology & AI","kind":"google_news","category":"x","query":"AI technology OpenAI Google Apple cybersecurity trending social media"},
+    {"id":"x-celebrities","name":"X · Celebrities & Public Figures","kind":"google_news","category":"x","query":"celebrity actor singer athlete public figure trending social media"},
+    {"id":"x-world","name":"X · World","kind":"google_news","category":"x","query":"world international conflict war diplomacy trending social media"},
+    {"id":"x-politics","name":"X · Politics & Government","kind":"google_news","category":"x","query":"White House Congress Supreme Court politics government trending social media"},
+    {"id":"x-entertainment","name":"X · Entertainment","kind":"google_news","category":"x","query":"movies music television streaming entertainment trending social media"},
+    {"id":"x-sports","name":"X · Sports","kind":"google_news","category":"x","query":"NFL NBA MLB soccer sports trending social media"},
+    {"id":"x-business","name":"X · Business & Economy","kind":"google_news","category":"x","query":"economy stocks tariffs jobs business companies trending social media"},
+    {"id":"x-gaming","name":"X · Gaming","kind":"google_news","category":"x","query":"gaming PlayStation Xbox Nintendo PC games trending social media"},
+    {"id":"x-science","name":"X · Science","kind":"google_news","category":"x","query":"science space NASA climate research trending social media"},
     {"id":"nfl-news","name":"NFL News","kind":"google_news","category":"nfl","query":"NFL news injuries trades roster scores"}
   ]
 }
