@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from datetime import datetime, timezone
 from typing import Any
 
@@ -18,6 +18,14 @@ class Story:
     market: str = ""
     importance: float = 0.0
     source_id: str = ""
+    what_happened: str = ""
+    what_is_missing: str = ""
+    background: str = ""
+    what_next: str = ""
+    coverage_label: str = ""
+    coverage_score: int = 0
+    supporting_source_count: int = 0
+    related: list[dict[str, Any]] = field(default_factory=list)
 
     @property
     def published_dt(self) -> datetime:

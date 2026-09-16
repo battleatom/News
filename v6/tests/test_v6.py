@@ -18,6 +18,14 @@ class V6PipelineTests(unittest.TestCase):
         a=Story("a","world","Major storm closes schools across northern New Mexico","https://a.example/x","A","2026-09-15T12:00:00Z");b=Story("b","world","Major storm closes schools across northern New Mexico today","https://b.example/y","B","2026-09-15T12:01:00Z");self.assertTrue(near_duplicate(a,b))
     def test_process_dedupes_and_scores(self):
         rows=[Story("a","world","Cyberattack causes emergency outage across city","https://a.example/x?utm_source=test","A","2026-09-15T12:00:00Z","Officials reported an outage."),Story("b","world","Cyberattack causes emergency outage across city","https://a.example/x","B","2026-09-15T12:01:00Z","Duplicate.")];out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));self.assertEqual(len(out),1);self.assertGreater(out[0].importance,0);self.assertTrue(any(term in out[0].why_matters.lower() for term in ("outage","emergency","attack")))
+    def test_underreported_builds_evidence_package_from_collected_pool(self):
+        rows=[
+            Story("u","underreported","EPA moves to repeal power plant emissions limits","https://primary.example/u","Primary","2026-09-15T12:00:00Z","EPA plans to repeal power plant emissions limits and is expected to announce the final action later this month."),
+            Story("a","us","EPA moves to repeal emissions limits for power plants","https://a.example/x","Outlet A","2026-09-14T12:00:00Z","Related report."),
+            Story("b","federal","EPA repeal of power plant emissions limits advances","https://b.example/x","Outlet B","2026-09-13T12:00:00Z","Related report."),
+        ]
+        out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));story=next(x for x in out if x.id=="u")
+        self.assertEqual(story.supporting_source_count,2);self.assertEqual(story.coverage_score,86);self.assertEqual(len(story.related),2);self.assertTrue(story.what_happened);self.assertTrue(story.what_is_missing);self.assertTrue(story.background);self.assertTrue(story.what_next)
     def test_presidential_rejects_foreign_and_former_office_personal_stories(self):
         rows=[Story("fr","presidential","French candidates gain ground in 2027 presidential race","https://example.com/fr","Reuters","2026-09-15T12:00:00Z","Polling in France shows movement in the presidential field."),Story("former","presidential","Deputies respond to trespasser at ex-Vice President's home","https://example.com/former","AP","2026-09-15T12:00:00Z","Deputies responded to a residential trespassing report.")]
         self.assertEqual(process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc)),[])
