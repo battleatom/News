@@ -58,10 +58,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           git checkout -B main origin/main
-          for file in index.html styles.css app.js store.js renderers.js location.js feedback.js status-ux.js tab-ux.js admin-ops.js weather.js feed.json nfl.json boxoffice.json markets.json status.json; do
+          for file in index.html styles.css app.js store.js renderers.js location.js feedback.js status-ux.js tab-ux.js admin-ops.js admin-layout.js weather.js feed.json nfl.json boxoffice.json markets.json status.json; do
             cp "/tmp/v6-production-dist/$file" "$file"
           done
-          git add index.html styles.css app.js store.js renderers.js location.js feedback.js status-ux.js tab-ux.js admin-ops.js weather.js feed.json nfl.json boxoffice.json markets.json status.json
+          git add index.html styles.css app.js store.js renderers.js location.js feedback.js status-ux.js tab-ux.js admin-ops.js admin-layout.js weather.js feed.json nfl.json boxoffice.json markets.json status.json
           if git diff --cached --quiet; then
             echo "V6 production is already current."
             exit 0
