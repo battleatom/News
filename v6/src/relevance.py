@@ -31,7 +31,7 @@ CATEGORY_RULES = {
         "exclude": {"federal league","sports"},
     },
     "legislation": {
-        "include": {"bill","law","legislation","regulation","rule","executive order","congress","senate","house"},
+        "include": set(),
         "exclude": {"sports rule","game rule"},
     },
     "nm": {
@@ -48,8 +48,27 @@ CATEGORY_RULES = {
     },
 }
 
+LEGISLATION_PATTERNS = (
+    r"\b(?:bill|legislation|statute|law|regulation|rulemaking|proposed rule|final rule|rule change|regulatory action)\b",
+    r"\bexecutive order\s+\d+\b",
+    r"\b(?:house|senate) (?:bill|resolution|joint resolution)\b",
+    r"\b(?:h\.?\s*r\.?|s\.?|h\.?\s*res\.?|s\.?\s*res\.?|h\.?\s*j\.?\s*res\.?|s\.?\s*j\.?\s*res\.?)\s*\d+\b",
+    r"\bpublic inspection\b.*\b(?:rule|regulation|regulatory|exchange|commission)\b",
+)
+
 def _text(story) -> str:
     return re.sub(r"\s+", " ", f"{story.title} {story.summary} {story.source}".lower()).strip()
+
+def _content_text(story) -> str:
+    return re.sub(r"\s+", " ", f"{story.title} {story.summary}".lower()).strip()
+
+def _legislation_relevant(story) -> bool:
+    text=_content_text(story)
+    if not text or len(re.sub(r"[^a-z0-9]+","",text))<12:
+        return False
+    if re.fullmatch(r"[-\s]*(?:congress\.gov)?[-\s]*", text):
+        return False
+    return any(re.search(pattern,text,re.I) for pattern in LEGISLATION_PATTERNS)
 
 def relevant_to_category(story) -> bool:
     rules = CATEGORY_RULES.get(story.category)
@@ -58,5 +77,7 @@ def relevant_to_category(story) -> bool:
     text = _text(story)
     if any(term in text for term in rules["exclude"]):
         return False
+    if story.category=="legislation":
+        return _legislation_relevant(story)
     includes = rules["include"]
     return not includes or any(term in text for term in includes)
