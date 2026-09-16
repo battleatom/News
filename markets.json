@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T21:18:06.036187Z",
+  "generatedAt": "2026-09-16T22:04:12.257686Z",
   "markets": [
     {
       "symbol": "^GSPC",
@@ -106,7 +106,7 @@
       "label": "COPPER",
       "price": 6.44,
       "previousClose": 6.47,
-      "changePct": -0.4328000618285875,
+      "changePct": -0.432766615146825,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -114,9 +114,9 @@
     {
       "symbol": "DX-Y.NYB",
       "label": "U.S. DOLLAR",
-      "price": 100.3,
+      "price": 100.31,
       "previousClose": 99.12,
-      "changePct": 1.1945117029862766,
+      "changePct": 1.2035916061339766,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -134,9 +134,9 @@
     {
       "symbol": "BTC-USD",
       "label": "BITCOIN",
-      "price": 76022.54,
+      "price": 75937.26,
       "previousClose": 77270.47,
-      "changePct": -1.6150154127443608,
+      "changePct": -1.7253809896588004,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -144,9 +144,9 @@
     {
       "symbol": "ETH-USD",
       "label": "ETHEREUM",
-      "price": 2406.13,
+      "price": 2404.32,
       "previousClose": 2525.94,
-      "changePct": -4.743358187665703,
+      "changePct": -4.815014549408552,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
