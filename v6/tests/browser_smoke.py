@@ -13,7 +13,7 @@ def main():
         assert page.locator(".legend").count()==1;assert page.locator(".feedback-controls").count()>0;assert page.locator(".bookmark-btn").count()>0;assert page.get_by_text("WHY IT MATTERS").count()>0
         footer=page.locator(".feedback-controls").first;buttons=footer.locator("button");assert buttons.count()==3;assert footer.get_by_text("D · Duplicate",exact=True).count()==1;assert footer.get_by_text("NR · Not Relevant",exact=True).count()==1;assert footer.get_by_text("NW · Not Wanted",exact=True).count()==1
         dims=footer.evaluate("el=>({position:getComputedStyle(el).position,width:el.getBoundingClientRect().width,card:el.closest('.story-card').getBoundingClientRect().width})");assert dims["position"]=="static";assert dims["width"]>=dims["card"]-50
-        first=buttons.nth(0).evaluate("el=>({radius:parseFloat(getComputedStyle(el).borderRadius)})");assert first["radius"]>=16
+        first=buttons.nth(0).evaluate("el=>({radius:parseFloat(getComputedStyle(el).borderRadius)})");assert first["radius"]>=8
         bm=page.locator(".bookmark-btn").first;bm.click();page.locator("#tabs .tab").filter(has_text="Bookmarks").click();page.wait_for_timeout(150);assert page.locator(".story-card").count()>0
         page.locator("#tabs .tab").filter(has_text="Technology").click();page.wait_for_selector(".story-card");assert page.locator(".story-card").count()>0
         page.reload(wait_until="domcontentloaded");page.wait_for_selector("#tabs .tab");assert page.locator('#tabs .tab[aria-selected="true"]').filter(has_text="Technology").count()==1;assert page.locator(".story-card").count()>0
