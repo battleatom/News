@@ -10,6 +10,13 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
   const previousCanonicalRender = typeof canonicalRender==='function' ? canonicalRender : null;
   const stateNames = {AL:'Alabama',AK:'Alaska',AZ:'Arizona',AR:'Arkansas',CA:'California',CO:'Colorado',CT:'Connecticut',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',ID:'Idaho',IL:'Illinois',IN:'Indiana',IA:'Iowa',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',ME:'Maine',MD:'Maryland',MA:'Massachusetts',MI:'Michigan',MN:'Minnesota',MS:'Mississippi',MO:'Missouri',MT:'Montana',NE:'Nebraska',NV:'Nevada',NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NY:'New York',NC:'North Carolina',ND:'North Dakota',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',VT:'Vermont',VA:'Virginia',WA:'Washington',WV:'West Virginia',WI:'Wisconsin',WY:'Wyoming',DC:'District of Columbia'};
   const DAY=86400000;
+  const BOXOFFICE_INITIAL_BATCH=8;
+  const BOXOFFICE_NEXT_BATCH=8;
+  const BOXOFFICE_CACHE_MS=5*60*1000;
+  let boxOfficeCache=null;
+  let boxOfficeCacheAt=0;
+  let boxOfficeRequest=null;
+
   function localState(){
     const saved=(localStorage.getItem('underreported-location')||'').toUpperCase();
     const m=saved.match(/(?:^|,\s*)([A-Z]{2})$/);
@@ -30,7 +37,10 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
       .movie-release-line{margin:1px 0 8px;color:#64748b;font-size:10.5px;font-weight:700;line-height:1.35}.movie-release-line strong{color:#334155}.movie-release-line .leave{color:#b91c1c;font-weight:850}.movie-release-line .confirmed{color:#64748b;font-weight:800}
       .boxoffice-movie-group{margin:18px 0 8px;padding-left:10px;border-left:3px solid #64748b;font-size:14px;font-weight:850}.boxoffice-movie-group.now{border-left-color:#2563eb}.boxoffice-movie-group.upcoming{border-left-color:#06b6d4}
       .movie-card .movie-news{margin-top:10px;font-size:.82rem;line-height:1.38}.movie-card .movie-news .underreported-label{font-size:.72rem!important;letter-spacing:.08em}.movie-card .movie-news a{display:block;margin-top:6px;font-size:.82rem!important;line-height:1.38!important;font-weight:600!important;text-decoration-thickness:1px}
-      @media(prefers-color-scheme:dark){.boxoffice-status-key{background:rgba(15,23,42,.42);color:#a7b0bd}.movie-release-line{color:#a7b0bd}.movie-release-line strong{color:#e5e7eb}.movie-release-line .confirmed{color:#a7b0bd}.movie-status.status-upcoming{color:#67e8f9}.movie-status.status-new{color:#93c5fd}.movie-status.status-playing{color:#86efac}.movie-status.status-leaving{color:#fca5a5}}
+      .boxoffice-scroll-sentinel{min-height:34px;display:flex;align-items:center;justify-content:center;margin:10px 0;color:#64748b;font-size:.78rem;font-weight:750;letter-spacing:.01em}
+      .boxoffice-scroll-sentinel::after{content:'Loading more Box Office…'}
+      .boxoffice-endcap{margin:14px 0 4px;padding:12px;text-align:center;border-top:1px solid var(--ui-line);color:#64748b;font-size:.76rem;font-weight:750}
+      @media(prefers-color-scheme:dark){.boxoffice-status-key{background:rgba(15,23,42,.42);color:#a7b0bd}.movie-release-line{color:#a7b0bd}.movie-release-line strong{color:#e5e7eb}.movie-release-line .confirmed{color:#a7b0bd}.movie-status.status-upcoming{color:#67e8f9}.movie-status.status-new{color:#93c5fd}.movie-status.status-playing{color:#86efac}.movie-status.status-leaving{color:#fca5a5}.boxoffice-scroll-sentinel,.boxoffice-endcap{color:#a7b0bd}}
       @media(max-width:700px){.movie-card .movie-news a{font-size:.8rem!important;line-height:1.36!important}}
     `;document.head.appendChild(st);
   }
@@ -68,7 +78,7 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     }
     return parts.length?`<div class="movie-release-line">${parts.join(' · ')}</div>`:'';
   }
-  function renderMovieCard(movie,body){
+  function renderMovieCard(movie,target){
     const state=movieState(movie);
     const card=document.createElement('article');card.className=`news-item movie-card ${state.rail}`;card.dataset.category='boxoffice';card.dataset.railMeaning='movie-status';
     const localTheaters=movie.theaters||[];
@@ -76,10 +86,19 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const movieNews=(movie.news||[]).slice(0,3);
     const newsHtml=movieNews.length?`<div class="movie-news"><div class="underreported-label">Movie news</div>${movieNews.map(n=>`<a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener noreferrer">${esc(n.title||'Movie news')}</a>`).join('')}</div>`:'';
     card.innerHTML=`<h3>${esc(movie.title||'Untitled')}</h3><div class="movie-details"><span class="movie-status status-${state.key}">${esc(state.label)}</span>${movie.releaseDate?`<span class="movie-pill">${state.key==='upcoming'?'Release':'Released'}: ${esc(fmtMovieDate(movie.releaseDate))}</span>`:''}${movie.rating?`<span class="movie-pill">${esc(movie.rating)}</span>`:''}${movie.runtime?`<span class="movie-pill">${esc(movie.runtime)}</span>`:''}</div>${movieReleaseLine(movie,state)}${movie.description?`<p class="description">${esc(movie.description)}</p>`:''}${showtimeHtml}${newsHtml}`;
-    body.appendChild(card);
+    target.appendChild(card);
+  }
+  function renderLocalNewsCard(n,i,target){
+    const ar=document.createElement('article');ar.className='news-item';ar.dataset.category='boxoffice';const newsAgeClass=ageRailClass(n.pubDate);if(newsAgeClass)ar.classList.add(newsAgeClass);ar.dataset.railMeaning='age';
+    ar.innerHTML=`<h3><a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(n.title||'Untitled')}</a></h3>${n.description?`<p class="description">${esc(n.description)}</p>`:''}<div class="meta">${n.source?`<span class="source">${esc(n.source)}</span>`:''}${n.pubDate?`<span>${esc(formatDate(n.pubDate))}</span>`:''}</div>`;
+    target.appendChild(ar);
+  }
+  function disconnectBoxOfficeObserver(){
+    if(window.__boxOfficeScrollObserver){try{window.__boxOfficeScrollObserver.disconnect()}catch(e){}window.__boxOfficeScrollObserver=null;}
   }
   function renderLocalBoxOffice(data){
     ensureBoxOfficeStyles();
+    disconnectBoxOfficeObserver();
     const root=document.getElementById('news-feed');
     const state=localState();
     const loc=(data.locations||{})[state]||null;
@@ -87,41 +106,103 @@ SCRIPT = r'''<script id="boxoffice-location-v1">
     const movies=data.movies||[];
     const current=movies.filter(m=>movieState(m).key!=='upcoming').sort((a,b)=>releaseSortValue(b)-releaseSortValue(a)||(a.title||'').localeCompare(b.title||''));
     const upcoming=movies.filter(m=>movieState(m).key==='upcoming').sort((a,b)=>releaseSortValue(a)-releaseSortValue(b)||(a.title||'').localeCompare(b.title||''));
+    const localNews=loc?.news||[];
     root.innerHTML='';
     const sec=document.createElement('section');sec.className='section';sec.dataset.category='boxoffice';sec.style.setProperty('--accent','#9a3412');
     const head=document.createElement('div');head.className='section-header';
-    head.innerHTML=`<h2>🎬 Box Office — ${esc(stateName)}</h2><span class="count">Movies, releases & local box-office news</span>`;sec.appendChild(head);
+    head.innerHTML=`<h2>🎬 Box Office — ${esc(stateName)}</h2><span class="count">Loading Box Office cards…</span>`;sec.appendChild(head);
+    const countEl=head.querySelector('.count');
     const intro=document.createElement('div');intro.className='boxoffice-intro';
     intro.innerHTML=`Showing national movie releases plus box-office/theater news selected for <strong>${esc(stateName)}</strong>.${state==='NM'&&/Farmington/i.test(localStorage.getItem('underreported-location')||'')?' Local Farmington showtimes are included when available.':''}`;
     sec.appendChild(intro);
     const body=document.createElement('div');body.className='section-body';
     const key=document.createElement('div');key.className='boxoffice-status-key';key.innerHTML='<span><i class="cyan"></i>Coming soon</span><span><i class="blue"></i>New release</span><span><i class="green"></i>Now playing</span><span><i class="red"></i>Leaving soon</span>';body.appendChild(key);
 
+    const queue=[];
     if(current.length){
-      const nowTitle=document.createElement('div');nowTitle.className='boxoffice-movie-group now';nowTitle.textContent='🎥 Now Playing — newest releases first';body.appendChild(nowTitle);
-      current.forEach(movie=>renderMovieCard(movie,body));
+      queue.push({type:'heading',className:'boxoffice-movie-group now',text:'🎥 Now Playing — newest releases first'});
+      current.forEach(movie=>queue.push({type:'movie',movie}));
     }
     if(upcoming.length){
-      const upcomingTitle=document.createElement('div');upcomingTitle.className='boxoffice-movie-group upcoming';upcomingTitle.textContent='🩵 Coming Soon — next releases first';body.appendChild(upcomingTitle);
-      upcoming.forEach(movie=>renderMovieCard(movie,body));
+      queue.push({type:'heading',className:'boxoffice-movie-group upcoming',text:'🩵 Coming Soon — next releases first'});
+      upcoming.forEach(movie=>queue.push({type:'movie',movie}));
     }
-    if(!movies.length){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');}
+    if(localNews.length){
+      queue.push({type:'heading',className:'boxoffice-section-title',text:`📍 ${stateName} Box Office & Theater News`});
+      localNews.forEach((news,index)=>queue.push({type:'news',news,index}));
+    }
 
-    if(loc?.news?.length){
-      const localTitle=document.createElement('div');localTitle.className='boxoffice-section-title';localTitle.textContent=`📍 ${stateName} Box Office & Theater News`;
-      body.appendChild(localTitle);
-      loc.news.forEach((n,i)=>{
-        const ar=document.createElement('article');ar.className='news-item';ar.dataset.category='boxoffice';const newsAgeClass=ageRailClass(n.pubDate);if(newsAgeClass)ar.classList.add(newsAgeClass);ar.dataset.railMeaning='age';
-        ar.innerHTML=`<h3><a href="${esc(safeUrl(n.link))}" target="_blank" rel="noopener noreferrer">${i+1}. ${esc(n.title||'Untitled')}</a></h3>${n.description?`<p class="description">${esc(n.description)}</p>`:''}<div class="meta">${n.source?`<span class="source">${esc(n.source)}</span>`:''}${n.pubDate?`<span>${esc(formatDate(n.pubDate))}</span>`:''}</div>`;
-        body.appendChild(ar);
-      });
+    const totalCards=current.length+upcoming.length+localNews.length;
+    let cursor=0;
+    let renderedCards=0;
+    let generation=Date.now()+Math.random();
+    window.__boxOfficeRenderGeneration=generation;
+
+    function updateCount(){
+      if(!countEl)return;
+      if(totalCards===0)countEl.textContent='No current Box Office cards';
+      else if(renderedCards<totalCards)countEl.textContent=`Showing ${renderedCards} of ${totalCards} cards`;
+      else countEl.textContent=`Showing all ${totalCards} cards`;
     }
+    function appendNextBatch(limit){
+      if(window.__boxOfficeRenderGeneration!==generation||active!=='boxoffice')return;
+      body.querySelectorAll('.boxoffice-scroll-sentinel').forEach(el=>el.remove());
+      const frag=document.createDocumentFragment();
+      let added=0;
+      while(cursor<queue.length&&added<limit){
+        const entry=queue[cursor++];
+        if(entry.type==='heading'){
+          const title=document.createElement('div');title.className=entry.className;title.textContent=entry.text;frag.appendChild(title);
+          continue;
+        }
+        if(entry.type==='movie')renderMovieCard(entry.movie,frag);
+        else if(entry.type==='news')renderLocalNewsCard(entry.news,entry.index,frag);
+        renderedCards+=1;
+        added+=1;
+      }
+      body.appendChild(frag);
+      updateCount();
+      if(cursor>=queue.length){
+        disconnectBoxOfficeObserver();
+        const end=document.createElement('div');end.className='boxoffice-endcap';end.textContent='All current Box Office cards loaded';body.appendChild(end);
+        return;
+      }
+      armObserver();
+    }
+    function armObserver(){
+      disconnectBoxOfficeObserver();
+      if(window.__boxOfficeRenderGeneration!==generation||active!=='boxoffice')return;
+      const sentinel=document.createElement('div');sentinel.className='boxoffice-scroll-sentinel';sentinel.setAttribute('aria-hidden','true');body.appendChild(sentinel);
+      let triggered=false;
+      const observer=new IntersectionObserver(entries=>{
+        if(triggered||!entries.some(entry=>entry.isIntersecting))return;
+        triggered=true;
+        observer.disconnect();
+        window.__boxOfficeScrollObserver=null;
+        requestAnimationFrame(()=>appendNextBatch(BOXOFFICE_NEXT_BATCH));
+      },{root:null,rootMargin:'700px 0px 700px 0px',threshold:0.01});
+      window.__boxOfficeScrollObserver=observer;
+      observer.observe(sentinel);
+    }
+
+    if(!totalCards){body.insertAdjacentHTML('beforeend','<div class="empty">Movie information is temporarily unavailable.</div>');updateCount();}
+    else appendNextBatch(BOXOFFICE_INITIAL_BATCH);
     sec.appendChild(body);root.appendChild(sec);
   }
+  function getBoxOfficeData(){
+    const now=Date.now();
+    if(boxOfficeCache&&now-boxOfficeCacheAt<BOXOFFICE_CACHE_MS)return Promise.resolve(boxOfficeCache);
+    if(boxOfficeRequest)return boxOfficeRequest;
+    boxOfficeRequest=fetch('boxoffice.json?ts='+now,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Box Office data unavailable');return r.json()}).then(data=>{boxOfficeCache=data;boxOfficeCacheAt=Date.now();return data;}).finally(()=>{boxOfficeRequest=null;});
+    return boxOfficeRequest;
+  }
   function locationAwareRender(items){
-    if(active!=='boxoffice') return previousRender(items);
-    const root=document.getElementById('news-feed');root.innerHTML='<div class="loading">Loading location-specific Box Office…</div>';
-    fetch('boxoffice.json?ts='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('Box Office data unavailable');return r.json()}).then(data=>renderLocalBoxOffice(data)).catch(()=>{root.innerHTML='<div class="empty">Box Office information is temporarily unavailable.</div>'});
+    if(active!=='boxoffice')return previousRender(items);
+    disconnectBoxOfficeObserver();
+    const root=document.getElementById('news-feed');
+    if(boxOfficeCache&&Date.now()-boxOfficeCacheAt<BOXOFFICE_CACHE_MS)renderLocalBoxOffice(boxOfficeCache);
+    else root.innerHTML='<div class="loading">Loading location-specific Box Office…</div>';
+    getBoxOfficeData().then(data=>{if(active==='boxoffice')renderLocalBoxOffice(data)}).catch(()=>{if(active==='boxoffice')root.innerHTML='<div class="empty">Box Office information is temporarily unavailable.</div>'});
   }
   render=locationAwareRender;
   if(previousCanonicalRender){
@@ -143,4 +224,4 @@ if '</body>' in s:
 else:
     s += '\n' + SCRIPT + '\n'
 P.write_text(s, encoding='utf-8')
-print('Installed canonical location-aware Box Office renderer with Now Playing first, cyan upcoming, blue new, green playing, red leaving rails, release dates, local showtimes, movie news, and deterministic ordering.')
+print('Installed canonical location-aware Box Office renderer with incremental 8-card loading, smooth append-only scrolling, local theater news continuation, release status rails, dates, showtimes, and deterministic ordering.')
