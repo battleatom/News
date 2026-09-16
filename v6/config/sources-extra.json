@@ -32,13 +32,22 @@
     {"id":"presidential-cbs","name":"CBS News","kind":"google_news","category":"presidential","query":"site:cbsnews.com White House president administration presidential action"},
     {"id":"presidential-nbc","name":"NBC News","kind":"google_news","category":"presidential","query":"site:nbcnews.com White House president administration presidential action"},
     {"id":"presidential-abc","name":"ABC News","kind":"google_news","category":"presidential","query":"site:abcnews.go.com White House president administration presidential action"},
+    {"id":"presidential-politico","name":"Politico","kind":"google_news","category":"presidential","query":"site:politico.com White House administration executive order presidential action"},
+    {"id":"presidential-axios","name":"Axios","kind":"google_news","category":"presidential","query":"site:axios.com White House administration executive order president policy"},
+    {"id":"presidential-official","name":"White House actions","kind":"google_news","category":"presidential","query":"site:whitehouse.gov presidential actions executive orders proclamations fact sheets"},
 
     {"id":"federal-scotusblog","name":"SCOTUSblog","kind":"google_news","category":"federal","query":"site:scotusblog.com Supreme Court federal law"},
     {"id":"federal-npr","name":"NPR","kind":"google_news","category":"federal","query":"site:npr.org Congress Supreme Court DOJ FBI federal agency"},
     {"id":"federal-cbs","name":"CBS News","kind":"google_news","category":"federal","query":"site:cbsnews.com Congress Supreme Court DOJ FBI federal agency"},
     {"id":"federal-nbc","name":"NBC News","kind":"google_news","category":"federal","query":"site:nbcnews.com Congress Supreme Court DOJ FBI federal agency"},
+    {"id":"federal-politico","name":"Politico","kind":"google_news","category":"federal","query":"site:politico.com Congress federal agency Supreme Court DOJ hearing oversight"},
+    {"id":"federal-thehill","name":"The Hill","kind":"google_news","category":"federal","query":"site:thehill.com Congress federal agency Supreme Court DOJ hearing oversight"},
+    {"id":"federal-justice","name":"Justice Department","kind":"google_news","category":"federal","query":"site:justice.gov press release federal court DOJ enforcement indictment settlement"},
 
     {"id":"legislation-govinfo","name":"GovInfo","kind":"google_news","category":"legislation","query":"site:govinfo.gov bill law public law regulation"},
+    {"id":"legislation-congress-actions","name":"Congress.gov actions","kind":"google_news","category":"legislation","query":"site:congress.gov bill introduced passed House Senate enrolled law"},
+    {"id":"legislation-register-actions","name":"Federal Register actions","kind":"google_news","category":"legislation","query":"site:federalregister.gov final rule proposed rule regulation effective date"},
+    {"id":"legislation-reuters","name":"Reuters","kind":"google_news","category":"legislation","query":"site:reuters.com Congress bill legislation regulation signed law federal rule"},
 
     {"id":"nm-kob","name":"KOB 4","kind":"google_news","category":"nm","query":"site:kob.com New Mexico news"},
     {"id":"nm-krqe","name":"KRQE","kind":"google_news","category":"nm","query":"site:krqe.com New Mexico news"},
@@ -48,6 +57,9 @@
 
     {"id":"local-daily-times","name":"Farmington Daily Times","kind":"google_news","category":"local","query":"site:daily-times.com Farmington San Juan County New Mexico","state":"NM","market":"Farmington"},
     {"id":"local-kobf","name":"KOBF","kind":"google_news","category":"local","query":"Farmington NM KOBF San Juan County","state":"NM","market":"Farmington"},
+    {"id":"local-four-corners","name":"Four Corners discovery","kind":"google_news","category":"local","query":"Farmington Aztec Bloomfield Shiprock San Juan County New Mexico Four Corners","state":"NM","market":"Farmington"},
+    {"id":"local-navajo-times","name":"Navajo Times","kind":"google_news","category":"local","query":"site:navajotimes.com Shiprock Farmington San Juan County Navajo Nation","state":"NM","market":"Farmington"},
+    {"id":"local-public-safety","name":"San Juan County public safety","kind":"google_news","category":"local","query":"Farmington San Juan County NM police fire sheriff court school city county","state":"NM","market":"Farmington"},
 
     {"id":"region-azcentral","name":"Arizona Republic","kind":"google_news","category":"region","query":"site:azcentral.com Arizona regional news","region":"southwest"},
     {"id":"region-denverpost","name":"Denver Post","kind":"google_news","category":"region","query":"site:denverpost.com Colorado regional news","region":"southwest"},
@@ -61,6 +73,10 @@
     {"id":"tech-engadget","name":"Engadget","kind":"google_news","category":"technology","query":"site:engadget.com technology AI devices software computing"},
     {"id":"tech-zdnet","name":"ZDNET","kind":"google_news","category":"technology","query":"site:zdnet.com AI cybersecurity software hardware technology"},
     {"id":"tech-register","name":"The Register","kind":"google_news","category":"technology","query":"site:theregister.com AI cybersecurity cloud chips software"},
+    {"id":"tech-ai-discovery","name":"AI discovery","kind":"google_news","category":"technology","query":"OpenAI Anthropic Google DeepMind Meta AI Microsoft Copilot artificial intelligence model enterprise"},
+    {"id":"tech-security-discovery","name":"Cybersecurity discovery","kind":"google_news","category":"technology","query":"cybersecurity ransomware vulnerability breach CISA Microsoft security cloud enterprise"},
+    {"id":"tech-hardware-discovery","name":"Hardware discovery","kind":"google_news","category":"technology","query":"Nvidia AMD Intel Qualcomm Apple chips GPU CPU semiconductor hardware"},
+    {"id":"tech-consumer-discovery","name":"Consumer technology discovery","kind":"google_news","category":"technology","query":"Apple Android Samsung Google Pixel Windows laptop smartphone device software update"},
 
     {"id":"gaming-polygon","name":"Polygon","kind":"google_news","category":"gaming","query":"site:polygon.com gaming Nintendo Xbox PlayStation PC"},
     {"id":"gaming-nintendolife","name":"Nintendo Life","kind":"google_news","category":"gaming","query":"site:nintendolife.com Nintendo gaming"},
@@ -84,6 +100,9 @@
     {"id":"under-insideclimate","name":"Inside Climate News","kind":"google_news","category":"underreported","query":"site:insideclimatenews.org investigation climate environment"},
     {"id":"under-texastribune","name":"Texas Tribune","kind":"google_news","category":"underreported","query":"site:texastribune.org investigation public policy"},
     {"id":"under-reveal","name":"Reveal","kind":"google_news","category":"underreported","query":"site:revealnews.org investigation government justice environment health"},
+    {"id":"under-health-investigations","name":"Public health investigations","kind":"google_news","category":"underreported","query":"investigation rural health hospital safety Medicaid public health environmental health local government"},
+    {"id":"under-statehouse-investigations","name":"Statehouse investigations","kind":"google_news","category":"underreported","query":"investigation state government public records accountability housing water education local policy"},
+    {"id":"under-environment-investigations","name":"Environmental investigations","kind":"google_news","category":"underreported","query":"investigation water contamination pollution environmental justice rural community regulation"},
 
     {"id":"nfl-espn","name":"ESPN","kind":"google_news","category":"nfl","query":"site:espn.com/nfl NFL injuries trades roster scores"},
     {"id":"nfl-athletic","name":"The Athletic","kind":"google_news","category":"nfl","query":"site:nytimes.com/athletic/nfl NFL injury trade roster game coach quarterback"},
@@ -93,6 +112,9 @@
     {"id":"nfl-fox","name":"Fox Sports","kind":"google_news","category":"nfl","query":"site:foxsports.com/nfl NFL injury trade roster game coach quarterback"},
     {"id":"nfl-yahoo","name":"Yahoo Sports","kind":"google_news","category":"nfl","query":"site:sports.yahoo.com/nfl NFL injury trade roster game coach quarterback"},
     {"id":"nfl-pft","name":"ProFootballTalk","kind":"google_news","category":"nfl","query":"site:nbcsports.com/nfl/profootballtalk NFL injury trade roster coach"},
-    {"id":"nfl-usatoday","name":"USA Today","kind":"google_news","category":"nfl","query":"site:usatoday.com/sports/nfl NFL injury trade roster game coach"}
+    {"id":"nfl-usatoday","name":"USA Today","kind":"google_news","category":"nfl","query":"site:usatoday.com/sports/nfl NFL injury trade roster game coach"},
+    {"id":"nfl-injuries","name":"NFL injury discovery","kind":"google_news","category":"nfl","query":"NFL injury report injured reserve practice status quarterback receiver running back defense"},
+    {"id":"nfl-transactions","name":"NFL transaction discovery","kind":"google_news","category":"nfl","query":"NFL trade signing waiver release roster transaction contract extension"},
+    {"id":"nfl-analysis","name":"NFL game analysis discovery","kind":"google_news","category":"nfl","query":"NFL game recap preview matchup depth chart coaching quarterback analysis"}
   ]
 }
