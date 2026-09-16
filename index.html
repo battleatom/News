@@ -33,8 +33,20 @@
   <script type="module" src="app.js"></script>
   <script src="status-ux.js?v=3"></script>
   <script src="tab-ux.js?v=3"></script>
-  <script src="admin-ops.js?v=3"></script>
-  <script src="admin-layout.js?v=2"></script>
+  <script>
+  (()=>{
+    let loaded=false;
+    const tabs=document.getElementById('tabs');
+    const loadAdmin=()=>{
+      if(loaded)return;loaded=true;
+      for(const src of ['admin-ops.js?v=4','admin-layout.js?v=3']){
+        const s=document.createElement('script');s.src=src;s.async=false;document.head.appendChild(s);
+      }
+    };
+    tabs?.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))loadAdmin()},true);
+    setTimeout(()=>{if(tabs?.querySelector('.tab[data-category="admin"][aria-selected="true"]'))loadAdmin()},600);
+  })();
+  </script>
   <script type="module" src="weather.js?v=3"></script>
 </body>
 </html>
