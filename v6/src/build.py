@@ -2,6 +2,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -17,16 +18,28 @@ from specialized import collect_boxoffice
 from xslots import select_fixed_x_slots
 
 ROOT=Path(__file__).resolve().parents[1];WEB=ROOT/"web";DIST=ROOT/"dist"
+COMING_SOON_SVG='''<svg xmlns="http://www.w3.org/2000/svg" width="500" height="750" viewBox="0 0 500 750"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0c1832"/><stop offset="1" stop-color="#25365e"/></linearGradient></defs><rect width="500" height="750" fill="url(#g)"/><rect x="42" y="42" width="416" height="666" rx="24" fill="none" stroke="#ffffff" stroke-opacity=".22" stroke-width="3"/><text x="250" y="340" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="5">COMING</text><text x="250" y="392" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="5">SOON</text><text x="250" y="450" text-anchor="middle" fill="#aebbd5" font-family="Arial,sans-serif" font-size="17">OFFICIAL ARTWORK PENDING</text></svg>'''
+COMING_SOON_POSTER="data:image/svg+xml;charset=UTF-8,"+urllib.parse.quote(COMING_SOON_SVG,safe="")
 
 def load_fixture(path:Path)->list[Story]:return[Story(**row) for row in json.loads(path.read_text(encoding="utf-8"))]
 def write_json(path:Path,payload)->None:path.write_text(json.dumps(payload,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
 
+def apply_upcoming_placeholders(movies:list[dict],artwork_status:dict)->dict:
+    placeholder_count=0
+    for movie in movies:
+        if movie.get("status")=="upcoming" and not movie.get("poster"):
+            movie["poster"]=COMING_SOON_POSTER;movie["posterReachable"]=True;movie["artworkSource"]="Coming Soon placeholder";movie["posterPlaceholder"]=True;placeholder_count+=1
+        else:movie["posterPlaceholder"]=False
+    total=len(movies);reachable=sum(bool(movie.get("poster")) and movie.get("posterReachable") is True for movie in movies)
+    artwork_status=dict(artwork_status);artwork_status.update({"movieCount":total,"posterCount":reachable,"reachablePosterCount":reachable,"missingPosterCount":max(0,total-reachable),"posterCoverage":round(reachable/total,4) if total else 0.0,"comingSoonPlaceholderCount":placeholder_count})
+    return artwork_status
+
 def build(*,fixture:Path|None=None)->dict:
     registry=load_registry();collector_errors=[];pools={reason:[] for reason in REASONS};feedback_removed={reason:0 for reason in REASONS}
     if fixture:
-        raw=load_fixture(fixture);collected_raw=list(raw);nfl=[];nfl_error="";boxoffice=[];boxoffice_error="Box Office not used in deterministic fixture build.";markets=[];markets_error="Markets not used in deterministic fixture build.";artwork_status={"movieCount":0,"posterCount":0,"missingPosterCount":0,"posterCoverage":0.0,"fallbackFilled":0,"tmdbFallbackFilled":0,"wikipediaFallbackFilled":0,"tmdbConfigured":False}
+        raw=load_fixture(fixture);collected_raw=list(raw);nfl=[];nfl_error="";boxoffice=[];boxoffice_error="Box Office not used in deterministic fixture build.";markets=[];markets_error="Markets not used in deterministic fixture build.";artwork_status={"movieCount":0,"posterCount":0,"missingPosterCount":0,"posterCoverage":0.0,"fallbackFilled":0,"tmdbFallbackFilled":0,"wikipediaFallbackFilled":0,"tmdbConfigured":False,"comingSoonPlaceholderCount":0}
     else:
-        raw,collector_errors=collect_all(registry);collected_raw=list(raw);nfl,nfl_error=collect_nfl();boxoffice,boxoffice_error=collect_boxoffice();artwork_status=ensure_movie_artwork(boxoffice);markets,markets_error=collect_markets();pools=fetch_pools();raw,feedback_removed=apply_pools(raw,pools)
+        raw,collector_errors=collect_all(registry);collected_raw=list(raw);nfl,nfl_error=collect_nfl();boxoffice,boxoffice_error=collect_boxoffice();artwork_status=ensure_movie_artwork(boxoffice);artwork_status=apply_upcoming_placeholders(boxoffice,artwork_status);markets,markets_error=collect_markets();pools=fetch_pools();raw,feedback_removed=apply_pools(raw,pools)
     stories=process(raw,registry)
     if not fixture:stories=select_fixed_x_slots(stories,raw,registry)
     DIST.mkdir(parents=True,exist_ok=True)
