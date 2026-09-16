@@ -64,6 +64,8 @@ SHOWTIMES_LABEL=os.environ.get("BOXOFFICE_CITY_LABEL","Farmington, NM").strip() 
 SHOWTIMES_URL=f"https://www.showtimes.com/movie-times/{SHOWTIMES_SLUG}/"
 RELEASE_YEAR=datetime.now(timezone.utc).year
 RELEASE_URL=f"https://www.the-numbers.com/movies/release-schedule/{RELEASE_YEAR}"
+TMDB_API_KEY=os.environ.get("TMDB_API_KEY","").strip()
+TMDB_IMAGE_BASE="https://image.tmdb.org/t/p/w500"
 
 def parse_local_showtimes(page:str)->list[dict]:
     blocks=list(re.finditer(r"<h2[^>]*>(.*?)</h2>(.*?)(?=<h2[^>]*>|</main>|</body>)",page,re.I|re.S));current="";rows=[]
@@ -127,13 +129,41 @@ def google_movie_news(title:str)->list[dict]:
         return rows
     except Exception:return []
 
+def tmdb_movie(title:str,release_date:str="")->dict:
+    if not TMDB_API_KEY:return{}
+    try:
+        params={"api_key":TMDB_API_KEY,"query":title,"include_adult":"false","language":"en-US"}
+        year=(release_date or "")[:4]
+        if year.isdigit():params["year"]=year
+        payload=fetch_json("https://api.themoviedb.org/3/search/movie?"+urllib.parse.urlencode(params));target=title_key(title);candidates=[]
+        for item in payload.get("results") or []:
+            found=title_key(item.get("title") or item.get("original_title") or "")
+            if not found:continue
+            score=1.0 if found==target else difflib.SequenceMatcher(None,target,found).ratio()
+            item_year=str(item.get("release_date") or "")[:4]
+            year_bonus=.05 if year and item_year==year else 0
+            candidates.append((score+year_bonus,item))
+        if not candidates:return{}
+        score,item=max(candidates,key=lambda pair:pair[0])
+        if score<.88:return{}
+        poster=item.get("poster_path") or "";overview=clean(item.get("overview") or "")
+        return{"overview":overview,"poster":TMDB_IMAGE_BASE+poster if poster else "","voteAverage":item.get("vote_average") or 0,"tmdbId":item.get("id") or "","metadataSource":"TMDB"}
+    except Exception:return{}
+
 def wiki_movie(title:str)->dict:
     for candidate in (f"{title} (film)",f"{title} ({RELEASE_YEAR} film)",title):
         try:
             d=fetch_json("https://en.wikipedia.org/api/rest_v1/page/summary/"+urllib.parse.quote(candidate.replace(" ","_")));extract=clean(d.get("extract") or "");desc=clean(d.get("description") or "").lower()
-            if extract and any(k in f" {desc} {extract[:250].lower()} " for k in (" film "," movie "," motion picture "," directed by "," starring "," documentary "," animated ")):return{"overview":extract,"poster":((d.get("thumbnail") or {}).get("source") or "")}
+            if extract and any(k in f" {desc} {extract[:250].lower()} " for k in (" film "," movie "," motion picture "," directed by "," starring "," documentary "," animated ")):return{"overview":extract,"poster":((d.get("thumbnail") or {}).get("source") or ""),"metadataSource":"Wikipedia"}
         except Exception:continue
     return{"overview":"","poster":""}
+
+def enrich_movie(movie:dict)->dict:
+    primary=tmdb_movie(movie["title"],movie.get("releaseDate","") or "")
+    fallback={}
+    if not primary.get("overview") or not primary.get("poster"):fallback=wiki_movie(movie["title"])
+    merged={"overview":primary.get("overview") or fallback.get("overview") or "","poster":primary.get("poster") or fallback.get("poster") or "","voteAverage":primary.get("voteAverage") or movie.get("voteAverage") or 0,"tmdbId":primary.get("tmdbId") or "","metadataSource":primary.get("metadataSource") or fallback.get("metadataSource") or ""}
+    movie.update(merged);movie["news"]=google_movie_news(movie["title"]);return movie
 
 def collect_boxoffice()->tuple[list[dict],str]:
     errors=[];local={};today=datetime.now(timezone.utc).date()
@@ -171,9 +201,8 @@ def collect_boxoffice()->tuple[list[dict],str]:
         upcoming.append({"id":"upcoming-"+re.sub(r"[^a-z0-9]+","-",release["title"].lower()).strip("-")[:70],"title":release["title"],"releaseDate":release["releaseDate"],"overview":"","poster":"","status":"upcoming","voteAverage":0,"rating":"","runtime":"","theaters":[],"news":[],"source":"The Numbers","confirmedThrough":"","leavingDate":"","leavingSoon":False})
         if len(upcoming)>=24:break
     rows.extend(upcoming)
-    def enrich(movie:dict)->dict:movie.update(wiki_movie(movie["title"]));movie["news"]=google_movie_news(movie["title"]);return movie
     if rows:
-        with ThreadPoolExecutor(max_workers=8) as pool:rows=[future.result() for future in as_completed([pool.submit(enrich,row) for row in rows])]
+        with ThreadPoolExecutor(max_workers=8) as pool:rows=[future.result() for future in as_completed([pool.submit(enrich_movie,row) for row in rows])]
         rows.sort(key=lambda m:(0 if m["status"]=="playing" else 1,-(datetime.fromisoformat(m["releaseDate"]).timestamp() if m.get("releaseDate") and m["status"]=="playing" else 0) if m["status"]=="playing" else (datetime.fromisoformat(m["releaseDate"]).timestamp() if m.get("releaseDate") else 9e18),m["title"].lower()))
     if not rows:
         try:
