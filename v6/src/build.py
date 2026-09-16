@@ -11,6 +11,7 @@ from pipeline import process
 from registry import load_registry
 from nfl import collect_nfl
 from specialized import collect_boxoffice, collect_markets
+from xslots import select_fixed_x_slots
 
 ROOT=Path(__file__).resolve().parents[1];WEB=ROOT/"web";DIST=ROOT/"dist"
 
@@ -23,7 +24,9 @@ def build(*,fixture:Path|None=None)->dict:
         raw=load_fixture(fixture);nfl=[];nfl_error="";boxoffice=[];boxoffice_error="Box Office not used in deterministic fixture build.";markets=[];markets_error="Markets not used in deterministic fixture build."
     else:
         raw,collector_errors=collect_all(registry);nfl,nfl_error=collect_nfl();boxoffice,boxoffice_error=collect_boxoffice();markets,markets_error=collect_markets()
-    stories=process(raw,registry);DIST.mkdir(parents=True,exist_ok=True)
+    stories=process(raw,registry)
+    if not fixture:stories=select_fixed_x_slots(stories,raw,registry)
+    DIST.mkdir(parents=True,exist_ok=True)
     for stale in DIST.iterdir():
         if stale.is_file():stale.unlink()
         elif stale.is_dir():shutil.rmtree(stale)
