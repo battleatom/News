@@ -19,6 +19,22 @@ IMPACT_TERMS = {
     "canceled":10,"cancelled":10,"delay":8,"delayed":8,
 }
 ROUTINE_TERMS = {"opinion":-10,"review":-8,"podcast":-8,"how to":-8,"photos":-5,"best":-5,"guide":-5,"sale":-8,"deal":-8}
+UNDERREPORTED_WEIGHTED = {
+    "war":16,"attack":14,"airstrike":14,"missile":14,"ceasefire":12,"mass shooting":18,"shooting":12,
+    "killed":10,"deaths":10,"earthquake":15,"hurricane":15,"tornado":14,"wildfire":14,"flood":10,
+    "outbreak":12,"recall":10,"contamination":13,"public health":12,"supreme court":14,"ruling":11,
+    "executive order":12,"legislation":10,"bill":8,"audit":12,"investigation":13,"inspector general":14,
+    "whistleblower":13,"civil rights":12,"privacy":10,"surveillance":11,"medicaid":11,"medicare":11,
+    "hospital":9,"housing":9,"workers":8,"labor":8,"layoffs":8,"bankruptcy":10,"pollution":11,"water":8,
+    "drought":9,"tribal":10,"indigenous":10,"fraud":10,"settlement":8,"lawsuit":8,"election":10,"voting":9,
+    "humanitarian":12,"famine":15,"refugee":10,
+}
+CONTINUING_TERMS = {
+    "investigation","investigating","lawsuit","court","ruling","appeal","trial","hearing","audit","whistleblower",
+    "recall","outbreak","wildfire","drought","flood","war","ceasefire","humanitarian","pollution","cleanup",
+    "surveillance","medicaid","medicare","housing","election","voting","legislation","bill","regulation","regulator",
+    "bankruptcy","layoffs","strike","workers","civil rights","indigenous",
+}
 
 
 def normalize_url(value: str) -> str:
@@ -61,7 +77,6 @@ def _summary_residual(story: Story) -> str:
 
 
 def technology_has_enough_information(story: Story) -> bool:
-    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
     title=normalize_title(story.title);residual=_summary_residual(story)
     if not title:return False
     title_words=[w for w in title.split() if len(w)>=3]
@@ -75,7 +90,6 @@ def age_hours(story: Story, now: datetime) -> float:
 
 
 def presidential_has_enough_information(story: Story, now: datetime) -> bool:
-    """Keep current U.S.-presidency coverage, but reject stale cards whose feed text adds no context."""
     if age_hours(story,now)<=14*24:return True
     residual=_summary_residual(story)
     return len(residual)>=45 and len([w for w in residual.split() if len(w)>=3])>=7
@@ -109,6 +123,15 @@ def _source_key(value: str) -> str:
     return re.sub(r"[^a-z0-9]+","",(value or "").lower())
 
 
+def _parse_dt(value: str) -> datetime:
+    try:
+        dt=datetime.fromisoformat((value or "").replace("Z","+00:00"))
+    except Exception:
+        return datetime.fromtimestamp(0,tz=timezone.utc)
+    if dt.tzinfo is None:dt=dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(timezone.utc)
+
+
 def _coverage_gap_score(source_count: int) -> int:
     if source_count <= 0:return 96
     if source_count == 1:return 92
@@ -125,11 +148,48 @@ def _coverage_gap_score(source_count: int) -> int:
 
 
 def _coverage_label(source_count: int) -> str:
-    if source_count == 0:return "High underreporting signal"
-    if source_count <= 2:return "Possible underreported — limited corroboration"
+    if source_count == 0:return "High coverage-gap signal · uncorroborated"
+    if source_count <= 2:return "Possible underreported · limited corroboration"
     if source_count <= 6:return "Growing supporting coverage"
     if source_count <= 9:return "Broadening coverage"
-    return "Broad coverage — underreported signal weakening"
+    return "Broad coverage · underreported signal weakening"
+
+
+def _corroboration_score(count: int) -> int:
+    if count<=0:return 15
+    if count==1:return 40
+    if count==2:return 65
+    if count==3:return 80
+    if count==4:return 90
+    return 100
+
+
+def _freshness_score(dt: datetime, now: datetime) -> int:
+    age=max(0.0,(now-dt).total_seconds()/3600)
+    if age<=6:return 100
+    if age<=24:return 95
+    if age<=48:return 88
+    if age<=72:return 78
+    if age<=120:return 62
+    if age<=168:return 48
+    if age<=240:return 32
+    if age<=14*24:return 15
+    return 0
+
+
+def _saturation_penalty(count: int) -> int:
+    if count<=6:return 0
+    if count<=9:return 4
+    if count<=14:return 10
+    return 18
+
+
+def _underreported_importance(story: Story) -> int:
+    text=f"{story.title} {story.summary}".lower();score=20
+    for term,weight in UNDERREPORTED_WEIGHTED.items():
+        if term in text:score+=weight
+    if any(term in text for term in ("opinion","review","podcast","how to","guide","sale","deal")):score-=18
+    return max(0,min(100,score))
 
 
 def _related_score(primary: Story, other: Story) -> float:
@@ -148,12 +208,50 @@ def _what_next(summary: str) -> str:
     return ""
 
 
+def _coverage_windows(related: list[dict], primary_source: str, now: datetime) -> tuple[int,int,int]:
+    recent6=set();recent24=set();prior72=set();primary=_source_key(primary_source)
+    for row in related:
+        skey=_source_key(str(row.get("source","")))
+        if not skey or skey==primary:continue
+        dt=_parse_dt(str(row.get("published_at","")))
+        if dt.timestamp()<=0:continue
+        age=max(0.0,(now-dt).total_seconds()/3600)
+        if age<=6:recent6.add(skey)
+        if age<=24:recent24.add(skey)
+        elif age<=72:prior72.add(skey)
+    return len(recent6),len(recent24),len(prior72)
+
+
+def _momentum_score(count: int, recent6: int, recent24: int, prior72: int, related: list[dict]) -> int:
+    if recent6>=3:return 100
+    if recent6==2:return 92
+    if recent24>=5:return 95
+    if recent24>=3 and recent24>prior72:return 85
+    if recent24>=2 and recent24>=prior72:return 72
+    if recent24==1 and prior72<=1:return 55
+    if recent24==1:return 40
+    if count>0 and not any(_parse_dt(str(r.get("published_at",""))).timestamp()>0 for r in related):return 45
+    return 20
+
+
+def _continuing_score(story: Story, now: datetime) -> int:
+    age_days=max(0.0,(now-story.published_dt).total_seconds()/86400)
+    score=max(25,70-round(age_days*2.5));text=f"{story.title} {story.summary}".lower()
+    if any(term in text for term in CONTINUING_TERMS):score+=18
+    if story.what_next:score+=8
+    if story.background:score+=5
+    return max(0,min(100,score))
+
+
 def enrich_underreported(visible_stories: list[Story], evidence_pool: list[Story], now: datetime) -> None:
-    """Build V6 Underreported evidence packages from the normalized collected story pool."""
     for story in visible_stories:
         if story.category!="underreported":continue
+        evidence=[];primary_source=_source_key(story.source);seen_sources=set();seen_urls=set()
+        for row in story.related or []:
+            skey=_source_key(str(row.get("source","")));url=normalize_url(str(row.get("url","")))
+            if not skey or skey==primary_source or not url or skey in seen_sources or url in seen_urls:continue
+            seen_sources.add(skey);seen_urls.add(url);evidence.append(dict(row))
         candidates=[]
-        primary_source=_source_key(story.source)
         for other in evidence_pool:
             if other.id==story.id or normalize_url(other.url)==normalize_url(story.url):continue
             score=_related_score(story,other)
@@ -162,33 +260,43 @@ def enrich_underreported(visible_stories: list[Story], evidence_pool: list[Story
             if not skey or skey==primary_source:continue
             candidates.append((score,other.published_dt,other))
         candidates.sort(key=lambda row:(row[0],row[1]),reverse=True)
-        distinct=[];seen_sources=set();seen_urls=set()
-        for score,_,other in candidates:
+        for _,_,other in candidates:
             skey=_source_key(other.source);url=normalize_url(other.url)
             if skey in seen_sources or url in seen_urls:continue
-            seen_sources.add(skey);seen_urls.add(url);distinct.append(other)
-            if len(distinct)>=24:break
-        support_count=len(distinct)
-        display=distinct[:4]
-        story.coverage_score=_coverage_gap_score(support_count)
-        story.coverage_label=_coverage_label(support_count)
+            seen_sources.add(skey);seen_urls.add(url)
+            evidence.append({"title":other.title,"url":other.url,"source":other.source,"published_at":other.published_at})
+            if len(evidence)>=24:break
+        support_count=len(evidence);display=evidence[:4]
         story.supporting_source_count=support_count
+        story.coverage_gap_score=_coverage_gap_score(support_count)
+        story.coverage_label=_coverage_label(support_count)
         story.what_happened=story.summary if len(story.summary.strip())>=40 else f"The available report identifies this development: {story.title}."
-        if support_count<=2:
-            story.what_is_missing=(f"Only {support_count} independent supporting publisher{'s were' if support_count!=1 else ' was'} found in the collected V6 source pool. "
-                                   "That is enough to flag a possible coverage gap, but not enough to make a high-confidence underreporting claim.")
+        if support_count==0:
+            story.what_is_missing="No independent supporting publisher was found in the current approved coverage search. That is a coverage-gap signal, but the story is not treated as strongly corroborated until supporting reporting appears."
+        elif support_count<=2:
+            story.what_is_missing=f"Only {support_count} independent supporting publisher{'s were' if support_count!=1 else ' was'} found. The story remains lightly covered, but there is at least some independent corroboration."
         else:
-            story.what_is_missing=(f"The story has {support_count} independent supporting publishers in the collected V6 source pool. "
-                                   "That corroboration helps verify the event while showing how widely the issue has spread beyond the primary report.")
-        older=[r for r in distinct if r.published_dt<story.published_dt]
+            story.what_is_missing=f"The story has {support_count} independent supporting publishers. That corroboration verifies the event while the coverage-gap score measures how broadly it has spread beyond the primary report."
+        older=[r for r in evidence if _parse_dt(str(r.get("published_at","")))<story.published_dt and _parse_dt(str(r.get("published_at",""))).timestamp()>0]
         if older:
-            oldest=min(older,key=lambda r:r.published_dt)
-            age_days=max(1,(story.published_dt-oldest.published_dt).days)
-            story.background=f"Related approved-source reporting reaches back about {age_days} day{'s' if age_days!=1 else ''}. The oldest matched report was from {oldest.source}: {oldest.title}."
+            oldest=min(older,key=lambda r:_parse_dt(str(r.get("published_at",""))))
+            oldest_dt=_parse_dt(str(oldest.get("published_at","")));age_days=max(1,(story.published_dt-oldest_dt).days)
+            story.background=f"Related approved-source reporting reaches back about {age_days} day{'s' if age_days!=1 else ''}. The oldest matched report was from {oldest.get('source','another outlet')}: {oldest.get('title','Related reporting')}."
         else:
-            story.background="No older matched report was identified in the current V6 source pool. This appears to be a newer development and the background section will deepen as related reporting is collected."
+            story.background="No older matched report was identified in the current evidence pool. This appears to be a newer development and the background section will deepen as related reporting is collected."
         story.what_next=_what_next(story.summary)
-        story.related=[{"title":r.title,"url":r.url,"source":r.source,"published_at":r.published_at} for r in display]
+        recent6,recent24,prior72=_coverage_windows(evidence,story.source,now)
+        story.recent_supporting_sources_6h=recent6;story.recent_supporting_sources_24h=recent24;story.prior_supporting_sources_72h=prior72
+        story.corroboration_score=_corroboration_score(support_count)
+        story.freshness_score=_freshness_score(story.published_dt,now)
+        story.coverage_momentum_score=_momentum_score(support_count,recent6,recent24,prior72,evidence)
+        story.continuing_relevance_score=_continuing_score(story,now)
+        story.saturation_penalty=_saturation_penalty(support_count)
+        importance=_underreported_importance(story)
+        priority=round(importance*.25+story.corroboration_score*.20+story.freshness_score*.20+story.coverage_gap_score*.15+story.coverage_momentum_score*.10+story.continuing_relevance_score*.10-story.saturation_penalty)
+        story.underreported_priority=max(0,min(100,priority))
+        story.coverage_score=story.underreported_priority
+        story.related=display
 
 
 def process(stories: list[Story], registry: dict, *, now: datetime | None=None) -> list[Story]:
@@ -208,7 +316,11 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
     output=[]
     for category, rows in by_cat.items():
         cfg=registry["categories"][category];target=int(cfg.get("target",50));source_cap=int(cfg.get("source_cap",8))
-        rows.sort(key=lambda s:(s.importance,s.published_dt), reverse=True);chosen=[];source_counts=defaultdict(int)
+        if category=="underreported":
+            rows.sort(key=lambda s:(s.underreported_priority,s.freshness_score,s.coverage_momentum_score,s.importance,s.corroboration_score,s.published_dt),reverse=True)
+        else:
+            rows.sort(key=lambda s:(s.importance,s.published_dt), reverse=True)
+        chosen=[];source_counts=defaultdict(int)
         for story in rows:
             source_key=re.sub(r"[^a-z0-9]+"," ",story.source.lower()).strip() or "unknown"
             if source_counts[source_key]>=source_cap or any(near_duplicate(story,prior) for prior in chosen): continue
@@ -216,5 +328,5 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
             if len(chosen)>=target: break
         output.extend(chosen)
     category_order={name:i for i,name in enumerate(registry["categories"])}
-    output.sort(key=lambda s:(category_order[s.category], -s.importance, -s.published_dt.timestamp()))
+    output.sort(key=lambda s:(category_order[s.category], -(s.underreported_priority if s.category=="underreported" else s.importance), -s.published_dt.timestamp()))
     return output
