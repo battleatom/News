@@ -26,10 +26,18 @@ def _key(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "", _clean(value).lower().replace("&", " and "))
 
 
-def _json(url: str) -> dict:
-    request = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
+def _request(url: str, accept: str) -> bytes:
+    request = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": accept, "Accept-Language": "en-US,en;q=0.8"})
     with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
-        return json.load(response)
+        return response.read()
+
+
+def _json(url: str) -> dict:
+    return json.loads(_request(url, "application/json").decode("utf-8", "replace"))
+
+
+def _text(url: str) -> str:
+    return _request(url, "text/html,application/xhtml+xml").decode("utf-8", "replace")
 
 
 def _similarity(left: str, right: str) -> float:
@@ -79,6 +87,82 @@ def _tmdb(title: str, release_date: str = "") -> dict:
         "tmdbId": best.get("id") or "",
         "metadataSource": "TMDB",
         "artworkSource": "TMDB" if poster else "",
+    }
+
+
+def _meta(page: str, key: str) -> str:
+    patterns = [
+        rf'<meta[^>]+property=["\']{re.escape(key)}["\'][^>]+content=["\']([^"\']+)["\']',
+        rf'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']{re.escape(key)}["\']',
+        rf'<meta[^>]+name=["\']{re.escape(key)}["\'][^>]+content=["\']([^"\']+)["\']',
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, page, re.I | re.S)
+        if match:
+            return html.unescape(match.group(1)).strip()
+    return ""
+
+
+def _tmdb_web(title: str, release_date: str = "") -> dict:
+    try:
+        search_url = "https://www.themoviedb.org/search/movie?" + urllib.parse.urlencode({"query": title, "language": "en-US"})
+        search_page = _text(search_url)
+    except Exception:
+        return {}
+    paths = []
+    for match in re.finditer(r'href=["\'](/movie/\d+[^"\']*)["\']', search_page, re.I):
+        path = html.unescape(match.group(1)).split("?")[0]
+        if path not in paths:
+            paths.append(path)
+        if len(paths) >= 8:
+            break
+    target_year = (release_date or "")[:4]
+    best = {}
+    best_score = 0.0
+    for path in paths:
+        try:
+            page = _text(urllib.parse.urljoin("https://www.themoviedb.org", path))
+        except Exception:
+            continue
+        page_title = _meta(page, "og:title") or _clean((re.search(r"<title[^>]*>(.*?)</title>", page, re.I | re.S) or ["", ""])[1])
+        page_title = re.sub(r"\s*[—|-]\s*The Movie Database.*$", "", page_title, flags=re.I).strip()
+        score = _similarity(title, re.sub(r"\s*\(\d{4}\)\s*$", "", page_title))
+        if target_year and target_year in page:
+            score += 0.06
+        poster = _meta(page, "og:image") or _meta(page, "twitter:image")
+        if poster:
+            score += 0.03
+        if score > best_score and poster:
+            movie_id_match = re.search(r"/movie/(\d+)", path)
+            best_score = score
+            best = {
+                "poster": poster,
+                "overview": _meta(page, "og:description"),
+                "tmdbId": movie_id_match.group(1) if movie_id_match else "",
+                "metadataSource": "TMDB Web",
+                "artworkSource": "TMDB Web",
+            }
+    return best if best_score >= 0.78 else {}
+
+
+def _showtimes_artwork(movie_url: str) -> dict:
+    if not movie_url or "showtimes.com" not in movie_url:
+        return {}
+    try:
+        page = _text(movie_url)
+    except Exception:
+        return {}
+    poster = _meta(page, "og:image") or _meta(page, "twitter:image")
+    if not poster:
+        image_matches = re.findall(r'<img[^>]+(?:src|data-src)=["\']([^"\']+)["\'][^>]*>', page, re.I | re.S)
+        poster = next((html.unescape(url) for url in image_matches if any(token in url.lower() for token in ("poster", "movie", "film"))), "")
+    if not poster:
+        return {}
+    return {
+        "poster": urllib.parse.urljoin(movie_url, poster),
+        "overview": _meta(page, "og:description"),
+        "metadataSource": "Showtimes.com",
+        "artworkSource": "Showtimes.com",
     }
 
 
@@ -144,8 +228,7 @@ def _wikipedia(title: str, release_date: str = "") -> dict:
 def ensure_movie_artwork(movies: list[dict]) -> dict:
     total = len(movies)
     filled = 0
-    tmdb_filled = 0
-    wiki_filled = 0
+    source_fills: dict[str, int] = {}
     for movie in movies:
         if movie.get("poster"):
             movie.setdefault("artworkSource", movie.get("metadataSource") or "existing")
@@ -155,6 +238,10 @@ def ensure_movie_artwork(movies: list[dict]) -> dict:
             continue
         release_date = str(movie.get("releaseDate") or "")
         result = _tmdb(title, release_date)
+        if not result.get("poster"):
+            result = _tmdb_web(title, release_date)
+        if not result.get("poster"):
+            result = _showtimes_artwork(str(movie.get("movieUrl") or ""))
         if not result.get("poster"):
             result = _wikipedia(title, release_date)
         if not result.get("poster"):
@@ -170,10 +257,7 @@ def ensure_movie_artwork(movies: list[dict]) -> dict:
             movie["metadataSource"] = result["metadataSource"]
         movie["artworkSource"] = result.get("artworkSource") or result.get("metadataSource") or "fallback"
         filled += 1
-        if movie["artworkSource"] == "TMDB":
-            tmdb_filled += 1
-        elif movie["artworkSource"] == "Wikipedia":
-            wiki_filled += 1
+        source_fills[movie["artworkSource"]] = source_fills.get(movie["artworkSource"], 0) + 1
     poster_count = sum(bool(movie.get("poster")) for movie in movies)
     return {
         "movieCount": total,
@@ -181,7 +265,6 @@ def ensure_movie_artwork(movies: list[dict]) -> dict:
         "missingPosterCount": max(0, total - poster_count),
         "posterCoverage": round((poster_count / total), 4) if total else 0.0,
         "fallbackFilled": filled,
-        "tmdbFallbackFilled": tmdb_filled,
-        "wikipediaFallbackFilled": wiki_filled,
+        "fallbackFilledBySource": source_fills,
         "tmdbConfigured": bool(TMDB_API_KEY),
     }
