@@ -47,6 +47,21 @@ def near_duplicate(a: Story, b: Story) -> bool:
     aa,bb=normalize_title(a.title),normalize_title(b.title)
     return len(ta & tb)>=4 and min(len(aa),len(bb))>=35 and SequenceMatcher(None,aa,bb).ratio()>=0.92
 
+def technology_has_enough_information(story: Story) -> bool:
+    """Reject only Technology cards where both headline and feed summary are effectively empty of context."""
+    title=normalize_title(story.title);summary=normalize_title(story.summary);source=normalize_title(story.source)
+    if not title:return False
+    # Remove boilerplate source/title text from the summary before measuring what new information it adds.
+    residual=summary
+    for token in sorted((title,source),key=len,reverse=True):
+        if token:residual=residual.replace(token," ")
+    residual=re.sub(r"\s+"," ",residual).strip()
+    title_words=[w for w in title.split() if len(w)>=3]
+    residual_words=[w for w in residual.split() if len(w)>=3]
+    # A descriptive headline can stand on its own. Short/vague headlines need a summary that adds real context.
+    if len(title_words)>=5 or len(title)>=42:return True
+    return len(residual_words)>=8 and len(residual)>=55
+
 def age_hours(story: Story, now: datetime) -> float:
     return max(0.0, (now - story.published_dt).total_seconds()/3600)
 
@@ -78,6 +93,7 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
         if story.category not in valid_categories: continue
         story.title=re.sub(r"\s+"," ",story.title).strip();story.summary=re.sub(r"\s+"," ",story.summary).strip();story.url=normalize_url(story.url)
         if not story.title or not story.url or not relevant_to_category(story): continue
+        if story.category=="technology" and not technology_has_enough_information(story): continue
         story.importance=importance_score(story,now);story.why_matters=why_matters(story);cleaned.append(story)
     by_cat=defaultdict(list)
     for story in cleaned: by_cat[story.category].append(story)
