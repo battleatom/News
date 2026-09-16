@@ -23,7 +23,7 @@ CATEGORY_RULES = {
         "exclude": {"college football","soccer","nba","mlb"},
     },
     "presidential": {
-        "include": {"president","white house","administration","executive order","presidential"},
+        "include": set(),
         "exclude": {"sports president","company president"},
     },
     "federal": {
@@ -47,6 +47,38 @@ CATEGORY_RULES = {
         "exclude": set(),
     },
 }
+
+# Presidential is a U.S.-presidency surface, not a global presidential-politics feed.
+# Require an explicit current U.S. presidency / White House signal in the story content.
+US_PRESIDENTIAL_DIRECT_PATTERNS = (
+    r"\bdonald trump\b",
+    r"\bpresident trump\b",
+    r"\btrump administration\b",
+    r"\bthe white house\b|\bwhite house\b",
+    r"\bpresident of the united states\b",
+    r"\bu\.?s\.? president\b",
+    r"\boval office\b",
+    r"\bvice president vance\b",
+    r"\bjd vance\b|\bj\.d\. vance\b",
+    r"\bwhite house press secretary\b",
+)
+US_PRESIDENTIAL_ACTION_PATTERNS = (
+    r"\bexecutive order\b",
+    r"\bpresidential (?:action|memorandum|proclamation)\b",
+    r"\bcabinet meeting\b",
+)
+US_CONTEXT_PATTERNS = (
+    r"\bunited states\b",
+    r"\bu\.?s\.?\b",
+    r"\bamerican\b",
+    r"\bwhite house\b",
+)
+FORMER_OFFICE_PATTERNS = (
+    r"\bformer president\b",
+    r"\bformer vice president\b",
+    r"\bex-president\b",
+    r"\bex-vice president\b",
+)
 
 # Legislation is intentionally strict. Generic mentions of "law", "rule", or
 # a government publisher are not enough; the story must describe a concrete
@@ -74,6 +106,19 @@ def _text(story) -> str:
 def _content_text(story) -> str:
     return re.sub(r"\s+", " ", f"{story.title} {story.summary}".lower()).strip()
 
+def _presidential_relevant(story) -> bool:
+    text=_content_text(story)
+    if not text:
+        return False
+    direct=any(re.search(pattern,text,re.I) for pattern in US_PRESIDENTIAL_DIRECT_PATTERNS)
+    if any(re.search(pattern,text,re.I) for pattern in FORMER_OFFICE_PATTERNS) and not direct:
+        return False
+    if direct:
+        return True
+    us_context=any(re.search(pattern,text,re.I) for pattern in US_CONTEXT_PATTERNS)
+    presidential_action=any(re.search(pattern,text,re.I) for pattern in US_PRESIDENTIAL_ACTION_PATTERNS)
+    return us_context and presidential_action
+
 def _legislation_relevant(story) -> bool:
     text=_content_text(story)
     if not text or len(re.sub(r"[^a-z0-9]+","",text))<12:
@@ -89,6 +134,8 @@ def relevant_to_category(story) -> bool:
     text = _text(story)
     if any(term in text for term in rules["exclude"]):
         return False
+    if story.category=="presidential":
+        return _presidential_relevant(story)
     if story.category=="legislation":
         return _legislation_relevant(story)
     includes = rules["include"]
