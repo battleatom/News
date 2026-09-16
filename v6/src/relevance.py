@@ -48,12 +48,24 @@ CATEGORY_RULES = {
     },
 }
 
+# Legislation is intentionally strict. Generic mentions of "law", "rule", or
+# a government publisher are not enough; the story must describe a concrete
+# legislative, regulatory, or executive legal action.
 LEGISLATION_PATTERNS = (
-    r"\b(?:bill|legislation|statute|law|regulation|rulemaking|proposed rule|final rule|rule change|regulatory action)\b",
+    r"\b(?:proposed|final|interim|emergency) rule\b",
+    r"\brulemaking\b",
+    r"\bregulation(?:s| change| changes| proposal| proposals)?\b",
+    r"\bregulatory (?:action|proposal|change|changes|notice)\b",
+    r"\b(?:bill|measure|legislation) (?:introduced|filed|passed|approved|signed|vetoed|enacted|advances?|clears?|would|to)\b",
+    r"\b(?:introduced|filed|passed|approved|signed|vetoed|enacted) (?:a |the )?(?:bill|measure|legislation)\b",
+    r"\bsigned (?:a |the )?[^.]{0,80}\binto law\b",
+    r"\benacted (?:into law|legislation|statute)\b",
+    r"\bstatute(?:s| amendment| amendments)?\b",
     r"\bexecutive order\s+\d+\b",
     r"\b(?:house|senate) (?:bill|resolution|joint resolution)\b",
     r"\b(?:h\.?\s*r\.?|s\.?|h\.?\s*res\.?|s\.?\s*res\.?|h\.?\s*j\.?\s*res\.?|s\.?\s*j\.?\s*res\.?)\s*\d+\b",
-    r"\bpublic inspection\b.*\b(?:rule|regulation|regulatory|exchange|commission)\b",
+    r"\bpublic inspection\b.*\b(?:proposed rule|final rule|rulemaking|regulation|regulatory|exchange|commission)\b",
+    r"\b(?:appropriations?|authorization) act\b",
 )
 
 def _text(story) -> str:
