@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright
 def main():
     parser=argparse.ArgumentParser();parser.add_argument("--base",default="http://127.0.0.1:8766/");parser.add_argument("--require-boxoffice",action="store_true");args=parser.parse_args()
     with sync_playwright() as p:
-        browser=p.chromium.launch();page=browser.new_page(viewport={"width":390,"height":844});errors=[];page.on("pageerror",lambda exc:errors.append(str(exc)));page.goto(args.base,wait_until="networkidle");page.wait_for_selector("#tabs .tab")
+        browser=p.chromium.launch();page=browser.new_page(viewport={"width":390,"height":844});errors=[];page.on("pageerror",lambda exc:errors.append(str(exc)));page.goto(args.base,wait_until="domcontentloaded");page.wait_for_selector("#tabs .tab")
         assert page.locator("#tabs .tab").count()>=17
         assert page.locator("#app-shell").evaluate("el=>getComputedStyle(el).position")=="sticky"
         assert page.locator("#markets").count()==1 and page.locator("#refresh-status").count()==1 and page.locator("#location-button").count()==1
