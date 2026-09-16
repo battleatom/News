@@ -7,6 +7,7 @@ from difflib import SequenceMatcher
 
 from model import Story
 from relevance import relevant_to_category
+from diversity import select_diverse
 
 TRACKING = {"utm_source","utm_medium","utm_campaign","utm_term","utm_content","gclid","fbclid"}
 IMPACT_TERMS = {
@@ -320,12 +321,15 @@ def process(stories: list[Story], registry: dict, *, now: datetime | None=None) 
             rows.sort(key=lambda s:(s.underreported_priority,s.freshness_score,s.coverage_momentum_score,s.importance,s.corroboration_score,s.published_dt),reverse=True)
         else:
             rows.sort(key=lambda s:(s.importance,s.published_dt), reverse=True)
-        chosen=[];source_counts=defaultdict(int)
-        for story in rows:
-            source_key=re.sub(r"[^a-z0-9]+"," ",story.source.lower()).strip() or "unknown"
-            if source_counts[source_key]>=source_cap or any(near_duplicate(story,prior) for prior in chosen): continue
-            chosen.append(story);source_counts[source_key]+=1
-            if len(chosen)>=target: break
+        if category=="x":
+            chosen=[];source_counts=defaultdict(int)
+            for story in rows:
+                source_key=re.sub(r"[^a-z0-9]+"," ",story.source.lower()).strip() or "unknown"
+                if source_counts[source_key]>=source_cap or any(near_duplicate(story,prior) for prior in chosen):continue
+                chosen.append(story);source_counts[source_key]+=1
+                if len(chosen)>=target:break
+        else:
+            chosen=select_diverse(rows,target,source_cap,near_duplicate)
         output.extend(chosen)
     category_order={name:i for i,name in enumerate(registry["categories"])}
     output.sort(key=lambda s:(category_order[s.category], -(s.underreported_priority if s.category=="underreported" else s.importance), -s.published_dt.timestamp()))
