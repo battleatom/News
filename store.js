@@ -1,4 +1,4 @@
-export const PAGE_SIZE=20;
+export const PAGE_SIZE=6;
 const BOOKMARK_KEY="underreported-v6-bookmarks";
 const ACTIVE_TAB_KEY="underreported-v6-active-tab";
 const UNDERREPORTED_SORTS=new Set(["signal","newest","oldest","most-sources","least-sources"]);
