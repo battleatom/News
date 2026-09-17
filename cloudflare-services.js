@@ -2,10 +2,11 @@ import runtime,{FeedState} from "./cloudflare-nfl.js";
 
 export {FeedState};
 
+const ESPN_HOST="https://site.web.api.espn.com";
 const MARKET_SYMBOLS=[
   ["^GSPC","S&P 500"],["^DJI","DOW"],["^IXIC","NASDAQ"],["^RUT","RUSSELL 2000"],["^VIX","VIX"],
   ["CL=F","WTI OIL"],["BZ=F","BRENT"],["NG=F","NAT GAS"],["GC=F","GOLD"],["SI=F","SILVER"],
-  ["HG=F","COPPER"],["DX-Y.NYB","U.S. DOLLAR"],["^TNX","10Y"],["BTC-USD","BITCOIN"],["ETH-USD","ETHEREUM"]
+  ["HG=F","COPPER"],["DX-Y.NYB","U.S. DOLLAR"],["^TNX","10Y"],["BTC-USD","BITCOIN"],["ETHEREUM","ETHEREUM"]
 ];
 
 function noStoreJson(value,status=200){return Response.json(value,{status,headers:{"Cache-Control":"no-store, no-cache, max-age=0, must-revalidate"}})}
@@ -18,10 +19,10 @@ function normalizeGame(event){
   return{id:String(event.id||""),name:event.name||"",shortName:event.shortName||"",date:event.date||"",status:type.description||"",detail:type.shortDetail||type.detail||"",state:type.state||"",teams,broadcasts,watchUrl:watch?.href||"",venue:competition.venue?.fullName||"",plays:[]};
 }
 async function fetchEspnScoreboard(query){
-  const url=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard${query?`?${query}`:""}`;
+  const url=`${ESPN_HOST}/apis/site/v2/sports/football/nfl/scoreboard${query?`?${query}`:""}`;
   const r=await fetch(url,{headers:{Accept:"application/json","User-Agent":"Mozilla/5.0 Underreported-V6-Cloudflare/1.0"},cf:{cacheTtl:15}});
   if(!r.ok)throw new Error(`ESPN ${r.status}`);
-  const d=await r.json();
+  const text=await r.text();let d;try{d=JSON.parse(text)}catch{throw new Error(`ESPN returned non-JSON: ${text.slice(0,60)}`)}
   if(!Array.isArray(d?.events))throw new Error("ESPN scoreboard missing events");
   return d;
 }
