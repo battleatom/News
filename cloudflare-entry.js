@@ -4,6 +4,8 @@ const API_URL="https://api.thenewsapi.com/v1/news/all";
 const MAX_CALLS_24H=90;
 const CATEGORY_COOLDOWN_MS=60*60*1000;
 const PUBLISHED_WINDOW_MS=24*60*60*1000;
+const SELF_HEAL_COOLDOWN_MS=5*60*1000;
+const SELF_HEAL_STALE_MS=35*60*1000;
 const FALLBACK_PRIORITY=["local","nm","federal","presidential","legislation","underreported","region","world","us","technology","gaming","military","entertainment","top"];
 const STALE_HOURS={local:8,nm:8,federal:6,presidential:6,legislation:6,underreported:8,region:8,world:6,us:6,technology:6,gaming:8,military:6,entertainment:8,top:4};
 const QUERY={
@@ -115,6 +117,19 @@ export class FeedState extends BaseFeedState{
       status={...status,theNewsApi:{enabled:true,used:false,error:String(error?.message||error)}};
       await this.ctx.storage.put("status",status);return status;
     }
+  }
+
+  async fetch(request){
+    const path=new URL(request.url).pathname;
+    if(path==="/healthz"){
+      const seeded=await this.seed(),now=Date.now(),generated=Date.parse(seeded.status?.generatedAt||""),stale=!Number.isFinite(generated)||now-generated>SELF_HEAL_STALE_MS||seeded.status?.cloudflareBatch?.failed;
+      const lastAttempt=Number(await this.ctx.storage.get("selfHealAttempt")||0);
+      if(stale&&now-lastAttempt>=SELF_HEAL_COOLDOWN_MS){
+        await this.ctx.storage.put("selfHealAttempt",now);
+        await this.refresh();
+      }
+    }
+    return super.fetch(request);
   }
 }
 
