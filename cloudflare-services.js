@@ -17,10 +17,25 @@ function normalizeGame(event){
   const watch=(event.links||[]).find(x=>(x.rel||[]).some(r=>String(r).toLowerCase().includes("watch")));
   return{id:String(event.id||""),name:event.name||"",shortName:event.shortName||"",date:event.date||"",status:type.description||"",detail:type.shortDetail||type.detail||"",state:type.state||"",teams,broadcasts,watchUrl:watch?.href||"",venue:competition.venue?.fullName||"",plays:[]};
 }
+async function fetchEspnScoreboard(query){
+  const url=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard${query?`?${query}`:""}`;
+  const r=await fetch(url,{headers:{Accept:"application/json","User-Agent":"Mozilla/5.0 Underreported-V6-Cloudflare/1.0"},cf:{cacheTtl:15}});
+  if(!r.ok)throw new Error(`ESPN ${r.status}`);
+  const d=await r.json();
+  if(!Array.isArray(d?.events))throw new Error("ESPN scoreboard missing events");
+  return d;
+}
 async function nflSchedule(){
   const now=new Date(),from=new Date(now),to=new Date(now);from.setDate(from.getDate()-1);to.setDate(to.getDate()+7);
-  const url=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=64&dates=${dateYmd(from)}-${dateYmd(to)}`;
-  try{const r=await fetch(url,{headers:{Accept:"application/json"},cf:{cacheTtl:15}});if(!r.ok)throw new Error(`ESPN ${r.status}`);const d=await r.json();return noStoreJson({generatedAt:new Date().toISOString(),games:(d.events||[]).map(normalizeGame),error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true})}catch(error){return noStoreJson({generatedAt:new Date().toISOString(),games:[],error:String(error?.message||error),provider:"ESPN via Cloudflare",cloudflareRuntime:true},502)}
+  const attempts=[`limit=64&dates=${dateYmd(from)}-${dateYmd(to)}`,"limit=64"];
+  let lastError=null;
+  for(const query of attempts){
+    try{
+      const d=await fetchEspnScoreboard(query);
+      return noStoreJson({generatedAt:new Date().toISOString(),games:(d.events||[]).map(normalizeGame),error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true});
+    }catch(error){lastError=error}
+  }
+  return noStoreJson({generatedAt:new Date().toISOString(),games:[],error:String(lastError?.message||lastError||"ESPN unavailable"),provider:"ESPN via Cloudflare",cloudflareRuntime:true},502);
 }
 async function marketRow(symbol,label){
   const url=`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?range=5d&interval=1d`;
@@ -28,7 +43,7 @@ async function marketRow(symbol,label){
 }
 async function markets(){
   const rows=await Promise.all(MARKET_SYMBOLS.map(([symbol,label])=>marketRow(symbol,label))),good=rows.filter(x=>!x.error),errors=rows.filter(x=>x.error);
-  return noStoreJson({generatedAt:new Date().toISOString(),markets:good,providerStatus:{sources:["Yahoo Finance via Cloudflare"],instrumentCount:good.length,failed:errors.map(x=>x.symbol),cloudflareRuntime:true},error:errors.length?`${errors.length} market instruments unavailable`:""},good.length?200:502);
+  return noStoreJson({generatedAt:new Date().toISOString(),markets:good,providerStatus:{sources:["Yahoo Finance via Cloudflare"],instrumentCount:good.length,failed:errors.map(x=>x.symbol),cloudflareRuntime:true},cloudflareRuntime:true,error:errors.length?`${errors.length} market instruments unavailable`:""},good.length?200:502);
 }
 function cleanHtml(value=""){return String(value).replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&nbsp;/gi," ").replace(/\s+/g," ").trim()}
 function parseShowtimes(html){
