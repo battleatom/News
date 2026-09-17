@@ -13,24 +13,29 @@ on:
       - 'pool-maintenance.js'
       - 'wrangler.jsonc'
       - 'package.json'
-      - '.assetsignore'
       - 'weather.js'
       - 'location.js'
       - 'app.js'
       - 'store.js'
+      - 'renderers.js'
       - 'feedback.js'
       - 'nfl-cloudflare-proxy.js'
       - 'index.html'
       - 'styles.css'
-      - 'pool-status.js'
       - 'story-sanitize.js'
+      - 'infinite-scroll.js'
+      - 'story-position.js'
+      - 'status-ux.js'
+      - 'tab-ux.js'
       - 'feed.json'
       - 'status.json'
       - 'nfl.json'
       - 'boxoffice.json'
       - 'markets.json'
-      - 'admin-ops.js'
-      - 'admin-cloudflare.js'
+      - 'admin-ops-cloudflare.js'
+      - 'admin-layout.js'
+      - 'admin-refresh.js'
+      - 'admin-pool.js'
       - 'admin-runtime-files.js'
       - '.github/workflows/cloudflare-deploy.yml'
   workflow_dispatch:
@@ -66,36 +71,43 @@ jobs:
           set -euo pipefail
           rm -rf .cloudflare-assets
           mkdir -p .cloudflare-assets
-          while IFS= read -r file; do
-            case "$file" in
-              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|cloudflare-services.js|cloudflare-safe.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
-                continue
-                ;;
-            esac
+
+          assets=(
+            index.html styles.css app.js store.js renderers.js location.js feedback.js weather.js
+            nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js
+            feed.json status.json nfl.json boxoffice.json markets.json
+          )
+          for file in "${assets[@]}"; do
+            test -f "$file"
             cp "$file" ".cloudflare-assets/$file"
-          done < <(git ls-files | awk 'index($0,"/")==0')
+          done
 
-          # Production bundle uses the Cloudflare same-origin NFL endpoint even
-          # though the historical source file still contains the retired URL.
+          # Historical source still contains old provider URLs. Production is
+          # forced to same-origin Cloudflare endpoints until the source is fully
+          # normalized.
           sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
+          sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard#/api/nfl-scoreboard#g' .cloudflare-assets/app.js
 
-          # Bundle source registries into Cloudflare. Production runtime never
-          # contacts GitHub, Vercel, or Supabase for registry data.
+          # Bundle source registries into Cloudflare. Runtime never contacts GitHub.
           git fetch --depth=1 origin v6
           git show FETCH_HEAD:v6/config/sources.json > .cloudflare-assets/sources.json
           git show FETCH_HEAD:v6/config/sources-extra.json > .cloudflare-assets/sources-extra.json
 
-          test -f .cloudflare-assets/index.html
-          test -f .cloudflare-assets/app.js
-          test -f .cloudflare-assets/nfl-cloudflare-proxy.js
-          test -f .cloudflare-assets/feed.json
-          test -s .cloudflare-assets/sources.json
-          test -s .cloudflare-assets/sources-extra.json
-          if grep -q 'supabase.co' .cloudflare-assets/app.js; then
-            echo 'Supabase reference remains in production app bundle.' >&2
+          jq empty .cloudflare-assets/feed.json .cloudflare-assets/status.json .cloudflare-assets/nfl.json .cloudflare-assets/boxoffice.json .cloudflare-assets/markets.json .cloudflare-assets/sources.json .cloudflare-assets/sources-extra.json
+          jq -e '.sources | type=="array" and length>0' .cloudflare-assets/sources.json >/dev/null
+          jq -e '.sources | type=="array" and length>0' .cloudflare-assets/sources-extra.json >/dev/null
+
+          # Source IDs must be unique across both registries.
+          jq -s '[.[].sources[]?.id] | length == (unique|length)' .cloudflare-assets/sources.json .cloudflare-assets/sources-extra.json | grep -qx true
+
+          # No legacy hosting/runtime references are allowed in browser JS.
+          if grep -Eqi 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' .cloudflare-assets/*.js; then
+            echo 'Legacy/direct-provider reference remains in production browser bundle.' >&2
+            grep -Ein 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' .cloudflare-assets/*.js || true
             exit 1
           fi
-          echo "Prepared $(find .cloudflare-assets -type f | wc -l) production assets"
+          echo "Prepared $(find .cloudflare-assets -type f | wc -l) V6 production assets"
 
       - name: Validate Wrangler config
         run: npx wrangler deploy --dry-run
@@ -106,3 +118,81 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy
+
+      - name: Production V6 smoke audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          SITE='https://news.luckynumbers7ven.workers.dev'
+          sleep 5
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+
+          fetch() {
+            local path="$1" body="$2" headers="$3"
+            local code
+            code=$(curl -sS --retry 4 --retry-delay 2 --retry-all-errors -D "$headers" -o "$body" -w '%{http_code}' "$SITE$path")
+            if [ "$code" != '200' ]; then
+              echo "FAIL $path HTTP $code" >&2
+              cat "$body" >&2 || true
+              return 1
+            fi
+            test -s "$body"
+          }
+
+          scripts=(
+            app.js store.js renderers.js location.js feedback.js weather.js nfl-cloudflare-proxy.js
+            story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js
+          )
+          for file in "${scripts[@]}"; do
+            fetch "/$file?smoke=$GITHUB_SHA" "$tmp/$file" "$tmp/$file.h"
+            if head -c 200 "$tmp/$file" | grep -Eqi '<!doctype html|<html'; then
+              echo "FAIL $file returned HTML" >&2; exit 1
+            fi
+            if grep -Eqi 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' "$tmp/$file"; then
+              echo "FAIL $file contains legacy/direct-provider reference" >&2; exit 1
+            fi
+            echo "OK script $file"
+          done
+
+          jsons=(feed.json status.json nfl.json markets.json boxoffice.json sources.json sources-extra.json)
+          for file in "${jsons[@]}"; do
+            fetch "/$file?smoke=$GITHUB_SHA" "$tmp/$file" "$tmp/$file.h"
+            jq empty "$tmp/$file"
+            if grep -qi '^X-Underreported-Fallback: 1' "$tmp/$file.h"; then
+              echo "FAIL $file is using bundled fallback" >&2; exit 1
+            fi
+            echo "OK json $file"
+          done
+
+          for file in feed.json status.json nfl.json markets.json boxoffice.json; do
+            jq -e '.cloudflareRuntime == true' "$tmp/$file" >/dev/null || { echo "FAIL $file is not Cloudflare runtime" >&2; exit 1; }
+          done
+          jq -e '.sources | type=="array" and length>0' "$tmp/sources.json" >/dev/null
+          jq -e '.sources | type=="array" and length>0' "$tmp/sources-extra.json" >/dev/null
+          jq -s -e '[.[].sources[]?.id] | length == (unique|length)' "$tmp/sources.json" "$tmp/sources-extra.json" >/dev/null
+
+          # Collector/source health: no recorded hard errors.
+          jq -e '((.collectorErrors // []) | length) == 0' "$tmp/status.json" >/dev/null
+          jq -e '([(.sourceStatuses // [])[] | select(.status=="error" or ((.error // "")|length)>0)] | length) == 0' "$tmp/status.json" >/dev/null
+          jq -e '(.sourceCount // 0) > 0 and (.healthySourceCount // 0) > 0' "$tmp/status.json" >/dev/null
+
+          fetch '/healthz' "$tmp/health.json" "$tmp/health.h"
+          jq -e '.runtime == "cloudflare" and (.ageMinutes == null or .ageMinutes <= 35)' "$tmp/health.json" >/dev/null
+
+          fetch '/api/feedback' "$tmp/feedback.json" "$tmp/feedback.h"
+          jq -e '.ok == true and (.pools|type)=="object"' "$tmp/feedback.json" >/dev/null
+
+          fetch '/api/weather?lat=36.7281&lon=-108.2187' "$tmp/weather.json" "$tmp/weather.h"
+          jq -e '.current != null and .daily != null' "$tmp/weather.json" >/dev/null
+
+          fetch '/api/nfl-scoreboard?limit=64' "$tmp/nfl-scoreboard.json" "$tmp/nfl-scoreboard.h"
+          jq -e '.events | type=="array"' "$tmp/nfl-scoreboard.json" >/dev/null
+
+          # The live-play endpoint should exist even when supplied bad input.
+          code=$(curl -sS -o "$tmp/nfl-live.json" -w '%{http_code}' "$SITE/api/nfl-live?gameID=invalid")
+          test "$code" = '400'
+          jq -e '.ok == false and .error == "invalid gameID"' "$tmp/nfl-live.json" >/dev/null
+
+          echo 'PRODUCTION V6 SMOKE AUDIT: PASS'
