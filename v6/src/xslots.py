@@ -8,7 +8,7 @@ def _key(story: Story) -> tuple[str, str]:
 
 
 def select_fixed_x_slots(processed: list[Story], raw: list[Story], registry: dict) -> list[Story]:
-    """Replace generic X selection with one current lead per configured fixed X slot."""
+    """Keep one active lead plus one backup candidate for each configured X slot."""
     source_ids = [
         str(source.get("id", ""))
         for source in registry.get("sources", [])
@@ -17,19 +17,33 @@ def select_fixed_x_slots(processed: list[Story], raw: list[Story], registry: dic
     if not source_ids:
         return processed
 
-    chosen: list[Story] = []
+    leads: list[Story] = []
+    backups: list[Story] = []
     used: set[tuple[str, str]] = set()
+
     for source_id in source_ids:
         candidates = [
             story for story in raw
             if story.category == "x" and story.source_id == source_id and story.title and story.url
         ]
         candidates.sort(key=lambda story: story.published_dt, reverse=True)
-        pick = next((story for story in candidates if _key(story) not in used), None)
-        if pick is None and candidates:
-            pick = candidates[0]
-        if pick is not None:
-            used.add(_key(pick))
-            chosen.append(pick)
 
-    return [story for story in processed if story.category != "x"] + chosen
+        picks: list[Story] = []
+        for story in candidates:
+            key = _key(story)
+            if key in used:
+                continue
+            used.add(key)
+            picks.append(story)
+            if len(picks) == 2:
+                break
+
+        if picks:
+            leads.append(picks[0])
+        if len(picks) > 1:
+            backups.append(picks[1])
+
+    # Keep backups first and leads second. The X renderer selects the last surviving
+    # candidate for each topic, so the lead is shown normally and the backup is
+    # promoted immediately if feedback suppresses the lead in the browser.
+    return [story for story in processed if story.category != "x"] + backups + leads
