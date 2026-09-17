@@ -15,23 +15,7 @@
       state:row.querySelector('strong')?.textContent?.trim()||''
     }));
     return{
-      exportedAt:new Date().toISOString(),
-      generatedAt:status.generatedAt||status.generated_at||'',
-      storyCount:status.storyCount??'',
-      poolStoryCount:status.poolStoryCount??'',
-      reserveStoryCount:status.reserveStoryCount??'',
-      sourceCount:status.sourceCount??'',
-      healthySourceCount:status.healthySourceCount??'',
-      warningSourceCount:status.warningSourceCount??'',
-      deadSourceCount:status.deadSourceCount??'',
-      categoryCounts:status.categoryCounts||{},
-      reserveCounts:status.reserveCounts||{},
-      collectorErrors:Array.isArray(status.collectorErrors)?status.collectorErrors:[],
-      sourceStatuses:Array.isArray(status.sourceStatuses)?status.sourceStatuses:[],
-      cloudflareBatch:status.cloudflareBatch||{},
-      runtimeRows,
-      feedCategories:Object.fromEntries(Object.entries(feedData?.stories||{}).map(([k,v])=>[k,Array.isArray(v)?v.length:0])),
-      feedReserves:Object.fromEntries(Object.entries(feedData?.reserves||{}).map(([k,v])=>[k,Array.isArray(v)?v.length:0]))
+      exportedAt:new Date().toISOString(),generatedAt:status.generatedAt||status.generated_at||'',storyCount:status.storyCount??'',poolStoryCount:status.poolStoryCount??'',reserveStoryCount:status.reserveStoryCount??'',sourceCount:status.sourceCount??'',healthySourceCount:status.healthySourceCount??'',warningSourceCount:status.warningSourceCount??'',deadSourceCount:status.deadSourceCount??'',categoryCounts:status.categoryCounts||{},reserveCounts:status.reserveCounts||{},collectorErrors:Array.isArray(status.collectorErrors)?status.collectorErrors:[],sourceStatuses:Array.isArray(status.sourceStatuses)?status.sourceStatuses:[],cloudflareBatch:status.cloudflareBatch||{},runtimeRows,feedCategories:Object.fromEntries(Object.entries(feedData?.stories||{}).map(([k,v])=>[k,Array.isArray(v)?v.length:0])),feedReserves:Object.fromEntries(Object.entries(feedData?.reserves||{}).map(([k,v])=>[k,Array.isArray(v)?v.length:0]))
     };
   }
   function toXml(s){
@@ -41,20 +25,18 @@
     const runtime=s.runtimeRows.map(r=>`<file><path>${escXml(r.path)}</path><state>${escXml(r.state)}</state><detail>${escXml(r.detail)}</detail></file>`).join('');
     return `<?xml version="1.0" encoding="UTF-8"?><adminDiagnostics><exportedAt>${escXml(s.exportedAt)}</exportedAt><generatedAt>${escXml(s.generatedAt)}</generatedAt><summary><storyCount>${escXml(s.storyCount)}</storyCount><poolStoryCount>${escXml(s.poolStoryCount)}</poolStoryCount><reserveStoryCount>${escXml(s.reserveStoryCount)}</reserveStoryCount><sourceCount>${escXml(s.sourceCount)}</sourceCount><healthySourceCount>${escXml(s.healthySourceCount)}</healthySourceCount><warningSourceCount>${escXml(s.warningSourceCount)}</warningSourceCount><deadSourceCount>${escXml(s.deadSourceCount)}</deadSourceCount></summary><cloudflareBatch>${entries(s.cloudflareBatch)}</cloudflareBatch><categoryCounts>${entries(s.categoryCounts)}</categoryCounts><reserveCounts>${entries(s.reserveCounts)}</reserveCounts><collectorErrors>${collectors}</collectorErrors><sourceStatuses>${sources}</sourceStatuses><runtimeFiles>${runtime}</runtimeFiles><feedCategories>${entries(s.feedCategories)}</feedCategories><feedReserves>${entries(s.feedReserves)}</feedReserves></adminDiagnostics>`;
   }
-  async function run(button){
-    const old=button.textContent;button.disabled=true;button.textContent='Preparing…';
-    try{const s=await snapshot(),stamp=new Date().toISOString().replace(/[:.]/g,'-');download(`admin-diagnostics-${stamp}.xml`,toXml(s),'application/xml;charset=utf-8')}catch(e){console.error(e);alert('Could not export diagnostics: '+(e?.message||e))}finally{button.disabled=false;button.textContent=old}
-  }
+  async function run(button){const old=button.textContent;button.disabled=true;button.textContent='Preparing…';try{const s=await snapshot(),stamp=new Date().toISOString().replace(/[:.]/g,'-');download(`admin-diagnostics-${stamp}.xml`,toXml(s),'application/xml;charset=utf-8')}catch(e){console.error(e);alert('Could not export diagnostics: '+(e?.message||e))}finally{button.disabled=false;button.textContent=old}}
   function ensure(){
-    if(!active())return;
-    const wrap=feed.firstElementChild;if(!wrap||document.getElementById('admin-export-tools'))return;
+    if(!active()||document.getElementById('admin-export-tools'))return;
+    const root=document.getElementById('admin-live-ops');if(!root)return;
     const box=document.createElement('section');box.id='admin-export-tools';box.style.cssText='display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:10px 0';
     box.innerHTML='<strong style="font-size:.7rem">Export diagnostics</strong><button type="button" data-export="xml" style="appearance:none;border:1px solid var(--line);border-radius:999px;padding:8px 14px;background:var(--surface,transparent);color:inherit;font:inherit;font-size:.62rem;font-weight:900;cursor:pointer">Export XML</button><span style="font-size:.56rem;color:var(--muted)">Includes source health, retry history, errors, pool/reserve counts, and runtime checks.</span>';
-    wrap.prepend(box);
-    box.addEventListener('click',e=>{const b=e.target.closest('button[data-export="xml"]');if(b)run(b)});
+    root.prepend(box);box.addEventListener('click',e=>{const b=e.target.closest('button[data-export="xml"]');if(b)run(b)});
   }
-  tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(ensure,400)},true);
-  document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')setTimeout(ensure,250)});
-  new MutationObserver(()=>{if(active())setTimeout(ensure,0)}).observe(feed,{childList:true,subtree:false});
+  const schedule=()=>{if(active())setTimeout(ensure,80)};
+  tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(ensure,350)},true);
+  document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')schedule()});
+  document.addEventListener('v6:adminopsrender',schedule);
+  new MutationObserver(schedule).observe(feed,{childList:true,subtree:true});
   setTimeout(ensure,500);
 })();
