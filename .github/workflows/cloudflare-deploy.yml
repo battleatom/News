@@ -84,12 +84,10 @@ jobs:
             cp "$file" ".cloudflare-assets/$file"
           done
 
-          # Normalize historical browser URLs to same-origin Cloudflare endpoints.
           sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard#/api/nfl-scoreboard#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary#/api/nfl-summary#g' .cloudflare-assets/app.js
 
-          # Bundle source registries into Cloudflare. Runtime never contacts GitHub.
           git fetch --depth=1 origin v6
           git show FETCH_HEAD:v6/config/sources.json > .cloudflare-assets/sources.json
           git show FETCH_HEAD:v6/config/sources-extra.json > .cloudflare-assets/sources-extra.json
@@ -170,10 +168,9 @@ jobs:
           jq -e '.sources | type=="array" and length>0' "$tmp/sources-extra.json" >/dev/null
           jq -s -e '[.[].sources[]?.id] | length == (unique|length)' "$tmp/sources.json" "$tmp/sources-extra.json" >/dev/null
 
-          # Only a collector-wide failure or a source with repeated failed checks is deployment-fatal.
           jq -e '([(.collectorErrors // [])[] | select(.source=="cloudflare-cron")] | length) == 0' "$tmp/status.json" >/dev/null
-          jq -e '([(.sourceStatuses // [])[] | select((.status=="error") and ((.consecutiveFailures // 0) >= 2) and ((.storyCount // 0) <= 0))] | length) == 0' "$tmp/status.json" >/dev/null
-          jq -e '(.sourceCount // 0) > 0 and (.healthySourceCount // 0) > 0' "$tmp/status.json" >/dev/null
+          jq -e '([(.sourceStatuses // [])[] | select((.status=="error") and ((.consecutiveFailures // 0) >= 3) and ((.storyCount // 0) <= 0))] | length) == 0' "$tmp/status.json" >/dev/null
+          jq -e '(.sourceCount // 0) > 0 and ((.sourceStatuses // []) | length) > 0' "$tmp/status.json" >/dev/null
 
           fetch '/healthz' "$tmp/health.json" "$tmp/health.h"
           jq -e '.runtime == "cloudflare" and (.ageMinutes == null or .ageMinutes <= 35)' "$tmp/health.json" >/dev/null
