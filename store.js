@@ -25,8 +25,12 @@ function feedIds(feed){const ids=[];for(const category of Object.keys(feed?.cate
 function norm(value){return String(value||"").toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim()}
 function suppressed(story,pools,category){const url=norm(story.url),title=norm(story.title),source=norm(story.source);const same=(record,requireCategory)=>{if(!record||record.serverCount)return false;if(requireCategory&&norm(record.category||record.tab)!==norm(category))return false;const recordUrl=norm(record.url_key||record.urlKey||record.url);if(recordUrl&&url&&recordUrl===url)return true;const recordTitle=norm(record.title_key||record.titleKey||record.title),recordSource=norm(record.source_key||record.sourceKey||record.source);return Boolean(recordTitle&&recordSource&&recordTitle===title&&recordSource===source)};return(pools.get("D")||[]).some(record=>same(record,false))||["NR","NW"].some(reason=>(pools.get(reason)||[]).some(record=>same(record,true)))}
 function xSlotId(story,index){
-  const direct=String(story?.source_id||story?.sourceId||story?.x_slot||story?.xSlot||"").trim().toLowerCase();
-  if(X_SLOTS.some(([id])=>id===direct))return direct;
+  const direct=String(story?.source_id||story?.sourceId||story?.x_slot||story?.xSlot||"").trim().toLowerCase().replace(/_/g,"-");
+  if(direct){
+    for(const[id]of X_SLOTS){
+      if(direct===id||direct.startsWith(`${id}-`))return id;
+    }
+  }
   const topic=norm(story?.x_topic||story?.xTopic||story?.topic||story?.slot||"");
   if(topic){
     for(const[id,aliases]of X_SLOTS){
@@ -34,17 +38,18 @@ function xSlotId(story,index){
       if(terms.some(term=>term.length>3&&topic.includes(term)))return id;
     }
   }
+  const text=norm(`${story?.title||""} ${story?.summary||""}`);
+  if(text){
+    for(const[id,aliases]of X_SLOTS){
+      const terms=aliases.split(" ").filter(term=>term.length>3);
+      if(terms.some(term=>text.includes(term)))return id;
+    }
+  }
   return X_SLOTS[index%X_SLOTS.length][0];
 }
 function normalizeXPool(rows){
-  const slotCounts=new Map();
   return rows.map((story,index)=>{
-    let source_id=xSlotId(story,index);
-    if(!story?.source_id&&!story?.sourceId&&!story?.x_topic&&!story?.xTopic&&!story?.topic&&!story?.slot){
-      const count=slotCounts.get(source_id)||0;
-      if(count){source_id=X_SLOTS[index%X_SLOTS.length][0]}
-      slotCounts.set(source_id,count+1);
-    }
+    const source_id=xSlotId(story,index);
     return story?.source_id===source_id?story:{...story,source_id};
   });
 }
