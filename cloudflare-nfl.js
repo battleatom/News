@@ -2,103 +2,17 @@ import runtime,{FeedState} from "./cloudflare-runtime.js";
 
 export {FeedState};
 
+const ESPN_HOST="https://site.web.api.espn.com";
 const TEAM_ALIASES={WSH:"WAS",LAR:"LA"};
-
 function normalizeAbbr(value=""){const v=String(value||"").toUpperCase();return TEAM_ALIASES[v]||v}
-function easternDate(value){
-  const dt=new Date(value);if(Number.isNaN(dt.getTime()))return"";
-  const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(dt);
-  const get=t=>parts.find(p=>p.type===t)?.value||"";
-  return `${get("year")}${get("month")}${get("day")}`;
-}
-function parseGameId(value=""){
-  const m=String(value).match(/^(\d{8})_([A-Z0-9]+)@([A-Z0-9]+)$/i);
-  if(!m)return null;
-  return{date:m[1],away:normalizeAbbr(m[2]),home:normalizeAbbr(m[3])};
-}
-function eventTeams(event){
-  const competition=(event.competitions||[{}])[0];
-  const comps=competition.competitors||[];
-  const away=comps.find(x=>x.homeAway==="away")||{},home=comps.find(x=>x.homeAway==="home")||{};
-  return{
-    awayAbbr:normalizeAbbr(away.team?.abbreviation||""),
-    homeAbbr:normalizeAbbr(home.team?.abbreviation||""),
-    awayPts:String(away.score??""),
-    homePts:String(home.score??"")
-  };
-}
+function easternDate(value){const dt=new Date(value);if(Number.isNaN(dt.getTime()))return"";const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(dt),get=t=>parts.find(p=>p.type===t)?.value||"";return`${get("year")}${get("month")}${get("day")}`}
+function parseGameId(value=""){const m=String(value).match(/^(\d{8})_([A-Z0-9]+)@([A-Z0-9]+)$/i);return m?{date:m[1],away:normalizeAbbr(m[2]),home:normalizeAbbr(m[3])}:null}
+function eventTeams(event){const competition=(event.competitions||[{}])[0],comps=competition.competitors||[],away=comps.find(x=>x.homeAway==="away")||{},home=comps.find(x=>x.homeAway==="home")||{};return{awayAbbr:normalizeAbbr(away.team?.abbreviation||""),homeAbbr:normalizeAbbr(home.team?.abbreviation||""),awayPts:String(away.score??""),homePts:String(home.score??"")}}
 function clockValue(v){return typeof v==="object"?(v?.displayValue||""):(v||"")}
 function periodValue(v){return typeof v==="object"?(v?.number||""):(v||"")}
-function normalizePlays(summary){
-  let plays=summary?.plays||[];
-  if(!plays.length)plays=summary?.drives?.current?.plays||[];
-  if(!plays.length)plays=(summary?.drives?.previous||[]).flatMap(x=>x.plays||[]);
-  if(!plays.length)plays=summary?.scoringPlays||[];
-  return plays.filter(p=>p&&(p.text||p.shortText)).slice(-20).map(p=>({
-    clock:clockValue(p.clock),period:periodValue(p.period),text:p.text||p.shortText||""
-  }));
-}
-async function espnJson(path,params,{ttl=2}={}){
-  const q=params instanceof URLSearchParams?params:new URLSearchParams(params||{});
-  const response=await fetch(`https://site.api.espn.com${path}?${q}`,{headers:{Accept:"application/json"},cf:{cacheTtl:ttl,cacheEverything:false}});
-  if(!response.ok)throw new Error(`ESPN ${response.status}`);
-  return response.json();
-}
-async function nflScoreboardResponse(url){
-  try{
-    const params=new URLSearchParams(url.searchParams);
-    params.delete("ts");
-    if(!params.has("limit"))params.set("limit","64");
-    const data=await espnJson('/apis/site/v2/sports/football/nfl/scoreboard',params,{ttl:5});
-    return Response.json(data,{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*","X-Underreported-Provider":"ESPN via Cloudflare"}});
-  }catch(error){
-    return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
-  }
-}
-async function nflSummaryResponse(url){
-  const event=String(url.searchParams.get('event')||'').trim();
-  if(!event)return Response.json({error:'missing event',provider:'ESPN via Cloudflare'},{status:400,headers:{'Cache-Control':'no-store'}});
-  try{
-    const data=await espnJson('/apis/site/v2/sports/football/nfl/summary',new URLSearchParams({event}),{ttl:2});
-    return Response.json(data,{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*","X-Underreported-Provider":"ESPN via Cloudflare"}});
-  }catch(error){
-    return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
-  }
-}
-async function nflLiveResponse(url){
-  const parsed=parseGameId(url.searchParams.get("gameID")||"");
-  if(!parsed)return Response.json({ok:false,error:"invalid gameID"},{status:400,headers:{"Cache-Control":"no-store"}});
-  try{
-    const board=await espnJson('/apis/site/v2/sports/football/nfl/scoreboard',new URLSearchParams({dates:parsed.date,limit:'64'}),{ttl:2});
-    const event=(board.events||[]).find(e=>{
-      const t=eventTeams(e);return easternDate(e.date)===parsed.date&&t.awayAbbr===parsed.away&&t.homeAbbr===parsed.home;
-    });
-    if(!event)return Response.json({ok:false,error:"game not found",provider:"ESPN via Cloudflare"},{status:404,headers:{"Cache-Control":"no-store"}});
-    let summary={};
-    try{summary=await espnJson('/apis/site/v2/sports/football/nfl/summary',new URLSearchParams({event:String(event.id||'')}),{ttl:2})}catch{}
-    const teams=eventTeams(event),statusType=event.status?.type||{},detail=statusType.shortDetail||statusType.detail||statusType.description||"";
-    const period=event.status?.period||summary?.header?.competitions?.[0]?.status?.period||"";
-    const clock=event.status?.displayClock||summary?.header?.competitions?.[0]?.status?.displayClock||"";
-    return Response.json({
-      ok:true,
-      provider:"ESPN via Cloudflare",
-      fetchedAt:new Date().toISOString(),
-      eventId:String(event.id||""),
-      game:{awayPts:teams.awayPts,homePts:teams.homePts,currentPeriod:period,gameClock:clock,gameStatus:detail,state:statusType.state||"",plays:normalizePlays(summary)}
-    },{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*"}});
-  }catch(error){
-    return Response.json({ok:false,error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
-  }
-}
-
-export default{
-  ...runtime,
-  async fetch(request,env,ctx){
-    const url=new URL(request.url);
-    if(url.pathname==="/api/nfl-live")return nflLiveResponse(url);
-    if(url.pathname==="/api/nfl-scoreboard")return nflScoreboardResponse(url);
-    if(url.pathname==="/api/nfl-summary")return nflSummaryResponse(url);
-    return runtime.fetch(request,env,ctx);
-  },
-  async scheduled(controller,env,ctx){return runtime.scheduled(controller,env,ctx)}
-};
+function normalizePlays(summary){let plays=summary?.plays||[];if(!plays.length)plays=summary?.drives?.current?.plays||[];if(!plays.length)plays=(summary?.drives?.previous||[]).flatMap(x=>x.plays||[]);if(!plays.length)plays=summary?.scoringPlays||[];return plays.filter(p=>p&&(p.text||p.shortText)).slice(-20).map(p=>({clock:clockValue(p.clock),period:periodValue(p.period),text:p.text||p.shortText||""}))}
+async function espnJson(path,params,{ttl=2}={}){const q=params instanceof URLSearchParams?params:new URLSearchParams(params||{}),response=await fetch(`${ESPN_HOST}${path}?${q}`,{headers:{Accept:"application/json","User-Agent":"Mozilla/5.0 Underreported-V6-Cloudflare/1.0"},cf:{cacheTtl:ttl,cacheEverything:false}});if(!response.ok)throw new Error(`ESPN ${response.status}`);const text=await response.text();try{return JSON.parse(text)}catch{throw new Error(`ESPN returned non-JSON: ${text.slice(0,60)}`)}}
+async function nflScoreboardResponse(url){try{const params=new URLSearchParams(url.searchParams);params.delete("ts");if(!params.has("limit"))params.set("limit","64");const data=await espnJson('/apis/site/v2/sports/football/nfl/scoreboard',params,{ttl:5});return Response.json(data,{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*","X-Underreported-Provider":"ESPN via Cloudflare"}})}catch(error){return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}})}}
+async function nflSummaryResponse(url){const event=String(url.searchParams.get('event')||'').trim();if(!event)return Response.json({error:'missing event',provider:'ESPN via Cloudflare'},{status:400,headers:{'Cache-Control':'no-store'}});try{const data=await espnJson('/apis/site/v2/sports/football/nfl/summary',new URLSearchParams({event}),{ttl:2});return Response.json(data,{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*","X-Underreported-Provider":"ESPN via Cloudflare"}})}catch(error){return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}})}}
+async function nflLiveResponse(url){const parsed=parseGameId(url.searchParams.get("gameID")||"");if(!parsed)return Response.json({ok:false,error:"invalid gameID"},{status:400,headers:{"Cache-Control":"no-store"}});try{const board=await espnJson('/apis/site/v2/sports/football/nfl/scoreboard',new URLSearchParams({dates:parsed.date,limit:'64'}),{ttl:2}),event=(board.events||[]).find(e=>{const t=eventTeams(e);return easternDate(e.date)===parsed.date&&t.awayAbbr===parsed.away&&t.homeAbbr===parsed.home});if(!event)return Response.json({ok:false,error:"game not found",provider:"ESPN via Cloudflare"},{status:404,headers:{"Cache-Control":"no-store"}});let summary={};try{summary=await espnJson('/apis/site/v2/sports/football/nfl/summary',new URLSearchParams({event:String(event.id||'')}),{ttl:2})}catch{}const teams=eventTeams(event),statusType=event.status?.type||{},detail=statusType.shortDetail||statusType.detail||statusType.description||"",period=event.status?.period||summary?.header?.competitions?.[0]?.status?.period||"",clock=event.status?.displayClock||summary?.header?.competitions?.[0]?.status?.displayClock||"";return Response.json({ok:true,provider:"ESPN via Cloudflare",fetchedAt:new Date().toISOString(),eventId:String(event.id||""),game:{awayPts:teams.awayPts,homePts:teams.homePts,currentPeriod:period,gameClock:clock,gameStatus:detail,state:statusType.state||"",plays:normalizePlays(summary)}},{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*"}})}catch(error){return Response.json({ok:false,error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}})}}
+export default{...runtime,async fetch(request,env,ctx){const url=new URL(request.url);if(url.pathname==="/api/nfl-live")return nflLiveResponse(url);if(url.pathname==="/api/nfl-scoreboard")return nflScoreboardResponse(url);if(url.pathname==="/api/nfl-summary")return nflSummaryResponse(url);return runtime.fetch(request,env,ctx)},async scheduled(controller,env,ctx){return runtime.scheduled(controller,env,ctx)}};
