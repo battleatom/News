@@ -8,6 +8,7 @@ on:
       - 'cloudflare-entry.js'
       - 'cloudflare-runtime.js'
       - 'cloudflare-nfl.js'
+      - 'cloudflare-services.js'
       - 'pool-maintenance.js'
       - 'wrangler.jsonc'
       - 'package.json'
@@ -65,15 +66,15 @@ jobs:
           mkdir -p .cloudflare-assets
           while IFS= read -r file; do
             case "$file" in
-              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
+              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|cloudflare-services.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
                 continue
                 ;;
             esac
             cp "$file" ".cloudflare-assets/$file"
           done < <(git ls-files | awk 'index($0,"/")==0')
 
-          # Bundle the V6 source registries into Cloudflare so scheduled refreshes
-          # never depend on raw.githubusercontent.com at runtime.
+          # Bundle source registries into Cloudflare. Production runtime never
+          # contacts GitHub, Vercel, or Supabase for registry data.
           git fetch --depth=1 origin v6
           git show FETCH_HEAD:v6/config/sources.json > .cloudflare-assets/sources.json
           git show FETCH_HEAD:v6/config/sources-extra.json > .cloudflare-assets/sources-extra.json
