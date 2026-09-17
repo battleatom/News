@@ -29,11 +29,14 @@
         const key=labelToKey[label];if(!key||key==='boxoffice')continue;
         const liveCount=Number(live[key]||0),backupCount=Number(reserve[key]||0),total=liveCount+backupCount;
         const strong=card.querySelector('strong');if(!strong)continue;
-        strong.textContent=String(total);
-        strong.style.color='var(--good)';
+        strong.innerHTML=`<span style="color:var(--good)">${total}</span><span style="color:var(--muted);font-weight:800;margin:0 5px">/</span><span style="color:#2563eb">${backupCount}</span>`;
+        strong.style.fontSize='1.45rem';
+        strong.style.lineHeight='1';
+        strong.style.letterSpacing='-.02em';
         let sub=card.querySelector('[data-pool-breakdown]');
-        if(!sub){sub=document.createElement('div');sub.dataset.poolBreakdown='1';sub.style.cssText='font-size:.52rem;margin-top:3px;line-height:1.25';card.appendChild(sub)}
-        sub.innerHTML=`<span style="color:var(--muted)">${liveCount} live</span>${backupCount?` · <span style="color:#2563eb;font-weight:850">${backupCount} backup</span>`:''}`;
+        if(!sub){sub=document.createElement('div');sub.dataset.poolBreakdown='1';card.appendChild(sub)}
+        sub.style.cssText='font-size:.54rem;color:var(--muted);margin-top:5px;line-height:1.25;font-weight:750';
+        sub.textContent=`${liveCount} live`;
       }
     }finally{busy=false}
   }
