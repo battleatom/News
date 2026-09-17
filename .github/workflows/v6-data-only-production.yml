@@ -3,7 +3,8 @@ name: V6 Data-Only Production Refresh
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/15 * * * *'
+    # Offset from the top of the hour to avoid GitHub Actions peak scheduling congestion.
+    - cron: '2,17,32,47 * * * *'
 
 permissions:
   contents: write
