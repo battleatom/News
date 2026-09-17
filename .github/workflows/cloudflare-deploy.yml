@@ -7,6 +7,7 @@ on:
       - 'cloudflare-worker.js'
       - 'cloudflare-entry.js'
       - 'cloudflare-runtime.js'
+      - 'cloudflare-nfl.js'
       - 'pool-maintenance.js'
       - 'wrangler.jsonc'
       - 'package.json'
@@ -16,6 +17,7 @@ on:
       - 'app.js'
       - 'store.js'
       - 'feedback.js'
+      - 'nfl-cloudflare-proxy.js'
       - 'index.html'
       - 'styles.css'
       - 'pool-status.js'
@@ -63,7 +65,7 @@ jobs:
           mkdir -p .cloudflare-assets
           while IFS= read -r file; do
             case "$file" in
-              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
+              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
                 continue
                 ;;
             esac
@@ -78,6 +80,7 @@ jobs:
 
           test -f .cloudflare-assets/index.html
           test -f .cloudflare-assets/app.js
+          test -f .cloudflare-assets/nfl-cloudflare-proxy.js
           test -f .cloudflare-assets/feed.json
           test -s .cloudflare-assets/sources.json
           test -s .cloudflare-assets/sources-extra.json
