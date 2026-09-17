@@ -1,39 +1,6 @@
 {
-  "generatedAt": "2026-09-17T00:10:44.348620Z",
+  "generatedAt": "2026-09-17T04:20:37.047745Z",
   "games": [
-    {
-      "id": "2026_01_DEN_KC",
-      "name": "Denver Broncos at Kansas City Chiefs",
-      "shortName": "DEN @ KC",
-      "date": "2026-09-15T00:15:00Z",
-      "status": "Final",
-      "detail": "Final",
-      "state": "post",
-      "teams": [
-        {
-          "name": "Denver Broncos",
-          "abbr": "DEN",
-          "score": "10",
-          "homeAway": "away",
-          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
-          "color": "",
-          "alternateColor": ""
-        },
-        {
-          "name": "Kansas City Chiefs",
-          "abbr": "KC",
-          "score": "31",
-          "homeAway": "home",
-          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
-          "color": "",
-          "alternateColor": ""
-        }
-      ],
-      "broadcasts": [],
-      "watchUrl": "",
-      "venue": "",
-      "plays": []
-    },
     {
       "id": "401872932",
       "name": "Detroit Lions at Buffalo Bills",
