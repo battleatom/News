@@ -19,6 +19,8 @@ on:
       - 'nfl.json'
       - 'boxoffice.json'
       - 'markets.json'
+      - 'admin-ops.js'
+      - 'admin-cloudflare.js'
       - '.github/workflows/cloudflare-deploy.yml'
   workflow_dispatch:
 
@@ -36,6 +38,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -59,9 +63,18 @@ jobs:
             esac
             cp "$file" ".cloudflare-assets/$file"
           done < <(git ls-files | awk 'index($0,"/")==0')
+
+          # Bundle the V6 source registries into Cloudflare so scheduled refreshes
+          # never depend on raw.githubusercontent.com at runtime.
+          git fetch --depth=1 origin v6
+          git show FETCH_HEAD:v6/config/sources.json > .cloudflare-assets/sources.json
+          git show FETCH_HEAD:v6/config/sources-extra.json > .cloudflare-assets/sources-extra.json
+
           test -f .cloudflare-assets/index.html
           test -f .cloudflare-assets/app.js
           test -f .cloudflare-assets/feed.json
+          test -s .cloudflare-assets/sources.json
+          test -s .cloudflare-assets/sources-extra.json
           echo "Prepared $(find .cloudflare-assets -type f | wc -l) production assets"
 
       - name: Validate Wrangler config
