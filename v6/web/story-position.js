@@ -3,7 +3,8 @@
   if(!root)return;
   let raf=0;
   const schedule=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;update()})};
-  function activeKey(){return document.querySelector('#tabs .tab[aria-selected="true"]')?.dataset.category||''}
+  function activeTab(){return document.querySelector('#tabs .tab[aria-selected="true"]')}
+  function activeKey(){return activeTab()?.dataset.category||''}
   function topLine(){
     const shell=document.getElementById('app-shell');
     if(!shell)return 16;
@@ -38,14 +39,16 @@
   }
   function update(){
     const ctx=context();if(!ctx)return;
-    const {cards,counter}=ctx,total=parseTotal(ctx.counter,cards.length),line=topLine();
+    const {cards,counter}=ctx,total=parseTotal(counter,cards.length),line=topLine();
     let index=0;
     for(let i=0;i<cards.length;i++){
       const r=cards[i].getBoundingClientRect();
       if(r.top<=line)index=i;else break;
     }
-    const text=`${Math.min(index+1,total||cards.length)} / ${total||cards.length}`;
+    const max=total||cards.length,current=Math.min(index+1,max),text=`${current} / ${max}`;
     if(counter.textContent!==text)counter.textContent=text;
+    const badge=activeTab()?.querySelector('small');
+    if(badge&&badge.textContent!==String(max))badge.textContent=String(max);
   }
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule,{passive:true});
