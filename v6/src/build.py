@@ -12,6 +12,7 @@ from markets import ALPHA_VANTAGE_API_KEY, collect_markets
 from model import Story
 from movie_artwork import ensure_movie_artwork
 from pipeline import process
+from pool_policy import apply_rolling_pool
 from registry import load_registry
 from nfl import collect_nfl
 from specialized import collect_boxoffice
@@ -28,8 +29,6 @@ def write_json(path:Path,payload)->None:path.write_text(json.dumps(payload,inden
 def prepare_dist(*,data_only:bool)->None:
     DIST.mkdir(parents=True,exist_ok=True)
     if data_only:
-        # Critical ownership boundary: a scheduled content refresh may replace JSON only.
-        # It must never delete, copy, or rewrite HTML/CSS/JS application assets.
         for name in DATA_FILES:
             target=DIST/name
             if target.exists():target.unlink()
@@ -58,6 +57,7 @@ def build(*,fixture:Path|None=None,data_only:bool=False)->dict:
         raw,collector_errors=collect_all(registry);collected_raw=list(raw);nfl,nfl_error=collect_nfl();boxoffice,boxoffice_error=collect_boxoffice();artwork_status=ensure_movie_artwork(boxoffice);artwork_status=apply_upcoming_placeholders(boxoffice,artwork_status);markets,markets_error=collect_markets();pools=fetch_pools();raw,feedback_removed=apply_pools(raw,pools)
     stories=process(raw,registry)
     if not fixture:stories=select_fixed_x_slots(stories,raw,registry)
+    stories,pool_policy=apply_rolling_pool(stories,registry)
     prepare_dist(data_only=data_only)
     full_by_category={key:[] for key in registry["categories"]}
     for story in stories:full_by_category.setdefault(story.category,[]).append(story.to_dict())
@@ -70,7 +70,7 @@ def build(*,fixture:Path|None=None,data_only:bool=False)->dict:
     market_sources=sorted({str(row.get("source") or "") for row in markets if row.get("source")})
     alpha_used=sum(1 for row in markets if row.get("source")=="Alpha Vantage")
     market_status={"alphaVantageConfigured":bool(ALPHA_VANTAGE_API_KEY) if not fixture else False,"alphaVantageUsed":alpha_used,"sources":market_sources,"instrumentCount":len(markets)}
-    write_json(DIST/"feed.json",{"version":"6","generatedAt":generated,"categories":registry["categories"],"stories":by_category,"reserves":reserves})
+    write_json(DIST/"feed.json",{"version":"6","generatedAt":generated,"categories":registry["categories"],"stories":by_category,"reserves":reserves,"poolPolicy":pool_policy})
     write_json(DIST/"nfl.json",{"generatedAt":generated,"games":nfl,"error":nfl_error})
     write_json(DIST/"boxoffice.json",{"generatedAt":generated,"localCity":"Farmington, NM","movies":boxoffice,"artwork":artwork_status,"error":boxoffice_error})
     write_json(DIST/"markets.json",{"generatedAt":generated,"markets":markets,"providerStatus":market_status,"error":markets_error})
@@ -79,9 +79,10 @@ def build(*,fixture:Path|None=None,data_only:bool=False)->dict:
     for story in collected_raw:
         sid=str(getattr(story,"source_id","") or "")
         if sid:raw_counts[sid]=raw_counts.get(sid,0)+1
-    source_statuses=[] if fixture else [{"id":row.get("id",""),"name":row.get("name",row.get("id","")),"category":row.get("category",""),"status":"error" if row.get("id","") in error_by_source else "live","storyCount":raw_counts.get(row.get("id",""),0),"error":error_by_source.get(row.get("id","") ,"")} for row in registry.get("sources",[])]
+    source_statuses=[] if fixture else [{"id":row.get("id",""),"name":row.get("name",row.get("id","")),"category":row.get("category",""),"status":"error" if row.get("id","") in error_by_source else ("degraded" if raw_counts.get(row.get("id",""),0)==0 else "live"),"storyCount":raw_counts.get(row.get("id",""),0),"error":error_by_source.get(row.get("id","") ,"")} for row in registry.get("sources",[])]
     healthy_sources=sum(1 for row in source_statuses if row["status"]=="live")
-    status={"version":"6","generatedAt":generated,"storyCount":sum(visible_counts.values()),"poolStoryCount":sum(visible_counts.values())+sum(reserve_counts.values()),"categoryCounts":visible_counts,"reserveCounts":reserve_counts,"reserveStoryCount":sum(reserve_counts.values()),"collectorErrors":collector_errors,"sourceStatuses":source_statuses,"sourceCount":len(source_statuses),"healthySourceCount":healthy_sources,"feedbackEnforcement":"server","feedbackPoolCounts":{reason:len(pools.get(reason,[])) for reason in REASONS},"feedbackRemovedCount":sum(feedback_removed.values()),"feedbackRemovedByReason":feedback_removed,"nflError":nfl_error,"boxOfficeError":boxoffice_error,"boxOfficeArtwork":artwork_status,"marketsError":markets_error,"marketData":market_status,"buildMode":"fixture" if fixture else "live","applicationAssetsWritten":not data_only}
+    pool_total=sum(visible_counts.values())+sum(reserve_counts.values())
+    status={"version":"6","generatedAt":generated,"storyCount":pool_total,"visibleStoryCount":sum(visible_counts.values()),"poolStoryCount":pool_total,"categoryCounts":visible_counts,"reserveCounts":reserve_counts,"reserveStoryCount":sum(reserve_counts.values()),"poolPolicy":pool_policy,"collectorErrors":collector_errors,"sourceStatuses":source_statuses,"sourceCount":len(source_statuses),"healthySourceCount":healthy_sources,"feedbackEnforcement":"server","feedbackPoolCounts":{reason:len(pools.get(reason,[])) for reason in REASONS},"feedbackRemovedCount":sum(feedback_removed.values()),"feedbackRemovedByReason":feedback_removed,"nflError":nfl_error,"boxOfficeError":boxoffice_error,"boxOfficeArtwork":artwork_status,"marketsError":markets_error,"marketData":market_status,"buildMode":"fixture" if fixture else "live","applicationAssetsWritten":not data_only}
     write_json(DIST/"status.json",status);return status
 
 def main()->None:
