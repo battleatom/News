@@ -1,0 +1,104 @@
+name: V6 Standalone Architecture Test
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'v6/**'
+      - '.github/workflows/v6-standalone-architecture-test.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v6-standalone-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  standalone:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout candidate
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Enforce V6-only source boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          roots = [Path('v6/src'), Path('v6/web'), Path('v6/config'), Path('v6/tests')]
+          forbidden = [
+              r'v5(?:-preview|/|\\)', r'v4(?:-preview|/|\\)', r'v3(?:/|\\)',
+              r'v2(?:/|\\)', r'v1(?:/|\\)', r'patch_.*\.py',
+          ]
+          hits=[]
+          for root in roots:
+              for p in root.rglob('*'):
+                  if not p.is_file() or p.suffix.lower() not in {'.py','.js','.html','.css','.json','.md'}:
+                      continue
+                  text=p.read_text(errors='ignore')
+                  for pat in forbidden:
+                      if re.search(pat,text,re.I): hits.append(f'{p}: {pat}')
+          if hits:
+              raise SystemExit('Legacy dependency detected:\n'+'\n'.join(hits))
+          print('PASS: V6 source contains no explicit pre-V6 dependency references')
+          PY
+
+      - name: Validate Python and JavaScript
+        run: |
+          python -m py_compile v6/src/*.py v6/tests/test_v6.py v6/tests/browser_smoke.py
+          for f in v6/web/*.js; do node --input-type=module --check < "$f"; done
+
+      - name: V6 unit tests
+        run: python -m unittest discover -s v6/tests -p 'test_*.py'
+
+      - name: Build using only V6 fixture and V6 source
+        run: python v6/src/build.py --fixture v6/tests/fixtures/stories.json
+
+      - name: V6 architecture audit
+        run: python v6/src/audit.py
+
+      - name: Prove dist contains no legacy application assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          bad=[]
+          for p in Path('v6/dist').rglob('*'):
+              if p.is_file() and p.suffix.lower() in {'.js','.html','.css'}:
+                  text=p.read_text(errors='ignore')
+                  if re.search(r'v(?:1|2|3|4|5)(?:\.|/|-preview)', text, re.I): bad.append(str(p))
+          if bad: raise SystemExit('Legacy signatures in V6 dist: '+', '.join(bad))
+          print('PASS: generated V6 dist is legacy-free')
+          PY
+
+      - name: Install browser smoke dependencies
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Browser smoke test standalone build
+        run: |
+          python -m http.server 8766 --bind 127.0.0.1 --directory v6/dist >/tmp/v6-standalone-http.log 2>&1 &
+          echo $! >/tmp/v6-standalone-http.pid
+          sleep 2
+          python v6/tests/browser_smoke.py
+          kill $(cat /tmp/v6-standalone-http.pid) || true
+
+      - name: Upload standalone candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: v6-standalone-candidate
+          path: v6/dist
+          if-no-files-found: error
