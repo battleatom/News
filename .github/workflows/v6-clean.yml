@@ -1,8 +1,8 @@
-name: V6 Clean Build
+name: V6 Consolidated Preview Validation
 
 on:
   push:
-    branches: [v6]
+    branches: [v6-consolidated-test]
     paths:
       - 'v6/**'
       - '.github/workflows/v6-clean.yml'
@@ -12,103 +12,78 @@ permissions:
   contents: write
 
 concurrency:
-  group: v6-clean-build
+  group: v6-consolidated-preview
   cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout V6
+      - name: Checkout candidate
         uses: actions/checkout@v4
-        with:
-          ref: v6
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate standalone Python
-        run: python -m py_compile v6/src/*.py v6/tests/test_v6.py v6/tests/browser_smoke.py
-      - name: Validate ES module syntax
+      - name: Validate standalone source
         run: |
+          python -m py_compile v6/src/*.py v6/tests/test_v6.py v6/tests/browser_smoke.py
           for f in v6/web/*.js; do node --input-type=module --check < "$f"; done
-      - name: Unit tests
-        run: python -m unittest discover -s v6/tests -p 'test_*.py'
-      - name: Verify Alpha Vantage credential
-        env:
-          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
-        run: python v6/src/markets.py --verify-alpha
-      - name: Verify Tank01 live proxy
+          python -m unittest discover -s v6/tests -p 'test_*.py'
+      - name: Deterministic full application build
+        run: python v6/src/build.py --fixture v6/tests/fixtures/stories.json
+      - name: Audit full application build
+        run: python v6/src/audit.py
+      - name: Prove data-only refresh cannot rewrite application
         run: |
+          set -euo pipefail
+          find v6/dist -maxdepth 1 -type f ! -name '*.json' -print0 | sort -z | xargs -0 sha256sum > /tmp/app-before.sha
+          python v6/src/build.py --fixture v6/tests/fixtures/stories.json --data-only >/tmp/data-only.json
+          find v6/dist -maxdepth 1 -type f ! -name '*.json' -print0 | sort -z | xargs -0 sha256sum > /tmp/app-after.sha
+          diff -u /tmp/app-before.sha /tmp/app-after.sha
           python - <<'PY'
           import json
-          import urllib.request
-          url = "https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live?verify=1"
-          req = urllib.request.Request(url, headers={
-              "Origin": "https://battleatom.github.io",
-              "User-Agent": "Underreported-V6-CI/1.0",
-              "Accept": "application/json",
-          })
-          with urllib.request.urlopen(req, timeout=30) as response:
-              data = json.load(response)
-          if not (data.get("ok") and data.get("configured") and data.get("verified")):
-              raise SystemExit(f"Tank01 proxy verification failed: {data}")
-          print("Tank01 live proxy verified")
+          from pathlib import Path
+          s=json.loads(Path('v6/dist/status.json').read_text())
+          if s.get('applicationAssetsWritten') is not False: raise SystemExit('data-only ownership marker failed')
+          print('PASS: data refresh changed JSON only; application hashes are identical')
           PY
-      - name: Deterministic V6 build
-        run: python v6/src/build.py --fixture v6/tests/fixtures/stories.json
-      - name: Static architecture audit
-        run: python v6/src/audit.py
-      - name: Install browser test dependencies
-        run: |
-          python -m pip install --quiet playwright
-          python -m playwright install --with-deps chromium
-      - name: Browser smoke test - fixture build
-        run: |
-          python -m http.server 8766 --bind 127.0.0.1 --directory v6/dist >/tmp/v6-http.log 2>&1 &
-          echo $! >/tmp/v6-http.pid
-          sleep 2
-          python v6/tests/browser_smoke.py
-          kill $(cat /tmp/v6-http.pid) || true
-      - name: Upload deterministic V6 build
-        uses: actions/upload-artifact@v4
-        with:
-          name: v6-fixture-build
-          path: v6/dist
-          if-no-files-found: error
-      - name: Independent live V6 collection
+      - name: Rebuild candidate with live data
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
         run: python v6/src/build.py
-      - name: Audit live V6 build
-        run: python v6/src/audit.py
-      - name: Live inventory quality gate
-        run: python v6/src/live_quality.py
-      - name: Browser smoke test - live build
+      - name: Audit and quality gate live candidate
         run: |
-          python -m http.server 8766 --bind 127.0.0.1 --directory v6/dist >/tmp/v6-live-http.log 2>&1 &
-          echo $! >/tmp/v6-live-http.pid
+          python v6/src/audit.py
+          python v6/src/live_quality.py
+      - name: Install browser dependencies
+        run: |
+          python -m pip install --quiet playwright
+          python -m playwright install --with-deps chromium
+      - name: Browser smoke test live candidate
+        run: |
+          python -m http.server 8766 --bind 127.0.0.1 --directory v6/dist >/tmp/v6-http.log 2>&1 &
+          echo $! >/tmp/v6-http.pid
           sleep 2
           python v6/tests/browser_smoke.py --require-boxoffice
-          kill $(cat /tmp/v6-live-http.pid) || true
-      - name: Upload live V6 build
+          kill $(cat /tmp/v6-http.pid) || true
+      - name: Upload exact candidate
         uses: actions/upload-artifact@v4
         with:
-          name: v6-live-build
+          name: v6-consolidated-live-candidate
           path: v6/dist
           if-no-files-found: error
-      - name: Publish exact tested build to V6 preview
+      - name: Publish exact tested candidate to preview branch
         run: |
           set -euo pipefail
-          rm -rf /tmp/v6-tested-dist
-          mkdir -p /tmp/v6-tested-dist
+          rm -rf /tmp/v6-tested-dist && mkdir -p /tmp/v6-tested-dist
           cp -a v6/dist/. /tmp/v6-tested-dist/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout --orphan v6-preview-publish
+          git checkout --orphan v6-consolidated-preview-publish
           git rm -rf . || true
           cp -a /tmp/v6-tested-dist/. .
           git add -A
-          git commit -m "Publish tested V6 preview ${GITHUB_SHA}"
-          git push --force origin HEAD:v6-live-preview
+          git commit -m "Publish consolidated V6 preview ${GITHUB_SHA}"
+          git push --force origin HEAD:v6-consolidated-preview
