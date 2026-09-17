@@ -17,6 +17,7 @@ on:
       - 'store.js'
       - 'index.html'
       - 'styles.css'
+      - 'pool-status.js'
       - 'feed.json'
       - 'status.json'
       - 'nfl.json'
