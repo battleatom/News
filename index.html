@@ -13,10 +13,7 @@
   <a class="skip-link" href="#feed">Skip to stories</a>
   <div id="app-shell" class="app-shell">
     <header class="masthead">
-      <div class="brand-block">
-        <h1>UNDERREPORTED</h1>
-        <p>High-impact news · local context · less noise</p>
-      </div>
+      <div class="brand-block"><h1>UNDERREPORTED</h1><p>High-impact news · local context · less noise</p></div>
       <div id="health" class="health" aria-live="polite">Loading V6…</div>
     </header>
     <div class="toolbar" aria-label="Site status">
@@ -26,9 +23,7 @@
     <div id="markets" class="markets" aria-label="Market snapshot"></div>
     <nav id="tabs" class="tabs" aria-label="News categories" role="tablist"></nav>
   </div>
-  <main class="page">
-    <section id="feed" class="feed" aria-live="polite"></section>
-  </main>
+  <main class="page"><section id="feed" class="feed" aria-live="polite"></section></main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script src="nfl-cloudflare-proxy.js?v=2"></script>
   <script type="module" src="app.js"></script>
@@ -46,12 +41,12 @@
     const loadAdmin=async()=>{
       if(loaded||loading)return;loading=true;
       try{
-        await loadScript('admin-ops-cloudflare.js?v=3');
+        await loadScript('admin-ops-cloudflare.js?v=4');
         await loadScript('admin-layout.js?v=5');
         await loadScript('admin-refresh.js?v=1');
         await loadScript('admin-pool.js?v=1');
         await loadScript('admin-runtime-files.js?v=4');
-        await loadScript('admin-export.js?v=3');
+        await loadScript('admin-export.js?v=4');
         loaded=true;
         document.dispatchEvent(new CustomEvent('v6:tabchange',{detail:{category:'admin'}}));
       }catch(e){console.warn('Admin diagnostics failed to load',e)}finally{loading=false}
