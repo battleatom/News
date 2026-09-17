@@ -37,6 +37,7 @@ on:
       - 'admin-refresh.js'
       - 'admin-pool.js'
       - 'admin-runtime-files.js'
+      - 'admin-export.js'
       - '.github/workflows/cloudflare-deploy.yml'
   workflow_dispatch:
 
@@ -75,7 +76,7 @@ jobs:
           assets=(
             index.html styles.css app.js store.js renderers.js location.js feedback.js weather.js
             nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
-            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
             feed.json status.json nfl.json boxoffice.json markets.json
           )
           for file in "${assets[@]}"; do
@@ -139,7 +140,7 @@ jobs:
           scripts=(
             app.js store.js renderers.js location.js feedback.js weather.js nfl-cloudflare-proxy.js
             story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
-            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
           )
           for file in "${scripts[@]}"; do
             fetch "/$file?smoke=$GITHUB_SHA" "$tmp/$file" "$tmp/$file.h"
