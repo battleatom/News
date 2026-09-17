@@ -1,10 +1,8 @@
-name: V5 Fresh Filter Shadow
+name: V5 Fresh Filter Shadow (Legacy - Manual Only)
 
+# Legacy V5 diagnostic retained temporarily for historical/manual use.
+# V6 is independently validated by the V6 standalone and clean-build workflows.
 on:
-  push:
-    branches: [v5-tab-filter-rebuild]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -52,16 +50,6 @@ jobs:
         run: |
           python scripts/refine_tech_gaming.py
           python tests/topic_quality_regression.py
-          python - <<'PY'
-          import xml.etree.ElementTree as ET
-          root=ET.parse('News').getroot()
-          items=root.findall('.//item')
-          for cat in ('technology','gaming','us'):
-              rows=[x for x in items if (x.findtext('category') or '').strip()==cat]
-              print('\n'+cat.upper(),len(rows))
-              for i,x in enumerate(rows[:12],1):
-                  print(i,'source='+str(x.findtext('source')),'|',x.findtext('title'))
-          PY
       - name: Compare fresh filters against current V5 feed
         run: python tests/v5_filter_shadow_test.py
       - name: Build site and verify NFL upcoming window
@@ -72,6 +60,4 @@ jobs:
       - name: Print detailed shadow report
         if: always()
         run: |
-          if [ -f v5-filter-shadow-report.json ]; then
-            cat v5-filter-shadow-report.json
-          fi
+          if [ -f v5-filter-shadow-report.json ]; then cat v5-filter-shadow-report.json; fi
