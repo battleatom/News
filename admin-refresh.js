@@ -1,0 +1,31 @@
+(()=>{
+  const tabs=document.getElementById('tabs'),feed=document.getElementById('feed'),refresh=document.getElementById('refresh-status');
+  if(!tabs||!feed)return;
+  const active=()=>!!tabs.querySelector('.tab[data-category="admin"][aria-selected="true"]');
+  const fmt=seconds=>`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
+  const feedSeconds=()=>{const span=5*60*1000,now=Date.now(),next=Math.floor(now/span)*span+span;return Math.max(0,Math.ceil((next-now)/1000))};
+  const browserSeconds=()=>Math.max(0,Number(refresh?.dataset.browserSeconds||0));
+  function ensure(){
+    if(!active())return null;
+    const wrap=feed.firstElementChild;if(!wrap)return null;
+    let bar=document.getElementById('admin-refresh-pills');
+    if(!bar){
+      bar=document.createElement('div');bar.id='admin-refresh-pills';
+      bar.style.cssText='display:flex;flex-wrap:wrap;gap:7px;margin:2px 0 0';
+      bar.innerHTML='<span data-feed-refresh style="display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:5px 10px;border-radius:999px;border:1px solid rgba(21,128,61,.18);background:rgba(21,128,61,.06);color:#15803d;font-size:.62rem;font-weight:900;white-space:nowrap"></span><span data-browser-refresh style="display:inline-flex;align-items:center;gap:7px;min-height:30px;padding:5px 10px;border-radius:999px;border:1px solid rgba(37,99,235,.18);background:rgba(37,99,235,.06);color:#2563eb;font-size:.62rem;font-weight:900;white-space:nowrap"></span>';
+      const anchor=wrap.firstElementChild;anchor?.insertAdjacentElement('afterend',bar);
+    }
+    return bar;
+  }
+  function update(){
+    const bar=ensure();if(!bar)return;
+    const feedPill=bar.querySelector('[data-feed-refresh]'),browserPill=bar.querySelector('[data-browser-refresh]');
+    if(feedPill)feedPill.textContent=`● Production Feed · 5m · ${fmt(feedSeconds())}`;
+    if(browserPill)browserPill.textContent=`● Browser Sync · 1m · ${fmt(browserSeconds())}`;
+  }
+  new MutationObserver(()=>{if(active())queueMicrotask(update)}).observe(feed,{childList:true,subtree:false});
+  tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(update,80)},true);
+  document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')setTimeout(update,40)});
+  setInterval(()=>{if(active())update()},1000);
+  setTimeout(update,180);
+})();
