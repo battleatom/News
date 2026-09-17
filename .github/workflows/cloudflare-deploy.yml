@@ -31,6 +31,7 @@ on:
       - 'markets.json'
       - 'admin-ops.js'
       - 'admin-cloudflare.js'
+      - 'admin-runtime-files.js'
       - '.github/workflows/cloudflare-deploy.yml'
   workflow_dispatch:
 
