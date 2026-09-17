@@ -30,7 +30,7 @@
     <section id="feed" class="feed" aria-live="polite"></section>
   </main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-  <script src="nfl-cloudflare-proxy.js?v=1"></script>
+  <script src="nfl-cloudflare-proxy.js?v=2"></script>
   <script type="module" src="app.js"></script>
   <script src="story-sanitize.js?v=1"></script>
   <script src="infinite-scroll.js?v=2"></script>
@@ -45,12 +45,11 @@
     const loadAdmin=async()=>{
       if(loaded||loading)return;loading=true;
       try{
-        await loadScript('admin-ops.js?v=4');
+        await loadScript('admin-ops-cloudflare.js?v=1');
         await loadScript('admin-layout.js?v=5');
         await loadScript('admin-refresh.js?v=1');
         await loadScript('admin-pool.js?v=1');
-        await loadScript('admin-cloudflare.js?v=1');
-        await loadScript('admin-runtime-files.js?v=1');
+        await loadScript('admin-runtime-files.js?v=2');
         loaded=true;
         document.dispatchEvent(new CustomEvent('v6:tabchange',{detail:{category:'admin'}}));
       }catch(e){console.warn('Admin diagnostics failed to load',e)}finally{loading=false}
