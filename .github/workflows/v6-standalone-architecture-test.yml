@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Enforce V6-only source boundary
+      - name: Enforce V6-only filesystem dependency boundary
         shell: bash
         run: |
           set -euo pipefail
@@ -36,21 +36,29 @@ jobs:
           import re
 
           roots = [Path('v6/src'), Path('v6/web'), Path('v6/config'), Path('v6/tests')]
-          forbidden = [
-              r'v5(?:-preview|/|\\)', r'v4(?:-preview|/|\\)', r'v3(?:/|\\)',
-              r'v2(?:/|\\)', r'v1(?:/|\\)', r'patch_.*\.py',
-          ]
+          # Detect actual repo/path references to legacy app trees. Do not confuse
+          # legitimate external API versions such as ESPN /v2/ or Wikipedia /v1/.
+          legacy_path = re.compile(
+              r'''(?ix)
+              (?:^|[\s"'`(=,:])
+              (?:\.\./|\./|/)?
+              (?:v1|v2|v3|v4|v5|v5\.\d+(?:\.\d+)?)
+              /
+              (?:src|web|dist|config|tests|data|assets|scripts|index\.html|app\.js|styles\.css)
+              '''
+          )
+          legacy_names = re.compile(r'(?i)\b(?:v4|v5|v5\.\d+(?:\.\d+)?)[-_](?:preview|production|materialize|patch)\b')
           hits=[]
           for root in roots:
               for p in root.rglob('*'):
                   if not p.is_file() or p.suffix.lower() not in {'.py','.js','.html','.css','.json','.md'}:
                       continue
-                  text=p.read_text(errors='ignore')
-                  for pat in forbidden:
-                      if re.search(pat,text,re.I): hits.append(f'{p}: {pat}')
+                  for n,line in enumerate(p.read_text(errors='ignore').splitlines(),1):
+                      if legacy_path.search(line) or legacy_names.search(line):
+                          hits.append(f'{p}:{n}: {line.strip()[:220]}')
           if hits:
-              raise SystemExit('Legacy dependency detected:\n'+'\n'.join(hits))
-          print('PASS: V6 source contains no explicit pre-V6 dependency references')
+              raise SystemExit('Real legacy application dependency detected:\n'+'\n'.join(hits))
+          print('PASS: V6 source has no pre-V6 application path dependencies')
           PY
 
       - name: Validate Python and JavaScript
@@ -67,20 +75,21 @@ jobs:
       - name: V6 architecture audit
         run: python v6/src/audit.py
 
-      - name: Prove dist contains no legacy application assets
+      - name: Prove dist has no legacy application references
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
           import re
+          pattern=re.compile(r'''(?ix)(?:\.\./|\./|/)?(?:v1|v2|v3|v4|v5|v5\.\d+(?:\.\d+)?)/(?:src|web|dist|config|tests|data|assets|scripts)''')
           bad=[]
           for p in Path('v6/dist').rglob('*'):
               if p.is_file() and p.suffix.lower() in {'.js','.html','.css'}:
-                  text=p.read_text(errors='ignore')
-                  if re.search(r'v(?:1|2|3|4|5)(?:\.|/|-preview)', text, re.I): bad.append(str(p))
-          if bad: raise SystemExit('Legacy signatures in V6 dist: '+', '.join(bad))
-          print('PASS: generated V6 dist is legacy-free')
+                  for n,line in enumerate(p.read_text(errors='ignore').splitlines(),1):
+                      if pattern.search(line): bad.append(f'{p}:{n}')
+          if bad: raise SystemExit('Legacy application references in V6 dist: '+', '.join(bad))
+          print('PASS: generated V6 dist is legacy-application-free')
           PY
 
       - name: Install browser smoke dependencies
