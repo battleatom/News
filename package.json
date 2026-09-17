@@ -1,0 +1,12 @@
+{
+  "name": "underreported-news",
+  "private": true,
+  "version": "6.0.0",
+  "scripts": {
+    "deploy:cloudflare": "wrangler deploy",
+    "check:cloudflare": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "^4.38.0"
+  }
+}
