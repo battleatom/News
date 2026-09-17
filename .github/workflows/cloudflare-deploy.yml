@@ -15,6 +15,7 @@ on:
       - 'location.js'
       - 'app.js'
       - 'store.js'
+      - 'feedback.js'
       - 'index.html'
       - 'styles.css'
       - 'pool-status.js'
