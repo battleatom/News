@@ -1,0 +1,57 @@
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare-worker.js'
+      - 'wrangler.jsonc'
+      - 'package.json'
+      - '.assetsignore'
+      - 'weather.js'
+      - 'location.js'
+      - 'app.js'
+      - 'store.js'
+      - 'index.html'
+      - 'styles.css'
+      - 'feed.json'
+      - 'status.json'
+      - 'nfl.json'
+      - 'boxoffice.json'
+      - 'markets.json'
+      - '.github/workflows/cloudflare-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate Wrangler config
+        run: npx wrangler deploy --dry-run
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
