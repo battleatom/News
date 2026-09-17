@@ -18,6 +18,7 @@ on:
       - 'index.html'
       - 'styles.css'
       - 'pool-status.js'
+      - 'story-sanitize.js'
       - 'feed.json'
       - 'status.json'
       - 'nfl.json'
