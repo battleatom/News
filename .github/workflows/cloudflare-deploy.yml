@@ -9,6 +9,7 @@ on:
       - 'cloudflare-runtime.js'
       - 'cloudflare-nfl.js'
       - 'cloudflare-services.js'
+      - 'cloudflare-safe.js'
       - 'pool-maintenance.js'
       - 'wrangler.jsonc'
       - 'package.json'
@@ -66,7 +67,7 @@ jobs:
           mkdir -p .cloudflare-assets
           while IFS= read -r file; do
             case "$file" in
-              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|cloudflare-services.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
+              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|cloudflare-runtime.js|cloudflare-nfl.js|cloudflare-services.js|cloudflare-safe.js|pool-maintenance.js|wrangler.jsonc|package.json|package-lock.json|*.py)
                 continue
                 ;;
             esac
