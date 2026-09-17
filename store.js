@@ -1,16 +1,20 @@
 export const PAGE_SIZE=6;
 const BOOKMARK_KEY="underreported-v6-bookmarks";
 const ACTIVE_TAB_KEY="underreported-v6-active-tab";
+const SEEN_STORIES_KEY="underreported-v6-seen-stories";
 const UNDERREPORTED_SORTS=new Set(["signal","newest","oldest","most-sources","least-sources"]);
 function readBookmarks(){try{return JSON.parse(localStorage.getItem(BOOKMARK_KEY)||"[]")}catch{return[]}}
 function writeBookmarks(rows){try{localStorage.setItem(BOOKMARK_KEY,JSON.stringify(rows))}catch{}}
 function readActiveTab(){try{return localStorage.getItem(ACTIVE_TAB_KEY)||"top"}catch{return"top"}}
 function writeActiveTab(category){try{localStorage.setItem(ACTIVE_TAB_KEY,category)}catch{}}
+function readSeenStories(){try{return new Set(JSON.parse(localStorage.getItem(SEEN_STORIES_KEY)||"[]"))}catch{return new Set()}}
+function writeSeenStories(ids){try{localStorage.setItem(SEEN_STORIES_KEY,JSON.stringify([...ids].slice(-5000)))}catch{}}
+function feedIds(feed){const ids=[];for(const category of Object.keys(feed?.categories||{})){for(const story of [...(feed?.stories?.[category]||[]),...(feed?.reserves?.[category]||[])])if(story?.id)ids.push(story.id)}return ids}
 function norm(value){return String(value||"").toLowerCase().replace(/\s+/g," ").trim()}
 function suppressed(story,pools,category){const url=norm(story.url),title=norm(story.title),source=norm(story.source);const same=(record,requireCategory)=>{if(!record||record.serverCount)return false;if(requireCategory&&norm(record.category||record.tab)!==norm(category))return false;const recordUrl=norm(record.url_key||record.urlKey||record.url);if(recordUrl&&url&&recordUrl===url)return true;const recordTitle=norm(record.title_key||record.titleKey||record.title),recordSource=norm(record.source_key||record.sourceKey||record.source);return Boolean(recordTitle&&recordSource&&recordTitle===title&&recordSource===source)};return(pools.get("D")||[]).some(record=>same(record,false))||["NR","NW"].some(reason=>(pools.get(reason)||[]).some(record=>same(record,true)))}
 export class Store{
-  constructor(){this.feed=null;this.nfl={games:[],error:""};this.boxoffice={movies:[],error:""};this.markets={markets:[],error:""};this.status={};this.active=readActiveTab();this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]]);this.bookmarks=readBookmarks();this.newIds=new Set();this.selectedNfl="";this.underreportedSort="signal"}
-  setFeed(feed){this.feed=feed;if(!feed?.categories?.[this.active]&&!["bookmarks","admin"].includes(this.active)){this.active=Object.keys(feed?.categories||{})[0]||"top";writeActiveTab(this.active)}}
+  constructor(){this.feed=null;this.nfl={games:[],error:""};this.boxoffice={movies:[],error:""};this.markets={markets:[],error:""};this.status={};this.active=readActiveTab();this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]]);this.bookmarks=readBookmarks();this.newIds=new Set();this.seenIds=readSeenStories();this.selectedNfl="";this.underreportedSort="signal"}
+  setFeed(feed){const incoming=new Set(feedIds(feed));if(this.feed){const previous=new Set(feedIds(this.feed));this.newIds=new Set([...incoming].filter(id=>!previous.has(id)))}else if(this.seenIds.size){this.newIds=new Set([...incoming].filter(id=>!this.seenIds.has(id)))}else{this.newIds=new Set()}this.feed=feed;for(const id of incoming)this.seenIds.add(id);writeSeenStories(this.seenIds);if(!feed?.categories?.[this.active]&&!["bookmarks","admin"].includes(this.active)){this.active=Object.keys(feed?.categories||{})[0]||"top";writeActiveTab(this.active)}}
   setActive(category){if(["bookmarks","admin"].includes(category)||this.feed?.categories?.[category]){this.active=category;writeActiveTab(category)}if(!this.visible.has(category))this.visible.set(category,PAGE_SIZE)}
   shown(category=this.active){return this.visible.get(category)||PAGE_SIZE}
   loadMore(category=this.active,amount=PAGE_SIZE){this.visible.set(category,this.shown(category)+amount)}
