@@ -5,7 +5,7 @@
     ['script','app.js'],['script','store.js'],['script','renderers.js'],['script','location.js'],['script','feedback.js'],['script','weather.js'],['script','nfl-cloudflare-proxy.js'],['script','story-sanitize.js'],['script','infinite-scroll.js'],['script','story-position.js'],['script','status-ux.js'],['script','tab-ux.js'],['script','admin-ops-cloudflare.js'],['script','admin-layout.js'],['script','admin-refresh.js'],['script','admin-pool.js'],['script','admin-runtime-files.js'],
     ['json','feed.json'],['json','status.json'],['json','nfl.json'],['json','markets.json'],['json','boxoffice.json'],['json','sources.json'],['json','sources-extra.json']
   ];
-  const LEGACY=[['supabase.co','legacy Supabase reference'],['vercel.app','legacy Vercel reference'],['github.io','legacy GitHub Pages reference'],['raw.githubusercontent.com','raw GitHub runtime reference']];
+  const LEGACY=[['supabase'+'.co','legacy Supabase reference'],['vercel'+'.app','legacy Vercel reference'],['github'+'.io','legacy GitHub Pages reference'],['raw.'+'githubusercontent.com','raw GitHub runtime reference']];
   let busy=false;
   const active=()=>!!tabs.querySelector('.tab[data-category="admin"][aria-selected="true"]');
   const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));
