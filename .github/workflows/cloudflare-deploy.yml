@@ -170,7 +170,9 @@ jobs:
           jq -s -e '[.[].sources[]?.id] | length == (unique|length)' "$tmp/sources.json" "$tmp/sources-extra.json" >/dev/null
 
           jq -e '((.collectorErrors // []) | length) == 0' "$tmp/status.json" >/dev/null
-          jq -e '([(.sourceStatuses // [])[] | select(.status=="error" or ((.error // "")|length)>0)] | length) == 0' "$tmp/status.json" >/dev/null
+          # A source is deployment-fatal only when it explicitly failed and produced no usable stories.
+          # Non-empty error text with retained stories is a transient warning and remains visible in Admin.
+          jq -e '([(.sourceStatuses // [])[] | select((.status=="error") and ((.storyCount // 0) <= 0))] | length) == 0' "$tmp/status.json" >/dev/null
           jq -e '(.sourceCount // 0) > 0 and (.healthySourceCount // 0) > 0' "$tmp/status.json" >/dev/null
 
           fetch '/healthz' "$tmp/health.json" "$tmp/health.h"
