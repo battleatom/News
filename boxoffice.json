@@ -1,0 +1,2917 @@
+{
+  "generatedAt": "2026-09-17T11:52:05.046913Z",
+  "localCity": "Farmington, NM",
+  "movies": [
+    {
+      "id": "local-fall-2-deadpoint",
+      "title": "Fall 2: Deadpoint",
+      "releaseDate": "2026-09-02",
+      "overview": "On a perilous climb across Thailand's Mount Kwan, two climbers become trapped thousands of feet above the ground, where vertigo-inducing heights, sheer exposure, and impossible odds turn every moment into a fight for survival.",
+      "poster": "https://image.tmdb.org/t/p/w500/fgSm5ylwiXbIHn8UbUXDjk9RRu4.jpg",
+      "status": "playing",
+      "voteAverage": 6.727,
+      "rating": "PG",
+      "runtime": "1h 37m",
+      "theaters": [
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "2:30pm",
+            "4:55pm",
+            "7:20pm",
+            "9:45pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "Fall 2: Deadpoint Review: Just Too Silly - MacGuffin or Meaning",
+          "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBEZzZhb2I2bGx6azA1LXZiVlhlX2k4WlZ5OEVVOUt3N3RGS0M5bU5lTURiaHdzMXF2OWVucGgwYnpLSExobVBnVDBBdzBTLVR4bTU2Vl9PblgycngtNnI1VnZpcWRpMFdZbkw3aFBiTlc1dEE?oc=5",
+          "source": "MacGuffin or Meaning",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "\"FALL 2: DEADPOINT\" - Review - Next Best Picture",
+          "link": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE0wLVVCeFNOMlg4NHloSEJ3ZmN0WEZwU2FUOHZUOG9iRnBSVUtJTUNiX0t6SXlEY0c3NjNXUVRrbVo1eHhhWjZfV1pZcHBZNVFrNVpZc1ZwWHM?oc=5",
+          "source": "Next Best Picture",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'Fall 2: Deadpoint' ending, explained - Mashable",
+          "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9CUEdEUDRhTVRkOUFkMEk2UkEzdmhBbG1FSnUxN2RVUzRYVmdtWEM1UGJ2eDN1RVNLRWhJTEE4WlJkN3p6RWRFYlQyYzl6dEEzMzlIMEY0YUdOTnVRLTdoUUhFY3BnUFFuWjBuR0t5cEhFcHVXOFBv?oc=5",
+          "source": "Mashable",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-10-06",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1101412,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US",
+        "GB"
+      ],
+      "popularity": 66.9121,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-the-odyssey",
+      "title": "The Odyssey",
+      "releaseDate": "2026-07-17",
+      "overview": "Odysseus, the legendary King of Ithaca, embarks on a long and perilous journey home following the Trojan War. Throughout his voyage, he is forced to confront the whims of gods, mythological monsters, and trials that stretch both his cunning and his humanity to the breaking point.",
+      "poster": "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
+      "status": "playing",
+      "voteAverage": 8.0,
+      "rating": "R",
+      "runtime": "2h 52m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "12:10pm",
+            "4:05pm",
+            "7:45pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "3:30pm",
+            "7:25pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "‘The Odyssey’ Conquers ‘Jurassic World’ to Become Universal’s Highest-Grossing Film Ever - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOMm1DWENualBoWTl6M1AyeFBPMkcyZk9IcTc1YzJfWklPa1dYdDJGdEFsRHhqQXBhMUdTREVwRkR2dFU2U1pPYzhidWZjOGttYm5nVkRZYUNfUWMwMmVfMlpVNTNjdFUxc1dEWFBjeU1QVG5DOGJacmR6czdkMmlfS255ZmZycjBGOWRFT0h4YlJnMERtZTFPN0FCbHVORG9nNmVUOG4yN0tJSW1kMlZMR2pHUThlVkM3cXZsbHhMbw?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Sat, 12 Sep 2026 16:59:34 GMT"
+        },
+        {
+          "title": "‘The Odyssey’ Beats ‘Deadpool & Wolverine’ as Biggest R-Rated Movie of All Time With $1.35 Billion - Variety",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNR3lxd3hKU2dza2N5S1VPZDhlQTB1aFFtcDVVNDR0UXRhQUMtWENROEw0ZXdaYWxObTVERmlzM3BMRndXODhwNEtjRGZBaEFOWlFfb0kyUlM3M1Y4WGozTkY5RV9BNlNxZXZpRWdXOURROS1Kb21HenZXNzJ2N2s3OFo0Q1NnZ1RsV2FlMklnU3VoM3dDbVlNVlpfNGFmNVBwVk9CVXRlczR5V2Z1WTgtWk11UzE?oc=5",
+          "source": "Variety",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The Odyssey’ Was Shot on Real Film. This Is the Only Place Left Making It. - The New York Times",
+          "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5RSUVaaFBFNnhqRVVYZjBaVVpmUlZ6TTU3RHNmRGpBTVJSOTFYOU5FTTBUamV2WUhkcjQ2T3RXUzMxWGl4WTJMM3Y2MkZ0TnhWTDIyOFJiM3ZQdGRtbnBfVzNPcXRoamtrTXV6YlVETU1FRVZpS0E?oc=5",
+          "source": "The New York Times",
+          "pubDate": "Sat, 12 Sep 2026 09:00:33 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-11-17",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1368337,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "GB",
+        "US"
+      ],
+      "popularity": 383.2533,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-by-any-means",
+      "title": "By Any Means",
+      "releaseDate": "",
+      "overview": "In 1960s Mississippi, a young Black FBI agent is forced to partner with a notorious mafia hitman to investigate a wave of brutal civil rights murders.",
+      "poster": "https://image.tmdb.org/t/p/w500/f4hdIed8vh10O8TkQ1CkHS8MQ3G.jpg",
+      "status": "playing",
+      "voteAverage": 7.912,
+      "rating": "R",
+      "runtime": "1h 47m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:40am",
+            "2:15pm",
+            "4:50pm",
+            "7:25pm",
+            "10:00pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "1:50pm",
+            "4:25pm",
+            "7:15pm",
+            "9:50pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "'By Any Means' Review: A Bluntly Drawn Historical Thriller - Variety",
+          "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWjMtM1RnZGlyeEM1UG5lQUZwLUFQWGh3RXE4ZnJGSm1hTXRlckFNdGloejQ1WFBDbVA3N2VKOU1rTXlrU0pOSWNta0lybGt3a2xUa3pZN1pNXzZTbVZVZnF1M2p0bnRoWndpMjBGNEFQWS1sNkZxZW1sSEdXSW02Qm1hQzJfd0JlcFI4?oc=5",
+          "source": "Variety",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
+          "source": "AP News",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'By Any Means' review: Mark Wahlberg takes the Johnny Depp path - Mashable",
+          "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE1pSWkzQ0p5ZlFWd0hHLWtsMDFrNEtFdkkwOHZ4NGpibTdiVVJvS2JOSGZyZGowZ29xbTFVUXdzMlpPenlyRmhOTUhRa0FHMGFvOW9fendERVRhYzRBeFdRWlpnUzNfSWhsUEkwWEFTNkx5N3JZWk00?oc=5",
+          "source": "Mashable",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-10-20",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1380417,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 26.1083,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-cars",
+      "title": "Cars",
+      "releaseDate": "",
+      "overview": "Lightning McQueen, a hotshot rookie race car driven to succeed, discovers that life is about the journey, not the finish line, when he finds himself unexpectedly detoured in the sleepy Route 66 town of Radiator Springs. On route across the country to the big Piston Cup Championship in California to compete against two seasoned pros, McQueen gets to know the town's offbeat characters.",
+      "poster": "https://image.tmdb.org/t/p/w500/2Touk3m5gzsqr1VsvxypdyHY5ci.jpg",
+      "status": "playing",
+      "voteAverage": 7.052,
+      "rating": "G",
+      "runtime": "1h 56m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:00am",
+            "4:25pm",
+            "7:05pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "Animators from Pixar's 'Cars' reveal Utah's inspiration for the movie - KSL News",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQUld2eHVMeHVpekc4ZTAxVXRkbjNmVzBaNHk1SG5UN2Z4dHBlbk1iQlZMc1pCeFNKNXhkekVNYWtCMzFuSW1JYjhxV3drUWZiRWR2dnJuNTZrV25uNHV5M0I1RHVvUGRPM1hBRy01X0F5aGZ1RTY2dXRtNU5fWGtWU0tabFNQNDhBcFdlU3g3RHlCbmI3MjFZbmJBQU1RTWJBUzZ2Uw?oc=5",
+          "source": "KSL News",
+          "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "\"Cars\" races back into theaters after 20 years of inspiring Disney attractions - Attractions Magazine",
+          "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQSFVnSXN2Q3hiM0JBdG9XVy1HVXpFWXVrMDVOWnM5OWdWWkJ1SmpHLXM1N2c1UGc1NlFCV3NqclNta1VWdDdPU2NvMHNmSFVUMWhtLVp3eUNkQTJRVG9RVEhlR0J2X1ltZnh1V2RrODU2WVNRdEYzS0tmQXB5NXFTaEpxRjZTQQ?oc=5",
+          "source": "Attractions Magazine",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Disney and Pixar’s Cars Turns 20! All The Cars Movies In Order & More - Disney Plus",
+          "link": "https://news.google.com/rss/articles/CBMickFVX3lxTE5jRktwejhWS2FjTmJsQ2t1UXZDUWlxMmV5R29JQ2JTSnQwRUZibEZyNlAwNVBFMzRUVFI2YmU2NmV5MVgxUzJwWEJwdTFkSG9XM2I1NWppaGJ2M05SVUROSkNqQ3pnZ3h5aXlDM1VHTUZFZw?oc=5",
+          "source": "Disney Plus",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-17",
+      "leavingDate": "2026-09-17",
+      "leavingSoon": true,
+      "tmdbId": 920,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 29.9926,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-coyote-vs-acme",
+      "title": "Coyote vs. Acme",
+      "releaseDate": "",
+      "overview": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
+      "poster": "https://image.tmdb.org/t/p/w500/kYDCl2y0VPvhT5eYWbMRInPoB03.jpg",
+      "status": "playing",
+      "voteAverage": 7.539,
+      "rating": "PG",
+      "runtime": "1h 41m",
+      "theaters": [
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "1:55pm",
+            "4:20pm",
+            "6:50pm",
+            "9:30pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "‘Coyote vs. Acme’: Family film or existential fable? - America Magazine",
+          "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOTFRrNHI0YjBRMjFFRWQ2dGJ6X2FZMjUwVWJWbTMtbEJGRXdRUzBmWmJRallJVzRxNjIySjEtMEJMekoxZlNKdmxFRTVXeDlmOWZUcGhrQXJKMU5GbjZvRkpfOFgzdi1sR3V3cFVZYmtuZXlkWUFGLTBvNVFLdWtOOHh3?oc=5",
+          "source": "America Magazine",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes - Ars Technica",
+          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNWU9PSzdwTUJXUDFsSHUyblFvTDdKLXBnZmhQMnNYY0hkTmdUTk0xNFhNRW03M1pxaXM2X3BTM0hJdHJqdENOeUllTWx0RFFNSVlDN05hcVZoUkNIbHUxWURySlhCT1pYNi1Hd0o5b0MwVF8wSGJmTDhNWGs1NE02Tmg0a0F2d05jZjZkZUlzdU5RYy02TVZ4OHdENTF4VVhxYTNVSGg3R0FlZw?oc=5",
+          "source": "Ars Technica",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Coyote vs. Acme Review: One Must Imagine Sisyphus Happy - MacGuffin or Meaning",
+          "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9GWS1zNlQyZGpFd2Z2ajNmOWxUSm1fXzdfUHpjOG85OTdhRFl4LWlkcG90eUFEd3l0TlJRZ19mTTh2WnJCbHY5Nm84R0lOajBTNmZiNGl2X3ZoekZUb3dmMUJSMXhfU3RzbTNFMFhUTng?oc=5",
+          "source": "MacGuffin or Meaning",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-29",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1204680,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 539.5072,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-insidious-out-of-the-further",
+      "title": "Insidious: Out of the Further",
+      "releaseDate": "",
+      "overview": "Gemma, a young mother raising her daughter in the house she grew up in, discovers she can travel into The Further, where she possesses an ability to bring what lives there back to the real world.",
+      "poster": "https://image.tmdb.org/t/p/w500/4tTrW9dXCByS5wt2pXVWb58zNjz.jpg",
+      "status": "playing",
+      "voteAverage": 6.5,
+      "rating": "PG",
+      "runtime": "1h 46m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:20am",
+            "1:50pm",
+            "4:20pm",
+            "6:50pm",
+            "9:20pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "2:10pm",
+            "4:40pm",
+            "7:10pm",
+            "9:40pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "Box Office: ‘Insidious: Out of the Further’ Makes $3 Million in Previews - Variety",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxOSFBYd3pheWV1R1NLZW0wd2VvTHdoMnVwTFo0Unl4OFFTX3p6cFQ0RUM1SUFldTg0c0RqWERqVkJvOXd1TWhVT3RyNW10UzkzTEhJZldwZUlxcWZFZENyekRqOVFYOHNjY3gyU1V1VnVTbV9KeDgyMnFsZm9JcHRYNmdmbXNpOEpZOWVEUHVsclhRaFNESWFFTjV4M0JnQQ?oc=5",
+          "source": "Variety",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "INSIDIOUS: OUT OF THE FURTHER Entertains Barbarella - Ain't It Cool News",
+          "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE0weGJHaXBTcDhaZnd0cVhiaVgwcE9NMTBIcFpTRnVkWHNCN29vbElRRzZRQjc1RVFaNW9hUzNlSWJZdVRhZUpkZE00eXNNMWNqbUdXcXhTbmlqVFQ5YUhETUN4MjczTUF3M2tybmhVdXhOeEFXV0dz?oc=5",
+          "source": "Ain't It Cool News",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "There’s a Good Reason They Keep Making More Insidious Movies - Vulture",
+          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxObWcxZmhvanBWSlpMWXpDVFBJXzRyYllvMjNCTVZOc2g3X3kyLTl6SjB0TDZvVlBTQ3kxN056VDkyNzJSc21GU2pleU5SelVHN2V5dU5KcU96TGI3eVM5cWV5Yk1WTlVXeUpCZlhLb0pZU0oxVHlMYkZDOTIzRERrS05pQ2NwOF92bUZtSDh5eFM4SjZJT1c5YlBR?oc=5",
+          "source": "Vulture",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-17",
+      "leavingDate": "2026-09-17",
+      "leavingSoon": true,
+      "tmdbId": 1291595,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 41.2091,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-onslaught",
+      "title": "Onslaught",
+      "releaseDate": "",
+      "overview": "When a rogue squad of genetically engineered super soldiers break loose in the desert, a badass Army sniper must unleash hell to protect her young daughter.",
+      "poster": "https://image.tmdb.org/t/p/w500/cOGtvhc6Ij9KvzM6jZsfQyg0B0O.jpg",
+      "status": "playing",
+      "voteAverage": 6.182,
+      "rating": "R",
+      "runtime": "1h 32m",
+      "theaters": [
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "4:45pm",
+            "9:25pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "Onslaught review – super soldier slasher doesn’t go hard enough - theguardian.com",
+          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPX1VUWjFWWldyUVlhLUhmTUZtelV2a1ZWemszbkRoZWlMRE9ETU1WM0piNHg1dWZ0MHZKZGRBNWZlSGZLcU9sVG9fOUNUYm5uYTduSnlWMHY1d3hSNXNuLS1aVUVPOGYzc0lydzc3cDl4bjdfYVJxT3p0UUdVVEd3elZEUGNPQTVVV0l5VUJqVTY5ci1FTG9pUA?oc=5",
+          "source": "theguardian.com",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Onslaught review: The nastiest action thriller of 2026, and also the most important - Polygon.com",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1YSEwzclpwVWhia1BzVTNqLTVEMVJPcVI0ZUV6T3hiYmxhY0dwSDR1R1J5dXJmT2FzN0JRUkNvSElJX0tzaldWTmxxQkJIeGFLRE9EWUNBdWNMQQ?oc=5",
+          "source": "Polygon.com",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The franchise-ification of everything - Substack",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNQmtnRXQ0UVgyeHNCOHBKVG5pcURKZFpYbi1CN1poN2Z6dC1zZlRLdzVpdGctbTc0UG5QSGhLa0NNLVFiSWx5X2ZFWnNGOGE5dWNua3NGVGU2UmRRTWRNaWNaUjVGc2ZWZ00xV3h1R0JTcGh1SWtTa2dKUWV0WktVV2p5dk1rNzNMYlRyRXhiUmtoOXM?oc=5",
+          "source": "Substack",
+          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-10-06",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1284046,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 14.3047,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-practical-magic-2",
+      "title": "Practical Magic 2",
+      "releaseDate": "",
+      "overview": "The Owens sisters must confront the dark curse that threatens to unravel their family once and for all.",
+      "poster": "https://image.tmdb.org/t/p/w500/ogwQOLbCfncjvBhFb5l0OmQH8KC.jpg",
+      "status": "playing",
+      "voteAverage": 6.055,
+      "rating": "PG",
+      "runtime": "2h 10m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "12:00pm",
+            "2:55pm",
+            "5:50pm",
+            "8:45pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "1:10pm",
+            "4:05pm",
+            "7:00pm",
+            "9:55pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "'Practical Magic 2' steers away from everything enjoyable about the first film - WBUR",
+          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1sYXV6eFBkMmpVcDV1RS1ZWWduVU9adk1yaUxYT1pUNEVqNFpmM1poLThENWZnQXVLYzVCY3NmS0d2ZDgzQ2R0TnZSTkQ0bU91UUlFU1BxaG5zLTg5ek9iRkhDV0JOcFh4TUk5NnN3?oc=5",
+          "source": "WBUR",
+          "pubDate": "Thu, 10 Sep 2026 09:07:54 GMT"
+        },
+        {
+          "title": "57 Thoughts I Had While Watching ‘Practical Magic 2’ - Vogue",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOT1hFSDdaM1NGN1ktbmpPUGt6bTFqTUFTb0xpOWZBN0gwT1RXTWFUVzVyZU5RVjZQWHNDTWtvV1JBM29OS08tbzZ0Rzc0azNuamVyOEhFemIzNXhnb3FYeVdsTXRLVi00RzFwSGdnRUFKNFJoTEtOd3hKNkh1dktPMmNvX0ZIOVk?oc=5",
+          "source": "Vogue",
+          "pubDate": "Sat, 12 Sep 2026 09:00:00 GMT"
+        },
+        {
+          "title": "‘Practical Magic 2’ Review: Live a Little, Live a Lot - The New York Times",
+          "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE5HMVBSLTM1RnNGTEtjcEZjSlRxbXJFV1ZkbkVvRzZOS2ZtemNrZWctNm5nQlZ3d3VUSDFJcmV3bEZ0b29Ed3plR2UyYk1HRjhQVlBaVHBRTFF3cWswMnlkSUFsNHpGYTFucnJwWE1QekxNdG82QTMtTVk2aw?oc=5",
+          "source": "The New York Times",
+          "pubDate": "Thu, 10 Sep 2026 09:03:32 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-10-13",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1302904,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 74.7425,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-resident-evil",
+      "title": "Resident Evil",
+      "releaseDate": "",
+      "overview": "Medical courier Bryan unwittingly finds himself fighting for survival as one fateful, horrifying night collapses around him in chaos.",
+      "poster": "https://image.tmdb.org/t/p/w500/i7UyjfPio0VFHB9rBUZSFyhOoM8.jpg",
+      "status": "playing",
+      "voteAverage": 8.1,
+      "rating": "R",
+      "runtime": "1h 35m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "8:05pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "'Resident Evil' Review: A Near-Perfect Sci-Fi Thriller That Never Steps Off the Gas - Polygon.com",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1WeHJyMWJfRVdmZHNRZXBuX25TOXc4T21JQUhXTl90ZVdyV3BVejVySEtETU42c0RxX19qRnJERFJwQ1VzQjBNSEVPU0dNcW95YmFfT1BYOEJiR20wRFI1VVduMzVOTHVUZWc?oc=5",
+          "source": "Polygon.com",
+          "pubDate": "Wed, 16 Sep 2026 16:01:14 GMT"
+        },
+        {
+          "title": "‘Resident Evil’: Finally, a Great Video Game Movie for People Who Suck at Video Games - Decoding Everything",
+          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBSVXNJanczV0NzTW1uQ2h6ZHRDRVJoTjdtRHVyM3BLM19odVFobVBhWEVkeE5hOEN2NDlOcmhkWEw3Ni1JV3NSTTFxOHRZOVROa3FETzlaaDhZdTZFcmM1MENpTUVpWTFId193TXRR?oc=5",
+          "source": "Decoding Everything",
+          "pubDate": "Wed, 16 Sep 2026 16:02:36 GMT"
+        },
+        {
+          "title": "Resident Evil Review: A Decent Raccoon City Movie That Comes Well-Armed - Den of Geek",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5zeWxGVFdCd0hYa3ZtY2NFWWczeUhQUjl4XzU5bkZhd2RwMVlYYjN3ZmF5eUhZWWNWeUU1OUVfRU1rMnp4aEhRb2dsekw0VFRsX3JCQTZPbDk1UzVnY1NoMlJLMU1wdW1ld1NhbEpfbWZlWUVrOFdyQThBTExhZzA?oc=5",
+          "source": "Den of Geek",
+          "pubDate": "Wed, 16 Sep 2026 16:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-18",
+      "leavingDate": "2026-09-18",
+      "leavingSoon": true,
+      "tmdbId": 1423191,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 169.2206,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-runner",
+      "title": "Runner",
+      "releaseDate": "",
+      "overview": "A former soldier is thrown into a brutal race against time when a critical medical delivery makes him and his unlikely partner the targets of a ruthless cartel. As the mission spirals into a deadly manhunt, every detour, delay, and bullet pushes them closer to failure. With betrayal closing in from every side, they must survive the chase and deliver their cargo to save the life of a little girl.",
+      "poster": "https://image.tmdb.org/t/p/w500/yBKMAIj7clP42UkFejhGDBBoTpb.jpg",
+      "status": "playing",
+      "voteAverage": 7.8,
+      "rating": "PG",
+      "runtime": "1h 37m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:55am",
+            "2:20pm",
+            "4:45pm",
+            "7:15pm",
+            "9:40pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "Runner review – Alan Ritchson and Owen Wilson thriller is serviceable B-movie camp - theguardian.com",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNUhNc043bnVUR3NFQ0YwU0R6UDJVR1g3WlUxT2pDbVhzdVZMTVZVcHY1Rnk0SnZWVlVSWlYzUnF5Ny1CczFEYU9yS0plOXZLR19maDJRT0sxSnd1bGQ2dnBoYm0yT0RRZHNjSFNWeXFiVDRxTElCaTF0Q2ZGVk03WjdVVHNid1JRbzZyMA?oc=5",
+          "source": "theguardian.com",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The Runner review: Take a jog instead of watching this Prime original - Roger Ebert",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOQ1pCNU9IVnFNNEg1Zk5DMEVOdEh4bm91akllRzkwQWxXOXNjVWVXZ09OYUliazd4ZGlkalRvRlEtdUFkZzBGY2lKdlgyaDJRbWZMeENwVmFzNGpiOUk5WGVYQjBYRjE5Z19YeVkybXRZNkhRR2JEVnFib0xPbmZpTDctczlPa2FmU2FxVURn?oc=5",
+          "source": "Roger Ebert",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'The Runner' Review: Gal Gadot in a Race-Against-the-Clock Thriller - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPVHVnRmN0RllRdC1FZklqTnoxa3ZFeHpuUFZ3bVBDdmt2dUwxTU5ycDdZMm9nU3NMVFUxcXlOcXZubkdESi1NRmFONXNCQ1BpLUF4VkJtZHJmc0dXOEE5WlZGS2hfV1FqTUtpbHBuSlZFTVBUeFR6bVBjQndPbXl5OGZIRTNTRGxzZzd6X2t3YkstRkxsLXhxcHZUOFdubk9kUWJldm5qYWdrUlhta3NV?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-10-13",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1377237,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 60.7809,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-spa-weekend",
+      "title": "Spa Weekend",
+      "releaseDate": "",
+      "overview": "Four lifelong friends realize that somewhere between careers, relationships, families, and everyday responsibilities, they’ve forgotten how to take care of themselves and each other. Burned out and overdue for a break, the women escape to a luxury spa retreat for an unforgettable weekend dedicated to fun, laughter, and a lot of really bad decisions.",
+      "poster": "https://image.tmdb.org/t/p/w500/i3I19SbOyz6AIl0cSYdyVJRucMr.jpg",
+      "status": "playing",
+      "voteAverage": 6.8,
+      "rating": "R",
+      "runtime": "1h 37m",
+      "theaters": [
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "2:25pm",
+            "7:05pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "57 Thoughts I Had While Watching ‘Spa Weekend’ - Vogue",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE1hdkwtSWtQaUxkdHU1WnFweE5PRVR3ZWxrZEI2Q3p6M1JlTGE1aHpfZ0hiUDJ3RGRDZkZlX0txN2xtT1dCTnIxcG5kem1xUzhtRWpDMlp5dTdFbEJjd0tOTlZGMU1fS2R0YzNyNzdFWkpUQjZzTEtpM0llT1NuQ3M?oc=5",
+          "source": "Vogue",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The Riotous and Raunchy New Comedy I've Been Raving About to All of My Friends - PureWow",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE84WHZZNUFVbnpBTmhYSXhOSXJRM1BnMERmTThicW1nLUFKbEpXY3FsRFNRd3RJOWhxb2E1d3JmeXpSNW83TWhLZWJrN0xOclBSRWNPSzRBblVzVlUxc3A2cDhtcC1uZWxHeVg2OVBDcw?oc=5",
+          "source": "PureWow",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Spa Weekend’ Review: Leslie Mann and Isla Fisher Go Underserved in a Lukewarm Bath of a Comedy - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNLUJraXE3d045dmQxUjQzLWItZkRDSFQ4OVFLWnoydXhya2RPQkVnTzFmVlB0OG50N2FFdDZucnJMT2dlLXhKREFmRFVUeWhXdV9jZTVWeGcwTTZlcTJOd0hpWDNJNUxPcGg5ZGxYUmhzLXB5X0VLUWtlMUJnWUxocmluVDJYeFZoak0zSUU0dEVRVEhFaml5LVZmN1RPXzFEVG1xMnJVcklnSGpMbFFOa0xMb2VodU4xWnRWeA?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-22",
+      "leavingDate": "2026-09-22",
+      "leavingSoon": true,
+      "tmdbId": 1341138,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 10.1401,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-spider-man-brand-new-day",
+      "title": "Spider-Man: Brand New Day",
+      "releaseDate": "",
+      "overview": "Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.",
+      "poster": "https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg",
+      "status": "playing",
+      "voteAverage": 7.848,
+      "rating": "PG",
+      "runtime": "2h 25m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:30am",
+            "2:45pm",
+            "6:00pm",
+            "9:15pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "3:20pm",
+            "6:35pm",
+            "9:50pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "‘Spider-Man: Brand New Day’ Overtakes ‘Star Wars: Force Awakens’ as Highest-Grossing Movie of All Time at Domestic Box Office - Variety",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQdzlNbjRBMFB3ZmxPaERjaFJNajBzNm5XMXYyMnlEU3h4VFpER0hndEtEYzRIcE1ibHpBREJWRDBUamZmS2lKLXFveDZhM1hKSFhCWWhMYlZlTEFJdWhDWWpPUldPeUtnTFdWYlJpV0lwTFA3UVNsRVBDM05QdjRKNl9uNkN3M2hlSjVxcC1raDJKT3RBdjZEQ1lUMXdIOEJtZi1ScEtDam9fT3J0T21GU0ljNA?oc=5",
+          "source": "Variety",
+          "pubDate": "Wed, 16 Sep 2026 14:49:00 GMT"
+        },
+        {
+          "title": "‘Spider-Man: Brand New Day’ Box Office Set to Sink ‘Titanic’ From All-Time Top 5 - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPOC10YUVDUnJNemgxYjVvSnByMFN5S09Da0pHWVhGMTVWVEdFTFVsSjAzVlA1RHhDcEFLM055cThXVG5rWGJ3UzBZZDF5Z194ZVA4aFpUbEgxXzJ2ZUdkUEI2eXhjbVZNcU5hR0dnRkFRcVBmRnM1cVdQZVdfWG5KVndzNU5UUGZzWFlrNzI5Ym9FTnM3NWVwVDQ3eVAzMTdoOFRDOGItYWtRc3l2OE9GbzVMQXhtQzA?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Box Office: 'Spider-Man: Brand New Day' 2nd Film To Cross $900M U.S. - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxONDlhV0ZiOXJWa0RQV3U2cDBONlROS21UcVBhci1mQmJSb0xZRE5LX3VxV1p4d2ZXa3ZsYmpDNEpHbFBrS2FlaWQ3UDFaUkdwS2RhamxCQUluM1IzYV9HSTdWc045dG14UmZMazBZb3lVbVg0Z2lYUnAteTJ2OHlhQ1lHYkg4QXlIVFN6N1VaUnJxdzY0a2JSbGN4Mnc?oc=5",
+          "source": "Deadline",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-17",
+      "leavingDate": "2026-09-17",
+      "leavingSoon": true,
+      "tmdbId": 969681,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 690.8873,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-the-dog-stars",
+      "title": "The Dog Stars",
+      "releaseDate": "",
+      "overview": "After the world's population has been ravaged by a pandemic, a man lives a lonesome existence in a Colorado airplane hangar with his dog and a dour gunman he has befriended. When a mysterious transmission comes through on the radio while he’s flying his old Cessna, it sparks a hunt for the provenance of the sound.",
+      "poster": "https://image.tmdb.org/t/p/w500/A7i16oDi03qrKep5pBfuTWNUTb.jpg",
+      "status": "playing",
+      "voteAverage": 6.63,
+      "rating": "R",
+      "runtime": "1h 58m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "11:50am",
+            "2:35pm",
+            "5:20pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "‘The Dog Stars’ is a box office flop. How does Colorado author Peter Heller feel about it? - Colorado Public Radio",
+          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1yYmkxWFljUjliUmNEUVRxUUQ3dWVyT0o1TVNjdWl2U2hKM1g5TmVCMWhPU2JIU2xmLTY1SWZqTF80MHpiUGd2TVNiNjFkdzdqNjhRanBNbkV5R3REWjJld2pMN0JlTXNXTXhYc29hckptNTlhVFc2STJR?oc=5",
+          "source": "Colorado Public Radio",
+          "pubDate": "Thu, 10 Sep 2026 10:01:58 GMT"
+        },
+        {
+          "title": "Movie Review: Ridley Scott’s Book Adaptation ‘The Dog Stars’ - Seven Days Vermont",
+          "link": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxNVnRIS2NhbWtsckVPdWNubVBPWUYxajE1cEFHTzYxMGRHUHR0Wk5kY2xod210R1NOeUxvTTNmREFfank1eGpkRzNsOE15em52OUJ1VzRPY2xiQXFyb0dnSlpnOC00YVBPaWpiU3VkTUhWMmxJUGJLckl5cXhJeTBPc2QwM080SUVKSmVzdC1Bckg1OEpUcVZfVWJEZHYwd3VqdVR2VFVNdzdHSTBZSzNVbkc2M2dlZHUtTHJDd3NDMVE5dw?oc=5",
+          "source": "Seven Days Vermont",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The Dog Stars review – Ridley Scott’s lethargic postapocalyptic drama is a misfire - theguardian.com",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNUHZZM3ZuVDdHdDhmWUpqYVNHa1U2bGw5WVI4R1RleWVoRU9pOG5FQzBLVlB5Z1h0QUJUd0h2ekF5anFoMXJIUHN1RmtFWWM1cUNuclllWjJySk1tY0JpU1NRcFphMHBKcHI1Y1hlN2JUaDRJWVJIRkxBeE8tWU0wNmZma1Q?oc=5",
+          "source": "theguardian.com",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-17",
+      "leavingDate": "2026-09-17",
+      "leavingSoon": true,
+      "tmdbId": 1384216,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 37.5977,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-the-end-of-oak-street",
+      "title": "The End of Oak Street",
+      "releaseDate": "",
+      "overview": "After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown, the Platt family soon discovers that their very survival depends on them sticking together as they navigate their now unrecognizable surroundings.",
+      "poster": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
+      "status": "playing",
+      "voteAverage": 6.885,
+      "rating": "PG",
+      "runtime": "1h 39m",
+      "theaters": [
+        {
+          "name": "Allen Theatres 8",
+          "showtimes": [
+            "1:40pm",
+            "9:45pm"
+          ]
+        },
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "1:40pm",
+            "4:15pm",
+            "6:55pm",
+            "9:20pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "‘The End of Oak Street’ is both new and nostalgic - Deseret News",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNOUZlRHhtSWVRZWM1N0NCNDBtU3ZMYmxEbW1pcXJ3MzAwbXc0a2VWSUU1TVRqaUNsaGdFbmhSRGVFQ3FveEMtMXpSeU9XVzROTnJJdzZzYUx0WXh4TlZOVDlwWjJ2X3I2c0VZa0EyX3ZrcDNiR2RqXzJBbkpUQVhzdXhtVEtOWi1XTGtrSXR0bDJ6TDZL?oc=5",
+          "source": "Deseret News",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - motionpictures.org",
+          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQdjNhSW9rMWdLeGF0Y3BodnRPOS1CbC05UFlJbHFUVFZPaTgybEh3RlBYN2RxczFvUTRmc2lFYTk5ZVVUQnhfMUFOcnMwdmVMMS1DV2Q2a0R2ejc2TlFPNGY1NGhENHlhOHJ4ZEwzcVdCUkhKVG13N3JiSGNmcFVaOEJuNkZFTXhRT3B3aVB5cm11U2FnZmF1WnhDb242OURXNVFEV19GUnd4cFlldUZJTGE5ZThSUlJxdDFBd3BiOTJoUEZKSnhrQWdRQUZ1NmEyVFEtSkMxWnZSTWdLS0w1MlJQVjI?oc=5",
+          "source": "motionpictures.org",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The End of Oak Street’ hits streaming—Where to watch the Anne Hathaway movie - New York Post",
+          "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPZHVZTGpkUTBleHlrSmlFNmVlMjhQbXJySkxOZTNEMWNaVFo3UjV4THhtbHZTVmUwS29WTkFPVjJKOTgxejVNV2xkNjFfTUthbWlZcmxySE54OGpaanRveXkzNnFKSVFEemdGQmtENUV3c0VybE9BWXhPcWZudlBsYUhDVUVuQjd1NGNXNmt6MFYtUUVuX1gzOFNjYXJSclRQNGxiUGFhRQ?oc=5",
+          "source": "New York Post",
+          "pubDate": "Tue, 15 Sep 2026 09:00:00 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-11-03",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1101383,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 414.9533,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "local-the-uprising",
+      "title": "The Uprising",
+      "releaseDate": "",
+      "overview": "As war and plague devastate 14th-century England, a humble peasant ignites a rebellion, uniting an army of commoners to defy the King’s might in a desperate fight for justice and survival.",
+      "poster": "https://image.tmdb.org/t/p/w500/fiFdny17lnjrwH6TmuxrhNy1Ol2.jpg",
+      "status": "playing",
+      "voteAverage": 7.091,
+      "rating": "R",
+      "runtime": "2h 8m",
+      "theaters": [
+        {
+          "name": "Allen Theatres Animas 10",
+          "showtimes": [
+            "3:50pm",
+            "6:45pm",
+            "9:40pm"
+          ]
+        }
+      ],
+      "news": [
+        {
+          "title": "The Uprising Is the Fury Road of Eat-the-Rich Epics - Vulture",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQR0tLYzNOSVEwb2c0Tlo4SlJhQXVmSXAzTGwyT0M3NlZSUXliSVFjRU5zU2dTOFpsWHp5Z2JDekZtMDg1LVlSdVFKRVd6SENUZmRsZGQ0WW9SczZ0MV9pQ1ZaWlFUTkVDU3lYdExRamNzTTNSQWtYVy14VGtJXzBRZW11ckRBQmE4ZW5VdHBBVXlSejdCVEFn?oc=5",
+          "source": "Vulture",
+          "pubDate": "Fri, 11 Sep 2026 18:50:01 GMT"
+        },
+        {
+          "title": "Marketing meltdown: why has Andrew Garfield’s new film suddenly added Robin Hood? - theguardian.com",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPMmtub2tHMXhsTVYtLUViS2RXbHRNU2M1Z01OTnRKRXdkVlMyQkRzSTFrWUg1cDVVLXVEN1VmSlV0ZnI5RDVEeWU3YWMyY1A3cGFvSVlmZVZ0d21DZ3ZKRDFPNkpCTHVEbGl6aGpzZ0xrNUtadkNZSEdXN3RvSk15X1NMaTNpeE1UcHczd1Rha3hqVy1D?oc=5",
+          "source": "theguardian.com",
+          "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Review: ‘The Uprising’ - Christianity Today",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBQNjQyZDV1X0lEZk1RVU9wcElrSDI1c1NhNWlZVnY2b1c5S1hOX2xVTjJ0T2Mzc0l0N0ZkOHNyS3V5cklhd19CXzdnWGNndGlRWTd0dXY2OHU3VWNtdEt5b21nX04zVmdrOWhJd2laTQ?oc=5",
+          "source": "Christianity Today",
+          "pubDate": "Wed, 09 Sep 2026 13:01:05 GMT"
+        }
+      ],
+      "source": "Showtimes.com",
+      "confirmedThrough": "2026-09-17",
+      "leavingDate": "2026-09-17",
+      "leavingSoon": true,
+      "tmdbId": 977942,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "DE",
+        "US"
+      ],
+      "popularity": 27.1335,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-digger",
+      "title": "Digger",
+      "releaseDate": "2026-10-02",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "The most powerful man in the world embarks on a frantic mission to prove he is humanity's savior before the disaster he's unleashed destroys everything.",
+      "poster": "https://image.tmdb.org/t/p/w500/1ATXKrIPJyKNwnJ6lcG088Sa6zi.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "No, Tom Cruise’s ‘Digger’ Isn’t a Musical - Variety",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxQRkpBbjk0aHpmT1JXbW1XSnJEa09NeUU3TUNyQVJHNS1BTjdQZFdKMHdmcWRCU2RWdVRIbkZVTWNSZ2lCc0VkZzBPNkhrVmZROFd3ZkVtai1BNG5CN21iQl9MSEhxaTZmS0xUYVBoQWdtWGk1NFpCTTFXQks5ZlYzLUNCMFUwa05nSGVqWg?oc=5",
+          "source": "Variety",
+          "pubDate": "Fri, 11 Sep 2026 20:34:00 GMT"
+        },
+        {
+          "title": "Tom Cruise's Digger is a disaster movie – and not in the way you expect - empireonline.com",
+          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxQd0hXZ3ZYbDlmRExoSEdfUEpWd0hZcjZCa2hMWE11RGFaZ0NSemctb3Y2RUVTbkdiZnQ1UWxsM2hsVl9xOW9WRTVzbGpwV3h2YVdMUE9haXU3VE82amRqTFlzeFdfRjcwZFdScTRsTmtFTFpfLTUyU0RRZ2hnUGg1dncwSVNhcUU1X29JcjkyVHE5bE1hc3Z2Y3V5b2JFcncwakpWLThXTVpfek9rV3dkMGJNSEJxdw?oc=5",
+          "source": "empireonline.com",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'Digger' Trailer: Tom Cruise Movie From Alejandro G. Iñárritu - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1maWtyWnB0R3IxeGx1ZlBOOGkyaTBHdjE2Y2taeGV0d3V3dElfSkFfTkhLZUtxbURmTUJoT1g5Q0pxMjRuX1lLM3lOMTczMnRsWHRzUzA2Z1habWZkdGhuMHpMZGprVmhyVTFLNkdEUko2eVdO?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 09 Sep 2026 16:07:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1248832,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 21.4651,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-angel-and-the-badman",
+      "title": "Angel and the Badman",
+      "releaseDate": "2026-10-09",
+      "releaseType": "Wide",
+      "distributor": "Angel Studios",
+      "overview": "A wounded outlaw finds unexpected mercy in the care of a rancher's daughter. The hope of love pulls him toward a different life until the law, and his violent past, close in on his new home. Now he must choose the kind of man he'll become.",
+      "poster": "https://image.tmdb.org/t/p/w500/igrWgzlxwHLzuNUrL4agCNmRfDi.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Trailer for Angel and the Badman remake starring Zachary Levi, Tommy Lee Jones and Neal McDonough - Flickering Myth",
+          "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOUEZjQnNpT2VKc09fUWdRcGdlcXBxcUxPVEg2ZnZySkxnTGdRRXBPaHNfVzk0RzhTM1NyTU1adHVZQjFMbl84WWxDb2h0U2I2TlJDNndWejBTY1JfN3BhQnF3aWFpRGgwQXdjUzl4TEQ2bnJFc00wcU1fNlZWRmRVZjhLakpXTE5GNjhnd3VQRnJQcUJRZHZpQXMzNXV4LUtSSFJ3Z2pLdmtpTVpoNEl1UHhlQUtyM3hEc0VWQlc0dXJNNHJ2LTln?oc=5",
+          "source": "Flickering Myth",
+          "pubDate": "Mon, 07 Sep 2026 00:53:12 GMT"
+        },
+        {
+          "title": "Angel And The Badman | Trailer - LRMonline",
+          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE41d1Bob2lXeGNHdXhVN2pDU1c3THhZUlFoaWFZQW5lUEVLTW5Na1I0MV95SzJaZmxGMjVFWWxIbFZFX2g4SUZlM2tMcS0zUUp6T1hTTzk2NFJZZmZ60gFiQVVfeXFMTnJtOVV3ZkhXMktYMkV6UGNWVW84ZmZOTWFLZzJvbUFVWk04QUZqYlZRSTB2WmpqZVpkMmc1ZHdYYjktWDgtLVptaUlxXzZhNFRyRDY3RU9oYUxFbVllMUJyNkE?oc=5",
+          "source": "LRMonline",
+          "pubDate": "Sun, 06 Sep 2026 22:38:13 GMT"
+        },
+        {
+          "title": "Zachary Levi & Tommy Lee Jones’ Gunslinging Western Movie Angel and the Badman Gets New Trailer - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxObXlPaFRsWlJPS0YtTVVxVllRUEVEYzRkUkJxV1dtRHRCRnRiZkZzVUN3SjZyeWVESi1UeHpWMmVfaTZFaldDcGlWdDN5TEx6UVVkMUoyZmM4ZTg5elVuSmxHdmQzTEdBS3FDNGtUbDI5VnJUUnB0SF9HSGJsdENwS193SWplNzhXdzVYMHJxaXgtR1pqNnZYcEZlOA?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1669915,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.01,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-ali-g-who-iz-i",
+      "title": "Ali G: Who Iz I?",
+      "releaseDate": "2026-10-23",
+      "releaseType": "Wide",
+      "distributor": "Amazon MGM Studios",
+      "overview": "After twenty years spent \"chillin', tokin' and bonin'\", Ali G is shocked to discover that his long-term girlfriend, Julie, is 8 months pregnant. Faced with an extra mouth to feed, he gets off his batty and heads to America to reclaim his former glory… but soon encounters adversaries who will ultimately threaten his and his child's very existence.",
+      "poster": "https://image.tmdb.org/t/p/w500/uTyVxPeWX8Ai30IQoyDDQONNcq.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Ali G: Who Iz I?’ Sparks Calls For Theater Boycott, Trailer Slammed Over Racist Stereotypes - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNU2VTektmU05lZUJ4TWhVaXN5elFuamlwRVljZlBxTGxpcTNpM2U5TUY4OEpia2tBNEs5Ymg1THBIcUVKVWgwZzFqd3dyUDJNWEhOTHBYZW1ldHRGa0lldzVkUjZHdHlrNVRqaWR5MjF2Qzk1MWRLVURHSUFwdVM0bDdBM1daMks2c190dVhGS2VvX1E4TzBfOW1LYWVpQQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Ali G: Who Iz I?’ Trailer: Sacha Baron Cohen Returns as the London Bad Boy in New Amazon MGM Mockumentary - Variety",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNczFTemdPYXFoSGh0bTdOWnprMWxaelpwX1pNZkxnaDUyZWh1UEt3dF96Vjh0Wmc5Q2VGY0JfZkhrYm9Lb3Ytd0pxZ2VZN2RjTDEyay1CZ3JlUXVPaDlmQW5JUnFIeXgzU2JER0hqZ3JTUS1EbWpscGZnZld1UnlUQkxRNS14dWJYZ21Uel9sd3ZoZEk?oc=5",
+          "source": "Variety",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Sacha Baron Cohen Ali G Movie Slammed as Racist, 37,000 Emails Sent to Theaters - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQaG96b2tkdzBzejBFOVVDNHBiclVEQlgzV0VsaUxSaEY0bUNHQldBMTZqTW1Ma0RYdzB3Q2lEZFBUT2t0Q3hIMkxLNWhxakVXQkMzRWlZUUxUb0dvUnhOaEFvX1pwbWNJb0ktM2xfZ2FxR3pOc3JiMHg0eGdfYkhNdWFPZ3lSSFFBMkdtT0VRS0tRWWFVUXA2c1BzZ1o0aG4tREJ6a1dNalYydWhmT3NB?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1727734,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.5627,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-christmas-at-the-kringles",
+      "title": "Christmas at the Kringles",
+      "releaseDate": "2026-10-30",
+      "releaseType": "Wide",
+      "distributor": "Briarcliff Entertainment",
+      "overview": "The Severson family move to a suburban neighborhood where their next-door neighbors, the Kringles, celebrate Christmas year-round. But when their son becomes increasingly attached to the unusual family, Mark and Julie begin to suspect that their neighbors aren't quite what they seem.",
+      "poster": "https://image.tmdb.org/t/p/w500/z0uOPm2KjrZp1v4jp4SdPsrdgWB.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "The Holidays Come Early With First CHRISTMAS AT THE KRINGLES Trailer - fangoria.com",
+          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTE44RGVYemRuVi1nMG91R3Mtbmp2VUxTZURiVUc4WG1Zek9laTc4cWVjdklPTlMyU3I4dmZRSzRPV1A0bWItU3RYdV9GNFlocU9vM0IzaVVDLWRzZEpISGtObVJRbTdaTGdjYXlB?oc=5",
+          "source": "fangoria.com",
+          "pubDate": "Wed, 16 Sep 2026 15:30:45 GMT"
+        },
+        {
+          "title": "‘Christmas at the Kringles’ Trailer Unwraps Bloody Holiday Chaos and Thomas Lennon With a Chainsaw - Dread Central",
+          "link": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxNUVNvazRLOTd0Q2xHa3dFX3NTMktSdzhid0F0TnlLVlBNdVZZbFQyZ2lQcDhoLXBUd1NweDVoeUE5dktzX2xxdHN1MkhtLXkxMWJDRXItRkUtU3AtSE4yUUJKU05YYmtFMFVvakpDSlpxUTIycjU2cTFobENCRmtsM3pzVVd6RlluNkc1VnlsOGl1YURFVFJYN2FqbUFjN3FwUlg3N0JrcWhXSDN4T29GX05udlgxdkNDajhLZENfTGdEVVpNSW5Uc1l2bjZQQ1ozcmZwWnBKSzI?oc=5",
+          "source": "Dread Central",
+          "pubDate": "Wed, 16 Sep 2026 15:31:05 GMT"
+        },
+        {
+          "title": "Ron Livingston Battles Killer Christmas Fanatics In ‘Christmas At The Kringles’ Teaser - Bloody Disgusting",
+          "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFBtdy0wanNyckM5cldsMXlVaDgzWGpRVEhoSFNSc2dnQUhRY1FKMFdLSWt6SWR0YlEycUp0ODJHbVYwYWlGZDBybEtSUENDXzBpT3c?oc=5",
+          "source": "Bloody Disgusting",
+          "pubDate": "Wed, 16 Sep 2026 15:30:53 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 939541,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.5893,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-ghost-soldier",
+      "title": "Ghost Soldier",
+      "releaseDate": "2026-11-11",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "Reclusive government asset Henry Fitzgerald is living off the grid in Wyoming, designing new systems for a weapons research agency. When a multi trillion dollar investment management firm begins employing corrupt police and foreign mercenaries to force farmers off their ranches, the Green Beret veteran decides to employ his weapon prototypes to assist his neighbors.",
+      "poster": "https://image.tmdb.org/t/p/w500/h3N9bQbuDtswq6nNtREpyhUYyv9.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Sony Shifts Jim Caviezel Action Thriller ‘Ghost Soldier’ To Veterans Day - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQOTJJa2JabzNudUVEeWRuY0xDT3RKRkIxZEl1bVVfZTZJSFRLQVRKOUNSVHEzN0h0WjhHMnpRMXEyb05UNGNMcW92Z0c1dmpZQ3ZrQlhQb2pyWldyUE90cWM5VnppZXBxcEwxVmhqSFB5ajYtM2duWnZRcVJWbnQxOG8ydERZZzQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Mon, 14 Sep 2026 16:45:00 GMT"
+        },
+        {
+          "title": "'Ghost Soldier' star Jim Caviezel says audiences are hungry for heroes as he takes on intense new role - Fox News",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxORzVnSG5zLU5fczJKU1lKRTdqMThaQktaeHg3RWRkRERpNENjc0FCS1NXbnVHN2hGbnpPeWI4N09ha25aOTk2UU9oczZXSXpQeHNSUVJYaHhDSkd3NWduQkVCUDNmX1BSSlYtbDRNTnlmSnBpTWs2X2J2TlMzVWxWS3RXZnVObUFPRFZ4M0prNXdiNWFkSG1VVWhvWk1OYmtRUFRySlFvVFNaODdwYUFmaVFUWXh5QmlHYjBvSGx30gHDAUFVX3lxTE5MRWNXeUozbXlCTzJSbzhxRnhzUnphdnRNSlhMMWdIbThhYWlHOEY0Vk8ydk5UN2RfRlY4dEYybzN0aHNBQ0RVTmFSMGMwNjFzcWd0WjVnY040UVYxN0ZfMkJHNjNYZjJXWjhPVW5pRHFpZHlrM1FtMkRIZ2VYZEE3bUItbnpwMlpwUm50SG5RbUR6VHdvX2tUR0EwWGkyZGJRbV8zVUZxVU1YZGt6T2ZWWXdMRUpUT1pGbjAtNU5PMy1Obw?oc=5",
+          "source": "Fox News",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Jim Caviezel says audiences hungry for heroes in new movie ‘Ghost Soldier’ - washingtontimes.com",
+          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNTU1SdlpLUVBSUlJkYkVmcmxtLXFlVGh4cmtRb2JMQ3dCZUo2d1RBcUNGRHN4Sy12SmxXNHNnRDlEbHpta2JfS3IxMnBNQks0VG5DLV9UNWZwR243ZkJoMi1Sbjg4eXJaUi1wc1Y2bmlqVGpSV1lzWTZyOTdWQ3h5elo4bmF2NlFlYlNfR0FHV3IyMC1QeERONTYwb3FGSHJod19LdldzOWNvNW5XS3lUQXhtQ0J3UQ?oc=5",
+          "source": "washingtontimes.com",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1562642,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 10.4921,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-hunger-games-sunrise-on-the-reaping",
+      "title": "The Hunger Games: Sunrise on the Reaping",
+      "releaseDate": "2026-11-20",
+      "releaseType": "Wide",
+      "distributor": "Lionsgate",
+      "overview": "Return to the world of Panem 24 years before the events of The Hunger Games, starting on the morning of the reaping of the 50th Hunger Games, also known as the Second Quarter Quell.",
+      "poster": "https://image.tmdb.org/t/p/w500/ffJaYMtB6v1TrvkyhCOqwqCKm0o.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Hunger Games: Sunrise on the Reaping’: New Trailer Spotlights Haymitch’s Fight Against the Capital - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNY1NsQ05EVGlsbzBYZ29fZDFicGEzYVV1TzFCWTBwQ3VzbWdPck9BTlFoSy1WdTFoNkFxX3FJQVB2TW1nSm84WGYwSEVGcFNsM3k1VDZWbGE0QUdtSGNWMnBqcWEzUWhxYWc4YUVFc25ZNDB0VzJfaDhkVW1sZzBieDZjWHRlejdWSHlySXRoRWFJcDBjVVNQa0JUbi1Fcmh1Qnd3OWJfMmRQM1FzTThWMw?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Wed, 16 Sep 2026 16:29:42 GMT"
+        },
+        {
+          "title": "Sparking a flame: Haymitch takes the lead as rebellion catches fire in ‘The Hunger Games: Sunrise on the Reaping’ - Entertainment Weekly",
+          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxObENQY1lNcVpKdlZWYnV6QmhyOEpiUVZQamFTbVFaU1daY1pHQTZkT011TXhydFVEaGNWOHlfMmZ5b012NlVBT0swYWRqR1hrbm15OVNRd2d6R2RpVFJrWnBRRkM5LVc4Y1ZEMWNsT0tqR3AtVG5iUGttSWRnQ3JiRHVLV1RHQ0hsQnlZTlc5YjdNdDk3eVRpRg?oc=5",
+          "source": "Entertainment Weekly",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The Hunger Games: Sunrise on the Reaping’ Officially Arrives in Theaters 2 Months Early - Collider",
+          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPODUtQWhQWVkxdGxQbUk4anJmcWo2eHc3eEtXQldYUDh4S1NOR2dYVVktNThrcXlIMXlJNkVSeElWMno3MF9IUHVTajRRYVpsSjREbkEweUZFN0NMcTZZdDFPU0hWSFJpdy0xY1FZajlJY3R0ZW9vME41aUVYUXphbTZLcm13OWs4eTdVODM5Umg?oc=5",
+          "source": "Collider",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1300968,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 14.4439,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-focker-in-law",
+      "title": "Focker-in-Law",
+      "releaseDate": "2026-11-25",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "Henry, son of Greg and Pam Focker, faces family chaos when he decides to marry a strong-willed woman who appears to be his complete mismatch.",
+      "poster": "https://image.tmdb.org/t/p/w500/gPdzdeehaoaYqxH2rA6yayEDSsS.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Ariana Grande Is ‘Committed’ to Promoting ‘Focker-in-Law’ Ahead of Planned Break (Source) - People.com",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQYVhsQjlLU0FBNWIzWkdiVEFmMzlkdHpuZ3VDOHpMXzNWQXRTdF9tTzBsRGRza1dHUGNRZTlNTDMzSTdNNEJIRThYNGZOU0JpZDBRQXZUb1JKdkJzdHMxdkNyRWRaTnhLUUNRUl9qRlZ2UFBDSm16YjdDel9PdnpuNVU0NDh4bDU2cXZSaVZIdjMwV1hTaHlDaEhTVFJ1UUhNUVVEWWZaUC1IMFZBLXRXUg?oc=5",
+          "source": "People.com",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Watch Ariana Grande Make Her Play for Robert De Niro’s Circle of Trust in ‘Focker-in-Law’ Trailer - Billboard",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxOQnAxTHNaRjRZcDdBWllXR2dMUHozMENsaTNoNTl3d2lmZ2NnUkgxUTI1WWhlZWRqaHVXcF93UTJrSEdVcmV2NXVmcWRacmhlYWx6V1QxSVZKR0VqQ2F1bWh1Zl9mU3JSWm1UYlNNbkI5d0N4WkN1YzZ6dEJQRHhEektXOEdXUnQxMjdOWjgxR2NicHhqdEk2eFh3bUhxYk5Wb0Nsckh2V0oxTFFBNG11Ylg5bw?oc=5",
+          "source": "Billboard",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "How Ariana Grande is approaching ‘Focker-in-Law’ promo amid ‘break from visibility’ - Page Six",
+          "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbmxwQktlZ2c4QklURVRFdi1OZ3g1SFE2SmdGVWI5Unl2NUZjcWhvVk04Yk1aOUNnVWlzOVZwaEpfZGFqUENSM1ZYdndianVjTm40cEN4aXZDNFBKZnBFWHNDZ05udkxJQWVLTTFoemE1Y3ptbllkTFVSc09ydlZDUmk3WGw5cGdWZ2Q5NWNqWDF1TkI2VDRhV1Z2Q1oyVTZlNWdibTY3d29GdkNJQklrcDE1d0FDVjdzYlRnMHQ0alFqbmEx?oc=5",
+          "source": "Page Six",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1400336,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 6.6607,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-hershey",
+      "title": "Hershey",
+      "releaseDate": "2026-11-26",
+      "releaseType": "Wide",
+      "distributor": "Angel Studios",
+      "overview": "Based on the life of Milton Hershey, founder of the iconic Hershey chocolate company. Milton's grit and determination to conquer the world of candy-making propel him from bankruptcy to monumental success, and the love of his life, Kitty, helps him build a legacy sweeter than any candy bar. But when Kitty falls ill, Milton’s wild optimism teeters on the edge of destruction, and she sparks an even bolder dream: to leave their fortune in the hands of America’s orphans.",
+      "poster": "https://image.tmdb.org/t/p/w500/ojd8Gu2bPsOzdMz6Ip5AYDu4Vki.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "William Shakespeare’s Romeo & Juliet Film in Concert to Stop at Hershey Theatre in 2027 - Hershey, PA Stories",
+          "link": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxQUTVkbjBKZ29Zd21sRDB1X1NNbnIzak9BaW5PanJnVmkxM3N1dl9zaW1YRUpPLXk0b1dBZDVwclBhQVJGTEF3OUpGUUFPSXloS0FwMk9pWHR6UEk2NVYxcjI1elVHbnZTZGRaVUJSUEE2NGRIbjEwOG1TT0lTV25kRVB3ZTc4b3ZoVkZGZ0VmbjYtVnhLMXBTX2tNZmd6QTJwaWJtcnVwUDNobVQwSEVRV1djUnhSaTVw?oc=5",
+          "source": "Hershey, PA Stories",
+          "pubDate": "Tue, 15 Sep 2026 14:54:09 GMT"
+        },
+        {
+          "title": "'Grand celebration' announced to celebrate Hershey's 169th birthday, holiday film release - local21news.com",
+          "link": "https://news.google.com/rss/articles/CBMiowJBVV95cUxOd2dYMmxZcktibGw3RWotaVZyekdSNTdQWFBpOFdMZTF2QkFFTDByRTVUZ3NEd0Y2ZmZjOHFuZzh5SDFZMkx4NjlYYmg2NDV6cUpDT1BES3Nxc1duX2JiTS1hc3Q5d2ZVOUdRTjVhck9nWGNEUnRCVXJxVlhsZW50aHJPdHpHdTQ2SGttMEowTlpVQ0I3VjMtdjFnUEFHNzZlVG5xY2MxTGlLN3E4dDROVklOdkVfWE9YYzh3am5fcWhBLXhpRlNKQkNfQ240WWVsME9xc3NnYWg1b3hHZ2VDc090U1hUTVBQSDNXcHBfLUxYY1RDUHFKck5uWUxHR1JtR2NkVy1MNGJ5TjBjS0JKVnh6Rmx3cWU1d3ZIQm9GNUtmYTA?oc=5",
+          "source": "local21news.com",
+          "pubDate": "Thu, 10 Sep 2026 09:19:45 GMT"
+        },
+        {
+          "title": "'Twilight' film concert experience coming to Hershey; here's when tickets are on sale - LancasterOnline",
+          "link": "https://news.google.com/rss/articles/CBMijwJBVV95cUxPNkZ2OW5NM0UwVGlWZ1RyTlJkbUlJVHhEWW9WT3N1dXNXMkFtR2VhaUZhcE1DbFRPbXdnVmROQVpPSzJqRUFPUUZobFNYTV9aZk9aZXVIYVpMYmY0dHhzOWVUWFVRSlFpSi1zM3I3a1RuOERGald3RlMwa3NPUlItQU5WQjJVRmIxbEFpY1VqZW0zQV9yNnVXYTduWDZCaE80UUxVM0twc2diSVBUckVjNEhOZFFEQnhDQzVuUWZ5MFdWNGROOEtQZXdadENNOEFzNnl4bWZnQlZxMHBrem1WVGhpUnRKejgxRkdmNGZud3NPd2ctVlUtdTBFYkV6SEZlZDdVNWExU0NwYUJ2dDJj?oc=5",
+          "source": "LancasterOnline",
+          "pubDate": "Tue, 08 Sep 2026 15:30:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1461490,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.6484,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-avengers-doomsday",
+      "title": "Avengers: Doomsday",
+      "releaseDate": "2026-12-18",
+      "releaseType": "Wide",
+      "distributor": "Walt Disney",
+      "overview": "Beloved heroes from three distinct universes are set on a deadly collision course and face an existential threat unlike anything they've ever encountered.",
+      "poster": "https://image.tmdb.org/t/p/w500/jzPwsojjFStf5lR5Nm07w2hH56G.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Marvel Has Assigned 42 Hours of Homework Before ‘Avengers: Doomsday’ - WIRED",
+          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPRXZDNU5ObWk5SzJQT2hwck41cHo3NVg5U2EzNWtxazloUkZjNnRpRGRwaEl2Yjk4N1dMMTk3b2ZWM1l0NjJZa3VXcGl5R0EzSWtpRm5PbjZRU1lfWjR4RmF5eDloVERuRm4zSmNwd25oQ2NVRndzRzNyeV8zYV9MVm5vOXlGcHUybjdLczlaS0l5c3VOd2pRWFZ3?oc=5",
+          "source": "WIRED",
+          "pubDate": "Sat, 05 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Avengers: Doomsday' Fall Movie Preview: Russo brothers, maestros of ensembles, test their limits - AP News",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxOZGh3ZjdTU1ZncXFhRUpPVTJILUQxS1RLQjR0UHl5b05jZ1JuX1Z4b3hReWxnMGhGVV9KVlU1dktxSmp4U1pDb0ZnZEphOFhXS0VUbi1JbmxMYnNOUFBibGlFajJHNDhlVmpmYXhPdWVUUGNDNFYtaU4ybWRBZkpCTWVwaEFUTEpGY2VLTERCR1FZOTBiaVdrOFBPaDZwYy1IZnJJNlYxb2YxRnQ2VkE?oc=5",
+          "source": "AP News",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Avengers: Doomsday’ Ticket Pre-Sales Cross $50M Domestically Three Months Out - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNUy1EVGRpUURTaklLLURuZVNycnVmTVM3UjB4eWtHSndWU2owbFA1M2N2bTFsYmk1XzRNUFJrX3ctRVkxUGstZVdIVzBCNFU3eHVTTV9pSzlYczU2M0cwQ0Itc3JJN3VjWU1LWVhKY1JOYXl6SGFqMTRuYk9CSFZaWTZZd2hiWDAzSW1aeWR4WTB1SlBsRXFRXzhPN1JteVRZ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 09 Sep 2026 20:23:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1003596,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 40.3695,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-angry-birds-movie-3",
+      "title": "The Angry Birds Movie 3",
+      "releaseDate": "2026-12-23",
+      "releaseType": "Wide",
+      "distributor": "Paramount Pictures",
+      "overview": "Red faces his greatest challenge yet… surviving fatherhood while saving the world.",
+      "poster": "https://image.tmdb.org/t/p/w500/oxaW6X3xohnzdFSBKCrCjRDckMe.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "'Angry Birds' Catapults Back into Theaters - License Global",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOaTN3dkxheXhLQTlIQmJiWXMtWmFYbXZ1YTduN1JwSE1CcVl0eTNzbG10UWJ4M1BUWDFaeVJsUTZCNVcxMTRRczJfd0Z6b1U1ZGlJM25qMnlOZUt6Z2duN29xbXVfbnZ5aTdxSFBJRy1TQUdiWGxrSkxVZW5pUWFEdXZWdWJ3Yl8yNjVhSA?oc=5",
+          "source": "License Global",
+          "pubDate": "Mon, 14 Sep 2026 06:05:58 GMT"
+        },
+        {
+          "title": "20 Upcoming Movies Facing Huge Issues – Page 17 - whatculture.com",
+          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPRGIwY0ZZdWwzdHN4Q1ptNEc1UHdfcGxtLThYUy1zYVYtcFhwVHF5LUhKNTZESlc3UWhlR0xsSjRyVHBFNENtZEFBWE96RFM5OTZ3dDdqWElPZ09qTTRhN2QyMUIzQ09Qc2s4em5YYXZvM0JoY1RQZEZuTEJmYjN2RXdGdF8zb0drRVdCMm1JRjhEZnNJZHVuWg?oc=5",
+          "source": "whatculture.com",
+          "pubDate": "Mon, 07 Sep 2026 11:55:10 GMT"
+        },
+        {
+          "title": "‘Bollywoof’ Animated Movie Sets Tail-Wagging Voice Cast - animationmagazine.net",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOWDRSdWVTaGl0a2tiMmZFdGlYS3NLVHVESEJEcFBqTF91dHdVVkNXQ1h6OWYxVHVZMVVRQzR2bF9sRDNYbldfNEZHOXR0STV6WGc3UXhTeWIwVnNSWWhZNDluSE9mYm9nVnBXclFUVjgyS2dQaENTWFN0MW9WZ3AtbHpmOXZhdDlsWWpvZXlfN21nQzJLVlZmZDF3NEc?oc=5",
+          "source": "animationmagazine.net",
+          "pubDate": "Tue, 08 Sep 2026 20:33:10 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1300926,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "FI",
+        "US"
+      ],
+      "popularity": 6.2108,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-artificial",
+      "title": "Artificial",
+      "releaseDate": "2026-12-25",
+      "releaseType": "Wide",
+      "distributor": "Neon",
+      "overview": "Described as a comedic drama set in the world of artificial intelligence, around the period at OpenAI in 2023 that saw CEO Sam Altman fired and rehired in a matter of days.",
+      "poster": "https://image.tmdb.org/t/p/w500/q3EYu8yrLqhDCkKp2MGlx3ZHJmj.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Artificial’ Teaser Trailer Shows Andrew Garfield As Sam Altman In Luca Guadagnino Film - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNTWJhRXQ3WE9ScXg0S1Y4VWIyWXdjWjBmMlNXVG1NVFJrdG45Njl1QkJ2OW5FdUNISGxESEljQnpWVE53cHFtQVhNUUZOZ0V5THFnTUxtRHJaZ0RJQ3JvMV9TU0VLeXdRSnl6MlJud3hCRG5HN0tRY1FMdTZkdWt2VFY1SEhZQmZPMHc0bnJ4TTFUdjNBTVE?oc=5",
+          "source": "Deadline",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'Artificial' Trailer: Andrew Garfield Is Sam Altman in OpenAI Biopic - Variety",
+          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNa0ZHMVp4OXhUT0YwQWNrZzlNbVFZa3NPU2RwZ2NPa2YzRndUcW1FOHE3OGNfcDFhbDVVajVjcjU5TEVZQ1pnWk1KS0UzaUVGbFFEbWJCMDFZeEtwTjR0YkJmSXdyVkp1ZThTYm9RbmVDWFFhREFEbXNBLVhBREZ3cFJyWkdUY3QzT0Nyb1Z0WDRjaFJKX2tURnZsTQ?oc=5",
+          "source": "Variety",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Artificial’ Trailer: First Look at Andrew Garfield as Sam Altman in Creepy Biopic - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxQZDZ0dDlhcEtxVWluZG54NUcwSHRvWkRhUU4tTTFqNDh1ZXg5TmY4RTcyWm5maGEzdVA5elE5cWF1YURFbkw4X1lQdlE1MGNGSDZjTU5XbWY1NUFMQ3AzczBPLUo5TWY3bi1idktEd2NEQXowZllaZU9talhFajF1RjU4dXhRSzVLNXVNcXkxU2FaWWlnenUwSW5kQ2pjSjh2bG5zV3p3XzNxbUxXdUE?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1492198,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "IT",
+        "GB",
+        "US"
+      ],
+      "popularity": 5.5407,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-beekeeper-2",
+      "title": "The Beekeeper 2",
+      "releaseDate": "2027-01-15",
+      "releaseType": "Wide",
+      "distributor": "Amazon MGM Studios",
+      "overview": "Now a wanted man, former government assassin Adam Clay continues his vendetta against those who wronged him.",
+      "poster": "https://image.tmdb.org/t/p/w500/smdkH5T2xiK30dHWPm2LfJcdPME.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Jason Statham's Next Big Action Movie Gets an Official Update From Original Director - Polygon.com",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5qU3Z5SmRPNGtrOGhVMHlodTFrYlRVR0xZbzhKNk9PS2NfREw1QkdNb1pkWVZ1eUJtdXBidEtqN2hjcDQ1OW1fcGgtVFpKclF5Z0lET1NBNnhULUIyei1Bdk9lN2UxbmdT?oc=5",
+          "source": "Polygon.com",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Jason Statham's 'John Wick' Replacement Officially Finds a New Streamer Ahead of Sequel - Collider",
+          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPa2c3QjhoaVM3d1NsVzdzQjh6Q0ZZOFkzX2FXVGUtV3MwSzFRa2hZUEdTVDJvTlp2dmdZNkVkSy1xdnhpVzdUc2FzYzZjR0xnUGZaOS1PMVMtbm51cU1RUzVhV2RWNVVCVG5heG81Uk9TUkpCNTdXMnFIdWRQekozbzNVQmVUYmlfQVE?oc=5",
+          "source": "Collider",
+          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Jason Statham's Non-Stop 105-Minute Action Thriller Scores New Streaming Home Ahead of Sequel - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYXJ3Sm84TUc3WFNhenc2QXVsZ3J1cS1SRHE2d0pMWXJzY05QeXNxa3RhRExyS1FrdDY1WkY1dHF2Nk91ZjVfMXlHUVdva0FkM29Va3RKcEtONUxVZF9FMFBXcmh5U3BydGwtTjF1THcyTnBfVWg5NG5VTDVUVElfLWo2LWZPSk94SHFzVF91TmJWRzQ?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1440769,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US",
+        "GB"
+      ],
+      "popularity": 4.6319,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-drag",
+      "title": "Drag",
+      "releaseDate": "2027-01-29",
+      "releaseType": "Wide",
+      "distributor": "Briarcliff Entertainment",
+      "overview": "A routine robbery at a rural house turns into a nightmare for two amateur burglars when one of them throws their back out. Things spiral out of control as they try to make it out before the homeowner returns.",
+      "poster": "https://image.tmdb.org/t/p/w500/64Ny6F2RpcGociNnRqx27sESU8N.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "How Tim Curry’s ‘Rocky Horror’ performance shaped generations of queer performers - San Francisco Chronicle",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNcU85cHRWUFVMM3JLb0s5RVlpeHVZdGJ0WklzVWs0WHRpREJ6ajJhQS14RnAxajVaSnVmNnhnWGdldDZTSmVmcXRhSkZOaXNPOUR6cW5CbGpRUUJ4Vi1ESENvdzYtUTI5Q2lqM0tNdWRlZ0hvX3ZRdDNoZVM4T3RqZHkyYzQzOGQyS0lpVVhiSFlDcEdHTGFkUlFaMk5CQXVpZ0p3dA?oc=5",
+          "source": "San Francisco Chronicle",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Dead Cats, Drag Clowns, and the Weirdest Awards in Indie Film - High Times Magazine",
+          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE94WVFicU9lX3lZWlVtdnRiU29nSThxMU1YZ0FoQTVtZXlSREFVbG9UR082TDkwQUl4dm1xUEdMNVVwOUhBQ19ZeVRsd0ViMFpmZWRRRUI4ZzhiRmc5S1JSQmR6azZ1eFJYel9FeEp6RWk2bFI5ektlVDBB?oc=5",
+          "source": "High Times Magazine",
+          "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Stop! That! Train!: Is this the most subversive film of 2026? - dazeddigital.com",
+          "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPamhkYXFKWUpSNjJiRHk5WklwSGE3U2J2RzJKRGxnNC1WVU5SaWNQVWsxdjgyYVhRal9maUNQMFd3UjBEOXRIVkxVQk1ieXpONTVlblZaSzFlSDB1Z2JUVElqbko4UEtUZmQ3RjJiTzRyZGFNS2JnSGVlQWl0Nk9tMHlSUU9xRXFlUldYWVhkYzdyVmg3MVNUM3U4ZnBWZVhyaHAxLXRfRFIyeUwwUHJLSnFfQ21VVVMySGZYR2JMSW5Lc0pGMUJ3VloxNA?oc=5",
+          "source": "dazeddigital.com",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1451238,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.3862,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-comeback-king",
+      "title": "The Comeback King",
+      "releaseDate": "2027-02-05",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "A country western star experiences a dramatic downfall and must navigate their career in free fall.",
+      "poster": "https://image.tmdb.org/t/p/w500/37ii02yqhWAbNYS3VxXYPp9wDGD.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Glen Powell’s ‘The Comeback King’ Just Got a Whole Lot More Country With Three Huge Stars - Backstage Country",
+          "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxON3JIRUVmS2hRM1ZELU90cmp3S3VGUERlaFZ5RnJxLWFPVGhHTEotSHBvcFNadk14aVMtSXBNWWhwX25STmVPT2lkWUI5LUQ3Y0lwc3FQM2w0R3dJMGZCMXJzeFl0Zl9CNUFBWXRzX1BHTUtqUVJKb3QzR3RHYWFpZHpaQ2dWanZEc296eVk5LWNBeWFESlRRcnVhdWNILUZQWjlnNVJ6TUFPRTdZZERxSXpDVGJzSGFLZVhRWFJZRFE0V1NMWWc?oc=5",
+          "source": "Backstage Country",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Three Country Music Icons Have Joined Glen Powell's New Film - Wide Open Country",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNd0xEVEpqSTVpd2pkMzFLWnpUSU1kQkRfMktiTWt1dHB0SEpiaE5oa3puVmc0QS13R2tRc253S1pIN1FmQ3VNYkRDakdmZ3IyRllWVUNveUJzS2s1Q0hwN1VMUHN5U3dhVGU1UVVKWlIwcU9DS2RhTUxpcV9sYUdCQmhEUWdUdjhlTDFza1hTb3hMdEJjLXE0?oc=5",
+          "source": "Wide Open Country",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Glen Powell Producing 'Confession Of Murder' Remake At Universal - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNQVJwR2NGRnJuVm81dlI0YVFqVGFWQ2liLUpXWjVHaDNRVy1vbEx6Zi1pUlRpUjB5WTVOSU1yZWZLY20zWGxqemxHYzVsZDJCcWZUclljV3VCaW9sTHk2Slkya1VIYVh0aWM3U2V6bDRQU0lmbG9tdHhLcW5FTTZ0NWhZVVRHaHE1b2g0R1M5TF9YLUhaUmQ3dkE0YWZhQVU?oc=5",
+          "source": "Deadline",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1466228,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.9306,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-wishful-thinking",
+      "title": "Wishful Thinking",
+      "releaseDate": "2027-02-12",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures Classics",
+      "overview": "Julia, an ambitious game designer, and Charlie, a struggling musician, are at a loss for how to repair their volatile relationship. After attending a couples-therapy seminar run by mysterious twin healers, they find that the ups-and-downs of their relationship have supernatural effects on the world around them. With earthquakes, the stock market, and entire nations at risk, Charlie and Julia must confront whether their passionate love can survive amidst so much chaos.",
+      "poster": "https://image.tmdb.org/t/p/w500/36vsIO0FkNNm9CfzDQargqWjktC.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "What Would a ‘How to Lose a Guy in 10 Days’ Sequel Even Be About? 5 Predictions - Vogue",
+          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNRHVWWllQdXlzaHhoVDlkRHJTdnJhMjJKODZkRGxoNkxsd2xUVEpTa1Z6VWMyWlpUOWZtcnpWRmkwdC1sMXpNeFhNUmZZWkcwaWg1RF90aGx4Ujlsc2J1VWo4d0pJNXN2ZVB4Q1RmcDIxdDlBSi0tTDllbEIyY1kzbHZxamY3UWJHWWc?oc=5",
+          "source": "Vogue",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "James Gray to Receive Director Award From Mill Valley Film Festival | Exclusive - TheWrap",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcUN2Wng1UEtINk9YOXFkeUhON3lfa0dMQnhzWlh5NGx3NVhETS0xaEpHWHRITTdUc2pQRzNBRERkcWtCQjdwSUdpV3F0Vl81NTJnVG51NnlVaEthWFNaY3dFdTl2bXJUS3A1R2IxeW9kN3NuY0ZMcE9yYUI5d1pHN1A4UG9Ub2VyVGlxN0dzQTZ5ajVqc3pNcm56Q0RsZw?oc=5",
+          "source": "TheWrap",
+          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "1990 Accidental Pop Hit, Featured on 'Pretty Woman' Soundtrack, Became an Inescapable Radio Classic - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQckxuZURzSlFDb3QwWFJPdTNRSFd1QXBNMEE2UEx6akphT2tnQW9nMlVLNWliaVU5YW9xcFpUUEYwanRZSGlnbjBDc3JJNVVITWRETTdZbU82WEJPVjFpdmxsdndlQVZPeHhCR1poNWtxTWRhbGRJS0lYVW5Rc185eUYtVGQtclBFMGxWS1JwVk1BZ09aQXFOeGZDN0Y0NUE?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1514328,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.2141,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-cocomelon-the-movie",
+      "title": "CoComelon: The Movie",
+      "releaseDate": "2027-02-19",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "JJ embarks on the biggest adventure of his life: Kindergarten. But when, on his first day at school, JJ discovers that his beloved stuffed bear Boba has gone missing, JJ and his friends Cody, CeCe and Nina will begin a quest that will transport them into a magical land ruled by Princess Harmony, who has created a world with one rule: No singing.",
+      "poster": "https://image.tmdb.org/t/p/w500/dDYSKF9VWmcgOy2sruIJkHs5DDG.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Bollywoof’ Animated Movie Sets Tail-Wagging Voice Cast - animationmagazine.net",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOWDRSdWVTaGl0a2tiMmZFdGlYS3NLVHVESEJEcFBqTF91dHdVVkNXQ1h6OWYxVHVZMVVRQzR2bF9sRDNYbldfNEZHOXR0STV6WGc3UXhTeWIwVnNSWWhZNDluSE9mYm9nVnBXclFUVjgyS2dQaENTWFN0MW9WZ3AtbHpmOXZhdDlsWWpvZXlfN21nQzJLVlZmZDF3NEc?oc=5",
+          "source": "animationmagazine.net",
+          "pubDate": "Tue, 08 Sep 2026 20:33:10 GMT"
+        },
+        {
+          "title": "CoComelon production company to start using AI to produce mind-numbing content - A.V. Club",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1aOUFwd2Z4ZkRvdjYwekNLeWhheERLOUJOazl5Z0ZmR3psaVZBbmszWjdTc1p5cTZFOTN4cnB2NU9VSExYXy1sOEIyWFFfNGZhTndlak83cndsQjRpWkJCQ0FKMkROYkJHbnRkSkpTNA?oc=5",
+          "source": "A.V. Club",
+          "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Stills and Photos from The CoComelon: The Movie, 2027 at Kinoafisha - Kinoafisha.info",
+          "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBmOFA3SU5hZTRCTjl3SEo3MkNfdGVSOERKc3hpNS1VOXRhOGNkUnRsTzdMNGFJM0pFMF9kMDFsWE9VckJJYUJ3aXlDRXNGNjllRDlUbFA2N1FRa1dhSVdpQk5R?oc=5",
+          "source": "Kinoafisha.info",
+          "pubDate": "Thu, 27 Aug 2026 16:41:26 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1480503,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US",
+        "GB"
+      ],
+      "popularity": 3.2573,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-k-pop-the-debut",
+      "title": "K-Pop: The Debut",
+      "releaseDate": "2027-02-26",
+      "releaseType": "Wide",
+      "distributor": "Paramount Pictures",
+      "overview": "A young Korean-American woman defies her family's wishes to compete in a televised competition to find the next K-pop girl group.",
+      "poster": "https://image.tmdb.org/t/p/w500/bGz5IMugwOsoyASG5AwEy0NpZMg.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘K-Pop: The Debut’ First Look: Ji-young Yoo & Eric Nam Star in Paramount’s New Movie! - IMDb",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1PeTJaVWNLdDNZbXh2N0Nrek1LSGhCZlRWQnYwNHpld3dNVTJyQUR3dTZUb1k4aUg4V0dEYzE4eWJfWk54SHBRTEdSZXRCamZ1amFrUzZVM0NnSDFYbGxmMGlLSUdxMlZJSEE?oc=5",
+          "source": "IMDb",
+          "pubDate": "Fri, 11 Sep 2026 10:07:58 GMT"
+        },
+        {
+          "title": "Pierce Brosnan's Remake of 33-Year-Old Action Thriller Classic Officially Scores Release Date - Comic Book Resources",
+          "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE96ODgwSUQ1c2tmWmZiUndTZ1diSy0zZ3p3OVl4ZEFaamFUbDhrUEZ2TUc3X0xCRDN1RW9DMUhkWFptLW40NVNDMmRkTERmNGxaZkZzS19UMjRXZm5tc0J2S1F1ZVY5MUE5RXJ2YXlHZjRPTkRsemc?oc=5",
+          "source": "Comic Book Resources",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Upcoming 2027 Movies: New Release Dates For Theaters And Streaming - Cinemablend",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPWHlDdS1veW51aWctMUVVTUxtSmV2SjhhZFVSZUdtSDZzTkM3RXFvajk5RUF6aDM5U1VpZnJvY3kwNU1WcVJ5TWV3VWR5b2hKd0hkYlNXZ1FPMHZwSGhOMkRvLVQ4TlluaDZWWG5xeHpabUFhZC0zc1VUeTRBWTNTZXNJbDMwRUt2c2w2Ql9mOWZQOFJvMkVZ?oc=5",
+          "source": "Cinemablend",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1517333,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.8291,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-gatto",
+      "title": "Gatto",
+      "releaseDate": "2027-03-05",
+      "releaseType": "Wide",
+      "distributor": "Walt Disney",
+      "overview": "After years of maneuvering the canal-ridden, superstitious city of Venice, Italy, a scrappy black cat named Nero begins to question whether he’s lived the right lives. Indebted to Rocco, a ruthless local feline mob boss, Nero finds himself in a quandary and is forced to forge a truly unexpected friendship that may finally lead him to his purpose — unless Venice gets the better of him first.",
+      "poster": "https://image.tmdb.org/t/p/w500/bgt6dSrwkJCMqdKWRpN4ZTAd1kL.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Pixar Wrap-Up from the 2026 D23 Expo Fan Event – Ghost Market, Gatto, Incredibles 3 and Coco 2 - pixarpost.com",
+          "link": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBDaktpYWhHbkJPaldYQk9faDNSQkEwaWxYb1NzVV8wbnZ6bnlrYTRUSTBBV1VaR2VSVGpUblM1ckVJNzN6Yl9SaDRDdEhxalppRlhQd3pNcFdQWkFJVDVDVHZDd3jSAWpBVV95cUxOdXJGbVZYNWwxZzN6TEdOZHZIeG1KQ3FnMGZzVWhlQ1c4OXVFN1Jibzl5eVhfd095X21iSldSdVo0aEFBMGM1bjBzSW9lWEdIZnFtLTY2VE1xTTUyZG93OUgwVnVwa2w1ZjRR?oc=5",
+          "source": "pixarpost.com",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Every Upcoming Pixar Movie in 2027 & Beyond - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9pMG8tZ3dscTNqRWMwSmJfYWE1dGY0NDNKRlBKVjhYNDdxbDBNS1d1UllINzJzREVFYTBVVUZUZ0w3YjdkSHE4ZzRicGNPUkRMREVnZWJ1aE1qMFlkVUJLeDN5U09LTGxTclp5eQ?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Sun, 23 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Gatto - adria.ign.com",
+          "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTFBoaWppQUdUWS01cy12S0prMkRFMFBfanptNDBQYTVhYW9zYWY1QURZM3I3QmdqVWhhdUNqb1lsX0hDQWJk?oc=5",
+          "source": "adria.ign.com",
+          "pubDate": "Thu, 03 Sep 2026 23:04:38 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1497464,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 8.0613,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-chosen-crucifixion",
+      "title": "The Chosen Crucifixion",
+      "releaseDate": "2027-03-12",
+      "releaseType": "Wide",
+      "distributor": "Amazon MGM Studios",
+      "overview": "The sixth season finale of the popular Biblical television series, following Jesus' arrest and trial leading up to His crucifixion.",
+      "poster": "https://image.tmdb.org/t/p/w500/qgJzrvYmpVBH6GYwnFT8N5sWhsB.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘[He] Was Extremely Uncomfortable’—Dallas Jenkins Discusses Disagreement With Jonathan Roumie Over ‘The Chosen’ Crucifixion Scene - ChurchLeaders",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPRHF3alk5VWpRRmI1LVhEYUxWRVZiU25DN0VUMkNudENCdzNMYVhXUUtCbjlEYTJoY0dHWFpVaFpCR0JLQUlGUHZQQWdrX2VXZnk0bDdhUkFMWG8tbnpfc2lwai03UEJQTUZ5ZHdPTFpsN20yT0VFbThyRVlNcmxTRlpnZ0pSamxfM2ZRWmhuTkJOTFAyWVpGSUNPbS12SGlqVXdqY2djUzhMX0RlcFBKUXk0RnMwOFk?oc=5",
+          "source": "ChurchLeaders",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Watched The Chosen ? This new resource plans to turn the show into a Gospel conversation - Salt&Light",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOUGsyODRaMXFSV1NndElyQi1YdXp3MHoyN1NjRmxFYlFtZXNfcFVKR0RRVlBpbkhic3kwTkp4bm9GT2FwLTBJYWJYdV82XzU1WlhZaWlGUEhGdi1aNHJ3T3BBcDV4cWFYaDNFV21jeFhFR1YwcG52RHIxdEFLdmppNUNqcUZtZDVjdmt2ZzhzN3o0MTV1YS1KSWlkWVpMSUtzbm16R3dMRC14UEJkVzRjY25uZjE5RGc?oc=5",
+          "source": "Salt&Light",
+          "pubDate": "Tue, 08 Sep 2026 23:36:03 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1487395,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.3759,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-nightingale",
+      "title": "The Nightingale",
+      "releaseDate": "2027-03-19",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "The lives of two French sisters are torn apart by the onset of World War II.",
+      "poster": "https://image.tmdb.org/t/p/w500/ghcC57Zl7qmOZWFqvc6aPBUC2fA.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘The Nightingale’ Movie Netflix Release Window Confirmed - Men's Journal",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNMFllTzRwNzZqazNfaDZFZVl2Ym5HWGFDdFE3VEJUU0NvTjIwMlFMRWJrS1pTaWh3NG51bmQxUHdVQld2anJ1SlJjY0lhbGdDdDY4SklYZW45dUF4QVJLRXVONEJoR2o5R045OWhkUVZQU2pZZlJnWHgwSVBoc2ljUVF4ZHEtbU1waEl4RXlRb25GcldsT0tyMW0tMzY?oc=5",
+          "source": "Men's Journal",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'The Nightingale' Movie News: Everything We Know About Elle Fanning & Dakota Fanning's New Period Drama - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQRE92NFp4RGVmb3JFNF8xdGhvdzlUekhLa05kX1Bmamo0US1tTlUtMC1kZWc4QVFCeHN3Tk16dTJTazRzRTZpNWZoSEh5YkxkdVdkbUdRS3NFN3NtZS1XaFBMQTZnQzBSVnBISlEyU21oY3doSTc4cjZsNWttblpRTmN0TlM5YnVDRnN4aWEyb29CdlJKQ0dsUXRhZDFYbmUtWXluYl9EXzA?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "What Kristin Hannah Really Thinks of ‘The Nightingale’ Movie - womansworld.com",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQeUJzVWRNdEo1QUhxYXY3TFA4R2V1dmE0bmU3TVEyaW5uQnBtUVRtZ3RhWlg3MTNCSVBHNUpzMnhNcVpyQ2ZWQU9aUWhVWHBXZDNWbnRGSkFYelN1Q1Z3Um9MU0FseENLSUpKYUdxa0s0OEQ3RFcwbTRBOFRMU1BveWh6MEJmVHlad0xiUG5wS3FlSjczSE54YkpNYjc4R0loWHNYQW5qSGRRRHk3a3BB?oc=5",
+          "source": "womansworld.com",
+          "pubDate": "Wed, 09 Sep 2026 23:30:19 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 458896,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 3.0593,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-day-drinker",
+      "title": "Day Drinker",
+      "releaseDate": "2027-03-26",
+      "releaseType": "Wide",
+      "distributor": "Lionsgate",
+      "overview": "A cruise ship bartender meets a mysterious day drinker, only for both of them to find themselves entangled in a criminal underbelly and connected in unexpected ways.",
+      "poster": "https://image.tmdb.org/t/p/w500/ztMNpLBbUS3RnFHmc3c9djKA73m.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Johnny Depp & Spider-Man Director’s Day Drinker Movie Gets New Plot Details in Big Update - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNSC0wOE9SbHBJQ3RRUEsxQVlZVUZJNDE2QjdGTjFRVWVfSHRxQnBrVXRuOVVEbm1paS12NmY1VUxhS0lRSzFWLWRuWWdiNnNiLWFMRXRpQVFTYTZKSkQxR1VqRjczUThOLWw1MmdjcEQ5RTRvcHhiVzFhMTJGNElkdHJVeTZXTGpHb0pzQUlTR2JUVi02U1BOc2F4dVRfWTA?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Outer Banks’ Star Madelyn Cline Is Entering Uncharted Waters - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNV3dJN1Z1ZkR6ZHZuUlRHUHFvUHB4MkUyVDVRSVlKRGxjeXBsVjBFSF9BTVFmVGYzMndicUhLRTE2TUxfMGJhMlR1TWw1ZzJRMkVHTXpfdTA1V255dFFEdng1ZHdWOE1RZEU5Q0tWNXZ2dzF4a21UbUtHeEhXR2VTak55T0hYaW1rNlhOYzhpcHcxYzI0cEppOElnZVJYSWtZNEhUdkJIamhMcHc?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Johnny Depp's Comeback Action Thriller Gets Major Plot Update Ahead of 2027 Release - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE00TTB5eU9IMGdjV0RsTXFzWVBPc01QRzgyVU42QkJwdVlFVFpRM0hjNTdVVUdvcU5JbnVrU004Y3hJTFVVTVZnTm1MbUg0cDB2QVk1TUxxVFE2TDNGZFk4dnN1T1ZwWGR0dUE?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1266643,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.3818,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-boys-for-life",
+      "title": "Boys for Life",
+      "releaseDate": "2027-04-09",
+      "releaseType": "Wide",
+      "distributor": "Paramount Pictures",
+      "overview": "Plot TBA; an ensemble comedy about a group of friends reuniting — with a twist.",
+      "poster": "https://image.tmdb.org/t/p/w500/cU29VmDK8a3WDtLgwtMimRZ4t4I.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Martin Lawrence, Will Smith filming 'Bad Boys for Life' in Buckhead - 11Alive.com",
+          "link": "https://news.google.com/rss/articles/CBMi6wNBVV95cUxNYXZoV1F1VFVJblczTnpRVE54T2txZlREek5rSW5TV2RHRTVVR3NEdkZuR3NYeWNYTjdHS1JCLTJzcm51dDgwMHJtYmI1QXYxX19nOGFCc1JJV19uX3o0eDctVWVWbGM5WWcwbVIzanZ4SjZRREVLdTZyS1AwSFZFVVN2MGFLMXBkcDV1OUF0VnM1VzVLLVE3RTg1LXhTT0t0Vnh1WldPRzhmQ01sSHpMa0FLend4bjFoSTVQNEdZLWJqYnRuR3M3MlBVWW1HTTB5ejFRZ1VOTzNWRlUyQjZya1l6QlFyVXQtUjRuaTZVaXpjam43Y1JlMVZISVFUUFNUSF9pRXloeThVc20zUzRNanRyeHJBbXU1SkZSWlJ2M090eU9tOXo5VWlhLTAybXNxbnBLamczNkYtNVF6ZmhZdy11dnlOb1ZKMTUzSzhoM084SDhUaEhyelpOYXhZWWxrMkRHeUVnM3hwaDZ0LU45T1c3UHF2Ui10dldETWU3TURVajhWX1g3a0g3eUxadkx4dXFWWkRaeWtOTEFEeUg1dENEbjl2bnpKUUp4b1dvVW1zT21UVjdJeG1YX1V2TkZQZnVnMW90NE5JREoxbGY1eGRmeXlDcWFKemZBUXVVRFpUcFRyTXdOODJ1VQ?oc=5",
+          "source": "11Alive.com",
+          "pubDate": "Sat, 05 Sep 2026 18:57:02 GMT"
+        },
+        {
+          "title": "Paramount Taps Destin Daniel Cretton to Direct 'Hawaii Five-O' Movie - Hypebeast",
+          "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQV1JKODQ4azN5R3V4cnBZcjAyZDRZM2VhLTU2cXFYeUFHS2E2c3EzM1VhMERjNGtpSlNzT0lMMC1Ha3RMMjlWbGl3ZnVHMExjZllQdl91c1lNZzh1dkVoU210bTdsV0xOYXpQa2pnOXYxcDVpQXpNbTRoUE1HbFdJQlQxUldLZDlrWVBxSFNoeGdvcUNaN1BTaTdMNGhHTklzaVE?oc=5",
+          "source": "Hypebeast",
+          "pubDate": "Sat, 12 Sep 2026 04:03:33 GMT"
+        },
+        {
+          "title": "\"Bad Boys FOR LIFE\" Brothers for a lifetime, life-and-death friends. - 玩具人 TOY PEOPLE",
+          "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyczNnVEtpTlVOTXlGWE5ad1hCdHJwRXF3OU9qYS1BVVZQVnI1WUExLV9oWF81Sm5jaV9xMVBXcXVGeks1d2t1cWhvUk0wV1E?oc=5",
+          "source": "玩具人 TOY PEOPLE",
+          "pubDate": "Thu, 10 Sep 2026 04:38:57 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1731801,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.4297,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-not-alone",
+      "title": "Not Alone",
+      "releaseDate": "2027-04-16",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "While preparing for a revolutionary space launch, an introverted rocket mechanic and a brilliant astro-botanist spark an unexpected romance—only for three runaway aliens to crash-land in his home, looking for a ride back to the stars.",
+      "poster": "https://image.tmdb.org/t/p/w500/9HqA8Hxwd7KNs6ttYqRbXtYHLpv.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "'Not Alone' Netflix Release Window Revealed - Yahoo News UK",
+          "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFB1NFJ2MFNFSzBYYmpPdmh0QkN6Mkw2ZGtOSjVNTmpVMEo5bXIwMEZ1VWJnWVlyeFhDSlAzVDZJdXVFS1EtLXhZaFFfd2lqNkl6U2pZOHkwLVAtR25zUUZjRUp4S1JnMnRyaGFJZWtfblBGYUFnNDNldHpiRWJldw?oc=5",
+          "source": "Yahoo News UK",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Loss, But Not Alone - Smiley Movement",
+          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE1wREp3UVpFY3lpTXRCWXVtYXlyNllTQmVfUXFQVlJMVGx5M3VZZGZ6b25ETEdtRzVjMk5FY3RNZ3V4azc1YXdLeVJFcWNXTk1ITXlIdEROSmh5ZWk5U3BsM1BXOTZoTllaZW12TDJieUhTVUFDZDRPQQ?oc=5",
+          "source": "Smiley Movement",
+          "pubDate": "Sat, 29 Aug 2026 18:20:32 GMT"
+        },
+        {
+          "title": "Wrexham not alone: Birmingham eyes Premier League push as promotion buzz builds in Second City - AP News",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNNTNXeTZyTGU1Ymd0T0d6QjNxTkZVRlFfWjV1VDc0a0pmYlBaakdzNjlFM19JNXRHdVM2YjlRWV9MVjlYcFF1VFNvZ1FEelJZaWx0cV8zOFo5eER5YjEyY0pCSmxLaGJ0cmJUYkxQSnRNQ3UxOWVJdGFCbXFDa0JvUGE1QWxJTkhxd0pfMDVham8xLWhhdGVMWDRzXzlwd0V5MkhrVQ?oc=5",
+          "source": "AP News",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1718699,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.8184,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-a-place-in-hell",
+      "title": "A Place in Hell",
+      "releaseDate": "2027-04-23",
+      "releaseType": "Wide",
+      "distributor": "Neon",
+      "overview": "A top criminal defense attorney, known for representing unlikeable clients in high-profile cases, is a relentless workhorse at her firm and fully expects to be named partner. When another attorney joins the firm, her job is put to the test and makes her question just how far she’ll go to protect it.",
+      "poster": "https://image.tmdb.org/t/p/w500/4gSgzVw59vhegejEh1yMMfStXsU.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Genre Love - Style Weekly",
+          "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBQQS1NZElDZ0tMck1GSV8ycUFHbENDeUM5Y1BxWnk2eDVmZ2Z5X2picHNLYXMyN202c3dOdjhiQmZzSnhYdmJFUnBNTXJKWTlZ?oc=5",
+          "source": "Style Weekly",
+          "pubDate": "Mon, 14 Sep 2026 16:00:44 GMT"
+        },
+        {
+          "title": "Andrew Scott to Receive Mill Valley Film Festival’s Acting Award for ‘Elsinore’ (EXCLUSIVE) - Variety",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPSjhvbmlTM0JvWmdrZnZGNHRFenVnMURUdGlGUURQckpGOURQdVJJcENUelhXckVRNjUxX0lFYU5jM2dDRjBfSFByU3k0VUlnMTdXYm44a1lSV29MZTdkbVpmOWt5Zmg5SS04cXNTLVMyZEZZRUxZN1NRTVY1a1JuLWlkdlI1bS1vVjVUWUtYNElaSUVZMnlkWl9fcGN4VVFJOEp4MQ?oc=5",
+          "source": "Variety",
+          "pubDate": "Thu, 10 Sep 2026 17:15:00 GMT"
+        },
+        {
+          "title": "Carrie Coon Joins Rebecca Ferguson & Greta Lee In MRC Rom-Com ‘Honeymoon / Funeral’ - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPUDRPTUxGZ24tZWNITktVNTFZS0dHaTJBWmJ5R1cwUXJFd2I0YVVpYllKbzBHNFdBODBKM0VfMlBlWFFXRHdPSWxTSG9HRXdOSnVteDVjV3VuRm95VXR0RjJJNjJhRmhaSFFQWmxvQWQyUWFUc3VVTkZlQkcwZmtfaDZYcHpoeVQxMXB0UlE4VmRscXBxNDdCTFhpNGUyQQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 09 Sep 2026 19:01:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1437882,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.3388,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-legend-of-zelda",
+      "title": "The Legend of Zelda",
+      "releaseDate": "2027-04-30",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "A live-action adaptation of Nintendo's Legend of Zelda video game series.",
+      "poster": "https://image.tmdb.org/t/p/w500/4XuaHHQ5eR9czPZPHcaaUjekx5w.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - Nintendo",
+          "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOc0xTbTFOUTNNSzd2Q1JqeGFrVjIxY3pOa056bWhYdHRlN3Axajg0dG9aOVJfN1dfdXQ2a1JnYnliSkp0Ymo1dXpSTXVCWXZiNFNHSkduSzhmTkZfWVlNdmE4bGNVQmpCbmFvczVGZGVNSnNYUE1IbExHNlBTczRyRFJmUEhGanVKb01yQW9qdFZiUkFheTZtVDkzNXJZWENuUUtYTjNxTkE5M3NzWVBna1FlcDdGTzI4cFRUdTYyeFVkQldIWlZWNURzVQ?oc=5",
+          "source": "Nintendo",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The Legend Of Zelda Movie Is Just Called 'The Legend Of Zelda,' Miyamoto Hints At Story Details - Game Informer",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPbExlbFJRazNBc1BiYUQzZ3FtMW5LMVdhdjg1R2VxYXIxdXN3M3BPSUhYbi1TVHhTWFFDX0FEa2NyN2lIa0s0X2Y4alRJa2k1NW01Y29jbHM2UzVqQVVwZmNRSWI4TDNMM1BZLU56QzU2N0w4MHRTQTlGVU5xZHZIU0pHajRzODIyeHV1Y21pQnpsVW9jWXUzV2prNVZ0cVpFdHFZeF9XQ0dBQm5sQ3dqU0lNOS1PVlhEMHVsN3VR?oc=5",
+          "source": "Game Informer",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Nintendo & Sony’s Live-Action Take Of Videogame ‘Zelda’ Gets Title - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPNkVicG56UnZ2aXhCWkFqY2VIUHg5OUxPY2ZCMlZLVEpWRnlPSV9VaUFyZXhqOVkwSVR5ejZ5SzhwdEJTbnkzSUNJMG9IemZwOVBjdDRHWU5qRWNoV25DTVNnbGZGaVIwVnlPdmlTZTVGUnlxa3IzZzl2SE9NNUc4S0lwRzAxN1pQenc?oc=5",
+          "source": "Deadline",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1177369,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "JP",
+        "US"
+      ],
+      "popularity": 2.7891,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-resurrection-of-the-christ-part-one",
+      "title": "The Resurrection of the Christ: Part One",
+      "releaseDate": "2027-05-06",
+      "releaseType": "Wide",
+      "distributor": "Lionsgate",
+      "overview": "The first part of a two-part sequel to The Passion of the Christ. Plot TBA.",
+      "poster": "https://image.tmdb.org/t/p/w500/qx3QVH1eVqtrdvL1dndXPhCktLq.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Cardinal Muller spent hours with Mel Gibson on the film set of ‘The Resurrection of the Christ’ - OSV News",
+          "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOcW13MnVLbWpyU2I1ekdpNGxKMWtmOGNMNHNJQVZkTGtTWmwxWWR4aXJwWUVVUzdiU1VnblNvZDd0eWFLU3dlTzBONVEtTnZPM2ctbVJjSkNKMy1HNi1NR3p2MnFfUUlkSVBEZzRSeC1TWmlDS0x1d0xpR0hvTUdFYnhkM1dDZUh3WklXbnVMZVFSYmJ0cU02QmJpN2xOSEhaa1BXODZkOFUtVzdNZnlOYUZ5Tm1BYm9wTXc?oc=5",
+          "source": "OSV News",
+          "pubDate": "Tue, 15 Sep 2026 19:28:41 GMT"
+        },
+        {
+          "title": "Mel Gibson says ‘Resurrection’ will explore ‘different realms' including 'Hell of the just,' Genesis 1 'firmament' - Christian Post",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPYnBTMng1VnEtRlJRZDZYblNDWkZKOFF4NFAzMF9iVlM2UjUyMElVWHFSeF9Rc3d5ZnFVMU5nRG5mRHVSVjJ1LTduTlM5aXpONDNuZEdOeVdGWjkxaFpCa2xVUmtfeTIzaW5BaU42TUVtYngzWjJ5eWgzbnJGaWFBRTVZY3h2S0RzNUZJTHotMTFNSW5PRVdCN3NZdmM5M3M?oc=5",
+          "source": "Christian Post",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The Passion of the Christ is back in cinemas. Should Christians still watch it? - Premier Christianity Magazine",
+          "link": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxNVGJLOVlYQ2pnRl9ZaFB4QXVZUThCbUZGWU5KQkpYVU5MUGZSMkNGVVl4V1VPUE9nLWtYbEIxYkVxTGxwdnVVaFdMRWc4V1o4b1dsdURpUU41anlLRkVvVUdlN0tRQm8ySW5lOUlWWWlxcm9rZGNTNTQ1ZFpoMVR2SWdHMUVsbXo5RE1jN0pKaVczcklacW5pMFQtTmZKWDYwd2JzSVlBallsVGFULUJUUHctcG1BNHF0ZVNVclhhaTFSUlB4eW5aaFhfZDNUQzRN?oc=5",
+          "source": "Premier Christianity Magazine",
+          "pubDate": "Fri, 11 Sep 2026 16:43:46 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 532652,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 3.0901,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-beach-read",
+      "title": "Beach Read",
+      "releaseDate": "2027-05-07",
+      "releaseType": "Wide",
+      "distributor": "20th Century Studios",
+      "overview": "When an idealistic romance novelist and a cynical literary fiction writer—rival authors with dramatically opposing worldviews and a serious case of writer's block—unexpectedly find themselves living next door to each other in a small Lake Michigan beach town for the summer, they strike an unlikely bet to swap genres and the lines between fiction and romance begin to blur.",
+      "poster": "https://image.tmdb.org/t/p/w500/snl3EJdZyUsKIJlgqLPinbEnnwg.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Reading Jane Austen’s ‘Sense and Sensibility’ Ahead of the Upcoming Movie - The Colgate Maroon-News",
+          "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONUVLS0JRSExZVUtpLVVvT0VjVkgtVmNFbEdkdjlVYllWSnVrbVg0VUtoRFZWb3F4TFpuTGlxQnN1MmlzQVhkMmEwSEVycW5XV0NHUUxvZmtWSk1xQ3UzTUJpanZCN25qQmNoOE9xcEdHZDgwS3dXWGJVNF9vRTdIbHdwNWcxcEJuakhpb3V6LUlSNVlZZVVDTkE1cnRZMzJ2VW92eTd2S25WTndlVGFtM0ZvVGZNYVVYWFEzalJn?oc=5",
+          "source": "The Colgate Maroon-News",
+          "pubDate": "Wed, 09 Sep 2026 13:05:21 GMT"
+        },
+        {
+          "title": "Traveling Soon? The Perfect Books to Pack for Your Last Summer Getaway - The Everymom",
+          "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1fMWEyV3Bubko5NEE1a3VTbVNWSGV6YWxEYnRSZGt3Q0lBNGZ2bmNyRXNuZHE2U3BycENOTWwzeHpqVnQxVEZ0WV94MDk5Ti11dEt0b2xmLUVUZGl2NTNhOXZxWk1oZw?oc=5",
+          "source": "The Everymom",
+          "pubDate": "Tue, 01 Sep 2026 17:05:15 GMT"
+        },
+        {
+          "title": "20 Spicy Romance Books To Read Before Their Film Or TV Adaptations - Bustle",
+          "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNV2J2bTFobVlvVUJBQmh4NWphYlJEYTlPdHZHcW92LXJiUGRCdkduZHZEQ3F6UjFHR0ZPQ2lCWFBwdVNIMHJVb0pyQXl3eW5kaWlHYVk4UkI5VEJTTk0xdjZxZ2ktVmNCaGJZUjBFamV3SDlWeURGTEN0S1hEZ1NvX0pB?oc=5",
+          "source": "Bustle",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1109469,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.4462,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-f-a-s-t",
+      "title": "F.A.S.T.",
+      "releaseDate": "2027-05-14",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "A former special forces commando, down on his luck after returning Stateside, is recruited by the DEA to lead a covert black ops team to take down CIA-protected drug dealers.",
+      "poster": "https://image.tmdb.org/t/p/w500/9GA7gpSrT1tqZ9KvE9GvqM8EGQG.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Paul Walker’s brother won’t be involved in possibly bringing Brian back for final Fast & Furious film (exclusive) - Entertainment Weekly",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNGVjd2g3bVhVYWE2bTlNLThGWUFCX1VieE1MMEVtT3ViRHhfek90R2QybUQxT3JFRjRiU2FYRm1tYXhpM0wxS2JYVG4ydHR1eFhvTUZ4TmpPZDVJeVVnN2F4cFNUUTA3Q1MwV3VlRlZOTjJfY1QxOFdIMGROV0l4V1VidDNjMDVTWmRPeg?oc=5",
+          "source": "Entertainment Weekly",
+          "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Every 'Fast and Furious' Movie, Ranked - Complex",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOMUFRZGlXOTItZ0dnV1FuRXdvS3ZiUGtMZVlpM2NEU3FqLUdVa0doLVJGRVVjcDFvZDlpeXk3Q1JDWm9TZEZkYzF5OVpjRXJINjFmNWYzQmt6ck5TdldCNVdGYmVGWW5kdWdWQVdfc1h0OUxOUGxFNnpJa3JTZFRBNjJvNWdFTTVQTUFVNXhjTWo4WmM?oc=5",
+          "source": "Complex",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "How the 'Fast and the Furious' franchise evolved from the original - upi.com",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQb1dvYnI0WnFZQWtqVjY4SVlMNWlhTXpDU2FhNERiQWVMb0Z3WDhiNHAzQmZXVGVkZnIyTG1jVmhPMU9maktFckE4cngwU1I0eHlVR1BPRldoVUlPbDZwQWJXM09MdUF6NUp1c0JqU2Z3NncwREhOMEZNdzhTMEVoR1NBYzk2bDRIS1lvT2ZING14WEdCVnJmMXVubjg5czBQYURtRlcyQkd1blBRVjZr0gG0AUFVX3lxTE5kdDVqM0NmcG1GYkxSeTdYTWx2Snc5dnZnaFR1QUZtUWZRVEhUVW0ySnJxYkVGWm9LTTBOb2w4ckF0TUtvOUZCRkczQ3ZFZTgza0tWb3ZqZjA0V1dsRWk1bF9jTU0tdjRaRFFpZ0U2U0tzYVFVUzIxNlFUTHhjdHdxdnYxdWJ5bzZLVG9oNlEwdzNqS3NURXd5bUQwd0JySEhMbGhYU0RvOGNFTEtfN3NsWkJtOQ?oc=5",
+          "source": "upi.com",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 556682,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.5119,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-bad-fairies",
+      "title": "Bad Fairies",
+      "releaseDate": "2027-05-21",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "An original musical comedy that follows a delightfully subversive gang of fairies as they shake up their magical world.",
+      "poster": "https://image.tmdb.org/t/p/w500/qv5bf7IXmVHpGE0TpYKA8tD2NFi.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Warner Bros. Pictures Animation’s ‘Margie Claus’ Reveals 2027 Release Date, Voice Cast - TheWrap",
+          "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNcVJ3MkwwcDNnaUpKblNYY3lIa1JTanlqOHhkS1paWGJNN1VHNzVQcU5EZjIzbmpZa0RPbWRhVmN5bVJ4M2N5VElnVTBycDhPYzV5aWx0MC1UcWJ3QXM4dU9yY3FzVFowMnFmbUJjNEVjRjlULXp5QzJUemRZRjRWYWdrS2VjZXZOOWlhdGlTdnVGVkxUak4xQUVqSXlmczUtZEt0cXMtOUtZejZL?oc=5",
+          "source": "TheWrap",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Ramayana Begins Its Musical Journey With ‘Jai Jai Ram’ a Celebration of Shri Ram - IWMBuzz",
+          "link": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxOUmFIdjhQMXFkS2FmRXQ2Z29CQVdUdVd0djJaN2o5bjNyTW93Ti04aWZUQV9nelkxSW56NWEwX1VOdGg4SmFqNWFFZ1R4RUl3a0gza1hueURYYUVaUlZQXy1LSmdPRUFURldpTlZEMmFZdENZdVo2Y1hIMWtZbE50WTNyTzRBR2xuUzlpcWwwbkZ6LVJIamV6b2h0Y19TUTRqNEVoTW54a0hNX0p5eEpTZ2lGanlLTTQ0YjlwMnpYdEtYbGhqZHZHeU8xMVlGb3VaM2c?oc=5",
+          "source": "IWMBuzz",
+          "pubDate": "Mon, 14 Sep 2026 06:15:15 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1138528,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "GB",
+        "US"
+      ],
+      "popularity": 1.6835,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-star-wars-starfighter",
+      "title": "Star Wars: Starfighter",
+      "releaseDate": "2027-05-28",
+      "releaseType": "Wide",
+      "distributor": "Walt Disney",
+      "overview": "An original story set approximately five years after the events of Star Wars: The Rise of Skywalker.",
+      "poster": "https://image.tmdb.org/t/p/w500/6LJetiEQjXUE9kDpXavXpZN1Vjk.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Everything We Know About Ryan Gosling's Star Wars: Starfighter - SYFY",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZVJwbGtQYlRPbmFYenFHNlVMQ05KV2xLLVpFbks3Q3ZxTXB3c0hTWWJjTXpkMkMyWXdjWWxXQXlra3VmYkJ3anp4b0VaLU8zSmRlUGNtdFRZWkRycEN5SGhEX3p0Ny1Yc1U2M3dnRVNPTnNOLWdERTl2VHlWaXl6Slk2dlhmREM5Und5YU5JcWVZUjRTU05HNm1sZm4?oc=5",
+          "source": "SYFY",
+          "pubDate": "Fri, 11 Sep 2026 15:16:05 GMT"
+        },
+        {
+          "title": "'Star Wars: Starfighter' Director Explains the State of the Galaxy - Star Wars News Net",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNdkFYZXJCYUtKaGlpQmxGcnVVbkZNSzJUWlVUMk9ZNEZLU0ZHN0VWUDE4cE9OT3hOTlZWSFlNWW42cGxyQ2gtbm52NWxONjUySWpxOG9QajJwOEwxWHp4Q3BaMFZxdTM4UU5TVkp5VU5NZzlJajQ3UEZFUGxGVTZkbGZtT1NrZ3lha2xMcXNNWXJtZzdLMHdBb0ltMzVTdU9Ic3NESll5QklaR2xJREVoNnV5eWo0ZW8?oc=5",
+          "source": "Star Wars News Net",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Star Wars: Starfighter’ & ‘Star Wars’ 50th Anniversary Edition To Be Released In Imax 70MM - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNU2VUd1JQOWdfc1FEcW1MYjVVc3VjTzZhU3VmQXE5bkZTOGhtUDdvTnloT3hXZ29nQThpRWpfSG12NWR6cTBYY2FqbVpyU0dwRFBuNHFidkE0RXBOOGg4eldSeTJYTmdiT19TRlN3dnU1RVBuRUpOMk55aG11Q1ZKQkRQb05ONkRxcTBJY0VCems2ZzJaWURLUXNrNlRYWlNx?oc=5",
+          "source": "Deadline",
+          "pubDate": "Tue, 08 Sep 2026 17:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1417668,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.3567,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-john-rambo",
+      "title": "John Rambo",
+      "releaseDate": "2027-06-04",
+      "releaseType": "Wide",
+      "distributor": "Lionsgate",
+      "overview": "The origin story of a young John Rambo during the Vietnam War.",
+      "poster": "https://image.tmdb.org/t/p/w500/nNgeEw5b9cc1UFTEyLhlAQT3UG9.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "James Franco joins Noah Centineo for the John Rambo prequel - JoBlo",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ockd1bGRUX3F6bU9yRElkVWZCR1I4cFRRZS1GOXB2QjhEaklKSXh3WkNfa2N4OTlZVmhqRjdyalNQUTlOalJMVFBKM0x2QVNDWkhoNnlKSWFRZ9IBX0FVX3lxTE96aEduUXQ2d2o5X2FvQlJmaE02eE14SnhXYW9GM2l5M1QwTmJSa2JZOVBndkhTdXJSTlhzbDFlVzZlRVNXbE94X3BJQmE5ZjJKRE9OMXRxZUpSalM2alE0?oc=5",
+          "source": "JoBlo",
+          "pubDate": "Tue, 08 Sep 2026 09:39:39 GMT"
+        },
+        {
+          "title": "JOHN RAMBO Star Reveals the FIRST BLOOD Scene That Became the Prequel’s “North Star” - GeekTyrant",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNbmpjZ0wxaWU4N1Vmc0s3WUdLNHZGeTZNV0Q1VUk2UUJNTGp2dU8tUndxaExEckQ4RGJKNGUyZVozTVlpNGZMQ3NCOW5nUm41dFJWTUgtRHpNQzRobnRMeGkzSGpsQ3ZJbmUwSUdtTnZXSnBwUjAzTmR3WTIyUzJUcF8xZFZ5MUFWSnFfcjg1akdjMXVvcnFwQXJVLW9GQnJSNm5DcUdtX25KRFpNN0E?oc=5",
+          "source": "GeekTyrant",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The new Rambo actor has already filmed the prequel and hasn’t even met Stallone: “I want to talk to him” - Diario AS",
+          "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQZzJyaFlUdWQtUmRhcllFTFFSUU5wODJhNDRiR1lhVTZuRjVkd3ZKVFlZQldPV3lfS1VUbl9xdS1sX3RSQ3BPYUttSlF3bm45clpYcC1pMUV3bi1BNVNqSXhfMXZmMHlBQ3ZBNk5IanFIWnR3alV6TjFkdGV2OEdQOFdmWDd2LXlnQ3R2T21JMzlJc0tyX1JwTS1WT3BZVWdQQUJ1MGtLZVB3Z0tTR3cxTVF0bzFpZWFvcE5TWXhUSGk5TmxNVzlrZVRER1V2cnItVVhCLWJyNkY0TnFMd2tz0gHzAUFVX3lxTE5yOV96MVNjMHlNMTNrcEZadTdPdEk0UXpkeG1vS21KZllua2R0cndDaXYtREJ6VGpaUHk5YkJrcEFtX1NsODE2azVEQk1VYWdhZV9yOEhiYlhJdWlGYTYwT1ZyczNlQXlZWk1JZHJNOHJ1SnhpcjFwYnNyZ2NQY0M0NlJKdmc4YWFJOE1pMXgzNjRDNnVFaVBJbGhkQ2ZKdzNNcVo3OTd2aGRLNmZUaG5LNlNQNExsWncyaS12TEUyd2E4T0JON0d0TmlRYmg5QW1LYzVRZVVvME5vOWg5Z1pPVUpvLTRXNFF0NzVWU3pGcmVhMA?oc=5",
+          "source": "Diario AS",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1150369,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.0014,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-how-to-train-your-dragon-2",
+      "title": "How to Train Your Dragon 2",
+      "releaseDate": "2027-06-11",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "The second live-action adaptation of the animated trilogy. Plot TBA.",
+      "poster": "https://image.tmdb.org/t/p/w500/6VlnDSuTmBPW6a45Qxp5qeDINBq.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "All 4 How To Train Your Dragon Movies, Ranked From Worst To Best - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNUHQtQTdrc0xVUmFYdHFIMUZqVXZ3WHF3a19YRHp3eXNOQThSaVFwaHNseF82OEJsOTg2TkREZHZxTVR4RzJ1MGZPYkFxRkxhbU9GbWxpeW5QSDZkSnNuMS1hZnZVNzl1VElHdVA0UDFZTDYtUTduYXFVMGpCSGJGOW9jOXFSYTZLQi1TRGpyTGJFTHUyUEE0NlJOOA?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "20 Upcoming Movies That Have Already WON – Page 11 - whatculture.com",
+          "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNd1c2TDVyRjlEcXdEVlpzUjRhZmRIYXNyQ0lUNEtFZlFFY3k4ZC1ZUEkyVWZ2Z0ZwZ0FmX3VTa1pGaEJrWC1qc1NMSXN4V29ycTFiXzd6UnRGcWllMnRXcTczcUF3MEpIeUh5dGdMbjFIdnhEM0FDRVdpWFhLR0FVVkVUVnhWQzlhU1ZoMWpQTVZEb2YtbGc?oc=5",
+          "source": "whatculture.com",
+          "pubDate": "Mon, 07 Sep 2026 10:55:07 GMT"
+        },
+        {
+          "title": "'How to Train Your Dragon 2' crew banned bizarre idea: Here's what it was - The News International",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQT2pzYmNlUU8tYk5RSFpFd25hLWlaLTN1UzhRNElDREtlbHZ3MVhhVmw1Q1YyS3N3aE5TV1dXTTZoUGpmMGlWS3pnQms3dXZiVmNHcVN2N2Q3OXdoU1lxbldES29kSnBzNjdPZGEwNlRvNzFZUWV5aVNUWnI3dXpPRzlTay1Va1poNW92Z1dtdXRsUUJBSVZsdkRSVU5sMzdQVWI2V1lZaXQ3eDZ2Zi1BedIBrAFBVV95cUxPN2FQWUM0WmFrQk9XbWt3aC1qdzFXbFhPX18yUkdPUGc1QWhUOGhqc2Yxb1dGNVhEWWJqRVdPU193Qm94djdnY0RQLWQzbDk4bUI0NnlhWG1PeW8yX0pzTnhheEZqNzdXUTFkaWI1dGlod0NqZjIxR1RRMWZCdjFRQmxxTjVpbFNjTVMwLTVWSDd5OVp1OV9mYy15Mkc5dGVJdE5ualBBSW5TNkZ4?oc=5",
+          "source": "The News International",
+          "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1458319,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.4687,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-spider-man-beyond-the-spider-verse",
+      "title": "Spider-Man: Beyond the Spider-Verse",
+      "releaseDate": "2027-06-18",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "Hunted by Miguel O'Hara's Spider Society and betrayed by his friends, Miles finds himself in the darkest corners of the Spider-Verse in search of a way home. Knowing that his family has been not only fractured but endangered by his calling, it's a race against the clock for Miles to travel across the wildest reaches of time and space to fight for and reunite everything he holds most dear.",
+      "poster": "https://image.tmdb.org/t/p/w500/9KAe39xqyZnv9J4W3DRGdQqX82h.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "'Spider-Man: Beyond the Spider-Verse' Netflix Release Date Confirmed - Men's Journal",
+          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQ20yUi15U0daVmFFMDcyM0JfV3M5ZWtPV3U4T2ZVc2QyUTVwZ2JKX1hnMkMyQWV5bGtqcGprbE05aUJ4cHdSd2Z1TkNIOHk3Mi1TcGFnbWlHS2o2WTRTNFFBZTdDT1hKV2xYdVpCLU5hSUZhdWZNSkkwM0pBS0NqSzQ1eVVXNWRleTNGazY4UDVZZk5McUpLMEZUYVI4bk1yUVFzNjhMTVY0NTQ?oc=5",
+          "source": "Men's Journal",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Spider-Verse 3 Is Confirmed to Include 3 Marvel Characters From Tom Holland's Spider-Man Movies and The MCU (But as New Versions) - The Direct",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZ1JScWlxOVd6TkRBU0Z6aUU1SE45UEtxenIzX0dGblVQYzFaVk5ybF80NGpocV9uelBHeWFLZTRncjVGeGxrTVhkYzRfelo5Z2x5bXBmZ3dCMWdwV25Pb1B5THRBcFBWU2JqUUZVSXhwZHBHczI2WW96aVctd1JESEU0Vy15TVBEdkQ2UWYzRkRXcjNiQVhzM3ZTVEs?oc=5",
+          "source": "The Direct",
+          "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Spider-Man's Most Anticipated Movie Officially Sets Netflix Release Date - Collider",
+          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNSm9nbkxYUFg2SHg5cjd4Q29hR2hLZUd1VVNIRTdBRFgxOVFNQlQyQVg0c0lfNEtKcVA4OVBiUkJmN0hzeXA3M3B4RzE0N0U5ZTZHbllqWDh5TDRsbGNLSHR3cFJoQkRDNHZGLTNUX2Q0RzF2bDdkVWZ6UkVlQVhzSVFfZnE5LXVmdEE?oc=5",
+          "source": "Collider",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 911916,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 5.4231,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-shrek-5",
+      "title": "Shrek 5",
+      "releaseDate": "2027-06-30",
+      "releaseType": "Wide",
+      "distributor": "Universal",
+      "overview": "Shrek and Donkey team up for another whirlwind, big-city adventure, this time in the magical city of Further Further Away.",
+      "poster": "https://image.tmdb.org/t/p/w500/zVGvsXptUWd1PgptipLNoIQYytW.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Shrek 5’ Netflix Release Window Revealed - Men's Journal",
+          "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5uQlc0M1g0OVpLeWlWOWtIWHg0c0dCXzJWaXhGaURoZHMzcW1WX05rOGdzVnZMeTRoWmgyYmU2RGdhRHhQeGl0NG5YSXNQYzRtWGJ3Y3g2OThnY0pVUmtUZmU0SVZla3JGTkw3SFhvbU5LZmNkVjVySFN0Wko?oc=5",
+          "source": "Men's Journal",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'Shrek 5' is on the way in 2025, according to an embarrassing leak - Entertainment.ie",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOcndBZy1DSUx0LTZ5VWw4T1JTMjRyQWRfY01jLUdiVlQtZXF3Mi1GVkZFUWRQNXI1X1B1SlpTdWZqbVpKZThkci10NkpCYmFTbUtRcEp4NWw4aUVtejUyYXhjcFV3RlR3RFpoRy1NY29zeG43d2hVdVUzcFh3OXhOTE95cDlYaUk?oc=5",
+          "source": "Entertainment.ie",
+          "pubDate": "Thu, 10 Sep 2026 09:31:22 GMT"
+        },
+        {
+          "title": "Before “Shrek 5,” It’s Time to Head Back to the Swamp for “Shrek’s” 25th Anniversary - BSCkids",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPWWVWY1duM0xWZUdnc29YOHVRa2VTVVQ3aGZNZWV4WEJTNEUxZzBHZDRXclQydmlENG1FSWRFWUlqanNGS2MtNUdyQW1wdEtqeDJNdHVBZXF4d2tIVl9GRnVfRm9Bdy1vSDVleEJnckdnT3Y3aWo5N21Kbk5UUEhhNndibmZsZVM3aURhajVZMDNacUNFVVI4UXFTR1lZV3FpTTMtck1LOWdXdktNVVhF0gG0AUFVX3lxTE9ab0JnU2NsSHJoSHRHaEtENTR6SmxXZTVybzFMUEZRRzFKUjlpX3Itb3FfcE83OHdxRjRiMFk5UmJLbkVWc3pMSWd3eWJ1WUNkU3FvdXhiTnY1Zm1reWNXM2RGNkhRcmhUYXROWFhmR1JRZ0pZc0JZUjN3R2o1N2NJeGtyYUVHTkw0VGF5bFlQZi1qRmI5d2JPWlg4SUJHWEYtVC1lTFhBeHpUclY3TFR4Qzd5MQ?oc=5",
+          "source": "BSCkids",
+          "pubDate": "Fri, 11 Sep 2026 18:22:30 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 421892,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 9.1597,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-man-of-tomorrow",
+      "title": "Man of Tomorrow",
+      "releaseDate": "2027-07-09",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "Superman and Lex Luthor find themselves forced to work together—to a certain degree—against a much, much bigger threat when Brainiac sets his sights on Earth.",
+      "poster": "https://image.tmdb.org/t/p/w500/tYLgfKk3cEk7LskgxWyW37Nty01.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Superman’ Sequel ‘Man Of Tomorrow’ Wraps Filming: “Truly A Joyful Experience” - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPZUJhUmZ0Q2NfbmpuMlRRWUhUaF9iYkI2eDRYWXE0ajZmcVIxRWhyR1hrRmthUkg3eVRfMF8zcncxYnYtYWdMUnAtb2tzRHRHZG5wVnlZbDRVZHRGM045M29HdjFWWXp3QVF1dnRHNWFDbXYxNEJ4NHVQeGhiekdsMG82cUVPQQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "James Gunn Says ‘Superman: Man of Tomorrow’ Has Wrapped Filming: ‘I Have Immense Gratitude’ - Variety",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQVi1TcTN5QnlmSzVMcVRvLW5RNHdMUTV1M09DRTVmRlYwZ0JvMlV0NzdyX2RueGg0SEJ2NUZaRWYyRkl6bWRlMWdjaUZoRHZZalVDY2ZPOE1IaEpQWDFMaUJHNUNDakhSQTRqRzc3UDlUV0Y4d1VncERtNTlIYm9jNDB4YXVnc1ZzMS1USThYZXZFTHhfWU95RnMzSUdkYTQ?oc=5",
+          "source": "Variety",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘Man of Tomorrow’ Cast: Every Actor and DC Character Confirmed for Superman Sequel - Men's Journal",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNZEZCZU00VFc0OUlhclgxXzllUHBLOERBZVk2T0hLMGtsREtjRHJKZFI5TmJ0QVFqbC0wM282R3o1NjlZdVN4aVplSzZPYlZZREdONVNSR0pWRDFfSG81c0dQSWR5NGN6eHJ3NHliQU9odGhDRkxLMWhwbExLRDRYZ004elY?oc=5",
+          "source": "Men's Journal",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1523140,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 5.643,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-fake-skating",
+      "title": "Fake Skating",
+      "releaseDate": "2027-07-16",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "Childhood best friends Dani and Alec reunite in Minnesota. After a compromising situation, they start a fake-dating, slow burn relationship to boost their reputations and navigate high school drama.",
+      "poster": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22750%22%20viewBox%3D%220%200%20500%20750%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%230c1832%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2325365e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22500%22%20height%3D%22750%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Crect%20x%3D%2242%22%20y%3D%2242%22%20width%3D%22416%22%20height%3D%22666%22%20rx%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%22.22%22%20stroke-width%3D%223%22%2F%3E%3Ctext%20x%3D%22250%22%20y%3D%22340%22%20text-anchor%3D%22middle%22%20fill%3D%22%23ffffff%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20letter-spacing%3D%225%22%3ECOMING%3C%2Ftext%3E%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20fill%3D%22%23ffffff%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20letter-spacing%3D%225%22%3ESOON%3C%2Ftext%3E%3Ctext%20x%3D%22250%22%20y%3D%22450%22%20text-anchor%3D%22middle%22%20fill%3D%22%23aebbd5%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2217%22%3EOFFICIAL%20ARTWORK%20PENDING%3C%2Ftext%3E%3C%2Fsvg%3E",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "'Better Than The Movies' Film Adaptation News & Updates: Everything We Know - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPMDhPb1ZhTjFleDBpOHVBSi1DeDFXXzFCVlZLdWxCNWNYWVFmcVVwblZtWmxoRWJyZWQ1ZzJzS0wwenFQQVhyYWVBZkJHRXUxTXNMbkdnUlMxNVhnNy1PZlk1WU9nR3dqVFVnNlY4S1RfelA2U0lnYXJWR0pMTTRlb2hLNm1GWFRjN1VQUzgwU3ZJcUhhX3E4?oc=5",
+          "source": "Deadline",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Page to screen: The Lynn Painter universe - The Lamron",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPTjZGb0FCb25pNGtiX2J6bXpjTUtxZTBnTXE4ZnpDUzYxb3hJeUQ3WU96ZHFENVJhUzNUWVZnZlhHcVZsUVpPNEZwbzZPdnVnenZLVXlOemZHelVyd0MwQVhBV1hGMW9xUkFrX09LQkpxRDJvQVY0enVPRHUxTGZmOThpQ1ctLXlpa1hZdzJYcVhpQjg?oc=5",
+          "source": "The Lamron",
+          "pubDate": "Fri, 11 Sep 2026 14:00:47 GMT"
+        },
+        {
+          "title": "All the Book to Movie Adaptations Coming Out in 2026 - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMidEFVX3lxTE1hVGRCSWVlVm5pdHNJXzFsYVFwR2puU0M5STJkZ2EzZFo4bjFyQ1Y1OU9LV0syMk1FOHlnSl9YbWxpOXVuTHdvaXg0UWFleFVmWWkyWG5YSDMtSExPZGFpQnJQTXVNU3lHT1JVbmVjaGZrR3NZ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1646360,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 3.4989,
+      "posterReachable": true,
+      "artworkSource": "Coming Soon placeholder",
+      "posterPlaceholder": true
+    },
+    {
+      "id": "upcoming-a-minecraft-movie-squared",
+      "title": "A Minecraft Movie Squared",
+      "releaseDate": "2027-07-23",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "The second installment in the franchise. Plot TBA.",
+      "poster": "https://image.tmdb.org/t/p/w500/dTlFgQFiILG6stHBhXMDXblgdCw.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "'Copperhead' Movie Adds Jason Momoa, Adria Arjona & Kiefer Sutherland - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOTVQyRXJpX3pwaVZnUUc0cloweWhWTkJXLW9yZWVOMVdULU9CV19xSXJxMFV3bV84M2RxaUV4b205bWd6eXVkb2VVaWFPRHBPMlQyN2NJQ0RtbjBnN3ZxZDlESzNjQ0p6OGQ1VnE5N1NxWEs2bmlCRFBJVjk3S2RodGFFcTlBOVV3TU5wRlYtVFA?oc=5",
+          "source": "Deadline",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "What’s Happening with the Netflix ‘Minecraft’ Series? - whats-on-netflix.com",
+          "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQUW5WN2FFdFdGUnBTcjVxVWRSQzZRUW5uUjRIWUJaMUtJUi1FZURNSXBJZk9fT0pWeENfM3VNamhvTU4wS0RoSzRKN05EMFZjLXFOc3FFemtwM2pCY21CNm15c2xoZkhRVDlZUE9fb1ZsWTdBWmVpVGlLUUw0Y0hIZnpKXy12cFotN09XNzNadw?oc=5",
+          "source": "whats-on-netflix.com",
+          "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Jason Momoa's New Crime Thriller Is Taylor Sheridan Meets 'Lethal Weapon' - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DSm43MUszRVl4TzFidDdVcXlYYkRSQXY1UTB3TjljTDhZd1JoNDZSMlJ6Q0ZyY1Q4WTI2bElaU1h0blNhOWh1UFpFblh5VHdJMDR6Rml1X0ZtSkhJMVlxQmFhcFEzc1dT?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1461519,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 4.3667,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-comebacker",
+      "title": "The Comebacker",
+      "releaseDate": "2027-07-30",
+      "releaseType": "Wide",
+      "distributor": "Sony Pictures",
+      "overview": "The life of the pitching coach of a major league hurler is upended when he is hit in the head by a line drive on the mound.",
+      "poster": "https://image.tmdb.org/t/p/w500/hNnrtEEcDE0kHnUzzUmEGzY2eny.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Amy Madigan Latest To Join Tom Hanks & Callum Turner In Sony’s Baseball Film ‘The Comebacker’ - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNMDhNeDA0ZWFaWlVYSkFNMW1ueDNqZDF6SU8ySGFQZ19Wa1c3THlyeHYwM0Q4VzZHcmpRQjhWaDFxZXl0enpXV1Y1aTJSYTgzcURLT05qVDRlWDdHWkp3T09jTFYtRHo2cENrTW1JSXFEWTdRVXpnOTRhVG43TjBZdHBtUGI?oc=5",
+          "source": "Deadline",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Patricia Clarkson Joins Tom Hanks & Callum Turner In Sony’s ‘The Comebacker’ - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPN09RSFNaRXVoWFpaS0NMalNHaHlpcDdqWGhFZXNIb01fTGxVV09LTmZtQXFYcEhjbVlKMmNjbGF0ZEZCRHB3U053UVo5UVdpclY5aHZrV2FocGlVdnpfSkJ4VkV0ZDFJelIxaTRRczZWV29faTBHRmZqaTVFbmhJQ3RaT3J4aENONDNNYjd5TXI?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Tom Hanks & Callum Turner’s New Movie Adds A-List Oscar Nominee to Cast - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOWUxQZkJuVWZDd2pfRkNYQjB5MHBVQnlsWWFtVDNBYmxHWWh4eXNiN3F0RDRMSkVuLVJvRzd6aWx0SUNVMzZpamp0NFU5YXM2U0RabnR0MFdmWE5xUmt2alFEZ2xJYWg4clhxc25UZ2lWdTROVEo1RXREeHZ0VDZ6dGpPa1dSUnJPVDEtR3JPLVhJWkFsQ2ZHUXFwQjg?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1658611,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 1.8239,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-shiver",
+      "title": "Shiver",
+      "releaseDate": "2027-08-13",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "A ne'er-do-well smuggler finds himself in the middle of a deadly double-cross while on a job in the Caribbean Sea, resulting in him getting surrounded by bodies, hostile mercenaries and thirsty sharks alike, all while stuck in a deathly time loop and scrambling to break the cycle.",
+      "poster": "https://image.tmdb.org/t/p/w500/hsi8ZhgUICETzeml16GpWRVWr4T.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "‘Onslaught’ Producer Ryder Picture Company Rebranded as Embrace (Exclusive) - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNUThRMmxNZ2hKa0o0eUNua2ZQay1CNHlxdXd0bElGaWVkUVQySDR6bUxaa194YWxQSkYwZHcxUTFmY0Z2M1VTNThzSGs3SGVkZDFHZnNaNEJ6SV9Ic05JSkFjSXBxN2VaNXdpWExGdC1jS2pPQ1k5amdCUE55ZDN1VzJwaWV4M3BIbFRLRnJ4U21UQ2RTS0FfeTg1dU52aUxMYnRPYWJKY1Zmdw?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Mon, 14 Sep 2026 21:30:47 GMT"
+        },
+        {
+          "title": "Keanu Reeves' New \"Jaws Meets Edge of Tomorrow\" Action Thriller Blockbuster Is Coming in 2027 - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE0tTm1yZk9sT2Itd1FQMHgwUjFvTHhpZHdZc2NMRlpwdXRlTDB2NGdpcXhFMUh4MGpyTmZoSEpqT3BIdktFcFhGQkdNUG1OTUlscXhZYnZ4azA0ZG95OTdhTktLU2VFUmZS?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Deadpool’s Stefan Kapičić joins Keanu Reeves in Tim Miller’s time-loop action movie - JoBlo",
+          "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5HOHdENnB2R3N0OTFpVzJWZm5xRXh2QzVXamhyVHYtanBGVVR1dVQ5NkpfWWhrc1BGNng1bGFTMGZQUWlCbENjUmhObUJ3Z05tcFdkQXMyNldpb1dpU1Z4X0tkenFxbENwb3ZKeHlQZGVUd2I5NkHSAXtBVV95cUxOVXo3eXN0TllYcWkwclNRWFg5UlJaZEhMeEc4XzZzeF9BMFN4d2ZjWDIxSm1MUjNjcWFITlpKQUttWEdEbHNWNHlvU3Y4eVVXeGxPNkoxSGZpUU4tUDE4THhlVFlTS2t1NHpDUGRXbm9mQ3ZRdHVHYTV3SDA?oc=5",
+          "source": "JoBlo",
+          "pubDate": "Tue, 08 Sep 2026 07:03:57 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1572400,
+      "metadataSource": "TMDB Web",
+      "originalLanguage": "en",
+      "originCountry": [
+        "GB",
+        "US"
+      ],
+      "popularity": 1.9854,
+      "posterReachable": true,
+      "artworkSource": "TMDB Web",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-get-lite",
+      "title": "Get Lite",
+      "releaseDate": "2027-08-20",
+      "releaseType": "Wide",
+      "distributor": "Paramount Pictures",
+      "overview": "Saunders, a headstrong Bronx teenager, is caught between his love of Litefeet subway dancing and his strict's insistence on becoming an engineer.",
+      "poster": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22750%22%20viewBox%3D%220%200%20500%20750%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%230c1832%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%2325365e%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22500%22%20height%3D%22750%22%20fill%3D%22url%28%23g%29%22%2F%3E%3Crect%20x%3D%2242%22%20y%3D%2242%22%20width%3D%22416%22%20height%3D%22666%22%20rx%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%22.22%22%20stroke-width%3D%223%22%2F%3E%3Ctext%20x%3D%22250%22%20y%3D%22340%22%20text-anchor%3D%22middle%22%20fill%3D%22%23ffffff%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20letter-spacing%3D%225%22%3ECOMING%3C%2Ftext%3E%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20fill%3D%22%23ffffff%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22700%22%20letter-spacing%3D%225%22%3ESOON%3C%2Ftext%3E%3Ctext%20x%3D%22250%22%20y%3D%22450%22%20text-anchor%3D%22middle%22%20fill%3D%22%23aebbd5%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2217%22%3EOFFICIAL%20ARTWORK%20PENDING%3C%2Ftext%3E%3C%2Fsvg%3E",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Leslie Odom, Jr. and Aunjanue Ellis-Taylor Join Storm Reid in Teyana Taylor’s Directorial Debut ‘Get Lite’ (EXCLUSIVE) - Variety",
+          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQREF6cHJHVnU0MkNMb0g1MGR2OHd6TEtYQTFfSk9TOVpYVlR3OWluNTFob3RvMkZxajNCUkRjVVY1N2JiMFJqd1E5Rl8tZm10NVZhNEdweUJZY01YazVnVi1kWmJ1a0N4emxmMnVXSlBIaFpVblJnSXRkY3hGRmhDNW5ISTFUckR3RXliTDl6X2YxTDV3M3JyTkRxOHFBS3RFNGYxVkJpa096LUhrNmJ5MA?oc=5",
+          "source": "Variety",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Ceyair Wright Goes Hollywood: NFL Player Nabs Starring Role in Teyana Taylor Dance Movie ‘Get Lite’ (Exclusive) - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMi_wFBVV95cUxOY1dZUkdudzgwOFVnYVA3bUpuZUpKQVBKeUs1Rm5Zc0ZXSWZXYU5kV2xSc3BVMlFDQW9SbHFBVi1kY19HcTRNeUo2bVc5ZExvODFKS3pOWWlUeE5HR3ZHNkR0N0hoUTNwRHNXd3hhUnNGakV5MlFoT3Vpb284N2Y3WWlGb3MwbjFOampjVlVwVGhPSlk4SFE5Z3FGRk5ZZF9SS05xYXRuR3ROMENUam9iMGtIWEdtejdiUjFtaTRKaG40Q0JpM3FSbnBEMlN1Y1c5ZXY1ZklmOVdwSVBSNmRRMktKV0IxWFhyRm5vQTdsSk16WEQ3WXZPLXhKUVpEZ28?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Meet cast of Teyana Taylor's directorial debut 'Get Lite' - ANI News",
+          "link": "https://news.google.com/rss/articles/CBMivAFBVV95cUxPdk9uTTBIQ0d2XzRxU3pySmZrb0FsbEF6N2diblV0cTNPWVlQWExTcDNPNVF0ZG5pTlM2NkRiV292ZGNDRVFXZnV0UWo0M0F2Uk5NbnZlRWNHak52NGpmUllhSS1KYURhd3lvNDJMRXozOEZDY3otNElkanVYeFFuSDdBa1RxTUxtYkZPWThxVXBKS0Y4TERDY1JtT3REZENrVExqbzExcW5NVHJTYWJEUWZ6QzYyOV9STjVHZw?oc=5",
+          "source": "ANI News",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1263022,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.6311,
+      "posterReachable": true,
+      "artworkSource": "Coming Soon placeholder",
+      "posterPlaceholder": true
+    },
+    {
+      "id": "upcoming-the-simpsons-movie-2",
+      "title": "The Simpsons Movie 2",
+      "releaseDate": "2027-09-03",
+      "releaseType": "Wide",
+      "distributor": "20th Century Studios",
+      "overview": "The sequel to the 2007 film. Plot TBA.",
+      "poster": "https://image.tmdb.org/t/p/w500/iG1pMw9ufzXXQDTguT2okaZY3xe.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "The Simpsons Is Entering a New Era With Streaming Specials and a Movie Sequel on the Way - The Main Street Mouse",
+          "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNVUR6RzVSRWU5RExwNVpHUEUzcTJoTVl3TUtJaW9ESWpMa3R1QV9NSVpKV091VWY5eGtQRnFJem1KWVc3MHVDdlB0UDlvX2psWEtDWTIzRENCMzdSZHVxZzBpUmZiUTllVzE0bFBlYUt2NU5YQmtuQzlaYThpZzVoaDlXdEdYVjNRbll5Q0MzZ0FoXzhpSk9WQXQ5SGtuSmRqUnJ4OGZ2RjU5ZGdEX2MtTi05SWw3NzRFWVd4bUNGYUJKVnFBOUVHbVMtVQ?oc=5",
+          "source": "The Main Street Mouse",
+          "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The Simpsons’ Officially Takes on ‘Black Mirror’ in First Trailer for New Disney+ Special - Collider",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5XNEJzLWpKcHNmakYzcDVvUlpDdEY0NU1xYTMwOWhaOGoyWDNRcDVENVNheXJ2M2xoZi1nZnZacVFJMVltd21qZ0RzWlNOd0NLMVFTcnVrY2Vva3MyUG54d2l4eVNhcHVqaDZMc3hqQQ?oc=5",
+          "source": "Collider",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'The Simpsons' Debuts Trailer for Crossover With Acclaimed Netflix Sci-Fi Series - MovieWeb",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9QWDd6cWNfR2NUdEhRMmF1d2hBNFVtUHhtcS1OT0x4eGtuMGRqX01raGM1X0lfdmxPY3V3QnlyaC0yRjJnSzFBNUtVaHpxVDR3RWZoSDViUXl1M2VLUElhODRHSkFHc01Yb1duSTVId3FqVGxuc19GcFlXalNZZkE?oc=5",
+          "source": "MovieWeb",
+          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1554353,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 3.6532,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    },
+    {
+      "id": "upcoming-the-conjuring-first-communion",
+      "title": "The Conjuring: First Communion",
+      "releaseDate": "2027-09-10",
+      "releaseType": "Wide",
+      "distributor": "Warner Bros.",
+      "overview": "A prequel in the franchise. Plot TBA.",
+      "poster": "https://image.tmdb.org/t/p/w500/dgyJySF7AETucMIxl8dyEsE9oWy.jpg",
+      "status": "upcoming",
+      "voteAverage": 0,
+      "rating": "",
+      "runtime": "",
+      "theaters": [],
+      "news": [
+        {
+          "title": "Troy Is Standing In For An 1890s Town In The New Conjuring Film - 107.7 WGNA",
+          "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA1dFNDWUVMeHk5amZQWFlwTzh1bHhNeXlKYlB1cGRnX1N6Q2dmRm81TlRySDhOQW94OFFjVTBOcHpqb1RyajVBUkN4Nk1vdXc3VVU2WlRLbDZMSzFkSDVlemJQNDBGeE0?oc=5",
+          "source": "107.7 WGNA",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "20 Upcoming Horror Movies That Are Already DOOMED – Page 15 - whatculture.com",
+          "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQRXk0cEdBQXpnRlV6dnVIX3pRczZtUElRMTZxX0Z3aFdtLVVtUVZBZ1R3VHNuNXp3Q0tjOXhreWhPQXA5Tk9zcU1lZTM5NTJLRzN4dTVxRlo0b21LWk9UMVNOYTVsZl9lY2Z0RDNUc2JBdjR0T2I5dTBSLU43MUpfSEdUM1hoMkNna0loZm1FSmdzZw?oc=5",
+          "source": "whatculture.com",
+          "pubDate": "Wed, 16 Sep 2026 09:49:42 GMT"
+        },
+        {
+          "title": "All the new Horror films coming out in 2027 - RUSSH",
+          "link": "https://news.google.com/rss/articles/CBMiUkFVX3lxTFB1bWpCN29vSnBHNVFkU3E3clJCeTdPQWFiVW1PRDlab0NaZTZjdnpFSS1LcUg4NjZyZDlWQ25vTEJCcmVMb3otSGdLQmQxSHgzb1E?oc=5",
+          "source": "RUSSH",
+          "pubDate": "Thu, 17 Sep 2026 04:36:19 GMT"
+        }
+      ],
+      "source": "The Numbers - U.S. Theatrical",
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
+      "tmdbId": 1544162,
+      "metadataSource": "TMDB",
+      "originalLanguage": "en",
+      "originCountry": [
+        "US"
+      ],
+      "popularity": 2.1882,
+      "posterReachable": true,
+      "artworkSource": "TMDB",
+      "posterPlaceholder": false
+    }
+  ],
+  "artwork": {
+    "movieCount": 57,
+    "posterCount": 57,
+    "reachablePosterCount": 57,
+    "missingPosterCount": 0,
+    "posterCoverage": 1.0,
+    "fallbackFilled": 6,
+    "repairedBrokenPosters": 0,
+    "fallbackFilledBySource": {
+      "TMDB Web": 6
+    },
+    "tmdbConfigured": true,
+    "comingSoonPlaceholderCount": 2
+  },
+  "error": ""
+}
