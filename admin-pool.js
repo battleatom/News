@@ -30,9 +30,10 @@
         const liveCount=Number(live[key]||0),backupCount=Number(reserve[key]||0),total=liveCount+backupCount;
         const strong=card.querySelector('strong');if(!strong)continue;
         strong.textContent=String(total);
+        strong.style.color='var(--good)';
         let sub=card.querySelector('[data-pool-breakdown]');
-        if(!sub){sub=document.createElement('div');sub.dataset.poolBreakdown='1';sub.style.cssText='font-size:.52rem;color:var(--muted);margin-top:3px;line-height:1.25';card.appendChild(sub)}
-        sub.textContent=backupCount?`${liveCount} live · ${backupCount} backup`:`${liveCount} live`;
+        if(!sub){sub=document.createElement('div');sub.dataset.poolBreakdown='1';sub.style.cssText='font-size:.52rem;margin-top:3px;line-height:1.25';card.appendChild(sub)}
+        sub.innerHTML=`<span style="color:var(--muted)">${liveCount} live</span>${backupCount?` · <span style="color:#2563eb;font-weight:850">${backupCount} backup</span>`:''}`;
       }
     }finally{busy=false}
   }
