@@ -4,21 +4,22 @@ export {FeedState};
 
 const SAFE_JSON=new Set(["/feed.json","/status.json","/nfl.json","/boxoffice.json","/markets.json"]);
 
-function noStore(response){
+function noStore(response,extraHeaders={}){
   const headers=new Headers(response.headers);
   headers.set("Cache-Control","no-store, no-cache, max-age=0, must-revalidate");
   headers.set("Pragma","no-cache");
   headers.set("Expires","0");
+  for(const [key,value] of Object.entries(extraHeaders))headers.set(key,value);
   return new Response(response.body,{status:response.status,statusText:response.statusText,headers});
 }
 
 async function assetFallback(path,env){
   try{
     const fallback=await env.ASSETS.fetch(`https://asset${path}`);
-    if(fallback.ok)return noStore(fallback);
+    if(fallback.ok)return noStore(fallback,{"X-Underreported-Fallback":"1"});
     return fallback;
   }catch(error){
-    return Response.json({ok:false,error:`Cloudflare fallback failed: ${String(error?.message||error)}`},{status:503,headers:{"Cache-Control":"no-store"}});
+    return Response.json({ok:false,error:`Cloudflare fallback failed: ${String(error?.message||error)}`},{status:503,headers:{"Cache-Control":"no-store","X-Underreported-Fallback":"1"}});
   }
 }
 
@@ -29,7 +30,7 @@ export default{
     if(!SAFE_JSON.has(url.pathname))return worker.fetch(request,env,ctx);
     try{
       const response=await worker.fetch(request,env,ctx);
-      if(response.ok)return response;
+      if(response.ok)return noStore(response,{"X-Underreported-Fallback":"0"});
       console.warn(`Live ${url.pathname} returned ${response.status}; serving bundled fallback`);
       return assetFallback(url.pathname,env);
     }catch(error){
