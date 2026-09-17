@@ -55,6 +55,16 @@ async function nflScoreboardResponse(url){
     return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
   }
 }
+async function nflSummaryResponse(url){
+  const event=String(url.searchParams.get('event')||'').trim();
+  if(!event)return Response.json({error:'missing event',provider:'ESPN via Cloudflare'},{status:400,headers:{'Cache-Control':'no-store'}});
+  try{
+    const data=await espnJson('/apis/site/v2/sports/football/nfl/summary',new URLSearchParams({event}),{ttl:2});
+    return Response.json(data,{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*","X-Underreported-Provider":"ESPN via Cloudflare"}});
+  }catch(error){
+    return Response.json({error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
+  }
+}
 async function nflLiveResponse(url){
   const parsed=parseGameId(url.searchParams.get("gameID")||"");
   if(!parsed)return Response.json({ok:false,error:"invalid gameID"},{status:400,headers:{"Cache-Control":"no-store"}});
@@ -74,15 +84,7 @@ async function nflLiveResponse(url){
       provider:"ESPN via Cloudflare",
       fetchedAt:new Date().toISOString(),
       eventId:String(event.id||""),
-      game:{
-        awayPts:teams.awayPts,
-        homePts:teams.homePts,
-        currentPeriod:period,
-        gameClock:clock,
-        gameStatus:detail,
-        state:statusType.state||"",
-        plays:normalizePlays(summary)
-      }
+      game:{awayPts:teams.awayPts,homePts:teams.homePts,currentPeriod:period,gameClock:clock,gameStatus:detail,state:statusType.state||"",plays:normalizePlays(summary)}
     },{headers:{"Cache-Control":"no-store, max-age=0","Access-Control-Allow-Origin":"*"}});
   }catch(error){
     return Response.json({ok:false,error:String(error?.message||error),provider:"ESPN via Cloudflare"},{status:502,headers:{"Cache-Control":"no-store"}});
@@ -95,6 +97,7 @@ export default{
     const url=new URL(request.url);
     if(url.pathname==="/api/nfl-live")return nflLiveResponse(url);
     if(url.pathname==="/api/nfl-scoreboard")return nflScoreboardResponse(url);
+    if(url.pathname==="/api/nfl-summary")return nflSummaryResponse(url);
     return runtime.fetch(request,env,ctx);
   },
   async scheduled(controller,env,ctx){return runtime.scheduled(controller,env,ctx)}
