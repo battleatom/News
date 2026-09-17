@@ -6,7 +6,7 @@ const ESPN_HOST="https://site.web.api.espn.com";
 const MARKET_SYMBOLS=[
   ["^GSPC","S&P 500"],["^DJI","DOW"],["^IXIC","NASDAQ"],["^RUT","RUSSELL 2000"],["^VIX","VIX"],
   ["CL=F","WTI OIL"],["BZ=F","BRENT"],["NG=F","NAT GAS"],["GC=F","GOLD"],["SI=F","SILVER"],
-  ["HG=F","COPPER"],["DX-Y.NYB","U.S. DOLLAR"],["^TNX","10Y"],["BTC-USD","BITCOIN"],["ETHEREUM","ETHEREUM"]
+  ["HG=F","COPPER"],["DX-Y.NYB","U.S. DOLLAR"],["^TNX","10Y"],["BTC-USD","BITCOIN"],["ETH-USD","ETHEREUM"]
 ];
 
 function noStoreJson(value,status=200){return Response.json(value,{status,headers:{"Cache-Control":"no-store, no-cache, max-age=0, must-revalidate"}})}
