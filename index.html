@@ -44,7 +44,7 @@
       if(loaded||loading)return;loading=true;
       try{
         await loadScript('admin-ops.js?v=4');
-        await loadScript('admin-layout.js?v=4');
+        await loadScript('admin-layout.js?v=5');
         loaded=true;
         document.dispatchEvent(new CustomEvent('v6:tabchange',{detail:{category:'admin'}}));
       }catch(e){console.warn('Admin diagnostics failed to load',e)}finally{loading=false}
