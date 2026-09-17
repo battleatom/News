@@ -47,6 +47,7 @@ async function markets(){
   return noStoreJson({generatedAt:new Date().toISOString(),markets:good,providerStatus:{sources:["Yahoo Finance via Cloudflare"],instrumentCount:good.length,failed:errors.map(x=>x.symbol),cloudflareRuntime:true},cloudflareRuntime:true,error:errors.length?`${errors.length} market instruments unavailable`:""},good.length?200:502);
 }
 function cleanHtml(value=""){return String(value).replace(/<script[\s\S]*?<\/script>/gi," ").replace(/<style[\s\S]*?<\/style>/gi," ").replace(/<[^>]+>/g," ").replace(/&amp;/gi,"&").replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&nbsp;/gi," ").replace(/\s+/g," ").trim()}
+function movieKey(value=""){return String(value).toLowerCase().replace(/&/g,"and").replace(/[^a-z0-9]+/g," ").trim()}
 function parseShowtimes(html){
   const rows=[],re=/<h2[^>]*>([\s\S]*?)<\/h2>([\s\S]*?)(?=<h2[^>]*>|<\/main>|<\/body>)/gi;let current="",m;
   while((m=re.exec(html))){const heading=cleanHtml(m[1]),body=cleanHtml(m[2]);if(/^(Allen Theatres|AMC |Regal |Cinemark |Harkins )/i.test(heading)){current=heading;continue}const times=body.match(/\b(?:[1-9]|1[0-2]):[0-5]\d\s*(?:am|pm)\b/gi)||[];if(!current||!heading||!times.length)continue;rows.push({title:heading.replace(/\s*Watch Trailer\s*/i,"").trim(),theater:current,showtimes:[...new Set(times.map(x=>x.toLowerCase()))]})}return rows;
@@ -54,7 +55,29 @@ function parseShowtimes(html){
 async function boxOffice(env){
   const seedRes=await env.ASSETS.fetch("https://asset/boxoffice.json");let seed={generatedAt:"",localCity:"Farmington, NM",movies:[]};try{if(seedRes.ok)seed=await seedRes.json()}catch{}
   try{
-    const r=await fetch("https://www.showtimes.com/movie-times/farmington-nm/",{headers:{"User-Agent":"Mozilla/5.0 Underreported-V6-Cloudflare/1.0","Accept":"text/html"},cf:{cacheTtl:1800}});if(!r.ok)throw new Error(`showtimes ${r.status}`);const local=parseShowtimes(await r.text());if(!local.length)throw new Error("showtimes parser returned no local movies");const byTitle=new Map((seed.movies||[]).map(movie=>[String(movie.title||"").toLowerCase(),structuredClone(movie)]));const fresh=[];for(const row of local){const key=row.title.toLowerCase(),movie=byTitle.get(key)||{id:`local-${key.replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}`,title:row.title,releaseDate:"",overview:"",poster:"",status:"playing",voteAverage:0,rating:"",runtime:"",news:[],source:"Showtimes.com",leavingDate:"",leavingSoon:false};let theater=movie.theaters?.find(x=>x.name===row.theater);if(!theater){theater={name:row.theater,showtimes:[]};movie.theaters=[...(movie.theaters||[]),theater]}theater.showtimes=row.showtimes;movie.status="playing";movie.source="Showtimes.com via Cloudflare";fresh.push(movie)}return noStoreJson({generatedAt:new Date().toISOString(),localCity:seed.localCity||"Farmington, NM",movies:fresh,provider:"Showtimes.com via Cloudflare",cloudflareRuntime:true,error:""})
+    const r=await fetch("https://www.showtimes.com/movie-times/farmington-nm/",{headers:{"User-Agent":"Mozilla/5.0 Underreported-V6-Cloudflare/1.0","Accept":"text/html"},cf:{cacheTtl:1800}});if(!r.ok)throw new Error(`showtimes ${r.status}`);
+    const local=parseShowtimes(await r.text());if(!local.length)throw new Error("showtimes parser returned no local movies");
+    const seedMovies=Array.isArray(seed.movies)?seed.movies:[],byTitle=new Map(seedMovies.map(movie=>[movieKey(movie.title),structuredClone(movie)])),liveMap=new Map();
+    for(const row of local){
+      const key=movieKey(row.title);
+      let movie=liveMap.get(key);
+      if(!movie){
+        movie=byTitle.get(key)||{id:`local-${key.replace(/\s+/g,"-")}`,title:row.title,releaseDate:"",overview:"",poster:"",status:"playing",voteAverage:0,rating:"",runtime:"",news:[],source:"Showtimes.com",leavingDate:"",leavingSoon:false};
+        movie.theaters=[];
+        liveMap.set(key,movie);
+      }
+      let theater=movie.theaters.find(x=>x.name===row.theater);
+      if(!theater){theater={name:row.theater,showtimes:[]};movie.theaters.push(theater)}
+      theater.showtimes=[...new Set([...(theater.showtimes||[]),...(row.showtimes||[])])];
+      movie.status="playing";movie.source="Showtimes.com via Cloudflare";
+    }
+    const now=Date.now(),upcoming=seedMovies.filter(movie=>{
+      const key=movieKey(movie.title);if(liveMap.has(key))return false;
+      const status=String(movie.status||"").toLowerCase(),release=Date.parse(movie.releaseDate||"");
+      return movie.isUpcoming===true||status.includes("upcoming")||(Number.isFinite(release)&&release>now);
+    }).map(movie=>structuredClone(movie));
+    const movies=[...liveMap.values(),...upcoming];
+    return noStoreJson({generatedAt:new Date().toISOString(),localCity:seed.localCity||"Farmington, NM",movies,provider:"Showtimes.com + curated release data via Cloudflare",cloudflareRuntime:true,error:""})
   }catch(error){return noStoreJson({...seed,generatedAt:new Date().toISOString(),provider:"Cloudflare cached seed",cloudflareRuntime:true,error:`Live showtimes unavailable: ${String(error?.message||error)}`})}
 }
 
