@@ -73,6 +73,10 @@ jobs:
             cp "$file" ".cloudflare-assets/$file"
           done < <(git ls-files | awk 'index($0,"/")==0')
 
+          # Production bundle uses the Cloudflare same-origin NFL endpoint even
+          # though the historical source file still contains the retired URL.
+          sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
+
           # Bundle source registries into Cloudflare. Production runtime never
           # contacts GitHub, Vercel, or Supabase for registry data.
           git fetch --depth=1 origin v6
@@ -85,6 +89,10 @@ jobs:
           test -f .cloudflare-assets/feed.json
           test -s .cloudflare-assets/sources.json
           test -s .cloudflare-assets/sources-extra.json
+          if grep -q 'supabase.co' .cloudflare-assets/app.js; then
+            echo 'Supabase reference remains in production app bundle.' >&2
+            exit 1
+          fi
           echo "Prepared $(find .cloudflare-assets -type f | wc -l) production assets"
 
       - name: Validate Wrangler config
