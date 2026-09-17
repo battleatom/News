@@ -4,7 +4,7 @@
   "main": "cloudflare-worker.js",
   "compatibility_date": "2026-09-17",
   "assets": {
-    "directory": ".",
+    "directory": ".cloudflare-assets",
     "binding": "ASSETS",
     "run_worker_first": true,
     "html_handling": "auto-trailing-slash",
