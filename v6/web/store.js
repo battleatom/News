@@ -21,6 +21,6 @@ export class Store{
   allStories(){return Object.keys(this.feed?.categories||{}).flatMap(category=>this.categoryStories(category))}
   bookmarkIds(){return new Set(this.bookmarks.map(row=>row.id))}
   isBookmarked(id){return this.bookmarks.some(row=>row.id===id)}
-  toggleBookmark(story){const i=this.bookmarks.findIndex(row=>row.id===id);let saved;if(i>=0){this.bookmarks.splice(i,1);saved=false}else{this.bookmarks.unshift({...story,bookmarked_at:new Date().toISOString()});saved=true}writeBookmarks(this.bookmarks);return saved}
+  toggleBookmark(story){const i=this.bookmarks.findIndex(row=>row.id===story.id);let saved;if(i>=0){this.bookmarks.splice(i,1);saved=false}else{this.bookmarks.unshift({...story,bookmarked_at:new Date().toISOString()});saved=true}writeBookmarks(this.bookmarks);return saved}
   storyById(id){for(const category of Object.keys(this.feed?.categories||{})){const story=this.rawCategoryPool(category).find(row=>row.id===id);if(story)return story}return this.bookmarks.find(row=>row.id===id)||null}
 }
