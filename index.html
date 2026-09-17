@@ -51,6 +51,7 @@
         await loadScript('admin-refresh.js?v=1');
         await loadScript('admin-pool.js?v=1');
         await loadScript('admin-runtime-files.js?v=2');
+        await loadScript('admin-export.js?v=1');
         loaded=true;
         document.dispatchEvent(new CustomEvent('v6:tabchange',{detail:{category:'admin'}}));
       }catch(e){console.warn('Admin diagnostics failed to load',e)}finally{loading=false}
