@@ -1,0 +1,51 @@
+name: V6 Data-Only Production Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v6-data-publish
+  cancel-in-progress: false
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout V6 source
+        uses: actions/checkout@v4
+        with:
+          ref: v6
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build dynamic data only
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+        run: python v6/src/build.py --data-only
+      - name: Validate dynamic inventory
+        run: python v6/src/live_quality.py
+      - name: Preserve validated JSON
+        run: |
+          mkdir -p /tmp/v6-data
+          cp v6/dist/feed.json v6/dist/nfl.json v6/dist/boxoffice.json v6/dist/markets.json v6/dist/status.json /tmp/v6-data/
+      - name: Publish JSON only to main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          cp /tmp/v6-data/*.json .
+          git add feed.json nfl.json boxoffice.json markets.json status.json
+          if git diff --cached --quiet; then echo 'Dynamic V6 data is already current.'; exit 0; fi
+          git commit -m 'V6 data refresh'
+          git push origin main
