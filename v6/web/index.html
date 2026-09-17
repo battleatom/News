@@ -33,7 +33,7 @@
   <script type="module" src="app.js"></script>
   <script src="infinite-scroll.js?v=1"></script>
   <script src="story-position.js?v=4"></script>
-  <script src="status-ux.js?v=3"></script>
+  <script src="status-ux.js?v=4"></script>
   <script src="tab-ux.js?v=5"></script>
   <script>
   (()=>{
@@ -45,6 +45,7 @@
       try{
         await loadScript('admin-ops.js?v=4');
         await loadScript('admin-layout.js?v=5');
+        await loadScript('admin-refresh.js?v=1');
         loaded=true;
         document.dispatchEvent(new CustomEvent('v6:tabchange',{detail:{category:'admin'}}));
       }catch(e){console.warn('Admin diagnostics failed to load',e)}finally{loading=false}
