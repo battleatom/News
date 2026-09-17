@@ -1,21 +1,16 @@
-name: V6 Production Refresh
+name: V6 Application Deploy
 
+# Application assets are immutable during scheduled content refreshes.
+# Run this workflow manually only when intentionally publishing V6 UI/code.
 on:
-  schedule:
-    - cron: '*/5 * * * *'
   workflow_dispatch:
-  push:
-    branches:
-      - main
-    paths:
-      - '.force-v6-refresh'
 
 permissions:
   contents: write
 
 concurrency:
-  group: v6-production-refresh
-  cancel-in-progress: true
+  group: v6-application-publish
+  cancel-in-progress: false
 
 jobs:
   build-and-publish:
@@ -68,13 +63,13 @@ jobs:
           done
           git add index.html styles.css app.js store.js renderers.js location.js feedback.js status-ux.js tab-ux.js infinite-scroll.js story-position.js admin-ops.js admin-layout.js admin-refresh.js admin-pool.js weather.js feed.json nfl.json boxoffice.json markets.json status.json
           if git diff --cached --quiet; then
-            echo "V6 production is already current."
+            echo "V6 application is already current."
             exit 0
           fi
-          git commit -m "V6 production refresh"
+          git commit -m "V6 application deploy"
           for attempt in 1 2 3; do
             if git push origin main; then
-              echo "V6 production publish succeeded."
+              echo "V6 application publish succeeded."
               exit 0
             fi
             git fetch origin main
