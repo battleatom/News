@@ -13,10 +13,9 @@
   function classifySources(statuses){
     const healthy=[],warnings=[],dead=[];
     for(const source of Array.isArray(statuses)?statuses:[]){
-      const error=String(source?.error||'').trim(),status=String(source?.status||'').toLowerCase(),stories=Number(source?.storyCount||0);
-      const hasProblem=status==='error'||Boolean(error);
-      if(status==='error'&&stories<=0)dead.push(source);
-      else if(hasProblem)warnings.push(source);
+      const status=String(source?.status||'').toLowerCase(),failures=Number(source?.consecutiveFailures||0),stories=Number(source?.storyCount||0);
+      if(status==='error'&&failures>=2&&stories<=0)dead.push(source);
+      else if(status==='warning'||status==='degraded'||(status==='error'&&failures<2))warnings.push(source);
       else healthy.push(source);
     }
     return{healthy,warnings,dead};
@@ -39,10 +38,9 @@
       let data;try{data=JSON.parse(text)}catch{return{kind,path,state:'red',label:'NOT WORKING',detail:`invalid JSON · ${ms} ms`}};
       if(fallback)return{kind,path,state:'yellow',label:'CONFLICT',detail:`Cloudflare live handler fell back to bundled snapshot · ${ms} ms`};
       if(path==='status.json'){
-        const collectorErrors=Array.isArray(data?.collectorErrors)?data.collectorErrors:[],health=classifySources(data?.sourceStatuses);
-        const warnings=health.warnings.length+collectorErrors.length;
-        if(health.dead.length)return{kind,path,state:'red',label:'SOURCE FAILURE',detail:`${health.healthy.length} healthy · ${warnings} warnings · ${health.dead.length} dead · ${ms} ms`};
-        if(warnings)return{kind,path,state:'yellow',label:'SOURCE WARNING',detail:`${health.healthy.length} healthy · ${warnings} warnings · 0 dead · ${ms} ms`};
+        const health=classifySources(data?.sourceStatuses);
+        if(health.dead.length)return{kind,path,state:'red',label:'SOURCE FAILURE',detail:`${health.healthy.length} healthy · ${health.warnings.length} warnings · ${health.dead.length} dead · ${ms} ms`};
+        if(health.warnings.length)return{kind,path,state:'yellow',label:'SOURCE WARNING',detail:`${health.healthy.length} healthy · ${health.warnings.length} warnings · 0 dead · ${ms} ms`};
         return{kind,path,state:'green',label:'WORKING',detail:`${health.healthy.length} healthy · 0 warnings · 0 dead · ${ms} ms`};
       }
       if(path==='sources.json'||path==='sources-extra.json'){
@@ -65,7 +63,7 @@
       const ok=results.filter(x=>x.state==='green').length,conflicts=results.filter(x=>x.state==='yellow').length,bad=results.filter(x=>x.state==='red').length;
       const root=document.getElementById('admin-live-ops')||feed.firstElementChild;if(!root)return;
       let section=document.getElementById('admin-runtime-files');if(!section){section=document.createElement('section');section.id='admin-runtime-files';section.style.cssText='display:grid;gap:8px;margin-top:2px';root.appendChild(section)}
-      section.innerHTML=`<div><div style="font-size:.7rem;font-weight:950">Runtime Files</div><div style="font-size:.6rem;color:var(--muted);margin-top:2px">Checks active V6 files deployed to Cloudflare. Source health separates transient warnings from dead sources; a source is dead only when it explicitly fails and has no usable stories.</div></div><div style="display:flex;gap:7px;flex-wrap:wrap;font-size:.57rem;font-weight:900"><span style="color:#15803d">${ok} working</span><span style="color:#b45309">${conflicts} warnings/conflicts</span><span style="color:#b91c1c">${bad} failed</span></div><div>${results.map(row).join('')}</div>`;
+      section.innerHTML=`<div><div style="font-size:.7rem;font-weight:950">Runtime Files</div><div style="font-size:.6rem;color:var(--muted);margin-top:2px">Checks active V6 files deployed to Cloudflare. One failed source check is a warning; a source is dead only after repeated failed checks with no usable stories.</div></div><div style="display:flex;gap:7px;flex-wrap:wrap;font-size:.57rem;font-weight:900"><span style="color:#15803d">${ok} working</span><span style="color:#b45309">${conflicts} warnings/conflicts</span><span style="color:#b91c1c">${bad} failed</span></div><div>${results.map(row).join('')}</div>`;
     }finally{busy=false}
   }
   tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(render,500)},true);
