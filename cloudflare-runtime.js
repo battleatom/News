@@ -3,9 +3,45 @@ import {compactElasticPool,recalcStatus} from "./pool-maintenance.js";
 
 const DAILY_REBUILD_CRON="13 10 * * *";
 
+function decodeEntities(value=""){
+  return String(value)
+    .replace(/&amp;/gi,"&")
+    .replace(/&quot;/gi,'"')
+    .replace(/&#39;|&apos;/gi,"'")
+    .replace(/&lt;/gi,"<")
+    .replace(/&gt;/gi,">")
+    .replace(/&#(\d+);/g,(_,n)=>{const code=Number(n);return Number.isFinite(code)?String.fromCodePoint(code):_})
+    .replace(/&#x([0-9a-f]+);/gi,(_,n)=>{const code=parseInt(n,16);return Number.isFinite(code)?String.fromCodePoint(code):_});
+}
+function plainText(value=""){
+  let text=String(value??"").replace(/<!\[CDATA\[([\s\S]*?)\]\]>/gi,"$1");
+  for(let i=0;i<3;i++){
+    const before=text;
+    text=decodeEntities(text).replace(/<\/?[a-z][^>]*>/gi," ");
+    if(text===before)break;
+  }
+  return text.replace(/\s+/g," ").trim();
+}
+function normalize(value=""){return plainText(value).toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
+function sanitizeStory(row){
+  if(!row||typeof row!=="object")return row;
+  const story={...row};
+  const fields=["title","summary","why_matters","what_happened","what_is_missing","background","what_next","source"];
+  for(const field of fields)if(story[field]!=null)story[field]=plainText(story[field]);
+  if(story.summary&&normalize(story.summary)===normalize(story.title))story.summary="";
+  if(story.summary&&normalize(story.summary).startsWith(normalize(story.title))&&story.summary.length<=story.title.length+80)story.summary="";
+  return story;
+}
+function sanitizeFeed(feed){
+  const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}};
+  for(const [key,rows] of Object.entries(next.stories))next.stories[key]=(rows||[]).map(sanitizeStory);
+  for(const [key,rows] of Object.entries(next.reserves))next.reserves[key]=(rows||[]).map(sanitizeStory);
+  return next;
+}
+
 async function saveMaintenance(state,status,{daily=false}={}){
   const seeded=await state.seed();
-  const feed=structuredClone(seeded.feed);
+  const feed=sanitizeFeed(structuredClone(seeded.feed));
   const maintained=compactElasticPool(feed,status,{daily});
   const generatedAt=status.generatedAt||new Date().toISOString();
   maintained.feed.generatedAt=generatedAt;
