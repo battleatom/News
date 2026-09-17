@@ -2,13 +2,13 @@
   const tabs=document.getElementById('tabs'),feed=document.getElementById('feed');
   if(!tabs||!feed)return;
   const FILES=[
-    ['script','app.js'],['script','store.js'],['script','renderers.js'],['script','location.js'],['script','feedback.js'],['script','weather.js'],['script','nfl-cloudflare-proxy.js'],['script','story-sanitize.js'],['script','infinite-scroll.js'],['script','story-position.js'],['script','status-ux.js'],['script','tab-ux.js'],['script','admin-ops.js'],['script','admin-layout.js'],['script','admin-refresh.js'],['script','admin-pool.js'],['script','admin-cloudflare.js'],['script','admin-runtime-files.js'],
+    ['script','app.js'],['script','store.js'],['script','renderers.js'],['script','location.js'],['script','feedback.js'],['script','weather.js'],['script','nfl-cloudflare-proxy.js'],['script','story-sanitize.js'],['script','infinite-scroll.js'],['script','story-position.js'],['script','status-ux.js'],['script','tab-ux.js'],['script','admin-ops-cloudflare.js'],['script','admin-layout.js'],['script','admin-refresh.js'],['script','admin-pool.js'],['script','admin-runtime-files.js'],
     ['json','feed.json'],['json','status.json'],['json','nfl.json'],['json','markets.json'],['json','boxoffice.json'],['json','sources.json'],['json','sources-extra.json']
   ];
   const LEGACY=[['supabase.co','legacy Supabase reference'],['vercel.app','legacy Vercel reference'],['github.io','legacy GitHub Pages reference'],['raw.githubusercontent.com','raw GitHub runtime reference']];
   let busy=false;
   const active=()=>!!tabs.querySelector('.tab[data-category="admin"][aria-selected="true"]');
-  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+  const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[m]));
   function duplicateCount(path){return [...document.scripts].filter(s=>{try{return new URL(s.src,location.href).pathname.endsWith('/'+path)||new URL(s.src,location.href).pathname===('/'+path)}catch{return false}}).length}
   async function check(kind,path){
     const started=performance.now();
@@ -27,6 +27,16 @@
       }
       let data;try{data=JSON.parse(text)}catch{return{kind,path,state:'red',label:'NOT WORKING',detail:`invalid JSON · ${ms} ms`}};
       if(fallback)return{kind,path,state:'yellow',label:'CONFLICT',detail:`Cloudflare live handler fell back to bundled snapshot · ${ms} ms`};
+      if(path==='status.json'){
+        const errs=Array.isArray(data?.collectorErrors)?data.collectorErrors:[];
+        const bad=Array.isArray(data?.sourceStatuses)?data.sourceStatuses.filter(x=>x.status==='error'||x.error):[];
+        if(errs.length||bad.length)return{kind,path,state:'yellow',label:'CONFLICT',detail:`${errs.length} collector errors · ${bad.length} source errors · ${ms} ms`};
+      }
+      if(path==='sources.json'||path==='sources-extra.json'){
+        if(!Array.isArray(data?.sources)||!data.sources.length)return{kind,path,state:'red',label:'NOT WORKING',detail:`source registry is empty or malformed · ${ms} ms`};
+        const ids=data.sources.map(x=>x?.id).filter(Boolean),dupes=ids.filter((id,i)=>ids.indexOf(id)!==i);
+        if(dupes.length)return{kind,path,state:'yellow',label:'CONFLICT',detail:`duplicate source IDs: ${[...new Set(dupes)].slice(0,4).join(', ')} · ${ms} ms`};
+      }
       if(['feed.json','status.json','nfl.json','markets.json','boxoffice.json'].includes(path)&&data?.cloudflareRuntime!==true){
         return{kind,path,state:'yellow',label:'CONFLICT',detail:`valid JSON but not marked Cloudflare runtime · ${ms} ms`};
       }
@@ -42,10 +52,11 @@
       const ok=results.filter(x=>x.state==='green').length,conflicts=results.filter(x=>x.state==='yellow').length,bad=results.filter(x=>x.state==='red').length;
       const root=document.getElementById('admin-live-ops')||feed.firstElementChild;if(!root)return;
       let section=document.getElementById('admin-runtime-files');if(!section){section=document.createElement('section');section.id='admin-runtime-files';section.style.cssText='display:grid;gap:8px;margin-top:2px';root.appendChild(section)}
-      section.innerHTML=`<div><div style="font-size:.7rem;font-weight:950">Runtime Files</div><div style="font-size:.6rem;color:var(--muted);margin-top:2px">Checks the deployed Cloudflare scripts and JSON files. Conflict means a legacy dependency, duplicate load, non-Cloudflare runtime response, or fallback snapshot.</div></div><div style="display:flex;gap:7px;flex-wrap:wrap;font-size:.57rem;font-weight:900"><span style="color:#15803d">${ok} working</span><span style="color:#b45309">${conflicts} conflicts</span><span style="color:#b91c1c">${bad} not working</span></div><div>${results.map(row).join('')}</div>`;
+      section.innerHTML=`<div><div style="font-size:.7rem;font-weight:950">Runtime Files</div><div style="font-size:.6rem;color:var(--muted);margin-top:2px">Checks active V6 files deployed to Cloudflare. Conflict means legacy dependency, duplicate load, source/collector error, non-Cloudflare response, or fallback snapshot.</div></div><div style="display:flex;gap:7px;flex-wrap:wrap;font-size:.57rem;font-weight:900"><span style="color:#15803d">${ok} working</span><span style="color:#b45309">${conflicts} conflicts</span><span style="color:#b91c1c">${bad} not working</span></div><div>${results.map(row).join('')}</div>`;
     }finally{busy=false}
   }
   tabs.addEventListener('click',e=>{if(e.target.closest('.tab[data-category="admin"]'))setTimeout(render,500)},true);
   document.addEventListener('v6:tabchange',e=>{if(e.detail?.category==='admin')setTimeout(render,300)});
+  document.addEventListener('v6:adminopsrender',()=>setTimeout(render,100));
   setInterval(()=>{if(active())render()},60000);
 })();
