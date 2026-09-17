@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'cloudflare-worker.js'
+      - 'cloudflare-entry.js'
       - 'wrangler.jsonc'
       - 'package.json'
       - '.assetsignore'
@@ -57,7 +58,7 @@ jobs:
           mkdir -p .cloudflare-assets
           while IFS= read -r file; do
             case "$file" in
-              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|wrangler.jsonc|package.json|package-lock.json|*.py)
+              .*|News|V5-MIGRATION-LOG.md|cloudflare-worker.js|cloudflare-entry.js|wrangler.jsonc|package.json|package-lock.json|*.py)
                 continue
                 ;;
             esac
