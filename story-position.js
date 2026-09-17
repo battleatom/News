@@ -1,10 +1,20 @@
 (()=>{
   const root=document.getElementById('feed');
+  const tabs=document.getElementById('tabs');
   if(!root)return;
   let raf=0;
   const schedule=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;update()})};
   function activeTab(){return document.querySelector('#tabs .tab[aria-selected="true"]')}
   function activeKey(){return activeTab()?.dataset.category||''}
+  function fixXTab(){
+    const tab=tabs?.querySelector('.tab[data-category="x"]');
+    if(!tab)return;
+    const spans=tab.querySelectorAll(':scope > span');
+    if(spans.length>=2){
+      spans[0].hidden=true;
+      spans[1].textContent='X';
+    }
+  }
   function topLine(){
     const shell=document.getElementById('app-shell');
     if(!shell)return 16;
@@ -38,6 +48,7 @@
     return cards.length&&counter?{cards,counter}:null;
   }
   function update(){
+    fixXTab();
     const ctx=context();if(!ctx)return;
     const {cards,counter}=ctx,total=parseTotal(counter,cards.length),line=topLine();
     let index=0;
@@ -48,11 +59,12 @@
     const max=total||cards.length,current=Math.min(index+1,max),text=`${current} / ${max}`;
     if(counter.textContent!==text)counter.textContent=text;
     const badge=activeTab()?.querySelector('small');
-    if(badge&&badge.textContent!==String(max))badge.textContent=String(max);
+    if(badge&&badge.textContent!==text)badge.textContent=text;
   }
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule,{passive:true});
   new MutationObserver(()=>setTimeout(schedule,0)).observe(root,{childList:true,subtree:true});
+  if(tabs)new MutationObserver(()=>setTimeout(schedule,0)).observe(tabs,{childList:true,subtree:true});
   document.addEventListener('v6:tabchange',()=>setTimeout(schedule,0));
   setTimeout(schedule,200);
 })();
