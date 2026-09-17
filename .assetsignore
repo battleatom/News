@@ -4,6 +4,7 @@
 .assetsignore
 wrangler.jsonc
 package.json
+cloudflare-worker.js
 .build-trigger
 .force-v6-refresh
 .materialize-v5
