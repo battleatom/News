@@ -1,0 +1,123 @@
+{
+  "policy": {
+    "active": 50,
+    "reserve": 25,
+    "targetInventory": 75,
+    "legislationTarget": 30,
+    "xFixed": 10,
+    "boxOffice": "excluded/untouched"
+  },
+  "categories": {
+    "top": {
+      "total": 53,
+      "activeCapacity": 50,
+      "reserveCapacity": 3,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": false
+    },
+    "nfl": {
+      "total": 14,
+      "activeCapacity": 14,
+      "reserveCapacity": 0,
+      "target": 75,
+      "meetsActiveFloor": false,
+      "meetsFullTarget": false
+    },
+    "underreported": {
+      "total": 75,
+      "activeCapacity": 50,
+      "reserveCapacity": 25,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": true
+    },
+    "world": {
+      "total": 105,
+      "activeCapacity": 50,
+      "reserveCapacity": 25,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": true
+    },
+    "us": {
+      "total": 27,
+      "activeCapacity": 27,
+      "reserveCapacity": 0,
+      "target": 75,
+      "meetsActiveFloor": false,
+      "meetsFullTarget": false
+    },
+    "presidential": {
+      "total": 67,
+      "activeCapacity": 50,
+      "reserveCapacity": 17,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": false
+    },
+    "federal": {
+      "total": 22,
+      "activeCapacity": 22,
+      "reserveCapacity": 0,
+      "target": 75,
+      "meetsActiveFloor": false,
+      "meetsFullTarget": false
+    },
+    "nm": {
+      "total": 63,
+      "activeCapacity": 50,
+      "reserveCapacity": 13,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": false
+    },
+    "technology": {
+      "total": 75,
+      "activeCapacity": 50,
+      "reserveCapacity": 25,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": true
+    },
+    "gaming": {
+      "total": 58,
+      "activeCapacity": 50,
+      "reserveCapacity": 8,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": false
+    },
+    "military": {
+      "total": 48,
+      "activeCapacity": 48,
+      "reserveCapacity": 0,
+      "target": 75,
+      "meetsActiveFloor": false,
+      "meetsFullTarget": false
+    },
+    "entertainment": {
+      "total": 78,
+      "activeCapacity": 50,
+      "reserveCapacity": 25,
+      "target": 75,
+      "meetsActiveFloor": true,
+      "meetsFullTarget": true
+    },
+    "legislation": {
+      "total": 27,
+      "expected": 30
+    },
+    "x": {
+      "total": 10,
+      "expected": 10
+    }
+  },
+  "failures": [
+    "nfl: 14 < active floor 50",
+    "us: 27 < active floor 50",
+    "federal: 22 < active floor 50",
+    "military: 48 < active floor 50",
+    "legislation: 27 < 30"
+  ]
+}

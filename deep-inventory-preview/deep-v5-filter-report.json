@@ -1,0 +1,1511 @@
+{
+  "mode": "v5-fresh-authoritative-shadow",
+  "inputArticles": 1306,
+  "outputArticles": 1129,
+  "baselineCounts": {
+    "top": 53,
+    "underreported": 75,
+    "world": 102,
+    "us": 47,
+    "technology": 89,
+    "military": 69,
+    "gaming": 76,
+    "nfl": 69,
+    "federal": 36,
+    "presidential": 97,
+    "nm": 61,
+    "local": 359,
+    "region": 62,
+    "entertainment": 78,
+    "legislation": 23,
+    "x": 10
+  },
+  "finalCounts": {
+    "top": 53,
+    "underreported": 75,
+    "military": 48,
+    "world": 105,
+    "presidential": 67,
+    "technology": 75,
+    "gaming": 58,
+    "us": 27,
+    "federal": 22,
+    "nm": 63,
+    "legislation": 27,
+    "local": 338,
+    "region": 69,
+    "nfl": 14,
+    "entertainment": 78,
+    "x": 10
+  },
+  "rerouted": 95,
+  "rejectedNoQualifiedTab": 177,
+  "withinTabDuplicatesRemoved": 0,
+  "crossTabDuplicateEvents": 0,
+  "crossTabDuplicatesRemoved": 0,
+  "protectedCategories": [
+    "boxoffice",
+    "entertainment"
+  ],
+  "routeChanges": [
+    {
+      "title": "Polish minister proposes drills near Kaliningrad to draw Russian troops from Ukraine",
+      "from": "world",
+      "to": "military",
+      "reason": "stronger-tab:military"
+    },
+    {
+      "title": "'Burb Bites: Shein's Central Indiana footprint expands",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Indiana State Police investigating officer-involved shooting after high-speed chase in western Indiana",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump calls on Ukraine to halt strikes on Russian diesel fuel, citing a global shortage",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-target:presidential"
+    },
+    {
+      "title": "Trump urges Ukraine to stop \u2018knocking out\u2019 Russian oil refineries as U.S. diesel hits record",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-target:presidential"
+    },
+    {
+      "title": "Trump, former U.S. presidents mark 25 years since 9/11 attacks at separate ceremonies",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-target:presidential"
+    },
+    {
+      "title": "Why Indiana flags are lowered to half-staff today",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Indiana officials approve permit allowing Google to fill wetlands for Fort Wayne data center",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Indiana Jones - IGN Deutschland",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Saudi crown prince, US CENTCOM chief discuss developments after Houthi escalation",
+      "from": "world",
+      "to": "military",
+      "reason": "stronger-tab:military"
+    },
+    {
+      "title": "French extreme candidates steam ahead in 2027 presidential race, poll shows",
+      "from": "world",
+      "to": "gaming",
+      "reason": "stronger-tab:gaming"
+    },
+    {
+      "title": "Amazon pauses operations with 21 Air after Miami cargo plane crash",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump tells Ukraine's Zelenskiy to stop hitting Russian diesel",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-target:presidential"
+    },
+    {
+      "title": "Indiana Women's Prison announces warden of 5 years has died",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Shots fired at Indianapolis city councilman's home after vote on proposed data center",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump's comments on a united Ireland may have targeted audience across the Atlantic",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-target:presidential"
+    },
+    {
+      "title": "'Axe-wielding driver' arrested after attacking semi-trucks in northwestern Indiana",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Texas reports first equine infection of New World screwworm on ranch horse",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Conti Ransomware Hacker Sentenced to 4 Years [2026] - tech-insider.org",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "45Drives Expands SnapShield to Detect and Contain Ransomware Encryption and Data Exfiltration - Yahoo Finance",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Global ransomware attacks hit record 997 in August 2026 as utility, healthcare and business attacks surge - Industrial Cyber",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Cisco Firewall Manager Hacked by Sandworm Espionage Implant and Qilin Ransomware - Tech Times",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "What \u2018The Pitt\u2019 got right on a hospital ransomware attack - Chief Healthcare Executive",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Kenya cyber attacks up 6pc as ransomware nearly doubles globally - Africa Business Communities",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Conti Ransomware Hacker Sentenced After Group Attacked Over 1,000 Victims Worldwide - CyberSecurityNews",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "News - Ransomware group claims breach at Dunedin clinical research firm ZenTech - teiss",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "SCADA and Industrial Control Malware: Securing Electrical Substations Against Weaponized Firmware Exploits - streamlinefeed.co.ke",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Modders halve FSR 4 render times on AMD\u2019s PS5-derived BC-250 mining APU \u2014 portable FidelityFX DLL cuts 1440p upscaling time from 11.51 ms to 5.92 ms - Tom's Hardware",
+      "from": "technology",
+      "to": "gaming",
+      "reason": "stronger-tab:gaming"
+    },
+    {
+      "title": "Report: Cyberattacks rise 22% globally as threat landscape intensifies - Africa Business Communities",
+      "from": "technology",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "How To Win Matches In Wardogs - GameSpot",
+      "from": "gaming",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "How To Level Up Each Skill In Wardogs - GameSpot",
+      "from": "gaming",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Carney, locked in US trade war, pitches Canada to global investment titans - Reuters",
+      "from": "nfl",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Israel and Lebanon to meet in Rome in October, US State Department official says - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "France apologises for human rights criticism that sparked US walkout - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "German firms lift China investment as US outlays fall, IW study shows - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Tensions simmer on US-Canada border for two towns relying on each other - The Guardian",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "The Latin American country betting on a \u2018democratic\u2019 strategy to combat crime - CNN",
+      "from": "us",
+      "to": "military",
+      "reason": "stronger-tab:military"
+    },
+    {
+      "title": "US House to vote on Russia sanctions backed by late Senator Graham - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Twenty-five years after September 11, Americans reflect on attack that changed a nation - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Mexico, Washington sprint toward bilateral trade deal before US elections - Reuters",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trade 'war' or not, are Canada and the United States now dug in? - cbc.ca",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Hillary Clinton warns the U.S. has let its guard down on terrorism 25 years after 9/11 - NBC News",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Canada\u2019s tariffs go into effect, spotlighting soured relations with U.S. - Los Angeles Times",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "US banning dairy products, most alcohol and motorcycles from Canada in growing trade war - WRAL",
+      "from": "us",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Will the U.S. midterm results affect Trump's tariffs on Canada? Democrats think yes - cbc.ca",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Europe pans \u2018disturbing\u2019 Trump map that shows all of North America as US territory - politico.eu",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "Ford responds to federal government telling it to cut back China ties - The Detroit News",
+      "from": "world",
+      "to": "federal",
+      "reason": "stronger-tab:federal"
+    },
+    {
+      "title": "Bombardier points out U.S. footprint after Trump says aerospace giant must build in America - CNBC",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "Donald Trump promotes the idea of renaming New Mexico to 'New America' - The Jerusalem Post",
+      "from": "presidential",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "Brazil's Eduardo Bolsonaro to push for U.S. sanctions against Supreme Court Justice during Washington visit - Reuters",
+      "from": "world",
+      "to": "federal",
+      "reason": "contextual-preserve:federal"
+    },
+    {
+      "title": "American democracy depends on the census. Trump is undermining it | danah boyd - The Guardian",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "Carney pitches Canada to global investors as Trump tries to pull investment south - AP News",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump agreed to new ethics rules to get a crypto bill across the line. But that might not be enough - AP News",
+      "from": "presidential",
+      "to": "legislation",
+      "reason": "stronger-tab:legislation"
+    },
+    {
+      "title": "Federal court rejects Trump order keeping Michigan coal plant open - AP News",
+      "from": "presidential",
+      "to": "federal",
+      "reason": "stronger-tab:federal"
+    },
+    {
+      "title": "As Trump squeezes the International Criminal Court, more countries are leaving - AP News",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Appeals court cites detention of Japanese Americans in ruling blasting Trump immigration policy - AP News",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "'South Park' creators Trey Parker and Matt Stone 'rename' show to 'South America' in jab at Trump - AP News",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "As midterms approach, new poll finds that few Americans trust campaigns or Trump - AP News",
+      "from": "presidential",
+      "to": "us",
+      "reason": "stronger-tab:us"
+    },
+    {
+      "title": "China hits back at US claims of \u2018malicious\u2019 AI distillation ahead of planned Trump-Xi talks - AP News",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Exclusive: New grand jury subpoenas in investigation targeting Trump-Russia probe, AP sources say - AP News",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Warning signs abound for Trump's Republicans as midterm campaign begins final sprint - Reuters",
+      "from": "presidential",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump aims to revoke tax-exemption from private schools that aid minorities - AJC.com",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-preserve:presidential"
+    },
+    {
+      "title": "Hill pushes legislation changing consumer protection agency - The Arkansas Democrat-Gazette",
+      "from": "us",
+      "to": "legislation",
+      "reason": "stronger-tab:legislation"
+    },
+    {
+      "title": "Trump keeps heralding an economic boom, but even a solid jobs report is causing problems for him - PBS",
+      "from": "federal",
+      "to": "presidential",
+      "reason": "contextual-preserve:presidential"
+    },
+    {
+      "title": "How 9/11 changed Howard Lutnick - Politico",
+      "from": "federal",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Oz\u2019s Medicaid fraud war room is prompting \u2018aggressive\u2019 state crackdowns - Politico",
+      "from": "federal",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Fed's Warsh faces new pressure to hike rates after inflation heats up - Politico",
+      "from": "federal",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump: Vote GOP or \u2018go to hell\u2019 - Politico",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-preserve:presidential"
+    },
+    {
+      "title": "Trump says the Iran war is worth the price. The bill keeps growing. - Politico",
+      "from": "world",
+      "to": "legislation",
+      "reason": "stronger-tab:legislation"
+    },
+    {
+      "title": "Trump\u2019s TPS crusade hits home - Politico",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-preserve:presidential"
+    },
+    {
+      "title": "Trump\u2019s health picks: Who\u2019s moving, who\u2019s stalled - Politico",
+      "from": "world",
+      "to": "presidential",
+      "reason": "contextual-preserve:presidential"
+    },
+    {
+      "title": "Lawmakers are at a loss for how to regulate AI as insiders warn of impending doom - Politico",
+      "from": "federal",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Petticoat Stakes headlines weekend at Albuquerque Downs - Tri City Record",
+      "from": "local",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "'Keep the Fiesta spirit alive': Santa Fe parade draws hundreds for celebration of community, culture - Santa Fe New Mexican",
+      "from": "local",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "Santa Fe archbishop blesses Rio Grande during drought - KRQE",
+      "from": "local",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "Democrat Pete Buttigieg rallies Las Cruces voters in support of Vasquez, Haaland - Santa Fe New Mexican",
+      "from": "local",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "Volunteers build 200-plus beds for El Paso, Las Cruces kids during Bunks Across America - KFOX",
+      "from": "local",
+      "to": "nm",
+      "reason": "stronger-tab:nm"
+    },
+    {
+      "title": "Library card sign-up program returns to open the door to the multitudes of Flagstaff's libraries - Arizona Daily Sun",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "Flagstaff\u2019s \u2018Kowboy Doe\u2019 identified 46 years after discovery - Arizona Daily Sun",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "Flagstaff man arrested on charges of soliciting explicit images from minors - Arizona Daily Sun",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "An everyday hero, How the captain of United Airlines Flight 93 continues to be remembered in Colorado - Denver7",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "Colorado's popular leaf-peeping spots prepare for heavy traffic this weekend - Denver7",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "Two Colorado Springs restaurants earn recognition in 2026 MICHELIN Guide - KOAA News 5",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "11th annual Patriot Day Give Back event in Colorado Springs to honor military, veterans, first responders, local community - KRDO",
+      "from": "local",
+      "to": "military",
+      "reason": "stronger-tab:military"
+    },
+    {
+      "title": "Fire breaks out at Salt Lake City recycling center for second time in 4 months - KSL.com",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "Bureau of Land Management lifts seasonal fire restrictions in northern Arizona - St. George News",
+      "from": "local",
+      "to": "region",
+      "reason": "stronger-tab:region"
+    },
+    {
+      "title": "EPA reaches milestone, clearing 700 Spokane homes of hazardous waste after wildfires - krem.com",
+      "from": "local",
+      "to": "federal",
+      "reason": "stronger-tab:federal"
+    },
+    {
+      "title": "New Washington, DC, bill would allow foster youths to select their own legal families - ABC News - Breaking News, Latest News and Videos",
+      "from": "local",
+      "to": "legislation",
+      "reason": "stronger-tab:legislation"
+    },
+    {
+      "title": "Fans boo Titans in coach Saleh's debut as QB Ward struggles - espn.com",
+      "from": "nfl",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "US airman recounts Iran rescue in 60 Minutes segment branded propaganda - The Guardian",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "\u2018Everything changed\u2019: The human cost of 25 years of US wars - Al Jazeera",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "China changes law to mobilize all resources in case of conflict. Should neighbors worry? - Defense News",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Trump claims fallen soldiers said 'we cannot let Iran have a nuclear weapon' - ABC News - Breaking News, Latest News and Videos",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Polish prime minister: Poland to develop its own Starlink - Defense News",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    },
+    {
+      "title": "Iran says it captured US submarine drone in Strait of Hormuz - Defense News",
+      "from": "military",
+      "to": "world",
+      "reason": "stronger-tab:world"
+    }
+  ],
+  "rejectedExamples": [
+    {
+      "title": "Icehouse to Celebrate 40 Years of \u2018Man of Colours\u2019 With 2027 Australian Tour",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Current & Breaking News | National & World Updates",
+      "from": "world",
+      "reason": "global-noise"
+    },
+    {
+      "title": "European founders and VCs urge lawmakers \u2018to get EU Inc right\u2019",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Musk's X Corp and SpaceXAI resolve antitrust lawsuit against Apple",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Gold rises on dip-buying even as Fed rate hike bets rise after US inflation data",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Proven 8-pin PCIe plugs aren't immune to melting \u2014 Thermal Grizzly WireView adapter burns out on Radeon RX 7900 XTX - Tom's Hardware",
+      "from": "technology",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "IKEA releases new Skyrim mod that adds gloriously mundane Kallax shelving unit as your newest companion \u2014 free collab provides a drab flatpack answer to your loot woes - Tom's Hardware",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Dumpster diver builds home lab Proxmox server from weekly landfill runs for SSDs, HDDs, GPUs, and even RAM \u2014 weekly e-waste raids net multi-drive Proxmox server and Asus ROG laptop - Tom's Hardware",
+      "from": "technology",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Wiki documents at least 44 instances in which Sony says you own your games as digital games ownership lawsuit progresses \u2014 project is direct assault on Sony's claim in recent ownership lawsuit - Tom's Hardware",
+      "from": "technology",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Fire Emblem: Fortune's Weave Gets A Seven-Minute Overview Trailer - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Diablo IV x The Witcher III: Wild Hunt Collab Unveiled, Here's A First Look - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Overwatch Announces What's Next As It Reaches The End Of Its First Year-Long Story Arc - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Latest Features - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Box Art Brawl - Duel: Professor Layton And The Spectre's Call - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "ICYMI: Dragon Quest Monsters: The Withered World Demo Out Now On eShop - Nintendo Life",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The Triple-I Initiative Showcase Is Getting A Second Event In 2026 - GameSpot",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Lies Of P\u2019s Wizard Of Oz Tease May Have Just Gotten A Lot More Interesting - GameSpot",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Last of Us 2 Multiplayer Mod Officially Canceled by Sony - Polygon.com",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Zack Snyder\u2019s The Last Photograph Is an Attempt at a Violent Arthouse Indie About His Own Need to Capture Images - IGN",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "How Long To Beat Marvel\u2019s Wolverine \u2013 Full Mission List - GameSpot",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "First GTA 6 Actor Officially Confirmed, And It\u2019s A Big Name - GameSpot",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "'There's Many Reasons for Players to Keep Playing' \u2014 Blizzard Insists Diablo 4 Has 'Bright Support' as Fans Debate No More Expansions and Diablo 5 in 2029 - IGN",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "'They Helped Pay For Our Movie, So Thank You': Marvel's Blade Might Be Scrapped, But Mahershala Ali Says He's Grateful He Got a Year of Free Training - IGN",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "'Marvel\u2019s Wolverine' Voice Actor Reveals Who Inspired His Take on Logan - Polygon.com",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Clair Obscur Expedition 33 Director Comments on Sandfall's Next Game - Polygon.com",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Lanterns Delivers Another Banger in Episode 5 as the Show's 2016 Storyline Reaches a Dramatic Climax - IGN",
+      "from": "gaming",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Afghan woman deported from US in first use of secretive terrorism court - Reuters",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "How Trump\u2019s Proposed Census Changes Could Impact States\u2019 Funding\u2014and Political Power - Time Magazine",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Golf Lowry delights home fans and cheering Trump with Irish Open win - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "US judge rules that Trump plan to halve FEMA workforce violated law - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "At Dallas convention, some loyalists question Trump-centric midterms strategy - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "A year after Charlie Kirk's death, Turning Point USA grows but Trump slips with young voters - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "WATCH: Trump leads RNC in pledge to 'cheat like hell' in November elections - PBS",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Crypto investor pardoned by Trump donates \u00a336 million to Farage's Reform UK - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Vance seizes MAGA spotlight as Republicans begin looking beyond Trump - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Democrats and activist groups plan to push back if Trump tries to interfere in midterm elections - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Ahead of Fed meeting, Trump says US should have world's lowest interest rate - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "PODCAST: AI slowdown, Trump\u2019s Houthi problem, Irish unity and the US Open - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "UK PM's office says position on Irish unity unchanged after Trump comments - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Analysis: Trump\u2019s solution to Republicans\u2019 midterm troubles is more Trump - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Vance? Rubio? DeSantis? Cruz? Republicans at Dallas convention ponder options for post-Trump leader - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Under Trump, census eyes sweeping plan to omit immigrants, race data - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Prosecutor brought in to lead investigation of Trump foes tells AP that he has resigned his position - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Carney calls Trump\u2019s latest trade measures \u2018relatively modest,\u2019 signals restraint - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "US prosecutor overseeing probe of Trump foes resigns - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Capital One and JPMorgan bet that fighting Trump may be safer than settling - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Democrats say Trump\u2019s \u2018bizarre\u2019 convention is a distraction from his faltering presidency - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Bombardier says it wants to fill 500 open US jobs despite Trump's threats - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "McIlroy says Trump\u2019s Irish Open visit will bring tight security and a different feel - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "With AI memes, Trump promotes mythical version of himself as challenges stack up ahead of midterms - AP News",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Kansas Republicans throw weight behind Bombardier jobs after Trump threat - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Lawyer asks Trump to pardon Lindsay Clancy after mistrial in Massachusetts murder case - Reuters",
+      "from": "presidential",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Headlines - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The U.S. Is Having One of Its Most Active Wildfire Seasons. Here\u2019s How the Costs Are Adding Up - Time Magazine",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Did the Treasury just make it easier to launder money? - wbur.org",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "US appeals court rejects Trump\u2019s bid to restrict mail-in voting before midterms - The Guardian",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Unions lead filing of new lawsuit to stop USDA reorganization - The Mighty 790 KFGO",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Politics: Latest and breaking political news today - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Prosecutor details ongoing \u201cgrand conspiracy\u201d probe into Trump\u2019s enemies - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The 2028 redistricting fight is already kicking off - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "What college presidents find \u2018frightening\u2019 about Trump\u2019s latest moves - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "New York\u2019s school vaccine laws face mounting resistance - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Florida pols grapple with AI debate - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Inside Dems\u2019 2028 AI strategy - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "NYC Council member faces probes over fundraising claims - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Illegal deportations spike under Trump's ICE push - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Corporate tax payments plunge as AI feasts on new incentives - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Crime - AP News",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Mullin seeks to win over immigration hardliners with messaging blitz - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The Future of Western Sahara Runs Down the Donald J. Trump Highway - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Democrats Challenge Trump\u2019s Right to Lease DC Hotel Building - ABC News - Breaking News, Latest News and Videos",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Oklahoma - AP News",
+      "from": "us",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Trespasser stopped at Kamala Harris\u2019 Malibu property - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Energy - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Why Vance was the talk of Texas - Politico",
+      "from": "us",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "A federal health program for 9/11 responders is still short-staffed - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "POLITICO Pulse - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Psychedelics are on the FDA\u2019s mind - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Anti-fraud campaign hits autism providers - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Ron vs. Don: Redux - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The 3 Mistakes That Doomed the Department of Homeland Security - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Rand Paul and his staff travel by private jet with taxpayer dollars while preaching fiscal restraint - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Missouri is poised to revert to former congressional districts after court rejects Trump-backed map - AP News",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Newsom\u2019s big water deal is in trouble - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Justice Department directs states to hold on to 2024 election records as it seeks their voter data - AP News",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Vance greeted with 48 cheers - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "DeSantis rebukes Trump\u2019s $5K checks: \u2018More debt and more inflation\u2019 - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The most important number in the world - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "The department created to stop another 9/11 may no longer be equipped for counterterrorism work - Politico",
+      "from": "federal",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "A solar industrial complex is turning Republicans into believers - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "California\u2019s health care reckoning could soon become Becerra\u2019s problem - Politico",
+      "from": "us",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Keep calm, Carney on - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "9/11 and NY-11 - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Mamdani and Trump underscore a shift in 9/11 discourse 25 years later - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "\u2018For 2 years, we\u2019ve held our tongues\u2019: Democrats clap back at 1 of Silicon Valley\u2019s biggest donors - Politico",
+      "from": "world",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "College football: Hawaii vs. New Mexico State (9/12/26) - Honolulu Star-Advertiser",
+      "from": "nm",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "What we know from latest Project Jupiter update - Searchlight New Mexico",
+      "from": "nm",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "New Mexico lawmaker\u2019s use of campaign funds for college football game in Ireland draws criticism - Source New Mexico",
+      "from": "nm",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Sen. Mu\u00f1oz accused of lobbying state to help son's company - Santa Fe New Mexican",
+      "from": "nm",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Santa Fe-area food service inspections, July 27-Aug. 2 - Santa Fe New Mexican",
+      "from": "local",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Letter to the Editor: Memories of past protest marches reignited - Arizona Daily Sun",
+      "from": "local",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Breaking down Week 3 Springfield area high school football action - Springfield News-Leader",
+      "from": "local",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Friday Night Hype: Highlights, scores and more from Week 3 of Iowa high school football - KCCI",
+      "from": "local",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Predicting the winner of each Week 1 High School football game in Central Mass. - Worcester Telegram",
+      "from": "local",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "South Alabama high school football player killed by 18-wheeler on I-65 - AL.com",
+      "from": "region",
+      "reason": "low-value-geo-content"
+    },
+    {
+      "title": "Lamar Jackson looks like old self in Ravens' new offense - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Is Jaguars QB Trevor Lawrence's hot start sustainable? - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Giants 28-20 Cowboys (Sep 13, 2026) Game Recap - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "John Harbaugh: Giants' win over Cowboys in debut 'really special' - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Cowboys fall flat in Week 1 loss, vow it's 'a long season' - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Packers searching for answers after blowing another lead late - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Jalen Hurts makes plays, leads Eagles by Commanders in Week 1 - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Harbaugh: Chargers 'sloppy' in loss to Cardinals - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Cardinals defeat Chargers, pull off Week 1's biggest upset - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Bears' offense makes statement with 'amazing' 59-point opener - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Saints irked by overturned defensive TD in OT loss to Lions - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Giants WR Malik Nabers makes return in opener vs. Cowboys - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Geno Smith praised for 'quarterback efficiency' in Jets re-debut - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "McCarthy gets game ball from Rodgers after Steelers' win - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Josh Allen, Bills use big plays to score big win vs. Texans - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "QB Kyler Murray suffers concussion in Vikings debut - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Zay Flowers, Ja'Kobi Lane leave Ravens' win with injuries - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Jets WR Cooper, safety Fitzpatrick both hurt against Titans - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Ravens' Henry passes Allen for third all time in rushing TDs - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Rams' Myles Garrett to have knee surgery, headed to IR - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Raiders believe Brock Bowers could play Week 2 - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Joey Porter Jr. out for Week 1 amid uncertain Steelers future - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Jets hope to end historic interception drought vs. Titans - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Source: Jaguars, Parker Washington unlikely to agree to deal - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: C.J. Stroud, Texans to table extension talks - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Chiefs set to use undrafted rookie with LT Josh Simmons out - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Raiders TE Michael Mayer gets 3-year, $45M extension, sources say - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Packers, TE Tucker Kraft agree to 4-year extension - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Three things Bears QB Caleb Williams wants to improve on - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Titans, Saleh downplay facing team that fired coach in Jets - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Dolphins rookie WRs ready for the spotlight - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Which Jaguars WRs will lead in catches, TDs, yards in 2026? - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Bears' Odunze feels 'ready' for Panthers despite questionable tag - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Eagles LB Jonathan Greenard out Week 1 due to pec injury - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Cowboys RB Malik Davis set for hip surgery, placed on IR - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Texans rookie Kayden McDonald placed on IR with ankle injury - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Bears, RB Swift agree to 3-year, $33.75M extension - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Steelers' Joey Porter Jr. questionable for opener vs. Falcons - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Seahawks confident in QB Drew Lock amid Sam Darnold's injury - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Bucs' Egbuka 'full go,' McMillan doubtful for opener, says Bowles - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Tagovailoa out, Rush to start at QB for Falcons vs. Steelers - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Panthers RB Jonathon Brooks to play vs. Bears without limitations - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Oweh (calf) among 4 Commanders players cleared to play vs. Eagles - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Patriots' A.J. Brown to go on IR, miss at least 4 games - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Source: Cardinals RB Love (ankle) expected to play in opener - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Patriots to add DaQuan Jones on 1-year deal - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Career reboots: Vikings' Murray faces Packers' Gannon - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Patriots face uphill battle without A.J. Brown for four weeks - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Rams' Puka Nacua: Was 'kind of drowning myself' with alcohol - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Source: Patriots' A.J. Brown likely out at least 4 weeks - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Falcons' Tua Tagovailoa day-to-day with oblique injury - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Sources: Seahawks' Sam Darnold expected to miss Week 2 - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Packers RB Josh Jacobs pleads no contest to misdemeanor charges - espn.com",
+      "from": "nfl",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "L3Harris gets $4.7 billion deal to help boost Patriot interceptor production - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Iridium - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Latest - Defense News - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Drone maker unveils \u2018low-cost\u2019 alternative to MQ-9 Reaper - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "PCS Move? Reset Your Finances the Right Way | Money Minute - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Author Claire Barrett - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Author Jaroslaw Adamowski - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Author Linus H\u00f6ller - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Parry Labs - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Technology and Innovation - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Author Gordon Arthur - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Latest Defense News Weekly Videos - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Video \u2013 Video and Multimedia - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Global - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Hanwha plans to build armored vehicle carrying a counter-drone laser - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Raising Scam Smart Kids | Money Minute - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "A new era for airborne surveillance missions - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    },
+    {
+      "title": "Author Rudy Ruitenberg - Defense News",
+      "from": "military",
+      "reason": "global-noise"
+    },
+    {
+      "title": "Sweden to buy HIMARS rocket artillery for around $730 million - Defense News",
+      "from": "military",
+      "reason": "no-qualified-tab"
+    }
+  ],
+  "withinTabDuplicateExamples": [],
+  "ownershipChanges": []
+}
