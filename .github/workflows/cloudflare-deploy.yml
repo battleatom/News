@@ -83,11 +83,10 @@ jobs:
             cp "$file" ".cloudflare-assets/$file"
           done
 
-          # Historical source still contains old provider URLs. Production is
-          # forced to same-origin Cloudflare endpoints until the source is fully
-          # normalized.
+          # Normalize historical browser URLs to same-origin Cloudflare endpoints.
           sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard#/api/nfl-scoreboard#g' .cloudflare-assets/app.js
+          sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary#/api/nfl-summary#g' .cloudflare-assets/app.js
 
           # Bundle source registries into Cloudflare. Runtime never contacts GitHub.
           git fetch --depth=1 origin v6
@@ -97,11 +96,8 @@ jobs:
           jq empty .cloudflare-assets/feed.json .cloudflare-assets/status.json .cloudflare-assets/nfl.json .cloudflare-assets/boxoffice.json .cloudflare-assets/markets.json .cloudflare-assets/sources.json .cloudflare-assets/sources-extra.json
           jq -e '.sources | type=="array" and length>0' .cloudflare-assets/sources.json >/dev/null
           jq -e '.sources | type=="array" and length>0' .cloudflare-assets/sources-extra.json >/dev/null
-
-          # Source IDs must be unique across both registries.
           jq -s '[.[].sources[]?.id] | length == (unique|length)' .cloudflare-assets/sources.json .cloudflare-assets/sources-extra.json | grep -qx true
 
-          # No legacy hosting/runtime references are allowed in browser JS.
           if grep -Eqi 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' .cloudflare-assets/*.js; then
             echo 'Legacy/direct-provider reference remains in production browser bundle.' >&2
             grep -Ein 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' .cloudflare-assets/*.js || true
@@ -173,7 +169,6 @@ jobs:
           jq -e '.sources | type=="array" and length>0' "$tmp/sources-extra.json" >/dev/null
           jq -s -e '[.[].sources[]?.id] | length == (unique|length)' "$tmp/sources.json" "$tmp/sources-extra.json" >/dev/null
 
-          # Collector/source health: no recorded hard errors.
           jq -e '((.collectorErrors // []) | length) == 0' "$tmp/status.json" >/dev/null
           jq -e '([(.sourceStatuses // [])[] | select(.status=="error" or ((.error // "")|length)>0)] | length) == 0' "$tmp/status.json" >/dev/null
           jq -e '(.sourceCount // 0) > 0 and (.healthySourceCount // 0) > 0' "$tmp/status.json" >/dev/null
@@ -190,9 +185,12 @@ jobs:
           fetch '/api/nfl-scoreboard?limit=64' "$tmp/nfl-scoreboard.json" "$tmp/nfl-scoreboard.h"
           jq -e '.events | type=="array"' "$tmp/nfl-scoreboard.json" >/dev/null
 
-          # The live-play endpoint should exist even when supplied bad input.
           code=$(curl -sS -o "$tmp/nfl-live.json" -w '%{http_code}' "$SITE/api/nfl-live?gameID=invalid")
           test "$code" = '400'
           jq -e '.ok == false and .error == "invalid gameID"' "$tmp/nfl-live.json" >/dev/null
+
+          code=$(curl -sS -o "$tmp/nfl-summary.json" -w '%{http_code}' "$SITE/api/nfl-summary")
+          test "$code" = '400'
+          jq -e '.error == "missing event"' "$tmp/nfl-summary.json" >/dev/null
 
           echo 'PRODUCTION V6 SMOKE AUDIT: PASS'
