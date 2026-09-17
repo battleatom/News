@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T04:20:37.047745Z",
+  "generatedAt": "2026-09-17T08:55:19.359736Z",
   "localCity": "Farmington, NM",
   "movies": [
     {
@@ -9,7 +9,7 @@
       "overview": "On a perilous climb across Thailand's Mount Kwan, two climbers become trapped thousands of feet above the ground, where vertigo-inducing heights, sheer exposure, and impossible odds turn every moment into a fight for survival.",
       "poster": "https://image.tmdb.org/t/p/w500/fgSm5ylwiXbIHn8UbUXDjk9RRu4.jpg",
       "status": "playing",
-      "voteAverage": 6.742,
+      "voteAverage": 6.625,
       "rating": "PG",
       "runtime": "1h 37m",
       "theaters": [
@@ -25,10 +25,10 @@
       ],
       "news": [
         {
-          "title": "Fall 2: Deadpoint Review: Just Too Silly - MacGuffin or Meaning",
+          "title": "Fall 2: Deadpoint Review: Just Too Silly - alisechaffins.substack.com",
           "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBEZzZhb2I2bGx6azA1LXZiVlhlX2k4WlZ5OEVVOUt3N3RGS0M5bU5lTURiaHdzMXF2OWVucGgwYnpLSExobVBnVDBBdzBTLVR4bTU2Vl9PblgycngtNnI1VnZpcWRpMFdZbkw3aFBiTlc1dEE?oc=5",
-          "source": "MacGuffin or Meaning",
-          "pubDate": "Tue, 08 Sep 2026 09:31:25 GMT"
+          "source": "alisechaffins.substack.com",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
           "title": "\"FALL 2: DEADPOINT\" - Review - Next Best Picture",
@@ -54,7 +54,7 @@
         "US",
         "GB"
       ],
-      "popularity": 66.5946,
+      "popularity": 66.9121,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -66,7 +66,7 @@
       "overview": "Odysseus, the legendary King of Ithaca, embarks on a long and perilous journey home following the Trojan War. Throughout his voyage, he is forced to confront the whims of gods, mythological monsters, and trials that stretch both his cunning and his humanity to the breaking point.",
       "poster": "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
       "status": "playing",
-      "voteAverage": 8.011,
+      "voteAverage": 8.01,
       "rating": "R",
       "runtime": "2h 52m",
       "theaters": [
@@ -94,16 +94,16 @@
           "pubDate": "Sat, 12 Sep 2026 16:59:34 GMT"
         },
         {
-          "title": "The ‘Odyssey’ Scholar Emily Wilson, a Critic of the Movie, Is Redoing Her Translation - The New York Times",
-          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQNDNjTkY5ZjRTeGZpdi15QnhrSi0wNkZqTnkydEZFUTU4UGpYRDFMaFdEZGRUdWR2VXoxejhyUURmZlpqeEw0bDZnOUZUczFKTEF6cjAyellnenFqWlhqN21fU095Qks0b09TSmN3YjhvMG5SWVFhbFRQci1JSFhkQkxPeDc?oc=5",
-          "source": "The New York Times",
-          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "‘The Odyssey’ Beats ‘Deadpool & Wolverine’ as Biggest R-Rated Movie of All Time With $1.35 Billion - Variety",
           "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNR3lxd3hKU2dza2N5S1VPZDhlQTB1aFFtcDVVNDR0UXRhQUMtWENROEw0ZXdaYWxObTVERmlzM3BMRndXODhwNEtjRGZBaEFOWlFfb0kyUlM3M1Y4WGozTkY5RV9BNlNxZXZpRWdXOURROS1Kb21HenZXNzJ2N2s3OFo0Q1NnZ1RsV2FlMklnU3VoM3dDbVlNVlpfNGFmNVBwVk9CVXRlczR5V2Z1WTgtWk11UzE?oc=5",
           "source": "Variety",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "The ‘Odyssey’ Scholar Emily Wilson, a Critic of the Movie, Is Redoing Her Translation - The New York Times",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQNDNjTkY5ZjRTeGZpdi15QnhrSi0wNkZqTnkydEZFUTU4UGpYRDFMaFdEZGRUdWR2VXoxejhyUURmZlpqeEw0bDZnOUZUczFKTEF6cjAyellnenFqWlhqN21fU095Qks0b09TSmN3YjhvMG5SWVFhbFRQci1JSFhkQkxPeDc?oc=5",
+          "source": "The New York Times",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -117,7 +117,7 @@
         "GB",
         "US"
       ],
-      "popularity": 383.2533,
+      "popularity": 383.4669,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -129,7 +129,7 @@
       "overview": "In 1960s Mississippi, a young Black FBI agent is forced to partner with a notorious mafia hitman to investigate a wave of brutal civil rights murders.",
       "poster": "https://image.tmdb.org/t/p/w500/f4hdIed8vh10O8TkQ1CkHS8MQ3G.jpg",
       "status": "playing",
-      "voteAverage": 8.1,
+      "voteAverage": 7.912,
       "rating": "R",
       "runtime": "1h 47m",
       "theaters": [
@@ -183,7 +183,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 23.6219,
+      "popularity": 26.1083,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -238,7 +238,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 28.1811,
+      "popularity": 29.9926,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -250,7 +250,7 @@
       "overview": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
       "poster": "https://image.tmdb.org/t/p/w500/kYDCl2y0VPvhT5eYWbMRInPoB03.jpg",
       "status": "playing",
-      "voteAverage": 7.6,
+      "voteAverage": 7.579,
       "rating": "PG",
       "runtime": "1h 41m",
       "theaters": [
@@ -272,9 +272,9 @@
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Coyote vs. Acme Review: One Must Imagine Sisyphus Happy - MacGuffin or Meaning",
+          "title": "Coyote vs. Acme Review: One Must Imagine Sisyphus Happy - alisechaffins.substack.com",
           "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9GWS1zNlQyZGpFd2Z2ajNmOWxUSm1fXzdfUHpjOG85OTdhRFl4LWlkcG90eUFEd3l0TlJRZ19mTTh2WnJCbHY5Nm84R0lOajBTNmZiNGl2X3ZoekZUb3dmMUJSMXhfU3RzbTNFMFhUTng?oc=5",
-          "source": "MacGuffin or Meaning",
+          "source": "alisechaffins.substack.com",
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
@@ -294,7 +294,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 539.7588,
+      "popularity": 539.5072,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -360,7 +360,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 40.8074,
+      "popularity": 41.2091,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -392,16 +392,16 @@
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
+          "title": "Onslaught review: The nastiest action thriller of 2026, and also the most important - Polygon.com",
+          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1YSEwzclpwVWhia1BzVTNqLTVEMVJPcVI0ZUV6T3hiYmxhY0dwSDR1R1J5dXJmT2FzN0JRUkNvSElJX0tzaldWTmxxQkJIeGFLRE9EWUNBdWNMQQ?oc=5",
+          "source": "Polygon.com",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        },
+        {
           "title": "The franchise-ification of everything - Substack",
           "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxNQmtnRXQ0UVgyeHNCOHBKVG5pcURKZFpYbi1CN1poN2Z6dC1zZlRLdzVpdGctbTc0UG5QSGhLa0NNLVFiSWx5X2ZFWnNGOGE5dWNua3NGVGU2UmRRTWRNaWNaUjVGc2ZWZ00xV3h1R0JTcGh1SWtTa2dKUWV0WktVV2p5dk1rNzNMYlRyRXhiUmtoOXM?oc=5",
           "source": "Substack",
           "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
-        },
-        {
-          "title": "Onslaught review: The nastiest action thriller of 2026, and also the most important - polygon.com",
-          "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1YSEwzclpwVWhia1BzVTNqLTVEMVJPcVI0ZUV6T3hiYmxhY0dwSDR1R1J5dXJmT2FzN0JRUkNvSElJX0tzaldWTmxxQkJIeGFLRE9EWUNBdWNMQQ?oc=5",
-          "source": "polygon.com",
-          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -414,7 +414,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 14.5449,
+      "popularity": 14.3047,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -451,9 +451,9 @@
       ],
       "news": [
         {
-          "title": "'Practical Magic 2' steers away from everything enjoyable about the first film - wbur.org",
+          "title": "'Practical Magic 2' steers away from everything enjoyable about the first film - WBUR",
           "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTE1sYXV6eFBkMmpVcDV1RS1ZWWduVU9adk1yaUxYT1pUNEVqNFpmM1poLThENWZnQXVLYzVCY3NmS0d2ZDgzQ2R0TnZSTkQ0bU91UUlFU1BxaG5zLTg5ek9iRkhDV0JOcFh4TUk5NnN3?oc=5",
-          "source": "wbur.org",
+          "source": "WBUR",
           "pubDate": "Thu, 10 Sep 2026 09:07:54 GMT"
         },
         {
@@ -504,21 +504,21 @@
       ],
       "news": [
         {
-          "title": "'Resident Evil' Movie Review: Zach Cregger's Relentless Adaptation - IndieWire",
-          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPZG1PV3FEMnctb2ZWZHZ0T1RuOHNwT25sT1MyVEpWVm9QTGl6ejFEWmpFR0FfeFZkZU1VRGZ3Q2RSbjIzOVFxN0RIRzQ2YUZ1ZTJzNXVKbUYxQWpIa3BFOWJmZ2hqWkhwaVUyenZyemFyU3N6b3ExRmhsYlQ1QklycWVfc0oxNTdVaFNPVEFHdUtYbXd6LW1YeGFSYVYyXzNB?oc=5",
-          "source": "IndieWire",
-          "pubDate": "Wed, 16 Sep 2026 16:00:00 GMT"
-        },
-        {
-          "title": "'Resident Evil' Review: A Near-Perfect Sci-Fi Thriller That Never Steps Off the Gas - polygon.com",
+          "title": "'Resident Evil' Review: A Near-Perfect Sci-Fi Thriller That Never Steps Off the Gas - Polygon.com",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1WeHJyMWJfRVdmZHNRZXBuX25TOXc4T21JQUhXTl90ZVdyV3BVejVySEtETU42c0RxX19qRnJERFJwQ1VzQjBNSEVPU0dNcW95YmFfT1BYOEJiR20wRFI1VVduMzVOTHVUZWc?oc=5",
-          "source": "polygon.com",
+          "source": "Polygon.com",
           "pubDate": "Wed, 16 Sep 2026 16:01:14 GMT"
         },
         {
-          "title": "'Resident Evil' Review: Zach Cregger's Reboot Is a Funky Monster Fun - Variety",
-          "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxQV3RGeHc0TUJqazI0bU9fVV90aFltb1h5TmZGN2F6UGpsdFBwYm9EeERqb0JHRC1VanpWSDhrY3hBZlkxbEMxZUVUN1JmTlFQcndDRHg0ZzNRS2poU2RkaEtRaXhIVWUwYzFPLUVYdmx0OTZDaV9rRjBCSkVHTUNfVmNuRDdsN0ltRWIw?oc=5",
-          "source": "Variety",
+          "title": "‘Resident Evil’: Finally, a Great Video Game Movie for People Who Suck at Video Games - Decoding Everything",
+          "link": "https://news.google.com/rss/articles/CBMibkFVX3lxTFBSVXNJanczV0NzTW1uQ2h6ZHRDRVJoTjdtRHVyM3BLM19odVFobVBhWEVkeE5hOEN2NDlOcmhkWEw3Ni1JV3NSTTFxOHRZOVROa3FETzlaaDhZdTZFcmM1MENpTUVpWTFId193TXRR?oc=5",
+          "source": "Decoding Everything",
+          "pubDate": "Wed, 16 Sep 2026 16:02:36 GMT"
+        },
+        {
+          "title": "Resident Evil Review: A Decent Raccoon City Movie That Comes Well-Armed - Den of Geek",
+          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5zeWxGVFdCd0hYa3ZtY2NFWWczeUhQUjl4XzU5bkZhd2RwMVlYYjN3ZmF5eUhZWWNWeUU1OUVfRU1rMnp4aEhRb2dsekw0VFRsX3JCQTZPbDk1UzVnY1NoMlJLMU1wdW1ld1NhbEpfbWZlWUVrOFdyQThBTExhZzA?oc=5",
+          "source": "Den of Geek",
           "pubDate": "Wed, 16 Sep 2026 16:00:00 GMT"
         }
       ],
@@ -621,9 +621,9 @@
           "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "The Riotous and Raunchy New Comedy I've Been Raving About to All of My Friends - PureWow",
+          "title": "The Riotous and Raunchy New Comedy I've Been Raving About to All of My Friends - purewow.com",
           "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE84WHZZNUFVbnpBTmhYSXhOSXJRM1BnMERmTThicW1nLUFKbEpXY3FsRFNRd3RJOWhxb2E1d3JmeXpSNW83TWhLZWJrN0xOclBSRWNPSzRBblVzVlUxc3A2cDhtcC1uZWxHeVg2OVBDcw?oc=5",
-          "source": "PureWow",
+          "source": "purewow.com",
           "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         },
         {
@@ -643,7 +643,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 10.8647,
+      "popularity": 10.1401,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -655,7 +655,7 @@
       "overview": "Fighting crime full-time as Spider-Man in a world that doesn't remember him—and the pressure of seeing his old friends move on without him—sparks a change in Peter Parker he may not have the power to control. But that transformation might also be the only thing that can stop a shocking new threat to the city and those he loves - a powerful villain no one can even see.",
       "poster": "https://image.tmdb.org/t/p/w500/bjiS5ipwxb9JFy3XRRN4OAilSeX.jpg",
       "status": "playing",
-      "voteAverage": 7.849,
+      "voteAverage": 7.848,
       "rating": "PG",
       "runtime": "2h 25m",
       "theaters": [
@@ -679,22 +679,22 @@
       ],
       "news": [
         {
+          "title": "‘Spider-Man: Brand New Day’ Overtakes ‘Star Wars: Force Awakens’ as Highest-Grossing Movie of All Time at Domestic Box Office - Variety",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQdzlNbjRBMFB3ZmxPaERjaFJNajBzNm5XMXYyMnlEU3h4VFpER0hndEtEYzRIcE1ibHpBREJWRDBUamZmS2lKLXFveDZhM1hKSFhCWWhMYlZlTEFJdWhDWWpPUldPeUtnTFdWYlJpV0lwTFA3UVNsRVBDM05QdjRKNl9uNkN3M2hlSjVxcC1raDJKT3RBdjZEQ1lUMXdIOEJtZi1ScEtDam9fT3J0T21GU0ljNA?oc=5",
+          "source": "Variety",
+          "pubDate": "Wed, 16 Sep 2026 14:49:00 GMT"
+        },
+        {
           "title": "‘Spider-Man: Brand New Day’ Hits No. 1 on All-Time Domestic Chart, Topping ‘Force Awakens’ - The Hollywood Reporter",
           "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPYjdkOVk4WG84YWtoS2l2RVlPSWo5X1M2QjFFVTBkajkzZU9Vb00zSlV5N2h5bHVJNE5kSlB4ZWkzaDNyZ0pNT0JuZUI2M1lnbXptalZkVm9OYUEtQ2dvRkVRTTNfRXM0QzRva2Z0SGliRjZuOHByV21QeUlHblA4eGY4V1VXamFqcXVoM0JuOXFIVHdUV0pBekdtX3pEWU5OaThvTGNuQTg2YU55Qy1YXzFtejRpQnJqZFRaWTBPZw?oc=5",
           "source": "The Hollywood Reporter",
           "pubDate": "Wed, 16 Sep 2026 15:29:17 GMT"
         },
         {
-          "title": "Box Office: ‘Spider-Man: Brand New Day’ Remains No. 1 in Sixth Weekend, Nears ‘Avengers: Endgame’ All-Time Domestic Record - Variety",
-          "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNbV94QWFTbU4zME5YSG5HR1IwY3g4cnNmd2lQT3NQa1FaNXVEZkdEamlmNkI5cnVKUUxYMUxXZ2w3LVdLY1cyMFFaai1JdGMyb3ZXazMyUTVicjVpeXo3VHdoTnFzV3ljSGhJdXRGbHJ0YnZJREgxOVZ1bGludjRmd1R5OGZqaXh5a201QWNNWlc3S0JEOGYwdnpEZ1oyeUVwTVh3?oc=5",
-          "source": "Variety",
-          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
-        },
-        {
-          "title": "‘Spider-Man’ Brand New Day Has A Jean Grey Problem - Erik Kain | Substack",
-          "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTFBRX04xSGRHYlpZMGYwa0ItMGM0UEZQQTFGb21SSEZMMkZTVzF4VjNUMmZUSURCa1VtQWpsSkxCN3ppWUh5YlVwSFM0VzNwVnA4WDFiZjE3bTBRZW9FWEtYb1NKc21tdUtJQzJtVkd6cS1WZ04ySFBqdQ?oc=5",
-          "source": "Erik Kain | Substack",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
+          "title": "Box Office: 'Spider-Man: Brand New Day' 2nd Film To Cross $900M U.S. - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxONDlhV0ZiOXJWa0RQV3U2cDBONlROS21UcVBhci1mQmJSb0xZRE5LX3VxV1p4d2ZXa3ZsYmpDNEpHbFBrS2FlaWQ3UDFaUkdwS2RhamxCQUluM1IzYV9HSTdWc045dG14UmZMazBZb3lVbVg0Z2lYUnAteTJ2OHlhQ1lHYkg4QXlIVFN6N1VaUnJxdzY0a2JSbGN4Mnc?oc=5",
+          "source": "Deadline",
+          "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -707,7 +707,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 691.7198,
+      "popularity": 690.8873,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -774,7 +774,7 @@
       "overview": "After a mysterious cosmic event rips Oak Street from suburbia and transports their neighborhood to someplace unknown, the Platt family soon discovers that their very survival depends on them sticking together as they navigate their now unrecognizable surroundings.",
       "poster": "https://image.tmdb.org/t/p/w500/fYXqpgPmHMphSF2W30GbTeJVIa5.jpg",
       "status": "playing",
-      "voteAverage": 6.794,
+      "voteAverage": 6.853,
       "rating": "PG",
       "runtime": "1h 39m",
       "theaters": [
@@ -803,16 +803,16 @@
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "‘The End of Oak Street’ Is the Best Dinosaur Movie in 30 Years - Autostraddle",
-          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOdjBPN2p3RWp1UWtnU1NMSk1iaDExWHN0M1dpbGowYTBfQUczTlBQRFlLaUplYVFidjhJVjhTa1BpOWlJZWQyMk5wUDBEZzJrYUgyVVJHbmF0eF9oRDJ4UWxrNU1UMkdmcGNubWhBOFAyYWdtRVNKWTNnT0FDRjhlSXMta05iTkJ3RE9mSXdhazJaZEZh?oc=5",
-          "source": "Autostraddle",
-          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - Motion Picture Association",
           "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQdjNhSW9rMWdLeGF0Y3BodnRPOS1CbC05UFlJbHFUVFZPaTgybEh3RlBYN2RxczFvUTRmc2lFYTk5ZVVUQnhfMUFOcnMwdmVMMS1DV2Q2a0R2ejc2TlFPNGY1NGhENHlhOHJ4ZEwzcVdCUkhKVG13N3JiSGNmcFVaOEJuNkZFTXhRT3B3aVB5cm11U2FnZmF1WnhDb242OURXNVFEV19GUnd4cFlldUZJTGE5ZThSUlJxdDFBd3BiOTJoUEZKSnhrQWdRQUZ1NmEyVFEtSkMxWnZSTWdLS0w1MlJQVjI?oc=5",
           "source": "Motion Picture Association",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The End of Oak Street’ hits streaming—Where to watch the Anne Hathaway movie - New York Post",
+          "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPZHVZTGpkUTBleHlrSmlFNmVlMjhQbXJySkxOZTNEMWNaVFo3UjV4THhtbHZTVmUwS29WTkFPVjJKOTgxejVNV2xkNjFfTUthbWlZcmxySE54OGpaanRveXkzNnFKSVFEemdGQmtENUV3c0VybE9BWXhPcWZudlBsYUhDVUVuQjd1NGNXNmt6MFYtUUVuX1gzOFNjYXJSclRQNGxiUGFhRQ?oc=5",
+          "source": "New York Post",
+          "pubDate": "Tue, 15 Sep 2026 09:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -825,7 +825,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 367.9096,
+      "popularity": 414.9533,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -835,7 +835,7 @@
       "title": "The Uprising",
       "releaseDate": "",
       "overview": "As war and plague devastate 14th-century England, a humble peasant ignites a rebellion, uniting an army of commoners to defy the King’s might in a desperate fight for justice and survival.",
-      "poster": "https://image.tmdb.org/t/p/w500/7TUl15TOsIvndKlgMWTtLgtEzZP.jpg",
+      "poster": "https://image.tmdb.org/t/p/w500/fiFdny17lnjrwH6TmuxrhNy1Ol2.jpg",
       "status": "playing",
       "voteAverage": 7.2,
       "rating": "R",
@@ -858,16 +858,16 @@
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Review: ‘The Uprising’ - Christianity Today",
-          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBQNjQyZDV1X0lEZk1RVU9wcElrSDI1c1NhNWlZVnY2b1c5S1hOX2xVTjJ0T2Mzc0l0N0ZkOHNyS3V5cklhd19CXzdnWGNndGlRWTd0dXY2OHU3VWNtdEt5b21nX04zVmdrOWhJd2laTQ?oc=5",
-          "source": "Christianity Today",
-          "pubDate": "Wed, 09 Sep 2026 13:01:05 GMT"
-        },
-        {
           "title": "The Uprising Is the Fury Road of Eat-the-Rich Epics - Vulture",
           "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQR0tLYzNOSVEwb2c0Tlo4SlJhQXVmSXAzTGwyT0M3NlZSUXliSVFjRU5zU2dTOFpsWHp5Z2JDekZtMDg1LVlSdVFKRVd6SENUZmRsZGQ0WW9SczZ0MV9pQ1ZaWlFUTkVDU3lYdExRamNzTTNSQWtYVy14VGtJXzBRZW11ckRBQmE4ZW5VdHBBVXlSejdCVEFn?oc=5",
           "source": "Vulture",
           "pubDate": "Fri, 11 Sep 2026 18:50:01 GMT"
+        },
+        {
+          "title": "Review: ‘The Uprising’ - christianitytoday.com",
+          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBQNjQyZDV1X0lEZk1RVU9wcElrSDI1c1NhNWlZVnY2b1c5S1hOX2xVTjJ0T2Mzc0l0N0ZkOHNyS3V5cklhd19CXzdnWGNndGlRWTd0dXY2OHU3VWNtdEt5b21nX04zVmdrOWhJd2laTQ?oc=5",
+          "source": "christianitytoday.com",
+          "pubDate": "Wed, 09 Sep 2026 13:01:05 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -881,7 +881,7 @@
         "DE",
         "US"
       ],
-      "popularity": 26.6381,
+      "popularity": 27.1335,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -949,9 +949,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Trailer for Angel and the Badman remake starring Zachary Levi, Tommy Lee Jones and Neal McDonough - flickeringmyth.com",
+          "title": "Trailer for Angel and the Badman remake starring Zachary Levi, Tommy Lee Jones and Neal McDonough - Flickering Myth",
           "link": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOUEZjQnNpT2VKc09fUWdRcGdlcXBxcUxPVEg2ZnZySkxnTGdRRXBPaHNfVzk0RzhTM1NyTU1adHVZQjFMbl84WWxDb2h0U2I2TlJDNndWejBTY1JfN3BhQnF3aWFpRGgwQXdjUzl4TEQ2bnJFc00wcU1fNlZWRmRVZjhLakpXTE5GNjhnd3VQRnJQcUJRZHZpQXMzNXV4LUtSSFJ3Z2pLdmtpTVpoNEl1UHhlQUtyM3hEc0VWQlc0dXJNNHJ2LTln?oc=5",
-          "source": "flickeringmyth.com",
+          "source": "Flickering Myth",
           "pubDate": "Mon, 07 Sep 2026 00:53:12 GMT"
         },
         {
@@ -1025,7 +1025,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.7214,
+      "popularity": 2.5627,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1051,9 +1051,9 @@
           "pubDate": "Wed, 16 Sep 2026 15:30:45 GMT"
         },
         {
-          "title": "‘Christmas at the Kringles’ Trailer Sets Oct. 30 Release - iHorror",
+          "title": "‘Christmas at the Kringles’ Trailer Sets Oct. 30 Release - ihorror.com",
           "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPY2k4WGVTeXJCb2ItYUdfOHBKRmVxZklIQkFkV05RT1hNWjFXRVYyX1FQNUV2MTQ4Rnk3bUhUWmZ3RjlfMEk0QTcyd3hxN01wVXpFVi1ydVZMMUJaWWxWU2FyRTJWeGpzMHVZYXdaclVOSGJvTWxLckNudDNLbGwyU3Z3?oc=5",
-          "source": "iHorror",
+          "source": "ihorror.com",
           "pubDate": "Wed, 16 Sep 2026 21:19:47 GMT"
         },
         {
@@ -1073,7 +1073,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.4216,
+      "popularity": 2.5893,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1105,9 +1105,9 @@
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Jim Caviezel Returns to Big Screen in ‘Ghost Soldier’ Movie, First Trailer Released - justjared.com",
+          "title": "Jim Caviezel Returns to Big Screen in ‘Ghost Soldier’ Movie, First Trailer Released - Just Jared",
           "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNZ1lIZDNwYXVkcmh1QkFub2NRMHZ2YlEtTVpzMkhlTFJ0SFFWcEZWb0s5VzJQdDh0aWt4S3o5dE5oM0RaUkpTWkdQTGQ0aGpjYTRGNVFWaGJRekl4X21kZXU1SjFqa0lxOWd3bG5GdUtKT002V0VKbTZ0OEotejhHNi1MTUVGa1RQdG5SeTNzNEhmalJiMkoyYkNsd1VWME03TmFmMDhwbEp6YV9HVzU3VnFHeHF0dmtiRlE?oc=5",
-          "source": "justjared.com",
+          "source": "Just Jared",
           "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -1121,7 +1121,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 11.0375,
+      "popularity": 10.4921,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1147,16 +1147,16 @@
           "pubDate": "Wed, 16 Sep 2026 16:29:42 GMT"
         },
         {
-          "title": "Sparking a flame: Haymitch takes the lead as rebellion catches fire in ‘The Hunger Games: Sunrise on the Reaping’ - ew.com",
+          "title": "Sparking a flame: Haymitch takes the lead as rebellion catches fire in ‘The Hunger Games: Sunrise on the Reaping’ - Entertainment Weekly",
           "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxObENQY1lNcVpKdlZWYnV6QmhyOEpiUVZQamFTbVFaU1daY1pHQTZkT011TXhydFVEaGNWOHlfMmZ5b012NlVBT0swYWRqR1hrbm15OVNRd2d6R2RpVFJrWnBRRkM5LVc4Y1ZEMWNsT0tqR3AtVG5iUGttSWRnQ3JiRHVLV1RHQ0hsQnlZTlc5YjdNdDk3eVRpRg?oc=5",
-          "source": "ew.com",
+          "source": "Entertainment Weekly",
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "'The Hunger Games: Sunrise on the Reaping' trailer teases a treat for book fans - Mashable",
-          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPczRRbFBvUnhKaU84cE5hdWtiWGxnS25jbkw4RXRqT2hlbTRaRDhHb05VNkNvOXhKVnQxT01JNk5BZGt2Ui1lcmJXQ1FtYlV0Um5oN3FhQU9jRXhIeHhQQ1NFSXFQUDhGZWV2dXZQQU1iU08zVWZDanlGOFdTMVhkTFZYSnBLN0FUajZNVWFtSkVxNC1F?oc=5",
-          "source": "Mashable",
-          "pubDate": "Wed, 16 Sep 2026 13:39:10 GMT"
+          "title": "‘The Hunger Games: Sunrise on the Reaping’ Officially Arrives in Theaters 2 Months Early - Collider",
+          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPODUtQWhQWVkxdGxQbUk4anJmcWo2eHc3eEtXQldYUDh4S1NOR2dYVVktNThrcXlIMXlJNkVSeElWMno3MF9IUHVTajRRYVpsSjREbkEweUZFN0NMcTZZdDFPU0hWSFJpdy0xY1FZajlJY3R0ZW9vME41aUVYUXphbTZLcm13OWs4eTdVODM5Umg?oc=5",
+          "source": "Collider",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1265,7 +1265,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.8208,
+      "popularity": 1.6484,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1313,7 +1313,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 39.9123,
+      "popularity": 40.3695,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1362,7 +1362,7 @@
         "FI",
         "US"
       ],
-      "popularity": 6.3307,
+      "popularity": 6.2108,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1412,7 +1412,7 @@
         "GB",
         "US"
       ],
-      "popularity": 6.6884,
+      "popularity": 5.5407,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1432,22 +1432,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "Jason Statham's Next Big Action Movie Gets an Official Update From Original Director - polygon.com",
+          "title": "Jason Statham's Next Big Action Movie Gets an Official Update From Original Director - Polygon.com",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5qU3Z5SmRPNGtrOGhVMHlodTFrYlRVR0xZbzhKNk9PS2NfREw1QkdNb1pkWVZ1eUJtdXBidEtqN2hjcDQ1OW1fcGgtVFpKclF5Z0lET1NBNnhULUIyei1Bdk9lN2UxbmdT?oc=5",
-          "source": "polygon.com",
+          "source": "Polygon.com",
           "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "Jason Statham's 'John Wick' Replacement Officially Finds a New Streamer Ahead of Sequel - Collider",
-          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPa2c3QjhoaVM3d1NsVzdzQjh6Q0ZZOFkzX2FXVGUtV3MwSzFRa2hZUEdTVDJvTlp2dmdZNkVkSy1xdnhpVzdUc2FzYzZjR0xnUGZaOS1PMVMtbm51cU1RUzVhV2RWNVVCVG5heG81Uk9TUkpCNTdXMnFIdWRQekozbzNVQmVUYmlfQVE?oc=5",
-          "source": "Collider",
-          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
         },
         {
           "title": "Jason Statham's Non-Stop 105-Minute Action Thriller Scores New Streaming Home Ahead of Sequel - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYXJ3Sm84TUc3WFNhenc2QXVsZ3J1cS1SRHE2d0pMWXJzY05QeXNxa3RhRExyS1FrdDY1WkY1dHF2Nk91ZjVfMXlHUVdva0FkM29Va3RKcEtONUxVZF9FMFBXcmh5U3BydGwtTjF1THcyTnBfVWg5NG5VTDVUVElfLWo2LWZPSk94SHFzVF91TmJWRzQ?oc=5",
           "source": "MovieWeb",
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Jason Statham’s Biggest 2024 Action Hit Finds New Streaming Home Ahead of Sequel - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOQmlacno5d19GTUNhcjFnWXlJMnVaSklNT2JCZkJYTkdqSG1qeFpRMmlfbGVIMGhXaWItdHFjNHRFMl92TC1teDhieXlVV3JmV1p6Zzk3Um1EdkdYSUFQSFZyMDRfa0xEdHBFUnhmdnN2OGJSQldBd1JnVnU3LVExalhaSWtlRkk3SjRRV19GSFZmN05jYzJ2OHBXYXhjSlZGNnc?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1481,12 +1481,6 @@
       "theaters": [],
       "news": [
         {
-          "title": "New Drag Comedy ‘Disastrous’ Opens Friday With Sold-Out Weekend at Oasis - SFist",
-          "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQcUhTbW1DemgzeDhveXA0amhxeDhVbGhDWVZvSFZETDA1UzNZQ3JfOUxwNlRHMGhmbTY5Slhla1ZtS2JaZl9MbE9yajctQUd3bzVaTWhPWHl6RHJkTzVQS21ydWRJb0d3OWltbzQ3VnhvN2xXVVI1a1VrWEZ2OE4yeFlRb2dYUUN5U1BkN1FFTlNvd1VnZ2E2MkZ2aXBBTDJIbFE?oc=5",
-          "source": "SFist",
-          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "How Tim Curry’s ‘Rocky Horror’ performance shaped generations of queer performers - San Francisco Chronicle",
           "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNcU85cHRWUFVMM3JLb0s5RVlpeHVZdGJ0WklzVWs0WHRpREJ6ajJhQS14RnAxajVaSnVmNnhnWGdldDZTSmVmcXRhSkZOaXNPOUR6cW5CbGpRUUJ4Vi1ESENvdzYtUTI5Q2lqM0tNdWRlZ0hvX3ZRdDNoZVM4T3RqZHkyYzQzOGQyS0lpVVhiSFlDcEdHTGFkUlFaMk5CQXVpZ0p3dA?oc=5",
           "source": "San Francisco Chronicle",
@@ -1497,6 +1491,12 @@
           "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE94WVFicU9lX3lZWlVtdnRiU29nSThxMU1YZ0FoQTVtZXlSREFVbG9UR082TDkwQUl4dm1xUEdMNVVwOUhBQ19ZeVRsd0ViMFpmZWRRRUI4ZzhiRmc5S1JSQmR6azZ1eFJYel9FeEp6RWk2bFI5ektlVDBB?oc=5",
           "source": "High Times Magazine",
           "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘RuPaul’s Drag Race UK’ Dropped by BBC - The Hollywood Reporter",
+          "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQUmVqX091TFdkemFDVGhMc3NObU1GNF9feXdqc0x5bEdTZi1MTkp2eHh2SGY2bVpOVkJvZUZZODBjU0t6U1JTZjVzNWpnM2l0SmM1eEQ0MzFtLVN6NGg2b1Vod3FXZ0Z3X2tjWmF6QzRjZWNwQThWbV9qVzlaUzlhSEluN3F5bjlwX0V2RFJrZFZaNGdVLXBnZkdiVnN6VGZybjd1REFFenQ0WW02T3RMcHhR?oc=5",
+          "source": "The Hollywood Reporter",
+          "pubDate": "Thu, 10 Sep 2026 09:33:45 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1509,7 +1509,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.663,
+      "popularity": 1.3862,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1535,16 +1535,16 @@
           "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Miranda Lambert, Brad Paisley & Jelly Roll To Appear In Upcoming Glen Powell Country Music Movie, “The Comeback King” - Whiskey Riff",
-          "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNekhtUGlWTXhCc0hoWEl5c215X2JEUndoZlVaeUl3U0JyeHNCejJlSE1LRl95ZExvSXhtaEhfZW1xQklaRXFsQkY4WEQ4N2JCelhEQ25GQjBHMzBadmUybXl5UG1hcE5fQi0yaEpKYS1HdE50dHAxQ1R0eFdXb1RKc3RIcTIyYUxEUXU3MTFEVC1NSlp5Q3kxWUVYSkc3U0YzWlVaR0Raa1FzQVozWjFidjBkTWRLMUx1ZzVoOER6ZUItWFJBZkd2UjZ1UkRKQTAtNVRKbWtUVFJybDNkNUZRWVNiaXpfZw?oc=5",
-          "source": "Whiskey Riff",
+          "title": "Three Country Music Icons Have Joined Glen Powell's New Film - wideopencountry.com",
+          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNd0xEVEpqSTVpd2pkMzFLWnpUSU1kQkRfMktiTWt1dHB0SEpiaE5oa3puVmc0QS13R2tRc253S1pIN1FmQ3VNYkRDakdmZ3IyRllWVUNveUJzS2s1Q0hwN1VMUHN5U3dhVGU1UVVKWlIwcU9DS2RhTUxpcV9sYUdCQmhEUWdUdjhlTDFza1hTb3hMdEJjLXE0?oc=5",
+          "source": "wideopencountry.com",
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Three Country Music Icons Have Joined Glen Powell's New Film - Wide Open Country",
-          "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNd0xEVEpqSTVpd2pkMzFLWnpUSU1kQkRfMktiTWt1dHB0SEpiaE5oa3puVmc0QS13R2tRc253S1pIN1FmQ3VNYkRDakdmZ3IyRllWVUNveUJzS2s1Q0hwN1VMUHN5U3dhVGU1UVVKWlIwcU9DS2RhTUxpcV9sYUdCQmhEUWdUdjhlTDFza1hTb3hMdEJjLXE0?oc=5",
-          "source": "Wide Open Country",
-          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+          "title": "Glen Powell Producing 'Confession Of Murder' Remake At Universal - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNQVJwR2NGRnJuVm81dlI0YVFqVGFWQ2liLUpXWjVHaDNRVy1vbEx6Zi1pUlRpUjB5WTVOSU1yZWZLY20zWGxqemxHYzVsZDJCcWZUclljV3VCaW9sTHk2Slkya1VIYVh0aWM3U2V6bDRQU0lmbG9tdHhLcW5FTTZ0NWhZVVRHaHE1b2g0R1M5TF9YLUhaUmQ3dkE0YWZhQVU?oc=5",
+          "source": "Deadline",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1583,9 +1583,9 @@
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "James Gray to Receive Director Award From Mill Valley Film Festival | Exclusive - TheWrap",
+          "title": "James Gray to Receive Director Award From Mill Valley Film Festival | Exclusive - thewrap.com",
           "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxNcUN2Wng1UEtINk9YOXFkeUhON3lfa0dMQnhzWlh5NGx3NVhETS0xaEpHWHRITTdUc2pQRzNBRERkcWtCQjdwSUdpV3F0Vl81NTJnVG51NnlVaEthWFNaY3dFdTl2bXJUS3A1R2IxeW9kN3NuY0ZMcE9yYUI5d1pHN1A4UG9Ub2VyVGlxN0dzQTZ5ajVqc3pNcm56Q0RsZw?oc=5",
-          "source": "TheWrap",
+          "source": "thewrap.com",
           "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
         },
         {
@@ -1605,7 +1605,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.3255,
+      "popularity": 2.2141,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1637,9 +1637,9 @@
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Stills and Photos from The CoComelon: The Movie, 2027 at Kinoafisha - kinoafisha.info",
+          "title": "Stills and Photos from The CoComelon: The Movie, 2027 at Kinoafisha - Kinoafisha.info",
           "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBmOFA3SU5hZTRCTjl3SEo3MkNfdGVSOERKc3hpNS1VOXRhOGNkUnRsTzdMNGFJM0pFMF9kMDFsWE9VckJJYUJ3aXlDRXNGNjllRDlUbFA2N1FRa1dhSVdpQk5R?oc=5",
-          "source": "kinoafisha.info",
+          "source": "Kinoafisha.info",
           "pubDate": "Thu, 27 Aug 2026 16:41:26 GMT"
         }
       ],
@@ -1776,9 +1776,9 @@
           "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Watched The Chosen ? This new resource plans to turn the show into a Gospel conversation - Salt&Light",
+          "title": "Watched The Chosen ? This new resource plans to turn the show into a Gospel conversation - saltandlight.sg",
           "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOUGsyODRaMXFSV1NndElyQi1YdXp3MHoyN1NjRmxFYlFtZXNfcFVKR0RRVlBpbkhic3kwTkp4bm9GT2FwLTBJYWJYdV82XzU1WlhZaWlGUEhGdi1aNHJ3T3BBcDV4cWFYaDNFV21jeFhFR1YwcG52RHIxdEFLdmppNUNqcUZtZDVjdmt2ZzhzN3o0MTV1YS1KSWlkWVpMSUtzbm16R3dMRC14UEJkVzRjY25uZjE5RGc?oc=5",
-          "source": "Salt&Light",
+          "source": "saltandlight.sg",
           "pubDate": "Tue, 08 Sep 2026 23:36:03 GMT"
         }
       ],
@@ -1792,7 +1792,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.2788,
+      "popularity": 1.3759,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1824,10 +1824,10 @@
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "'The Nightingale' Set Leaks: An Unexpected First Look at Elle Fanning in \"Buzzy\" Period Drama - Brit + Co",
-          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1kb3RzSHFxNElNVXB0ZE53aVlNQ0t6TkJRMDBlem9vNXZlNG11TDNuYVFfZmhuVWFucEo1b1htVFBFc0NNQ2tRVGNDZ0JTQVpqUnRISE90R3prc2Rn?oc=5",
-          "source": "Brit + Co",
-          "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
+          "title": "What Kristin Hannah Really Thinks of ‘The Nightingale’ Movie - Woman's World",
+          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQeUJzVWRNdEo1QUhxYXY3TFA4R2V1dmE0bmU3TVEyaW5uQnBtUVRtZ3RhWlg3MTNCSVBHNUpzMnhNcVpyQ2ZWQU9aUWhVWHBXZDNWbnRGSkFYelN1Q1Z3Um9MU0FseENLSUpKYUdxa0s0OEQ3RFcwbTRBOFRMU1BveWh6MEJmVHlad0xiUG5wS3FlSjczSE54YkpNYjc4R0loWHNYQW5qSGRRRHk3a3BB?oc=5",
+          "source": "Woman's World",
+          "pubDate": "Wed, 09 Sep 2026 23:30:19 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1936,7 +1936,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.2433,
+      "popularity": 1.4297,
       "posterReachable": true,
       "artworkSource": "TMDB Web",
       "posterPlaceholder": false
@@ -1956,9 +1956,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "'Not Alone' Netflix Release Window Revealed - Yahoo News UK",
+          "title": "'Not Alone' Netflix Release Window Revealed - uk.news.yahoo.com",
           "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFB1NFJ2MFNFSzBYYmpPdmh0QkN6Mkw2ZGtOSjVNTmpVMEo5bXIwMEZ1VWJnWVlyeFhDSlAzVDZJdXVFS1EtLXhZaFFfd2lqNkl6U2pZOHkwLVAtR25zUUZjRUp4S1JnMnRyaGFJZWtfblBGYUFnNDNldHpiRWJldw?oc=5",
-          "source": "Yahoo News UK",
+          "source": "uk.news.yahoo.com",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
@@ -1968,10 +1968,10 @@
           "pubDate": "Sat, 29 Aug 2026 18:20:32 GMT"
         },
         {
-          "title": "‘At Last, We Know We Are Not Alone’: Gloria Steinem on Ms., the Feminist Movement and the Work Still Ahead - Ms. Magazine",
-          "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE5odUllZTNDbmJORVNFZVgya2xkc1pJWWF3MV9reGR5X1ZzU2hHc3pCWmdsZDQyTHhiRjcwb0RJYnFhcVN1OFRoUVdsckgyb0tfZDI0Uk9EcE85RFhSZm92cXRZZS1UX3haMWc?oc=5",
-          "source": "Ms. Magazine",
-          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+          "title": "Wrexham not alone: Birmingham eyes Premier League push as promotion buzz builds in Second City - AP News",
+          "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNNTNXeTZyTGU1Ymd0T0d6QjNxTkZVRlFfWjV1VDc0a0pmYlBaakdzNjlFM19JNXRHdVM2YjlRWV9MVjlYcFF1VFNvZ1FEelJZaWx0cV8zOFo5eER5YjEyY0pCSmxLaGJ0cmJUYkxQSnRNQ3UxOWVJdGFCbXFDa0JvUGE1QWxJTkhxd0pfMDVham8xLWhhdGVMWDRzXzlwd0V5MkhrVQ?oc=5",
+          "source": "AP News",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1984,7 +1984,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.9026,
+      "popularity": 2.8184,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2010,16 +2010,16 @@
           "pubDate": "Mon, 14 Sep 2026 16:00:44 GMT"
         },
         {
-          "title": "Daisy Jones' Upcoming Movies, TV Shows: 'Sense And Sensibility' & More - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1SVEd1S1pxZDUzOXNNbHRhaUNSV3hzc3lhQlFxWG1SaXlsOXFFdW12QmNRaEt3Ql94bW9xMWREN2VVTmtPSUxLeUhWeGFwcXowUlJ0V3BHMnAwX3ZmOTBRRllsMGpiSVhlcXZzYVJJcTBuSnNtYzllbmZn?oc=5",
-          "source": "Deadline",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "Andrew Scott to Receive Mill Valley Film Festival’s Acting Award for ‘Elsinore’ (EXCLUSIVE) - Variety",
           "link": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPSjhvbmlTM0JvWmdrZnZGNHRFenVnMURUdGlGUURQckpGOURQdVJJcENUelhXckVRNjUxX0lFYU5jM2dDRjBfSFByU3k0VUlnMTdXYm44a1lSV29MZTdkbVpmOWt5Zmg5SS04cXNTLVMyZEZZRUxZN1NRTVY1a1JuLWlkdlI1bS1vVjVUWUtYNElaSUVZMnlkWl9fcGN4VVFJOEp4MQ?oc=5",
           "source": "Variety",
           "pubDate": "Thu, 10 Sep 2026 17:15:00 GMT"
+        },
+        {
+          "title": "Carrie Coon Joins Rebecca Ferguson & Greta Lee In MRC Rom-Com ‘Honeymoon / Funeral’ - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMingFBVV95cUxPUDRPTUxGZ24tZWNITktVNTFZS0dHaTJBWmJ5R1cwUXJFd2I0YVVpYllKbzBHNFdBODBKM0VfMlBlWFFXRHdPSWxTSG9HRXdOSnVteDVjV3VuRm95VXR0RjJJNjJhRmhaSFFQWmxvQWQyUWFUc3VVTkZlQkcwZmtfaDZYcHpoeVQxMXB0UlE4VmRscXBxNDdCTFhpNGUyQQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 09 Sep 2026 19:01:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2052,9 +2052,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - nintendo.com",
+          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - Nintendo",
           "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOc0xTbTFOUTNNSzd2Q1JqeGFrVjIxY3pOa056bWhYdHRlN3Axajg0dG9aOVJfN1dfdXQ2a1JnYnliSkp0Ymo1dXpSTXVCWXZiNFNHSkduSzhmTkZfWVlNdmE4bGNVQmpCbmFvczVGZGVNSnNYUE1IbExHNlBTczRyRFJmUEhGanVKb01yQW9qdFZiUkFheTZtVDkzNXJZWENuUUtYTjNxTkE5M3NzWVBna1FlcDdGTzI4cFRUdTYyeFVkQldIWlZWNURzVQ?oc=5",
-          "source": "nintendo.com",
+          "source": "Nintendo",
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
@@ -2161,9 +2161,9 @@
           "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Traveling Soon? The Perfect Books to Pack for Your Last Summer Getaway - theeverymom.com",
+          "title": "Traveling Soon? The Perfect Books to Pack for Your Last Summer Getaway - The Everymom",
           "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1fMWEyV3Bubko5NEE1a3VTbVNWSGV6YWxEYnRSZGt3Q0lBNGZ2bmNyRXNuZHE2U3BycENOTWwzeHpqVnQxVEZ0WV94MDk5Ti11dEt0b2xmLUVUZGl2NTNhOXZxWk1oZw?oc=5",
-          "source": "theeverymom.com",
+          "source": "The Everymom",
           "pubDate": "Tue, 01 Sep 2026 17:05:15 GMT"
         }
       ],
@@ -2197,22 +2197,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "'Fast & Furious' Stars Tease TV Series, Final Movie 'Fast Forever' - The Hollywood Reporter",
-          "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPX2d4LUNNZUlYaExSSTBsNDlvZlJKeDZKTk5nRFhqeE1rSW50MTNfbGZaeDQ1cDhjbGpTRmcyNHQ1UVJ6MUVmMWdET0hjOG5DUG93dXk2QmpXOXZLbV93NHFDa2xUU01XdUthS21ST1FNQ0lEVmtPckkyYjJEMnRkSDJBS1hHU2NTNU1fVkZuWnhPV2tlUHoycEh0bEhhNkxJaVNRb0JqZ3NXdFluUDRqcQ?oc=5",
-          "source": "The Hollywood Reporter",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
+          "title": "Paul Walker’s brother won’t be involved in possibly bringing Brian back for final Fast & Furious film (exclusive) - Entertainment Weekly",
+          "link": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPNGVjd2g3bVhVYWE2bTlNLThGWUFCX1VieE1MMEVtT3ViRHhfek90R2QybUQxT3JFRjRiU2FYRm1tYXhpM0wxS2JYVG4ydHR1eFhvTUZ4TmpPZDVJeVVnN2F4cFNUUTA3Q1MwV3VlRlZOTjJfY1QxOFdIMGROV0l4V1VidDNjMDVTWmRPeg?oc=5",
+          "source": "Entertainment Weekly",
+          "pubDate": "Wed, 09 Sep 2026 16:29:38 GMT"
         },
         {
-          "title": "Vin Diesel reveals ‘Fast Forever’ start date and why the final film has taken so long - ew.com",
-          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOSUpkRWxIQnh1cVZuTFoxVHl5NjdyS0U0Tk1PdlBZR19QcUx5N1A1Y3d4bzVIdlRaWkNYVXpObTFreGo0dlJueGxFelQwUjRsSnFOTzdhak1CclRtS1c2SUc1OGJzakI0X0FSaFNEb2NFZU1rNjNRQ2pLZDlEdERoYUNYT0FuVFdjUUItb3E4MUFHMHhSZTdmd2x0TWg?oc=5",
-          "source": "ew.com",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
+          "title": "Every 'Fast and Furious' Movie, Ranked - Complex",
+          "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOMUFRZGlXOTItZ0dnV1FuRXdvS3ZiUGtMZVlpM2NEU3FqLUdVa0doLVJGRVVjcDFvZDlpeXk3Q1JDWm9TZEZkYzF5OVpjRXJINjFmNWYzQmt6ck5TdldCNVdGYmVGWW5kdWdWQVdfc1h0OUxOUGxFNnpJa3JTZFRBNjJvNWdFTTVQTUFVNXhjTWo4WmM?oc=5",
+          "source": "Complex",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "What’s the hold up with the next Fast & Furious movie? Alan Ritchson says money - Popverse",
-          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQckhqMXpZYkFLaVkyNmFnem9NMHJ1S2NjTFZqYmdBMjVUXzZ0OGhscmxBQ25fNlRFbzJ4QktYVGgtcklFZWtkVS1sYmRPNG1xUm54YzRXYWFwTXhVUXZMcU10eEQwek1GekpGeFpzNmZ2eXRiS1RCWWZIYlRJVGk5UGs0S0Jxdm8tY2gtcEFDMllJdmJPN2MzS0Nn?oc=5",
-          "source": "Popverse",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
+          "title": "‘It was a horror movie’: Homeowners describe fast-moving floodwaters that destroyed homes in Gallia County - wsaz.com",
+          "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxPUFFvaG9Xb1ZhS3o1NUNmOVByVlFkTVN4U05CdENnVlpsaDYxSlJtSkhtRDBsX0ZZS3RQcDlVQWVtQXBzMi1qc3VucnZ2ZUIycHZRQ09UWkZlNTZKMllpeUw4TWxYejJPT0R1OTlyYW0tUkRZYm5yRzBMUzBhTU9JNjRwdDNJT3VDV05oUzUwSWYwVWl5RXRyZ0JpbG9kMGZxdXlqa04tczNneTVzeWIxaktvOEFtN05mb1h5MERKTHpRVEtzWGdxcUZUa9IB3wFBVV95cUxNMWpUS1VkeHB3VXFWdXRydFpHUFFYN3lVb1Q4Q0V4VElMdzczQnBUdVBJTUJxazNmUlJvVzJJY3hMYnRoVEYwNk1mSC1TaG5VMkVLMW1GWm9BRWw3U011bmZwZVROS3dBMUp2SEo3dGhJTVlsT0FQSWVVOFd1OXQ4TU44cUpUQVliaTNVWm0xSkRJTzQ1OUZoSkZrV3drSFZ2cGp5Z2xQMFlNOEYyYTI5aUVtY2J3dUp4Vm5UOGVzLVJKdXlhS0EzNDJZX0VfTl8wVGM4WE9sd0JPOWtJVGV3?oc=5",
+          "source": "wsaz.com",
+          "pubDate": "Mon, 14 Sep 2026 22:20:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2245,9 +2245,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Warner Bros. Pictures Animation’s ‘Margie Claus’ Reveals 2027 Release Date, Voice Cast - TheWrap",
+          "title": "Warner Bros. Pictures Animation’s ‘Margie Claus’ Reveals 2027 Release Date, Voice Cast - thewrap.com",
           "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNcVJ3MkwwcDNnaUpKblNYY3lIa1JTanlqOHhkS1paWGJNN1VHNzVQcU5EZjIzbmpZa0RPbWRhVmN5bVJ4M2N5VElnVTBycDhPYzV5aWx0MC1UcWJ3QXM4dU9yY3FzVFowMnFmbUJjNEVjRjlULXp5QzJUemRZRjRWYWdrS2VjZXZOOWlhdGlTdnVGVkxUak4xQUVqSXlmczUtZEt0cXMtOUtZejZL?oc=5",
-          "source": "TheWrap",
+          "source": "thewrap.com",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
@@ -2294,16 +2294,16 @@
           "pubDate": "Fri, 11 Sep 2026 15:16:05 GMT"
         },
         {
+          "title": "'Star Wars: Starfighter' Director Explains the State of the Galaxy - Star Wars News Net",
+          "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNdkFYZXJCYUtKaGlpQmxGcnVVbkZNSzJUWlVUMk9ZNEZLU0ZHN0VWUDE4cE9OT3hOTlZWSFlNWW42cGxyQ2gtbm52NWxONjUySWpxOG9QajJwOEwxWHp4Q3BaMFZxdTM4UU5TVkp5VU5NZzlJajQ3UEZFUGxGVTZkbGZtT1NrZ3lha2xMcXNNWXJtZzdLMHdBb0ltMzVTdU9Ic3NESll5QklaR2xJREVoNnV5eWo0ZW8?oc=5",
+          "source": "Star Wars News Net",
+          "pubDate": "Wed, 19 Aug 2026 07:00:00 GMT"
+        },
+        {
           "title": "‘Star Wars: Starfighter’ & ‘Star Wars’ 50th Anniversary Edition To Be Released In Imax 70MM - Deadline",
           "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNU2VUd1JQOWdfc1FEcW1MYjVVc3VjTzZhU3VmQXE5bkZTOGhtUDdvTnloT3hXZ29nQThpRWpfSG12NWR6cTBYY2FqbVpyU0dwRFBuNHFidkE0RXBOOGg4eldSeTJYTmdiT19TRlN3dnU1RVBuRUpOMk55aG11Q1ZKQkRQb05ONkRxcTBJY0VCems2ZzJaWURLUXNrNlRYWlNx?oc=5",
           "source": "Deadline",
           "pubDate": "Tue, 08 Sep 2026 17:00:00 GMT"
-        },
-        {
-          "title": "‘Star Wars: Starfighter’ Was Inspired by a Francis Ford Coppola Classic - Gizmodo",
-          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNLVpER0I5M3lIbS1qOW00QzlpZHl4cjFGdnpfX042RVJiQm84WVA1U2xDYi1xeExFNEJPRlR0Sjh3YWo2SDFqcHJLaGtlb1ZNMHNkTTRIYmtvMWlIRXhnQ2lQbDJ5cUs3X01qaHA4RHh3dzBmdnVmT3ZQSXlBWlBPWUZNczlrZE1KSmJfTEpkdjNsNUZ4d2hHRnJObmJNX0w2?oc=5",
-          "source": "Gizmodo",
-          "pubDate": "Tue, 18 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2316,7 +2316,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.4375,
+      "popularity": 2.3567,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2348,9 +2348,9 @@
           "pubDate": "Tue, 08 Sep 2026 09:39:39 GMT"
         },
         {
-          "title": "The new Rambo actor has already filmed the prequel and hasn’t even met Stallone: “I want to talk to him” - Diario AS",
+          "title": "The new Rambo actor has already filmed the prequel and hasn’t even met Stallone: “I want to talk to him” - en.as.com",
           "link": "https://news.google.com/rss/articles/CBMi3wFBVV95cUxQZzJyaFlUdWQtUmRhcllFTFFSUU5wODJhNDRiR1lhVTZuRjVkd3ZKVFlZQldPV3lfS1VUbl9xdS1sX3RSQ3BPYUttSlF3bm45clpYcC1pMUV3bi1BNVNqSXhfMXZmMHlBQ3ZBNk5IanFIWnR3alV6TjFkdGV2OEdQOFdmWDd2LXlnQ3R2T21JMzlJc0tyX1JwTS1WT3BZVWdQQUJ1MGtLZVB3Z0tTR3cxTVF0bzFpZWFvcE5TWXhUSGk5TmxNVzlrZVRER1V2cnItVVhCLWJyNkY0TnFMd2tz0gHzAUFVX3lxTE5yOV96MVNjMHlNMTNrcEZadTdPdEk0UXpkeG1vS21KZllua2R0cndDaXYtREJ6VGpaUHk5YkJrcEFtX1NsODE2azVEQk1VYWdhZV9yOEhiYlhJdWlGYTYwT1ZyczNlQXlZWk1JZHJNOHJ1SnhpcjFwYnNyZ2NQY0M0NlJKdmc4YWFJOE1pMXgzNjRDNnVFaVBJbGhkQ2ZKdzNNcVo3OTd2aGRLNmZUaG5LNlNQNExsWncyaS12TEUyd2E4T0JON0d0TmlRYmg5QW1LYzVRZVVvME5vOWg5Z1pPVUpvLTRXNFF0NzVWU3pGcmVhMA?oc=5",
-          "source": "Diario AS",
+          "source": "en.as.com",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -2364,7 +2364,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.8952,
+      "popularity": 2.0014,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2412,7 +2412,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.6862,
+      "popularity": 2.4687,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2540,10 +2540,10 @@
           "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "‘Man of Tomorrow’ is Looking Like the DCU's ‘Avengers.’ Here's Everything We Know - GQ",
-          "link": "https://news.google.com/rss/articles/CBMia0FVX3lxTFBZaXdKMTM2YkhkTGdMT0dWRXBETHgtb3ZnZHFveXFhc1gySXprMVNXdDRUWGNuWlVjWUFGXzZKTXZHTzNwZFh1NTh6YXdra2s1V1poTHB4TTc3VllvSWlqT2g1U2FMVTVQZENJ?oc=5",
-          "source": "GQ",
-          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+          "title": "‘Man of Tomorrow’ Cast: Every Actor and DC Character Confirmed for Superman Sequel - Men's Journal",
+          "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNZEZCZU00VFc0OUlhclgxXzllUHBLOERBZVk2T0hLMGtsREtjRHJKZFI5TmJ0QVFqbC0wM282R3o1NjlZdVN4aVplSzZPYlZZREdONVNSR0pWRDFfSG81c0dQSWR5NGN6eHJ3NHliQU9odGhDRkxLMWhwbExLRDRYZ004elY?oc=5",
+          "source": "Men's Journal",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2624,22 +2624,22 @@
       "theaters": [],
       "news": [
         {
+          "title": "'Copperhead' Movie Adds Jason Momoa, Adria Arjona & Kiefer Sutherland - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOTVQyRXJpX3pwaVZnUUc0cloweWhWTkJXLW9yZWVOMVdULU9CV19xSXJxMFV3bV84M2RxaUV4b205bWd6eXVkb2VVaWFPRHBPMlQyN2NJQ0RtbjBnN3ZxZDlESzNjQ0p6OGQ1VnE5N1NxWEs2bmlCRFBJVjk3S2RodGFFcTlBOVV3TU5wRlYtVFA?oc=5",
+          "source": "Deadline",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
           "title": "Jason Momoa's New Crime Thriller Is Taylor Sheridan Meets 'Lethal Weapon' - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DSm43MUszRVl4TzFidDdVcXlYYkRSQXY1UTB3TjljTDhZd1JoNDZSMlJ6Q0ZyY1Q4WTI2bElaU1h0blNhOWh1UFpFblh5VHdJMDR6Rml1X0ZtSkhJMVlxQmFhcFEzc1dT?oc=5",
           "source": "MovieWeb",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Halo, Warcraft, & More Xbox Video Games Could Soon Get New Movie & TV Show Adaptations - AOL.com",
-          "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTFBCYlZaOFRVckYwZU90bW43dTdUSURsaTAzUkR1RFJySXFaMWY0YVA3UFNWUTNGdnB0MTZCR3NaaGpSODU1UEpqV21GOXVrc3RUZ0p5ckVaank2VkdpN2c5NTdIRDI0bDJGRDdXREFhYmlSMXBJdUVlTkJud1lPZw?oc=5",
-          "source": "AOL.com",
-          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "Jason Momoa, Adria Arjona join Copperhead - The New Indian Express",
-          "link": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxPZXVXTno2aFdpM2tCNDl2UEZKcU5DX21vUkNTVzg2anFHQV9XaHh2eTdYVDJQMGZlMVdEU28wWlBnSzV2MXpTelRYaDY0cEhXeTBwRVRDSXc1X1ZrcnFibjR2NXRlci1rVmZfZ3BNQjdhVVJxVU1xNEpUTndzZE10VFJSZHgtR0w5dmRnZmMtRnVucXNESzhQZTI1NTJqb2NiSGFfWElWZXBtd25ab3lvRWpydFEyVl93clBhb2UzcWkwXy1KcDhDTlVycFhuX3FxUUpIVNIB4gFBVV95cUxPenFVZ2dydmhLUHloalZiRHhySDVfcEc4ajhsZzZSQWpuT0dCZ0tWSk0wWnY0dGVzaktOb2lGTHh2VmlHUWpzLV9YYjJEZUxGWHVqRVZDQmRQdS1oMWZLY2hZeE1Ka3NTR2dhSHhZUks4bVA0N00wNXdCYXNGTlFEU0hySldlcGJGb2pWMVBsWE9vc2Z0VGoxbHBMNEVQakswcTU1UGF0Y1o2cXE1YkRuWHFzdFZPTjM1M3dBOGJzd2VnSDlfU1YxU3V4NjdETDVaazhQWUJYY2txMUNZTENjOFBB?oc=5",
-          "source": "The New Indian Express",
-          "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
+          "title": "What’s Happening with the Netflix ‘Minecraft’ Series? - whats-on-netflix.com",
+          "link": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQUW5WN2FFdFdGUnBTcjVxVWRSQzZRUW5uUjRIWUJaMUtJUi1FZURNSXBJZk9fT0pWeENfM3VNamhvTU4wS0RoSzRKN05EMFZjLXFOc3FFemtwM2pCY21CNm15c2xoZkhRVDlZUE9fb1ZsWTdBWmVpVGlLUUw0Y0hIZnpKXy12cFotN09XNzNadw?oc=5",
+          "source": "whats-on-netflix.com",
+          "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2652,7 +2652,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 4.6507,
+      "popularity": 4.3667,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2749,7 +2749,7 @@
         "GB",
         "US"
       ],
-      "popularity": 2.026,
+      "popularity": 1.9854,
       "posterReachable": true,
       "artworkSource": "TMDB Web",
       "posterPlaceholder": false
@@ -2797,7 +2797,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.3859,
+      "popularity": 2.6311,
       "posterReachable": true,
       "artworkSource": "Wikipedia",
       "posterPlaceholder": false
@@ -2845,7 +2845,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 4.0907,
+      "popularity": 3.6532,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -2865,9 +2865,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Troy Is Standing In For An 1890s Town In The New Conjuring Film - 107.7 WGNA",
+          "title": "Troy Is Standing In For An 1890s Town In The New Conjuring Film - wgna.com",
           "link": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTFA1dFNDWUVMeHk5amZQWFlwTzh1bHhNeXlKYlB1cGRnX1N6Q2dmRm81TlRySDhOQW94OFFjVTBOcHpqb1RyajVBUkN4Nk1vdXc3VVU2WlRLbDZMSzFkSDVlemJQNDBGeE0?oc=5",
-          "source": "107.7 WGNA",
+          "source": "wgna.com",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
