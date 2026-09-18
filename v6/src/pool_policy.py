@@ -99,4 +99,6 @@ def apply_rolling_pool(stories: list[Story], registry: dict, *, now: datetime | 
             "retiredStaleCount": retired.get(category, 0),
         }
 
-    # Categories are already emitted in registry order and rows are already ranked above.\n    # Do not globally re-sort here: X relies on primaries staying ahead of same-slot backups.\n    return output, {"categories": capacities, "retiredStaleCount": sum(retired.values())}\n
+    # Categories are already emitted in registry order and rows are already ranked above.
+    # Do not globally re-sort here: X relies on primaries staying ahead of same-slot backups.
+    return output, {"categories": capacities, "retiredStaleCount": sum(retired.values())}
