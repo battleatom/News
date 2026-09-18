@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#0b1120">
   <meta name="description" content="Underreported V6 — high-impact, local and undercovered news in a clean standalone architecture.">
   <title>Underreported V6</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
   <a class="skip-link" href="#feed">Skip to stories</a>
@@ -26,7 +26,7 @@
   <main class="page"><section id="feed" class="feed" aria-live="polite"></section></main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
   <script src="nfl-cloudflare-proxy.js?v=2"></script>
-  <script type="module" src="app.js?v=5"></script>
+  <script type="module" src="app.js?v=6"></script>
   <script src="story-sanitize.js?v=1"></script>
   <script src="infinite-scroll.js?v=2"></script>
   <script src="story-position.js?v=5"></script>
@@ -41,7 +41,7 @@
     const loadAdmin=async()=>{
       if(loaded||loading)return;loading=true;
       try{
-        await loadScript('admin-ops-cloudflare.js?v=6');
+        await loadScript('admin-ops-cloudflare.js?v=7');
         await loadScript('admin-layout.js?v=5');
         await loadScript('admin-refresh.js?v=2');
         await loadScript('admin-pool.js?v=1');
