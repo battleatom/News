@@ -92,3 +92,9 @@
 
 /* Mobile status row: remove outer backplate; retain only individual pills */
 @media(max-width:760px){.toolbar{background:transparent!important;box-shadow:none!important;border:0!important;backdrop-filter:none!important}.refresh-status{width:auto!important;max-width:none!important}.local-status{background:transparent!important;box-shadow:none!important;border:0!important}.local-status::before,.local-status::after,.toolbar::before,.toolbar::after{content:none!important}}
+
+/* Status UX: parent must be invisible; only generated pills carry fill */
+#refresh-status.refresh-status{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;min-height:0!important;filter:none!important}
+#refresh-status .status-pill{background:rgba(255,255,255,.75)!important;border:1px solid rgba(148,163,184,.30)!important;box-shadow:0 2px 7px rgba(15,23,42,.10)!important}
+#refresh-status .status-pill.status-live{background:rgba(255,255,255,.75)!important;color:var(--good)!important}
+#refresh-status .status-pill.status-warn{background:rgba(255,255,255,.75)!important;color:var(--warn)!important}
