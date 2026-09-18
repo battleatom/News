@@ -1,0 +1,84 @@
+name: V6 Data-Only Production Refresh
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Keep the proven V6 Python collector off the top of the hour.
+    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: v6-data-publish
+  cancel-in-progress: false
+
+jobs:
+  refresh-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout V6 source
+        uses: actions/checkout@v4
+        with:
+          ref: v6
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Validate V6 collector source
+        run: |
+          python -m py_compile v6/src/*.py v6/tests/test_v6.py
+          python -m unittest discover -s v6/tests -p 'test_*.py'
+
+      - name: Build dynamic data only
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+        run: python v6/src/build.py --data-only
+
+      - name: Validate dynamic inventory
+        run: |
+          python v6/src/audit.py
+          python v6/src/live_quality.py
+          jq -e '.stories.x | length == 10' v6/dist/feed.json >/dev/null
+          jq -e '[.stories.x[].source_id] | unique | length == 10' v6/dist/feed.json >/dev/null
+          jq -e '.movies | type=="array" and length>0' v6/dist/boxoffice.json >/dev/null
+          jq -e '[.movies[] | (.tmdbId // (.title|ascii_downcase))] | length == (unique|length)' v6/dist/boxoffice.json >/dev/null
+
+      - name: Preserve validated JSON
+        run: |
+          mkdir -p /tmp/v6-data
+          cp v6/dist/feed.json v6/dist/nfl.json v6/dist/boxoffice.json v6/dist/markets.json v6/dist/status.json /tmp/v6-data/
+
+      - name: Publish JSON only to main
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin main
+          git checkout -B main origin/main
+          cp /tmp/v6-data/*.json .
+          git add feed.json nfl.json boxoffice.json markets.json status.json
+          if git diff --cached --quiet; then
+            echo "Dynamic V6 data is already current."
+            exit 0
+          fi
+          git commit -m "V6 validated data refresh"
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "V6 data publish succeeded."
+              exit 0
+            fi
+            git fetch origin main
+            if ! git rebase origin/main; then
+              git rebase --abort || true
+              echo "Concurrent data publish conflicted; refusing to resolve silently."
+              exit 1
+            fi
+            if [ "$attempt" -lt 3 ]; then sleep 3; fi
+          done
+          exit 1
