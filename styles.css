@@ -32,3 +32,45 @@
   .tab[data-category="entertainment"],
   .tab[data-category="technology"]{font-size:.62rem}
 }
+
+/* Final desktop tab layout: compact, readable, content-sized, two rows */
+@media(min-width:901px){
+  .tabs{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+    align-items:center!important;
+    overflow:visible!important;
+    gap:5px 6px!important;
+    padding:0 14px 8px!important;
+  }
+  .tab{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:max-content!important;
+    max-width:none!important;
+    justify-content:center!important;
+    overflow:visible!important;
+    white-space:nowrap!important;
+    font-size:.54rem!important;
+    padding:4px 6px!important;
+    gap:4px!important;
+    line-height:1.15!important;
+  }
+  .tab>span:nth-child(2){
+    min-width:max-content!important;
+    overflow:visible!important;
+    text-overflow:clip!important;
+    white-space:nowrap!important;
+    font-size:.54rem!important;
+  }
+  .tab small{
+    display:inline-block!important;
+    flex:0 0 auto!important;
+    min-width:4.4ch!important;
+    font-size:.49rem!important;
+    text-align:right!important;
+    white-space:nowrap!important;
+    font-variant-numeric:tabular-nums!important;
+  }
+}
