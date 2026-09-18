@@ -8,6 +8,8 @@
   let rt=0;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>centerActive('smooth'),90)},{passive:true});window.addEventListener('orientationchange',()=>setTimeout(()=>centerActive('smooth'),180),{passive:true});
   tabs.addEventListener('click',e=>{const b=e.target.closest('.tab[data-category]');if(!b)return;const same=b.getAttribute('aria-selected')==='true',y=window.scrollY;if(same)requestAnimationFrame(()=>requestAnimationFrame(()=>window.scrollTo({top:y,left:0,behavior:'auto'})));setTimeout(()=>centerActive('smooth'),20)},true);
   new MutationObserver(()=>sync()).observe(tabs,{childList:true,subtree:true,attributes:true,attributeFilter:['aria-selected','class']});
-  document.addEventListener('v6:tabchange',e=>{const key=e?.detail?.category||'';if(key&&key===prev)requestAnimationFrame(()=>centerActive('smooth'))});
+  // Center only after an actual tab click/resize. Do not re-center on generic
+  // v6:tabchange events: scroll-position updates also emit/synchronize state and
+  // were snapping the horizontal tab strip back to the active X tab.
   sync();
 })();
