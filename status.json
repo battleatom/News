@@ -1,19 +1,19 @@
 {
   "version": "6",
-  "generatedAt": "2026-09-18T07:34:23.544666Z",
-  "storyCount": 1173,
-  "visibleStoryCount": 1038,
-  "poolStoryCount": 1173,
+  "generatedAt": "2026-09-18T12:28:18.072186Z",
+  "storyCount": 1166,
+  "visibleStoryCount": 1032,
+  "poolStoryCount": 1166,
   "categoryCounts": {
     "top": 100,
-    "nfl": 65,
+    "nfl": 62,
     "x": 10,
-    "underreported": 38,
+    "underreported": 40,
     "world": 120,
     "us": 120,
-    "presidential": 18,
+    "presidential": 17,
     "federal": 18,
-    "legislation": 45,
+    "legislation": 41,
     "nm": 80,
     "local": 14,
     "region": 80,
@@ -26,23 +26,23 @@
   "reserveCounts": {
     "top": 20,
     "nfl": 0,
-    "x": 9,
+    "x": 7,
     "underreported": 0,
     "world": 24,
     "us": 24,
     "presidential": 0,
     "federal": 0,
     "legislation": 0,
-    "nm": 10,
+    "nm": 11,
     "local": 0,
     "region": 16,
-    "technology": 0,
-    "gaming": 18,
-    "military": 6,
-    "entertainment": 8,
+    "technology": 4,
+    "gaming": 14,
+    "military": 8,
+    "entertainment": 6,
     "boxoffice": 0
   },
-  "reserveStoryCount": 135,
+  "reserveStoryCount": 134,
   "poolPolicy": {
     "categories": {
       "top": {
@@ -51,9 +51,9 @@
         "expansionCapacity": 30,
         "expansionUsed": 0,
         "poolCapacity": 120,
-        "candidateCount": 136,
+        "candidateCount": 137,
         "keptCount": 120,
-        "retiredStaleCount": 7
+        "retiredStaleCount": 6
       },
       "nfl": {
         "visibleTarget": 80,
@@ -61,9 +61,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 65,
-        "keptCount": 65,
-        "retiredStaleCount": 33
+        "candidateCount": 62,
+        "keptCount": 62,
+        "retiredStaleCount": 35
       },
       "x": {
         "visibleTarget": 10,
@@ -71,9 +71,9 @@
         "expansionCapacity": 0,
         "expansionUsed": 0,
         "poolCapacity": 20,
-        "candidateCount": 19,
-        "keptCount": 19,
-        "retiredStaleCount": 1
+        "candidateCount": 17,
+        "keptCount": 17,
+        "retiredStaleCount": 3
       },
       "underreported": {
         "visibleTarget": 50,
@@ -81,8 +81,8 @@
         "expansionCapacity": 15,
         "expansionUsed": 0,
         "poolCapacity": 60,
-        "candidateCount": 38,
-        "keptCount": 38,
+        "candidateCount": 40,
+        "keptCount": 40,
         "retiredStaleCount": 1
       },
       "world": {
@@ -91,9 +91,9 @@
         "expansionCapacity": 36,
         "expansionUsed": 0,
         "poolCapacity": 144,
-        "candidateCount": 150,
+        "candidateCount": 145,
         "keptCount": 144,
-        "retiredStaleCount": 12
+        "retiredStaleCount": 17
       },
       "us": {
         "visibleTarget": 120,
@@ -103,7 +103,7 @@
         "poolCapacity": 144,
         "candidateCount": 157,
         "keptCount": 144,
-        "retiredStaleCount": 6
+        "retiredStaleCount": 4
       },
       "presidential": {
         "visibleTarget": 30,
@@ -111,8 +111,8 @@
         "expansionCapacity": 9,
         "expansionUsed": 0,
         "poolCapacity": 36,
-        "candidateCount": 18,
-        "keptCount": 18,
+        "candidateCount": 17,
+        "keptCount": 17,
         "retiredStaleCount": 1
       },
       "federal": {
@@ -131,9 +131,9 @@
         "expansionCapacity": 15,
         "expansionUsed": 0,
         "poolCapacity": 60,
-        "candidateCount": 45,
-        "keptCount": 45,
-        "retiredStaleCount": 0
+        "candidateCount": 41,
+        "keptCount": 41,
+        "retiredStaleCount": 1
       },
       "nm": {
         "visibleTarget": 80,
@@ -141,8 +141,8 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 90,
-        "keptCount": 90,
+        "candidateCount": 91,
+        "keptCount": 91,
         "retiredStaleCount": 0
       },
       "local": {
@@ -161,9 +161,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 125,
+        "candidateCount": 123,
         "keptCount": 96,
-        "retiredStaleCount": 0
+        "retiredStaleCount": 2
       },
       "technology": {
         "visibleTarget": 80,
@@ -171,9 +171,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 80,
-        "keptCount": 80,
-        "retiredStaleCount": 15
+        "candidateCount": 84,
+        "keptCount": 84,
+        "retiredStaleCount": 14
       },
       "gaming": {
         "visibleTarget": 90,
@@ -181,9 +181,9 @@
         "expansionCapacity": 27,
         "expansionUsed": 0,
         "poolCapacity": 108,
-        "candidateCount": 108,
-        "keptCount": 108,
-        "retiredStaleCount": 8
+        "candidateCount": 104,
+        "keptCount": 104,
+        "retiredStaleCount": 13
       },
       "military": {
         "visibleTarget": 80,
@@ -191,9 +191,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 86,
-        "keptCount": 86,
-        "retiredStaleCount": 3
+        "candidateCount": 88,
+        "keptCount": 88,
+        "retiredStaleCount": 4
       },
       "entertainment": {
         "visibleTarget": 80,
@@ -201,8 +201,8 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 88,
-        "keptCount": 88,
+        "candidateCount": 86,
+        "keptCount": 86,
         "retiredStaleCount": 8
       },
       "boxoffice": {
@@ -216,7 +216,7 @@
         "retiredStaleCount": 0
       }
     },
-    "retiredStaleCount": 102
+    "retiredStaleCount": 116
   },
   "collectorErrors": [],
   "sourceStatuses": [
@@ -297,7 +297,7 @@
       "name": "Reuters",
       "category": "presidential",
       "status": "live",
-      "storyCount": 38,
+      "storyCount": 35,
       "error": ""
     },
     {
@@ -305,7 +305,7 @@
       "name": "Associated Press",
       "category": "presidential",
       "status": "live",
-      "storyCount": 59,
+      "storyCount": 46,
       "error": ""
     },
     {
@@ -313,7 +313,7 @@
       "name": "Reuters",
       "category": "federal",
       "status": "live",
-      "storyCount": 22,
+      "storyCount": 21,
       "error": ""
     },
     {
@@ -321,7 +321,7 @@
       "name": "Associated Press",
       "category": "federal",
       "status": "live",
-      "storyCount": 6,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -345,7 +345,7 @@
       "name": "White House",
       "category": "legislation",
       "status": "live",
-      "storyCount": 65,
+      "storyCount": 63,
       "error": ""
     },
     {
@@ -353,7 +353,7 @@
       "name": "Source New Mexico",
       "category": "nm",
       "status": "live",
-      "storyCount": 38,
+      "storyCount": 37,
       "error": ""
     },
     {
@@ -385,7 +385,7 @@
       "name": "KSJE",
       "category": "local",
       "status": "live",
-      "storyCount": 11,
+      "storyCount": 10,
       "error": ""
     },
     {
@@ -393,7 +393,7 @@
       "name": "Durango Herald",
       "category": "local",
       "status": "live",
-      "storyCount": 30,
+      "storyCount": 24,
       "error": ""
     },
     {
@@ -401,7 +401,7 @@
       "name": "Southwest discovery",
       "category": "region",
       "status": "live",
-      "storyCount": 100,
+      "storyCount": 99,
       "error": ""
     },
     {
@@ -409,7 +409,7 @@
       "name": "The Verge",
       "category": "technology",
       "status": "live",
-      "storyCount": 4,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -417,7 +417,7 @@
       "name": "Ars Technica",
       "category": "technology",
       "status": "live",
-      "storyCount": 8,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -425,7 +425,7 @@
       "name": "TechCrunch",
       "category": "technology",
       "status": "live",
-      "storyCount": 33,
+      "storyCount": 29,
       "error": ""
     },
     {
@@ -449,7 +449,7 @@
       "name": "PC Gamer",
       "category": "gaming",
       "status": "live",
-      "storyCount": 25,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -473,7 +473,7 @@
       "name": "Stars and Stripes",
       "category": "military",
       "status": "live",
-      "storyCount": 13,
+      "storyCount": 15,
       "error": ""
     },
     {
@@ -505,7 +505,7 @@
       "name": "ProPublica",
       "category": "underreported",
       "status": "live",
-      "storyCount": 9,
+      "storyCount": 8,
       "error": ""
     },
     {
@@ -513,7 +513,7 @@
       "name": "The Marshall Project",
       "category": "underreported",
       "status": "live",
-      "storyCount": 2,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -537,7 +537,7 @@
       "name": "X · Health",
       "category": "x",
       "status": "live",
-      "storyCount": 54,
+      "storyCount": 55,
       "error": ""
     },
     {
@@ -545,7 +545,7 @@
       "name": "X · Technology & AI",
       "category": "x",
       "status": "live",
-      "storyCount": 7,
+      "storyCount": 9,
       "error": ""
     },
     {
@@ -561,7 +561,7 @@
       "name": "X · World",
       "category": "x",
       "status": "live",
-      "storyCount": 33,
+      "storyCount": 32,
       "error": ""
     },
     {
@@ -569,7 +569,7 @@
       "name": "X · Politics & Government",
       "category": "x",
       "status": "live",
-      "storyCount": 46,
+      "storyCount": 45,
       "error": ""
     },
     {
@@ -585,7 +585,7 @@
       "name": "X · Sports",
       "category": "x",
       "status": "live",
-      "storyCount": 56,
+      "storyCount": 54,
       "error": ""
     },
     {
@@ -601,7 +601,7 @@
       "name": "X · Gaming",
       "category": "x",
       "status": "live",
-      "storyCount": 65,
+      "storyCount": 66,
       "error": ""
     },
     {
@@ -617,7 +617,7 @@
       "name": "NFL News",
       "category": "nfl",
       "status": "live",
-      "storyCount": 67,
+      "storyCount": 69,
       "error": ""
     },
     {
@@ -681,7 +681,7 @@
       "name": "The Guardian",
       "category": "world",
       "status": "live",
-      "storyCount": 14,
+      "storyCount": 13,
       "error": ""
     },
     {
@@ -689,7 +689,7 @@
       "name": "Al Jazeera",
       "category": "world",
       "status": "live",
-      "storyCount": 45,
+      "storyCount": 46,
       "error": ""
     },
     {
@@ -697,7 +697,7 @@
       "name": "NPR",
       "category": "world",
       "status": "live",
-      "storyCount": 70,
+      "storyCount": 65,
       "error": ""
     },
     {
@@ -721,7 +721,7 @@
       "name": "CBC News",
       "category": "world",
       "status": "live",
-      "storyCount": 2,
+      "storyCount": 3,
       "error": ""
     },
     {
@@ -729,7 +729,7 @@
       "name": "NHK World",
       "category": "world",
       "status": "live",
-      "storyCount": 4,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -745,7 +745,7 @@
       "name": "South China Morning Post",
       "category": "world",
       "status": "live",
-      "storyCount": 93,
+      "storyCount": 91,
       "error": ""
     },
     {
@@ -753,7 +753,7 @@
       "name": "The Times of India",
       "category": "world",
       "status": "live",
-      "storyCount": 39,
+      "storyCount": 36,
       "error": ""
     },
     {
@@ -761,7 +761,7 @@
       "name": "The Kyiv Independent",
       "category": "world",
       "status": "live",
-      "storyCount": 66,
+      "storyCount": 93,
       "error": ""
     },
     {
@@ -769,7 +769,7 @@
       "name": "Haaretz",
       "category": "world",
       "status": "live",
-      "storyCount": 100,
+      "storyCount": 86,
       "error": ""
     },
     {
@@ -833,7 +833,7 @@
       "name": "CBS News",
       "category": "presidential",
       "status": "live",
-      "storyCount": 73,
+      "storyCount": 100,
       "error": ""
     },
     {
@@ -841,7 +841,7 @@
       "name": "NBC News",
       "category": "presidential",
       "status": "live",
-      "storyCount": 11,
+      "storyCount": 12,
       "error": ""
     },
     {
@@ -873,7 +873,7 @@
       "name": "White House actions",
       "category": "presidential",
       "status": "live",
-      "storyCount": 65,
+      "storyCount": 61,
       "error": ""
     },
     {
@@ -897,7 +897,7 @@
       "name": "CBS News",
       "category": "federal",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 100,
       "error": ""
     },
     {
@@ -937,7 +937,7 @@
       "name": "GovInfo",
       "category": "legislation",
       "status": "live",
-      "storyCount": 44,
+      "storyCount": 40,
       "error": ""
     },
     {
@@ -961,7 +961,7 @@
       "name": "Reuters",
       "category": "legislation",
       "status": "live",
-      "storyCount": 48,
+      "storyCount": 45,
       "error": ""
     },
     {
@@ -993,7 +993,7 @@
       "name": "Albuquerque Journal",
       "category": "nm",
       "status": "live",
-      "storyCount": 52,
+      "storyCount": 54,
       "error": ""
     },
     {
@@ -1001,7 +1001,7 @@
       "name": "KOAT",
       "category": "nm",
       "status": "live",
-      "storyCount": 85,
+      "storyCount": 83,
       "error": ""
     },
     {
@@ -1057,7 +1057,7 @@
       "name": "Denver Post",
       "category": "region",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -1065,7 +1065,7 @@
       "name": "Salt Lake Tribune",
       "category": "region",
       "status": "live",
-      "storyCount": 61,
+      "storyCount": 64,
       "error": ""
     },
     {
@@ -1073,7 +1073,7 @@
       "name": "Colorado Sun",
       "category": "region",
       "status": "live",
-      "storyCount": 43,
+      "storyCount": 40,
       "error": ""
     },
     {
@@ -1089,7 +1089,7 @@
       "name": "Wired",
       "category": "technology",
       "status": "live",
-      "storyCount": 9,
+      "storyCount": 12,
       "error": ""
     },
     {
@@ -1105,7 +1105,7 @@
       "name": "CISA",
       "category": "technology",
       "status": "live",
-      "storyCount": 32,
+      "storyCount": 30,
       "error": ""
     },
     {
@@ -1113,7 +1113,7 @@
       "name": "Engadget",
       "category": "technology",
       "status": "live",
-      "storyCount": 69,
+      "storyCount": 73,
       "error": ""
     },
     {
@@ -1129,7 +1129,7 @@
       "name": "The Register",
       "category": "technology",
       "status": "live",
-      "storyCount": 17,
+      "storyCount": 16,
       "error": ""
     },
     {
@@ -1145,7 +1145,7 @@
       "name": "Cybersecurity discovery",
       "category": "technology",
       "status": "live",
-      "storyCount": 7,
+      "storyCount": 8,
       "error": ""
     },
     {
@@ -1161,7 +1161,7 @@
       "name": "Consumer technology discovery",
       "category": "technology",
       "status": "live",
-      "storyCount": 23,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -1193,7 +1193,7 @@
       "name": "VGC",
       "category": "gaming",
       "status": "live",
-      "storyCount": 61,
+      "storyCount": 63,
       "error": ""
     },
     {
@@ -1201,7 +1201,7 @@
       "name": "GamesIndustry.biz",
       "category": "gaming",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 32,
       "error": ""
     },
     {
@@ -1209,7 +1209,7 @@
       "name": "Rock Paper Shotgun",
       "category": "gaming",
       "status": "live",
-      "storyCount": 38,
+      "storyCount": 41,
       "error": ""
     },
     {
@@ -1217,7 +1217,7 @@
       "name": "Breaking Defense",
       "category": "military",
       "status": "live",
-      "storyCount": 75,
+      "storyCount": 73,
       "error": ""
     },
     {
@@ -1241,7 +1241,7 @@
       "name": "USNI News",
       "category": "military",
       "status": "live",
-      "storyCount": 26,
+      "storyCount": 25,
       "error": ""
     },
     {
@@ -1249,7 +1249,7 @@
       "name": "Air & Space Forces Magazine",
       "category": "military",
       "status": "live",
-      "storyCount": 58,
+      "storyCount": 56,
       "error": ""
     },
     {
@@ -1281,7 +1281,7 @@
       "name": "IndieWire",
       "category": "entertainment",
       "status": "live",
-      "storyCount": 20,
+      "storyCount": 18,
       "error": ""
     },
     {
@@ -1297,7 +1297,7 @@
       "name": "Inside Climate News",
       "category": "underreported",
       "status": "live",
-      "storyCount": 11,
+      "storyCount": 10,
       "error": ""
     },
     {
@@ -1305,7 +1305,7 @@
       "name": "Texas Tribune",
       "category": "underreported",
       "status": "live",
-      "storyCount": 11,
+      "storyCount": 13,
       "error": ""
     },
     {
@@ -1321,7 +1321,7 @@
       "name": "Public health investigations",
       "category": "underreported",
       "status": "live",
-      "storyCount": 2,
+      "storyCount": 1,
       "error": ""
     },
     {
@@ -1337,7 +1337,7 @@
       "name": "Environmental investigations",
       "category": "underreported",
       "status": "live",
-      "storyCount": 1,
+      "storyCount": 2,
       "error": ""
     },
     {
@@ -1345,7 +1345,7 @@
       "name": "ESPN",
       "category": "nfl",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -1369,7 +1369,7 @@
       "name": "CBS Sports",
       "category": "nfl",
       "status": "live",
-      "storyCount": 18,
+      "storyCount": 19,
       "error": ""
     },
     {
@@ -1377,7 +1377,7 @@
       "name": "NBC Sports",
       "category": "nfl",
       "status": "live",
-      "storyCount": 13,
+      "storyCount": 17,
       "error": ""
     },
     {
@@ -1385,7 +1385,7 @@
       "name": "Fox Sports",
       "category": "nfl",
       "status": "live",
-      "storyCount": 43,
+      "storyCount": 38,
       "error": ""
     },
     {
@@ -1393,7 +1393,7 @@
       "name": "Yahoo Sports",
       "category": "nfl",
       "status": "live",
-      "storyCount": 32,
+      "storyCount": 28,
       "error": ""
     },
     {
@@ -1401,7 +1401,7 @@
       "name": "ProFootballTalk",
       "category": "nfl",
       "status": "live",
-      "storyCount": 8,
+      "storyCount": 7,
       "error": ""
     },
     {
@@ -1409,7 +1409,7 @@
       "name": "USA Today",
       "category": "nfl",
       "status": "live",
-      "storyCount": 19,
+      "storyCount": 21,
       "error": ""
     },
     {
@@ -1417,7 +1417,7 @@
       "name": "NFL injury discovery",
       "category": "nfl",
       "status": "live",
-      "storyCount": 59,
+      "storyCount": 60,
       "error": ""
     },
     {
@@ -1433,7 +1433,7 @@
       "name": "NFL game analysis discovery",
       "category": "nfl",
       "status": "live",
-      "storyCount": 5,
+      "storyCount": 4,
       "error": ""
     }
   ],
@@ -1445,10 +1445,10 @@
     "NR": 13,
     "NW": 4
   },
-  "feedbackRemovedCount": 6,
+  "feedbackRemovedCount": 7,
   "feedbackRemovedByReason": {
     "D": 1,
-    "NR": 3,
+    "NR": 4,
     "NW": 2
   },
   "nflError": "",
@@ -1462,11 +1462,10 @@
     "fallbackFilled": 6,
     "repairedBrokenPosters": 0,
     "fallbackFilledBySource": {
-      "TMDB Web": 5,
-      "Wikipedia": 1
+      "TMDB Web": 6
     },
     "tmdbConfigured": true,
-    "comingSoonPlaceholderCount": 1
+    "comingSoonPlaceholderCount": 2
   },
   "marketsError": "",
   "marketData": {
