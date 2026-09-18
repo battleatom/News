@@ -6,9 +6,9 @@
 @keyframes underreported-market-loop{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(hover:hover){.markets:hover .markets-track{animation-play-state:paused}}
 @media(min-width:901px){
-  .tabs{display:grid!important;grid-template-columns:repeat(10,minmax(0,1fr));grid-auto-flow:row;overflow:visible!important;gap:6px;padding:0 18px 9px}
-  .tab{width:100%;min-width:0;justify-content:center;overflow:hidden;white-space:nowrap;font-size:.66rem;padding:6px 6px}
-  .tab>span:nth-child(2){min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .tabs{display:grid!important;grid-template-columns:repeat(10,max-content);grid-auto-flow:row;justify-content:center;overflow:visible!important;gap:6px 8px;padding:0 18px 9px}
+  .tab{width:auto;min-width:max-content;justify-content:center;overflow:visible;white-space:nowrap;font-size:.66rem;padding:6px 9px}
+  .tab>span:nth-child(2){overflow:visible;text-overflow:clip}
 }
 
 /* Stable live tab position counters */
@@ -18,7 +18,7 @@
   .tab small{min-width:5.2ch}
 }
 @media(min-width:901px){
-  .tabs{grid-template-columns:repeat(10,minmax(105px,1fr))!important}
-  .tab{overflow:visible!important;white-space:nowrap!important;padding-inline:8px}
+  .tabs{grid-template-columns:repeat(10,max-content)!important;justify-content:center}
+  .tab{overflow:visible!important;white-space:nowrap!important;padding-inline:9px}
   .tab small{min-width:5.2ch}
 }
