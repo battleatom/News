@@ -27,10 +27,11 @@ jobs:
         with:
           python-version: '3.12'
       - name: Build dynamic data only
+        timeout-minutes: 12
         env:
           TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
           ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
-        run: python v6/src/build.py --data-only
+        run: python -u v6/src/build.py --data-only
       - name: Validate dynamic inventory
         run: python v6/src/live_quality.py
       - name: Preserve validated JSON
