@@ -41,6 +41,9 @@ on:
       - 'admin-export.js'
       - '.github/workflows/cloudflare-deploy.yml'
   workflow_dispatch:
+  workflow_run:
+    workflows: ['V6 Data-Only Production Refresh']
+    types: [completed]
 
 permissions:
   contents: read
@@ -51,6 +54,7 @@ concurrency:
 
 jobs:
   deploy:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
