@@ -57,7 +57,7 @@
     const stat=root.querySelector(".section-stats span");
     const match=stat?.textContent?.match(/(\d+)\s+of\s+(\d+)/i);
     if(match){
-      corrected.set(key,Number(match[2]));
+      corrected.set(key,key==="x"?Number(match[1]):Number(match[2]));
       apply();
       return;
     }
