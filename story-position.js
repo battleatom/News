@@ -83,7 +83,7 @@
     if(counter.textContent!==text)counter.textContent=text;
     if(key&&key!=='boxoffice')poolTotals.set(key,max);
     const badge=activeTab()?.querySelector('small');
-    const badgeText=key==='x'?`${max} / 10`:text;
+    const badgeText=text;
     if(badge&&badge.textContent!==badgeText)badge.textContent=badgeText;
   }
   window.addEventListener('scroll',schedule,{passive:true});
