@@ -73,7 +73,7 @@
   function update(){
     syncTabTotals();
     const ctx=context();if(!ctx)return;
-    const key=activeKey(),{cards,counter}=ctx,total=parseTotal(counter,cards.length),line=topLine();
+    const key=activeKey(),{cards,counter}=ctx,total=key==='x'?cards.length:parseTotal(counter,cards.length),line=topLine();
     let index=0;
     for(let i=0;i<cards.length;i++){
       const r=cards[i].getBoundingClientRect();
@@ -83,7 +83,8 @@
     if(counter.textContent!==text)counter.textContent=text;
     if(key&&key!=='boxoffice')poolTotals.set(key,max);
     const badge=activeTab()?.querySelector('small');
-    if(badge&&badge.textContent!==text)badge.textContent=text;
+    const badgeText=key==='x'?String(max):text;
+    if(badge&&badge.textContent!==badgeText)badge.textContent=badgeText;
   }
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule,{passive:true});
