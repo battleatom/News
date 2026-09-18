@@ -44,7 +44,9 @@
   };
 
   function apply(){
+    const active=tabs.querySelector('.tab[aria-selected="true"][data-category]')?.dataset.category||'';
     for(const[key,count]of corrected){
+      if(key===active)continue;
       const small=tabs.querySelector(`.tab[data-category="${CSS.escape(key)}"] small`);
       if(small&&small.textContent!==String(count))small.textContent=String(count);
     }
@@ -54,19 +56,16 @@
     const active=tabs.querySelector('.tab[aria-selected="true"][data-category]');
     if(!active)return;
     const key=active.dataset.category;
-    const stat=root.querySelector(".section-stats span");
-    const match=stat?.textContent?.match(/(\d+)\s+of\s+(\d+)/i);
+    const stat=root.querySelector(".section-stats span,.nfl-news-head span");
+    const match=stat?.textContent?.match(/(\d+)\s*(?:\/|of)\s*(\d+)/i);
     if(match){
-      corrected.set(key,key==="x"?Number(match[1]):Number(match[2]));
-      apply();
+      corrected.set(key,Number(match[2]));
       return;
     }
     if(!["nfl","boxoffice","admin"].includes(key)){
       const cards=root.querySelectorAll(`.story-card[data-category="${CSS.escape(key)}"]`).length;
-      if(cards||key==="bookmarks"){
-        corrected.set(key,cards);
-        apply();
-      }
+      const known=corrected.get(key);
+      if(cards&&!known)corrected.set(key,cards);
     }
   }
 
