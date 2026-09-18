@@ -63,6 +63,19 @@ def apply_rolling_pool(stories: list[Story], registry: dict, *, now: datetime | 
         rows = grouped.get(category, [])
         rows.sort(key=lambda s: (s.published_dt, s.importance), reverse=True)
         visible = int(cfg.get("visible_target", cfg.get("target", 50)))
+        if category == "x":
+            source_ids = [
+                str(source.get("id", ""))
+                for source in registry.get("sources", [])
+                if source.get("category") == "x" and source.get("id")
+            ]
+            per_slot = {source_id: [] for source_id in source_ids}
+            for story in rows:
+                if story.source_id in per_slot:
+                    per_slot[story.source_id].append(story)
+            primaries = [per_slot[source_id][0] for source_id in source_ids if per_slot[source_id]]
+            backups = [per_slot[source_id][1] for source_id in source_ids if len(per_slot[source_id]) > 1]
+            rows = primaries + backups
         reserve_ratio = max(0.0, float(cfg.get("reserve_ratio", 0.20)))
         expansion_ratio = max(0.0, float(cfg.get("expansion_ratio", 0.30)))
         normal_reserve = round(visible * reserve_ratio)
