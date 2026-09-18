@@ -109,3 +109,36 @@
 .app-shell .tab[aria-selected="true"]{background:#0f172a!important;color:#fff!important}
 .app-shell #local-date,.app-shell #local-time,.app-shell #location-button{background:rgba(255,255,255,.82)!important;border-color:rgba(148,163,184,.30)!important;box-shadow:0 2px 7px rgba(15,23,42,.10)!important}
 #weather-forecast-strip .weather-pill,#weather-forecast-strip .weather-pill.current,#weather-forecast-strip .weather-pill.weather-error{background:rgba(255,255,255,.82)!important;border-color:rgba(148,163,184,.30)!important;box-shadow:0 2px 7px rgba(15,23,42,.10)!important}
+
+
+/* Collage pill text contrast — keep existing fills/layout, make labels legible */
+.app-shell .brand-block,
+.app-shell .health,
+.app-shell #local-date,
+.app-shell #local-time,
+.app-shell #location-button,
+.app-shell #refresh-status .status-pill,
+.app-shell .market,
+.app-shell .market-label,
+.app-shell .market-time,
+.app-shell .market-note,
+#weather-forecast-strip .weather-pill,
+#weather-forecast-strip .weather-pill.current,
+#weather-forecast-strip .weather-pill.weather-error{
+  color:#334155!important;
+  text-shadow:none!important;
+}
+.app-shell .brand-block h1{color:#334155!important;text-shadow:none!important}
+.app-shell .market-name,
+.app-shell .market-value,
+.app-shell .market-time,
+.app-shell .market-label,
+#weather-forecast-strip .weather-pill strong,
+#weather-forecast-strip .weather-pill span{
+  color:#334155!important;
+  text-shadow:none!important;
+}
+.app-shell .market .up{color:#15803d!important}
+.app-shell .market .down{color:#b91c1c!important}
+.app-shell #refresh-status .status-pill.status-live{color:#166534!important}
+.app-shell #refresh-status .status-pill.status-warn{color:#a16207!important}
