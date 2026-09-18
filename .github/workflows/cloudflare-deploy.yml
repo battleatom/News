@@ -214,6 +214,9 @@ jobs:
           fetch '/api/nfl-scoreboard?limit=64' "$tmp/nfl-scoreboard.json" "$tmp/nfl-scoreboard.h"
           jq -e '.events | type=="array"' "$tmp/nfl-scoreboard.json" >/dev/null
 
+          fetch '/api/nfl-standings' "$tmp/nfl-standings.json" "$tmp/nfl-standings.h"
+          jq -e '(.children | type=="array") or (.standings.entries | type=="array")' "$tmp/nfl-standings.json" >/dev/null
+
           code=$(curl -sS -o "$tmp/nfl-live.json" -w '%{http_code}' "$SITE/api/nfl-live?gameID=invalid")
           test "$code" = '400'
           jq -e '.ok == false and .error == "invalid gameID"' "$tmp/nfl-live.json" >/dev/null

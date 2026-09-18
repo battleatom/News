@@ -54,7 +54,7 @@ function normalizeXPool(rows){
   });
 }
 export class Store{
-  constructor(){this.feed=null;this.nfl={games:[],error:""};this.boxoffice={movies:[],error:""};this.markets={markets:[],error:""};this.status={};this.active=readActiveTab();this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]]);this.bookmarks=readBookmarks();this.newIds=new Set();this.seenIds=readSeenStories();this.selectedNfl="";this.underreportedSort="signal"}
+  constructor(){this.feed=null;this.nfl={games:[],error:""};this.nflStandings={children:[],error:""};this.boxoffice={movies:[],error:""};this.markets={markets:[],error:""};this.status={};this.active=readActiveTab();this.visible=new Map();this.location=null;this.suppressed=new Map([["D",[]],["NR",[]],["NW",[]]]);this.bookmarks=readBookmarks();this.newIds=new Set();this.seenIds=readSeenStories();this.selectedNfl="";this.underreportedSort="signal"}
   setFeed(feed){const incoming=new Set(feedIds(feed));if(this.feed){const previous=new Set(feedIds(this.feed));this.newIds=new Set([...incoming].filter(id=>!previous.has(id)))}else if(this.seenIds.size){this.newIds=new Set([...incoming].filter(id=>!this.seenIds.has(id)))}else{this.newIds=new Set()}this.feed=feed;for(const id of incoming)this.seenIds.add(id);writeSeenStories(this.seenIds);if(!feed?.categories?.[this.active]&&!["bookmarks","admin"].includes(this.active)){this.active=Object.keys(feed?.categories||{})[0]||"top";writeActiveTab(this.active)}}
   setActive(category){if(["bookmarks","admin"].includes(category)||this.feed?.categories?.[category]){this.active=category;writeActiveTab(category)}if(!this.visible.has(category))this.visible.set(category,PAGE_SIZE)}
   shown(category=this.active){return this.visible.get(category)||PAGE_SIZE}
