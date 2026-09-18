@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-18T12:28:18.072186Z",
+  "generatedAt": "2026-09-18T14:36:57.288512Z",
   "markets": [
     {
       "symbol": "^GSPC",
       "label": "S&P 500",
-      "price": 7637.76,
-      "previousClose": 7591.7,
-      "changePct": 0.6067152284732062,
+      "price": 7623.69,
+      "previousClose": 7656.98,
+      "changePct": -0.43476670959046476,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -14,9 +14,9 @@
     {
       "symbol": "^DJI",
       "label": "DOW",
-      "price": 51778.04,
-      "previousClose": 52064.1,
-      "changePct": -0.5494380965002712,
+      "price": 51599.33,
+      "previousClose": 52573.29,
+      "changePct": -1.8525757090720387,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -24,9 +24,9 @@
     {
       "symbol": "^IXIC",
       "label": "NASDAQ",
-      "price": 26418.3,
-      "previousClose": 26081.72,
-      "changePct": 1.2904785420593348,
+      "price": 26390.24,
+      "previousClose": 26333.04,
+      "changePct": 0.21722520453391442,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -34,9 +34,9 @@
     {
       "symbol": "^RUT",
       "label": "RUSSELL 2000",
-      "price": 2874.63,
-      "previousClose": 2890.95,
-      "changePct": -0.5645203133917815,
+      "price": 2850.49,
+      "previousClose": 2903.94,
+      "changePct": -1.8407749471407786,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -44,9 +44,9 @@
     {
       "symbol": "^VIX",
       "label": "VIX",
-      "price": 15.43,
+      "price": 15.49,
       "previousClose": 17.1,
-      "changePct": -9.766081871345039,
+      "changePct": -9.41520467836258,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -54,9 +54,9 @@
     {
       "symbol": "CL=F",
       "label": "WTI OIL",
-      "price": 96.53,
+      "price": 97.98,
       "previousClose": 101.39,
-      "changePct": -4.793372127428739,
+      "changePct": -3.3632508136897097,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -64,9 +64,9 @@
     {
       "symbol": "BZ=F",
       "label": "BRENT",
-      "price": 98.85,
+      "price": 100.11,
       "previousClose": 105.68,
-      "changePct": -6.462906888720678,
+      "changePct": -5.270628311884942,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -74,9 +74,9 @@
     {
       "symbol": "NG=F",
       "label": "NAT GAS",
-      "price": 2.88,
+      "price": 2.92,
       "previousClose": 2.9,
-      "changePct": -0.6215469613259597,
+      "changePct": 0.8287292817679567,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -84,9 +84,9 @@
     {
       "symbol": "GC=F",
       "label": "GOLD",
-      "price": 4411.2,
+      "price": 4383.4,
       "previousClose": 4351.9,
-      "changePct": 1.362623222040952,
+      "changePct": 0.7238217789930835,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -94,9 +94,9 @@
     {
       "symbol": "SI=F",
       "label": "SILVER",
-      "price": 67.14,
+      "price": 66.58,
       "previousClose": 63.51,
-      "changePct": 5.702769511753511,
+      "changePct": 4.828932659455544,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -106,7 +106,7 @@
       "label": "COPPER",
       "price": 6.66,
       "previousClose": 6.33,
-      "changePct": 5.173775671405998,
+      "changePct": 5.165876777251184,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -114,9 +114,9 @@
     {
       "symbol": "DX-Y.NYB",
       "label": "U.S. DOLLAR",
-      "price": 100.53,
+      "price": 100.52,
       "previousClose": 99.46,
-      "changePct": 1.0778202292378873,
+      "changePct": 1.0697767946913403,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -124,9 +124,9 @@
     {
       "symbol": "^TNX",
       "label": "10Y",
-      "price": 4.95,
+      "price": 5.0,
       "previousClose": 4.96,
-      "changePct": -0.2822011691191339,
+      "changePct": 0.7055029227978259,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -134,9 +134,9 @@
     {
       "symbol": "BTC-USD",
       "label": "BITCOIN",
-      "price": 77932.7,
+      "price": 80600.0,
       "previousClose": 78163.38,
-      "changePct": -0.29512541550788557,
+      "changePct": 3.1173421620201114,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -144,9 +144,9 @@
     {
       "symbol": "ETH-USD",
       "label": "ETHEREUM",
-      "price": 2498.2,
+      "price": 2568.01,
       "previousClose": 2514.41,
-      "changePct": -0.6445654979484361,
+      "changePct": 2.131834663202897,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"

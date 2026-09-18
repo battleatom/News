@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-18T12:28:18.072186Z",
+  "generatedAt": "2026-09-18T14:36:57.288512Z",
   "localCity": "Farmington, NM",
   "movies": [
     {
@@ -26,9 +26,9 @@
       ],
       "news": [
         {
-          "title": "Fall 2: Deadpoint Review: Just Too Silly - MacGuffin or Meaning",
+          "title": "Fall 2: Deadpoint Review: Just Too Silly - alisechaffins.substack.com",
           "link": "https://news.google.com/rss/articles/CBMic0FVX3lxTFBEZzZhb2I2bGx6azA1LXZiVlhlX2k4WlZ5OEVVOUt3N3RGS0M5bU5lTURiaHdzMXF2OWVucGgwYnpLSExobVBnVDBBdzBTLVR4bTU2Vl9PblgycngtNnI1VnZpcWRpMFdZbkw3aFBiTlc1dEE?oc=5",
-          "source": "MacGuffin or Meaning",
+          "source": "alisechaffins.substack.com",
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
@@ -67,7 +67,7 @@
       "overview": "Odysseus, the legendary King of Ithaca, embarks on a long and perilous journey home following the Trojan War. Throughout his voyage, he is forced to confront the whims of gods, mythological monsters, and trials that stretch both his cunning and his humanity to the breaking point.",
       "poster": "https://image.tmdb.org/t/p/w500/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg",
       "status": "playing",
-      "voteAverage": 8.012,
+      "voteAverage": 8.013,
       "rating": "R",
       "runtime": "2h 52m",
       "theaters": [
@@ -82,12 +82,6 @@
       ],
       "news": [
         {
-          "title": "‘The Odyssey’ Beats ‘Deadpool & Wolverine’ as Biggest R-Rated Movie of All Time With $1.35 Billion - variety.com",
-          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNR3lxd3hKU2dza2N5S1VPZDhlQTB1aFFtcDVVNDR0UXRhQUMtWENROEw0ZXdaYWxObTVERmlzM3BMRndXODhwNEtjRGZBaEFOWlFfb0kyUlM3M1Y4WGozTkY5RV9BNlNxZXZpRWdXOURROS1Kb21HenZXNzJ2N2s3OFo0Q1NnZ1RsV2FlMklnU3VoM3dDbVlNVlpfNGFmNVBwVk9CVXRlczR5V2Z1WTgtWk11UzE?oc=5",
-          "source": "variety.com",
-          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "‘The Odyssey’ Conquers ‘Jurassic World’ to Become Universal’s Highest-Grossing Film Ever - The Hollywood Reporter",
           "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxOMm1DWENualBoWTl6M1AyeFBPMkcyZk9IcTc1YzJfWklPa1dYdDJGdEFsRHhqQXBhMUdTREVwRkR2dFU2U1pPYzhidWZjOGttYm5nVkRZYUNfUWMwMmVfMlpVNTNjdFUxc1dEWFBjeU1QVG5DOGJacmR6czdkMmlfS255ZmZycjBGOWRFT0h4YlJnMERtZTFPN0FCbHVORG9nNmVUOG4yN0tJSW1kMlZMR2pHUThlVkM3cXZsbHhMbw?oc=5",
           "source": "The Hollywood Reporter",
@@ -98,6 +92,12 @@
           "link": "https://news.google.com/rss/articles/CBMidkFVX3lxTE5RSUVaaFBFNnhqRVVYZjBaVVpmUlZ6TTU3RHNmRGpBTVJSOTFYOU5FTTBUamV2WUhkcjQ2T3RXUzMxWGl4WTJMM3Y2MkZ0TnhWTDIyOFJiM3ZQdGRtbnBfVzNPcXRoamtrTXV6YlVETU1FRVZpS0E?oc=5",
           "source": "The New York Times",
           "pubDate": "Sat, 12 Sep 2026 09:00:33 GMT"
+        },
+        {
+          "title": "‘The Odyssey’ Beats ‘Deadpool & Wolverine’ as Biggest R-Rated Movie of All Time With $1.35 Billion - variety.com",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNR3lxd3hKU2dza2N5S1VPZDhlQTB1aFFtcDVVNDR0UXRhQUMtWENROEw0ZXdaYWxObTVERmlzM3BMRndXODhwNEtjRGZBaEFOWlFfb0kyUlM3M1Y4WGozTkY5RV9BNlNxZXZpRWdXOURROS1Kb21HenZXNzJ2N2s3OFo0Q1NnZ1RsV2FlMklnU3VoM3dDbVlNVlpfNGFmNVBwVk9CVXRlczR5V2Z1WTgtWk11UzE?oc=5",
+          "source": "variety.com",
+          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -123,7 +123,7 @@
       "overview": "In 1960s Mississippi, a young Black FBI agent is forced to partner with a notorious mafia hitman to investigate a wave of brutal civil rights murders.",
       "poster": "https://image.tmdb.org/t/p/w500/f4hdIed8vh10O8TkQ1CkHS8MQ3G.jpg",
       "status": "playing",
-      "voteAverage": 7.806,
+      "voteAverage": 7.8,
       "rating": "R",
       "runtime": "1h 47m",
       "theaters": [
@@ -145,15 +145,15 @@
       ],
       "news": [
         {
-          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
-          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
-          "source": "AP News",
-          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
-        },
-        {
           "title": "'By Any Means' Review: A Bluntly Drawn Historical Thriller - variety.com",
           "link": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOWjMtM1RnZGlyeEM1UG5lQUZwLUFQWGh3RXE4ZnJGSm1hTXRlckFNdGloejQ1WFBDbVA3N2VKOU1rTXlrU0pOSWNta0lybGt3a2xUa3pZN1pNXzZTbVZVZnF1M2p0bnRoWndpMjBGNEFQWS1sNkZxZW1sSEdXSW02Qm1hQzJfd0JlcFI4?oc=5",
           "source": "variety.com",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
+          "source": "AP News",
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
@@ -208,15 +208,15 @@
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
+          "title": "Coyote vs. Acme Review: One Must Imagine Sisyphus Happy - alisechaffins.substack.com",
+          "link": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9GWS1zNlQyZGpFd2Z2ajNmOWxUSm1fXzdfUHpjOG85OTdhRFl4LWlkcG90eUFEd3l0TlJRZ19mTTh2WnJCbHY5Nm84R0lOajBTNmZiNGl2X3ZoekZUb3dmMUJSMXhfU3RzbTNFMFhUTng?oc=5",
+          "source": "alisechaffins.substack.com",
+          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
+        },
+        {
           "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes - Ars Technica",
           "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNWU9PSzdwTUJXUDFsSHUyblFvTDdKLXBnZmhQMnNYY0hkTmdUTk0xNFhNRW03M1pxaXM2X3BTM0hJdHJqdENOeUllTWx0RFFNSVlDN05hcVZoUkNIbHUxWURySlhCT1pYNi1Hd0o5b0MwVF8wSGJmTDhNWGs1NE02Tmg0a0F2d05jZjZkZUlzdU5RYy02TVZ4OHdENTF4VVhxYTNVSGg3R0FlZw?oc=5",
           "source": "Ars Technica",
-          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "6 Reasons 'Coyote vs. Acme' Genuinely Deserves A Family Trip To The Movies - Scary Mommy",
-          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOWjczTVNBMm1ZMEZlZHdvWUcyZG9vWUZyZnI5blh0MTFMbDlBYlBxUXhsOXdoQXdfaUFLVUh2Y0czcklnTUljZkJuMnJoa3h5eS0zMFRzQTJJWG1ORjBKQmkyTl9NaVdTSFBFMHhRNDgtekdCVE5UMUlmWTMxUGVaSXBpckk1alF1TWlET0puTnBFaDRaYjlqdGV3WQ?oc=5",
-          "source": "Scary Mommy",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -404,9 +404,9 @@
           "pubDate": "Mon, 14 Sep 2026 17:01:00 GMT"
         },
         {
-          "title": "57 Thoughts I Had While Watching ‘Practical Magic 2’ - vogue.com",
+          "title": "57 Thoughts I Had While Watching ‘Practical Magic 2’ - Vogue",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxOT1hFSDdaM1NGN1ktbmpPUGt6bTFqTUFTb0xpOWZBN0gwT1RXTWFUVzVyZU5RVjZQWHNDTWtvV1JBM29OS08tbzZ0Rzc0azNuamVyOEhFemIzNXhnb3FYeVdsTXRLVi00RzFwSGdnRUFKNFJoTEtOd3hKNkh1dktPMmNvX0ZIOVk?oc=5",
-          "source": "vogue.com",
+          "source": "Vogue",
           "pubDate": "Sat, 12 Sep 2026 09:00:00 GMT"
         }
       ],
@@ -476,10 +476,10 @@
           "pubDate": "Wed, 16 Sep 2026 16:01:14 GMT"
         },
         {
-          "title": "Resident Evil Review: A Decent Raccoon City Movie That Comes Well-Armed - Den of Geek",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE5zeWxGVFdCd0hYa3ZtY2NFWWczeUhQUjl4XzU5bkZhd2RwMVlYYjN3ZmF5eUhZWWNWeUU1OUVfRU1rMnp4aEhRb2dsekw0VFRsX3JCQTZPbDk1UzVnY1NoMlJLMU1wdW1ld1NhbEpfbWZlWUVrOFdyQThBTExhZzA?oc=5",
-          "source": "Den of Geek",
-          "pubDate": "Wed, 16 Sep 2026 16:00:12 GMT"
+          "title": "‘Resident Evil’ Review - The Bulwark",
+          "link": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFAxYm82XzBQUE9PalVmX0g2aWZURS1Wazl3eXFaOFNmRFBBNkl3RUh0bEtPUS11ZmU4d1ZnTWpLakk2THNxNU9ITnIxSUdCeHAyUl9PRDc2MDd6eXFyOWc?oc=5",
+          "source": "The Bulwark",
+          "pubDate": "Wed, 16 Sep 2026 16:00:06 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -521,9 +521,9 @@
       ],
       "news": [
         {
-          "title": "‘The Runner’ Review: A Race Across London and a Battle for Control - Fan Fun with Damian Lewis",
+          "title": "‘The Runner’ Review: A Race Across London and a Battle for Control - fanfunwithdamianlewis.com",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBnUUJrU0FMOEVIcFcteHZOdEVaSzlGazdSMVgzdXRSanl0TkttUVg0Y1FfcExzSGNCMVVlVWtBakFSTHRFb2ZiRXVucmxCR212WmwxWFRuOGNXQQ?oc=5",
-          "source": "Fan Fun with Damian Lewis",
+          "source": "fanfunwithdamianlewis.com",
           "pubDate": "Tue, 15 Sep 2026 23:21:17 GMT"
         },
         {
@@ -533,9 +533,9 @@
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Runner review: Alan Ritchson, Owen Wilson deliver the goods - rogerebert.com",
+          "title": "Runner review: Alan Ritchson, Owen Wilson deliver the goods - Roger Ebert",
           "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPMERIZTdLNkJBa2pVRWVNM29TM0g2ZVBFWnBCRldCaWZ3Wktyb3B2SnRyUUthdVhVQmRLdGFERzUwdWRlUjZ6bWFHWENHb1lwcXJQaWlKMVRnZ2p3c1ZWNEs2V3VtT0Fnb25pV01TZjAwNW5wZVFidTJYaTdYSFNQZnQ5eS1BU01rTlpDUnlDYW5ET1RjSmpiWjZlOUIzaEVj?oc=5",
-          "source": "rogerebert.com",
+          "source": "Roger Ebert",
           "pubDate": "Fri, 11 Sep 2026 13:09:48 GMT"
         }
       ],
@@ -586,12 +586,6 @@
       ],
       "news": [
         {
-          "title": "AT THE MOVIES: Tom Holland delivers a mature performance in Spider-Man: Brand New Day - Monadnock Ledger-Transcript",
-          "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNLVhfU3haQk1MZ0V3R3pxMk5rME9zdkFnaGY3NG4xSF9MRWppZEpaNndMeXNoeGVucWNWOHJJT0JfLURxZk5JMFZCUXg5SFNlcEZiS3ZHWk1nRllYSExudGFoVklZbHNGemZ3YVF4WTN1Q3JrcVRnWnBMRmFMajJJVENR?oc=5",
-          "source": "Monadnock Ledger-Transcript",
-          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "Spider-Man Brand New Day Continues Box Office Reign Over Labor Day - variety.com",
           "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNbV94QWFTbU4zME5YSG5HR1IwY3g4cnNmd2lQT3NQa1FaNXVEZkdEamlmNkI5cnVKUUxYMUxXZ2w3LVdLY1cyMFFaai1JdGMyb3ZXazMyUTVicjVpeXo3VHdoTnFzV3ljSGhJdXRGbHJ0YnZJREgxOVZ1bGludjRmd1R5OGZqaXh5a201QWNNWlc3S0JEOGYwdnpEZ1oyeUVwTVh3?oc=5",
           "source": "variety.com",
@@ -602,6 +596,12 @@
           "link": "https://news.google.com/rss/articles/CBMitwFBVV95cUxPOC10YUVDUnJNemgxYjVvSnByMFN5S09Da0pHWVhGMTVWVEdFTFVsSjAzVlA1RHhDcEFLM055cThXVG5rWGJ3UzBZZDF5Z194ZVA4aFpUbEgxXzJ2ZUdkUEI2eXhjbVZNcU5hR0dnRkFRcVBmRnM1cVdQZVdfWG5KVndzNU5UUGZzWFlrNzI5Ym9FTnM3NWVwVDQ3eVAzMTdoOFRDOGItYWtRc3l2OE9GbzVMQXhtQzA?oc=5",
           "source": "The Hollywood Reporter",
           "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Box Office: 'Spider-Man', Universal Push Summer To $4.76B All-Time Record - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQb2N3UVRUU0tpX1lXSUtSS1h5Vk5kWkpaZk5XZnAtbDdiWlNOU0lJRGJMNDlkaFk1Z3UzR25uTGFpaGtxaTR2QnRqY0ExSGpkSHZIdDNudjlYazV2d0Jnd05HUF82TFkyYWxVbVdIVk9uTzJQZUZ0cDBMbFJibWFSajhUbkFBaS1sUEJiNFZpUGpleVBEQXliUUZxRlpBV0ZC?oc=5",
+          "source": "Deadline",
+          "pubDate": "Mon, 07 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -643,9 +643,9 @@
       ],
       "news": [
         {
-          "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - Motion Picture Association",
+          "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - motionpictures.org",
           "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQdjNhSW9rMWdLeGF0Y3BodnRPOS1CbC05UFlJbHFUVFZPaTgybEh3RlBYN2RxczFvUTRmc2lFYTk5ZVVUQnhfMUFOcnMwdmVMMS1DV2Q2a0R2ejc2TlFPNGY1NGhENHlhOHJ4ZEwzcVdCUkhKVG13N3JiSGNmcFVaOEJuNkZFTXhRT3B3aVB5cm11U2FnZmF1WnhDb242OURXNVFEV19GUnd4cFlldUZJTGE5ZThSUlJxdDFBd3BiOTJoUEZKSnhrQWdRQUZ1NmEyVFEtSkMxWnZSTWdLS0w1MlJQVjI?oc=5",
-          "source": "Motion Picture Association",
+          "source": "motionpictures.org",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
@@ -655,10 +655,10 @@
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "The End Of Oak Street Is So Much Better Than The Trailer Pretended - Yahoo",
-          "link": "https://news.google.com/rss/articles/CBMimAFBVV95cUxPT2d1ajJNMWIyMEZfTGozMDdobGlvSE9PVEtCYjZpQTVMTDlFTVMxeWdwVTVRSHR3bkVwUTFEYllYU01pdWxWUXItWi0tOGdCRmtFQ2NxWVBISVI2eXNla0NqX1ZlZWdhdXJGQ24wRWFrMUFGS2l6cG5acVZjc3d2Nm95YnNQQXYzNEhXWE16Ty1XSWtwSFpvdA?oc=5",
-          "source": "Yahoo",
-          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
+          "title": "The End of Oak Street - mediaversityreviews.com",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQYjVzb3VGbUNsOWVzY3p6eWRDakk4MXo5YkJWYUg5Y3RxNTZOZW42RUZwclFycy1jWThFWERFV05vR0RwUG1kbXN1UnNrLVdPQ0x4Nzh0MjlEZW9uNnc1Ni1FYmd2dmgxVHk0ZTdZVzJzc0NVNVdEV0FDY3FiVEFvNkJQS0VkQTg?oc=5",
+          "source": "mediaversityreviews.com",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -683,7 +683,7 @@
       "overview": "As war and plague devastate 14th-century England, a humble peasant ignites a rebellion, uniting an army of commoners to defy the King’s might in a desperate fight for justice and survival.",
       "poster": "https://image.tmdb.org/t/p/w500/fiFdny17lnjrwH6TmuxrhNy1Ol2.jpg",
       "status": "playing",
-      "voteAverage": 7.1,
+      "voteAverage": 6.9,
       "rating": "R",
       "runtime": "2h 8m",
       "theaters": [
@@ -811,9 +811,9 @@
           "pubDate": "Mon, 07 Sep 2026 00:53:12 GMT"
         },
         {
-          "title": "Angel And The Badman | Trailer - LRMonline",
+          "title": "Angel And The Badman | Trailer - lrmonline.com",
           "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE41d1Bob2lXeGNHdXhVN2pDU1c3THhZUlFoaWFZQW5lUEVLTW5Na1I0MV95SzJaZmxGMjVFWWxIbFZFX2g4SUZlM2tMcS0zUUp6T1hTTzk2NFJZZmZ60gFiQVVfeXFMTnJtOVV3ZkhXMktYMkV6UGNWVW84ZmZOTWFLZzJvbUFVWk04QUZqYlZRSTB2WmpqZVpkMmc1ZHdYYjktWDgtLVptaUlxXzZhNFRyRDY3RU9oYUxFbVllMUJyNkE?oc=5",
-          "source": "LRMonline",
+          "source": "lrmonline.com",
           "pubDate": "Sun, 06 Sep 2026 22:38:13 GMT"
         },
         {
@@ -907,9 +907,9 @@
           "pubDate": "Wed, 16 Sep 2026 15:30:45 GMT"
         },
         {
-          "title": "Wacky Fun Trailer for 'Christmas at the Kringles' X-Mas Horror Comedy - FirstShowing",
+          "title": "Wacky Fun Trailer for 'Christmas at the Kringles' X-Mas Horror Comedy - firstshowing.net",
           "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNUWkzNWE2OGJKRVFCanJoUDFVUTNja0M0Umk5bjZyYjZiMlJrdFNVbkVpTXdpWjRVaWVneHcxSl9KV19TX2hIMXpLTzB6d2pkc3NtMENsZjZhODRCQzlyXzF4NnI5ODlXejlXcG9panJTcDAydGJjTzVERzlfYzAtazRlSWlNcnh0aFVRSWdpeTRYOGdVU2pwRE5ZTHR0YmxRSlJTQ2E3cFkwUQ?oc=5",
-          "source": "FirstShowing",
+          "source": "firstshowing.net",
           "pubDate": "Wed, 16 Sep 2026 18:45:24 GMT"
         },
         {
@@ -961,10 +961,10 @@
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Jim Caviezel says audiences hungry for heroes in new movie ‘Ghost Soldier’ - Washington Times",
-          "link": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNTU1SdlpLUVBSUlJkYkVmcmxtLXFlVGh4cmtRb2JMQ3dCZUo2d1RBcUNGRHN4Sy12SmxXNHNnRDlEbHpta2JfS3IxMnBNQks0VG5DLV9UNWZwR243ZkJoMi1Sbjg4eXJaUi1wc1Y2bmlqVGpSV1lzWTZyOTdWQ3h5elo4bmF2NlFlYlNfR0FHV3IyMC1QeERONTYwb3FGSHJod19LdldzOWNvNW5XS3lUQXhtQ0J3UQ?oc=5",
-          "source": "Washington Times",
-          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
+          "title": "Jim Caviezel Returns to Big Screen in ‘Ghost Soldier’ Movie, First Trailer Released - Just Jared",
+          "link": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNZ1lIZDNwYXVkcmh1QkFub2NRMHZ2YlEtTVpzMkhlTFJ0SFFWcEZWb0s5VzJQdDh0aWt4S3o5dE5oM0RaUkpTWkdQTGQ0aGpjYTRGNVFWaGJRekl4X21kZXU1SjFqa0lxOWd3bG5GdUtKT002V0VKbTZ0OEotejhHNi1MTUVGa1RQdG5SeTNzNEhmalJiMkoyYkNsd1VWME03TmFmMDhwbEp6YV9HVzU3VnFHeHF0dmtiRlE?oc=5",
+          "source": "Just Jared",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1003,16 +1003,16 @@
           "pubDate": "Wed, 16 Sep 2026 16:29:42 GMT"
         },
         {
+          "title": "‘The Hunger Games: Sunrise On The Reaping’ New Trailer - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNbjJzR2gwWHNkTW1ldER3R25lZEdfRU53angtSV9RRzBTRWQway1rSk5SNGFyWWlmbldJSWRBdVZITEhxYjlrVUdCd3hEbEI5QTJmaEwwWFUyMjBiYm4td09qOWJHMXJVSi1OSm9COGFMRG94bkFPUjc3djI3eE1oRDBVcDh2cm1McVJlTmRudFZJQQ?oc=5",
+          "source": "Deadline",
+          "pubDate": "Wed, 16 Sep 2026 17:00:00 GMT"
+        },
+        {
           "title": "'The Hunger Games: Sunrise on the Reaping' trailer teases a treat for book fans - Mashable",
           "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPczRRbFBvUnhKaU84cE5hdWtiWGxnS25jbkw4RXRqT2hlbTRaRDhHb05VNkNvOXhKVnQxT01JNk5BZGt2Ui1lcmJXQ1FtYlV0Um5oN3FhQU9jRXhIeHhQQ1NFSXFQUDhGZWV2dXZQQU1iU08zVWZDanlGOFdTMVhkTFZYSnBLN0FUajZNVWFtSkVxNC1F?oc=5",
           "source": "Mashable",
           "pubDate": "Wed, 16 Sep 2026 13:39:10 GMT"
-        },
-        {
-          "title": "‘The Hunger Games: Sunrise on the Reaping’ Officially Arrives in Theaters 2 Months Early - Collider",
-          "link": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPODUtQWhQWVkxdGxQbUk4anJmcWo2eHc3eEtXQldYUDh4S1NOR2dYVVktNThrcXlIMXlJNkVSeElWMno3MF9IUHVTajRRYVpsSjREbkEweUZFN0NMcTZZdDFPU0hWSFJpdy0xY1FZajlJY3R0ZW9vME41aUVYUXphbTZLcm13OWs4eTdVODM5Umg?oc=5",
-          "source": "Collider",
-          "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1057,9 +1057,9 @@
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "How Ariana Grande is approaching ‘Focker-in-Law’ promo amid ‘break from visibility’ - pagesix.com",
+          "title": "How Ariana Grande is approaching ‘Focker-in-Law’ promo amid ‘break from visibility’ - Page Six",
           "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbmxwQktlZ2c4QklURVRFdi1OZ3g1SFE2SmdGVWI5Unl2NUZjcWhvVk04Yk1aOUNnVWlzOVZwaEpfZGFqUENSM1ZYdndianVjTm40cEN4aXZDNFBKZnBFWHNDZ05udkxJQWVLTTFoemE1Y3ptbllkTFVSc09ydlZDUmk3WGw5cGdWZ2Q5NWNqWDF1TkI2VDRhV1Z2Q1oyVTZlNWdibTY3d29GdkNJQklrcDE1d0FDVjdzYlRnMHQ0alFqbmEx?oc=5",
-          "source": "pagesix.com",
+          "source": "Page Six",
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         }
       ],
@@ -1099,16 +1099,16 @@
           "pubDate": "Tue, 15 Sep 2026 14:54:09 GMT"
         },
         {
-          "title": "'Grand celebration' announced to celebrate Hershey's 169th birthday, holiday film release - local21news.com",
-          "link": "https://news.google.com/rss/articles/CBMiowJBVV95cUxOd2dYMmxZcktibGw3RWotaVZyekdSNTdQWFBpOFdMZTF2QkFFTDByRTVUZ3NEd0Y2ZmZjOHFuZzh5SDFZMkx4NjlYYmg2NDV6cUpDT1BES3Nxc1duX2JiTS1hc3Q5d2ZVOUdRTjVhck9nWGNEUnRCVXJxVlhsZW50aHJPdHpHdTQ2SGttMEowTlpVQ0I3VjMtdjFnUEFHNzZlVG5xY2MxTGlLN3E4dDROVklOdkVfWE9YYzh3am5fcWhBLXhpRlNKQkNfQ240WWVsME9xc3NnYWg1b3hHZ2VDc090U1hUTVBQSDNXcHBfLUxYY1RDUHFKck5uWUxHR1JtR2NkVy1MNGJ5TjBjS0JKVnh6Rmx3cWU1d3ZIQm9GNUtmYTA?oc=5",
-          "source": "local21news.com",
-          "pubDate": "Thu, 10 Sep 2026 09:19:45 GMT"
-        },
-        {
           "title": "Celebrating Milton Hershey's Legacy Through Service - The Hershey Company",
           "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcENKX1AxUWNUOWY1a3dBb2ZUdVV0UU9jcDAyOUZzNlM1ME0yd1ZzallCRGlzbkdGd2dFQllMYTBkRVhQMXJLbjFkWnZFRVA1Sl9FLTRtZFVoUm12eVVKa0hoUmRhVmZFYzVmbnBOM2pKVGtlQi0ybnBYSXR1QWdLWWtsbGFzNkVPT0tGWnNyUHJpTk1PQ2ZxX29TcmNjVlgyeXVqa29IM3pPY1NPQklGdnU1T3c?oc=5",
           "source": "The Hershey Company",
           "pubDate": "Mon, 14 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'Grand celebration' announced to celebrate Hershey's 169th birthday, holiday film release - local21news.com",
+          "link": "https://news.google.com/rss/articles/CBMiqwJBVV95cUxPRGpUZ3ByX2lMQm1JRlZmbzdUbjg2MVBNZlh1YzVqemF0UXpDbG5DMWt6RmZYX29OVmYwYXJXX0pwVk5nSkZJZnotT3ppbjhuWXl3Yk5RZEx0XzlHczNBMFdIR001b2ZWaG9uQ0VmTDZ2TFBZcFp2c0puanEydS1ONWVXOWdra1pjYm5veGFLalR6M1lFT0pnTHVFSWRHWnNFNHo1ckE3YzhPVlB4dG5rSWhaRzBBQnBaRkJLdWVCdXptYk5qVDFDNjAwOUplSC1pb3JCamlGTGdoWFpZQ2ZncUoxcHBBZUVyY1hqeTFjallmcnFkMW50NGVjMWphR1EtNVNkRFMtaHJrbDliYXI3WFRSbU1RLXd3eXZ1NC11WWtHazVnb29vUGk2UQ?oc=5",
+          "source": "local21news.com",
+          "pubDate": "Thu, 10 Sep 2026 11:20:03 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1153,9 +1153,9 @@
           "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "‘Avengers: Doomsday’ Ticket Pre-Sales Cross $50M Domestically Three Months Out - Deadline",
-          "link": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNUy1EVGRpUURTaklLLURuZVNycnVmTVM3UjB4eWtHSndWU2owbFA1M2N2bTFsYmk1XzRNUFJrX3ctRVkxUGstZVdIVzBCNFU3eHVTTV9pSzlYczU2M0cwQ0Itc3JJN3VjWU1LWVhKY1JOYXl6SGFqMTRuYk9CSFZaWTZZd2hiWDAzSW1aeWR4WTB1SlBsRXFRXzhPN1JteVRZ?oc=5",
-          "source": "Deadline",
+          "title": "‘Avengers: Doomsday’ Has Already Made $50 Million in Pre-Sales, Three Months Before Release - variety.com",
+          "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNVGlma0xtMnk2WnVzMDhXQzFpWkxHSlhmamdwOTZ3VmJDMmo1bk53VXQ0bXZ6OGU2a3R1N0VTWGVaLTQyaXNrZ1dRQ3hiTmV0NllFTVZkZGVHclVfcTZCVWVxaWpvR1NWSzZQcHdqZFJjS3Rwa1VXS2dCMFJiclBtYXBZeDR5OXNSYk9XTkJR?oc=5",
+          "source": "variety.com",
           "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         }
       ],
@@ -1294,16 +1294,16 @@
           "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Jason Statham's Non-Stop 105-Minute Action Thriller Scores New Streaming Home Ahead of Sequel - movieweb.com",
+          "title": "Jason Statham's Non-Stop 105-Minute Action Thriller Scores New Streaming Home Ahead of Sequel - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPYXJ3Sm84TUc3WFNhenc2QXVsZ3J1cS1SRHE2d0pMWXJzY05QeXNxa3RhRExyS1FrdDY1WkY1dHF2Nk91ZjVfMXlHUVdva0FkM29Va3RKcEtONUxVZF9FMFBXcmh5U3BydGwtTjF1THcyTnBfVWg5NG5VTDVUVElfLWo2LWZPSk94SHFzVF91TmJWRzQ?oc=5",
-          "source": "movieweb.com",
+          "source": "MovieWeb",
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Jason Statham's 'John Wick' Replacement Officially Finds a New Streamer Ahead of Sequel - Collider",
-          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxPa2c3QjhoaVM3d1NsVzdzQjh6Q0ZZOFkzX2FXVGUtV3MwSzFRa2hZUEdTVDJvTlp2dmdZNkVkSy1xdnhpVzdUc2FzYzZjR0xnUGZaOS1PMVMtbm51cU1RUzVhV2RWNVVCVG5heG81Uk9TUkpCNTdXMnFIdWRQekozbzNVQmVUYmlfQVE?oc=5",
-          "source": "Collider",
-          "pubDate": "Sun, 06 Sep 2026 07:00:00 GMT"
+          "title": "Jason Statham’s Biggest 2024 Action Hit Finds New Streaming Home Ahead of Sequel - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQbGRMV0dDTFhib1d1dnF2NFRfMGdfam1iMlBFQ1ZqaFdVd2VvUGQ0YWdGV0RCMGYwekpKOGdPdnFPRnRTVm5wWWRwT3pxeDVFMkhfMGFrY1prYnhub3ZFNkNJcWxLQVJnZk5LY3VMNEpLb2RsVWYxanQ3Snk5ZGJOTXNVU29jcjBfNUJGOUljdmdQVExSZ2FyWmhfTnRHU1pQcEE?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1385,12 +1385,6 @@
       "theaters": [],
       "news": [
         {
-          "title": "Miranda Lambert, Brad Paisley & Jelly Roll To Appear In Upcoming Glen Powell Country Music Movie, “The Comeback King” - Whiskey Riff",
-          "link": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxNekhtUGlWTXhCc0hoWEl5c215X2JEUndoZlVaeUl3U0JyeHNCejJlSE1LRl95ZExvSXhtaEhfZW1xQklaRXFsQkY4WEQ4N2JCelhEQ25GQjBHMzBadmUybXl5UG1hcE5fQi0yaEpKYS1HdE50dHAxQ1R0eFdXb1RKc3RIcTIyYUxEUXU3MTFEVC1NSlp5Q3kxWUVYSkc3U0YzWlVaR0Raa1FzQVozWjFidjBkTWRLMUx1ZzVoOER6ZUItWFJBZkd2UjZ1UkRKQTAtNVRKbWtUVFJybDNkNUZRWVNiaXpfZw?oc=5",
-          "source": "Whiskey Riff",
-          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "Glen Powell’s ‘The Comeback King’ Just Got a Whole Lot More Country With Three Huge Stars - Backstage Country",
           "link": "https://news.google.com/rss/articles/CBMixgFBVV95cUxON3JIRUVmS2hRM1ZELU90cmp3S3VGUERlaFZ5RnJxLWFPVGhHTEotSHBvcFNadk14aVMtSXBNWWhwX25STmVPT2lkWUI5LUQ3Y0lwc3FQM2w0R3dJMGZCMXJzeFl0Zl9CNUFBWXRzX1BHTUtqUVJKb3QzR3RHYWFpZHpaQ2dWanZEc296eVk5LWNBeWFESlRRcnVhdWNILUZQWjlnNVJ6TUFPRTdZZERxSXpDVGJzSGFLZVhRWFJZRFE0V1NMWWc?oc=5",
           "source": "Backstage Country",
@@ -1401,6 +1395,12 @@
           "link": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNd0xEVEpqSTVpd2pkMzFLWnpUSU1kQkRfMktiTWt1dHB0SEpiaE5oa3puVmc0QS13R2tRc253S1pIN1FmQ3VNYkRDakdmZ3IyRllWVUNveUJzS2s1Q0hwN1VMUHN5U3dhVGU1UVVKWlIwcU9DS2RhTUxpcV9sYUdCQmhEUWdUdjhlTDFza1hTb3hMdEJjLXE0?oc=5",
           "source": "Wide Open Country",
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Glen Powell Producing 'Confession Of Murder' Remake At Universal - Deadline",
+          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNQVJwR2NGRnJuVm81dlI0YVFqVGFWQ2liLUpXWjVHaDNRVy1vbEx6Zi1pUlRpUjB5WTVOSU1yZWZLY20zWGxqemxHYzVsZDJCcWZUclljV3VCaW9sTHk2Slkya1VIYVh0aWM3U2V6bDRQU0lmbG9tdHhLcW5FTTZ0NWhZVVRHaHE1b2g0R1M5TF9YLUhaUmQ3dkE0YWZhQVU?oc=5",
+          "source": "Deadline",
+          "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1433,6 +1433,12 @@
       "theaters": [],
       "news": [
         {
+          "title": "CoComelon Puts a ‘Peaceful’ Spin on ‘Farmer in the Dell’ & More Nursery Rhymes for New ‘Lullabies’ Album - K-Jewel 99.3 FM",
+          "link": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxNVHA4NVgwb2J6RmpEaEJlNzhEc0RuSlZHeGZvWlYyNzRvVFR2NlFYdVhkZEJZek9DdWxFajlWbUhhSnNFNVJaWGRPb1g1eHk0OTl3TWRwOEw2Uk1VYS03S1JMcGZVR0Q0c3R0Z19pOEhGN1hoN0gtU0NWRUdkdGdkdy0yYWRxMi1XOFQ0Z2VaN1drVW1qdk5fSjdreHhsOEc5anlieC03c3ZRcl9xeFJMWmRJRlZWRU5UYm1neVB2NG9iU01DdF9sUg?oc=5",
+          "source": "K-Jewel 99.3 FM",
+          "pubDate": "Fri, 18 Sep 2026 13:09:37 GMT"
+        },
+        {
           "title": "Stills and Photos from The CoComelon: The Movie, 2027 at Kinoafisha - Kinoafisha.info",
           "link": "https://news.google.com/rss/articles/CBMiYkFVX3lxTFBmOFA3SU5hZTRCTjl3SEo3MkNfdGVSOERKc3hpNS1VOXRhOGNkUnRsTzdMNGFJM0pFMF9kMDFsWE9VckJJYUJ3aXlDRXNGNjllRDlUbFA2N1FRa1dhSVdpQk5R?oc=5",
           "source": "Kinoafisha.info",
@@ -1443,12 +1449,6 @@
           "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOOTBGcEs3RXF6Z0d1azNRdk8wLUIzUXdoYUtKaXEtbUE3LS1sR2pEUVd1NmNHX1FSY18zdXRGTDhteUp4SnJieC0zbFY5WmtldU13aGN4MjMtdlFqVmVKLUVlLUNKX0h4MF81YmwtWU9rTXlFTWtGb0syS1VMajlwMWZFU09lbEFoU1ZiaG1vRVU0QjVrNWlTMGFZZ05DTFFtV3VEaGxn?oc=5",
           "source": "Yahoo",
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "Photos: HOW TO ROB A BANK Trailer Debuts With Nicholas Hoult, Zoë Kravitz - BroadwayWorld",
-          "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNUkRHS21EOEZMaklaU0xUWm9wUG1qdVh5TmNhOTVqTzZ3WHMyZWFWblNVeVB5V0xLVkNsc2hTX21ZdmVueW83LWtIaUNsQjhKSEctbXYySktDNTJReTlEc1lpbGM5SThFa1RuSlRyXzZEZ2pLYnc5WUh0NTNrZ1hFaGp0TmtDbU80ZkdjMHlvTXJxNTZHcVVfY2NIYWxfTU1rRm5yTVhUM0dma21zLWlUdEdlYXJnalF6VEktYkNwUUc?oc=5",
-          "source": "BroadwayWorld",
-          "pubDate": "Thu, 17 Sep 2026 14:06:08 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1482,9 +1482,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "‘K-Pop: The Debut’ First Look: Ji-young Yoo & Eric Nam Star in Paramount’s New Movie! - IMDb",
+          "title": "‘K-Pop: The Debut’ First Look: Ji-young Yoo & Eric Nam Star in Paramount’s New Movie! - imdb.com",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE1PeTJaVWNLdDNZbXh2N0Nrek1LSGhCZlRWQnYwNHpld3dNVTJyQUR3dTZUb1k4aUg4V0dEYzE4eWJfWk54SHBRTEdSZXRCamZ1amFrUzZVM0NnSDFYbGxmMGlLSUdxMlZJSEE?oc=5",
-          "source": "IMDb",
+          "source": "imdb.com",
           "pubDate": "Fri, 11 Sep 2026 10:07:58 GMT"
         },
         {
@@ -1530,22 +1530,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "Every Upcoming Pixar Movie in 2027 & Beyond - movieweb.com",
+          "title": "Every Upcoming Pixar Movie in 2027 & Beyond - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMibEFVX3lxTE9pMG8tZ3dscTNqRWMwSmJfYWE1dGY0NDNKRlBKVjhYNDdxbDBNS1d1UllINzJzREVFYTBVVUZUZ0w3YjdkSHE4ZzRicGNPUkRMREVnZWJ1aE1qMFlkVUJLeDN5U09LTGxTclp5eQ?oc=5",
-          "source": "movieweb.com",
+          "source": "MovieWeb",
           "pubDate": "Sun, 23 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "D23 EXPO 2026: Exclusive Interviews for Star Wars: Starfighter Frozen 3 , and More! - Rotten Tomatoes",
-          "link": "https://news.google.com/rss/articles/CBMiggFBVV95cUxPaC1DM1ZOMllXUFl5bzRJYl9HUFpHcXFvelFVZXZKN1F0cEsyeHJkZkpyaG5hNmlxWFlUcG41a3ZGd0t6RUNxejVDQk90NGl6UHEwNmlIOGVldmlDUGdCTVlHX3R1UEtFNEtDcWdBSVpWMGhmYTN3TFBTZDRzcWxCc0VB?oc=5",
-          "source": "Rotten Tomatoes",
-          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         },
         {
           "title": "Gatto - IGN Adria",
           "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTFBoaWppQUdUWS01cy12S0prMkRFMFBfanptNDBQYTVhYW9zYWY1QURZM3I3QmdqVWhhdUNqb1lsX0hDQWJk?oc=5",
           "source": "IGN Adria",
           "pubDate": "Thu, 03 Sep 2026 23:04:38 GMT"
+        },
+        {
+          "title": "Pete Docter Breaks Down Upcoming Pixar Movies - Yahoo",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQZGk3bE5vbmRqbTQ4SE9ZZGhzcmg5dWdpdU1lTU9kTEl2c2xuamQ5VDRSZjZtWUxOVUdGQjNKWmxrTnFTT216bW9maFNoQUxIa05YT2xudWJnRVZXaTVsUE5XUTNkaDd4c3Z3cGFHZlFhejJNODRWWVB5d2RHQmlvVnRoWUs4MGVDckRtQWxlTHpfbEc2?oc=5",
+          "source": "Yahoo",
+          "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1626,22 +1626,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "'The Nightingale' Movie Netflix Release Window Confirmed - Yahoo",
-          "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxOQkNTbHI4bUxmWHF3MUJuLWZKejM0and0amxELV9RSXEtb0dONUxfRUdfQU5pSUhrWi1mTno1NjJTcExhLU85WThmQ3p1TngweUxLRWszR0ZPb3YyeXhPXzJQUlZvaVdpTXVaZGo2Qms2REZCd0tIN294QmNNZHhUUklEM3BQUkhxa2RhMzlkS3EzRWFES1BrNDVJbXpwYnVKZHRzTUxTd3B5d00?oc=5",
-          "source": "Yahoo",
+          "title": "‘The Nightingale’ Movie Netflix Release Window Confirmed - mensjournal.com",
+          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNMFllTzRwNzZqazNfaDZFZVl2Ym5HWGFDdFE3VEJUU0NvTjIwMlFMRWJrS1pTaWh3NG51bmQxUHdVQld2anJ1SlJjY0lhbGdDdDY4SklYZW45dUF4QVJLRXVONEJoR2o5R045OWhkUVZQU2pZZlJnWHgwSVBoc2ljUVF4ZHEtbU1waEl4RXlRb25GcldsT0tyMW0tMzY?oc=5",
+          "source": "mensjournal.com",
           "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "'The Nightingale' Set Leaks: An Unexpected First Look at Elle Fanning in \"Buzzy\" Period Drama - Brit + Co",
-          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1kb3RzSHFxNElNVXB0ZE53aVlNQ0t6TkJRMDBlem9vNXZlNG11TDNuYVFfZmhuVWFucEo1b1htVFBFc0NNQ2tRVGNDZ0JTQVpqUnRISE90R3prc2Rn?oc=5",
-          "source": "Brit + Co",
-          "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         },
         {
           "title": "'The Nightingale' Movie News: Everything We Know About Elle Fanning & Dakota Fanning's New Period Drama - Yahoo",
           "link": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQRE92NFp4RGVmb3JFNF8xdGhvdzlUekhLa05kX1Bmamo0US1tTlUtMC1kZWc4QVFCeHN3Tk16dTJTazRzRTZpNWZoSEh5YkxkdVdkbUdRS3NFN3NtZS1XaFBMQTZnQzBSVnBISlEyU21oY3doSTc4cjZsNWttblpRTmN0TlM5YnVDRnN4aWEyb29CdlJKQ0dsUXRhZDFYbmUtWXluYl9EXzA?oc=5",
           "source": "Yahoo",
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "'The Nightingale' Set Leaks: An Unexpected First Look at Elle Fanning in \"Buzzy\" Period Drama - Brit + Co",
+          "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1kb3RzSHFxNElNVXB0ZE53aVlNQ0t6TkJRMDBlem9vNXZlNG11TDNuYVFfZmhuVWFucEo1b1htVFBFc0NNQ2tRVGNDZ0JTQVpqUnRISE90R3prc2Rn?oc=5",
+          "source": "Brit + Co",
+          "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1680,9 +1680,9 @@
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Johnny Depp's Comeback Action Thriller Gets Major Plot Update Ahead of 2027 Release - movieweb.com",
+          "title": "Johnny Depp's Comeback Action Thriller Gets Major Plot Update Ahead of 2027 Release - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMiakFVX3lxTE00TTB5eU9IMGdjV0RsTXFzWVBPc01QRzgyVU42QkJwdVlFVFpRM0hjNTdVVUdvcU5JbnVrU004Y3hJTFVVTVZnTm1MbUg0cDB2QVk1TUxxVFE2TDNGZFk4dnN1T1ZwWGR0dUE?oc=5",
-          "source": "movieweb.com",
+          "source": "MovieWeb",
           "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         },
         {
@@ -1734,9 +1734,9 @@
           "pubDate": "Sat, 12 Sep 2026 04:03:33 GMT"
         },
         {
-          "title": "\"Bad Boys FOR LIFE\" Brothers for a lifetime, life-and-death friends. - toy-people.com",
+          "title": "\"Bad Boys FOR LIFE\" Brothers for a lifetime, life-and-death friends. - 玩具人 TOY PEOPLE",
           "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyczNnVEtpTlVOTXlGWE5ad1hCdHJwRXF3OU9qYS1BVVZQVnI1WUExLV9oWF81Sm5jaV9xMVBXcXVGeks1d2t1cWhvUk0wV1E?oc=5",
-          "source": "toy-people.com",
+          "source": "玩具人 TOY PEOPLE",
           "pubDate": "Thu, 10 Sep 2026 04:38:57 GMT"
         }
       ],
@@ -1782,10 +1782,10 @@
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "In their words: Israeli forces describe AI-backed Gaza killing in new film - Al-Monitor",
-          "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNd3c1aFJkaU9vWkVjbXZTaEtwSjk4YV9qcUZ6MEQ4QkhPdHQ3NXhELWlHMTY2YzJ4QU5tMnNXaVBNbFM2U0RDdXVGekZENkhBRUZJcXYyNjd1c2dKYTYwOFhlU3FxTjBfNGJmVFU1N3h6Q3JRYkk3Z1FPTGFubGJGLWhQWUN0ZUUtcDNrU2V3WldGT29ERUg1ZGJtX3NVRWZVdFNjT1JFX1l4eDVfYWZSNlJ3?oc=5",
-          "source": "Al-Monitor",
-          "pubDate": "Thu, 10 Sep 2026 11:46:16 GMT"
+          "title": "Introducing MISSION 1 PRO ILS: GoPro's First Interchangeable-Lens Cinema Camera - GoPro",
+          "link": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxPa1lNb1FRTjZlQzBsVWxBcDRodlhaeWNfd3hSLXdFbV9kQ3h4ZG1zNWVhemNKZ2RlekJqM2hxT0hRNzdFWHBOUWxuZW42d19FWU93QTVxSHJ1enk3X21qSU1GSm5GdFk2S2JXd0VMemlwSkJkS29aUDhwTWVPLXkzT3ZvZVJDRmRw?oc=5",
+          "source": "GoPro",
+          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1818,9 +1818,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Genre Love - styleweekly.com",
+          "title": "Genre Love - Style Weekly",
           "link": "https://news.google.com/rss/articles/CBMiUEFVX3lxTFBQQS1NZElDZ0tMck1GSV8ycUFHbENDeUM5Y1BxWnk2eDVmZ2Z5X2picHNLYXMyN202c3dOdjhiQmZzSnhYdmJFUnBNTXJKWTlZ?oc=5",
-          "source": "styleweekly.com",
+          "source": "Style Weekly",
           "pubDate": "Mon, 14 Sep 2026 16:00:44 GMT"
         },
         {
@@ -1866,9 +1866,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - Nintendo",
+          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - nintendo.com",
           "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOc0xTbTFOUTNNSzd2Q1JqeGFrVjIxY3pOa056bWhYdHRlN3Axajg0dG9aOVJfN1dfdXQ2a1JnYnliSkp0Ymo1dXpSTXVCWXZiNFNHSkduSzhmTkZfWVlNdmE4bGNVQmpCbmFvczVGZGVNSnNYUE1IbExHNlBTczRyRFJmUEhGanVKb01yQW9qdFZiUkFheTZtVDkzNXJZWENuUUtYTjNxTkE5M3NzWVBna1FlcDdGTzI4cFRUdTYyeFVkQldIWlZWNURzVQ?oc=5",
-          "source": "Nintendo",
+          "source": "nintendo.com",
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
@@ -1963,22 +1963,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "Patrick Schwarzenegger Says His Wife Is ‘Really Excited’ for His Romance Era (Exclusive) - People.com",
-          "link": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPSnNiSWp0TU1IZUxlRTBhbVRseXdFNnY1VVBoWWJOLWl4blBKN0U5ZGViM3RXVjUwSUVVbFFyc0diSFZ6aGJKeWd0YWtzS24zZXZwRDJzUE1XcnkzNENiWXd5RjVMX3R4Tkx0VE15VnZXVzI0TVpYUGRUUjVaeXdGekFFcU9MNkU0aDc1bHhNOU9GdGJOWlViOTEwem5oc2o2QmJmeEl0dFdQek9xOHY0WWR3?oc=5",
-          "source": "People.com",
+          "title": "Patrick Schwarzenegger Says His Wife Is ‘Really Excited’ for His Romance Era with “Beach Read” and “Love of Your Life” (Exclusive) - Yahoo News New Zealand",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZzI2bUhDZ1VkWTFHdU9tSEprR01ZQnpTMlNqOHJXOThGQ3lUbDhob243d3A2d1ZUOTItRDVPczlyMGZlNkRpVWhJSE9nTUNFN2xMWUFLRWxhWnVLUU8wSGo3N19ic2ptMDlwb2cxdWdXM0l5WXpWdG1SWVd3WjFCdjV2bnU1U0k?oc=5",
+          "source": "Yahoo News New Zealand",
           "pubDate": "Thu, 17 Sep 2026 15:45:48 GMT"
         },
         {
-          "title": "Reading Jane Austen’s ‘Sense and Sensibility’ Ahead of the Upcoming Movie - thecolgatemaroonnews.com",
+          "title": "Reading Jane Austen’s ‘Sense and Sensibility’ Ahead of the Upcoming Movie - The Colgate Maroon-News",
           "link": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONUVLS0JRSExZVUtpLVVvT0VjVkgtVmNFbEdkdjlVYllWSnVrbVg0VUtoRFZWb3F4TFpuTGlxQnN1MmlzQVhkMmEwSEVycW5XV0NHUUxvZmtWSk1xQ3UzTUJpanZCN25qQmNoOE9xcEdHZDgwS3dXWGJVNF9vRTdIbHdwNWcxcEJuakhpb3V6LUlSNVlZZVVDTkE1cnRZMzJ2VW92eTd2S25WTndlVGFtM0ZvVGZNYVVYWFEzalJn?oc=5",
-          "source": "thecolgatemaroonnews.com",
+          "source": "The Colgate Maroon-News",
           "pubDate": "Wed, 09 Sep 2026 13:05:21 GMT"
         },
         {
-          "title": "Traveling Soon? The Perfect Books to Pack for Your Last Summer Getaway - The Everymom",
-          "link": "https://news.google.com/rss/articles/CBMiZkFVX3lxTE1fMWEyV3Bubko5NEE1a3VTbVNWSGV6YWxEYnRSZGt3Q0lBNGZ2bmNyRXNuZHE2U3BycENOTWwzeHpqVnQxVEZ0WV94MDk5Ti11dEt0b2xmLUVUZGl2NTNhOXZxWk1oZw?oc=5",
-          "source": "The Everymom",
-          "pubDate": "Tue, 01 Sep 2026 17:05:15 GMT"
+          "title": "Vancouver author delivers great beach read for the last days of summer - Vancouver Sun",
+          "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPUlY5Uy1uZ3l5ME1CWURYZ1I3bFBpNm1Nbm1pcjd6U3RaZ2tPbmdKMk5EU1VWTDdVd1FUS3laa2ZQa3Bhak9Oc0lubjkyYVh4cDlpSnNXamY4NGlGTEhRTENIdVNBYXRGeGl5c0ZZb2QyNVp5eEd2NmpxTC01a19iT1lmMkV5U05qM2c0ejdYZUxvaEl5SDhOaW1rWURiRmc3UUlIN2dpekNsRG9GUEE?oc=5",
+          "source": "Vancouver Sun",
+          "pubDate": "Fri, 21 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2017,16 +2017,16 @@
           "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         },
         {
+          "title": "Thoughts while watching the first seven Fast and Furious movies - Entertainment.ie",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxQLVlyQnVuWXE0ZlhMZWRybzZNOXFnMkNoc2pmN1I4d25KT185Ny1lUUlqQ2YzaURxc3RVUU1ReGhnbGh4dWZwMW56emZzT2JEbk1ZMTk5bk1FTWlvWDFEQjRTbjZIQ1BvZGU3QVBsMUFidy12c084X09IYTcyQk5zd21DNWJOUkNzbHdXV2lkcWRZa29xOTdBbFlPYzFQazE0dnBDWDdONTJyS2txd2VFWHkxa0k?oc=5",
+          "source": "Entertainment.ie",
+          "pubDate": "Thu, 10 Sep 2026 09:31:22 GMT"
+        },
+        {
           "title": "'Call My Agent! The Movie' Review: A Fast, Funny Feature-Length Return - variety.com",
           "link": "https://news.google.com/rss/articles/CBMigwFBVV95cUxOTzJUS1NocTN0c2p1dGE0NHhwNEdIVm1oZ1VtMEFsTjRRcWwtTDFocEdVSGF1NEUtVGNGN3lMZWxSWDkzaEJ0X3NMWTRiRTliUlZISVhyWXpzZEcweFdfbVJhUzdRaEtSU3liT2RHT21Fdm9wbkhRUVlySTg5VE8tT1laWQ?oc=5",
           "source": "variety.com",
           "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
-        },
-        {
-          "title": "How the 'Fast and the Furious' franchise evolved from the original - upi.com",
-          "link": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQb1dvYnI0WnFZQWtqVjY4SVlMNWlhTXpDU2FhNERiQWVMb0Z3WDhiNHAzQmZXVGVkZnIyTG1jVmhPMU9maktFckE4cngwU1I0eHlVR1BPRldoVUlPbDZwQWJXM09MdUF6NUp1c0JqU2Z3NncwREhOMEZNdzhTMEVoR1NBYzk2bDRIS1lvT2ZING14WEdCVnJmMXVubjg5czBQYURtRlcyQkd1blBRVjZr0gG0AUFVX3lxTE5kdDVqM0NmcG1GYkxSeTdYTWx2Snc5dnZnaFR1QUZtUWZRVEhUVW0ySnJxYkVGWm9LTTBOb2w4ckF0TUtvOUZCRkczQ3ZFZTgza0tWb3ZqZjA0V1dsRWk1bF9jTU0tdjRaRFFpZ0U2U0tzYVFVUzIxNlFUTHhjdHdxdnYxdWJ5bzZLVG9oNlEwdzNqS3NURXd5bUQwd0JySEhMbGhYU0RvOGNFTEtfN3NsWkJtOQ?oc=5",
-          "source": "upi.com",
-          "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -2059,9 +2059,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Warner Bros. Pictures Animation’s ‘Margie Claus’ Reveals 2027 Release Date, Voice Cast - thewrap.com",
+          "title": "Warner Bros. Pictures Animation’s ‘Margie Claus’ Reveals 2027 Release Date, Voice Cast - TheWrap",
           "link": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNcVJ3MkwwcDNnaUpKblNYY3lIa1JTanlqOHhkS1paWGJNN1VHNzVQcU5EZjIzbmpZa0RPbWRhVmN5bVJ4M2N5VElnVTBycDhPYzV5aWx0MC1UcWJ3QXM4dU9yY3FzVFowMnFmbUJjNEVjRjlULXp5QzJUemRZRjRWYWdrS2VjZXZOOWlhdGlTdnVGVkxUak4xQUVqSXlmczUtZEt0cXMtOUtZejZL?oc=5",
-          "source": "thewrap.com",
+          "source": "TheWrap",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
@@ -2108,9 +2108,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "Everything We Know About Ryan Gosling's Star Wars: Starfighter - SYFY",
+          "title": "Everything We Know About Ryan Gosling's Star Wars: Starfighter - syfy.com",
           "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZVJwbGtQYlRPbmFYenFHNlVMQ05KV2xLLVpFbks3Q3ZxTXB3c0hTWWJjTXpkMkMyWXdjWWxXQXlra3VmYkJ3anp4b0VaLU8zSmRlUGNtdFRZWkRycEN5SGhEX3p0Ny1Yc1U2M3dnRVNPTnNOLWdERTl2VHlWaXl6Slk2dlhmREM5Und5YU5JcWVZUjRTU05HNm1sZm4?oc=5",
-          "source": "SYFY",
+          "source": "syfy.com",
           "pubDate": "Fri, 11 Sep 2026 15:16:05 GMT"
         },
         {
@@ -2162,9 +2162,9 @@
           "pubDate": "Tue, 08 Sep 2026 09:39:39 GMT"
         },
         {
-          "title": "JOHN RAMBO Star Reveals the FIRST BLOOD Scene That Became the Prequel’s “North Star” - GeekTyrant",
+          "title": "JOHN RAMBO Star Reveals the FIRST BLOOD Scene That Became the Prequel’s “North Star” - geektyrant.com",
           "link": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNbmpjZ0wxaWU4N1Vmc0s3WUdLNHZGeTZNV0Q1VUk2UUJNTGp2dU8tUndxaExEckQ4RGJKNGUyZVozTVlpNGZMQ3NCOW5nUm41dFJWTUgtRHpNQzRobnRMeGkzSGpsQ3ZJbmUwSUdtTnZXSnBwUjAzTmR3WTIyUzJUcF8xZFZ5MUFWSnFfcjg1akdjMXVvcnFwQXJVLW9GQnJSNm5DcUdtX25KRFpNN0E?oc=5",
-          "source": "GeekTyrant",
+          "source": "geektyrant.com",
           "pubDate": "Thu, 20 Aug 2026 07:00:00 GMT"
         },
         {
@@ -2252,15 +2252,15 @@
       "theaters": [],
       "news": [
         {
-          "title": "‘Spider-Man: Beyond the Spider-Verse’ Netflix Release Window Confirmed - Men's Journal",
+          "title": "‘Spider-Man: Beyond the Spider-Verse’ Netflix Release Window Confirmed - mensjournal.com",
           "link": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQQ20yUi15U0daVmFFMDcyM0JfV3M5ZWtPV3U4T2ZVc2QyUTVwZ2JKX1hnMkMyQWV5bGtqcGprbE05aUJ4cHdSd2Z1TkNIOHk3Mi1TcGFnbWlHS2o2WTRTNFFBZTdDT1hKV2xYdVpCLU5hSUZhdWZNSkkwM0pBS0NqSzQ1eVVXNWRleTNGazY4UDVZZk5McUpLMEZUYVI4bk1yUVFzNjhMTVY0NTQ?oc=5",
-          "source": "Men's Journal",
+          "source": "mensjournal.com",
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Spider-Verse 3 Is Confirmed to Include 3 Marvel Characters From Tom Holland's Spider-Man Movies and The MCU (But as New Versions) - thedirect.com",
+          "title": "Spider-Verse 3 Is Confirmed to Include 3 Marvel Characters From Tom Holland's Spider-Man Movies and The MCU (But as New Versions) - The Direct",
           "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZ1JScWlxOVd6TkRBU0Z6aUU1SE45UEtxenIzX0dGblVQYzFaVk5ybF80NGpocV9uelBHeWFLZTRncjVGeGxrTVhkYzRfelo5Z2x5bXBmZ3dCMWdwV25Pb1B5THRBcFBWU2JqUUZVSXhwZHBHczI2WW96aVctd1JESEU0Vy15TVBEdkQ2UWYzRkRXcjNiQVhzM3ZTVEs?oc=5",
-          "source": "thedirect.com",
+          "source": "The Direct",
           "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
         },
         {
@@ -2300,9 +2300,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "‘Shrek 5’ Netflix Release Window Revealed - Men's Journal",
+          "title": "‘Shrek 5’ Netflix Release Window Revealed - mensjournal.com",
           "link": "https://news.google.com/rss/articles/CBMifEFVX3lxTE5uQlc0M1g0OVpLeWlWOWtIWHg0c0dCXzJWaXhGaURoZHMzcW1WX05rOGdzVnZMeTRoWmgyYmU2RGdhRHhQeGl0NG5YSXNQYzRtWGJ3Y3g2OThnY0pVUmtUZmU0SVZla3JGTkw3SFhvbU5LZmNkVjVySFN0Wko?oc=5",
-          "source": "Men's Journal",
+          "source": "mensjournal.com",
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         },
         {
@@ -2456,9 +2456,9 @@
           "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Jason Momoa's New Crime Thriller Is Taylor Sheridan Meets 'Lethal Weapon' - movieweb.com",
+          "title": "Jason Momoa's New Crime Thriller Is Taylor Sheridan Meets 'Lethal Weapon' - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DSm43MUszRVl4TzFidDdVcXlYYkRSQXY1UTB3TjljTDhZd1JoNDZSMlJ6Q0ZyY1Q4WTI2bElaU1h0blNhOWh1UFpFblh5VHdJMDR6Rml1X0ZtSkhJMVlxQmFhcFEzc1dT?oc=5",
-          "source": "movieweb.com",
+          "source": "MovieWeb",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -2552,9 +2552,9 @@
           "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Keanu Reeves' New \"Jaws Meets Edge of Tomorrow\" Action Thriller Blockbuster Is Coming in 2027 - movieweb.com",
+          "title": "Keanu Reeves' New \"Jaws Meets Edge of Tomorrow\" Action Thriller Blockbuster Is Coming in 2027 - MovieWeb",
           "link": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE0tTm1yZk9sT2Itd1FQMHgwUjFvTHhpZHdZc2NMRlpwdXRlTDB2NGdpcXhFMUh4MGpyTmZoSEpqT3BIdktFcFhGQkdNUG1OTUlscXhZYnZ4azA0ZG95OTdhTktLU2VFUmZS?oc=5",
-          "source": "movieweb.com",
+          "source": "MovieWeb",
           "pubDate": "Fri, 04 Sep 2026 07:00:00 GMT"
         }
       ],
@@ -2623,8 +2623,8 @@
       "posterPlaceholder": true
     },
     {
-      "id": "upcoming-the-simpsons-movie-2",
-      "title": "The Simpsons Movie 2",
+      "id": "upcoming-the-new-simpsons-movie",
+      "title": "The New Simpsons Movie",
       "releaseDate": "2027-09-03",
       "releaseType": "Wide",
       "distributor": "20th Century Studios",
@@ -2637,22 +2637,22 @@
       "theaters": [],
       "news": [
         {
-          "title": "The Simpsons Is Entering a New Era With Streaming Specials and a Movie Sequel on the Way - The Main Street Mouse",
-          "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNVUR6RzVSRWU5RExwNVpHUEUzcTJoTVl3TUtJaW9ESWpMa3R1QV9NSVpKV091VWY5eGtQRnFJem1KWVc3MHVDdlB0UDlvX2psWEtDWTIzRENCMzdSZHVxZzBpUmZiUTllVzE0bFBlYUt2NU5YQmtuQzlaYThpZzVoaDlXdEdYVjNRbll5Q0MzZ0FoXzhpSk9WQXQ5SGtuSmRqUnJ4OGZ2RjU5ZGdEX2MtTi05SWw3NzRFWVd4bUNGYUJKVnFBOUVHbVMtVQ?oc=5",
-          "source": "The Main Street Mouse",
-          "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
+          "title": "Can ‘The New Simpsons Movie’ Make Springfield Great Again? - GQ",
+          "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPTkVOWjlnMnM0emZzSnN4bllhenVQZnNFRktNLUt6WG1jZENjSGdqc3RxQ05BZF9DMDlqc3Jvbk15dVk1MDJhR2M5Q1BGSW9UanRVUjNVUm4zdEJXNEZuOUphb3VHejRVbldnLXhwc05sajl6c0FCdDhOaDl5a0JTaGZkU3NWNEk?oc=5",
+          "source": "GQ",
+          "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "‘The Simpsons’ Officially Takes on ‘Black Mirror’ in First Trailer for New Disney+ Special - Collider",
-          "link": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5XNEJzLWpKcHNmakYzcDVvUlpDdEY0NU1xYTMwOWhaOGoyWDNRcDVENVNheXJ2M2xoZi1nZnZacVFJMVltd21qZ0RzWlNOd0NLMVFTcnVrY2Vva3MyUG54d2l4eVNhcHVqaDZMc3hqQQ?oc=5",
-          "source": "Collider",
-          "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
+          "title": "Disney's D23: Everything announced, from rides to movies and more - ABC News - Breaking News, Latest News and Videos",
+          "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNX2tGemhTaVY5cDVWRWExVFpzVlRmSUNjc09feVRmSkNpRlVkNVZDYk50S09FYkJrMGFYc0dOVVhjRlBFRGlhQkNJemlIdkNLUTBFM0ZwY25qQm95bWFiLXRyY3o4Q3VYNktnNGZ3cTBBLWFQbHM4Ni0wXzlrOGdIZkNUTUNpN1pBMS1Vb0xFLTcyN002NkUxRmltOEJZaGRoN0xz0gGoAUFVX3lxTE5hNkZsZ3B6b0c3MHQtWXBqRWE4Y0g3OU5ReVpLTFBucWk4aDkxTm4wTXhycUhFbDFUVWVzcTdyUTl0djFUVl9wM1ktejNHUG5sS2l0NnBaT0pJN0JMU1RGN095VzZ4c2dQUVczUGJQdUlzbzliSERtM1Zqa01nU1JYM1pLbEZtREY2cEJpV3VvUWgtS2Njd25SM3RUYktVRGs4MVJiRGhJWg?oc=5",
+          "source": "ABC News - Breaking News, Latest News and Videos",
+          "pubDate": "Thu, 17 Sep 2026 18:43:29 GMT"
         },
         {
-          "title": "'The Simpsons' Debuts Trailer for Crossover With Acclaimed Netflix Sci-Fi Series - movieweb.com",
-          "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE9QWDd6cWNfR2NUdEhRMmF1d2hBNFVtUHhtcS1OT0x4eGtuMGRqX01raGM1X0lfdmxPY3V3QnlyaC0yRjJnSzFBNUtVaHpxVDR3RWZoSDViUXl1M2VLUElhODRHSkFHc01Yb1duSTVId3FqVGxuc19GcFlXalNZZkE?oc=5",
-          "source": "movieweb.com",
-          "pubDate": "Mon, 24 Aug 2026 07:00:00 GMT"
+          "title": "Frozen 3 Official Release Date Update Confirms Disney Will Finally End Its 90-Year Trend Of Releasing No Back-To-Back-To-Back Animated Direct Sequel Movies In One Year - The Direct",
+          "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPQ0NLaVM0UWpHdFVkYmZhcVdRS0tvVDBKZkdBRlJaYUJTeklUTHh3anRJTXZNOTVTZXp4eFBaWWlPS0lGWk5wdHBjNmpHVUhGNFVpREM5NDJXMFZVU1U0bUFJb3ZhaDhmLUcyNnF6S2FpdjY2OVduMGg0dlJPZ3VhZnNzY2FkMkc3MElJcXk1TERTUQ?oc=5",
+          "source": "The Direct",
+          "pubDate": "Fri, 28 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
