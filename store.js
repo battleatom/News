@@ -62,7 +62,7 @@ export class Store{
   resetPage(category=this.active){this.visible.set(category,PAGE_SIZE)}
   setUnderreportedSort(value){if(!UNDERREPORTED_SORTS.has(value))return;this.underreportedSort=value;this.resetPage("underreported")}
   rawCategoryPool(category){return[...(this.feed?.stories?.[category]||[]),...(this.feed?.reserves?.[category]||[])]}
-  categoryStories(category=this.active){if(category==="bookmarks")return this.bookmarks;if(category==="admin")return[];let rows=this.rawCategoryPool(category);if(category==="x")rows=normalizeXPool(rows);rows=rows.filter(story=>!suppressed(story,this.suppressed,category));return category==="x"?[...rows].reverse():rows}
+  categoryStories(category=this.active){if(category==="bookmarks")return this.bookmarks;if(category==="admin")return[];let rows=this.rawCategoryPool(category);if(category==="x"){rows=normalizeXPool(rows);const selected=[];for(const[id]of X_SLOTS){const replacement=rows.find(story=>story.source_id===id&&!suppressed(story,this.suppressed,category));if(replacement)selected.push(replacement)}return selected}rows=rows.filter(story=>!suppressed(story,this.suppressed,category));return rows}
   allStories(){return Object.keys(this.feed?.categories||{}).flatMap(category=>this.categoryStories(category))}
   bookmarkIds(){return new Set(this.bookmarks.map(row=>row.id))}
   isBookmarked(id){return this.bookmarks.some(row=>row.id===id)}
