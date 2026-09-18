@@ -26,7 +26,7 @@ jobs:
       - name: Checkout V6 source
         uses: actions/checkout@v4
         with:
-          ref: 8715b1f901ca
+          ref: v6
           fetch-depth: 0
 
       - name: Set up Python
