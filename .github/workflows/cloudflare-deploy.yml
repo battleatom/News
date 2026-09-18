@@ -76,16 +76,18 @@ jobs:
         run: |
           set -euo pipefail
           rm -rf .cloudflare-assets
-          mkdir -p .cloudflare-assets
+          mkdir -p .cloudflare-assets .cloudflare-assets/assets
 
           assets=(
             index.html styles.css app.js store.js renderers.js location.js feedback.js weather.js
             nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js tab-count-sync.js
             admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
             feed.json status.json nfl.json boxoffice.json markets.json
+            assets/file_000000006cdc81fd866c6c2774dd7009.png
           )
           for file in "${assets[@]}"; do
             test -f "$file"
+            mkdir -p ".cloudflare-assets/$(dirname "$file")"
             cp "$file" ".cloudflare-assets/$file"
           done
 
