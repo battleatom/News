@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-18T02:50:24.563103Z",
+  "generatedAt": "2026-09-18T07:34:23.544666Z",
   "games": [
     {
       "id": "401872932",
       "name": "Detroit Lions at Buffalo Bills",
       "shortName": "DET @ BUF",
       "date": "2026-09-18T00:15Z",
-      "status": "In Progress",
-      "detail": "9:29 - 3rd",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Buffalo Bills",
           "abbr": "BUF",
-          "score": "27",
+          "score": "41",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/buf.png",
           "color": "00338d",
@@ -22,7 +22,7 @@
         {
           "name": "Detroit Lions",
           "abbr": "DET",
-          "score": "17",
+          "score": "31",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/det.png",
           "color": "0076b6",
@@ -34,28 +34,7 @@
       ],
       "watchUrl": "",
       "venue": "Highmark Stadium",
-      "plays": [
-        {
-          "clock": "14:13",
-          "period": 4,
-          "text": "(Shotgun) J.Goff pass short left to A.St. Brown to BUF 19 for 11 yards (D.Alford)."
-        },
-        {
-          "clock": "13:35",
-          "period": 4,
-          "text": "J.Goff pass short left to S.LaPorta pushed ob at BUF 12 for 7 yards (C.Bishop)."
-        },
-        {
-          "clock": "13:05",
-          "period": 4,
-          "text": " (Shotgun) J.Gibbs left tackle to BUF 12 for no gain (C.Benford)."
-        },
-        {
-          "clock": "12:28",
-          "period": 4,
-          "text": " (Shotgun) J.Goff pass incomplete short left to I.TeSlaa (C.Benford)."
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872933",
