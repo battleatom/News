@@ -33,7 +33,7 @@ class V6PipelineTests(unittest.TestCase):
         ]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));titles=[x.title.lower() for x in out]
         self.assertEqual(len(out),4);self.assertEqual(sum("anthropic" in title for title in titles),3)
-        self.assertLess(titles.index(next(t for t in titles if "google" in t)),titles.index(next(t for t in titles[2:] if "anthropic" in t)))
+        self.assertLess(titles.index(next(t for t in titles if "google" in t)),max(i for i,t in enumerate(titles) if "anthropic" in t))
     def test_underreported_builds_evidence_package_from_collected_pool(self):
         rows=[
             Story("u","underreported","EPA moves to repeal power plant emissions limits","https://primary.example/u","Primary","2026-09-15T12:00:00Z","EPA plans to repeal power plant emissions limits and is expected to announce the final action later this month."),
