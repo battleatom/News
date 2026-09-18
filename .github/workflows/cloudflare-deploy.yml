@@ -85,6 +85,10 @@ jobs:
             cp "$file" ".cloudflare-assets/$file"
           done
 
+          for file in .cloudflare-assets/*.js; do
+            node --check "$file"
+          done
+
           sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard#/api/nfl-scoreboard#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary#/api/nfl-summary#g' .cloudflare-assets/app.js
