@@ -49,8 +49,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: cloudflare-production-deploy
-  cancel-in-progress: true
+  group: cloudflare-production-deploy-${{ github.event_name }}
+  cancel-in-progress: false
 
 jobs:
   deploy:
