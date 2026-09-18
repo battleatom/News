@@ -10,6 +10,7 @@ from pipeline import normalize_url, near_duplicate, process
 from diversity import same_event
 from registry import load_registry
 from movie_artwork import _is_schedule_label, _title_variants, _normalize_poster_url
+from pool_policy import apply_rolling_pool
 
 class V6PipelineTests(unittest.TestCase):
     def setUp(self): self.registry=load_registry()
@@ -33,6 +34,19 @@ class V6PipelineTests(unittest.TestCase):
         ]
         out=process(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc));titles=[x.title.lower() for x in out]
         self.assertEqual(len(out),4);self.assertEqual(sum("anthropic" in title for title in titles),3);self.assertEqual(sum("google" in title for title in titles),1)
+    def test_x_rolling_pool_keeps_one_visible_primary_per_slot(self):
+        source_ids=[row["id"] for row in self.registry["sources"] if row.get("category")=="x"]
+        rows=[]
+        for i,source_id in enumerate(source_ids):
+            rows.append(Story(f"{source_id}-lead","x",f"{source_id} newest topic","https://example.com/"+source_id+"/lead","Outlet","2026-09-15T12:00:00Z",source_id=source_id))
+            rows.append(Story(f"{source_id}-backup","x",f"{source_id} backup topic","https://example.com/"+source_id+"/backup","Outlet","2026-09-15T11:00:00Z",source_id=source_id))
+        out,_=apply_rolling_pool(rows,self.registry,now=datetime(2026,9,15,13,tzinfo=timezone.utc))
+        x=[story for story in out if story.category=="x"]
+        visible=x[:10]
+        self.assertEqual(len(visible),10)
+        self.assertEqual({story.source_id for story in visible},set(source_ids))
+        self.assertEqual(len({story.source_id for story in visible}),10)
+
     def test_underreported_builds_evidence_package_from_collected_pool(self):
         rows=[
             Story("u","underreported","EPA moves to repeal power plant emissions limits","https://primary.example/u","Primary","2026-09-15T12:00:00Z","EPA plans to repeal power plant emissions limits and is expected to announce the final action later this month."),
