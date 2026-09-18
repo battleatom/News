@@ -17,6 +17,11 @@ def main()->None:
     if len(collector_errors)/source_total>MAX_ERROR_RATIO:errors.append(f"too many collector failures: {len(collector_errors)}/{source_total}")
 
     feed=json.loads(FEED.read_text(encoding="utf-8"));under=(feed.get("stories") or {}).get("underreported",[])
+    x_live=(feed.get("stories") or {}).get("x",[]);x_reserve=(feed.get("reserves") or {}).get("x",[])
+    x_expected={"x-health","x-technology","x-celebrities","x-world","x-politics","x-entertainment","x-sports","x-business","x-gaming","x-science"}
+    x_live_ids={str(row.get("source_id") or "") for row in x_live};x_reserve_ids={str(row.get("source_id") or "") for row in x_reserve}
+    if len(x_live)!=10 or x_live_ids!=x_expected:errors.append(f"X live invariant failed: {len(x_live)}/10 stories, slots={sorted(x_live_ids)}")
+    if len(x_reserve)!=10 or x_reserve_ids!=x_expected:errors.append(f"X reserve invariant failed: {len(x_reserve)}/10 stories, slots={sorted(x_reserve_ids)}")
     bad_under=[]
     for story in under:
         words=_title_words(str(story.get("title") or ""));detail=str(story.get("what_happened") or story.get("summary") or "").strip()
