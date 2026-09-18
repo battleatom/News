@@ -2,6 +2,7 @@ from __future__ import annotations
 import argparse
 import json
 import shutil
+import time
 import urllib.parse
 from datetime import datetime, timezone
 from pathlib import Path
@@ -54,7 +55,20 @@ def build(*,fixture:Path|None=None,data_only:bool=False)->dict:
     if fixture:
         raw=load_fixture(fixture);collected_raw=list(raw);nfl=[];nfl_error="";boxoffice=[];boxoffice_error="Box Office not used in deterministic fixture build.";markets=[];markets_error="Markets not used in deterministic fixture build.";artwork_status={"movieCount":0,"posterCount":0,"missingPosterCount":0,"posterCoverage":0.0,"fallbackFilled":0,"tmdbFallbackFilled":0,"wikipediaFallbackFilled":0,"tmdbConfigured":False,"comingSoonPlaceholderCount":0}
     else:
-        raw,collector_errors=collect_all(registry);collected_raw=list(raw);nfl,nfl_error=collect_nfl();boxoffice,boxoffice_error=collect_boxoffice();artwork_status=ensure_movie_artwork(boxoffice);artwork_status=apply_upcoming_placeholders(boxoffice,artwork_status);markets,markets_error=collect_markets();pools=fetch_pools();raw,feedback_removed=apply_pools(raw,pools)
+        def timed(label, fn):
+            print(f"[v6] START {label}", flush=True);started=time.monotonic()
+            result=fn()
+            print(f"[v6] DONE {label} {time.monotonic()-started:.1f}s", flush=True)
+            return result
+        raw,collector_errors=timed("news collectors",lambda:collect_all(registry));collected_raw=list(raw)
+        nfl,nfl_error=timed("NFL",collect_nfl)
+        boxoffice,boxoffice_error=timed("box office",collect_boxoffice)
+        artwork_status=timed("movie artwork",lambda:ensure_movie_artwork(boxoffice));artwork_status=apply_upcoming_placeholders(boxoffice,artwork_status)
+        markets,markets_error=timed("markets",collect_markets)
+        try:pools=timed("feedback pools",fetch_pools)
+        except Exception as exc:
+            print(f"[v6] WARN feedback pools: {type(exc).__name__}: {exc}",flush=True);pools={reason:[] for reason in REASONS}
+        raw,feedback_removed=apply_pools(raw,pools)
     stories=process(raw,registry)
     if not fixture:stories=select_fixed_x_slots(stories,raw,registry)
     stories,pool_policy=apply_rolling_pool(stories,registry)
