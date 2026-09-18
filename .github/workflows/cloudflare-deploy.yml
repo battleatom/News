@@ -27,6 +27,7 @@ on:
       - 'story-position.js'
       - 'status-ux.js'
       - 'tab-ux.js'
+      - 'tab-count-sync.js'
       - 'feed.json'
       - 'status.json'
       - 'nfl.json'
@@ -75,7 +76,7 @@ jobs:
 
           assets=(
             index.html styles.css app.js store.js renderers.js location.js feedback.js weather.js
-            nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
+            nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js tab-count-sync.js
             admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
             feed.json status.json nfl.json boxoffice.json markets.json
           )
@@ -103,6 +104,22 @@ jobs:
             exit 1
           fi
           echo "Prepared $(find .cloudflare-assets -type f | wc -l) V6 production assets"
+
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path(".cloudflare-assets/index.html").read_text()
+          refs=[]
+          for src in re.findall(r'<script[^>]+src=["\']([^"\']+)["\']',html,re.I):
+              path=src.split("?",1)[0]
+              if path.startswith(("http://","https://","//")):
+                  continue
+              refs.append(path.lstrip("/"))
+          missing=[p for p in refs if not Path(".cloudflare-assets",p).is_file()]
+          if missing:
+              raise SystemExit("Missing deployed scripts referenced by index.html: "+", ".join(missing))
+          print("Index script asset audit OK:", ", ".join(refs))
+          PY
 
       - name: Validate Wrangler config
         run: npx wrangler deploy --dry-run
@@ -137,7 +154,7 @@ jobs:
 
           scripts=(
             app.js store.js renderers.js location.js feedback.js weather.js nfl-cloudflare-proxy.js
-            story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js
+            story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js tab-count-sync.js
             admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
           )
           for file in "${scripts[@]}"; do
