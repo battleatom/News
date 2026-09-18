@@ -38,6 +38,10 @@ jobs:
         run: |
           python -m py_compile v6/src/*.py v6/tests/test_v6.py
           python -m unittest discover -s v6/tests -p 'test_*.py'
+          jq -e '.sources | type=="array" and length>0' v6/config/sources.json >/dev/null
+          jq -e '.sources | type=="array" and length>0' v6/config/sources-extra.json >/dev/null
+          jq -s -e '[.[].sources[].id] | length == (unique|length)' v6/config/sources.json v6/config/sources-extra.json >/dev/null
+          jq -s -e '[.[].sources[] | select(.category=="x") | .id] | sort == ["x-business","x-celebrities","x-entertainment","x-gaming","x-health","x-politics","x-science","x-sports","x-technology","x-world"]' v6/config/sources.json v6/config/sources-extra.json >/dev/null
 
       - name: Build dynamic data only
         env:
