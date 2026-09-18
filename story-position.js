@@ -82,8 +82,8 @@
     const max=total||cards.length,current=Math.min(index+1,max),text=`${current} / ${max}`;
     if(counter.textContent!==text)counter.textContent=text;
     if(key&&key!=='boxoffice')poolTotals.set(key,max);
-    // Never mutate the sticky tab bar while the user is vertically scrolling.
-    // The navigation badge stays a stable category count; only the in-page counter tracks position.
+    const badge=activeTab()?.querySelector('small');
+    if(badge&&badge.textContent!==text)badge.textContent=text;
   }
   window.addEventListener('scroll',schedule,{passive:true});
   window.addEventListener('resize',schedule,{passive:true});
