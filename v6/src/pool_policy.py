@@ -52,7 +52,10 @@ def apply_rolling_pool(stories: list[Story], registry: dict, *, now: datetime | 
     grouped: dict[str, list[Story]] = defaultdict(list)
     retired: dict[str, int] = defaultdict(int)
     for story in stories:
-        if _keep(story, now):
+        # X is a fixed 10-slot contract: select_fixed_x_slots has already chosen
+        # exactly one live + one reserve per subject. Never shrink that 20-story
+        # inventory in the rolling/staleness policy.
+        if story.category == "x" or _keep(story, now):
             grouped[story.category].append(story)
         else:
             retired[story.category] += 1
