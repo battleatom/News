@@ -38,10 +38,10 @@ def select_fixed_x_slots(processed: list[Story], raw: list[Story], registry: dic
             if len(picks) == 2:
                 break
 
-        if picks:
-            leads.append(picks[0])
-        if len(picks) > 1:
-            backups.append(picks[1])
+        if len(picks) != 2:
+            raise RuntimeError(f"X slot {source_id} requires exactly 2 eligible stories (1 live + 1 reserve); found {len(picks)}")
+        leads.append(picks[0])
+        backups.append(picks[1])
 
     # Keep backups first and leads second. The X renderer selects the last surviving
     # candidate for each topic, so the lead is shown normally and the backup is
