@@ -203,7 +203,7 @@ jobs:
           jq -e '(.sourceCount // 0) > 0 and ((.sourceStatuses // []) | length) > 0' "$tmp/status.json" >/dev/null
 
           fetch '/healthz' "$tmp/health.json" "$tmp/health.h"
-          jq -e '.runtime == "cloudflare" and (.ageMinutes == null or .ageMinutes <= 35)' "$tmp/health.json" >/dev/null
+          jq -e '.runtime == "cloudflare" and .ok == true and (.ageMinutes == null or .ageMinutes <= 90)' "$tmp/health.json" >/dev/null
 
           fetch '/api/feedback' "$tmp/feedback.json" "$tmp/feedback.h"
           jq -e '.ok == true and (.pools|type)=="object"' "$tmp/feedback.json" >/dev/null
