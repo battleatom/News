@@ -89,3 +89,6 @@
 .markets,.markets-track,.markets-segment{background:transparent!important;border:0!important;box-shadow:none!important}
 .market,.market-label,.market-time,.market-note{background:rgba(255,255,255,.75)!important;border:1px solid rgba(148,163,184,.30)!important;border-radius:999px!important;padding:4px 8px!important;box-shadow:0 2px 7px rgba(15,23,42,.10)!important}
 .market:has(.up),.market:has(.down){background:rgba(255,255,255,.75)!important}
+
+/* Mobile status row: remove outer backplate; retain only individual pills */
+@media(max-width:760px){.toolbar{background:transparent!important;box-shadow:none!important;border:0!important;backdrop-filter:none!important}.refresh-status{width:auto!important;max-width:none!important}.local-status{background:transparent!important;box-shadow:none!important;border:0!important}.local-status::before,.local-status::after,.toolbar::before,.toolbar::after{content:none!important}}
