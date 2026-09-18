@@ -10,3 +10,15 @@
   .tab{width:100%;min-width:0;justify-content:center;overflow:hidden;white-space:nowrap;font-size:.66rem;padding:6px 6px}
   .tab>span:nth-child(2){min-width:0;overflow:hidden;text-overflow:ellipsis}
 }
+
+/* Stable live tab position counters */
+.tab small{display:inline-block;min-width:4.8ch;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:900px){
+  .tab{overflow:visible}
+  .tab small{min-width:5.2ch}
+}
+@media(min-width:901px){
+  .tabs{grid-template-columns:repeat(10,minmax(105px,1fr))!important}
+  .tab{overflow:visible!important;white-space:nowrap!important;padding-inline:8px}
+  .tab small{min-width:5.2ch}
+}
