@@ -98,3 +98,8 @@
 #refresh-status .status-pill{background:rgba(255,255,255,.75)!important;border:1px solid rgba(148,163,184,.30)!important;box-shadow:0 2px 7px rgba(15,23,42,.10)!important}
 #refresh-status .status-pill.status-live{background:rgba(255,255,255,.75)!important;color:var(--good)!important}
 #refresh-status .status-pill.status-warn{background:rgba(255,255,255,.75)!important;color:var(--warn)!important}
+
+/* Unified collage pills: 82% white / 18% transparent */
+.app-shell .brand-block,.app-shell .health,.app-shell #local-date,.app-shell #local-time,.app-shell #location-button,.app-shell #refresh-status .status-pill,.app-shell .market,.app-shell .market-label,.app-shell .market-time,.app-shell .market-note,.app-shell .tab{background:rgba(255,255,255,.82)!important;backdrop-filter:none!important}
+.app-shell #refresh-status{background:transparent!important}
+.app-shell .tab[aria-selected="true"]{background:rgba(15,23,42,.90)!important;color:#fff!important}
