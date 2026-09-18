@@ -31,8 +31,8 @@ async function assetFallback(path,env){return assetJson(path,env,{fallback:true}
 async function validatedHealth(env){
   const response=await env.ASSETS.fetch("https://asset/status.json");
   if(!response.ok)return Response.json({ok:false,error:`status asset ${response.status}`},{status:503,headers:{"Cache-Control":"no-store"}});
-  const status=await response.json(),generated=Date.parse(status.generatedAt||""),ageMinutes=Number.isFinite(generated)?Math.max(0,Math.round((Date.now()-generated)/60000)):null,critical=ageMinutes==null||ageMinutes>90,healthState=critical?"stale":ageMinutes>35?"watch":"healthy";
-  return Response.json({ok:!critical,healthState,service:"underreported-news",runtime:"cloudflare",dataSource:"validated-v6-github-build",generatedAt:status.generatedAt||null,ageMinutes,storyCount:status.storyCount??null,poolStoryCount:status.poolStoryCount??null,reserveStoryCount:status.reserveStoryCount??null,collectorErrors:Array.isArray(status.collectorErrors)?status.collectorErrors.length:0},{status:critical?503:200,headers:{"Cache-Control":"no-store"}});
+  const status=await response.json(),generated=Date.parse(status.generatedAt||""),ageMinutes=Number.isFinite(generated)?Math.max(0,Math.round((Date.now()-generated)/60000)):null,hasUsableFeed=Number(status.storyCount||0)>0,healthState=ageMinutes==null?"unknown":ageMinutes>90?"stale":ageMinutes>35?"watch":"healthy";
+  return Response.json({ok:hasUsableFeed,healthState,degraded:healthState!=="healthy",service:"underreported-news",runtime:"cloudflare",dataSource:"validated-v6-github-build",generatedAt:status.generatedAt||null,ageMinutes,storyCount:status.storyCount??null,poolStoryCount:status.poolStoryCount??null,reserveStoryCount:status.reserveStoryCount??null,collectorErrors:Array.isArray(status.collectorErrors)?status.collectorErrors.length:0},{status:hasUsableFeed?200:503,headers:{"Cache-Control":"no-store"}});
 }
 
 export default{
