@@ -170,6 +170,7 @@ jobs:
             if head -c 200 "$tmp/$file" | grep -Eqi '<!doctype html|<html'; then
               echo "FAIL $file returned HTML" >&2; exit 1
             fi
+            node --check "$tmp/$file" >/dev/null || { echo "FAIL $file production syntax" >&2; exit 1; }
             if grep -Eqi 'supabase\.co|vercel\.app|github\.io|raw\.githubusercontent\.com|site\.api\.espn\.com' "$tmp/$file"; then
               echo "FAIL $file contains legacy/direct-provider reference" >&2; exit 1
             fi
