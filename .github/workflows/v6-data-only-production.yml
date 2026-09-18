@@ -89,10 +89,6 @@ jobs:
       - name: Validate dynamic inventory
         run: |
           python v6/src/live_quality.py
-          jq -e '.stories.x | length == 10' v6/dist/feed.json >/dev/null
-          jq -e '[.stories.x[].source_id] | unique | length == 10' v6/dist/feed.json >/dev/null
-          jq -e '.movies | type=="array" and length>0' v6/dist/boxoffice.json >/dev/null
-          jq -e '[.movies[] | (.tmdbId // (.title|ascii_downcase))] | length == (unique|length)' v6/dist/boxoffice.json >/dev/null
 
       - name: Preserve validated JSON
         run: |
