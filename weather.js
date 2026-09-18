@@ -28,5 +28,30 @@ function ensureStrip(){
 }
 function renderWeather(data){const strip=ensureStrip();if(!strip)return;const currentTemp=Math.round(Number(data.current?.temperature_2m));const[currentIcon,currentText]=weatherLabel(data.current?.weather_code);const current=Number.isFinite(currentTemp)?`<span class="weather-pill current"><span class="weather-icon">${currentIcon}</span><span>${currentTemp}°</span><span class="weather-detail">${currentText}</span></span>`:"";const daily=data.daily||{},dates=daily.time||[];const days=dates.slice(0,5).map((date,i)=>{const[icon]=weatherLabel(daily.weather_code?.[i]);const hi=Math.round(Number(daily.temperature_2m_max?.[i])),lo=Math.round(Number(daily.temperature_2m_min?.[i])),rain=Math.round(Number(daily.precipitation_probability_max?.[i]));const temps=Number.isFinite(hi)&&Number.isFinite(lo)?`${hi}° / ${lo}°`:"";const precip=Number.isFinite(rain)?`<span class="weather-rain">💧 ${rain}%</span>`:"";return`<span class="weather-pill"><span class="weather-icon">${icon}</span><span class="weather-day">${forecastDayLabel(date,i)}</span>${temps?`<span>${temps}</span>`:""}${precip}</span>`}).join("");strip.innerHTML=`<div class="weather-forecast-track">${current}${days}</div>`}
 function renderError(){const strip=ensureStrip();if(strip)strip.innerHTML='<div class="weather-forecast-track"><span class="weather-pill weather-error">🌡️ Weather temporarily unavailable</span></div>'}
-async function refreshWeather(force=false){if(busy)return;const location=readLocation();const key=`${Number(location.lat).toFixed(3)},${Number(location.lon).toFixed(3)}`;if(!force&&key===lastKey&&Date.now()-lastFetch<REFRESH_MS)return;busy=true;try{const q=new URLSearchParams({lat:String(location.lat),lon:String(location.lon)});let response=await fetch(`/api/weather?${q}`,{cache:"no-store"});if(!response.ok)throw new Error(`weather proxy ${response.status}`);renderWeather(await response.json());lastKey=key;lastFetch=Date.now()}catch(error){console.warn("Weather forecast refresh failed",error);renderError()}finally{busy=false}}
+async function fetchDirectWeather(location){
+  const q=new URLSearchParams({latitude:String(location.lat),longitude:String(location.lon),current:"temperature_2m,weather_code",daily:"weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",temperature_unit:"fahrenheit",precipitation_unit:"inch",timezone:"auto",forecast_days:"5"});
+  const response=await fetch("https://api.open-meteo.com/v1/forecast?"+q,{cache:"no-store"});
+  if(!response.ok)throw new Error("Open-Meteo "+response.status);
+  return response.json();
+}
+async function refreshWeather(force=false){
+  if(busy)return;
+  const location=readLocation(),key=Number(location.lat).toFixed(3)+","+Number(location.lon).toFixed(3);
+  if(!force&&key===lastKey&&Date.now()-lastFetch<REFRESH_MS)return;
+  busy=true;
+  try{
+    const q=new URLSearchParams({lat:String(location.lat),lon:String(location.lon)});
+    let data;
+    try{
+      const response=await fetch("/api/weather?"+q,{cache:"no-store"});
+      if(!response.ok)throw new Error("weather proxy "+response.status);
+      data=await response.json();
+    }catch(proxyError){
+      console.warn("Weather proxy unavailable; using direct Open-Meteo fallback",proxyError);
+      data=await fetchDirectWeather(location);
+    }
+    renderWeather(data);lastKey=key;lastFetch=Date.now();
+  }catch(error){console.warn("Weather forecast refresh failed",error);renderError()}
+  finally{busy=false}
+}
 ensureStrip();setTimeout(()=>refreshWeather(true),300);setInterval(()=>refreshWeather(false),15000);document.addEventListener("visibilitychange",()=>{if(!document.hidden)refreshWeather(false)});window.addEventListener("storage",e=>{if(e.key===LOCATION_KEY)refreshWeather(true)});document.addEventListener("v6:locationchange",()=>refreshWeather(true));
