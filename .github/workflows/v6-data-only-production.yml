@@ -16,7 +16,7 @@ permissions:
 
 concurrency:
   group: v6-data-publish
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   refresh-data:
