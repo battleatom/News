@@ -17,6 +17,10 @@ def main()->None:
     if len(collector_errors)/source_total>MAX_ERROR_RATIO:errors.append(f"too many collector failures: {len(collector_errors)}/{source_total}")
 
     feed=json.loads(FEED.read_text(encoding="utf-8"));under=(feed.get("stories") or {}).get("underreported",[])
+    christian_live=(feed.get("stories") or {}).get("christian",[]);christian_reserve=(feed.get("reserves") or {}).get("christian",[])
+    if len(christian_live)<40:errors.append(f"Christian live invariant failed: {len(christian_live)}/40 stories")
+    if len(christian_reserve)<10:errors.append(f"Christian reserve invariant failed: {len(christian_reserve)}/10 minimum reserve stories")
+    if len(christian_reserve)>20:errors.append(f"Christian reserve invariant failed: {len(christian_reserve)} exceeds 20-story reserve ceiling")
     x_live=(feed.get("stories") or {}).get("x",[]);x_reserve=(feed.get("reserves") or {}).get("x",[])
     x_expected={"x-health","x-technology","x-celebrities","x-world","x-politics","x-entertainment","x-sports","x-business","x-gaming","x-science"}
     x_live_ids={str(row.get("source_id") or "") for row in x_live};x_reserve_ids={str(row.get("source_id") or "") for row in x_reserve}
