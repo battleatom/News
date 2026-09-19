@@ -3,30 +3,30 @@
   "categories": {
     "underreported": {
       "label": "Underreported",
-      "target": 78,
+      "target": 71,
       "visible_target": 50,
-      "reserve": 10,
+      "reserve": 13,
       "source_cap": 10,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.26,
+      "expansion_ratio": 0.15
     },
     "top": {
       "label": "Top Stories",
-      "target": 156,
+      "target": 140,
       "visible_target": 100,
-      "reserve": 20,
+      "reserve": 25,
       "source_cap": 14,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "nfl": {
       "label": "NFL",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 12,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "christian": {
       "label": "Christian",
@@ -48,111 +48,111 @@
     },
     "world": {
       "label": "World",
-      "target": 188,
+      "target": 168,
       "visible_target": 120,
-      "reserve": 24,
+      "reserve": 30,
       "source_cap": 12,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "us": {
       "label": "United States",
-      "target": 188,
+      "target": 168,
       "visible_target": 120,
-      "reserve": 24,
+      "reserve": 30,
       "source_cap": 18,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "presidential": {
       "label": "Presidential",
-      "target": 47,
+      "target": 43,
       "visible_target": 30,
-      "reserve": 6,
+      "reserve": 8,
       "source_cap": 10,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.26666666666666666,
+      "expansion_ratio": 0.15
     },
     "federal": {
       "label": "Federal Government",
-      "target": 63,
+      "target": 56,
       "visible_target": 40,
-      "reserve": 8,
+      "reserve": 10,
       "source_cap": 10,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "legislation": {
       "label": "Laws & Legislation",
-      "target": 78,
+      "target": 71,
       "visible_target": 50,
-      "reserve": 10,
+      "reserve": 13,
       "source_cap": 20,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.26,
+      "expansion_ratio": 0.15
     },
     "nm": {
       "label": "New Mexico",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 14,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "local": {
       "label": "Local",
-      "target": 47,
+      "target": 43,
       "visible_target": 30,
-      "reserve": 6,
+      "reserve": 8,
       "source_cap": 10,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.26666666666666666,
+      "expansion_ratio": 0.15
     },
     "region": {
       "label": "Region",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 18,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "technology": {
       "label": "Technology",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 12,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "gaming": {
       "label": "Gaming & Computing",
-      "target": 141,
+      "target": 127,
       "visible_target": 90,
-      "reserve": 18,
+      "reserve": 23,
       "source_cap": 13,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25555555555555554,
+      "expansion_ratio": 0.15
     },
     "military": {
       "label": "Military & War",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 14,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "entertainment": {
       "label": "Entertainment",
-      "target": 125,
+      "target": 112,
       "visible_target": 80,
-      "reserve": 16,
+      "reserve": 20,
       "source_cap": 15,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.15
     },
     "boxoffice": {
       "label": "Box Office",
