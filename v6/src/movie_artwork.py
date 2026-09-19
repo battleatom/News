@@ -7,6 +7,7 @@ import os
 import re
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 
 UA="Mozilla/5.0 Underreported-V6/1.0"
@@ -184,20 +185,26 @@ def _find_artwork(title:str,release_date:str,movie_url:str)->dict:
 
 def ensure_movie_artwork(movies:list[dict])->dict:
     movies[:]=[movie for movie in movies if not _is_schedule_label(str(movie.get("title") or ""))];total=len(movies);filled=0;repaired=0;source_fills={}
+    pending=[]
     for movie in movies:
         original=_normalize_poster_url(str(movie.get("poster") or ""))
         if original and _poster_reachable(original):
             movie["poster"]=original;movie["posterReachable"]=True;movie.setdefault("artworkSource",movie.get("metadataSource") or "existing");continue
         if original:repaired+=1
         movie["poster"]="";movie["posterReachable"]=False;title=str(movie.get("title") or "").strip()
-        if not title:continue
-        result=_find_artwork(title,str(movie.get("releaseDate") or ""),str(movie.get("movieUrl") or ""))
-        if not result:continue
-        movie["poster"]=result["poster"];movie["posterReachable"]=True
-        if not movie.get("overview") and result.get("overview"):movie["overview"]=result["overview"]
-        if not movie.get("tmdbId") and result.get("tmdbId"):movie["tmdbId"]=result["tmdbId"]
-        if not movie.get("voteAverage") and result.get("voteAverage"):movie["voteAverage"]=result["voteAverage"]
-        if result.get("metadataSource"):movie["metadataSource"]=result["metadataSource"]
-        movie["artworkSource"]=result.get("artworkSource") or result.get("metadataSource") or "fallback";filled+=1;source_fills[movie["artworkSource"]]=source_fills.get(movie["artworkSource"],0)+1
+        if title:pending.append(movie)
+    def lookup(movie):
+        return movie,_find_artwork(str(movie.get("title") or "").strip(),str(movie.get("releaseDate") or ""),str(movie.get("movieUrl") or ""))
+    with ThreadPoolExecutor(max_workers=min(8,max(1,len(pending)))) as executor:
+        futures=[executor.submit(lookup,movie) for movie in pending]
+        for future in as_completed(futures):
+            movie,result=future.result()
+            if not result:continue
+            movie["poster"]=result["poster"];movie["posterReachable"]=True
+            if not movie.get("overview") and result.get("overview"):movie["overview"]=result["overview"]
+            if not movie.get("tmdbId") and result.get("tmdbId"):movie["tmdbId"]=result["tmdbId"]
+            if not movie.get("voteAverage") and result.get("voteAverage"):movie["voteAverage"]=result["voteAverage"]
+            if result.get("metadataSource"):movie["metadataSource"]=result["metadataSource"]
+            movie["artworkSource"]=result.get("artworkSource") or result.get("metadataSource") or "fallback";filled+=1;source_fills[movie["artworkSource"]]=source_fills.get(movie["artworkSource"],0)+1
     reachable=sum(bool(movie.get("poster")) and movie.get("posterReachable") is True for movie in movies)
     return {"movieCount":total,"posterCount":reachable,"reachablePosterCount":reachable,"missingPosterCount":max(0,total-reachable),"posterCoverage":round(reachable/total,4) if total else 0.0,"fallbackFilled":filled,"repairedBrokenPosters":repaired,"fallbackFilledBySource":source_fills,"tmdbConfigured":bool(TMDB_API_KEY)}
