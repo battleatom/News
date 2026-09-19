@@ -1,74 +1,568 @@
 {
   "version": 1,
   "categories": {
-    "top": {"label":"Top Stories","target":156,"visible_target":100,"reserve":20,"source_cap":14,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "nfl": {"label":"NFL","target":125,"visible_target":80,"reserve":16,"source_cap":12,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "x": {"label":"X","target":20,"visible_target":10,"reserve":10,"source_cap":2,"reserve_ratio":1.00,"expansion_ratio":0.00},
-    "underreported": {"label":"Underreported","target":78,"visible_target":50,"reserve":10,"source_cap":10,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "world": {"label":"World","target":188,"visible_target":120,"reserve":24,"source_cap":12,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "us": {"label":"United States","target":188,"visible_target":120,"reserve":24,"source_cap":18,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "presidential": {"label":"Presidential","target":47,"visible_target":30,"reserve":6,"source_cap":10,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "federal": {"label":"Federal Government","target":63,"visible_target":40,"reserve":8,"source_cap":10,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "legislation": {"label":"Laws & Legislation","target":78,"visible_target":50,"reserve":10,"source_cap":20,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "nm": {"label":"New Mexico","target":125,"visible_target":80,"reserve":16,"source_cap":14,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "local": {"label":"Local","target":47,"visible_target":30,"reserve":6,"source_cap":10,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "region": {"label":"Region","target":125,"visible_target":80,"reserve":16,"source_cap":18,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "technology": {"label":"Technology","target":125,"visible_target":80,"reserve":16,"source_cap":12,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "gaming": {"label":"Gaming & Computing","target":141,"visible_target":90,"reserve":18,"source_cap":13,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "military": {"label":"Military & War","target":125,"visible_target":80,"reserve":16,"source_cap":14,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "entertainment": {"label":"Entertainment","target":125,"visible_target":80,"reserve":16,"source_cap":15,"reserve_ratio":0.20,"expansion_ratio":0.30},
-    "boxoffice": {"label":"Box Office","target":40,"visible_target":40,"reserve":0,"source_cap":40,"reserve_ratio":0.00,"expansion_ratio":0.00}
+    "underreported": {
+      "label": "Underreported",
+      "target": 78,
+      "visible_target": 50,
+      "reserve": 10,
+      "source_cap": 10,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "top": {
+      "label": "Top Stories",
+      "target": 156,
+      "visible_target": 100,
+      "reserve": 20,
+      "source_cap": 14,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "nfl": {
+      "label": "NFL",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 12,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "christian": {
+      "label": "Christian",
+      "target": 47,
+      "visible_target": 30,
+      "reserve": 6,
+      "source_cap": 8,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "x": {
+      "label": "X",
+      "target": 20,
+      "visible_target": 10,
+      "reserve": 10,
+      "source_cap": 2,
+      "reserve_ratio": 1,
+      "expansion_ratio": 0
+    },
+    "world": {
+      "label": "World",
+      "target": 188,
+      "visible_target": 120,
+      "reserve": 24,
+      "source_cap": 12,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "us": {
+      "label": "United States",
+      "target": 188,
+      "visible_target": 120,
+      "reserve": 24,
+      "source_cap": 18,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "presidential": {
+      "label": "Presidential",
+      "target": 47,
+      "visible_target": 30,
+      "reserve": 6,
+      "source_cap": 10,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "federal": {
+      "label": "Federal Government",
+      "target": 63,
+      "visible_target": 40,
+      "reserve": 8,
+      "source_cap": 10,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "legislation": {
+      "label": "Laws & Legislation",
+      "target": 78,
+      "visible_target": 50,
+      "reserve": 10,
+      "source_cap": 20,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "nm": {
+      "label": "New Mexico",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 14,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "local": {
+      "label": "Local",
+      "target": 47,
+      "visible_target": 30,
+      "reserve": 6,
+      "source_cap": 10,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "region": {
+      "label": "Region",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 18,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "technology": {
+      "label": "Technology",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 12,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "gaming": {
+      "label": "Gaming & Computing",
+      "target": 141,
+      "visible_target": 90,
+      "reserve": 18,
+      "source_cap": 13,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "military": {
+      "label": "Military & War",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 14,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "entertainment": {
+      "label": "Entertainment",
+      "target": 125,
+      "visible_target": 80,
+      "reserve": 16,
+      "source_cap": 15,
+      "reserve_ratio": 0.2,
+      "expansion_ratio": 0.3
+    },
+    "boxoffice": {
+      "label": "Box Office",
+      "target": 40,
+      "visible_target": 40,
+      "reserve": 0,
+      "source_cap": 40,
+      "reserve_ratio": 0,
+      "expansion_ratio": 0
+    }
   },
   "sources": [
-    {"id":"top-reuters","name":"Reuters","kind":"google_news","category":"top","query":"site:reuters.com breaking news world United States"},
-    {"id":"top-ap","name":"Associated Press","kind":"google_news","category":"top","query":"site:apnews.com breaking news world United States"},
-    {"id":"top-npr","name":"NPR","kind":"google_news","category":"top","query":"site:npr.org breaking news United States world"},
-    {"id":"world-reuters","name":"Reuters","kind":"google_news","category":"world","query":"site:reuters.com world international"},
-    {"id":"world-ap","name":"Associated Press","kind":"google_news","category":"world","query":"site:apnews.com world international"},
-    {"id":"world-bbc","name":"BBC","kind":"google_news","category":"world","query":"site:bbc.com/news world international"},
-    {"id":"us-reuters","name":"Reuters","kind":"google_news","category":"us","query":"site:reuters.com United States national news"},
-    {"id":"us-ap","name":"Associated Press","kind":"google_news","category":"us","query":"site:apnews.com United States national news"},
-    {"id":"us-npr","name":"NPR","kind":"google_news","category":"us","query":"site:npr.org United States national news"},
-    {"id":"presidential-reuters","name":"Reuters","kind":"google_news","category":"presidential","query":"site:reuters.com White House president administration presidential action"},
-    {"id":"presidential-ap","name":"Associated Press","kind":"google_news","category":"presidential","query":"site:apnews.com White House president administration presidential action"},
-    {"id":"federal-reuters","name":"Reuters","kind":"google_news","category":"federal","query":"site:reuters.com Congress Supreme Court DOJ FBI federal agency"},
-    {"id":"federal-ap","name":"Associated Press","kind":"google_news","category":"federal","query":"site:apnews.com Congress Supreme Court DOJ FBI federal agency"},
-    {"id":"legislation-congress","name":"Congress.gov","kind":"google_news","category":"legislation","query":"site:congress.gov bill law House Senate"},
-    {"id":"legislation-fr","name":"Federal Register","kind":"google_news","category":"legislation","query":"site:federalregister.gov final rule regulation"},
-    {"id":"legislation-wh","name":"White House","kind":"google_news","category":"legislation","query":"site:whitehouse.gov presidential actions executive order"},
-    {"id":"nm-source","name":"Source New Mexico","kind":"google_news","category":"nm","query":"site:sourcenm.com New Mexico news"},
-    {"id":"nm-depth","name":"New Mexico In Depth","kind":"google_news","category":"nm","query":"site:nmindepth.com New Mexico news"},
-    {"id":"nm-kunm","name":"KUNM","kind":"google_news","category":"nm","query":"site:kunm.org New Mexico news"},
-    {"id":"local-tricity","name":"Tri-City Record","kind":"google_news","category":"local","query":"site:tricityrecordnm.com Farmington OR Aztec OR Bloomfield OR Shiprock","state":"NM","market":"Farmington"},
-    {"id":"local-ksje","name":"KSJE","kind":"google_news","category":"local","query":"site:ksje.com Farmington OR San Juan County OR Shiprock","state":"NM","market":"Farmington"},
-    {"id":"local-durango","name":"Durango Herald","kind":"google_news","category":"local","query":"site:durangoherald.com Four Corners OR Farmington OR Shiprock","state":"NM","market":"Farmington"},
-    {"id":"region-southwest","name":"Southwest discovery","kind":"google_news","category":"region","query":"Arizona OR New Mexico OR Colorado OR Utah regional news","region":"southwest"},
-    {"id":"tech-verge","name":"The Verge","kind":"google_news","category":"technology","query":"site:theverge.com AI technology cybersecurity computing"},
-    {"id":"tech-ars","name":"Ars Technica","kind":"google_news","category":"technology","query":"site:arstechnica.com AI security software chips computing"},
-    {"id":"tech-techcrunch","name":"TechCrunch","kind":"google_news","category":"technology","query":"site:techcrunch.com AI technology cybersecurity startups"},
-    {"id":"gaming-ign","name":"IGN","kind":"google_news","category":"gaming","query":"site:ign.com gaming PlayStation Xbox Nintendo PC"},
-    {"id":"gaming-gamespot","name":"GameSpot","kind":"google_news","category":"gaming","query":"site:gamespot.com gaming PlayStation Xbox Nintendo PC"},
-    {"id":"gaming-pcgamer","name":"PC Gamer","kind":"google_news","category":"gaming","query":"site:pcgamer.com gaming Steam Nvidia AMD"},
-    {"id":"mil-defense","name":"Defense News","kind":"google_news","category":"military","query":"site:defensenews.com Pentagon military defense"},
-    {"id":"mil-times","name":"Military Times","kind":"google_news","category":"military","query":"site:militarytimes.com Pentagon military troops"},
-    {"id":"mil-stripes","name":"Stars and Stripes","kind":"google_news","category":"military","query":"site:stripes.com US military Pentagon troops"},
-    {"id":"ent-variety","name":"Variety","kind":"google_news","category":"entertainment","query":"site:variety.com film television music entertainment"},
-    {"id":"ent-billboard","name":"Billboard","kind":"google_news","category":"entertainment","query":"site:billboard.com music artist tour album"},
-    {"id":"ent-deadline","name":"Deadline","kind":"google_news","category":"entertainment","query":"site:deadline.com film television Hollywood entertainment"},
-    {"id":"under-propublica","name":"ProPublica","kind":"google_news","category":"underreported","query":"site:propublica.org investigation government health justice environment"},
-    {"id":"under-marshall","name":"The Marshall Project","kind":"google_news","category":"underreported","query":"site:themarshallproject.org criminal justice investigation"},
-    {"id":"under-publicintegrity","name":"Center for Public Integrity","kind":"google_news","category":"underreported","query":"site:publicintegrity.org investigation government inequality"},
-    {"id":"under-kff","name":"KFF Health News","kind":"google_news","category":"underreported","query":"site:kffhealthnews.org investigation health policy"},
-    {"id":"x-health","name":"X · Health","kind":"google_news","category":"x","query":"health medical disease FDA public health trending social media"},
-    {"id":"x-technology","name":"X · Technology & AI","kind":"google_news","category":"x","query":"AI technology OpenAI Google Apple cybersecurity trending social media"},
-    {"id":"x-celebrities","name":"X · Celebrities & Public Figures","kind":"google_news","category":"x","query":"celebrity actor singer athlete public figure trending social media"},
-    {"id":"x-world","name":"X · World","kind":"google_news","category":"x","query":"world international conflict war diplomacy trending social media"},
-    {"id":"x-politics","name":"X · Politics & Government","kind":"google_news","category":"x","query":"White House Congress Supreme Court politics government trending social media"},
-    {"id":"x-entertainment","name":"X · Entertainment","kind":"google_news","category":"x","query":"movies music television streaming entertainment trending social media"},
-    {"id":"x-sports","name":"X · Sports","kind":"google_news","category":"x","query":"NFL NBA MLB soccer sports trending social media"},
-    {"id":"x-business","name":"X · Business & Economy","kind":"google_news","category":"x","query":"economy stocks tariffs jobs business companies trending social media"},
-    {"id":"x-gaming","name":"X · Gaming","kind":"google_news","category":"x","query":"gaming PlayStation Xbox Nintendo PC games trending social media"},
-    {"id":"x-science","name":"X · Science","kind":"google_news","category":"x","query":"science space NASA climate research trending social media"},
-    {"id":"nfl-news","name":"NFL News","kind":"google_news","category":"nfl","query":"NFL news injuries trades roster scores"}
+    {
+      "id": "top-reuters",
+      "name": "Reuters",
+      "kind": "google_news",
+      "category": "top",
+      "query": "site:reuters.com breaking news world United States"
+    },
+    {
+      "id": "top-ap",
+      "name": "Associated Press",
+      "kind": "google_news",
+      "category": "top",
+      "query": "site:apnews.com breaking news world United States"
+    },
+    {
+      "id": "top-npr",
+      "name": "NPR",
+      "kind": "google_news",
+      "category": "top",
+      "query": "site:npr.org breaking news United States world"
+    },
+    {
+      "id": "world-reuters",
+      "name": "Reuters",
+      "kind": "google_news",
+      "category": "world",
+      "query": "site:reuters.com world international"
+    },
+    {
+      "id": "world-ap",
+      "name": "Associated Press",
+      "kind": "google_news",
+      "category": "world",
+      "query": "site:apnews.com world international"
+    },
+    {
+      "id": "world-bbc",
+      "name": "BBC",
+      "kind": "google_news",
+      "category": "world",
+      "query": "site:bbc.com/news world international"
+    },
+    {
+      "id": "us-reuters",
+      "name": "Reuters",
+      "kind": "google_news",
+      "category": "us",
+      "query": "site:reuters.com United States national news"
+    },
+    {
+      "id": "us-ap",
+      "name": "Associated Press",
+      "kind": "google_news",
+      "category": "us",
+      "query": "site:apnews.com United States national news"
+    },
+    {
+      "id": "us-npr",
+      "name": "NPR",
+      "kind": "google_news",
+      "category": "us",
+      "query": "site:npr.org United States national news"
+    },
+    {
+      "id": "presidential-reuters",
+      "name": "Reuters",
+      "kind": "google_news",
+      "category": "presidential",
+      "query": "site:reuters.com White House president administration presidential action"
+    },
+    {
+      "id": "presidential-ap",
+      "name": "Associated Press",
+      "kind": "google_news",
+      "category": "presidential",
+      "query": "site:apnews.com White House president administration presidential action"
+    },
+    {
+      "id": "federal-reuters",
+      "name": "Reuters",
+      "kind": "google_news",
+      "category": "federal",
+      "query": "site:reuters.com Congress Supreme Court DOJ FBI federal agency"
+    },
+    {
+      "id": "federal-ap",
+      "name": "Associated Press",
+      "kind": "google_news",
+      "category": "federal",
+      "query": "site:apnews.com Congress Supreme Court DOJ FBI federal agency"
+    },
+    {
+      "id": "legislation-congress",
+      "name": "Congress.gov",
+      "kind": "google_news",
+      "category": "legislation",
+      "query": "site:congress.gov bill law House Senate"
+    },
+    {
+      "id": "legislation-fr",
+      "name": "Federal Register",
+      "kind": "google_news",
+      "category": "legislation",
+      "query": "site:federalregister.gov final rule regulation"
+    },
+    {
+      "id": "legislation-wh",
+      "name": "White House",
+      "kind": "google_news",
+      "category": "legislation",
+      "query": "site:whitehouse.gov presidential actions executive order"
+    },
+    {
+      "id": "nm-source",
+      "name": "Source New Mexico",
+      "kind": "google_news",
+      "category": "nm",
+      "query": "site:sourcenm.com New Mexico news"
+    },
+    {
+      "id": "nm-depth",
+      "name": "New Mexico In Depth",
+      "kind": "google_news",
+      "category": "nm",
+      "query": "site:nmindepth.com New Mexico news"
+    },
+    {
+      "id": "nm-kunm",
+      "name": "KUNM",
+      "kind": "google_news",
+      "category": "nm",
+      "query": "site:kunm.org New Mexico news"
+    },
+    {
+      "id": "local-tricity",
+      "name": "Tri-City Record",
+      "kind": "google_news",
+      "category": "local",
+      "query": "site:tricityrecordnm.com Farmington OR Aztec OR Bloomfield OR Shiprock",
+      "state": "NM",
+      "market": "Farmington"
+    },
+    {
+      "id": "local-ksje",
+      "name": "KSJE",
+      "kind": "google_news",
+      "category": "local",
+      "query": "site:ksje.com Farmington OR San Juan County OR Shiprock",
+      "state": "NM",
+      "market": "Farmington"
+    },
+    {
+      "id": "local-durango",
+      "name": "Durango Herald",
+      "kind": "google_news",
+      "category": "local",
+      "query": "site:durangoherald.com Four Corners OR Farmington OR Shiprock",
+      "state": "NM",
+      "market": "Farmington"
+    },
+    {
+      "id": "region-southwest",
+      "name": "Southwest discovery",
+      "kind": "google_news",
+      "category": "region",
+      "query": "Arizona OR New Mexico OR Colorado OR Utah regional news",
+      "region": "southwest"
+    },
+    {
+      "id": "tech-verge",
+      "name": "The Verge",
+      "kind": "google_news",
+      "category": "technology",
+      "query": "site:theverge.com AI technology cybersecurity computing"
+    },
+    {
+      "id": "tech-ars",
+      "name": "Ars Technica",
+      "kind": "google_news",
+      "category": "technology",
+      "query": "site:arstechnica.com AI security software chips computing"
+    },
+    {
+      "id": "tech-techcrunch",
+      "name": "TechCrunch",
+      "kind": "google_news",
+      "category": "technology",
+      "query": "site:techcrunch.com AI technology cybersecurity startups"
+    },
+    {
+      "id": "gaming-ign",
+      "name": "IGN",
+      "kind": "google_news",
+      "category": "gaming",
+      "query": "site:ign.com gaming PlayStation Xbox Nintendo PC"
+    },
+    {
+      "id": "gaming-gamespot",
+      "name": "GameSpot",
+      "kind": "google_news",
+      "category": "gaming",
+      "query": "site:gamespot.com gaming PlayStation Xbox Nintendo PC"
+    },
+    {
+      "id": "gaming-pcgamer",
+      "name": "PC Gamer",
+      "kind": "google_news",
+      "category": "gaming",
+      "query": "site:pcgamer.com gaming Steam Nvidia AMD"
+    },
+    {
+      "id": "mil-defense",
+      "name": "Defense News",
+      "kind": "google_news",
+      "category": "military",
+      "query": "site:defensenews.com Pentagon military defense"
+    },
+    {
+      "id": "mil-times",
+      "name": "Military Times",
+      "kind": "google_news",
+      "category": "military",
+      "query": "site:militarytimes.com Pentagon military troops"
+    },
+    {
+      "id": "mil-stripes",
+      "name": "Stars and Stripes",
+      "kind": "google_news",
+      "category": "military",
+      "query": "site:stripes.com US military Pentagon troops"
+    },
+    {
+      "id": "ent-variety",
+      "name": "Variety",
+      "kind": "google_news",
+      "category": "entertainment",
+      "query": "site:variety.com film television music entertainment"
+    },
+    {
+      "id": "ent-billboard",
+      "name": "Billboard",
+      "kind": "google_news",
+      "category": "entertainment",
+      "query": "site:billboard.com music artist tour album"
+    },
+    {
+      "id": "ent-deadline",
+      "name": "Deadline",
+      "kind": "google_news",
+      "category": "entertainment",
+      "query": "site:deadline.com film television Hollywood entertainment"
+    },
+    {
+      "id": "under-propublica",
+      "name": "ProPublica",
+      "kind": "google_news",
+      "category": "underreported",
+      "query": "site:propublica.org investigation government health justice environment"
+    },
+    {
+      "id": "under-marshall",
+      "name": "The Marshall Project",
+      "kind": "google_news",
+      "category": "underreported",
+      "query": "site:themarshallproject.org criminal justice investigation"
+    },
+    {
+      "id": "under-publicintegrity",
+      "name": "Center for Public Integrity",
+      "kind": "google_news",
+      "category": "underreported",
+      "query": "site:publicintegrity.org investigation government inequality"
+    },
+    {
+      "id": "under-kff",
+      "name": "KFF Health News",
+      "kind": "google_news",
+      "category": "underreported",
+      "query": "site:kffhealthnews.org investigation health policy"
+    },
+    {
+      "id": "christian-cbn",
+      "name": "CBN News",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:cbn.com OR site:cbnnews.com Christian Christianity church faith news politics Israel Jerusalem entertainment"
+    },
+    {
+      "id": "christian-post",
+      "name": "The Christian Post",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:christianpost.com Christian news politics world entertainment movies actors church"
+    },
+    {
+      "id": "christian-jpost",
+      "name": "Jerusalem Post · Christian World",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:jpost.com Christian Christianity Jerusalem Israel archaeology Christians"
+    },
+    {
+      "id": "christian-rns",
+      "name": "Religion News Service",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:religionnews.com Christian Christianity church politics culture entertainment"
+    },
+    {
+      "id": "christian-premier",
+      "name": "Premier Christianity",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:premierchristianity.com Christian news culture entertainment church world"
+    },
+    {
+      "id": "christian-crosswalk",
+      "name": "Crosswalk",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:crosswalk.com Christian news movies entertainment culture faith"
+    },
+    {
+      "id": "x-health",
+      "name": "X · Health",
+      "kind": "google_news",
+      "category": "x",
+      "query": "health medical disease FDA public health trending social media"
+    },
+    {
+      "id": "x-technology",
+      "name": "X · Technology & AI",
+      "kind": "google_news",
+      "category": "x",
+      "query": "AI technology OpenAI Google Apple cybersecurity trending social media"
+    },
+    {
+      "id": "x-celebrities",
+      "name": "X · Celebrities & Public Figures",
+      "kind": "google_news",
+      "category": "x",
+      "query": "celebrity actor singer athlete public figure trending social media"
+    },
+    {
+      "id": "x-world",
+      "name": "X · World",
+      "kind": "google_news",
+      "category": "x",
+      "query": "world international conflict war diplomacy trending social media"
+    },
+    {
+      "id": "x-politics",
+      "name": "X · Politics & Government",
+      "kind": "google_news",
+      "category": "x",
+      "query": "White House Congress Supreme Court politics government trending social media"
+    },
+    {
+      "id": "x-entertainment",
+      "name": "X · Entertainment",
+      "kind": "google_news",
+      "category": "x",
+      "query": "movies music television streaming entertainment trending social media"
+    },
+    {
+      "id": "x-sports",
+      "name": "X · Sports",
+      "kind": "google_news",
+      "category": "x",
+      "query": "NFL NBA MLB soccer sports trending social media"
+    },
+    {
+      "id": "x-business",
+      "name": "X · Business & Economy",
+      "kind": "google_news",
+      "category": "x",
+      "query": "economy stocks tariffs jobs business companies trending social media"
+    },
+    {
+      "id": "x-gaming",
+      "name": "X · Gaming",
+      "kind": "google_news",
+      "category": "x",
+      "query": "gaming PlayStation Xbox Nintendo PC games trending social media"
+    },
+    {
+      "id": "x-science",
+      "name": "X · Science",
+      "kind": "google_news",
+      "category": "x",
+      "query": "science space NASA climate research trending social media"
+    },
+    {
+      "id": "nfl-news",
+      "name": "NFL News",
+      "kind": "google_news",
+      "category": "nfl",
+      "query": "NFL news injuries trades roster scores"
+    }
   ]
 }
