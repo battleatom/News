@@ -2,7 +2,7 @@
   const tabs=document.getElementById('tabs'),feed=document.getElementById('feed');
   if(!tabs||!feed)return;
   const labelToKey={
-    'Top Stories':'top','NFL':'nfl','X':'x','Underreported':'underreported','World':'world',
+    'Top Stories':'top','NFL':'nfl','Christian':'christian','X':'x','Underreported':'underreported','World':'world',
     'United States':'us','US':'us','Presidential':'presidential','Federal Government':'federal','Federal':'federal',
     'Laws & Legislation':'legislation','Legislation':'legislation','New Mexico':'nm','Local':'local','Region':'region',
     'Technology':'technology','Gaming & Computing':'gaming','Gaming':'gaming','Military & War':'military','Military':'military',
