@@ -12,4 +12,8 @@
   // v6:tabchange events: scroll-position updates also emit/synchronize state and
   // were snapping the horizontal tab strip back to the active X tab.
   sync();
+  // On a full page refresh the selected tab is restored before this module runs.
+  // Center it once after layout/fonts settle; this does not affect later manual tab-strip scrolling.
+  const centerRestored=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>centerActive('auto')));
+  if(document.readyState==='complete')centerRestored();else window.addEventListener('load',centerRestored,{once:true});
 })();
