@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T20:37:58.751693Z",
+  "generatedAt": "2026-09-19T22:35:14.905535Z",
   "markets": [
     {
       "symbol": "^GSPC",
@@ -134,9 +134,9 @@
     {
       "symbol": "BTC-USD",
       "label": "BITCOIN",
-      "price": 81241.71,
+      "price": 81043.93,
       "previousClose": 75612.51,
-      "changePct": 7.444799808920524,
+      "changePct": 7.183229335992151,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -144,9 +144,9 @@
     {
       "symbol": "ETH-USD",
       "label": "ETHEREUM",
-      "price": 2636.42,
+      "price": 2621.27,
       "previousClose": 2399.09,
-      "changePct": 9.892638324495948,
+      "changePct": 9.26114809508784,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
