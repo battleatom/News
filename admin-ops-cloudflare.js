@@ -2,7 +2,7 @@
   const tabs=document.getElementById('tabs'),feed=document.getElementById('feed');
   if(!tabs||!feed)return;
   const C={g:'#15803d',y:'#b45309',r:'#b91c1c',b:'#2563eb',p:'#7c3aed',c:'#0891b2'};
-  const labels={top:'Top Stories',nfl:'NFL',x:'X',underreported:'Underreported',world:'World',us:'US',presidential:'Presidential',federal:'Federal',legislation:'Legislation',nm:'New Mexico',local:'Local',region:'Region',technology:'Technology',gaming:'Gaming',military:'Military',entertainment:'Entertainment'};
+  const labels={top:'Top Stories',nfl:'NFL',christian:'Christian',x:'X',underreported:'Underreported',world:'World',us:'US',presidential:'Presidential',federal:'Federal',legislation:'Legislation',nm:'New Mexico',local:'Local',region:'Region',technology:'Technology',gaming:'Gaming',military:'Military',entertainment:'Entertainment'};
   let busy=false,last='';
   const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   const active=()=>!!tabs.querySelector('.tab[data-category="admin"][aria-selected="true"]');
