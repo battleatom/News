@@ -44,8 +44,8 @@ async function loadData(first=false){
 
   const fallbackPools=()=>new Map([["D",[]],["NR",[]],["NW",[]]]);
   const tasks=[
-    json("status.json").then(status=>{store.status=status;const generated=Date.parse(status.generatedAt||"");const ageMinutes=Number.isFinite(generated)?Math.max(0,Math.round((Date.now()-generated)/60000)):null;const stale=ageMinutes!=null&&ageMinutes>90;health.textContent=status.collectorErrors?.length?`Degraded · ${status.collectorErrors.length} source errors`:stale?`V6 · stale · ${ageMinutes}m`:"V6 · healthy";health.dataset.state=(status.collectorErrors?.length||stale)?"warn":"ok";render()}).catch(error=>console.warn("Status load failed",error)),
-    json("nfl.json").then(data=>{store.nfl=data;render()}).catch(error=>{store.nfl={games:[],error:String(error?.message||error)}}),
+    json("status.json").then(status=>{store.status=status;const generated=Date.parse(status.generatedAt||"");const ageMinutes=Number.isFinite(generated)?Math.max(0,Math.round((Date.now()-generated)/60000)):null;const stale=ageMinutes!=null&&ageMinutes>90;health.textContent=status.collectorErrors?.length?`Degraded · ${status.collectorErrors.length} source errors`:stale?`V6 · stale · ${ageMinutes}m`:"V6 · healthy";health.dataset.state=(status.collectorErrors?.length||stale)?"warn":"ok";if(store.active==="admin")render();else renderTabs()}).catch(error=>console.warn("Status load failed",error)),
+    json("nfl.json").then(data=>{store.nfl=data;if(store.active==="nfl")render();else renderTabs()}).catch(error=>{store.nfl={games:[],error:String(error?.message||error)}}),
     json("/api/nfl-standings").then(data=>{store.nflStandings=data;lastStandingsAt=Date.now();if(store.active==="nfl")render()}).catch(error=>{store.nflStandings={children:[],error:String(error?.message||error)}}),
     json("boxoffice.json").then(data=>{store.boxoffice=data;if(store.active==="boxoffice")render()}).catch(error=>{store.boxoffice={movies:[],error:String(error?.message||error)}}),
     json("markets.json").then(data=>{store.markets=data;renderMarkets()}).catch(error=>{store.markets={markets:[],error:String(error?.message||error)}}),
