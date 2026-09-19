@@ -448,16 +448,16 @@
     {
       "id": "christian-cbn",
       "name": "CBN News",
-      "kind": "google_news",
+      "kind": "rss",
       "category": "christian",
-      "query": "site:cbn.com OR site:cbnnews.com Christian Christianity church faith news politics Israel Jerusalem entertainment"
+      "url": "https://www1.cbn.com/rss-cbn-articles-cbnnews.xml"
     },
     {
       "id": "christian-post",
       "name": "The Christian Post",
-      "kind": "google_news",
+      "kind": "rss",
       "category": "christian",
-      "query": "site:christianpost.com Christian news politics world entertainment movies actors church"
+      "url": "https://www.christianpost.com/rss"
     },
     {
       "id": "christian-jpost",
@@ -490,9 +490,9 @@
     {
       "id": "christian-today",
       "name": "Christian Today",
-      "kind": "google_news",
+      "kind": "rss",
       "category": "christian",
-      "query": "site:christiantoday.com Christian Christianity church world culture life news"
+      "url": "https://www.christiantoday.com/rss.xml"
     },
     {
       "id": "christianity-today",
@@ -514,6 +514,55 @@
       "kind": "google_news",
       "category": "christian",
       "query": "site:opendoorsus.org Christian persecution Christians church world faith"
+    },
+    {
+      "id": "christian-cbn-world",
+      "name": "CBN News · World",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www1.cbn.com/rss-cbn-news-world.xml"
+    },
+    {
+      "id": "christian-cbn-cwn",
+      "name": "CBN News · Christian World",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www1.cbn.com/rss-cbn-news-christianworldnews.xml"
+    },
+    {
+      "id": "christian-cbn-entertainment",
+      "name": "CBN · Entertainment",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www1.cbn.com/rss-cbn-articles-entertainment.xml"
+    },
+    {
+      "id": "christian-post-world",
+      "name": "The Christian Post · World",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www.christianpost.com/category/world/rss"
+    },
+    {
+      "id": "christian-post-entertainment",
+      "name": "The Christian Post · Entertainment",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www.christianpost.com/category/entertainment/rss"
+    },
+    {
+      "id": "christian-today-world",
+      "name": "Christian Today · World",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www.christiantoday.com/world?format=xml"
+    },
+    {
+      "id": "christian-today-culture",
+      "name": "Christian Today · Culture",
+      "kind": "rss",
+      "category": "christian",
+      "url": "https://www.christiantoday.com/culture?format=xml"
     },
     {
       "id": "x-health",
