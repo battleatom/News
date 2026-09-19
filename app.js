@@ -1,5 +1,5 @@
 import{Store}from"./store.js";
-import{renderActive,esc}from"./renderers.js?v=2";
+import{renderActive,esc}from"./renderers.js?v=3";
 import{resolveLocation,clearLocation}from"./location.js";
 import{loadPools,submitFeedback}from"./feedback.js";
 const store=new Store(),tabs=document.getElementById("tabs"),root=document.getElementById("feed"),health=document.getElementById("health"),localDate=document.getElementById("local-date"),localTime=document.getElementById("local-time"),locationButton=document.getElementById("location-button"),weatherStatus=document.getElementById("weather-status"),refreshStatus=document.getElementById("refresh-status"),marketsRoot=document.getElementById("markets"),toast=document.getElementById("toast");
