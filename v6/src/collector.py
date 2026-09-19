@@ -177,6 +177,54 @@ def enrich_underreported_evidence(stories: list[Story], registry: dict) -> None:
         future.cancel()
     executor.shutdown(wait=False,cancel_futures=True)
 
+
+BACKFILL_QUERIES = {
+    "technology": ["technology AI cybersecurity software chips computing", "technology startups cloud privacy devices"],
+    "entertainment": ["entertainment movies television music streaming Hollywood", "actors film TV music entertainment industry"],
+    "legislation": ["Congress bill legislation law regulation House Senate", "federal rule executive order legislation regulation"],
+    "underreported": ["investigation public health justice environment inequality government accountability", "underreported investigation local government health environment justice"],
+    "presidential": ["White House president administration executive action", "president administration White House policy"],
+    "federal": ["Congress Supreme Court DOJ FBI federal agencies government", "federal government agency Congress court policy"],
+    "local": ["Farmington NM San Juan County Aztec Bloomfield Shiprock", "Four Corners Farmington New Mexico local news"],
+}
+BACKFILL_CATEGORIES=set(BACKFILL_QUERIES)
+
+def _dedupe_key(story: Story) -> tuple[str,str]:
+    return (re.sub(r"[^a-z0-9]+"," ",story.title.lower()).strip(), story.url.strip())
+
+def collect_google_backfill(stories: list[Story], registry: dict) -> tuple[list[Story], list[dict]]:
+    """Second-pass Google News discovery only for explicitly deficient pools."""
+    counts={}
+    for story in stories:counts[story.category]=counts.get(story.category,0)+1
+    jobs=[]
+    for category in BACKFILL_CATEGORIES:
+        cfg=registry.get("categories",{}).get(category,{})
+        target=int(cfg.get("visible_target",cfg.get("target",0)))+int(cfg.get("reserve",0))
+        deficit=max(0,target-counts.get(category,0))
+        if not deficit:continue
+        for idx,query in enumerate(BACKFILL_QUERIES[category],1):
+            jobs.append((category,deficit,{"id":f"backfill-{category}-{idx}","name":f"Google News Backfill · {category}","kind":"google_news","category":category,"query":query,"market":"Farmington" if category=="local" else "","state":"NM" if category=="local" else ""}))
+    if not jobs:return stories,[]
+    extra=[];errors=[]
+    executor=ThreadPoolExecutor(max_workers=min(8,len(jobs)))
+    futures={executor.submit(collect_one,source):(category,source) for category,_,source in jobs}
+    done,pending=wait(futures,timeout=COLLECTOR_STAGE_TIMEOUT)
+    for future in done:
+        category,source=futures[future]
+        try:_,rows,error=future.result()
+        except Exception as exc:rows=[];error=f"{type(exc).__name__}: {exc}"
+        extra.extend(rows)
+        if error:errors.append({"source":source["id"],"name":source["name"],"error":error})
+    for future in pending:
+        _,source=futures[future];future.cancel();errors.append({"source":source["id"],"name":source["name"],"error":f"backfill timeout after {COLLECTOR_STAGE_TIMEOUT}s"})
+    executor.shutdown(wait=False,cancel_futures=True)
+    seen={_dedupe_key(s) for s in stories};merged=list(stories)
+    for story in extra:
+        key=_dedupe_key(story)
+        if key in seen:continue
+        seen.add(key);merged.append(story)
+    return merged,errors
+
 def collect_all(registry: dict) -> tuple[list[Story], list[dict]]:
     stories: list[Story] = []
     errors: list[dict] = []
@@ -195,5 +243,7 @@ def collect_all(registry: dict) -> tuple[list[Story], list[dict]]:
         errors.append({"source":sid,"name":source.get("name",sid),"error":f"collector stage timeout after {COLLECTOR_STAGE_TIMEOUT}s"})
         future.cancel()
     executor.shutdown(wait=False,cancel_futures=True)
+    stories,backfill_errors=collect_google_backfill(stories,registry)
+    errors.extend(backfill_errors)
     enrich_underreported_evidence(stories, registry)
     return stories, errors
