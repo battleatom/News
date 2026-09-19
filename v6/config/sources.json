@@ -537,20 +537,6 @@
       "url": "https://www1.cbn.com/rss-cbn-articles-entertainment.xml"
     },
     {
-      "id": "christian-post-world",
-      "name": "The Christian Post · World",
-      "kind": "rss",
-      "category": "christian",
-      "url": "https://www.christianpost.com/category/world/rss"
-    },
-    {
-      "id": "christian-post-entertainment",
-      "name": "The Christian Post · Entertainment",
-      "kind": "rss",
-      "category": "christian",
-      "url": "https://www.christianpost.com/category/entertainment/rss"
-    },
-    {
       "id": "christian-today-world",
       "name": "Christian Today · World",
       "kind": "rss",
@@ -640,6 +626,20 @@
       "kind": "google_news",
       "category": "nfl",
       "query": "NFL news injuries trades roster scores"
+    },
+    {
+      "id": "christian-post-world",
+      "name": "The Christian Post · World",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:christianpost.com/category/world Christian Christianity church persecution world"
+    },
+    {
+      "id": "christian-post-entertainment",
+      "name": "The Christian Post · Entertainment",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:christianpost.com/category/entertainment Christian faith movies music entertainment"
     }
   ]
 }
