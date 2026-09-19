@@ -5,7 +5,7 @@ import re
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, wait
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
@@ -13,8 +13,10 @@ from model import Story
 
 UA = "Underreported-V6/1.0 (+https://battleatom.github.io/)"
 TIMEOUT = 15
-MAX_WORKERS = 10
-EVIDENCE_WORKERS = 6
+MAX_WORKERS = 16
+COLLECTOR_STAGE_TIMEOUT = 45
+EVIDENCE_STAGE_TIMEOUT = 30
+EVIDENCE_WORKERS = 8
 MAX_UNDERREPORTED_EVIDENCE = 40
 MAX_EVIDENCE_POOL = 24
 
@@ -163,26 +165,35 @@ def enrich_underreported_evidence(stories: list[Story], registry: dict) -> None:
     if not candidates:
         return
     trusted=_trusted_keys(registry)
-    with ThreadPoolExecutor(max_workers=min(EVIDENCE_WORKERS,len(candidates))) as executor:
-        futures={executor.submit(_collect_evidence_for_story,story,trusted):story for story in candidates}
-        for future in as_completed(futures):
-            story=futures[future]
-            try:
-                story.related=future.result()
-            except Exception:
-                story.related=[]
+    executor=ThreadPoolExecutor(max_workers=min(EVIDENCE_WORKERS,len(candidates)))
+    futures={executor.submit(_collect_evidence_for_story,story,trusted):story for story in candidates}
+    done,pending=wait(futures,timeout=EVIDENCE_STAGE_TIMEOUT)
+    for future in done:
+        story=futures[future]
+        try:story.related=future.result()
+        except Exception:story.related=[]
+    for future in pending:
+        futures[future].related=[]
+        future.cancel()
+    executor.shutdown(wait=False,cancel_futures=True)
 
 def collect_all(registry: dict) -> tuple[list[Story], list[dict]]:
     stories: list[Story] = []
     errors: list[dict] = []
     sources = list(registry.get("sources", []))
-    with ThreadPoolExecutor(max_workers=min(MAX_WORKERS, max(1, len(sources)))) as executor:
-        futures = {executor.submit(collect_one, source): source for source in sources}
-        for future in as_completed(futures):
-            source = futures[future]
-            sid, rows, error = future.result()
-            stories.extend(rows)
-            if error:
-                errors.append({"source": sid, "name": source.get("name", sid), "error": error})
+    executor=ThreadPoolExecutor(max_workers=min(MAX_WORKERS,max(1,len(sources))))
+    futures={executor.submit(collect_one,source):source for source in sources}
+    done,pending=wait(futures,timeout=COLLECTOR_STAGE_TIMEOUT)
+    for future in done:
+        source=futures[future]
+        try:sid,rows,error=future.result()
+        except Exception as exc:sid,rows,error=source.get("id",""),[],f"{type(exc).__name__}: {exc}"
+        stories.extend(rows)
+        if error:errors.append({"source":sid,"name":source.get("name",sid),"error":error})
+    for future in pending:
+        source=futures[future];sid=source.get("id","")
+        errors.append({"source":sid,"name":source.get("name",sid),"error":f"collector stage timeout after {COLLECTOR_STAGE_TIMEOUT}s"})
+        future.cancel()
+    executor.shutdown(wait=False,cancel_futures=True)
     enrich_underreported_evidence(stories, registry)
     return stories, errors
