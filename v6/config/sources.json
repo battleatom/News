@@ -30,12 +30,12 @@
     },
     "christian": {
       "label": "Christian",
-      "target": 47,
-      "visible_target": 30,
-      "reserve": 6,
-      "source_cap": 8,
-      "reserve_ratio": 0.2,
-      "expansion_ratio": 0.3
+      "target": 60,
+      "visible_target": 40,
+      "reserve": 10,
+      "source_cap": 10,
+      "reserve_ratio": 0.25,
+      "expansion_ratio": 0.25
     },
     "x": {
       "label": "X",
@@ -486,6 +486,34 @@
       "kind": "google_news",
       "category": "christian",
       "query": "site:crosswalk.com Christian news movies entertainment culture faith"
+    },
+    {
+      "id": "christian-today",
+      "name": "Christian Today",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:christiantoday.com Christian Christianity church world culture life news"
+    },
+    {
+      "id": "christianity-today",
+      "name": "Christianity Today",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:christianitytoday.com Christianity Christian church culture movies world news"
+    },
+    {
+      "id": "christian-vom",
+      "name": "Voice of the Martyrs",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:persecution.com OR site:vomradio.net persecuted Christians Christian persecution faith"
+    },
+    {
+      "id": "christian-open-doors",
+      "name": "Open Doors",
+      "kind": "google_news",
+      "category": "christian",
+      "query": "site:opendoorsus.org Christian persecution Christians church world faith"
     },
     {
       "id": "x-health",
