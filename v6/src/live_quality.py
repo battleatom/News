@@ -3,7 +3,7 @@ import json
 import re
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1];STATUS=ROOT/"dist"/"status.json";BOX=ROOT/"dist"/"boxoffice.json";MARKETS=ROOT/"dist"/"markets.json";FEED=ROOT/"dist"/"feed.json"
-REQUIRED_NONEMPTY={"top","nfl","underreported","world","us","presidential","federal","legislation","nm","local","region","technology","gaming","military","entertainment"};MIN_TOTAL=120;MAX_ERROR_RATIO=0.35;MIN_POSTER_COVERAGE=1.0
+REQUIRED_NONEMPTY={"top","nfl","underreported","christian","world","us","presidential","federal","legislation","nm","local","region","technology","gaming","military","entertainment"};MIN_TOTAL=120;MAX_ERROR_RATIO=0.35;MIN_POSTER_COVERAGE=1.0
 
 def _title_words(value:str)->list[str]:return [w for w in re.sub(r"[^a-z0-9]+"," ",(value or "").lower()).split() if len(w)>=3]
 
