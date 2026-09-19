@@ -142,3 +142,11 @@
 .app-shell .market .down{color:#b91c1c!important}
 .app-shell #refresh-status .status-pill.status-live{color:#166534!important}
 .app-shell #refresh-status .status-pill.status-warn{color:#a16207!important}
+
+
+/* Desktop fluid-width layout: preserve mobile/tablet behavior */
+@media(min-width:1101px){
+  :root{--max:min(96vw,1800px)}
+  .page{width:100%;max-width:var(--max)}
+  .masthead,.toolbar,.markets,.tabs{width:100%;max-width:var(--max)}
+}
