@@ -21,6 +21,7 @@ MAX_AGE_HOURS = {
     "military": 120,
     "entertainment": 96,
     "underreported": 240,
+    "christian": 120,
     "nfl": 96,
     "x": 48,
 }
