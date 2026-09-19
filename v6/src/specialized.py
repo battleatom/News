@@ -67,7 +67,8 @@ RELEASE_YEARS=(RELEASE_YEAR,RELEASE_YEAR+1)
 TMDB_API_KEY=os.environ.get("TMDB_API_KEY","").strip()
 TMDB_IMAGE_BASE="https://image.tmdb.org/t/p/w500"
 UPCOMING_DAYS=365
-UPCOMING_MAX=80
+UPCOMING_MAX=40
+UPCOMING_ENRICH_LIMIT=48
 MAJOR_US_DISTRIBUTORS=(
     "20th century","a24","amazon mgm","angel studios","apple original","bleecker street",
     "briarcliff","disney","focus features","ifc","lionsgate","neon","paramount",
@@ -229,9 +230,13 @@ def collect_boxoffice()->tuple[list[dict],str]:
         if release_date<=today or (release_date-today).days>UPCOMING_DAYS or title_key(release["title"]) in local_keys:continue
         if "wide" not in (release.get("releaseType") or "").lower():continue
         upcoming.append({"id":"upcoming-"+re.sub(r"[^a-z0-9]+","-",release["title"].lower()).strip("-")[:70],"title":release["title"],"releaseDate":release["releaseDate"],"releaseType":release.get("releaseType","") ,"distributor":release.get("distributor","") ,"overview":"","poster":"","status":"upcoming","voteAverage":0,"rating":"","runtime":"","theaters":[],"news":[],"source":"The Numbers - U.S. Theatrical","confirmedThrough":"","leavingDate":"","leavingSoon":False})
-    rows.extend(upcoming)
+    # Bound network enrichment before TMDB/Wikipedia/news lookups. Previously every
+    # wide-release candidate was enriched before the final cap, allowing hundreds
+    # of external requests to hold the entire news refresh hostage.
+    upcoming.sort(key=lambda m:(m.get("releaseDate") or "9999-99-99",m.get("title","").lower()))
+    rows.extend(upcoming[:UPCOMING_ENRICH_LIMIT])
     if rows:
-        with ThreadPoolExecutor(max_workers=8) as pool:rows=[future.result() for future in as_completed([pool.submit(enrich_movie,row) for row in rows])]
+        with ThreadPoolExecutor(max_workers=12) as pool:rows=[future.result() for future in as_completed([pool.submit(enrich_movie,row) for row in rows])]
         rows=[row for row in rows if row.get("status")!="upcoming" or is_mainstream_us_upcoming(row)]
         playing=[row for row in rows if row.get("status")=="playing"]
         upcoming=[row for row in rows if row.get("status")=="upcoming"]
