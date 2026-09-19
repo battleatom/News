@@ -5,6 +5,7 @@ import json
 import os
 import urllib.parse
 import urllib.request
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 UA = "Mozilla/5.0 Underreported-V6/1.0"
 TIMEOUT = 18
@@ -134,23 +135,26 @@ def _alpha_market(symbol: str, label: str) -> dict:
     return _row(symbol, label, price, prev, "USD", "", "Alpha Vantage")
 
 
+def _collect_market(pair: tuple[str, str]) -> tuple[dict | None, str]:
+    symbol,label=pair
+    try:return _yahoo_market(symbol,label),""
+    except Exception as yahoo_exc:
+        if ALPHA_VANTAGE_API_KEY and symbol in {"CL=F","BZ=F","NG=F","^TNX","BTC-USD","ETH-USD"}:
+            try:return _alpha_market(symbol,label),""
+            except Exception as alpha_exc:return None,f"{symbol}: Yahoo {type(yahoo_exc).__name__}; Alpha {type(alpha_exc).__name__}"
+        return None,f"{symbol}: Yahoo {type(yahoo_exc).__name__}"
+
 def collect_markets() -> tuple[list[dict], str]:
-    rows = []
-    errors = []
-    for symbol, label in MARKETS:
-        try:
-            rows.append(_yahoo_market(symbol, label))
-            continue
-        except Exception as yahoo_exc:
-            if ALPHA_VANTAGE_API_KEY and symbol in {"CL=F", "BZ=F", "NG=F", "^TNX", "BTC-USD", "ETH-USD"}:
-                try:
-                    rows.append(_alpha_market(symbol, label))
-                    continue
-                except Exception as alpha_exc:
-                    errors.append(f"{symbol}: Yahoo {type(yahoo_exc).__name__}; Alpha {type(alpha_exc).__name__}")
-                    continue
-            errors.append(f"{symbol}: Yahoo {type(yahoo_exc).__name__}")
-    return rows, "; ".join(errors)
+    rows=[];errors=[]
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures=[pool.submit(_collect_market,pair) for pair in MARKETS]
+        for future in as_completed(futures):
+            row,error=future.result()
+            if row:rows.append(row)
+            if error:errors.append(error)
+    order={symbol:i for i,(symbol,_) in enumerate(MARKETS)}
+    rows.sort(key=lambda row:order.get(row.get("symbol",""),999))
+    return rows,"; ".join(errors)
 
 
 def verify_alpha_vantage() -> dict:
