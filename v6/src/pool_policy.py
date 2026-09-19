@@ -82,7 +82,7 @@ def apply_rolling_pool(stories: list[Story], registry: dict, *, now: datetime | 
             rows = primaries + backups
         reserve_ratio = max(0.0, float(cfg.get("reserve_ratio", 0.20)))
         expansion_ratio = max(0.0, float(cfg.get("expansion_ratio", 0.30)))
-        normal_reserve = round(visible * reserve_ratio)
+        normal_reserve = max(int(cfg.get("reserve", 0)), round(visible * reserve_ratio))
         expansion = round(visible * expansion_ratio)
         fresh_count = sum(_age_hours(story, now) <= FRESH_SURGE_HOURS for story in rows)
         # Expansion is demand-driven: only fresh supply beyond the normal pool unlocks it.
