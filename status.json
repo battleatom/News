@@ -1,27 +1,27 @@
 {
   "version": "6",
-  "generatedAt": "2026-09-19T04:59:30.633540Z",
+  "generatedAt": "2026-09-19T05:08:40.277400Z",
   "storyCount": 1224,
-  "visibleStoryCount": 1079,
+  "visibleStoryCount": 1078,
   "poolStoryCount": 1224,
   "categoryCounts": {
     "underreported": 37,
     "top": 100,
-    "nfl": 69,
+    "nfl": 71,
     "christian": 40,
     "x": 10,
     "world": 120,
     "us": 120,
     "presidential": 17,
     "federal": 16,
-    "legislation": 43,
+    "legislation": 42,
     "nm": 80,
     "local": 17,
     "region": 80,
     "technology": 80,
     "gaming": 90,
     "military": 80,
-    "entertainment": 80,
+    "entertainment": 78,
     "boxoffice": 0
   },
   "reserveCounts": {
@@ -39,12 +39,12 @@
     "local": 0,
     "region": 16,
     "technology": 0,
-    "gaming": 15,
+    "gaming": 16,
     "military": 13,
     "entertainment": 0,
     "boxoffice": 0
   },
-  "reserveStoryCount": 145,
+  "reserveStoryCount": 146,
   "poolPolicy": {
     "categories": {
       "underreported": {
@@ -73,9 +73,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 69,
-        "keptCount": 69,
-        "retiredStaleCount": 38
+        "candidateCount": 71,
+        "keptCount": 71,
+        "retiredStaleCount": 35
       },
       "christian": {
         "visibleTarget": 40,
@@ -103,9 +103,9 @@
         "expansionCapacity": 36,
         "expansionUsed": 0,
         "poolCapacity": 144,
-        "candidateCount": 155,
+        "candidateCount": 156,
         "keptCount": 144,
-        "retiredStaleCount": 13
+        "retiredStaleCount": 12
       },
       "us": {
         "visibleTarget": 120,
@@ -143,9 +143,9 @@
         "expansionCapacity": 15,
         "expansionUsed": 0,
         "poolCapacity": 60,
-        "candidateCount": 43,
-        "keptCount": 43,
-        "retiredStaleCount": 3
+        "candidateCount": 42,
+        "keptCount": 42,
+        "retiredStaleCount": 4
       },
       "nm": {
         "visibleTarget": 80,
@@ -193,9 +193,9 @@
         "expansionCapacity": 27,
         "expansionUsed": 0,
         "poolCapacity": 108,
-        "candidateCount": 105,
-        "keptCount": 105,
-        "retiredStaleCount": 13
+        "candidateCount": 106,
+        "keptCount": 106,
+        "retiredStaleCount": 11
       },
       "military": {
         "visibleTarget": 80,
@@ -213,9 +213,9 @@
         "expansionCapacity": 24,
         "expansionUsed": 0,
         "poolCapacity": 96,
-        "candidateCount": 80,
-        "keptCount": 80,
-        "retiredStaleCount": 5
+        "candidateCount": 78,
+        "keptCount": 78,
+        "retiredStaleCount": 6
       },
       "boxoffice": {
         "visibleTarget": 40,
@@ -228,20 +228,9 @@
         "retiredStaleCount": 0
       }
     },
-    "retiredStaleCount": 106
+    "retiredStaleCount": 102
   },
-  "collectorErrors": [
-    {
-      "source": "christian-post-world",
-      "name": "The Christian Post · World",
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
-      "source": "christian-post-entertainment",
-      "name": "The Christian Post · Entertainment",
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    }
-  ],
+  "collectorErrors": [],
   "sourceStatuses": [
     {
       "id": "top-reuters",
@@ -320,7 +309,7 @@
       "name": "Reuters",
       "category": "presidential",
       "status": "live",
-      "storyCount": 62,
+      "storyCount": 64,
       "error": ""
     },
     {
@@ -328,7 +317,7 @@
       "name": "Associated Press",
       "category": "presidential",
       "status": "live",
-      "storyCount": 54,
+      "storyCount": 55,
       "error": ""
     },
     {
@@ -336,7 +325,7 @@
       "name": "Reuters",
       "category": "federal",
       "status": "live",
-      "storyCount": 9,
+      "storyCount": 10,
       "error": ""
     },
     {
@@ -376,7 +365,7 @@
       "name": "Source New Mexico",
       "category": "nm",
       "status": "live",
-      "storyCount": 42,
+      "storyCount": 43,
       "error": ""
     },
     {
@@ -416,7 +405,7 @@
       "name": "Durango Herald",
       "category": "local",
       "status": "live",
-      "storyCount": 20,
+      "storyCount": 19,
       "error": ""
     },
     {
@@ -448,7 +437,7 @@
       "name": "TechCrunch",
       "category": "technology",
       "status": "live",
-      "storyCount": 35,
+      "storyCount": 36,
       "error": ""
     },
     {
@@ -472,7 +461,7 @@
       "name": "PC Gamer",
       "category": "gaming",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -496,7 +485,7 @@
       "name": "Stars and Stripes",
       "category": "military",
       "status": "live",
-      "storyCount": 24,
+      "storyCount": 25,
       "error": ""
     },
     {
@@ -536,7 +525,7 @@
       "name": "The Marshall Project",
       "category": "underreported",
       "status": "live",
-      "storyCount": 6,
+      "storyCount": 5,
       "error": ""
     },
     {
@@ -584,7 +573,7 @@
       "name": "Religion News Service",
       "category": "christian",
       "status": "live",
-      "storyCount": 13,
+      "storyCount": 12,
       "error": ""
     },
     {
@@ -660,22 +649,6 @@
       "error": ""
     },
     {
-      "id": "christian-post-world",
-      "name": "The Christian Post · World",
-      "category": "christian",
-      "status": "error",
-      "storyCount": 0,
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
-      "id": "christian-post-entertainment",
-      "name": "The Christian Post · Entertainment",
-      "category": "christian",
-      "status": "error",
-      "storyCount": 0,
-      "error": "HTTPError: HTTP Error 403: Forbidden"
-    },
-    {
       "id": "christian-today-world",
       "name": "Christian Today · World",
       "category": "christian",
@@ -720,7 +693,7 @@
       "name": "X · World",
       "category": "x",
       "status": "live",
-      "storyCount": 28,
+      "storyCount": 27,
       "error": ""
     },
     {
@@ -736,7 +709,7 @@
       "name": "X · Entertainment",
       "category": "x",
       "status": "live",
-      "storyCount": 57,
+      "storyCount": 56,
       "error": ""
     },
     {
@@ -752,7 +725,7 @@
       "name": "X · Business & Economy",
       "category": "x",
       "status": "live",
-      "storyCount": 7,
+      "storyCount": 8,
       "error": ""
     },
     {
@@ -776,7 +749,23 @@
       "name": "NFL News",
       "category": "nfl",
       "status": "live",
-      "storyCount": 55,
+      "storyCount": 56,
+      "error": ""
+    },
+    {
+      "id": "christian-post-world",
+      "name": "The Christian Post · World",
+      "category": "christian",
+      "status": "degraded",
+      "storyCount": 0,
+      "error": ""
+    },
+    {
+      "id": "christian-post-entertainment",
+      "name": "The Christian Post · Entertainment",
+      "category": "christian",
+      "status": "degraded",
+      "storyCount": 0,
       "error": ""
     },
     {
@@ -856,7 +845,7 @@
       "name": "NPR",
       "category": "world",
       "status": "live",
-      "storyCount": 45,
+      "storyCount": 44,
       "error": ""
     },
     {
@@ -896,7 +885,7 @@
       "name": "The Hindu",
       "category": "world",
       "status": "live",
-      "storyCount": 80,
+      "storyCount": 79,
       "error": ""
     },
     {
@@ -904,7 +893,7 @@
       "name": "South China Morning Post",
       "category": "world",
       "status": "live",
-      "storyCount": 87,
+      "storyCount": 86,
       "error": ""
     },
     {
@@ -1120,7 +1109,7 @@
       "name": "Reuters",
       "category": "legislation",
       "status": "live",
-      "storyCount": 45,
+      "storyCount": 44,
       "error": ""
     },
     {
@@ -1160,7 +1149,7 @@
       "name": "KOAT",
       "category": "nm",
       "status": "live",
-      "storyCount": 85,
+      "storyCount": 86,
       "error": ""
     },
     {
@@ -1224,7 +1213,7 @@
       "name": "Salt Lake Tribune",
       "category": "region",
       "status": "live",
-      "storyCount": 59,
+      "storyCount": 62,
       "error": ""
     },
     {
@@ -1232,7 +1221,7 @@
       "name": "Colorado Sun",
       "category": "region",
       "status": "live",
-      "storyCount": 44,
+      "storyCount": 45,
       "error": ""
     },
     {
@@ -1320,7 +1309,7 @@
       "name": "Consumer technology discovery",
       "category": "technology",
       "status": "live",
-      "storyCount": 22,
+      "storyCount": 23,
       "error": ""
     },
     {
@@ -1376,7 +1365,7 @@
       "name": "Breaking Defense",
       "category": "military",
       "status": "live",
-      "storyCount": 81,
+      "storyCount": 80,
       "error": ""
     },
     {
@@ -1400,7 +1389,7 @@
       "name": "USNI News",
       "category": "military",
       "status": "live",
-      "storyCount": 23,
+      "storyCount": 22,
       "error": ""
     },
     {
@@ -1408,7 +1397,7 @@
       "name": "Air & Space Forces Magazine",
       "category": "military",
       "status": "live",
-      "storyCount": 56,
+      "storyCount": 61,
       "error": ""
     },
     {
@@ -1520,7 +1509,7 @@
       "name": "NFL.com",
       "category": "nfl",
       "status": "live",
-      "storyCount": 15,
+      "storyCount": 16,
       "error": ""
     },
     {
@@ -1544,7 +1533,7 @@
       "name": "Fox Sports",
       "category": "nfl",
       "status": "live",
-      "storyCount": 42,
+      "storyCount": 41,
       "error": ""
     },
     {
@@ -1560,7 +1549,7 @@
       "name": "ProFootballTalk",
       "category": "nfl",
       "status": "live",
-      "storyCount": 26,
+      "storyCount": 28,
       "error": ""
     },
     {
@@ -1613,18 +1602,18 @@
   "nflError": "",
   "boxOfficeError": "",
   "boxOfficeArtwork": {
-    "movieCount": 53,
-    "posterCount": 53,
-    "reachablePosterCount": 53,
+    "movieCount": 46,
+    "posterCount": 46,
+    "reachablePosterCount": 46,
     "missingPosterCount": 0,
     "posterCoverage": 1.0,
-    "fallbackFilled": 5,
+    "fallbackFilled": 4,
     "repairedBrokenPosters": 0,
     "fallbackFilledBySource": {
-      "TMDB Web": 5
+      "TMDB Web": 4
     },
     "tmdbConfigured": true,
-    "comingSoonPlaceholderCount": 2
+    "comingSoonPlaceholderCount": 0
   },
   "marketsError": "",
   "marketData": {

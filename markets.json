@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T04:59:30.633540Z",
+  "generatedAt": "2026-09-19T05:08:40.277400Z",
   "markets": [
     {
       "symbol": "^GSPC",
@@ -36,7 +36,7 @@
       "label": "RUSSELL 2000",
       "price": 2860.4,
       "previousClose": 2903.94,
-      "changePct": -1.499462798818165,
+      "changePct": -1.4994800168047504,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -134,9 +134,9 @@
     {
       "symbol": "BTC-USD",
       "label": "BITCOIN",
-      "price": 80950.06,
+      "price": 81006.84,
       "previousClose": 75612.51,
-      "changePct": 7.059083212553059,
+      "changePct": 7.1341766064901195,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
@@ -144,9 +144,9 @@
     {
       "symbol": "ETH-USD",
       "label": "ETHEREUM",
-      "price": 2616.09,
+      "price": 2618.8,
       "previousClose": 2399.09,
-      "changePct": 9.045232623910685,
+      "changePct": 9.15819226230646,
       "currency": "USD",
       "marketState": "",
       "source": "Yahoo Finance"
