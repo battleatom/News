@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T21:57:01.744090Z",
+  "generatedAt": "2026-09-20T23:45:09.202355Z",
   "games": [
     {
       "id": "401872932",
@@ -251,9 +251,9 @@
       "name": "Cleveland Browns at Tampa Bay Buccaneers",
       "shortName": "CLE @ TB",
       "date": "2026-09-20T17:00Z",
-      "status": "Delayed",
-      "detail": "Delayed",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Tampa Bay Buccaneers",
@@ -279,28 +279,7 @@
       ],
       "watchUrl": "",
       "venue": "Raymond James Stadium",
-      "plays": [
-        {
-          "clock": "3:18",
-          "period": 4,
-          "text": "B.Irving right guard to CLV 42 for 5 yards (C.Schwesinger; I.McGuire)."
-        },
-        {
-          "clock": "2:37",
-          "period": 4,
-          "text": "B.Mayfield pass short left to C.Godwin pushed ob at CLV 34 for 8 yards (M.Harden)."
-        },
-        {
-          "clock": "2:33",
-          "period": 4,
-          "text": "B.Irving up the middle to CLV 28 for 6 yards (M.Graham; C.Schwesinger)."
-        },
-        {
-          "clock": "2:00",
-          "period": 4,
-          "text": "Two-Minute Warning"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872939",
@@ -343,13 +322,13 @@
       "shortName": "JAX @ DEN",
       "date": "2026-09-20T20:05Z",
       "status": "In Progress",
-      "detail": "9:02 - 3rd",
+      "detail": "3:41 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Denver Broncos",
           "abbr": "DEN",
-          "score": "3",
+          "score": "20",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png",
           "color": "0a2343",
@@ -372,24 +351,24 @@
       "venue": "Empower Field at Mile High",
       "plays": [
         {
-          "clock": "9:49",
-          "period": 3,
-          "text": "(Shotgun) T.Lawrence pass short right to B.Tuten pushed ob at DEN 5 for no gain (B.Jones)."
+          "clock": "2:00",
+          "period": 4,
+          "text": "B.Nix kneels to JAX 19 for -1 yards."
         },
         {
-          "clock": "9:12",
-          "period": 3,
-          "text": "(Shotgun) T.Lawrence pass incomplete short middle to L.Allen (A.Singleton)."
+          "clock": "1:20",
+          "period": 4,
+          "text": "B.Nix kneels to JAX 20 for -1 yards."
         },
         {
-          "clock": "9:02",
-          "period": 3,
-          "text": " C.Little 23 yard field goal is GOOD, Center-R.Matiscik, Holder-L.Cooke."
+          "clock": "0:39",
+          "period": 4,
+          "text": " B.Nix kneels to JAX 21 for -1 yards."
         },
         {
-          "clock": "9:02",
-          "period": 3,
-          "text": "Official Timeout at 09:02."
+          "clock": "0:00",
+          "period": 4,
+          "text": "END GAME"
         }
       ]
     },
@@ -399,13 +378,13 @@
       "shortName": "LV @ LAC",
       "date": "2026-09-20T20:05Z",
       "status": "In Progress",
-      "detail": "12:43 - 3rd",
+      "detail": "3:34 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Los Angeles Chargers",
           "abbr": "LAC",
-          "score": "7",
+          "score": "14",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lac.png",
           "color": "0080c6",
@@ -414,7 +393,7 @@
         {
           "name": "Las Vegas Raiders",
           "abbr": "LV",
-          "score": "10",
+          "score": "17",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png",
           "color": "000000",
@@ -428,24 +407,24 @@
       "venue": "SoFi Stadium",
       "plays": [
         {
-          "clock": "14:03",
-          "period": 3,
-          "text": "A.Cole punts 56 yards to LAC 26, Center-A.Ward, out of bounds."
+          "clock": "1:41",
+          "period": 4,
+          "text": "K.Cousins kneels to LAC 43 for -1 yards."
         },
         {
-          "clock": "13:56",
-          "period": 3,
-          "text": "Official Timeout at 13:56."
+          "clock": "0:59",
+          "period": 4,
+          "text": "K.Cousins kneels to LAC 44 for -1 yards."
         },
         {
-          "clock": "13:56",
-          "period": 3,
-          "text": "O.Hampton left tackle to LAC 31 for 5 yards (J.Chinn; H.Masses)."
+          "clock": "0:37",
+          "period": 4,
+          "text": "K.Cousins kneels to LAC 45 for -1 yards."
         },
         {
-          "clock": "13:22",
-          "period": 3,
-          "text": " O.Hampton left tackle to LAC 37 for 6 yards (Q.Walker)."
+          "clock": "0:00",
+          "period": 4,
+          "text": "END GAME"
         }
       ]
     },
@@ -455,7 +434,7 @@
       "shortName": "SEA @ ARI",
       "date": "2026-09-20T20:25Z",
       "status": "In Progress",
-      "detail": "0:11 - 2nd",
+      "detail": "12:40 - 4th",
       "state": "in",
       "teams": [
         {
@@ -470,7 +449,7 @@
         {
           "name": "Seattle Seahawks",
           "abbr": "SEA",
-          "score": "7",
+          "score": "24",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png",
           "color": "002a5c",
@@ -484,24 +463,24 @@
       "venue": "State Farm Stadium",
       "plays": [
         {
-          "clock": "0:25",
-          "period": 2,
-          "text": "(Shotgun) D.Lock pass incomplete deep middle to R.Shaheed (W.Johnson)."
+          "clock": "1:11",
+          "period": 4,
+          "text": "J.Myers kicks 65 yards from SEA 35 to end zone, Touchback to the ARZ 35."
         },
         {
-          "clock": "0:19",
-          "period": 2,
-          "text": "(Shotgun) D.Lock pass short right to C.Kupp ran ob at SEA 42 for 16 yards (W.Johnson)."
+          "clock": "1:11",
+          "period": 4,
+          "text": "Z.Knight up the middle to SEA 47 for 18 yards (J.Neal)."
         },
         {
-          "clock": "0:14",
-          "period": 2,
-          "text": "*** play under review ***"
+          "clock": "0:30",
+          "period": 4,
+          "text": "Z.Knight left tackle to SEA 41 for 6 yards (R.Mills; D.Hall)."
         },
         {
-          "clock": "0:11",
-          "period": 2,
-          "text": "Official Timeout at 00:11."
+          "clock": "0:00",
+          "period": 4,
+          "text": "END GAME"
         }
       ]
     },
@@ -511,13 +490,13 @@
       "shortName": "WSH @ DAL",
       "date": "2026-09-20T20:25Z",
       "status": "In Progress",
-      "detail": "0:08 - 2nd",
+      "detail": "1:53 - 3rd",
       "state": "in",
       "teams": [
         {
           "name": "Dallas Cowboys",
           "abbr": "DAL",
-          "score": "17",
+          "score": "27",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png",
           "color": "002a5c",
@@ -526,7 +505,7 @@
         {
           "name": "Washington Commanders",
           "abbr": "WSH",
-          "score": "10",
+          "score": "13",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png",
           "color": "5a1414",
@@ -540,24 +519,24 @@
       "venue": "AT&T Stadium",
       "plays": [
         {
-          "clock": "0:12",
-          "period": 2,
-          "text": "Timeout #3 by WAS at 00:12."
+          "clock": "2:00",
+          "period": 4,
+          "text": "K.Allen left tackle to DAL 40 for 1 yard (K.Clark)."
         },
         {
-          "clock": "0:12",
-          "period": 2,
-          "text": "Timeout #3 by DAL at 00:12."
+          "clock": "1:16",
+          "period": 4,
+          "text": "K.Allen left tackle to DAL 36 for 4 yards (D.Ezeiruaku)."
         },
         {
-          "clock": "0:12",
-          "period": 2,
-          "text": "(Shotgun) J.Daniels pass incomplete short middle to T.McLaurin. DAL-C.Durant was injured during the play."
+          "clock": "0:37",
+          "period": 4,
+          "text": "K.Allen left tackle to DAL 33 for 3 yards (S.Revel)."
         },
         {
-          "clock": "0:08",
-          "period": 2,
-          "text": "Timeout #4 by DAL at 00:08."
+          "clock": "0:00",
+          "period": 4,
+          "text": "END GAME"
         }
       ]
     },
@@ -567,13 +546,13 @@
       "shortName": "MIA @ SF",
       "date": "2026-09-20T20:25Z",
       "status": "In Progress",
-      "detail": "13:12 - 3rd",
+      "detail": "8:03 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "San Francisco 49ers",
           "abbr": "SF",
-          "score": "14",
+          "score": "35",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sf.png",
           "color": "aa0000",
@@ -596,24 +575,24 @@
       "venue": "Levi's Stadium",
       "plays": [
         {
-          "clock": "15:00",
-          "period": 3,
-          "text": "R.Patterson kicks 65 yards from MIA 35 to end zone, Touchback to the SF 35."
+          "clock": "2:00",
+          "period": 4,
+          "text": "(Shotgun) J.James up the middle to SF 38 for 3 yards (J.Woodard; J.Wood)."
         },
         {
-          "clock": "15:00",
-          "period": 3,
-          "text": " (Shotgun) B.Purdy pass deep middle to G.Kittle to MIA 25 for 40 yards (Z.Anderson)."
+          "clock": "1:18",
+          "period": 4,
+          "text": "M.Jones kneels to SF 37 for -1 yards."
         },
         {
-          "clock": "14:23",
-          "period": 3,
-          "text": " (Shotgun) C.McCaffrey up the middle to MIA 20 for 5 yards (M.Taaffe)."
+          "clock": "0:39",
+          "period": 4,
+          "text": "M.Jones kneels to SF 36 for -1 yards."
         },
         {
-          "clock": "13:49",
-          "period": 3,
-          "text": " (Shotgun) B.Purdy pass short left to C.McCaffrey to MIA 12 for 8 yards (J.Brooks)."
+          "clock": "0:00",
+          "period": 4,
+          "text": "END GAME"
         }
       ]
     },
