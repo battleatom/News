@@ -8,8 +8,8 @@ on:
       - '.force-v6-data-refresh'
       - '.force-v6-data-refresh-*'
   schedule:
-    # Keep the proven V6 Python collector off the top of the hour.
-    - cron: '2,17,32,47 * * * *'
+    # Run away from the top of the hour; the 10-minute cadence reduces stale-feed risk when GitHub delays a scheduled event.
+    - cron: '3,13,23,33,43,53 * * * *'
 
 permissions:
   contents: write
