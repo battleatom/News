@@ -193,13 +193,22 @@ def _dedupe_key(story: Story) -> tuple[str,str]:
     return (re.sub(r"[^a-z0-9]+"," ",story.title.lower()).strip(), story.url.strip())
 
 def collect_google_backfill(stories: list[Story], registry: dict) -> tuple[list[Story], list[dict]]:
-    """Second-pass Google News discovery only for explicitly deficient pools."""
+    """Backfill only pools still deficient after the real processing and rolling-pool filters."""
+    # Raw collector counts are misleading: relevance, quality, dedupe, diversity and
+    # staleness filters can remove many rows later. Run the same eligibility path used
+    # by the build before deciding whether Google discovery is needed.
+    from pipeline import process
+    from pool_policy import apply_rolling_pool
+    eligible=process(list(stories),registry)
+    eligible,_=apply_rolling_pool(eligible,registry)
     counts={}
-    for story in stories:counts[story.category]=counts.get(story.category,0)+1
+    for story in eligible:counts[story.category]=counts.get(story.category,0)+1
     jobs=[]
     for category in BACKFILL_CATEGORIES:
         cfg=registry.get("categories",{}).get(category,{})
-        target=int(cfg.get("visible_target",cfg.get("target",0)))+int(cfg.get("reserve",0))
+        visible=int(cfg.get("visible_target",cfg.get("target",0)))
+        reserve=max(int(cfg.get("reserve",0)),round(visible*max(0.0,float(cfg.get("reserve_ratio",0.0)))))
+        target=visible+reserve
         deficit=max(0,target-counts.get(category,0))
         if not deficit:continue
         for idx,query in enumerate(BACKFILL_QUERIES[category],1):
