@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T17:32:20.454370Z",
+  "generatedAt": "2026-09-20T19:45:37.277887Z",
   "games": [
     {
       "id": "401872932",
@@ -42,13 +42,13 @@
       "shortName": "CAR @ ATL",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "9:41 - 1st",
+      "detail": "2:58 - 3rd",
       "state": "in",
       "teams": [
         {
           "name": "Atlanta Falcons",
           "abbr": "ATL",
-          "score": "0",
+          "score": "3",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/atl.png",
           "color": "a71930",
@@ -57,7 +57,7 @@
         {
           "name": "Carolina Panthers",
           "abbr": "CAR",
-          "score": "7",
+          "score": "34",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png",
           "color": "0085ca",
@@ -71,24 +71,24 @@
       "venue": "Mercedes-Benz Stadium",
       "plays": [
         {
-          "clock": "10:12",
-          "period": 1,
-          "text": " (No Huddle) Bi.Robinson left guard to ATL 47 for 4 yards (N.Scott)."
+          "clock": "14:54",
+          "period": 4,
+          "text": " C.Hubbard left guard to CAR 15 for 9 yards (C.Thomas)."
         },
         {
-          "clock": "9:41",
-          "period": 1,
-          "text": "Bi.Robinson right tackle to ATL 48 for 1 yard (D.Lloyd)."
+          "clock": "14:18",
+          "period": 4,
+          "text": " (Shotgun) C.Hubbard left guard to CAR 18 for 3 yards (Z.Harrison)."
         },
         {
-          "clock": "9:07",
-          "period": 1,
-          "text": "(Shotgun) C.Rush pass short middle intended for Bi.Robinson INTERCEPTED by B.Okereke (D.Lloyd) at CAR 42. B.Okereke to CAR 44 for 2 yards (K.Pitts)."
+          "clock": "13:44",
+          "period": 4,
+          "text": " C.Hubbard up the middle to CAR 20 for 2 yards (L.London; Y.Abdullah).\nPENALTY on CAR, Illegal Shift, 5 yards, enforced at CAR 18 - No Play."
         },
         {
-          "clock": "8:59",
-          "period": 1,
-          "text": "Official Timeout at 08:59."
+          "clock": "13:18",
+          "period": 4,
+          "text": " (Shotgun) C.Hubbard up the middle to CAR 18 for 5 yards (Z.Smith)."
         }
       ]
     },
@@ -98,13 +98,13 @@
       "shortName": "NO @ BAL",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "2:52 - 1st",
+      "detail": "8:06 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Baltimore Ravens",
           "abbr": "BAL",
-          "score": "7",
+          "score": "17",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png",
           "color": "29126f",
@@ -113,7 +113,7 @@
         {
           "name": "New Orleans Saints",
           "abbr": "NO",
-          "score": "0",
+          "score": "17",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/no.png",
           "color": "d3bc8d",
@@ -127,24 +127,24 @@
       "venue": "M&T Bank Stadium",
       "plays": [
         {
-          "clock": "4:28",
-          "period": 1,
-          "text": "D.Henry right end to NO 9 for 5 yards (K.McKinstry)."
+          "clock": "3:29",
+          "period": 4,
+          "text": "A.Kamara right tackle to BLT 36 for -4 yards (K.Hamilton)."
         },
         {
-          "clock": "3:45",
-          "period": 1,
-          "text": " D.Henry left end to NO 1 for 8 yards (D.Stutsman)."
+          "clock": "2:48",
+          "period": 4,
+          "text": " (Shotgun) T.Shough pass short left to D.Vele to BLT 30 for 6 yards (M.Humphrey)."
         },
         {
-          "clock": "2:52",
-          "period": 1,
-          "text": "C.Vinson reported in as eligible. Direct snap to D.Henry.  D.Henry right end for 1 yard, TOUCHDOWN. T.Loop extra point is GOOD, Center-N.Moore, Holder-R.Eckley."
+          "clock": "2:03",
+          "period": 4,
+          "text": "(Shotgun) T.Shough pass short right to J.Johnson to BLT 5 for 25 yards (J.Hawkins; M.Green).PENALTY on BLT-T.Hendrickson, Roughing the Passer, 3 yards, enforced at BLT 5."
         },
         {
-          "clock": "2:52",
-          "period": 1,
-          "text": "Official Timeout at 02:52."
+          "clock": "1:54",
+          "period": 4,
+          "text": "Two-Minute Warning"
         }
       ]
     },
@@ -154,7 +154,7 @@
       "shortName": "MIN @ CHI",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "5:03 - 1st",
+      "detail": "11:42 - 4th",
       "state": "in",
       "teams": [
         {
@@ -169,7 +169,7 @@
         {
           "name": "Minnesota Vikings",
           "abbr": "MIN",
-          "score": "3",
+          "score": "6",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png",
           "color": "4f2683",
@@ -183,24 +183,24 @@
       "venue": "Soldier Field",
       "plays": [
         {
+          "clock": "7:15",
+          "period": 4,
+          "text": " T.Bagent pass short right to D.Swift to MIN 5 for 1 yard (I.Rodgers; B.Cashman)."
+        },
+        {
           "clock": "6:32",
-          "period": 1,
-          "text": " (Shotgun) C.Williams pass short left to K.Monangai to MIN 38 for 4 yards (B.Murphy; E.Wilson)."
+          "period": 4,
+          "text": " (Shotgun) T.Bagent pass incomplete short left [A.Van Ginkel]."
         },
         {
-          "clock": "5:53",
-          "period": 1,
-          "text": " (Shotgun) C.Williams scrambles right end pushed ob at MIN 32 for 6 yards (A.Van Ginkel)."
+          "clock": "6:26",
+          "period": 4,
+          "text": " C.Santos 23 yard field goal is BLOCKED (I.Rodgers), Center-B.Gardner, Holder-T.Taylor, recovered by CHI-T.Taylor at MIN 12."
         },
         {
-          "clock": "5:03",
-          "period": 1,
-          "text": " C.Santos 50 yard field goal is GOOD, Center-B.Gardner, Holder-T.Taylor."
-        },
-        {
-          "clock": "5:03",
-          "period": 1,
-          "text": "Official Timeout at 05:03."
+          "clock": "6:21",
+          "period": 4,
+          "text": "Official Timeout at 06:21."
         }
       ]
     },
@@ -210,13 +210,13 @@
       "shortName": "CIN @ HOU",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "9:30 - 1st",
+      "detail": "15:00 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Houston Texans",
           "abbr": "HOU",
-          "score": "0",
+          "score": "6",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/hou.png",
           "color": "021018",
@@ -225,7 +225,7 @@
         {
           "name": "Cincinnati Bengals",
           "abbr": "CIN",
-          "score": "0",
+          "score": "17",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cin.png",
           "color": "fb4f14",
@@ -239,24 +239,24 @@
       "venue": "Reliant Stadium",
       "plays": [
         {
-          "clock": "10:08",
-          "period": 1,
-          "text": " (Shotgun) D.Montgomery left guard to HST 12 for 4 yards (B.Mafe)."
+          "clock": "12:24",
+          "period": 4,
+          "text": "(Shotgun) J.Burrow pass incomplete short left to T.Higgins."
         },
         {
-          "clock": "9:30",
-          "period": 1,
-          "text": "(Shotgun) D.Montgomery up the middle to HST 13 for 1 yard (D.Lawrence; B.Carter)."
+          "clock": "12:16",
+          "period": 4,
+          "text": " E.McPherson 57 yard field goal is GOOD, Center-W.Wagner, Holder-R.Rehkow."
         },
         {
-          "clock": "8:51",
-          "period": 1,
-          "text": "(Shotgun) C.Stroud pass incomplete short left to X.Hutchinson (D.Hill)."
+          "clock": "12:16",
+          "period": 4,
+          "text": "Official Timeout at 12:16."
         },
         {
-          "clock": "8:47",
-          "period": 1,
-          "text": "(8:47) K.Kroeger punts 40 yards to CIN 47, Center-A.Brinkman. T.Davis MUFFS catch, recovered by CIN-D.Meyers at CIN 40."
+          "clock": "12:16",
+          "period": 4,
+          "text": "E.McPherson kicks 65 yards from CIN 35 to landing zone to end zone, Touchback to the HST 20."
         }
       ]
     },
@@ -266,13 +266,13 @@
       "shortName": "PIT @ NE",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "8:22 - 1st",
+      "detail": "13:31 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "New England Patriots",
           "abbr": "NE",
-          "score": "7",
+          "score": "20",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png",
           "color": "002a5c",
@@ -281,7 +281,7 @@
         {
           "name": "Pittsburgh Steelers",
           "abbr": "PIT",
-          "score": "0",
+          "score": "3",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/pit.png",
           "color": "000000",
@@ -295,24 +295,24 @@
       "venue": "Gillette Stadium",
       "plays": [
         {
-          "clock": "8:22",
-          "period": 1,
-          "text": "(Shotgun) T.Henderson left guard for 39 yards, TOUCHDOWN. A.Borregales extra point is GOOD, Center-J.Ashby, Holder-M.Wishnowsky."
+          "clock": "9:53",
+          "period": 4,
+          "text": " (Shotgun) A.Rodgers pass short right to D.Metcalf to PIT 17 for 9 yards (C.Gonzalez)."
         },
         {
-          "clock": "8:22",
-          "period": 1,
-          "text": "Official Timeout at 08:22."
+          "clock": "9:31",
+          "period": 4,
+          "text": " (No Huddle, Shotgun) J.Warren right end to PIT 27 for 10 yards (R.Spillane; K.Byard)."
         },
         {
-          "clock": "8:22",
-          "period": 1,
-          "text": "A.Borregales kicks 65 yards from NE 35 to PIT 0. E.Heidenreich to PIT 26 for 26 yards (E.Hunter)."
+          "clock": "9:03",
+          "period": 4,
+          "text": " (No Huddle, Shotgun) A.Rodgers pass short right to J.Warren to PIT 35 for 8 yards (C.Elliss)."
         },
         {
-          "clock": "8:16",
-          "period": 1,
-          "text": " (Shotgun) A.Rodgers pass short right to P.Freiermuth to PIT 35 for 9 yards (C.Gonzalez)."
+          "clock": "8:38",
+          "period": 4,
+          "text": "(No Huddle, Shotgun) A.Rodgers pass short left to R.Wilson to PIT 40 for 5 yards (R.Spillane)."
         }
       ]
     },
@@ -322,13 +322,13 @@
       "shortName": "GB @ NYJ",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "10:48 - 1st",
+      "detail": "15:00 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "New York Jets",
           "abbr": "NYJ",
-          "score": "0",
+          "score": "14",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/nyj.png",
           "color": "115740",
@@ -337,7 +337,7 @@
         {
           "name": "Green Bay Packers",
           "abbr": "GB",
-          "score": "0",
+          "score": "7",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/gb.png",
           "color": "204e32",
@@ -351,24 +351,24 @@
       "venue": "MetLife Stadium",
       "plays": [
         {
-          "clock": "11:47",
-          "period": 1,
-          "text": " B.Hall left guard to NYJ 20 for 4 yards (B.Cisse)."
+          "clock": "13:26",
+          "period": 4,
+          "text": " (Shotgun) G.Smith sacked at NYJ 43 for -10 yards (E.Cooper)."
         },
         {
-          "clock": "11:10",
-          "period": 1,
-          "text": " (Shotgun) B.Hall left end pushed ob at NYJ 28 for 8 yards (X.McKinney).\nPENALTY on NYJ-I.Williams, Offensive Holding, 10 yards, enforced at NYJ 20 - No Play."
+          "clock": "12:47",
+          "period": 4,
+          "text": "(12:47) A.McNamara punts 41 yards to GB 16, Center-T.Hennessy. S.Moore MUFFS catch, and recovers at GB 15. S.Moore to GB 27 for 12 yards (T.Reeder).\nPENALTY on GB-C.McClellan, Unnecessary Roughness, 13 yards, enforced at GB 27."
         },
         {
-          "clock": "10:48",
-          "period": 1,
-          "text": " (Shotgun) G.Smith pass short left to A.Mitchell to NYJ 17 for 7 yards (E.Cooper)."
+          "clock": "12:35",
+          "period": 4,
+          "text": "Official Timeout at 12:35."
         },
         {
-          "clock": "10:04",
-          "period": 1,
-          "text": " (Shotgun) G.Smith pass incomplete deep left to A.Mitchell (J.Bullard).\nPENALTY on GB-J.Bullard, Unsportsmanlike Conduct, 15 yards, enforced at NYJ 17."
+          "clock": "12:35",
+          "period": 4,
+          "text": "M.Lloyd left end to GB 17 for 3 yards (K.Enagbare). FUMBLES (K.Enagbare), RECOVERED by NYJ-H.Phillips at GB 17."
         }
       ]
     },
@@ -378,13 +378,13 @@
       "shortName": "CLE @ TB",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "7:07 - 1st",
+      "detail": "13:37 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Tampa Bay Buccaneers",
           "abbr": "TB",
-          "score": "3",
+          "score": "16",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tb.png",
           "color": "bd1c36",
@@ -393,7 +393,7 @@
         {
           "name": "Cleveland Browns",
           "abbr": "CLE",
-          "score": "3",
+          "score": "16",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
           "color": "472a08",
@@ -407,24 +407,24 @@
       "venue": "Raymond James Stadium",
       "plays": [
         {
-          "clock": "7:12",
-          "period": 1,
-          "text": "A.Szmyt kicks 64 yards from CLV 35 to TB 1. K.Gainwell to TB 25 for 24 yards (E.McNeil-Warren)."
+          "clock": "11:14",
+          "period": 4,
+          "text": " (No Huddle, Shotgun) B.Mayfield pass short right to E.Egbuka pushed ob at CLV 17 for 4 yards (D.Ward)."
         },
         {
-          "clock": "7:07",
-          "period": 1,
-          "text": " B.Irving right tackle to TB 29 for 4 yards (C.Schwesinger; A.Huntington)."
+          "clock": "10:49",
+          "period": 4,
+          "text": "(No Huddle, Shotgun) B.Mayfield pass short right to B.Irving to CLV 13 for 4 yards (C.Schwesinger)."
         },
         {
-          "clock": "6:27",
-          "period": 1,
-          "text": " (Shotgun) B.Irving left end to CLV 33 for 38 yards (C.Schwesinger)."
+          "clock": "10:08",
+          "period": 4,
+          "text": " (Shotgun) B.Mayfield pass incomplete short right to T.Hurst (M.Harden) [J.Verse]."
         },
         {
-          "clock": "5:37",
-          "period": 1,
-          "text": " (Shotgun) B.Mayfield pass short left to B.Irving to CLV 29 for 4 yards (G.Delpit)."
+          "clock": "10:01",
+          "period": 4,
+          "text": "Official Timeout at 10:01."
         }
       ]
     },
@@ -434,13 +434,13 @@
       "shortName": "PHI @ TEN",
       "date": "2026-09-20T17:00Z",
       "status": "In Progress",
-      "detail": "4:22 - 1st",
+      "detail": "6:08 - 4th",
       "state": "in",
       "teams": [
         {
           "name": "Tennessee Titans",
           "abbr": "TEN",
-          "score": "7",
+          "score": "17",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png",
           "color": "4495d2",
@@ -449,7 +449,7 @@
         {
           "name": "Philadelphia Eagles",
           "abbr": "PHI",
-          "score": "0",
+          "score": "17",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/phi.png",
           "color": "06424d",
@@ -463,24 +463,24 @@
       "venue": "Nissan Stadium",
       "plays": [
         {
-          "clock": "5:11",
-          "period": 1,
-          "text": " (Shotgun) C.Ward scrambles right end pushed ob at PHI 1 for 4 yards (Z.Baun)."
+          "clock": "4:31",
+          "period": 4,
+          "text": "C.Ward pass deep right to E.Ayomanor pushed ob at PHI 24 for 41 yards (J.Campbell)."
         },
         {
-          "clock": "4:22",
-          "period": 1,
-          "text": "C.Ward up the middle for 1 yard, TOUCHDOWN. J.Slye extra point is GOOD, Center-M.Cox, Holder-T.Townsend."
+          "clock": "4:21",
+          "period": 4,
+          "text": "T.Pollard left tackle to PHI 22 for 2 yards (B.Young; A.Mukuba).PENALTY on TEN-A.Schlottmann, Offensive Holding, 10 yards, enforced at PHI 24 - No Play."
         },
         {
-          "clock": "4:22",
-          "period": 1,
-          "text": "Official Timeout at 04:22."
+          "clock": "4:15",
+          "period": 4,
+          "text": " T.Spears left tackle to PHI 37 for -3 yards (M.Ojomo)."
         },
         {
-          "clock": "4:22",
-          "period": 1,
-          "text": "J.Slye kicks 65 yards from TEN 35 to end zone, Touchback to the PHI 35."
+          "clock": "3:33",
+          "period": 4,
+          "text": "(3:33) (Shotgun) C.Ward pass incomplete deep right to W.Robinson.\nPenalty on TEN-J.Latham, Illegal Formation, declined."
         }
       ]
     },
