@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T14:07:46.583143Z",
+  "generatedAt": "2026-09-20T17:32:20.454370Z",
   "games": [
     {
       "id": "401872932",
@@ -41,9 +41,9 @@
       "name": "Carolina Panthers at Atlanta Falcons",
       "shortName": "CAR @ ATL",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "9:41 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Atlanta Falcons",
@@ -57,7 +57,7 @@
         {
           "name": "Carolina Panthers",
           "abbr": "CAR",
-          "score": "0",
+          "score": "7",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/car.png",
           "color": "0085ca",
@@ -69,21 +69,42 @@
       ],
       "watchUrl": "",
       "venue": "Mercedes-Benz Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "10:12",
+          "period": 1,
+          "text": " (No Huddle) Bi.Robinson left guard to ATL 47 for 4 yards (N.Scott)."
+        },
+        {
+          "clock": "9:41",
+          "period": 1,
+          "text": "Bi.Robinson right tackle to ATL 48 for 1 yard (D.Lloyd)."
+        },
+        {
+          "clock": "9:07",
+          "period": 1,
+          "text": "(Shotgun) C.Rush pass short middle intended for Bi.Robinson INTERCEPTED by B.Okereke (D.Lloyd) at CAR 42. B.Okereke to CAR 44 for 2 yards (K.Pitts)."
+        },
+        {
+          "clock": "8:59",
+          "period": 1,
+          "text": "Official Timeout at 08:59."
+        }
+      ]
     },
     {
       "id": "401872938",
       "name": "New Orleans Saints at Baltimore Ravens",
       "shortName": "NO @ BAL",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "2:52 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Baltimore Ravens",
           "abbr": "BAL",
-          "score": "0",
+          "score": "7",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/bal.png",
           "color": "29126f",
@@ -104,21 +125,42 @@
       ],
       "watchUrl": "",
       "venue": "M&T Bank Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "4:28",
+          "period": 1,
+          "text": "D.Henry right end to NO 9 for 5 yards (K.McKinstry)."
+        },
+        {
+          "clock": "3:45",
+          "period": 1,
+          "text": " D.Henry left end to NO 1 for 8 yards (D.Stutsman)."
+        },
+        {
+          "clock": "2:52",
+          "period": 1,
+          "text": "C.Vinson reported in as eligible. Direct snap to D.Henry.  D.Henry right end for 1 yard, TOUCHDOWN. T.Loop extra point is GOOD, Center-N.Moore, Holder-R.Eckley."
+        },
+        {
+          "clock": "2:52",
+          "period": 1,
+          "text": "Official Timeout at 02:52."
+        }
+      ]
     },
     {
       "id": "401872937",
       "name": "Minnesota Vikings at Chicago Bears",
       "shortName": "MIN @ CHI",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "5:03 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Chicago Bears",
           "abbr": "CHI",
-          "score": "0",
+          "score": "3",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/chi.png",
           "color": "0b1c3a",
@@ -127,7 +169,7 @@
         {
           "name": "Minnesota Vikings",
           "abbr": "MIN",
-          "score": "0",
+          "score": "3",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/min.png",
           "color": "4f2683",
@@ -139,16 +181,37 @@
       ],
       "watchUrl": "",
       "venue": "Soldier Field",
-      "plays": []
+      "plays": [
+        {
+          "clock": "6:32",
+          "period": 1,
+          "text": " (Shotgun) C.Williams pass short left to K.Monangai to MIN 38 for 4 yards (B.Murphy; E.Wilson)."
+        },
+        {
+          "clock": "5:53",
+          "period": 1,
+          "text": " (Shotgun) C.Williams scrambles right end pushed ob at MIN 32 for 6 yards (A.Van Ginkel)."
+        },
+        {
+          "clock": "5:03",
+          "period": 1,
+          "text": " C.Santos 50 yard field goal is GOOD, Center-B.Gardner, Holder-T.Taylor."
+        },
+        {
+          "clock": "5:03",
+          "period": 1,
+          "text": "Official Timeout at 05:03."
+        }
+      ]
     },
     {
       "id": "401872934",
       "name": "Cincinnati Bengals at Houston Texans",
       "shortName": "CIN @ HOU",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "9:30 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Houston Texans",
@@ -174,21 +237,42 @@
       ],
       "watchUrl": "",
       "venue": "Reliant Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "10:08",
+          "period": 1,
+          "text": " (Shotgun) D.Montgomery left guard to HST 12 for 4 yards (B.Mafe)."
+        },
+        {
+          "clock": "9:30",
+          "period": 1,
+          "text": "(Shotgun) D.Montgomery up the middle to HST 13 for 1 yard (D.Lawrence; B.Carter)."
+        },
+        {
+          "clock": "8:51",
+          "period": 1,
+          "text": "(Shotgun) C.Stroud pass incomplete short left to X.Hutchinson (D.Hill)."
+        },
+        {
+          "clock": "8:47",
+          "period": 1,
+          "text": "(8:47) K.Kroeger punts 40 yards to CIN 47, Center-A.Brinkman. T.Davis MUFFS catch, recovered by CIN-D.Meyers at CIN 40."
+        }
+      ]
     },
     {
       "id": "401872946",
       "name": "Pittsburgh Steelers at New England Patriots",
       "shortName": "PIT @ NE",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "8:22 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "New England Patriots",
           "abbr": "NE",
-          "score": "0",
+          "score": "7",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ne.png",
           "color": "002a5c",
@@ -209,16 +293,37 @@
       ],
       "watchUrl": "",
       "venue": "Gillette Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "8:22",
+          "period": 1,
+          "text": "(Shotgun) T.Henderson left guard for 39 yards, TOUCHDOWN. A.Borregales extra point is GOOD, Center-J.Ashby, Holder-M.Wishnowsky."
+        },
+        {
+          "clock": "8:22",
+          "period": 1,
+          "text": "Official Timeout at 08:22."
+        },
+        {
+          "clock": "8:22",
+          "period": 1,
+          "text": "A.Borregales kicks 65 yards from NE 35 to PIT 0. E.Heidenreich to PIT 26 for 26 yards (E.Hunter)."
+        },
+        {
+          "clock": "8:16",
+          "period": 1,
+          "text": " (Shotgun) A.Rodgers pass short right to P.Freiermuth to PIT 35 for 9 yards (C.Gonzalez)."
+        }
+      ]
     },
     {
       "id": "401872936",
       "name": "Green Bay Packers at New York Jets",
       "shortName": "GB @ NYJ",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "10:48 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "New York Jets",
@@ -244,21 +349,42 @@
       ],
       "watchUrl": "",
       "venue": "MetLife Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "11:47",
+          "period": 1,
+          "text": " B.Hall left guard to NYJ 20 for 4 yards (B.Cisse)."
+        },
+        {
+          "clock": "11:10",
+          "period": 1,
+          "text": " (Shotgun) B.Hall left end pushed ob at NYJ 28 for 8 yards (X.McKinney).\nPENALTY on NYJ-I.Williams, Offensive Holding, 10 yards, enforced at NYJ 20 - No Play."
+        },
+        {
+          "clock": "10:48",
+          "period": 1,
+          "text": " (Shotgun) G.Smith pass short left to A.Mitchell to NYJ 17 for 7 yards (E.Cooper)."
+        },
+        {
+          "clock": "10:04",
+          "period": 1,
+          "text": " (Shotgun) G.Smith pass incomplete deep left to A.Mitchell (J.Bullard).\nPENALTY on GB-J.Bullard, Unsportsmanlike Conduct, 15 yards, enforced at NYJ 17."
+        }
+      ]
     },
     {
       "id": "401872935",
       "name": "Cleveland Browns at Tampa Bay Buccaneers",
       "shortName": "CLE @ TB",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "7:07 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Tampa Bay Buccaneers",
           "abbr": "TB",
-          "score": "0",
+          "score": "3",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/tb.png",
           "color": "bd1c36",
@@ -267,7 +393,7 @@
         {
           "name": "Cleveland Browns",
           "abbr": "CLE",
-          "score": "0",
+          "score": "3",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/cle.png",
           "color": "472a08",
@@ -279,21 +405,42 @@
       ],
       "watchUrl": "",
       "venue": "Raymond James Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "7:12",
+          "period": 1,
+          "text": "A.Szmyt kicks 64 yards from CLV 35 to TB 1. K.Gainwell to TB 25 for 24 yards (E.McNeil-Warren)."
+        },
+        {
+          "clock": "7:07",
+          "period": 1,
+          "text": " B.Irving right tackle to TB 29 for 4 yards (C.Schwesinger; A.Huntington)."
+        },
+        {
+          "clock": "6:27",
+          "period": 1,
+          "text": " (Shotgun) B.Irving left end to CLV 33 for 38 yards (C.Schwesinger)."
+        },
+        {
+          "clock": "5:37",
+          "period": 1,
+          "text": " (Shotgun) B.Mayfield pass short left to B.Irving to CLV 29 for 4 yards (G.Delpit)."
+        }
+      ]
     },
     {
       "id": "401872939",
       "name": "Philadelphia Eagles at Tennessee Titans",
       "shortName": "PHI @ TEN",
       "date": "2026-09-20T17:00Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 1:00 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "4:22 - 1st",
+      "state": "in",
       "teams": [
         {
           "name": "Tennessee Titans",
           "abbr": "TEN",
-          "score": "0",
+          "score": "7",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ten.png",
           "color": "4495d2",
@@ -314,7 +461,28 @@
       ],
       "watchUrl": "",
       "venue": "Nissan Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "5:11",
+          "period": 1,
+          "text": " (Shotgun) C.Ward scrambles right end pushed ob at PHI 1 for 4 yards (Z.Baun)."
+        },
+        {
+          "clock": "4:22",
+          "period": 1,
+          "text": "C.Ward up the middle for 1 yard, TOUCHDOWN. J.Slye extra point is GOOD, Center-M.Cox, Holder-T.Townsend."
+        },
+        {
+          "clock": "4:22",
+          "period": 1,
+          "text": "Official Timeout at 04:22."
+        },
+        {
+          "clock": "4:22",
+          "period": 1,
+          "text": "J.Slye kicks 65 yards from TEN 35 to end zone, Touchback to the PHI 35."
+        }
+      ]
     },
     {
       "id": "401872940",
@@ -586,6 +754,303 @@
           "score": "",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/gb.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_LAC_BUF",
+      "name": "Los Angeles Chargers at Buffalo Bills",
+      "shortName": "LAC @ BUF",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Los Angeles Chargers",
+          "abbr": "LAC",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/lac.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Buffalo Bills",
+          "abbr": "BUF",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_CAR_CLE",
+      "name": "Carolina Panthers at Cleveland Browns",
+      "shortName": "CAR @ CLE",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Carolina Panthers",
+          "abbr": "CAR",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/car.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Cleveland Browns",
+          "abbr": "CLE",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cle.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_NYJ_DET",
+      "name": "New York Jets at Detroit Lions",
+      "shortName": "NYJ @ DET",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "New York Jets",
+          "abbr": "NYJ",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Detroit Lions",
+          "abbr": "DET",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/det.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_HOU_IND",
+      "name": "Houston Texans at Indianapolis Colts",
+      "shortName": "HOU @ IND",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Houston Texans",
+          "abbr": "HOU",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/hou.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Indianapolis Colts",
+          "abbr": "IND",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ind.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_NE_JAX",
+      "name": "New England Patriots at Jacksonville Jaguars",
+      "shortName": "NE @ JAX",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "New England Patriots",
+          "abbr": "NE",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ne.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Jacksonville Jaguars",
+          "abbr": "JAX",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/jax.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_KC_MIA",
+      "name": "Kansas City Chiefs at Miami Dolphins",
+      "shortName": "KC @ MIA",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Kansas City Chiefs",
+          "abbr": "KC",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Miami Dolphins",
+          "abbr": "MIA",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/mia.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_TEN_NYG",
+      "name": "Tennessee Titans at New York Giants",
+      "shortName": "TEN @ NYG",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Tennessee Titans",
+          "abbr": "TEN",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/ten.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "New York Giants",
+          "abbr": "NYG",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_CIN_PIT",
+      "name": "Cincinnati Bengals at Pittsburgh Steelers",
+      "shortName": "CIN @ PIT",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Cincinnati Bengals",
+          "abbr": "CIN",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/cin.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Pittsburgh Steelers",
+          "abbr": "PIT",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/pit.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_SEA_WAS",
+      "name": "Seattle Seahawks at Washington Commanders",
+      "shortName": "SEA @ WSH",
+      "date": "2026-09-27T17:00:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Seattle Seahawks",
+          "abbr": "SEA",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/sea.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Washington Commanders",
+          "abbr": "WSH",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/wsh.png",
           "color": "",
           "alternateColor": ""
         }
