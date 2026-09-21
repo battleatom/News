@@ -128,24 +128,57 @@ def fetch_nflverse() -> dict:
     }
 
 
+def event_key(ev: dict) -> str:
+    comp = (ev.get('competitions') or [{}])[0]
+    teams = comp.get('competitors') or []
+    away = next((t for t in teams if t.get('homeAway') == 'away'), {})
+    home = next((t for t in teams if t.get('homeAway') == 'home'), {})
+    aa = ((away.get('team') or {}).get('abbreviation') or '').replace('LAR','LA').replace('WSH','WAS').replace('JAX','JAC')
+    ha = ((home.get('team') or {}).get('abbreviation') or '').replace('LAR','LA').replace('WSH','WAS').replace('JAX','JAC')
+    try:
+        day = datetime.fromisoformat(str(ev.get('date') or '').replace('Z', '+00:00')).date().isoformat()
+    except Exception:
+        day = str(ev.get('date') or '')[:10]
+    return f'{day}|{aa}|{ha}'
+
+
 def main() -> None:
     errors = []
-    payload = None
+    espn = None
+    schedule = None
     try:
-        payload = fetch_espn()
-        print(f"Cached {len(payload['events'])} NFL scoreboard events from ESPN.")
+        espn = fetch_espn()
+        print(f"Fetched {len(espn['events'])} live/current NFL events from ESPN.")
     except Exception as exc:
         errors.append(f'ESPN: {exc}')
-        print(f'ESPN NFL cache unavailable; trying nflverse schedule backup: {exc}')
-        try:
-            payload = fetch_nflverse()
-            print(f"Cached {len(payload['events'])} NFL schedule events from nflverse backup.")
-        except Exception as backup_exc:
-            errors.append(f'nflverse: {backup_exc}')
+        print(f'ESPN NFL live scoreboard unavailable: {exc}')
 
-    if payload is not None:
+    try:
+        schedule = fetch_nflverse()
+        print(f"Fetched {len(schedule['events'])} NFL schedule events from nflverse.")
+    except Exception as exc:
+        errors.append(f'nflverse: {exc}')
+        print(f'nflverse NFL schedule unavailable: {exc}')
+
+    # Always use the wider schedule as the base, then let ESPN replace matching
+    # games with fresher live/final status and scores. This prevents ESPN's
+    # narrow scoreboard response from collapsing the UI to only today's game.
+    merged = {}
+    for ev in (schedule or {}).get('events', []):
+        merged[event_key(ev)] = ev
+    for ev in (espn or {}).get('events', []):
+        merged[event_key(ev)] = ev
+
+    if merged:
+        payload = {
+            'generatedAt': datetime.now(timezone.utc).isoformat(),
+            'source': 'ESPN live + nflverse 16-day schedule',
+            'liveScores': bool(espn),
+            'events': sorted(merged.values(), key=lambda e: e.get('date') or ''),
+        }
         OUT.parent.mkdir(parents=True, exist_ok=True)
         OUT.write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+        print(f"Cached {len(payload['events'])} merged NFL events.")
         return
     if OUT.exists():
         print('NFL refresh sources failed; preserving previous cache: ' + ' | '.join(errors))
