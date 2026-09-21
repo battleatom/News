@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-21T01:52:02.798676Z",
+  "generatedAt": "2026-09-21T07:17:30.025009Z",
   "games": [
     {
       "id": "401872932",
@@ -496,14 +496,14 @@
       "name": "Indianapolis Colts at Kansas City Chiefs",
       "shortName": "IND @ KC",
       "date": "2026-09-21T00:20Z",
-      "status": "In Progress",
-      "detail": "0:59 - 2nd",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final/OT",
+      "state": "post",
       "teams": [
         {
           "name": "Kansas City Chiefs",
           "abbr": "KC",
-          "score": "17",
+          "score": "33",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png",
           "color": "e31837",
@@ -512,7 +512,7 @@
         {
           "name": "Indianapolis Colts",
           "abbr": "IND",
-          "score": "20",
+          "score": "30",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png",
           "color": "003b75",
@@ -524,28 +524,7 @@
       ],
       "watchUrl": "",
       "venue": "Arrowhead Stadium",
-      "plays": [
-        {
-          "clock": "1:10",
-          "period": 2,
-          "text": "(1:10) (Shotgun) D.Jones pass short right to J.Downs pushed ob at KC 24 for 7 yards (L.Sneed) [C.Jones].\nPenalty on IND-J.Downs, Unnecessary Roughness, offsetting.\nPenalty on KC-L.Sneed, Unnecessary Roughness, offsetting."
-        },
-        {
-          "clock": "0:59",
-          "period": 2,
-          "text": "J.Taylor right end for 24 yards, TOUCHDOWN. S.Shrader extra point is GOOD, Center-L.Rhodes, Holder-R.Sanchez."
-        },
-        {
-          "clock": "0:59",
-          "period": 2,
-          "text": "Official Timeout at 00:59."
-        },
-        {
-          "clock": "0:59",
-          "period": 2,
-          "text": "S.Shrader kicks 65 yards from IND 35 to landing zone to end zone, Touchback to the KC 20."
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872947",
