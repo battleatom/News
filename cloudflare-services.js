@@ -27,25 +27,24 @@ async function fetchEspnScoreboard(query){
   return d;
 }
 async function nflSchedule(){
-  const now=new Date(),from=new Date(now);from.setDate(from.getDate()-1);
-  // NFL weeks/slates can straddle a rolling-day cutoff. Fetch progressively farther
-  // ahead until we have the current remainder plus the next complete scheduled slate.
-  const horizons=[14,28,56];
-  let lastError=null,best=[];
-  for(const days of horizons){
-    const to=new Date(now);to.setDate(to.getDate()+days);
-    try{
-      const d=await fetchEspnScoreboard(`limit=256&dates=${dateYmd(from)}-${dateYmd(to)}`);
+  // Populate the next NFL week as a league-wide set, rather than relying on a
+  // rolling date window. ESPN's week endpoint returns the complete scheduled slate.
+  let lastError=null;
+  try{
+    const base=await fetchEspnScoreboard("limit=64");
+    const currentWeek=Number(base?.week?.number||base?.season?.week||0);
+    const season=Number(base?.season?.year||new Date().getFullYear());
+    const seasonType=Number(base?.season?.type||2);
+    const currentGames=(base.events||[]).map(normalizeGame);
+    const hasUpcoming=currentGames.some(g=>String(g.state||"").toLowerCase()==="pre");
+    const week=hasUpcoming?currentWeek:currentWeek+1;
+    if(week>0){
+      const d=await fetchEspnScoreboard(`limit=64&dates=${season}&seasontype=${seasonType}&week=${week}`);
       const games=(d.events||[]).map(normalizeGame);
-      if(games.length>best.length)best=games;
-      const future=games.filter(g=>{const t=Date.parse(g.date||"");return Number.isFinite(t)&&t>=now.getTime()});
-      // One NFL slate is normally 13-16 games. Once we have at least the next full
-      // batch beyond today's remaining game(s), stop widening the request.
-      if(future.length>=12)return noStoreJson({generatedAt:new Date().toISOString(),games,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:days});
-    }catch(error){lastError=error}
-  }
-  if(best.length)return noStoreJson({generatedAt:new Date().toISOString(),games:best,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:56});
-  try{const d=await fetchEspnScoreboard("limit=256");const games=(d.events||[]).map(normalizeGame);return noStoreJson({generatedAt:new Date().toISOString(),games,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:null})}catch(error){lastError=error}
+      if(games.length)return noStoreJson({generatedAt:new Date().toISOString(),games,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"league-week",season,seasonType,week});
+    }
+    if(currentGames.length)return noStoreJson({generatedAt:new Date().toISOString(),games:currentGames,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"league-week",season,seasonType,week:currentWeek});
+  }catch(error){lastError=error}
   return noStoreJson({generatedAt:new Date().toISOString(),games:[],error:String(lastError?.message||lastError||"ESPN unavailable"),provider:"ESPN via Cloudflare",cloudflareRuntime:true},502);
 }
 async function marketRow(symbol,label){
