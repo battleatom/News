@@ -44,14 +44,19 @@
     const sourceNode=card.querySelector('.source,[data-source],.meta .source-name');
     const descNode=card.querySelector('.description,.summary,.dek');
     const whyNode=card.querySelector('.why,.v3-why-text');
+    const publishedNode=card.querySelector('time,[datetime],.pubdate,.published,.date');
+    const imageNode=card.querySelector('img[src]');
     const title=(titleNode?.textContent||link?.textContent||'').trim();
     const url=safeUrl(link?.href||'');
     const source=(sourceNode?.textContent||sourceNode?.getAttribute('data-source')||'').trim();
     const description=(descNode?.textContent||'').trim();
     const why=(whyNode?.textContent||'').trim();
     const tab=tabFor(card);
+    const publishedAt=(publishedNode?.getAttribute('datetime')||publishedNode?.textContent||'').trim();
+    const imageUrl=safeUrl(imageNode?.currentSrc||imageNode?.src||'');
+    const storyId=String(card.dataset.storyId||card.dataset.id||'').trim();
     return {
-      title,url,source,description,why,tab,
+      title,url,source,description,why,tab,publishedAt,imageUrl,storyId,
       titleKey:normalizeText(title),urlKey:url.toLowerCase(),sourceKey:normalizeText(source),
       capturedAt:new Date().toISOString()
     };
@@ -145,13 +150,18 @@
           source:data.source,
           description:data.description,
           why:data.why,
+          publishedAt:data.publishedAt,
+          imageUrl:data.imageUrl,
+          storyId:data.storyId,
+          originalCategory:data.tab,
+          schemaVersion:2,
           capturedAt:data.capturedAt
         })
       });
       if(!response.ok)throw new Error(`Feedback write failed (${response.status})`);
       const entry={
         reason,category:data.tab,title:data.title,url:data.url,source:data.source,
-        title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
+        description:data.description,why:data.why,published_at:data.publishedAt,image_url:data.imageUrl,story_id:data.storyId,original_category:data.tab,schema_version:2,title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
       };
       const globalReason=reason==='D';
       if(!remotePools[reason].some(existing=>sameRecord(existing,data,!globalReason)))remotePools[reason].push(entry);
