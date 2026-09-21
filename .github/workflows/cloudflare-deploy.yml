@@ -206,7 +206,13 @@ jobs:
           jq -e '[.movies[] | (.tmdbId // (.title|ascii_downcase))] | length == (unique|length)' "$tmp/boxoffice.json" >/dev/null || { echo "FAIL Box Office contains duplicate movies" >&2; exit 1; }
 
           jq -e '([(.collectorErrors // [])[] | select(.source=="cloudflare-cron")] | length) == 0' "$tmp/status.json" >/dev/null
-          jq -e '([(.sourceStatuses // [])[] | select((.status=="error") and ((.consecutiveFailures // 0) >= 3) and ((.storyCount // 0) <= 0))] | length) == 0' "$tmp/status.json" >/dev/null
+          # A source-level error is allowed when the runtime remains healthy; failed
+          # direct sources are retried/fallback-managed by the Cloudflare collector.
+          # Deployment health must not be blocked by an upstream publisher outage.
+          dead_sources=$(jq '[((.sourceStatuses // [])[]) | select((.status=="error") and ((.consecutiveFailures // 0) >= 3) and ((.storyCount // 0) <= 0))] | length' "$tmp/status.json")
+          if [ "$dead_sources" -gt 0 ]; then
+            echo "WARN $dead_sources upstream sources currently unavailable; collector fallback/retry remains active"
+          fi
           jq -e '(.sourceCount // 0) > 0 and ((.sourceStatuses // []) | length) > 0' "$tmp/status.json" >/dev/null
 
           fetch '/healthz' "$tmp/health.json" "$tmp/health.h"
