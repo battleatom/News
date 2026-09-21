@@ -27,8 +27,9 @@ async function fetchEspnScoreboard(query){
   return d;
 }
 async function nflSchedule(){
-  const now=new Date(),from=new Date(now),to=new Date(now);from.setDate(from.getDate()-1);to.setDate(to.getDate()+7);
-  const attempts=[`limit=64&dates=${dateYmd(from)}-${dateYmd(to)}`,"limit=64"];
+  const now=new Date(),from=new Date(now),to=new Date(now);from.setDate(from.getDate()-1);to.setDate(to.getDate()+21);
+  // Pull far enough ahead to include the next scheduled NFL slate, not merely a rolling 7-day window.
+  const attempts=[`limit=128&dates=${dateYmd(from)}-${dateYmd(to)}`,`limit=128`];
   let lastError=null;
   for(const query of attempts){
     try{
