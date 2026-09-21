@@ -192,6 +192,7 @@ jobs:
           for file in feed.json status.json nfl.json markets.json boxoffice.json; do
             jq -e '.cloudflareRuntime == true' "$tmp/$file" >/dev/null || { echo "FAIL $file is not Cloudflare runtime" >&2; exit 1; }
           done
+          jq -e '.buildMode == "cloudflare-live" or .buildMode == "cloudflare-error"' "$tmp/status.json" >/dev/null || { echo "FAIL status.json is not served from Cloudflare live state" >&2; exit 1; }
           jq -e '.sources | type=="array" and length>0' "$tmp/sources.json" >/dev/null
           jq -e '.sources | type=="array" and length>0' "$tmp/sources-extra.json" >/dev/null
           jq -s -e '[.[].sources[]?.id] | length == (unique|length)' "$tmp/sources.json" "$tmp/sources-extra.json" >/dev/null
