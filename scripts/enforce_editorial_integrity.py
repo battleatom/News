@@ -77,7 +77,7 @@ INTERNATIONAL_CONTEXT = {
     'war','military','troops','missile','airstrike','invasion','ceasefire','sanctions','diplomacy','diplomatic','summit',
     'prime minister','president','government','foreign minister','trade agreement','treaty','nato','united nations','brics'
 }
-TECH_SHOPPING = ('where to preorder','where to pre-order','preorder the','pre-order the','best deals','deal of the day','buy now','gift guide')
+TECH_SHOPPING = ('where to preorder','where to pre-order','preorder the','pre-order the','best deals','deal of the day','buy now','gift guide','save up to','sim-only deals')
 GAMING = {'gaming','video game','playstation','xbox','nintendo','switch','steam','skyrim','game mod','dlc','gamepass','game pass'}
 GENERIC_LANDING = (
     re.compile(r'^all coverage\b', re.I), re.compile(r'^latest news\b', re.I), re.compile(r'^news$|^home$', re.I),
