@@ -262,6 +262,10 @@ def main():
                 set_text(item,'category','nfl'); world_to_nfl+=1; cat='nfl'
             elif obvious_domestic_world(item):
                 set_text(item,'category','us'); world_to_us+=1; cat='us'
+        if cat=='top':
+            sports_action=us_sports_disposition(item)
+            if sports_action=='nfl':
+                set_text(item,'category','nfl'); us_to_nfl+=1; cat='nfl'
         if cat=='us':
             sports_action=us_sports_disposition(item)
             if sports_action=='nfl':
