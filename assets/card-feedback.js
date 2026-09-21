@@ -2,6 +2,11 @@
   'use strict';
   const API_URL='https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/news-feedback';
   const REASONS=['D','NR','NW'];
+  const DESTINATIONS=[
+    ['top','Top News'],['underreported','Underreported'],['world','World'],['us','U.S.'],['presidential','Presidential'],
+    ['federal','Federal'],['legislation','Legislation'],['nm','New Mexico'],['local','Local'],['region','Region'],
+    ['technology','Technology'],['gaming','Gaming'],['military','Military'],['entertainment','Entertainment'],['nfl','NFL'],['x','X']
+  ];
   const remotePools={D:[],NR:[],NW:[]};
   let decorating=false;
   let refreshing=null;
@@ -133,7 +138,32 @@
     },150);
   }
 
-  async function record(reason,card){
+  function chooseDestination(card){
+    const current=tabFor(card);
+    return new Promise(resolve=>{
+      document.querySelector('.nr-destination-picker')?.remove();
+      const overlay=document.createElement('div');
+      overlay.className='nr-destination-picker';
+      Object.assign(overlay.style,{position:'fixed',inset:'0',zIndex:'2147483647',background:'rgba(0,0,0,.52)',display:'flex',alignItems:'center',justifyContent:'center',padding:'18px'});
+      const panel=document.createElement('div');
+      Object.assign(panel.style,{width:'min(440px,100%)',maxHeight:'80vh',overflow:'auto',background:'var(--card-bg,#fff)',color:'var(--text-color,#111)',borderRadius:'16px',padding:'18px',boxShadow:'0 18px 60px rgba(0,0,0,.35)'});
+      const heading=document.createElement('div'); heading.textContent='Where should this story go?'; Object.assign(heading.style,{fontWeight:'800',fontSize:'18px',marginBottom:'12px'}); panel.appendChild(heading);
+      const grid=document.createElement('div'); Object.assign(grid.style,{display:'grid',gridTemplateColumns:'repeat(2,minmax(0,1fr))',gap:'8px'});
+      DESTINATIONS.filter(([key])=>key!==current).forEach(([key,label])=>{
+        const b=document.createElement('button'); b.type='button'; b.textContent=label;
+        Object.assign(b.style,{padding:'11px 10px',borderRadius:'10px',border:'1px solid rgba(127,127,127,.35)',background:'transparent',color:'inherit',fontWeight:'700',cursor:'pointer'});
+        b.onclick=e=>{e.preventDefault();e.stopPropagation();overlay.remove();resolve(key);}; grid.appendChild(b);
+      });
+      panel.appendChild(grid);
+      const cancel=document.createElement('button'); cancel.type='button'; cancel.textContent='Cancel';
+      Object.assign(cancel.style,{marginTop:'12px',width:'100%',padding:'10px',border:'0',background:'transparent',color:'inherit',cursor:'pointer'});
+      cancel.onclick=e=>{e.preventDefault();e.stopPropagation();overlay.remove();resolve(null);}; panel.appendChild(cancel);
+      overlay.onclick=e=>{if(e.target===overlay){overlay.remove();resolve(null);}};
+      overlay.appendChild(panel); document.body.appendChild(overlay);
+    });
+  }
+
+  async function record(reason,card,targetCategory=''){
     const data=snapshot(card);
     if(!data.title&&!data.url)return;
     const controls=card.querySelector(':scope > .card-feedback-controls');
@@ -154,6 +184,7 @@
           imageUrl:data.imageUrl,
           storyId:data.storyId,
           originalCategory:data.tab,
+          targetCategory:targetCategory||null,
           schemaVersion:2,
           capturedAt:data.capturedAt
         })
@@ -161,7 +192,7 @@
       if(!response.ok)throw new Error(`Feedback write failed (${response.status})`);
       const entry={
         reason,category:data.tab,title:data.title,url:data.url,source:data.source,
-        description:data.description,why:data.why,published_at:data.publishedAt,image_url:data.imageUrl,story_id:data.storyId,original_category:data.tab,schema_version:2,title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
+        description:data.description,why:data.why,published_at:data.publishedAt,image_url:data.imageUrl,story_id:data.storyId,original_category:data.tab,target_category:targetCategory||null,schema_version:2,title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
       };
       const globalReason=reason==='D';
       if(!remotePools[reason].some(existing=>sameRecord(existing,data,!globalReason)))remotePools[reason].push(entry);
@@ -195,7 +226,7 @@
     controls.className='card-feedback-controls';
     controls.setAttribute('role','group');
     controls.setAttribute('aria-label','Article feedback');
-    const labels={D:'Duplicate',NR:'Not Relevant',NW:'Not Wanted'};
+    const labels={D:'Duplicate',NR:'Wrong Section',NW:'Vague / Weak Title'};
     REASONS.forEach(reason=>{
       const button=document.createElement('button');
       button.type='button';
@@ -204,8 +235,13 @@
       button.textContent=reason;
       button.title=labels[reason];
       button.setAttribute('aria-label',labels[reason]);
-      button.addEventListener('click',event=>{
-        event.preventDefault();event.stopPropagation();record(reason,card);
+      button.addEventListener('click',async event=>{
+        event.preventDefault();event.stopPropagation();
+        if(reason==='NR'){
+          const target=await chooseDestination(card);
+          if(!target)return;
+          record(reason,card,target);
+        }else record(reason,card);
       });
       controls.appendChild(button);
     });
