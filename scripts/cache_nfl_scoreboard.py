@@ -8,7 +8,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
-ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=32'
+ESPN_URL = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?limit=64'
 NFLVERSE_URL = 'https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv'
 OUT = Path('assets/nfl-scoreboard.json')
 
@@ -84,7 +84,7 @@ def score_value(v: str) -> str:
 def fetch_nflverse() -> dict:
     rows = list(csv.DictReader(io.StringIO(fetch_text(NFLVERSE_URL))))
     now = datetime.now(timezone.utc)
-    lo, hi = now - timedelta(days=2), now + timedelta(days=10)
+    lo, hi = now - timedelta(days=2), now + timedelta(days=16)
     events = []
     for row in rows:
         if str(row.get('season') or '') != str(now.year):
