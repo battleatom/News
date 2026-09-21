@@ -83,6 +83,6 @@ async function boxOffice(env){
 
 export default{
   ...runtime,
-  async fetch(request,env,ctx){const url=new URL(request.url);if(url.pathname==="/nfl.json")return nflSchedule();if(url.pathname==="/markets.json")return markets();if(url.pathname==="/boxoffice.json")return boxOffice(env);return runtime.fetch(request,env,ctx)},
+  async fetch(request,env,ctx){const url=new URL(request.url);if(url.pathname==="/nfl.json")return nflSchedule();if(url.pathname==="/markets.json")return markets();if(url.pathname==="/boxoffice.json")return boxOffice(env);if(url.pathname==="/api/admin/refresh-services"&&request.method==="POST"){const checks=await Promise.allSettled([nflSchedule(),markets(),boxOffice(env)]);return noStoreJson({ok:checks.some(x=>x.status==="fulfilled"),generatedAt:new Date().toISOString(),services:{nfl:checks[0].status==="fulfilled",markets:checks[1].status==="fulfilled",boxOffice:checks[2].status==="fulfilled"},errors:checks.map((x,i)=>x.status==="rejected"?`${["NFL","Markets","Box Office"][i]}: ${String(x.reason?.message||x.reason)}`:null).filter(Boolean)})}return runtime.fetch(request,env,ctx)},
   async scheduled(controller,env,ctx){return runtime.scheduled(controller,env,ctx)}
 };
