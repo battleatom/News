@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T23:45:09.202355Z",
+  "generatedAt": "2026-09-21T01:52:02.798676Z",
   "localCity": "Farmington, NM",
   "movies": [
     {
@@ -38,16 +38,16 @@
           "pubDate": "Tue, 15 Sep 2026 13:06:00 GMT"
         },
         {
-          "title": "‘Daniel and the Fiery Furnace’ Review: Lions, Treaties and Fire - The New York Times",
-          "link": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNdFh2RGpKMjJRcXR1bm92TEwzcDNyVnAwVGV4WndRUVlSQTJGQnZOSi1LenJpbnJtR1BERFp5NHlJeU5lWXlhX1UwMWgzNE1NQWhsMDNTSDVJV2NQQ1hSQUh6XzNpUDVkbU5vYmU0TklwZ3dmZkpPSGVOTWxSTk1aUDJnU3BQMXBSeXc?oc=5",
-          "source": "The New York Times",
-          "pubDate": "Thu, 17 Sep 2026 09:02:49 GMT"
+          "title": "Filmmakers Detail Spiritual Manifestation on Set of New Movie: 'Natural Realm Responded' - cbn.com",
+          "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNRlRoZGd5RTlxMXJfd2QwZ3hjUmxLMWpNbzU1QzNNR29kc1EyS21GSkx0a3F4UEVBbmpUSnhsNnFzVHV3X3dPVHBKNFJJVmtTb1FNS0M0V2ZaOWs5bEZWUnJmNTZHME02aGNuRUJ6ZDkxbzV3X01RTnFEYnlRUE9ZZWlWd3hJbDFlLWVoRjB6UGdUUWE1VnZyNFZEZXk4T3RpUnBjdDMyUzVCSGFZaWtyNXNnbEE?oc=5",
+          "source": "cbn.com",
+          "pubDate": "Sun, 20 Sep 2026 23:39:48 GMT"
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 1706702,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -113,7 +113,7 @@
         "US",
         "GB"
       ],
-      "popularity": 71.4217,
+      "popularity": 68.5505,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -209,9 +209,9 @@
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - AP News",
+          "title": "Movie Review: 'By Any Means' is a propulsive action thriller set against the Civil Rights Movement - apnews.com",
           "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxORjFOTmVDNkRiTU1jbUw2SGpYU1Y4QWw5UG9McmR3dUI2WU1XZFU3QlJHajlDSFlhal9EX0ZjM2lfR1dvTnFuTnp0UGpwZWtTVWYxdHdNaDZTUzBETkYwcGJ3RDBKZ2x6VGpIQ2hPc3ZTZm11VTdvX2liTWRReHpiUkNmWWRtcENRTnJmZmR3?oc=5",
-          "source": "AP News",
+          "source": "apnews.com",
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
@@ -243,7 +243,7 @@
       "overview": "After Acme products fail him one too many times in his dogged pursuit of the Roadrunner, Wile E. Coyote decides to hire a billboard lawyer to sue the Acme Corporation.",
       "poster": "https://image.tmdb.org/t/p/w500/kYDCl2y0VPvhT5eYWbMRInPoB03.jpg",
       "status": "playing",
-      "voteAverage": 7.6,
+      "voteAverage": 7.554,
       "rating": "PG",
       "runtime": "1h 41m",
       "theaters": [
@@ -266,15 +266,15 @@
           "pubDate": "Tue, 01 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "They uncrushed ‘Coyote vs. Acme’ from a falling anvil and lived to tell about it - latimes.com",
+          "title": "They uncrushed ‘Coyote vs. Acme’ from a falling anvil and lived to tell about it - Los Angeles Times",
           "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxQNl9MTnVUcUhJM2VmWGNyaVU5VWY3TWpIelhYTXpBQWdKYlpVYzFFbTVCdVhBS2gzbG1QTlMtQUxBR1NJVXpzc3k0ZUNwMklBbE5NZF9HWWtHeFZCbGlydU96em1MMDdaUFBMY1Z4d1EzU1lIMUp4QkoyVjVaN2szbWVNTEVvNWZ4VVpXMFBFRlRzS2xaRk9pR2VWUTJJQXh1TXB1aDA5TWhuQzh6aGdsTzRuS1NZMHZ6eEZZRm1WLTdDcV9RLVN3dEVpQlFZZHZCX3pWbEwtNm1xaTdKclYwRTg5T09HZElKNnBlaFdnMlg?oc=5",
-          "source": "latimes.com",
+          "source": "Los Angeles Times",
           "pubDate": "Wed, 26 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Review: Coyote vs. Acme is an unabashed love letter to Looney Tunes - Ars Technica",
-          "link": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNWU9PSzdwTUJXUDFsSHUyblFvTDdKLXBnZmhQMnNYY0hkTmdUTk0xNFhNRW03M1pxaXM2X3BTM0hJdHJqdENOeUllTWx0RFFNSVlDN05hcVZoUkNIbHUxWURySlhCT1pYNi1Hd0o5b0MwVF8wSGJmTDhNWGs1NE02Tmg0a0F2d05jZjZkZUlzdU5RYy02TVZ4OHdENTF4VVhxYTNVSGg3R0FlZw?oc=5",
-          "source": "Ars Technica",
+          "title": "6 Reasons 'Coyote vs. Acme' Genuinely Deserves A Family Trip To The Movies - Scary Mommy",
+          "link": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOWjczTVNBMm1ZMEZlZHdvWUcyZG9vWUZyZnI5blh0MTFMbDlBYlBxUXhsOXdoQXdfaUFLVUh2Y0czcklnTUljZkJuMnJoa3h5eS0zMFRzQTJJWG1ORjBKQmkyTl9NaVdTSFBFMHhRNDgtekdCVE5UMUlmWTMxUGVaSXBpckk1alF1TWlET0puTnBFaDRaYjlqdGV3WQ?oc=5",
+          "source": "Scary Mommy",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         }
       ],
@@ -346,9 +346,9 @@
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 1291595,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -464,9 +464,9 @@
       ],
       "news": [
         {
-          "title": "Movie Review: 'Resident Evil' is a gory good time, even for non-gamers - seattlerefined.com",
+          "title": "Movie Review: 'Resident Evil' is a gory good time, even for non-gamers - Seattle Refined",
           "link": "https://news.google.com/rss/articles/CBMipwJBVV95cUxNejdFeFRzT0FnS3VtX0llX1laYXpLbDhFTVlLUGdabDltS24zQU5fZUk1QlBoZFJUcEJCbFVIdm9aYmYyTkdBWllNVGRqM2hIZ1IydGlGZTByUnI4QUFBTnNsNlNLbHM5RG8xT1NDWkdzejdkM3JjbFJsX0dkTGdFRFE5Z1lydEJYdFdsZm1DQ2hRZUNGUVA2NFowck12RnRaTFVBd2RjaVAyOXZjaUctVFgyZkhFQ2ZJMkpQRlZ0R1p0c0VvWmNVM0REQkRfY1lRZTY1cGhLOTBMOVd4LWNzYTNyTGJpaHNKb2dzMi1ESzVXS1FqX2RpUW94ZmwzV016TkpoaGtSc3NWYkptSFlsc21HcTFENXdGUmpNdi1iXzRZbk5IMlQ0?oc=5",
-          "source": "seattlerefined.com",
+          "source": "Seattle Refined",
           "pubDate": "Sat, 19 Sep 2026 03:08:02 GMT"
         },
         {
@@ -483,9 +483,9 @@
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 1423191,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -533,9 +533,9 @@
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "‘The Runner’ Review: A Race Across London and a Battle for Control - Fan Fun with Damian Lewis",
+          "title": "‘The Runner’ Review: A Race Across London and a Battle for Control - fanfunwithdamianlewis.com",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBnUUJrU0FMOEVIcFcteHZOdEVaSzlGazdSMVgzdXRSanl0TkttUVg0Y1FfcExzSGNCMVVlVWtBakFSTHRFb2ZiRXVucmxCR212WmwxWFRuOGNXQQ?oc=5",
-          "source": "Fan Fun with Damian Lewis",
+          "source": "fanfunwithdamianlewis.com",
           "pubDate": "Tue, 15 Sep 2026 23:21:17 GMT"
         }
       ],
@@ -586,16 +586,16 @@
       ],
       "news": [
         {
-          "title": "‘Spider-Man: Brand New Day’ Overtakes ‘Star Wars: Force Awakens’ as Highest-Grossing Movie of All Time at Domestic Box Office - Variety",
-          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQdzlNbjRBMFB3ZmxPaERjaFJNajBzNm5XMXYyMnlEU3h4VFpER0hndEtEYzRIcE1ibHpBREJWRDBUamZmS2lKLXFveDZhM1hKSFhCWWhMYlZlTEFJdWhDWWpPUldPeUtnTFdWYlJpV0lwTFA3UVNsRVBDM05QdjRKNl9uNkN3M2hlSjVxcC1raDJKT3RBdjZEQ1lUMXdIOEJtZi1ScEtDam9fT3J0T21GU0ljNA?oc=5",
-          "source": "Variety",
-          "pubDate": "Wed, 16 Sep 2026 14:49:00 GMT"
-        },
-        {
           "title": "‘Spider-Man: Brand New Day’ Hits No. 1 on All-Time Domestic Chart, Topping ‘Force Awakens’ - The Hollywood Reporter",
           "link": "https://news.google.com/rss/articles/CBMivwFBVV95cUxPYjdkOVk4WG84YWtoS2l2RVlPSWo5X1M2QjFFVTBkajkzZU9Vb00zSlV5N2h5bHVJNE5kSlB4ZWkzaDNyZ0pNT0JuZUI2M1lnbXptalZkVm9OYUEtQ2dvRkVRTTNfRXM0QzRva2Z0SGliRjZuOHByV21QeUlHblA4eGY4V1VXamFqcXVoM0JuOXFIVHdUV0pBekdtX3pEWU5OaThvTGNuQTg2YU55Qy1YXzFtejRpQnJqZFRaWTBPZw?oc=5",
           "source": "The Hollywood Reporter",
           "pubDate": "Wed, 16 Sep 2026 15:29:17 GMT"
+        },
+        {
+          "title": "‘Spider-Man: Brand New Day’ Overtakes ‘Star Wars: Force Awakens’ as Highest-Grossing Movie of All Time at Domestic Box Office - Variety",
+          "link": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQdzlNbjRBMFB3ZmxPaERjaFJNajBzNm5XMXYyMnlEU3h4VFpER0hndEtEYzRIcE1ibHpBREJWRDBUamZmS2lKLXFveDZhM1hKSFhCWWhMYlZlTEFJdWhDWWpPUldPeUtnTFdWYlJpV0lwTFA3UVNsRVBDM05QdjRKNl9uNkN3M2hlSjVxcC1raDJKT3RBdjZEQ1lUMXdIOEJtZi1ScEtDam9fT3J0T21GU0ljNA?oc=5",
+          "source": "Variety",
+          "pubDate": "Wed, 16 Sep 2026 14:49:00 GMT"
         },
         {
           "title": "Box Office: 'Spider-Man', Universal Push Summer To $4.76B All-Time Record - Deadline",
@@ -605,9 +605,9 @@
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 969681,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -643,22 +643,22 @@
       ],
       "news": [
         {
-          "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - Motion Picture Association",
-          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQdjNhSW9rMWdLeGF0Y3BodnRPOS1CbC05UFlJbHFUVFZPaTgybEh3RlBYN2RxczFvUTRmc2lFYTk5ZVVUQnhfMUFOcnMwdmVMMS1DV2Q2a0R2ejc2TlFPNGY1NGhENHlhOHJ4ZEwzcVdCUkhKVG13N3JiSGNmcFVaOEJuNkZFTXhRT3B3aVB5cm11U2FnZmF1WnhDb242OURXNVFEV19GUnd4cFlldUZJTGE5ZThSUlJxdDFBd3BiOTJoUEZKSnhrQWdRQUZ1NmEyVFEtSkMxWnZSTWdLS0w1MlJQVjI?oc=5",
-          "source": "Motion Picture Association",
-          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "The End of Oak Street - Mediaversity Reviews",
           "link": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQYjVzb3VGbUNsOWVzY3p6eWRDakk4MXo5YkJWYUg5Y3RxNTZOZW42RUZwclFycy1jWThFWERFV05vR0RwUG1kbXN1UnNrLVdPQ0x4Nzh0MjlEZW9uNnc1Ni1FYmd2dmgxVHk0ZTdZVzJzc0NVNVdEV0FDY3FiVEFvNkJQS0VkQTg?oc=5",
           "source": "Mediaversity Reviews",
           "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "New Movies on Streaming: ‘The End of Oak Street,’ ‘Tony,’ and More - Decider",
-          "link": "https://news.google.com/rss/articles/CBMinwFBVV95cUxOSzM1UXlJcUE0dUJURkNhMm1XeXNUcDA5aHVCU2lBcU9DZkNwdzRJUHR5dnQ0b0ZzUmVmQnJOcjR1TndxVWVHVkNaQVM5VWFqaVdWYlU4Mi1ybzFyUHZhYWR0Q2Z4NGNwRkpsbThaOUo3c1hWZ3NrUzNOcUZneEl4bTZJdEtnTGJZY1lQSFpMeHlPWG1sT1BQTTNkTW52TTA?oc=5",
-          "source": "Decider",
-          "pubDate": "Fri, 18 Sep 2026 15:00:00 GMT"
+          "title": "How “The End of Oak Street” Editor John Axelrad Crafted Anne Hathaway & Ewan McGregor's Lean, Mean Dinosaur Thriller - motionpictures.org",
+          "link": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQdjNhSW9rMWdLeGF0Y3BodnRPOS1CbC05UFlJbHFUVFZPaTgybEh3RlBYN2RxczFvUTRmc2lFYTk5ZVVUQnhfMUFOcnMwdmVMMS1DV2Q2a0R2ejc2TlFPNGY1NGhENHlhOHJ4ZEwzcVdCUkhKVG13N3JiSGNmcFVaOEJuNkZFTXhRT3B3aVB5cm11U2FnZmF1WnhDb242OURXNVFEV19GUnd4cFlldUZJTGE5ZThSUlJxdDFBd3BiOTJoUEZKSnhrQWdRQUZ1NmEyVFEtSkMxWnZSTWdLS0w1MlJQVjI?oc=5",
+          "source": "motionpictures.org",
+          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "‘The End of Oak Street’ is both new and nostalgic - deseret.com",
+          "link": "https://news.google.com/rss/articles/CBMilAFBVV95cUxNOUZlRHhtSWVRZWM1N0NCNDBtU3ZMYmxEbW1pcXJ3MzAwbXc0a2VWSUU1TVRqaUNsaGdFbmhSRGVFQ3FveEMtMXpSeU9XVzROTnJJdzZzYUx0WXh4TlZOVDlwWjJ2X3I2c0VZa0EyX3ZrcDNiR2RqXzJBbkpUQVhzdXhtVEtOWi1XTGtrSXR0bDJ6TDZL?oc=5",
+          "source": "deseret.com",
+          "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
         }
       ],
       "source": "Showtimes.com",
@@ -718,9 +718,9 @@
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 977942,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -769,16 +769,16 @@
           "pubDate": "Fri, 18 Sep 2026 23:19:00 GMT"
         },
         {
-          "title": "Movie Review: Ethan Hawke leads a tense, Depression-era thriller in ‘The Weight’ - AP News",
+          "title": "Movie Review: Ethan Hawke leads a tense, Depression-era thriller in ‘The Weight’ - apnews.com",
           "link": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPVGhwMzZ4WEM0d2hlN3dmTndvTHo2SFVnOG5CLW43QUdBOXZ6M3U1VGNydXpNZVFyaFhxVHNmNTduelBFQTNDSVlFMUhwMnFEOTFBTlFYUFRwcWkzNFVVVEJQd3JSVFdhY25NWFp1WlZJTFAwZlJOWjU2NmlGNXptbGk1U1QyUQ?oc=5",
-          "source": "AP News",
+          "source": "apnews.com",
           "pubDate": "Thu, 17 Sep 2026 12:49:15 GMT"
         }
       ],
       "source": "Showtimes.com",
-      "confirmedThrough": "2026-09-20",
-      "leavingDate": "2026-09-20",
-      "leavingSoon": true,
+      "confirmedThrough": "",
+      "leavingDate": "",
+      "leavingSoon": false,
       "tmdbId": 1433583,
       "metadataSource": "TMDB",
       "originalLanguage": "en",
@@ -977,7 +977,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 11.8915,
+      "popularity": 10.9395,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1051,15 +1051,15 @@
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Ariana Grande Is ‘Committed’ to Promoting ‘Focker-in-Law’ Ahead of Planned Break (Source) - people.com",
+          "title": "Ariana Grande Is ‘Committed’ to Promoting ‘Focker-in-Law’ Ahead of Planned Break (Source) - People.com",
           "link": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQYVhsQjlLU0FBNWIzWkdiVEFmMzlkdHpuZ3VDOHpMXzNWQXRTdF9tTzBsRGRza1dHUGNRZTlNTDMzSTdNNEJIRThYNGZOU0JpZDBRQXZUb1JKdkJzdHMxdkNyRWRaTnhLUUNRUl9qRlZ2UFBDSm16YjdDel9PdnpuNVU0NDh4bDU2cXZSaVZIdjMwV1hTaHlDaEhTVFJ1UUhNUVVEWWZaUC1IMFZBLXRXUg?oc=5",
-          "source": "people.com",
+          "source": "People.com",
           "pubDate": "Wed, 02 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "How Ariana Grande is approaching ‘Focker-in-Law’ promo amid ‘break from visibility’ - Page Six",
+          "title": "How Ariana Grande is approaching ‘Focker-in-Law’ promo amid ‘break from visibility’ - pagesix.com",
           "link": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNbmxwQktlZ2c4QklURVRFdi1OZ3g1SFE2SmdGVWI5Unl2NUZjcWhvVk04Yk1aOUNnVWlzOVZwaEpfZGFqUENSM1ZYdndianVjTm40cEN4aXZDNFBKZnBFWHNDZ05udkxJQWVLTTFoemE1Y3ptbllkTFVSc09ydlZDUmk3WGw5cGdWZ2Q5NWNqWDF1TkI2VDRhV1Z2Q1oyVTZlNWdibTY3d29GdkNJQklrcDE1d0FDVjdzYlRnMHQ0alFqbmEx?oc=5",
-          "source": "Page Six",
+          "source": "pagesix.com",
           "pubDate": "Thu, 03 Sep 2026 07:00:00 GMT"
         }
       ],
@@ -1099,9 +1099,9 @@
           "pubDate": "Thu, 10 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "Celebrating Milton Hershey's Legacy Through Service - thehersheycompany.com",
+          "title": "Celebrating Milton Hershey's Legacy Through Service - The Hershey Company",
           "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcENKX1AxUWNUOWY1a3dBb2ZUdVV0UU9jcDAyOUZzNlM1ME0yd1ZzallCRGlzbkdGd2dFQllMYTBkRVhQMXJLbjFkWnZFRVA1Sl9FLTRtZFVoUm12eVVKa0hoUmRhVmZFYzVmbnBOM2pKVGtlQi0ybnBYSXR1QWdLWWtsbGFzNkVPT0tGWnNyUHJpTk1PQ2ZxX29TcmNjVlgyeXVqa29IM3pPY1NPQklGdnU1T3c?oc=5",
-          "source": "thehersheycompany.com",
+          "source": "The Hershey Company",
           "pubDate": "Mon, 14 Sep 2026 07:00:00 GMT"
         },
         {
@@ -1141,16 +1141,16 @@
       "theaters": [],
       "news": [
         {
-          "title": "Marvel Has Assigned 42 Hours of Homework Before ‘Avengers: Doomsday’ - WIRED",
-          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPRXZDNU5ObWk5SzJQT2hwck41cHo3NVg5U2EzNWtxazloUkZjNnRpRGRwaEl2Yjk4N1dMMTk3b2ZWM1l0NjJZa3VXcGl5R0EzSWtpRm5PbjZRU1lfWjR4RmF5eDloVERuRm4zSmNwd25oQ2NVRndzRzNyeV8zYV9MVm5vOXlGcHUybjdLczlaS0l5c3VOd2pRWFZ3?oc=5",
-          "source": "WIRED",
-          "pubDate": "Sat, 05 Sep 2026 07:00:00 GMT"
-        },
-        {
           "title": "‘Avengers: Doomsday’ Has Already Made $50 Million in Pre-Sales, Three Months Before Release - Variety",
           "link": "https://news.google.com/rss/articles/CBMijgFBVV95cUxNVGlma0xtMnk2WnVzMDhXQzFpWkxHSlhmamdwOTZ3VmJDMmo1bk53VXQ0bXZ6OGU2a3R1N0VTWGVaLTQyaXNrZ1dRQ3hiTmV0NllFTVZkZGVHclVfcTZCVWVxaWpvR1NWSzZQcHdqZFJjS3Rwa1VXS2dCMFJiclBtYXBZeDR5OXNSYk9XTkJR?oc=5",
           "source": "Variety",
           "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Marvel Has Assigned 42 Hours of Homework Before ‘Avengers: Doomsday’ - WIRED",
+          "link": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPRXZDNU5ObWk5SzJQT2hwck41cHo3NVg5U2EzNWtxazloUkZjNnRpRGRwaEl2Yjk4N1dMMTk3b2ZWM1l0NjJZa3VXcGl5R0EzSWtpRm5PbjZRU1lfWjR4RmF5eDloVERuRm4zSmNwd25oQ2NVRndzRzNyeV8zYV9MVm5vOXlGcHUybjdLczlaS0l5c3VOd2pRWFZ3?oc=5",
+          "source": "WIRED",
+          "pubDate": "Sat, 05 Sep 2026 07:00:00 GMT"
         },
         {
           "title": "‘Avengers: Doomsday’ Ticket Pre-Sales Cross $50M Domestically Three Months Out - Deadline",
@@ -1268,7 +1268,7 @@
         "GB",
         "US"
       ],
-      "popularity": 4.2724,
+      "popularity": 3.8447,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1439,9 +1439,9 @@
           "pubDate": "Fri, 18 Sep 2026 13:00:40 GMT"
         },
         {
-          "title": "Photos: HOW TO ROB A BANK Trailer Debuts With Nicholas Hoult, Zoë Kravitz - broadwayworld.com",
+          "title": "Photos: HOW TO ROB A BANK Trailer Debuts With Nicholas Hoult, Zoë Kravitz - BroadwayWorld",
           "link": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNUkRHS21EOEZMaklaU0xUWm9wUG1qdVh5TmNhOTVqTzZ3WHMyZWFWblNVeVB5V0xLVkNsc2hTX21ZdmVueW83LWtIaUNsQjhKSEctbXYySktDNTJReTlEc1lpbGM5SThFa1RuSlRyXzZEZ2pLYnc5WUh0NTNrZ1hFaGp0TmtDbU80ZkdjMHlvTXJxNTZHcVVfY2NIYWxfTU1rRm5yTVhUM0dma21zLWlUdEdlYXJnalF6VEktYkNwUUc?oc=5",
-          "source": "broadwayworld.com",
+          "source": "BroadwayWorld",
           "pubDate": "Thu, 17 Sep 2026 14:06:08 GMT"
         },
         {
@@ -1510,7 +1510,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 2.669,
+      "popularity": 2.8754,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1536,9 +1536,9 @@
           "pubDate": "Sun, 23 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Gatto - adria.ign.com",
+          "title": "Gatto - IGN Adria",
           "link": "https://news.google.com/rss/articles/CBMiREFVX3lxTFBoaWppQUdUWS01cy12S0prMkRFMFBfanptNDBQYTVhYW9zYWY1QURZM3I3QmdqVWhhdUNqb1lsX0hDQWJk?oc=5",
-          "source": "adria.ign.com",
+          "source": "IGN Adria",
           "pubDate": "Thu, 03 Sep 2026 23:04:38 GMT"
         },
         {
@@ -1626,9 +1626,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "'The Nightingale' Set Leaks: An Unexpected First Look at Elle Fanning in \"Buzzy\" Period Drama - brit.co",
+          "title": "'The Nightingale' Set Leaks: An Unexpected First Look at Elle Fanning in \"Buzzy\" Period Drama - Brit + Co",
           "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1kb3RzSHFxNElNVXB0ZE53aVlNQ0t6TkJRMDBlem9vNXZlNG11TDNuYVFfZmhuVWFucEo1b1htVFBFc0NNQ2tRVGNDZ0JTQVpqUnRISE90R3prc2Rn?oc=5",
-          "source": "brit.co",
+          "source": "Brit + Co",
           "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         },
         {
@@ -1674,12 +1674,6 @@
       "theaters": [],
       "news": [
         {
-          "title": "Johnny Depp Is Asking ‘Upwards of $40 Million’ to Return to the ‘Pirates of the Caribbean’ Franchise - National Enquirer",
-          "link": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQS19CdndxQkZhczlLaWtPeEpIN0w5SXJMaV9yRDdHSWRKajNnMUlLeTMzWjg2WEo3TXBmZmVrNU4wVXU1cVRlbTRGRDJtNDExR0JZODFJWmpWUkp1cjRPWGZIbjJMVXBkRWE5NGpVN2pBNk96R2c0NTBfcU9KT1pLOGFEOWpGbGtNRFEtLWQ1SnJ6RFBkNC1lV1NtU2hSZXQzNjBnNUVKZVoyQnZFek41S3d0NEpxRGFIbGx0dmpSaHliems?oc=5",
-          "source": "National Enquirer",
-          "pubDate": "Mon, 31 Aug 2026 07:00:00 GMT"
-        },
-        {
           "title": "Thunder Road, Lit Entertainment Launch New Production Banner - The Hollywood Reporter",
           "link": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQd0V5LTJYVDBqM21NYjlkNTdzOWp4eFZKZUp3ZG9OSWphU3NMYV9NczU3VUVGNmkwUE9nTGlkaVJxaU5wcllWa0NQODhhbGluVEY0ZkdkeDNsd2RWcW14VUxqR2pUZ0xFR3dkTTJhWG5HZFVabUplX3p5T2dkU3lqU3lNcmctZ2Q2VHZJR1ktcExSbGlPTWNSOEt1QklsWHlTRGpR?oc=5",
           "source": "The Hollywood Reporter",
@@ -1690,6 +1684,12 @@
           "link": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNNzFQNWVQTThoOGd3ckpfdUF5VDdqSlNnRks5VXlJQV92SEE1aG82YzhVYi0zNEVRQlFpdll2NklZR1RCM2htN1VyWWY5OENVbndzcmpfT1JPR2xYejVkTS1pY251QXVvSV96eVJaclhGTlEzOXREUEtKdGtTUlQwUWxIOVE?oc=5",
           "source": "Collider",
           "pubDate": "Sat, 29 Aug 2026 07:00:00 GMT"
+        },
+        {
+          "title": "Thunder Road and Lit Entertainment Group Launch TR/AK Banner - TheWrap",
+          "link": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQU2xJWVZIZmJiQkc4V29HRlFpQ0lIekxnS2M5MHFUaU8wSDhnZXZseXVMX0ltbTNPOWk2S1lXMlEteFdQdXdrVFdPbmdIbzh4S19aMkpKaS13V2JqaGg2cFQ0b1BLaHlwcFVRc2hXdUl6dTRpQXNCekVMT3lFR3JlQ3NvN2RFZ1JNOElqekJBeDhuWWIzeXBrTzNudFpWM0o1NUYxcFJSVQ?oc=5",
+          "source": "TheWrap",
+          "pubDate": "Wed, 09 Sep 2026 07:00:00 GMT"
         }
       ],
       "source": "The Numbers - U.S. Theatrical",
@@ -1846,7 +1846,7 @@
       "originCountry": [
         "US"
       ],
-      "popularity": 1.9018,
+      "popularity": 2.0412,
       "posterReachable": true,
       "artworkSource": "TMDB",
       "posterPlaceholder": false
@@ -1872,9 +1872,9 @@
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
-          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - Nintendo",
+          "title": "The Legend of Zelda 40th Anniversary celebration revealed in new Nintendo Direct presentation - nintendo.com",
           "link": "https://news.google.com/rss/articles/CBMiywFBVV95cUxOc0xTbTFOUTNNSzd2Q1JqeGFrVjIxY3pOa056bWhYdHRlN3Axajg0dG9aOVJfN1dfdXQ2a1JnYnliSkp0Ymo1dXpSTXVCWXZiNFNHSkduSzhmTkZfWVlNdmE4bGNVQmpCbmFvczVGZGVNSnNYUE1IbExHNlBTczRyRFJmUEhGanVKb01yQW9qdFZiUkFheTZtVDkzNXJZWENuUUtYTjNxTkE5M3NzWVBna1FlcDdGTzI4cFRUdTYyeFVkQldIWlZWNURzVQ?oc=5",
-          "source": "Nintendo",
+          "source": "nintendo.com",
           "pubDate": "Tue, 08 Sep 2026 07:00:00 GMT"
         },
         {
@@ -2144,9 +2144,9 @@
       "theaters": [],
       "news": [
         {
-          "title": "James Franco joins Noah Centineo for the John Rambo prequel - joblo.com",
+          "title": "James Franco joins Noah Centineo for the John Rambo prequel - JoBlo",
           "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9ockd1bGRUX3F6bU9yRElkVWZCR1I4cFRRZS1GOXB2QjhEaklKSXh3WkNfa2N4OTlZVmhqRjdyalNQUTlOalJMVFBKM0x2QVNDWkhoNnlKSWFRZ9IBX0FVX3lxTE96aEduUXQ2d2o5X2FvQlJmaE02eE14SnhXYW9GM2l5M1QwTmJSa2JZOVBndkhTdXJSTlhzbDFlVzZlRVNXbE94X3BJQmE5ZjJKRE9OMXRxZUpSalM2alE0?oc=5",
-          "source": "joblo.com",
+          "source": "JoBlo",
           "pubDate": "Tue, 08 Sep 2026 09:39:39 GMT"
         },
         {
@@ -2198,15 +2198,15 @@
           "pubDate": "Sun, 30 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Mason Thames on the Painful Acting Tip He Borrowed from Dave Franco (Exclusive) - people.com",
+          "title": "Mason Thames on the Painful Acting Tip He Borrowed from Dave Franco (Exclusive) - People.com",
           "link": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNNFh2TWZrRnBCOGtqNjdZV3VWWHFTSnZYOVV3QjBMVFI0Mkh5LTJnVDFnREl1c0FNeGhkLS1xTEZTTXNlU3FWN29ZWXJ0TzV4S29EU0tEUE5lbVh4YlBSWE0wYmZWRXVEalFpd2xLb3FZZG1ORG1RTHFabE9CaXBNdFNON293RTVhbUNXcldjSEQ5UGMyUWx0UVM3NldWSWFvUEhnbnJiY3hyUm1mQXFRei1mOWs?oc=5",
-          "source": "people.com",
+          "source": "People.com",
           "pubDate": "Thu, 27 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "20 Upcoming Movies That Have Already WON – Page 11 - WhatCulture.com",
+          "title": "20 Upcoming Movies That Have Already WON – Page 11 - whatculture.com",
           "link": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNd1c2TDVyRjlEcXdEVlpzUjRhZmRIYXNyQ0lUNEtFZlFFY3k4ZC1ZUEkyVWZ2Z0ZwZ0FmX3VTa1pGaEJrWC1qc1NMSXN4V29ycTFiXzd6UnRGcWllMnRXcTczcUF3MEpIeUh5dGdMbjFIdnhEM0FDRVdpWFhLR0FVVkVUVnhWQzlhU1ZoMWpQTVZEb2YtbGc?oc=5",
-          "source": "WhatCulture.com",
+          "source": "whatculture.com",
           "pubDate": "Mon, 07 Sep 2026 10:55:07 GMT"
         }
       ],
@@ -2246,10 +2246,10 @@
           "pubDate": "Tue, 25 Aug 2026 07:00:00 GMT"
         },
         {
-          "title": "Spider-Verse 3 Is Confirmed to Include 3 Marvel Characters From Tom Holland's Spider-Man Movies and The MCU (But as New Versions) - The Direct",
-          "link": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZ1JScWlxOVd6TkRBU0Z6aUU1SE45UEtxenIzX0dGblVQYzFaVk5ybF80NGpocV9uelBHeWFLZTRncjVGeGxrTVhkYzRfelo5Z2x5bXBmZ3dCMWdwV25Pb1B5THRBcFBWU2JqUUZVSXhwZHBHczI2WW96aVctd1JESEU0Vy15TVBEdkQ2UWYzRkRXcjNiQVhzM3ZTVEs?oc=5",
+          "title": "Spider-Verse 3 Trailer Confirms 8 Key Spider-Men In the Sequel - The Direct",
+          "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTE1BRGRIbHJhTnFPTU8wdFhQdEVSR1J0V1dmQ0tTdzAzXzIzbUhUSzJaZnB5MjFmWDdaa3hSVURhZlZxLWs5NHNmN0c4bWt3TXBEQnRtNGZCMVBDbjlxVVZXWXlWd1o1Y3dvUDBNMEU1c0owczNuWF9qQml3?oc=5",
           "source": "The Direct",
-          "pubDate": "Sat, 22 Aug 2026 07:00:00 GMT"
+          "pubDate": "Fri, 18 Sep 2026 04:55:32 GMT"
         },
         {
           "title": "Spider-Man's Most Anticipated Movie Officially Sets Netflix Release Date - Collider",

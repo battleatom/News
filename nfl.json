@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T23:45:09.202355Z",
+  "generatedAt": "2026-09-21T01:52:02.798676Z",
   "games": [
     {
       "id": "401872932",
@@ -321,9 +321,9 @@
       "name": "Jacksonville Jaguars at Denver Broncos",
       "shortName": "JAX @ DEN",
       "date": "2026-09-20T20:05Z",
-      "status": "In Progress",
-      "detail": "3:41 - 4th",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Denver Broncos",
@@ -349,37 +349,16 @@
       ],
       "watchUrl": "",
       "venue": "Empower Field at Mile High",
-      "plays": [
-        {
-          "clock": "2:00",
-          "period": 4,
-          "text": "B.Nix kneels to JAX 19 for -1 yards."
-        },
-        {
-          "clock": "1:20",
-          "period": 4,
-          "text": "B.Nix kneels to JAX 20 for -1 yards."
-        },
-        {
-          "clock": "0:39",
-          "period": 4,
-          "text": " B.Nix kneels to JAX 21 for -1 yards."
-        },
-        {
-          "clock": "0:00",
-          "period": 4,
-          "text": "END GAME"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872941",
       "name": "Las Vegas Raiders at Los Angeles Chargers",
       "shortName": "LV @ LAC",
       "date": "2026-09-20T20:05Z",
-      "status": "In Progress",
-      "detail": "3:34 - 4th",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Los Angeles Chargers",
@@ -393,7 +372,7 @@
         {
           "name": "Las Vegas Raiders",
           "abbr": "LV",
-          "score": "17",
+          "score": "26",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/lv.png",
           "color": "000000",
@@ -405,37 +384,16 @@
       ],
       "watchUrl": "",
       "venue": "SoFi Stadium",
-      "plays": [
-        {
-          "clock": "1:41",
-          "period": 4,
-          "text": "K.Cousins kneels to LAC 43 for -1 yards."
-        },
-        {
-          "clock": "0:59",
-          "period": 4,
-          "text": "K.Cousins kneels to LAC 44 for -1 yards."
-        },
-        {
-          "clock": "0:37",
-          "period": 4,
-          "text": "K.Cousins kneels to LAC 45 for -1 yards."
-        },
-        {
-          "clock": "0:00",
-          "period": 4,
-          "text": "END GAME"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872943",
       "name": "Seattle Seahawks at Arizona Cardinals",
       "shortName": "SEA @ ARI",
       "date": "2026-09-20T20:25Z",
-      "status": "In Progress",
-      "detail": "12:40 - 4th",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Arizona Cardinals",
@@ -449,7 +407,7 @@
         {
           "name": "Seattle Seahawks",
           "abbr": "SEA",
-          "score": "24",
+          "score": "31",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/sea.png",
           "color": "002a5c",
@@ -461,42 +419,21 @@
       ],
       "watchUrl": "",
       "venue": "State Farm Stadium",
-      "plays": [
-        {
-          "clock": "1:11",
-          "period": 4,
-          "text": "J.Myers kicks 65 yards from SEA 35 to end zone, Touchback to the ARZ 35."
-        },
-        {
-          "clock": "1:11",
-          "period": 4,
-          "text": "Z.Knight up the middle to SEA 47 for 18 yards (J.Neal)."
-        },
-        {
-          "clock": "0:30",
-          "period": 4,
-          "text": "Z.Knight left tackle to SEA 41 for 6 yards (R.Mills; D.Hall)."
-        },
-        {
-          "clock": "0:00",
-          "period": 4,
-          "text": "END GAME"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872944",
       "name": "Washington Commanders at Dallas Cowboys",
       "shortName": "WSH @ DAL",
       "date": "2026-09-20T20:25Z",
-      "status": "In Progress",
-      "detail": "1:53 - 3rd",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "Dallas Cowboys",
           "abbr": "DAL",
-          "score": "27",
+          "score": "37",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/dal.png",
           "color": "002a5c",
@@ -505,7 +442,7 @@
         {
           "name": "Washington Commanders",
           "abbr": "WSH",
-          "score": "13",
+          "score": "20",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/wsh.png",
           "color": "5a1414",
@@ -517,37 +454,16 @@
       ],
       "watchUrl": "",
       "venue": "AT&T Stadium",
-      "plays": [
-        {
-          "clock": "2:00",
-          "period": 4,
-          "text": "K.Allen left tackle to DAL 40 for 1 yard (K.Clark)."
-        },
-        {
-          "clock": "1:16",
-          "period": 4,
-          "text": "K.Allen left tackle to DAL 36 for 4 yards (D.Ezeiruaku)."
-        },
-        {
-          "clock": "0:37",
-          "period": 4,
-          "text": "K.Allen left tackle to DAL 33 for 3 yards (S.Revel)."
-        },
-        {
-          "clock": "0:00",
-          "period": 4,
-          "text": "END GAME"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872942",
       "name": "Miami Dolphins at San Francisco 49ers",
       "shortName": "MIA @ SF",
       "date": "2026-09-20T20:25Z",
-      "status": "In Progress",
-      "detail": "8:03 - 4th",
-      "state": "in",
+      "status": "Final",
+      "detail": "Final",
+      "state": "post",
       "teams": [
         {
           "name": "San Francisco 49ers",
@@ -561,7 +477,7 @@
         {
           "name": "Miami Dolphins",
           "abbr": "MIA",
-          "score": "6",
+          "score": "13",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/mia.png",
           "color": "008e97",
@@ -573,42 +489,21 @@
       ],
       "watchUrl": "",
       "venue": "Levi's Stadium",
-      "plays": [
-        {
-          "clock": "2:00",
-          "period": 4,
-          "text": "(Shotgun) J.James up the middle to SF 38 for 3 yards (J.Woodard; J.Wood)."
-        },
-        {
-          "clock": "1:18",
-          "period": 4,
-          "text": "M.Jones kneels to SF 37 for -1 yards."
-        },
-        {
-          "clock": "0:39",
-          "period": 4,
-          "text": "M.Jones kneels to SF 36 for -1 yards."
-        },
-        {
-          "clock": "0:00",
-          "period": 4,
-          "text": "END GAME"
-        }
-      ]
+      "plays": []
     },
     {
       "id": "401872945",
       "name": "Indianapolis Colts at Kansas City Chiefs",
       "shortName": "IND @ KC",
       "date": "2026-09-21T00:20Z",
-      "status": "Scheduled",
-      "detail": "9/20 - 8:20 PM EDT",
-      "state": "pre",
+      "status": "In Progress",
+      "detail": "0:59 - 2nd",
+      "state": "in",
       "teams": [
         {
           "name": "Kansas City Chiefs",
           "abbr": "KC",
-          "score": "0",
+          "score": "17",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/kc.png",
           "color": "e31837",
@@ -617,7 +512,7 @@
         {
           "name": "Indianapolis Colts",
           "abbr": "IND",
-          "score": "0",
+          "score": "20",
           "homeAway": "away",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ind.png",
           "color": "003b75",
@@ -629,7 +524,28 @@
       ],
       "watchUrl": "",
       "venue": "Arrowhead Stadium",
-      "plays": []
+      "plays": [
+        {
+          "clock": "1:10",
+          "period": 2,
+          "text": "(1:10) (Shotgun) D.Jones pass short right to J.Downs pushed ob at KC 24 for 7 yards (L.Sneed) [C.Jones].\nPenalty on IND-J.Downs, Unnecessary Roughness, offsetting.\nPenalty on KC-L.Sneed, Unnecessary Roughness, offsetting."
+        },
+        {
+          "clock": "0:59",
+          "period": 2,
+          "text": "J.Taylor right end for 24 yards, TOUCHDOWN. S.Shrader extra point is GOOD, Center-L.Rhodes, Holder-R.Sanchez."
+        },
+        {
+          "clock": "0:59",
+          "period": 2,
+          "text": "Official Timeout at 00:59."
+        },
+        {
+          "clock": "0:59",
+          "period": 2,
+          "text": "S.Shrader kicks 65 yards from IND 35 to landing zone to end zone, Touchback to the KC 20."
+        }
+      ]
     },
     {
       "id": "401872947",
@@ -1120,6 +1036,39 @@
           "score": "",
           "homeAway": "home",
           "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/no.png",
+          "color": "",
+          "alternateColor": ""
+        }
+      ],
+      "broadcasts": [],
+      "watchUrl": "",
+      "venue": "",
+      "plays": []
+    },
+    {
+      "id": "2026_03_LA_DEN",
+      "name": "Los Angeles Rams at Denver Broncos",
+      "shortName": "LAR @ DEN",
+      "date": "2026-09-28T00:20:00Z",
+      "status": "Scheduled",
+      "detail": "Scheduled",
+      "state": "pre",
+      "teams": [
+        {
+          "name": "Los Angeles Rams",
+          "abbr": "LAR",
+          "score": "",
+          "homeAway": "away",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/lar.png",
+          "color": "",
+          "alternateColor": ""
+        },
+        {
+          "name": "Denver Broncos",
+          "abbr": "DEN",
+          "score": "",
+          "homeAway": "home",
+          "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/den.png",
           "color": "",
           "alternateColor": ""
         }
