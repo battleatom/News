@@ -27,16 +27,25 @@ async function fetchEspnScoreboard(query){
   return d;
 }
 async function nflSchedule(){
-  const now=new Date(),from=new Date(now),to=new Date(now);from.setDate(from.getDate()-1);to.setDate(to.getDate()+21);
-  // Pull far enough ahead to include the next scheduled NFL slate, not merely a rolling 7-day window.
-  const attempts=[`limit=128&dates=${dateYmd(from)}-${dateYmd(to)}`,`limit=128`];
-  let lastError=null;
-  for(const query of attempts){
+  const now=new Date(),from=new Date(now);from.setDate(from.getDate()-1);
+  // NFL weeks/slates can straddle a rolling-day cutoff. Fetch progressively farther
+  // ahead until we have the current remainder plus the next complete scheduled slate.
+  const horizons=[14,28,56];
+  let lastError=null,best=[];
+  for(const days of horizons){
+    const to=new Date(now);to.setDate(to.getDate()+days);
     try{
-      const d=await fetchEspnScoreboard(query);
-      return noStoreJson({generatedAt:new Date().toISOString(),games:(d.events||[]).map(normalizeGame),error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true});
+      const d=await fetchEspnScoreboard(`limit=256&dates=${dateYmd(from)}-${dateYmd(to)}`);
+      const games=(d.events||[]).map(normalizeGame);
+      if(games.length>best.length)best=games;
+      const future=games.filter(g=>{const t=Date.parse(g.date||"");return Number.isFinite(t)&&t>=now.getTime()});
+      // One NFL slate is normally 13-16 games. Once we have at least the next full
+      // batch beyond today's remaining game(s), stop widening the request.
+      if(future.length>=12)return noStoreJson({generatedAt:new Date().toISOString(),games,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:days});
     }catch(error){lastError=error}
   }
+  if(best.length)return noStoreJson({generatedAt:new Date().toISOString(),games:best,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:56});
+  try{const d=await fetchEspnScoreboard("limit=256");const games=(d.events||[]).map(normalizeGame);return noStoreJson({generatedAt:new Date().toISOString(),games,error:"",provider:"ESPN via Cloudflare",cloudflareRuntime:true,scheduleMode:"next-slate",horizonDays:null})}catch(error){lastError=error}
   return noStoreJson({generatedAt:new Date().toISOString(),games:[],error:String(lastError?.message||lastError||"ESPN unavailable"),provider:"ESPN via Cloudflare",cloudflareRuntime:true},502);
 }
 async function marketRow(symbol,label){
