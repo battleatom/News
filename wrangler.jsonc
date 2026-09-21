@@ -24,6 +24,9 @@
       "storage": "sqlite"
     }
   },
+  "triggers": {
+    "crons": ["*/10 * * * *", "13 10 * * *"]
+  },
   "observability": {
     "enabled": true
   }
