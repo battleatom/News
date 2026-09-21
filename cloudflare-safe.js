@@ -3,7 +3,7 @@ import worker,{FeedState} from "./cloudflare-services.js";
 export {FeedState};
 
 const SAFE_JSON=new Set(["/feed.json","/status.json","/nfl.json","/boxoffice.json","/markets.json"]);
-const VALIDATED_ASSET_JSON=new Set(["/feed.json","/status.json","/boxoffice.json"]);
+const VALIDATED_ASSET_JSON=new Set(["/boxoffice.json"]);
 
 function noStore(response,extraHeaders={}){
   const headers=new Headers(response.headers);
@@ -39,7 +39,7 @@ export default{
   ...worker,
   async fetch(request,env,ctx){
     const url=new URL(request.url);
-    if(url.pathname==="/healthz")return validatedHealth(env);
+    if(url.pathname==="/healthz"){try{const response=await worker.fetch(request,env,ctx);if(response.ok)return noStore(response);console.warn("Live Cloudflare health unavailable; serving validated asset health");return validatedHealth(env)}catch(error){console.warn("Live Cloudflare health threw; serving validated asset health",error);return validatedHealth(env)}}
     if(VALIDATED_ASSET_JSON.has(url.pathname))return assetJson(url.pathname,env);
     if(!SAFE_JSON.has(url.pathname))return worker.fetch(request,env,ctx);
     try{
@@ -52,5 +52,5 @@ export default{
       return assetFallback(url.pathname,env);
     }
   },
-  async scheduled(){return}
+  async scheduled(controller,env,ctx){return worker.scheduled(controller,env,ctx)}
 };
