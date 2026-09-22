@@ -171,7 +171,7 @@
     try{
       const response=await fetch(API_URL,{
         method:'POST',
-        headers:{'Content-Type':'application/json',Accept:'application/json'},
+        headers:{'Content-Type':'application/json',Accept:'application/json',...(window.DPoolSecurity?.headers?.()||{})},
         body:JSON.stringify({
           reason,
           category:data.tab,
@@ -237,6 +237,7 @@
       button.setAttribute('aria-label',labels[reason]);
       button.addEventListener('click',async event=>{
         event.preventDefault();event.stopPropagation();
+        const auth=await window.DPoolSecurity?.requireAuth?.();if(!auth)return;
         if(reason==='NR'){
           const target=await chooseDestination(card);
           if(!target)return;
