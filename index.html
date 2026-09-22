@@ -25,6 +25,7 @@
   </div>
   <main class="page"><section id="feed" class="feed" aria-live="polite"></section></main>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <script src="dpool-security.js?v=1"></script>
   <script src="nfl-cloudflare-proxy.js?v=2"></script>
   <script type="module" src="app.js?v=36"></script>
   <script src="story-sanitize.js?v=1"></script>
@@ -45,6 +46,7 @@
         await loadScript('admin-layout.js?v=5');
         await loadScript('admin-refresh.js?v=6');
         await loadScript('admin-pool.js?v=2');
+        await loadScript('dpool-admin.js?v=1');
         await loadScript('admin-runtime-files.js?v=6');
         await loadScript('admin-export.js?v=6');
         loaded=true;
