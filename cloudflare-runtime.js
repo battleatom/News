@@ -75,6 +75,17 @@ function applyFeedbackSuppression(feed,pools){
   return{feed:next,removed};
 }
 function feedbackCounts(pools){return Object.fromEntries(FEEDBACK_REASONS.map(reason=>[reason,(pools[reason]||[]).length]))}
+function secureEqual(a,b){a=String(a||"");b=String(b||"");if(a.length!==b.length)return false;let n=0;for(let i=0;i<a.length;i++)n|=a.charCodeAt(i)^b.charCodeAt(i);return n===0}
+function bytesToHex(bytes){return [...new Uint8Array(bytes)].map(b=>b.toString(16).padStart(2,"0")).join("")}
+async function adminToken(secret,expires){const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);const sig=await crypto.subtle.sign("HMAC",key,new TextEncoder().encode(String(expires)));return String(expires)+"."+bytesToHex(sig)}
+async function validAdminToken(token,secret){if(!token||!secret)return false;const [exp]=String(token).split(".");const n=Number(exp);if(!Number.isFinite(n)||Date.now()>n)return false;return secureEqual(token,await adminToken(secret,n))}
+function reviewFlag(record,pools,learning){
+  const reason=String(record?.reason||"").toUpperCase();
+  if(reason==="NR"&&record.target_category){const route=(learning?.nrRoutes||[]).find(r=>normalize(r.origin)===normalize(record.original_category||record.category)&&normalize(r.target)===normalize(record.target_category));if(route)return{status:"safe",reason:"Contributes to a learned section-routing archetype."}}
+  if(reason==="NW"){const title=normalize(record.title);const structural=(learning?.nwStructural||[]).find(x=>NW_PATTERNS.find(p=>p.name===x.name)?.re.test(title));if(structural)return{status:"safe",reason:"Contributes to an active vague-title filtering archetype."};const signals=(learning?.nwVague||[]).filter(x=>x.examples>=3);if(signals.length)return{status:"safe",reason:"Contributes to learned weak-title filtering signals."}}
+  if(reason==="D"){const same=(pools.D||[]).filter(r=>normalize(r.title_key||r.title)===normalize(record.title_key||record.title));if(same.length<=1)return{status:"restore",reason:"Only one stored duplicate example remains; review before suppressing it."};return{status:"safe",reason:"Duplicate identity is corroborated by another stored example."}}
+  return{status:"delete",reason:"No active learned archetype currently depends on this record."}
+}
 
 const NW_STOP=new Set(["the","and","for","with","from","this","that","news","latest","update","updates","report","reports","page","new"]);
 const NW_PATTERNS=[
@@ -215,6 +226,17 @@ export class FeedState extends ExistingFeedState{
     return{ok:true,record,counts:feedbackCounts(pools),removedFromFeed:suppressed.removed,removedByLearning:learned.removed,routedByLearning:learned.routed.length,learning};
   }
 
+  async removeFeedback(payload){
+    const reason=String(payload?.reason||"").toUpperCase();if(!FEEDBACK_REASONS.includes(reason))throw new Error("invalid feedback reason");
+    const pools=await this.feedbackPools(),rows=pools[reason]||[],probe={...payload,category:payload?.category||payload?.original_category||""};
+    const index=rows.findIndex(r=>recordMatchesStory(r,probe,probe.category,reason));if(index<0)throw new Error("feedback record not found");
+    const [record]=rows.splice(index,1);await this.ctx.storage.put(feedbackKey(reason),rows);
+    const seeded=await this.seed(),suppressed=applyFeedbackSuppression(sanitizeFeed(structuredClone(seeded.feed)),pools),learning=learnFeedback(pools),learned=applyLearnedFeedback(suppressed.feed,learning);
+    const status={...recalcStatus(learned.feed,seeded.status||{}),feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackLastReviewAt:new Date().toISOString(),feedbackLearning:learning,cloudflareRuntime:true};
+    await this.ctx.storage.put({feed:learned.feed,status,feedbackLearning:learning});
+    return{ok:true,record,counts:feedbackCounts(pools),action:String(payload?.action||"delete")};
+  }
+
   async refresh(){
     const status=await super.refresh();
     return saveMaintenance(this,status,{daily:false});
@@ -245,9 +267,12 @@ export class FeedState extends ExistingFeedState{
       try{
         if(request.method==="GET"){
           const pools=await this.feedbackPools();
-          return Response.json({ok:true,pools,counts:feedbackCounts(pools)});
+          const learning=learnFeedback(pools);
+          const reviewed=Object.fromEntries(FEEDBACK_REASONS.map(reason=>[reason,(pools[reason]||[]).map(row=>({...row,review:reviewFlag(row,pools,learning)}))]));
+          return Response.json({ok:true,pools:reviewed,counts:feedbackCounts(pools),learning});
         }
         if(request.method==="POST")return Response.json(await this.submitFeedback(await request.json()));
+        if(request.method==="DELETE")return Response.json(await this.removeFeedback(await request.json()));
         return new Response("Method not allowed",{status:405});
       }catch(error){return Response.json({ok:false,error:String(error?.message||error)},{status:400})}
     }
@@ -259,6 +284,16 @@ export default{
   ...worker,
   async fetch(request,env,ctx){
     const url=new URL(request.url);
+    if(url.pathname==="/api/dpool-auth"&&request.method==="POST"){
+      if(!env.DPOOL_ADMIN_PIN)return Response.json({ok:false,error:"DPOOL_ADMIN_PIN secret is not configured"},{status:503});
+      let body={};try{body=await request.json()}catch{}
+      if(!secureEqual(body.pin,env.DPOOL_ADMIN_PIN))return Response.json({ok:false,error:"Incorrect PIN"},{status:401});
+      const expires=Date.now()+15*60*1000;return Response.json({ok:true,token:await adminToken(env.DPOOL_ADMIN_PIN,expires),expires});
+    }
+    if(url.pathname==="/api/feedback"&&request.method!=="GET"){
+      const auth=request.headers.get("Authorization")||"",token=auth.startsWith("Bearer ")?auth.slice(7):"";
+      if(!await validAdminToken(token,env.DPOOL_ADMIN_PIN))return Response.json({ok:false,error:"Admin PIN required"},{status:401});
+    }
     if(url.pathname==="/api/feedback"){
       const target=new Request(`https://state/feedback${url.search}`,request);
       const response=await env.FEED_STATE.getByName("production").fetch(target);
