@@ -1,4 +1,4 @@
-name: V6 Data-Only Production Refresh
+name: V6 Data Validation (Manual)
 
 on:
   workflow_dispatch:
@@ -7,9 +7,6 @@ on:
     paths:
       - '.force-v6-data-refresh'
       - '.force-v6-data-refresh-*'
-  schedule:
-    # Run away from the top of the hour; the 10-minute cadence reduces stale-feed risk when GitHub delays a scheduled event.
-    - cron: '3,13,23,33,43,53 * * * *'
 
 permissions:
   contents: write
