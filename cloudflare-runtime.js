@@ -68,6 +68,18 @@ const NW_PATTERNS=[
   {name:"breaking-news",re:/^breaking news$/i}
 ];
 function nwTokens(value=""){return new Set((normalize(value).match(/[a-z0-9]+/g)||[]).filter(x=>x.length>=4&&!NW_STOP.has(x)))}
+function feedbackTokens(value=""){return [...nwTokens(value)]}
+function learnRoutes(pools){
+  const groups=new Map();
+  for(const row of (pools.NR||[])){
+    const origin=normalize(row.original_category||row.category),target=normalize(row.target_category||row.targetCategory);
+    if(!origin||!target||origin===target)continue;
+    const key=origin+"=>"+target;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(row);
+  }
+  const routes=[];
+  for(const [key,rows] of groups){if(rows.length<2)continue;const [origin,target]=key.split("=>"),counts=new Map();for(const row of rows)for(const token of feedbackTokens(row.title))counts.set(token,(counts.get(token)||0)+1);const tokens=[...counts].filter(([,n])=>n>=2).map(([t])=>t);if(tokens.length)routes.push({origin,target,tokens,examples:rows.length})}
+  return routes;
+}
 function learnFeedback(pools){
   const rows=pools.NW||[],structural=[];
   for(const rule of NW_PATTERNS){const examples=rows.filter(r=>rule.re.test(normalize(r.title))).length;if(examples>=2)structural.push({name:rule.name,examples})}
@@ -82,7 +94,7 @@ function learnFeedback(pools){
     for(const s of signals)vagueSignals.set(s,(vagueSignals.get(s)||0)+1);
   }
   const vague=[...vagueSignals].filter(([,examples])=>examples>=2).map(([name,examples])=>({name,examples}));
-  return{version:2,nwStructural:structural,nwVague:vague,nwExamples:rows.length,updatedAt:new Date().toISOString()};
+  return{version:3,nwStructural:structural,nwVague:vague,nwExamples:rows.length,nrRoutes:learnRoutes(pools),nrExamples:(pools.NR||[]).length,dExamples:(pools.D||[]).length,updatedAt:new Date().toISOString()};
 }
 function nwLearnedReject(story,learning){
   const title=normalize(story?.title||"");
@@ -94,10 +106,15 @@ function nwLearnedReject(story,learning){
   if(enabled.has("fragment")&&!/[a-z0-9].*\s.*[a-z0-9]/i.test(title))return true;
   return false;
 }
+function learnedRoute(story,category,learning){
+  const tokens=nwTokens(story?.title||"");
+  for(const rule of (learning?.nrRoutes||[]))if(normalize(category)===rule.origin&&rule.tokens.some(t=>tokens.has(t)))return rule.target;
+  return "";
+}
 function applyLearnedFeedback(feed,learning){
   const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}};let removed=0;
-  for(const bucket of ["stories","reserves"])for(const [category,rows] of Object.entries(next[bucket])){const before=(rows||[]).length;next[bucket][category]=(rows||[]).filter(story=>!nwLearnedReject(story,learning));removed+=before-next[bucket][category].length}
-  return{feed:next,removed};
+  const routed=[];for(const bucket of ["stories","reserves"])for(const [category,rows] of Object.entries(next[bucket])){const before=(rows||[]).length;const kept=[];for(const story of (rows||[])){if(nwLearnedReject(story,learning)){removed++;continue}const target=learnedRoute(story,category,learning);if(target&&target!==category){next[bucket][target]=next[bucket][target]||[];next[bucket][target].push({...story,category:target});routed.push({from:category,to:target,title:story.title});continue}kept.push(story)}next[bucket][category]=kept}
+  return{feed:next,removed,routed};
 }
 
 async function saveMaintenance(state,status,{daily=false}={}){
@@ -108,7 +125,7 @@ async function saveMaintenance(state,status,{daily=false}={}){
   const generatedAt=status.generatedAt||new Date().toISOString();
   maintained.feed.generatedAt=generatedAt;
   maintained.feed.cloudflareRuntime=true;
-  maintained.status={...recalcStatus(maintained.feed,maintained.status),generatedAt,cloudflareRuntime:true,feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackSuppressedLastPass:suppressed.removed,feedbackLearnedSuppressedLastPass:learned.removed,feedbackLearning:learning};
+  maintained.status={...recalcStatus(maintained.feed,maintained.status),generatedAt,cloudflareRuntime:true,feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackSuppressedLastPass:suppressed.removed,feedbackLearnedSuppressedLastPass:learned.removed,feedbackLearnedRoutedLastPass:learned.routed.length,feedbackLearning:learning};
   if(daily){
     maintained.status.dailyRebuild={
       at:new Date().toISOString(),
@@ -142,6 +159,7 @@ export class FeedState extends ExistingFeedState{
       image_url:String(payload?.imageUrl||payload?.image_url||"").trim(),
       story_id:String(payload?.storyId||payload?.story_id||"").trim(),
       original_category:plainText(payload?.originalCategory||payload?.category||""),
+      target_category:plainText(payload?.targetCategory||payload?.target_category||""),
       schema_version:Number(payload?.schemaVersion||2),
       captured_at:payload?.capturedAt||new Date().toISOString(),
       title_key:normalize(payload?.title||""),
@@ -158,7 +176,7 @@ export class FeedState extends ExistingFeedState{
     await this.ctx.storage.put(feedbackKey(reason),rows);
 
     const seeded=await this.seed();
-    const suppressed=applyFeedbackSuppression(sanitizeFeed(structuredClone(seeded.feed)),pools);\n    const learning=learnFeedback(pools);\n    const learned=applyLearnedFeedback(suppressed.feed,learning);\n    const status={...recalcStatus(learned.feed,seeded.status||{}),feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackLastWriteAt:new Date().toISOString(),feedbackLearning:learning,feedbackLearnedSuppressedLastPass:learned.removed,cloudflareRuntime:true};\n    await this.ctx.storage.put({feed:learned.feed,status,feedbackLearning:learning});\n    return{ok:true,record,counts:feedbackCounts(pools),removedFromFeed:suppressed.removed,removedByLearning:learned.removed,learning};
+    const suppressed=applyFeedbackSuppression(sanitizeFeed(structuredClone(seeded.feed)),pools);\n    const learning=learnFeedback(pools);\n    const learned=applyLearnedFeedback(suppressed.feed,learning);\n    const status={...recalcStatus(learned.feed,seeded.status||{}),feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackLastWriteAt:new Date().toISOString(),feedbackLearning:learning,feedbackLearnedSuppressedLastPass:learned.removed,feedbackLearnedRoutedLastPass:learned.routed.length,cloudflareRuntime:true};\n    await this.ctx.storage.put({feed:learned.feed,status,feedbackLearning:learning});\n    return{ok:true,record,counts:feedbackCounts(pools),removedFromFeed:suppressed.removed,removedByLearning:learned.removed,routedByLearning:learned.routed.length,learning};
   }
 
   async refresh(){
