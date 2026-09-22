@@ -46,15 +46,31 @@ function recordMatchesStory(record,story,category,reason){
   if(ru&&su&&ru===su)return true;
   return normalize(record.title_key||record.title)===normalize(story.title)&&normalize(record.source_key||record.source)===normalize(story.source);
 }
-function applyFeedbackSuppression(feed,pools){
-  const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}};
-  let removed=0;
-  for(const bucket of ["stories","reserves"]){
-    for(const [category,rows] of Object.entries(next[bucket])){
-      const before=(rows||[]).length;
-      next[bucket][category]=(rows||[]).filter(story=>!FEEDBACK_REASONS.some(reason=>(pools[reason]||[]).some(record=>recordMatchesStory(record,story,category,reason))));
-      removed+=before-next[bucket][category].length;
+function feedbackIndexes(pools){
+  const out={};
+  for(const reason of FEEDBACK_REASONS){
+    const globalUrls=new Set(),globalPairs=new Set(),byCategory=new Map();
+    for(const record of (pools[reason]||[])){
+      const bucket=reason==="D"?null:normalize(record.category);
+      const target=bucket?(byCategory.get(bucket)||{urls:new Set(),pairs:new Set()}):null;
+      const urls=target?.urls||globalUrls,pairs=target?.pairs||globalPairs;
+      const url=normalize(record.url_key||record.url),title=normalize(record.title_key||record.title),source=normalize(record.source_key||record.source);
+      if(url)urls.add(url);if(title||source)pairs.add(title+"\u0000"+source);
+      if(bucket)byCategory.set(bucket,target);
     }
+    out[reason]={globalUrls,globalPairs,byCategory};
+  }
+  return out;
+}
+function applyFeedbackSuppression(feed,pools){
+  const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}},indexes=feedbackIndexes(pools);let removed=0;
+  for(const bucket of ["stories","reserves"])for(const [category,rows] of Object.entries(next[bucket])){
+    const cat=normalize(category);
+    next[bucket][category]=(rows||[]).filter(story=>{
+      const url=normalize(story.url),pair=normalize(story.title)+"\u0000"+normalize(story.source);
+      for(const reason of FEEDBACK_REASONS){const idx=indexes[reason],set=reason==="D"?idx:{urls:idx.byCategory.get(cat)?.urls||new Set(),pairs:idx.byCategory.get(cat)?.pairs||new Set()};if((url&&set.urls.has(url))||set.pairs.has(pair)){removed++;return false}}
+      return true;
+    });
   }
   return{feed:next,removed};
 }
@@ -99,11 +115,13 @@ function learnFeedback(pools){
 function nwLearnedReject(story,learning){
   const title=normalize(story?.title||"");
   if((learning?.nwStructural||[]).some(x=>NW_PATTERNS.find(p=>p.name===x.name)?.re.test(title)))return true;
-  const enabled=new Set((learning?.nwVague||[]).map(x=>x.name)),tokens=[...nwTokens(title)];
-  if(enabled.has("very-short")&&tokens.length<=3)return true;
-  if(enabled.has("low-context")&&!/\b(?:who|what|when|where|why|how)\b/.test(title)&&tokens.length<=5)return true;
-  if(enabled.has("generic-lead")&&/^(?:watch|live|here(?:'s| is)|more|details|what we know|developing|just in)\b/i.test(title))return true;
-  if(enabled.has("fragment")&&!/[a-z0-9].*\s.*[a-z0-9]/i.test(title))return true;
+  const enabled=new Set((learning?.nwVague||[]).filter(x=>x.examples>=3).map(x=>x.name)),tokens=[...nwTokens(title)];
+  const genericLead=/^(?:watch|live|here(?:'s| is)|more|details|what we know|developing|just in)\b/i.test(title);
+  const veryShort=tokens.length<=3,fragment=!/[a-z0-9].*\s.*[a-z0-9]/i.test(title);
+  if(enabled.has("generic-lead")&&genericLead)return true;
+  if(enabled.has("fragment")&&fragment)return true;
+  if(enabled.has("very-short")&&veryShort&&(genericLead||fragment))return true;
+  if(enabled.has("low-context")&&tokens.length<=5&&(genericLead||fragment))return true;
   return false;
 }
 function learnedRoute(story,category,learning){
@@ -112,16 +130,29 @@ function learnedRoute(story,category,learning){
   return "";
 }
 function applyLearnedFeedback(feed,learning){
-  const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}};let removed=0;
-  const routed=[];for(const bucket of ["stories","reserves"])for(const [category,rows] of Object.entries(next[bucket])){const before=(rows||[]).length;const kept=[];for(const story of (rows||[])){if(nwLearnedReject(story,learning)){removed++;continue}const target=learnedRoute(story,category,learning);if(target&&target!==category){next[bucket][target]=next[bucket][target]||[];next[bucket][target].push({...story,category:target});routed.push({from:category,to:target,title:story.title});continue}kept.push(story)}next[bucket][category]=kept}
-  return{feed:next,removed,routed};
+  const next={...feed,stories:{...(feed.stories||{})},reserves:{...(feed.reserves||{})}},removedStories=[],moves=[];
+  for(const bucket of ["stories","reserves"])for(const [category,rows] of Object.entries(next[bucket])){
+    const kept=[];
+    for(const story of (rows||[])){
+      if(nwLearnedReject(story,learning)){removedStories.push(story);continue}
+      const target=learnedRoute(story,category,learning);
+      if(target&&target!==category){moves.push({bucket,from:category,to:target,story:{...story,category:target}});continue}
+      kept.push(story);
+    }
+    next[bucket][category]=kept;
+  }
+  for(const move of moves){next[move.bucket][move.to]=next[move.bucket][move.to]||[];next[move.bucket][move.to].push(move.story)}
+  return{feed:next,removed:removedStories.length,routed:moves};
 }
 
 async function saveMaintenance(state,status,{daily=false}={}){
   const seeded=await state.seed();
   const pools=await state.feedbackPools();
   const sanitized=sanitizeFeed(structuredClone(seeded.feed));
-  const suppressed=applyFeedbackSuppression(sanitized,pools);\n  const learning=learnFeedback(pools);\n  const learned=applyLearnedFeedback(suppressed.feed,learning);\n  const maintained=compactElasticPool(learned.feed,status,{daily});
+  const suppressed=applyFeedbackSuppression(sanitized,pools);
+  const learning=learnFeedback(pools);
+  const learned=applyLearnedFeedback(suppressed.feed,learning);
+  const maintained=compactElasticPool(learned.feed,status,{daily});
   const generatedAt=status.generatedAt||new Date().toISOString();
   maintained.feed.generatedAt=generatedAt;
   maintained.feed.cloudflareRuntime=true;
@@ -176,7 +207,12 @@ export class FeedState extends ExistingFeedState{
     await this.ctx.storage.put(feedbackKey(reason),rows);
 
     const seeded=await this.seed();
-    const suppressed=applyFeedbackSuppression(sanitizeFeed(structuredClone(seeded.feed)),pools);\n    const learning=learnFeedback(pools);\n    const learned=applyLearnedFeedback(suppressed.feed,learning);\n    const status={...recalcStatus(learned.feed,seeded.status||{}),feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackLastWriteAt:new Date().toISOString(),feedbackLearning:learning,feedbackLearnedSuppressedLastPass:learned.removed,feedbackLearnedRoutedLastPass:learned.routed.length,cloudflareRuntime:true};\n    await this.ctx.storage.put({feed:learned.feed,status,feedbackLearning:learning});\n    return{ok:true,record,counts:feedbackCounts(pools),removedFromFeed:suppressed.removed,removedByLearning:learned.removed,routedByLearning:learned.routed.length,learning};
+    const suppressed=applyFeedbackSuppression(sanitizeFeed(structuredClone(seeded.feed)),pools);
+    const learning=learnFeedback(pools);
+    const learned=applyLearnedFeedback(suppressed.feed,learning);
+    const status={...recalcStatus(learned.feed,seeded.status||{}),feedbackPoolCounts:feedbackCounts(pools),feedbackPoolTotal:FEEDBACK_REASONS.reduce((n,r)=>n+(pools[r]||[]).length,0),feedbackLastWriteAt:new Date().toISOString(),feedbackLearning:learning,feedbackLearnedSuppressedLastPass:learned.removed,feedbackLearnedRoutedLastPass:learned.routed.length,cloudflareRuntime:true};
+    await this.ctx.storage.put({feed:learned.feed,status,feedbackLearning:learning});
+    return{ok:true,record,counts:feedbackCounts(pools),removedFromFeed:suppressed.removed,removedByLearning:learned.removed,routedByLearning:learned.routed.length,learning};
   }
 
   async refresh(){
