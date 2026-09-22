@@ -2,11 +2,15 @@
   'use strict';
   const API_URL='/api/feedback';
   const REASONS=['D','NR','NW'];
-  const DESTINATIONS=[
-    ['top','Top News'],['underreported','Underreported'],['world','World'],['us','U.S.'],['presidential','Presidential'],
-    ['federal','Federal'],['legislation','Legislation'],['nm','New Mexico'],['local','Local'],['region','Region'],
-    ['technology','Technology'],['gaming','Gaming'],['military','Military'],['entertainment','Entertainment'],['nfl','NFL'],['x','X']
+  const FALLBACK_DESTINATIONS=[
+    ['top','Top Stories'],['nfl','NFL'],['christian','Christian'],['x','X'],['underreported','Underreported'],['world','World'],['us','United States'],['presidential','Presidential'],
+    ['federal','Federal Government'],['legislation','Laws & Legislation'],['nm','New Mexico'],['local','Local'],['region','Region'],
+    ['technology','Technology'],['gaming','Gaming & Computing'],['military','Military & War'],['entertainment','Entertainment']
   ];
+  function destinations(){
+    const live=[...document.querySelectorAll('#tabs .tab[data-category]')].map(tab=>[tab.dataset.category,tab.querySelector('span:not([aria-hidden])')?.textContent?.trim()||tab.textContent.replace(/\d+\s*(?:\/\s*\d+)?\s*$/,'').trim()]).filter(([key])=>key&&!['admin','bookmarks','boxoffice'].includes(key));
+    const seen=new Set(live.map(([key])=>key));return [...live,...FALLBACK_DESTINATIONS.filter(([key])=>!seen.has(key))];
+  }
   const remotePools={D:[],NR:[],NW:[]};
   let decorating=false;
   let refreshing=null;
@@ -149,7 +153,7 @@
       Object.assign(panel.style,{width:'min(440px,100%)',maxHeight:'80vh',overflow:'auto',background:'var(--card-bg,#fff)',color:'var(--text-color,#111)',borderRadius:'16px',padding:'18px',boxShadow:'0 18px 60px rgba(0,0,0,.35)'});
       const heading=document.createElement('div'); heading.textContent='Where should this story go?'; Object.assign(heading.style,{fontWeight:'800',fontSize:'18px',marginBottom:'12px'}); panel.appendChild(heading);
       const grid=document.createElement('div'); Object.assign(grid.style,{display:'grid',gridTemplateColumns:'repeat(2,minmax(0,1fr))',gap:'8px'});
-      DESTINATIONS.filter(([key])=>key!==current).forEach(([key,label])=>{
+      destinations().filter(([key])=>key!==current).forEach(([key,label])=>{
         const b=document.createElement('button'); b.type='button'; b.textContent=label;
         Object.assign(b.style,{padding:'11px 10px',borderRadius:'10px',border:'1px solid rgba(127,127,127,.35)',background:'transparent',color:'inherit',fontWeight:'700',cursor:'pointer'});
         b.onclick=e=>{e.preventDefault();e.stopPropagation();overlay.remove();resolve(key);}; grid.appendChild(b);
@@ -189,7 +193,7 @@
           capturedAt:data.capturedAt
         })
       });
-      if(!response.ok)throw new Error(`Feedback write failed (${response.status})`);
+      if(!response.ok){let detail='';try{detail=(await response.json())?.error||''}catch{};if(response.status===401)sessionStorage.removeItem('dpoolAdminSession');throw new Error(detail||`Feedback write failed (${response.status})`);}
       const entry={
         reason,category:data.tab,title:data.title,url:data.url,source:data.source,
         description:data.description,why:data.why,published_at:data.publishedAt,image_url:data.imageUrl,story_id:data.storyId,original_category:data.tab,target_category:targetCategory||null,schema_version:2,title_key:data.titleKey,url_key:data.urlKey,source_key:data.sourceKey,captured_at:data.capturedAt
@@ -201,7 +205,7 @@
     }catch(error){
       console.error('Could not save article feedback:',error);
       controls?.querySelectorAll('button').forEach(button=>{button.disabled=false;});
-      if(controls){controls.dataset.error='1';controls.title='Feedback was not saved. Tap again to retry.';}
+      if(controls){controls.dataset.error='1';controls.title='Feedback was not saved. Tap again to retry.';} const t=document.getElementById('toast');if(t){t.textContent=error?.message||'Feedback was not saved';t.hidden=false;clearTimeout(record.toastTimer);record.toastTimer=setTimeout(()=>{t.hidden=true},3000)}
     }
   }
 
@@ -241,8 +245,8 @@
         if(reason==='NR'){
           const target=await chooseDestination(card);
           if(!target)return;
-          record(reason,card,target);
-        }else record(reason,card);
+          await record(reason,card,target);
+        }else await record(reason,card);
       });
       controls.appendChild(button);
     });
