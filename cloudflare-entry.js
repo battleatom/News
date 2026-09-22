@@ -7,7 +7,7 @@ const PUBLISHED_WINDOW_MS=24*60*60*1000;
 const SELF_HEAL_COOLDOWN_MS=5*60*1000;
 const SELF_HEAL_STALE_MS=35*60*1000;
 const FALLBACK_PRIORITY=["local","nm","federal","presidential","legislation","underreported","region","world","us","technology","gaming","military","entertainment","top"];
-const STALE_HOURS={local:8,nm:8,federal:6,presidential:6,legislation:6,underreported:8,region:8,world:6,us:6,technology:6,gaming:8,military:6,entertainment:8,top:4};
+const STALE_HOURS={local:8,nm:8,federal:6,presidential:6,legislation:8,underreported:12,region:8,world:6,us:6,technology:6,gaming:8,military:8,entertainment:8,top:4};
 const QUERY={
   local:{search:'"Farmington" | "San Juan County" | "Four Corners"',locale:"us"},
   nm:{search:'"New Mexico"',locale:"us"},
@@ -83,7 +83,7 @@ export class FeedState extends BaseFeedState{
     let status=await super.refresh();
     try{
       if(!this.env.THE_NEWS_API){
-        status={...status,theNewsApi:{enabled:false,reason:"THE_NEWS_API secret not configured"}};
+        status={...status,theNewsApi:{enabled:false,reason:"THE_NEWS_API secret not configured",freshnessRecoveryAvailable:false}};
         await this.ctx.storage.put("status",status);return status;
       }
       const seeded=await this.seed(),feed=structuredClone(seeded.feed),now=Date.now();
@@ -93,13 +93,13 @@ export class FeedState extends BaseFeedState{
       const weak=[];
       for(const category of FALLBACK_PRIORITY){
         const rows=feed.stories?.[category]||[],cfg=feed.categories?.[category]||{},target=Number(cfg.visible_target||cfg.target||rows.length||0),age=newestAgeHours(rows,now),stale=age>(STALE_HOURS[category]??8),underfilled=target>0&&rows.length<target,last=Number(usage.lastByCategory[category]||0),cooled=now-last>=CATEGORY_COOLDOWN_MS;
-        if(cooled&&(stale||underfilled))weak.push({category,age,underfilled});
+        if(cooled&&(stale||underfilled)){const threshold=STALE_HOURS[category]??8,urgency=underfilled?1000:age/threshold;weak.push({category,age,underfilled,threshold,urgency})}
       }
       if(usage.calls.length>=MAX_CALLS_24H||!weak.length){
         status={...status,theNewsApi:{enabled:true,requestsLast24h:usage.calls.length,limit:MAX_CALLS_24H,used:false,reason:usage.calls.length>=MAX_CALLS_24H?"budget reserved":"no stale or underfilled category"}};
         await this.ctx.storage.put({status,theNewsApiUsage:usage});return status;
       }
-      const pick=weak[0],spec=QUERY[pick.category]||{},params=new URLSearchParams({api_token:this.env.THE_NEWS_API,language:"en",published_after:new Date(now-PUBLISHED_WINDOW_MS).toISOString().slice(0,19),sort:"published_at",limit:"10"});
+      weak.sort((a,b)=>b.urgency-a.urgency||b.age-a.age);const pick=weak[0],spec=QUERY[pick.category]||{},params=new URLSearchParams({api_token:this.env.THE_NEWS_API,language:"en",published_after:new Date(now-PUBLISHED_WINDOW_MS).toISOString().slice(0,19),sort:"published_at",limit:"10"});
       for(const[k,v]of Object.entries(spec))if(v)params.set(k,v);
       const response=await fetch(`${API_URL}?${params}`,{headers:{Accept:"application/json"}});
       usage.calls.push(now);usage.lastByCategory[pick.category]=now;
@@ -110,7 +110,7 @@ export class FeedState extends BaseFeedState{
       }
       const payload=await response.json(),rows=toRows(payload?.data,pick.category),added=mergeCategory(feed,status,pick.category,rows),generatedAt=new Date().toISOString();
       feed.generatedAt=generatedAt;feed.cloudflareRuntime=true;
-      status=recalcStatus(feed,{...status,generatedAt,theNewsApi:{enabled:true,requestsLast24h:usage.calls.length,limit:MAX_CALLS_24H,used:true,category:pick.category,returned:rows.length,added,staleAgeHours:Math.round(pick.age*10)/10},cloudflareBatch:{...(status.cloudflareBatch||{}),newsApiUsed:true,newsApiCategory:pick.category,newsApiReturned:rows.length,newsApiAdded:added,newsApiRequestsLast24h:usage.calls.length}});
+      status=recalcStatus(feed,{...status,generatedAt,theNewsApi:{enabled:true,requestsLast24h:usage.calls.length,limit:MAX_CALLS_24H,used:true,category:pick.category,returned:rows.length,added,staleAgeHours:Math.round(pick.age*10)/10,staleThresholdHours:pick.threshold,urgency:Math.round(pick.urgency*100)/100},cloudflareBatch:{...(status.cloudflareBatch||{}),newsApiUsed:true,newsApiCategory:pick.category,newsApiReturned:rows.length,newsApiAdded:added,newsApiRequestsLast24h:usage.calls.length}});
       await this.ctx.storage.put({feed,status,theNewsApiUsage:usage});
       return status;
     }catch(error){
