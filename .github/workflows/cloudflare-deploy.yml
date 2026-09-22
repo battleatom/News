@@ -92,9 +92,9 @@ jobs:
             cp "$file" ".cloudflare-assets/$file"
           done
 
-          for file in .cloudflare-assets/*.js; do
+          while IFS= read -r -d '' file; do
             node --check "$file"
-          done
+          done < <(find .cloudflare-assets -type f -name '*.js' -print0)
 
           sed -i 's#https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/nfl-live#/api/nfl-live#g' .cloudflare-assets/app.js
           sed -i 's#https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard#/api/nfl-scoreboard#g' .cloudflare-assets/app.js
