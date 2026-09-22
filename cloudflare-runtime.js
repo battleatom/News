@@ -68,7 +68,7 @@ function applyFeedbackSuppression(feed,pools){
     const cat=normalize(category);
     next[bucket][category]=(rows||[]).filter(story=>{
       const url=normalize(story.url),pair=normalize(story.title)+"\u0000"+normalize(story.source);
-      for(const reason of FEEDBACK_REASONS){const idx=indexes[reason],set=reason==="D"?idx:{urls:idx.byCategory.get(cat)?.urls||new Set(),pairs:idx.byCategory.get(cat)?.pairs||new Set()};if((url&&set.urls.has(url))||set.pairs.has(pair)){removed++;return false}}
+      for(const reason of FEEDBACK_REASONS){const idx=indexes[reason],set=reason==="D"?{urls:idx.globalUrls||new Set(),pairs:idx.globalPairs||new Set()}:{urls:idx.byCategory.get(cat)?.urls||new Set(),pairs:idx.byCategory.get(cat)?.pairs||new Set()};if((url&&set.urls.has(url))||set.pairs.has(pair)){removed++;return false}}
       return true;
     });
   }
