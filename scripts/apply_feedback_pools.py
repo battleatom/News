@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Any
 
-DEFAULT_API = "https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/news-feedback"
+DEFAULT_API = "https://news.luckynumbers7ven.workers.dev/api/feedback"
 REASONS = ("D", "NR", "NW")
 
 
