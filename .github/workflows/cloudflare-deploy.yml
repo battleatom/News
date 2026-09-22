@@ -41,6 +41,9 @@ on:
       - 'admin-pool.js'
       - 'admin-runtime-files.js'
       - 'admin-export.js'
+      - 'dpool-security.js'
+      - 'dpool-admin.js'
+      - 'assets/card-feedback.js'
       - '.github/workflows/cloudflare-deploy.yml'
 
 permissions:
@@ -78,7 +81,8 @@ jobs:
           assets=(
             index.html styles.css app.js store.js renderers.js location.js feedback.js weather.js
             nfl-cloudflare-proxy.js story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js tab-count-sync.js
-            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js dpool-security.js dpool-admin.js
+            assets/card-feedback.js
             feed.json status.json nfl.json boxoffice.json markets.json
             assets/file_000000006cdc81fd866c6c2774dd7009.png
           )
@@ -162,7 +166,8 @@ jobs:
           scripts=(
             app.js store.js renderers.js location.js feedback.js weather.js nfl-cloudflare-proxy.js
             story-sanitize.js infinite-scroll.js story-position.js status-ux.js tab-ux.js tab-count-sync.js
-            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js
+            admin-ops-cloudflare.js admin-layout.js admin-refresh.js admin-pool.js admin-runtime-files.js admin-export.js dpool-security.js dpool-admin.js
+            assets/card-feedback.js
           )
           for file in "${scripts[@]}"; do
             fetch "/$file?smoke=$GITHUB_SHA" "$tmp/$file" "$tmp/$file.h"
