@@ -1,6 +1,6 @@
 (()=>{
   'use strict';
-  const API_URL='https://bkcrgfkhgjypvzwubwrh.supabase.co/functions/v1/news-feedback';
+  const API_URL='/api/feedback';
   const REASONS=['D','NR','NW'];
   const DESTINATIONS=[
     ['top','Top News'],['underreported','Underreported'],['world','World'],['us','U.S.'],['presidential','Presidential'],
