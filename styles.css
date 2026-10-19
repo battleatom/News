@@ -253,3 +253,5 @@
 .ugc-error{color:var(--bad)}
 .ugc-source{padding:8px 14px 12px;font-size:.55rem;color:var(--muted);border-top:1px solid var(--line)}
 @media(max-width:660px){.ugc-scoreboard{padding:12px 8px;grid-template-columns:minmax(0,1fr) minmax(92px,1.12fr) minmax(0,1fr)}.ugc-panel{padding:10px}.ugc-field{height:97px;grid-template-columns:29px minmax(0,1fr) 29px}.ugc-logo{height:36px}.ugc-logo img{max-height:35px;max-width:35px}.ugc-team>span{font-size:.51rem}.ugc-score>div{gap:7px}.ugc-field-head{flex-wrap:wrap}.ugc-field-head span{text-align:left}.ugc-player-groups{grid-template-columns:1fr}.ugc-plays li{grid-template-columns:69px minmax(0,1fr);gap:7px}.ugc-topline{padding:11px 12px}}
+
+.nfl-game-card.ugc-selected{outline:2px solid var(--accent);outline-offset:-3px}
