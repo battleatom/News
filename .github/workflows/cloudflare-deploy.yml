@@ -154,6 +154,7 @@ jobs:
           fetch() {
             local path="$1" body="$2" headers="$3"
             local code
+            mkdir -p "$(dirname "$body")" "$(dirname "$headers")"
             code=$(curl -sS --retry 4 --retry-delay 2 --retry-all-errors -D "$headers" -o "$body" -w '%{http_code}' "$SITE$path")
             if [ "$code" != '200' ]; then
               echo "FAIL $path HTTP $code" >&2
