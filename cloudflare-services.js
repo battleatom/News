@@ -2,7 +2,7 @@ import runtime,{FeedState} from "./cloudflare-nfl.js";
 
 export {FeedState};
 
-const ESPN_HOST="https://site.web.api.espn.com";
+const ESPN_HOST="https://site.api.espn.com";
 const MARKET_SYMBOLS=[
   ["^GSPC","S&P 500"],["^DJI","DOW"],["^IXIC","NASDAQ"],["^RUT","RUSSELL 2000"],["^VIX","VIX"],
   ["CL=F","WTI OIL"],["BZ=F","BRENT"],["NG=F","NAT GAS"],["GC=F","GOLD"],["SI=F","SILVER"],
