@@ -170,3 +170,88 @@
 .nr-route-card{width:min(520px,100%);max-height:min(78vh,720px);overflow:auto;background:var(--surface,#fff);color:var(--text,#111827);border:1px solid var(--line,#dbe2ea);border-radius:18px;padding:18px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
 .nr-route-card>strong{display:block;font-size:1rem;margin-bottom:12px}.nr-route-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.nr-route-button,.nr-route-cancel{border:1px solid var(--line,#cbd5e1);border-radius:11px;padding:11px 8px;background:var(--surface-2,#f8fafc);color:inherit;font-weight:850;font-size:.75rem;cursor:pointer}.nr-route-button:active{transform:scale(.98)}.nr-route-cancel{width:100%;margin-top:12px}.nr-route-button[data-target="nfl"]{font-weight:950}.nr-route-button[data-target="top"],.nr-route-button[data-target="underreported"]{border-color:rgba(37,99,235,.35)}
 @media(max-width:430px){.nr-route-card{padding:14px;max-height:82vh}.nr-route-grid{grid-template-columns:1fr 1fr}.nr-route-button{font-size:.71rem;padding:10px 6px}}
+
+
+/* Underreported NFL Game Center: real scoreboard data, no simulated field position. */
+.ugc-center{margin:16px 0 18px;background:var(--surface);border:1px solid var(--line);border-radius:19px;overflow:hidden;box-shadow:0 12px 35px rgba(15,23,42,.12);color:var(--text)}
+.ugc-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 16px;background:linear-gradient(100deg,#102d24,#173f33);color:#f8fafc}
+.ugc-topline>div{display:flex;align-items:center;gap:8px;font-size:.72rem;letter-spacing:.07em}
+.ugc-topline button{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.1);color:#f8fafc;border-radius:999px;padding:6px 11px;cursor:pointer;font-size:.65rem;font-weight:800}
+.ugc-topline button:focus-visible,.ugc-nav button:focus-visible,.ugc-game-switcher button:focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+.ugc-live-dot{width:9px;height:9px;border-radius:50%;background:#94a3b8;display:inline-block;flex:none}
+.ugc-center.live .ugc-live-dot{background:#4ade80;box-shadow:0 0 0 4px rgba(74,222,128,.19);animation:ugc-pulse 2.2s ease-in-out infinite}
+@keyframes ugc-pulse{50%{opacity:.5}}
+@media(prefers-reduced-motion:reduce){.ugc-live-dot{animation:none!important}}
+.ugc-scoreboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(105px,1.3fr) minmax(0,1fr);align-items:center;gap:6px;padding:16px;background:linear-gradient(180deg,var(--surface),var(--surface-2))}
+.ugc-team{min-width:0;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.ugc-logo{width:45px;height:43px;display:grid;place-items:center}
+.ugc-logo img{max-height:41px;max-width:41px;object-fit:contain}
+.ugc-logo b{font-size:.75rem;color:var(--muted)}
+.ugc-team strong{font-size:.85rem;font-weight:950}
+.ugc-team>span{font-size:.56rem;line-height:1.25;color:var(--muted);max-width:130px}
+.ugc-score{text-align:center;font-variant-numeric:tabular-nums;min-width:0}
+.ugc-score>div{display:flex;justify-content:center;align-items:center;gap:10px}
+.ugc-score>div strong{font-size:clamp(1.75rem,4vw,2.5rem);font-weight:950}
+.ugc-score>div>span{font-size:1.1rem;color:var(--muted)}
+.ugc-score>span{display:block;font-size:.66rem;font-weight:850;color:var(--good);line-height:1.4}
+.ugc-score small{display:block;font-size:.51rem;color:var(--muted);margin-top:4px}
+.ugc-game-switcher{display:flex;gap:6px;padding:10px 12px 0;overflow-x:auto}
+.ugc-game-switcher button{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:6px 9px;white-space:nowrap;color:var(--text);font-size:.66rem;cursor:pointer}
+.ugc-game-switcher button[aria-pressed=true]{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.ugc-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--surface)}
+.ugc-nav button{border:0;border-bottom:3px solid transparent;padding:11px 5px 9px;color:var(--muted);background:transparent;font-size:.7rem;font-weight:850;cursor:pointer}
+.ugc-nav button[aria-selected=true]{color:var(--accent);border-bottom-color:var(--accent);background:color-mix(in srgb,var(--accent) 5%,var(--surface))}
+.ugc-panel{padding:14px 16px 17px;min-height:96px}
+.ugc-field-block{border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.ugc-field-head{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;font-size:.7rem;background:var(--surface-2)}
+.ugc-field-head strong{font-weight:900}.ugc-field-head span{color:var(--muted);text-align:right;font-size:.6rem}
+.ugc-field{display:grid;grid-template-columns:35px minmax(0,1fr) 35px;background:#244e39;height:112px;color:#fff;overflow:hidden;border-top:1px solid rgba(255,255,255,.25);border-bottom:1px solid rgba(255,255,255,.25)}
+.ugc-endzone{display:grid;place-items:center;writing-mode:vertical-rl;text-orientation:mixed;letter-spacing:.13em;font-weight:950;font-size:.67rem;background:#1b3a32;border-inline:2px solid rgba(255,255,255,.6)}
+.ugc-endzone:last-child{transform:rotate(180deg);background:#214438}
+.ugc-turf{position:relative;background:repeating-linear-gradient(90deg,#2b684a 0%,#2b684a 9.97%,#255b40 10%,#255b40 19.97%);min-width:0}
+.ugc-turf:before{content:"";pointer-events:none;position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent calc(10% - 1px),rgba(255,255,255,.6) calc(10% - 1px),rgba(255,255,255,.6) 10%)}
+.ugc-yard{position:absolute;top:11px;transform:translateX(-50%);font-size:.53rem;font-weight:950;opacity:.85;color:#fff;font-variant-numeric:tabular-nums}
+.ugc-first-down{position:absolute;z-index:2;top:0;bottom:0;border-left:3px solid #facc15;transform:translateX(-50%)}
+.ugc-ball{position:absolute;z-index:3;left:50%;top:56%;display:grid;place-items:center;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;border:2px solid #fff;background:#12281d;box-shadow:0 2px 8px #0006}
+.ugc-ball span{color:#e8c296;font-size:1rem;transform:rotate(90deg);display:inline-block}
+.ugc-field-key{display:flex;gap:15px;justify-content:flex-end;padding:7px 11px;color:var(--muted);font-size:.58rem}
+.ugc-field-key span{display:flex;align-items:center;gap:5px}
+.ugc-field-key i{display:inline-block;width:10px;height:10px;border-radius:50%}
+.ugc-key-ball{background:#12281d;border:2px solid #eee}
+.ugc-key-first{background:#eab308}
+.ugc-drive{margin-top:12px;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.ugc-drive-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.ugc-drive-head strong{font-size:.75rem}.ugc-drive-head span{font-size:.61rem;color:var(--muted);text-align:right}
+.ugc-drive-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:12px}
+.ugc-drive-metrics>div{display:flex;flex-direction:column;gap:5px;align-items:center;min-width:0}
+.ugc-drive-metrics>div:not(:last-child){border-right:1px solid var(--line)}
+.ugc-drive-metrics span{color:var(--muted);font-size:.59rem}
+.ugc-drive-metrics strong{font-size:.88rem;font-variant-numeric:tabular-nums}
+.ugc-last-play{margin-top:11px;padding:11px 12px;border-radius:11px;border-left:3px solid var(--accent);background:color-mix(in srgb,var(--accent) 6%,var(--surface))}
+.ugc-last-play span{font-size:.56rem;color:var(--accent);font-weight:950;letter-spacing:.08em;text-transform:uppercase}
+.ugc-last-play p{margin:4px 0 0;font-size:.7rem;line-height:1.5}
+.ugc-plays{padding:0;margin:0;list-style:none;display:grid;gap:2px}
+.ugc-plays li{display:grid;grid-template-columns:85px minmax(0,1fr);gap:12px;padding:10px 5px;border-bottom:1px solid var(--line)}
+.ugc-plays time{font-size:.59rem;font-weight:850;color:var(--muted);white-space:nowrap}.ugc-plays span{font-size:.7rem;line-height:1.4}
+.ugc-stat-row{display:grid;grid-template-columns:minmax(0,1fr) 2fr minmax(0,1fr);align-items:center;gap:8px;text-align:center;border-bottom:1px solid var(--line);padding:10px 6px}
+.ugc-stat-row strong{font-size:.8rem;font-variant-numeric:tabular-nums}
+.ugc-stat-row span{font-size:.64rem;color:var(--muted)}.ugc-stat-header{background:var(--surface-2);border-radius:9px;padding:11px 6px}
+.ugc-stat-header strong{font-size:.71rem}.ugc-stat-header span{font-weight:900;letter-spacing:.03em}
+.ugc-subheading{font-size:.82rem;margin:18px 0 9px}
+.ugc-player-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.ugc-player-group{min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:10px}
+.ugc-player-group h4{margin:0;padding:8px 10px;font-size:.65rem;background:var(--surface-2);font-weight:950;text-transform:capitalize}
+.ugc-player-scroll{overflow-x:auto}
+.ugc-player-group table{border-collapse:collapse;width:100%;font-size:.59rem}
+.ugc-player-group th,.ugc-player-group td{padding:7px 8px;text-align:left;border-top:1px solid var(--line);white-space:nowrap}
+.ugc-player-group th{font-size:.55rem;color:var(--muted)}
+.ugc-watch{padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--surface-2)}
+.ugc-watch strong{font-size:.8rem}.ugc-watch p{font-size:.75rem;line-height:1.5}
+.ugc-watch small{display:block;margin-top:12px;font-size:.6rem;color:var(--muted);line-height:1.4}
+.ugc-watch-link{display:inline-block;color:var(--accent);font-size:.72rem;font-weight:850;text-decoration:underline}
+.ugc-empty,.ugc-error{color:var(--muted);font-size:.68rem;line-height:1.5;margin:12px 0}
+.ugc-error{color:var(--bad)}
+.ugc-source{padding:8px 14px 12px;font-size:.55rem;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:660px){.ugc-scoreboard{padding:12px 8px;grid-template-columns:minmax(0,1fr) minmax(92px,1.12fr) minmax(0,1fr)}.ugc-panel{padding:10px}.ugc-field{height:97px;grid-template-columns:29px minmax(0,1fr) 29px}.ugc-logo{height:36px}.ugc-logo img{max-height:35px;max-width:35px}.ugc-team>span{font-size:.51rem}.ugc-score>div{gap:7px}.ugc-field-head{flex-wrap:wrap}.ugc-field-head span{text-align:left}.ugc-player-groups{grid-template-columns:1fr}.ugc-plays li{grid-template-columns:69px minmax(0,1fr);gap:7px}.ugc-topline{padding:11px 12px}}
+
+.nfl-game-card.ugc-selected{outline:2px solid var(--accent);outline-offset:-3px}

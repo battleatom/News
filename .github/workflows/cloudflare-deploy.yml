@@ -240,6 +240,10 @@ jobs:
           test "$code" = '400'
           jq -e '.ok == false and .error == "invalid gameID"' "$tmp/nfl-live.json" >/dev/null
 
+          code=$(curl -sS -o "$tmp/nfl-gamecenter.json" -w '%{http_code}' "$SITE/api/nfl-gamecenter?event=invalid")
+          test "$code" = '400'
+          jq -e '.ok == false and .error == "invalid event"' "$tmp/nfl-gamecenter.json" >/dev/null
+
           code=$(curl -sS -o "$tmp/nfl-summary.json" -w '%{http_code}' "$SITE/api/nfl-summary")
           test "$code" = '400'
           jq -e '.error == "missing event"' "$tmp/nfl-summary.json" >/dev/null

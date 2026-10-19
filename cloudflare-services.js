@@ -13,7 +13,7 @@ function noStoreJson(value,status=200){return Response.json(value,{status,header
 function dateYmd(dt){return `${dt.getFullYear()}${String(dt.getMonth()+1).padStart(2,"0")}${String(dt.getDate()).padStart(2,"0")}`}
 function normalizeGame(event){
   const competition=(event.competitions||[{}])[0],type=event.status?.type||{};
-  const teams=(competition.competitors||[]).map(comp=>{const team=comp.team||{};return{name:team.displayName||team.shortDisplayName||"",abbr:team.abbreviation||"",score:String(comp.score??""),homeAway:comp.homeAway||"",logo:team.logo||"",color:team.color||"",alternateColor:team.alternateColor||""}});
+  const teams=(competition.competitors||[]).map(comp=>{const team=comp.team||{};return{id:String(team.id||""),name:team.displayName||team.shortDisplayName||"",abbr:team.abbreviation||"",score:String(comp.score??""),homeAway:comp.homeAway||"",logo:team.logo||"",color:team.color||"",alternateColor:team.alternateColor||""}});
   const broadcasts=[...new Set((competition.broadcasts||[]).flatMap(x=>x.names||[]).filter(Boolean))];
   const watch=(event.links||[]).find(x=>(x.rel||[]).some(r=>String(r).toLowerCase().includes("watch")));
   return{id:String(event.id||""),name:event.name||"",shortName:event.shortName||"",date:event.date||"",status:type.description||"",detail:type.shortDetail||type.detail||"",state:type.state||"",teams,broadcasts,watchUrl:watch?.href||"",venue:competition.venue?.fullName||"",plays:[]};
