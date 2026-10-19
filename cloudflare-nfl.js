@@ -2,7 +2,7 @@ import runtime,{FeedState} from "./cloudflare-runtime.js";
 
 export {FeedState};
 
-const ESPN_HOST="https://site.web.api.espn.com";
+const ESPN_HOST="https://site.api.espn.com";
 const TEAM_ALIASES={WSH:"WAS",LAR:"LA"};
 function normalizeAbbr(value=""){const v=String(value||"").toUpperCase();return TEAM_ALIASES[v]||v}
 function easternDate(value){const dt=new Date(value);if(Number.isNaN(dt.getTime()))return"";const parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/New_York",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(dt),get=t=>parts.find(p=>p.type===t)?.value||"";return`${get("year")}${get("month")}${get("day")}`}
