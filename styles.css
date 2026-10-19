@@ -255,3 +255,19 @@
 @media(max-width:660px){.ugc-scoreboard{padding:12px 8px;grid-template-columns:minmax(0,1fr) minmax(92px,1.12fr) minmax(0,1fr)}.ugc-panel{padding:10px}.ugc-field{height:97px;grid-template-columns:29px minmax(0,1fr) 29px}.ugc-logo{height:36px}.ugc-logo img{max-height:35px;max-width:35px}.ugc-team>span{font-size:.51rem}.ugc-score>div{gap:7px}.ugc-field-head{flex-wrap:wrap}.ugc-field-head span{text-align:left}.ugc-player-groups{grid-template-columns:1fr}.ugc-plays li{grid-template-columns:69px minmax(0,1fr);gap:7px}.ugc-topline{padding:11px 12px}}
 
 .nfl-game-card.ugc-selected{outline:2px solid var(--accent);outline-offset:-3px}
+
+
+/* Independent Tank01 live play-by-play directly below the field tracker. */
+.ugc-tank-panel{margin-top:12px;border:1px solid var(--line);border-radius:13px;background:var(--surface);overflow:hidden}
+.ugc-tank-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;padding:12px 13px;background:color-mix(in srgb,var(--good) 7%,var(--surface));border-bottom:1px solid var(--line)}
+.ugc-tank-head>div{display:flex;align-items:center;gap:8px}
+.ugc-tank-head strong{font-size:.73rem;font-weight:950;color:var(--text)}
+.ugc-tank-source{font-size:.62rem;font-weight:850;color:var(--good);background:var(--surface);border:1px solid var(--line);padding:4px 8px;border-radius:999px}
+.ugc-tank-info{font-size:.65rem;line-height:1.45;padding:9px 13px;background:var(--surface-2);color:var(--muted);border-bottom:1px solid var(--line)}
+.ugc-tank-plays{padding:0 11px;margin:0;list-style:none;max-height:290px;overflow-y:auto}
+.ugc-tank-plays li{display:grid;grid-template-columns:82px minmax(0,1fr);gap:10px;padding:10px 2px;border-bottom:1px solid var(--line)}
+.ugc-tank-plays li:last-child{border-bottom:0}
+.ugc-tank-plays time{font-size:.58rem;color:var(--muted);font-weight:900;white-space:nowrap}
+.ugc-tank-plays li>span{font-size:.7rem;line-height:1.4;color:var(--text)}
+.ugc-tank-panel .ugc-empty{margin:0;padding:14px}
+@media(max-width:500px){.ugc-tank-head{padding:10px}.ugc-tank-plays{padding:0 9px}.ugc-tank-plays li{grid-template-columns:68px minmax(0,1fr);gap:7px}}
